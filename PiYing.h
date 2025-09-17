@@ -7,6 +7,10 @@
 #include <QMenuBar>
 #include <QAction>
 #include <QFileDialog>
+#include <QTreeWidget>
+#include <QHBoxLayout>
+
+#include "piYingGL.h"
 
 class PiYing : public QMainWindow
 {
@@ -22,5 +26,7 @@ private:
     QMenu* menuFile;
 
     QAction* actionExit;
+
+    PiYingGL* piYingGL = nullptr;
 };
 

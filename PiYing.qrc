@@ -1,4 +1,6 @@
 <RCC>
-    <qresource prefix="PiYing">
+    <qresource prefix="/PiYing">
+        <file>shapes.frag</file>
+        <file>shapes.vert</file>
     </qresource>
 </RCC>
