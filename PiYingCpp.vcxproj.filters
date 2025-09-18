@@ -49,6 +49,12 @@
     <ClCompile Include="piYingGL.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="RatioDialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="piYingGLContainer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Layer.h">
@@ -65,12 +71,18 @@
     <QtMoc Include="piYingGL.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="RatioDialog.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="piYingGLContainer.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
-    <None Include="shapes.vert">
+    <None Include="bgshapes.vert">
       <Filter>Shader</Filter>
     </None>
-    <None Include="shapes.frag">
+    <None Include="bgshapes.frag">
       <Filter>Shader</Filter>
     </None>
   </ItemGroup>

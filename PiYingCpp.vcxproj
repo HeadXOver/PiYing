@@ -93,6 +93,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="piYingGL.cpp" />
+    <ClCompile Include="piYingGLContainer.cpp" />
+    <ClCompile Include="RatioDialog.cpp" />
     <QtRcc Include="PiYing.qrc" />
     <QtUic Include="PiYing.ui" />
     <QtMoc Include="PiYing.h" />
@@ -103,11 +105,13 @@
     <ClInclude Include="cusMode.h" />
     <ClInclude Include="Element.h" />
     <ClInclude Include="Layer.h" />
+    <QtMoc Include="piYingGLContainer.h" />
+    <QtMoc Include="RatioDialog.h" />
     <QtMoc Include="piYingGL.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="shapes.frag" />
-    <None Include="shapes.vert" />
+    <None Include="bgshapes.frag" />
+    <None Include="bgshapes.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
