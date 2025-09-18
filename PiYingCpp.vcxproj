@@ -101,6 +101,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cusMode.h" />
+    <ClInclude Include="Element.h" />
     <ClInclude Include="Layer.h" />
     <QtMoc Include="piYingGL.h" />
   </ItemGroup>

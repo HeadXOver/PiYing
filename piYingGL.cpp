@@ -1,5 +1,7 @@
 #include "piYingGL.h"
 
+#include <QMessageBox>
+
 unsigned int VAO = 0, VBO = 0, EBO = 0;
 
 PiYingGL::PiYingGL(QWidget* parent) : QOpenGLWidget(parent)
@@ -9,15 +11,17 @@ PiYingGL::PiYingGL(QWidget* parent) : QOpenGLWidget(parent)
 
 PiYingGL::~PiYingGL()
 {
+	makeCurrent();
+
+	////////////////////////////////////////
+
 	glDeleteBuffers(1, &VBO);
 	glDeleteVertexArrays(1, &VAO);
 	glDeleteBuffers(1, &EBO);
 
-	if (cusTexture)
-	{
-		delete cusTexture;
-		cusTexture = nullptr;
-	}
+	////////////////////////////////////////
+
+	doneCurrent();
 }
 
 void PiYingGL::initializeGL()
@@ -55,51 +59,38 @@ void PiYingGL::resizeGL(int w, int h){
 
 void PiYingGL::paintGL(){
 	glClear(GL_COLOR_BUFFER_BIT);
-
-	if (backGrounds.size() > 0) {
-		if (cusTexture) {
-			delete cusTexture;
-			cusTexture = nullptr;
-		}
-		cusTexture = new QOpenGLTexture(backGrounds[0].flipped());
-		cusTexture->setMinificationFilter(QOpenGLTexture::Linear);
-		cusTexture->setMagnificationFilter(QOpenGLTexture::Nearest);
-		cusTexture->setWrapMode(QOpenGLTexture::ClampToEdge);
+	for (ImageTexture &it : backGrounds) {
 		shaderProgram.bind();
 		glActiveTexture(GL_TEXTURE0);
-		cusTexture->bind();
+		it.tex->bind();
 		shaderProgram.setUniformValue("texture1", 0);
-		float vertices[] = {
-			// positions          // colors           // texture coords
-			 1.0f,  1.0f, 0.0f,   1.0f, 1.0f, 1.0f,   1.0f, 1.0f, // top right
-			 1.0f, -1.0f, 0.0f,   1.0f, 1.0f, 1.0f,   1.0f, 0.0f, // bottom right
-			-1.0f, -1.0f, 0.0f,   1.0f, 1.0f, 1.0f,   0.0f, 0.0f, // bottom left
-			-1.0f,  1.0f, 0.0f,   1.0f, 1.0f, 1.0f,   0.0f, 1.0f  // top left 
-		};
-		unsigned int indices[] = {
-			0, 1, 3, // first triangle
-			1, 2, 3  // second triangle
-		};
+		shaderProgram.setUniformValue("trans", 0);
+		
 		glBindVertexArray(VAO);
 		glBindBuffer(GL_ARRAY_BUFFER, VBO);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(RECTANGLE_VERT), RECTANGLE_VERT, GL_STATIC_DRAW);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(RECTANGLE_INDECES), RECTANGLE_INDECES, GL_STATIC_DRAW);
+
 		// position attribute
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
 		glEnableVertexAttribArray(0);
-		// color attribute
-		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
-		glEnableVertexAttribArray(1);
+
 		// texture coord attribute
-		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
-		glEnableVertexAttribArray(2);
+		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+		glEnableVertexAttribArray(1);
+
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 		glBindVertexArray(0);
 	}
 }
 
-void PiYingGL::addBackground(const QImage& img){
+void PiYingGL::addBackground(QString& imageName){
+	QImage img;
+	if (!img.load(imageName)) {
+		QMessageBox::warning(this, "Warning", "Failed to load image: " + imageName);
+		return;
+	}
 	backGrounds.append(img);
 	update();
 }

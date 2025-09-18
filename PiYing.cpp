@@ -33,11 +33,6 @@ void PiYing::importBackGround() {
     if (fileName.isEmpty()) {
         return;
     }
-    QImage image;
-    if (!image.load(fileName)) {
-        QMessageBox::warning(this, "警告", "无法加载图片");
-        return;
-    }
-	piYingGL->addBackground(image);
+	piYingGL->addBackground(fileName);
 }
 

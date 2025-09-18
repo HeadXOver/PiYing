@@ -57,6 +57,9 @@
     <ClInclude Include="cusMode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Element.h">
+      <Filter>Header Files\CusStruct</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="piYingGL.h">

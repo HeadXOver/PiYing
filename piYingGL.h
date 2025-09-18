@@ -1,9 +1,10 @@
 #pragma once
 
 #include <QOpenGLWidget.h>
-#include <QOpenGLTexture>
 #include <qopenglfunctions_3_3_Core>
 #include <QOpenGLShaderProgram.h>
+
+#include "Element.h"
 
 class PiYingGL : public QOpenGLWidget, QOpenGLFunctions_3_3_Core
 {
@@ -19,7 +20,7 @@ protected:
 	void paintGL() override;
 
 public:
-	void addBackground(const QImage& img);
+	void addBackground(QString& imageName);
 
 public:
 	bool lineMode = true;
@@ -27,13 +28,9 @@ public:
 
 private:
 	QOpenGLShaderProgram shaderProgram;
-	QOpenGLTexture* cusTexture = nullptr;
 
-	// images
-	QList<QImage> backGrounds;
-	QList<QImage> characterTextures;
-
-	// textures
-	QList<QOpenGLTexture*> backGroundTextures;
+	// imageTextures
+	QList<ImageTexture> backGrounds;
+	QList<ImageTexture> characterTextures;
 };
 
