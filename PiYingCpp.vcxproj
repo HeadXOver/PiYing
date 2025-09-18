@@ -100,6 +100,7 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="cusMode.h" />
     <ClInclude Include="Layer.h" />
     <QtMoc Include="piYingGL.h" />
   </ItemGroup>

@@ -19,11 +19,21 @@ protected:
 	void paintGL() override;
 
 public:
+	void addBackground(const QImage& img);
+
+public:
 	bool lineMode = true;
 	bool drawVisible = true;
 
 private:
 	QOpenGLShaderProgram shaderProgram;
 	QOpenGLTexture* cusTexture = nullptr;
+
+	// images
+	QList<QImage> backGrounds;
+	QList<QImage> characterTextures;
+
+	// textures
+	QList<QOpenGLTexture*> backGroundTextures;
 };
 

@@ -9,7 +9,10 @@
 #include <QFileDialog>
 #include <QTreeWidget>
 #include <QHBoxLayout>
+#include <QFile>
+#include <QList>
 
+#include "cusMode.h"
 #include "piYingGL.h"
 
 class PiYing : public QMainWindow
@@ -20,13 +23,23 @@ public:
     PiYing(QWidget *parent = nullptr);
     ~PiYing();
 
+private slots:
+    void importBackGround();
+
 private:
     Ui::PiYingClass ui;
 
+    // menus
     QMenu* menuFile;
 
-    QAction* actionExit;
+	// child menus of menuFile
+	QMenu* childMenuImport;
 
+	// actions of menuFile
+    QAction* actionExit;
+    QAction* actionImportBackGround;
+
+	// OpenGL widget
     PiYingGL* piYingGL = nullptr;
 };
 
