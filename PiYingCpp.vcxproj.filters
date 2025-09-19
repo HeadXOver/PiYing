@@ -66,6 +66,9 @@
     <ClInclude Include="Element.h">
       <Filter>Header Files\CusStruct</Filter>
     </ClInclude>
+    <ClInclude Include="KeyboardStateWin.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="piYingGL.h">

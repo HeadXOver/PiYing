@@ -1,7 +1,9 @@
-#include "piYingGL.h"
+﻿#include "piYingGL.h"
 
 #include <QMessageBox>
 #include <QMouseEvent>
+
+#include "KeyboardStateWin.h"
 
 unsigned int VAO = 0, VBO = 0, EBO = 0;
 
@@ -11,8 +13,15 @@ PiYingGL::PiYingGL(QWidget* parent) : QOpenGLWidget(parent)
 
 	proj.setToIdentity();
 	insProj.setToIdentity();
+	viewScale = 1.0f;
 
 	aspect = 16.0f / 9.0f;
+
+	actionAddBackGround = new QAction("添加背景图", this);
+	actionFullScreenBackGround = new QAction("背景图全屏", this);
+
+	connect(actionAddBackGround,		SIGNAL(triggered()), this, SLOT(importBackGround()));
+	connect(actionFullScreenBackGround, SIGNAL(triggered()), this, SLOT(fullScreenBackGround()));
 }
 
 PiYingGL::~PiYingGL()
@@ -37,8 +46,10 @@ void PiYingGL::paintBackgrounds()
 		shaderProgram.bind();
 		glActiveTexture(GL_TEXTURE0);
 		it.tex->bind();
+		QMatrix4x4 mViewScale;
+		mViewScale.scale(viewScale);
 		shaderProgram.setUniformValue("texture1", 0);
-		shaderProgram.setUniformValue("trc", proj * it.trans * it.rot * it.scale * insProj);
+		shaderProgram.setUniformValue("trc", proj * it.trans * it.rot * it.scale * mViewScale * insProj);
 		shaderProgram.setUniformValue("selected", it.selected);
 
 		glBindVertexArray(VAO);
@@ -58,6 +69,15 @@ void PiYingGL::paintBackgrounds()
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 		glBindVertexArray(0);
 	}
+}
+
+void PiYingGL::fullScreenBackGround()
+{
+	if (currentSelectedBackGround < 0) return;
+	backGrounds[currentSelectedBackGround].rot.setToIdentity();
+	backGrounds[currentSelectedBackGround].scale.setToIdentity();
+	backGrounds[currentSelectedBackGround].scale.scale(1 / viewScale);
+	backGrounds[currentSelectedBackGround].trans.setToIdentity();
 }
 
 void PiYingGL::initializeGL()
@@ -86,7 +106,7 @@ void PiYingGL::initializeGL()
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
-	glClearColor(0.2f, 0.1f, 0.067f, 1.f);
+	glClearColor(0.0f, 0.1f, 0.067f, 1.f);
 	glClear(GL_COLOR_BUFFER_BIT);
 }
 
@@ -108,15 +128,18 @@ void PiYingGL::mousePressEvent(QMouseEvent* event)
 	QVector4D posV;
 	currentSelectedBackGround = -1;
 	for (auto& item : backGrounds) item.selected = false;
-	for (int i = backGrounds.size() - 1; i >= 0; i--){
-		ImageTexture& item = backGrounds[i];
-		posV = proj * item.scale.inverted() * item.rot.inverted() * item.trans.inverted() * insProj * QVector4D(x, y, 0.0f, 1.0f);
-		if (posV.x() >= -1.0f && posV.x() <= 1.0f && posV.y() >= -1.0f && posV.y() <= 1.0f) {
-			item.selected = true;
-			currentSelectedBackGround = i;
-			break;
+	if (KeyboardStateWin::isKeyHeld(Qt::Key_B))
+		for (int i = backGrounds.size() - 1; i >= 0; i--) {
+			ImageTexture& item = backGrounds[i];
+			QMatrix4x4 mViewScale;
+			mViewScale.scale(1 / viewScale);
+			posV = proj * mViewScale * item.scale.inverted() * item.rot.inverted() * item.trans.inverted() * insProj * QVector4D(x, y, 0.0f, 1.0f);
+			if (posV.x() >= -1.0f && posV.x() <= 1.0f && posV.y() >= -1.0f && posV.y() <= 1.0f) {
+				item.selected = true;
+				currentSelectedBackGround = i;
+				break;
+			}
 		}
-	}
 
 	if(currentSelectedBackGround >= 0) posV = backGrounds[currentSelectedBackGround].trans * QVector4D(0.0f, 0.0f, 0.0f, 1.0f);
 	LastSelectMousePos = QPointF(posV.x() - x, posV.y() - y);
@@ -153,6 +176,15 @@ void PiYingGL::changeRatio(float ratio)
 	update();
 }
 
+void PiYingGL::importBackground()
+{
+	QString fileName = QFileDialog::getOpenFileName(this, "选择背景图", ".", "Images (*.png *.xpm *.jpg)");
+	if (fileName.isEmpty()) {
+		return;
+	}
+	addBackground(fileName);
+}
+
 void PiYingGL::mouseMoveEvent(QMouseEvent* event) {
 	if (event->buttons() && Qt::LeftButton && currentSelectedBackGround >= 0) {
 		QPointF mouse = event->pos();
@@ -166,4 +198,43 @@ void PiYingGL::mouseMoveEvent(QMouseEvent* event) {
 	makeCurrent();
 	paintBackgrounds();
 	update();
+	doneCurrent();
+}
+
+void PiYingGL::wheelEvent(QWheelEvent* ev){
+	QPoint numSteps = ev->angleDelta() / 120.f;
+
+	if (!numSteps.isNull()) {
+		int delta = numSteps.y();
+		float scaleFactor = 1.0f + delta * 0.1f;
+		if (scaleFactor < 0.1f) scaleFactor = 0.1f;
+		viewScale *= scaleFactor;
+
+		makeCurrent();
+		paintBackgrounds();
+		update();
+		doneCurrent();
+	}
+
+	ev->accept();   // self event
+}
+
+void PiYingGL::contextMenuEvent(QContextMenuEvent* e)
+{
+	// QMessageBox::information(this, "Info", "Right click at (" + QString::number(e->pos().x()) + ", " + QString::number(e->pos().y()) + ")");
+
+	QMenu menu(this);
+	if (currentSelectedBackGround < 0) {
+		menu.addAction(actionAddBackGround);
+	}
+	else {
+		menu.addAction(actionFullScreenBackGround);
+	}
+	menu.exec(e->globalPos());
+	e->accept();
+}
+
+
+void PiYingGL::importBackGround() {
+	importBackground();
 }

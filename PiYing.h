@@ -3,11 +3,6 @@
 #include <QtWidgets/QMainWindow>
 #include "ui_PiYing.h"
 
-#include <QMenu>
-#include <QMenuBar>
-#include <QAction>
-#include <QFileDialog>
-#include <QFile>
 #include <QList>
 
 #include "cusMode.h"
@@ -28,8 +23,8 @@ public:
     ~PiYing();
 
 private slots:
-    void importBackGround();
-    void importCharacter();
+	void importCharacter();
+	void importBackGround();
     void exportCurrentFrame();
 	void askScreenScale();
 	void askDefaultColor();
@@ -50,9 +45,9 @@ private:
 
 	// actions of menuFile
     QAction* actionExit;
-    QAction* actionImportBackGround;
 	QAction* actionImportCharacter;
     QAction* actionExportCurrentFrame;
+	QAction* actionImportBackGround;
 
 	// actions of menuEdit
 	QAction* actionScreenScale;

@@ -21,10 +21,10 @@ PiYing::PiYing(QWidget* parent) : QMainWindow(parent) {
 	childMenuScreen = menuEdit->addMenu("幕布");
 
 	// actions of menu File
-    actionExit                  = menuFile->            addAction("退出");
-    actionImportBackGround      = childMenuImport->     addAction("背景图");
-    actionImportCharacter       = childMenuImport->     addAction("角色图");
-    actionExportCurrentFrame    = childMenuExport->     addAction("当前帧");
+    actionExit                              = menuFile->            addAction("退出");
+    actionImportBackGround                  = childMenuImport->     addAction("背景图");
+    actionImportCharacter                   = childMenuImport->     addAction("角色图");
+    actionExportCurrentFrame                = childMenuExport->     addAction("当前帧");
 
 	// actions of menu Edit
 	actionScreenScale           = childMenuScreen->     addAction("比例...");
@@ -98,11 +98,6 @@ void PiYing::askDefaultColor(){
 
 }
 
-void PiYing::importBackGround() {
-    QString fileName = QFileDialog::getOpenFileName(this, "选择背景图", ".", "Images (*.png *.xpm *.jpg)");
-    if (fileName.isEmpty()) {
-        return;
-    }
-	piYingGL->addBackground(fileName);
+void PiYing::importBackGround(){
+    piYingGL->importBackground();
 }
-
