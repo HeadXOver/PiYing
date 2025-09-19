@@ -95,7 +95,7 @@ void PiYing::askScreenScale(){
 }
 
 void PiYing::askDefaultColor(){
-
+	piYingGL->choseBackgroundColor();
 }
 
 void PiYing::importBackGround(){

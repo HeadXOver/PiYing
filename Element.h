@@ -19,7 +19,7 @@ struct ImageTexture {
         trans.setToIdentity();
         rot.setToIdentity();
         scale.setToIdentity();
-        rot.rotate(30.f, 0.f, 0.f, 1.0f);
+        //rot.rotate(30.f, 0.f, 0.f, 1.0f);
 		//scale.scale(0.5f, 0.5f, 1.0f);
     }
 

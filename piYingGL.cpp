@@ -1,9 +1,7 @@
 ﻿#include "piYingGL.h"
 
 #include <QMessageBox>
-#include <QMouseEvent>
-
-#include "KeyboardStateWin.h"
+#include <QColorDialog>
 
 unsigned int VAO = 0, VBO = 0, EBO = 0;
 
@@ -19,11 +17,15 @@ PiYingGL::PiYingGL(QWidget* parent) : QOpenGLWidget(parent)
 
 	actionAddBackGround = new QAction("添加背景图", this);
 	actionFullScreenBackGround = new QAction("背景图全屏", this);
+	actionChoseBackGroundColor = new QAction("选择幕布底色", this);
 
 	connect(actionAddBackGround,		SIGNAL(triggered()), this, SLOT(importBackGround()));
 	connect(actionFullScreenBackGround, SIGNAL(triggered()), this, SLOT(fullScreenBackGround()));
+	connect(actionChoseBackGroundColor, SIGNAL(triggered()), this, SLOT(choseBackGroundColor()));
 
 	setMouseTracking(true);
+
+	backGroundColor.setRgbF(0.0f, 0.1f, 0.067f, 1.f);
 }
 
 PiYingGL::~PiYingGL()
@@ -82,6 +84,11 @@ void PiYingGL::fullScreenBackGround()
 	backGrounds[currentSelectedBackGround].trans.setToIdentity();
 }
 
+void PiYingGL::choseBackGroundColor()
+{
+	choseBackgroundColor();
+}
+
 void PiYingGL::initializeGL()
 {
 	aspect = width() / float(height());
@@ -108,7 +115,7 @@ void PiYingGL::initializeGL()
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
-	glClearColor(0.0f, 0.1f, 0.067f, 1.f);
+	glClearColor(backGroundColor.redF(), backGroundColor.greenF(), backGroundColor.blueF(), backGroundColor.alphaF());
 	glClear(GL_COLOR_BUFFER_BIT);
 }
 
@@ -127,6 +134,18 @@ void PiYingGL::addBackground(QString& imageName){
 		return;
 	}
 	backGrounds.append(img);
+	update();
+}
+
+void PiYingGL::choseBackgroundColor()
+{
+	QColor color = QColorDialog::getColor(backGroundColor, this, "选择幕布底色");
+	if (!color.isValid()) return;
+	backGroundColor = color;
+	makeCurrent();
+	glClearColor(backGroundColor.redF(), backGroundColor.greenF(), backGroundColor.blueF(), backGroundColor.alphaF());
+	glClear(GL_COLOR_BUFFER_BIT);
+	doneCurrent();
 	update();
 }
 
@@ -270,95 +289,6 @@ Qt::CursorShape PiYingGL::getCursorShape(const MousePos& pos)
 	default:					return Qt::ArrowCursor;
 	}
 }
-
-QPointF PiYingGL::mapToGL(const QPointF& point)
-{
-	return QPointF((point.x() / float(width())) * 2.0f - 1.0f, 1.0f - (point.y() / float(height())) * 2.0f);
-}
-
-void PiYingGL::mousePressEvent(QMouseEvent* event)
-{
-	LastMousePos = mapToGL(event->position());
-	QOpenGLWidget::mousePressEvent(event);
-
-	QPointF posV = QPointF(LastMousePos.x(), LastMousePos.y());
-	currentSelectedBackGround = -1;
-	LastMousePosType = MousePos::OutSide;
-	for (auto& item : backGrounds) item.selected = false;
-	if (KeyboardStateWin::isKeyHeld(Qt::Key_B))
-		for (int i = backGrounds.size() - 1; i >= 0; i--) {
-			ImageTexture& item = backGrounds[i];
-			raletiveToRect(posV, item);
-			if (isInsideSquare(posV)) {
-				LastMousePosType = getMousePosType(posV, item);
-				LastImageTransform = {item.trans, item.rot, item.scale};
-				item.selected = true;
-				currentSelectedBackGround = i;
-				break;
-			}
-		}
-
-	if (currentSelectedBackGround >= 0) {
-		posV = backGrounds[currentSelectedBackGround].trans.map(QPointF(0.0f, 0.0f));
-		LastSelectCenterToMousePos = QPointF(posV.x() - LastMousePos.x() * aspect, posV.y() - LastMousePos.y());
-	}
-
-	currentUpdate();
-}
-
-void PiYingGL::mouseMoveEvent(QMouseEvent* event) {
-	if (currentSelectedBackGround >= 0) {
-		ImageTexture& item = backGrounds[currentSelectedBackGround];
-		QPointF mouse = mapToGL(event->position());
-		if (event->buttons() == Qt::LeftButton) {
-			// move
-			if (KeyboardStateWin::isKeyHeld(Qt::Key_B) && LastMousePosType == MousePos::Inside) {
-				setCursor(Qt::ClosedHandCursor);
-				item.setTrans(mouse.x() * aspect + LastSelectCenterToMousePos.x(), mouse.y() + LastSelectCenterToMousePos.y());
-			}
-			else if (LastMousePosType == MousePos::Inside) rotationControl(mouse, item);
-			else  scaleControl(mouse, item);
-
-			currentUpdate();
-		}
-		else {
-			raletiveToRect(mouse, item);
-			setCursor(getCursorShape(getMousePosType(mouse, item)));
-		}
-	}
-	else {
-		setCursor(Qt::ArrowCursor);
-	}
-}
-
-void PiYingGL::wheelEvent(QWheelEvent* ev){
-	QPoint numSteps = ev->angleDelta() / 120.f;
-
-	if (!numSteps.isNull()) {
-		int delta = numSteps.y();
-		float scaleFactor = 1.0f + delta * 0.1f;
-		if (scaleFactor < 0.1f) scaleFactor = 0.1f;
-		viewScale *= scaleFactor;
-
-		currentUpdate();
-	}
-
-	ev->accept();   // self event
-}
-
-void PiYingGL::contextMenuEvent(QContextMenuEvent* e)
-{
-	QMenu menu(this);
-	if (currentSelectedBackGround < 0) {
-		menu.addAction(actionAddBackGround);
-	}
-	else {
-		menu.addAction(actionFullScreenBackGround);
-	}
-	menu.exec(e->globalPos());
-	e->accept();
-}
-
 
 void PiYingGL::importBackGround() {
 	importBackground();

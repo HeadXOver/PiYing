@@ -38,6 +38,7 @@ private:
 private slots:
 	void importBackGround();
 	void fullScreenBackGround();
+	void choseBackGroundColor();
 
 protected:
 	void initializeGL() override;
@@ -51,6 +52,7 @@ protected:
 
 public:
 	void addBackground(QString& imageName);
+	void choseBackgroundColor();
 	void changeRatio(float ratio);
 	void importBackground();
 	void currentUpdate();
@@ -77,7 +79,7 @@ public:
 	MousePos getMousePosType(const QPointF& point, const ImageTexture& image);
 	Qt::CursorShape getCursorShape(const MousePos& pos);
 
-	inline QPointF mapToGL(const QPointF& point);
+	inline QPointF mapToGL(const QPointF& point) { return QPointF((point.x() / float(width())) * 2.0f - 1.0f, 1.0f - (point.y() / float(height())) * 2.0f); }
 
 public:
 	bool lineMode = true;
@@ -85,6 +87,7 @@ public:
 
 	QAction* actionAddBackGround;
 	QAction* actionFullScreenBackGround;
+	QAction* actionChoseBackGroundColor;
 
 private:
 	QOpenGLShaderProgram shaderProgram;
@@ -107,5 +110,7 @@ private:
 	QPointF LastMousePos;
 
 	MousePos LastMousePosType = MousePos::OutSide;
+
+	QColor backGroundColor;
 };
 
