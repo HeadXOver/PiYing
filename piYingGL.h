@@ -40,6 +40,13 @@ public:
 	void addBackground(QString& imageName);
 	void changeRatio(float ratio);
 	void importBackground();
+	void currentUpdate();
+	void raletiveToRect(QPointF &point, const ImageTexture& image);
+	void raletiveToRect(QVector4D& vec4, const ImageTexture& image);
+
+	bool isInsideSquare(const QPointF& point, float side = 2.0f);
+
+	inline QPointF mapToGL(const QPointF& point);
 
 public:
 	bool lineMode = true;
