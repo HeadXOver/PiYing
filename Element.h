@@ -3,6 +3,12 @@
 #include <QOpenGLTexture>
 #include <QMatrix4x4>
 
+struct ImageTransform {
+    QMatrix4x4 trans;
+    QMatrix4x4 rot;
+    QMatrix4x4 scale;
+};
+
 struct ImageTexture {
 
     ImageTexture(QImage& image) {
@@ -13,13 +19,33 @@ struct ImageTexture {
         trans.setToIdentity();
         rot.setToIdentity();
         scale.setToIdentity();
-        //rot.rotate(30.f, 0.f, 0.f, 1.0f);
+        rot.rotate(30.f, 0.f, 0.f, 1.0f);
 		//scale.scale(0.5f, 0.5f, 1.0f);
     }
 
     ~ImageTexture() {
 
     }
+
+    void setTrans(float x, float y) {
+        trans.setToIdentity();
+		trans.translate(x, y);
+    }
+    
+    void setRot(float r) {
+		rot.setToIdentity();
+		rot.rotate(r, 0.f, 0.f, 1.0f);
+    }
+    
+    void setScale(float x, float y) {
+		scale.setToIdentity();
+		scale.scale(x, y);
+    }
+
+    void setScale(float s) {
+		scale.setToIdentity();
+		scale.scale(s);
+	}
 
     QOpenGLTexture* tex;
     QMatrix4x4 trans;

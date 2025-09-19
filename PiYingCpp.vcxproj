@@ -94,6 +94,7 @@
   <ItemGroup>
     <ClCompile Include="piYingGL.cpp" />
     <ClCompile Include="piYingGLContainer.cpp" />
+    <ClCompile Include="RaletiveTransform.cpp" />
     <ClCompile Include="RatioDialog.cpp" />
     <QtRcc Include="PiYing.qrc" />
     <QtUic Include="PiYing.ui" />

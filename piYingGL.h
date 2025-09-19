@@ -11,6 +11,19 @@
 
 #include "Element.h"
 
+enum class MousePos {
+	Inside,
+	LeftTop,
+	LeftBottom,
+	RightTop,
+	RightBottom,
+	LeftEdge,
+	RightEdge,
+	TopEdge,
+	BottomEdge,
+	OutSide
+};
+
 class PiYingGL : public QOpenGLWidget, QOpenGLFunctions_3_3_Core
 {
 	Q_OBJECT
@@ -41,10 +54,28 @@ public:
 	void changeRatio(float ratio);
 	void importBackground();
 	void currentUpdate();
-	void raletiveToRect(QPointF &point, const ImageTexture& image);
+	void rotationControl(const QPointF& mouse, ImageTexture& image);
+	void scaleControl(const QPointF& mouse, ImageTexture& image);
+
 	void raletiveToRect(QVector4D& vec4, const ImageTexture& image);
+	void raletiveToRect(QPointF& point, const ImageTexture& image);
+	void raletiveToRect(QPointF& point, const ImageTransform& transform);
+	void raletiveToRectWithoutTrans(QPointF &point, const ImageTransform& transform);
+	void raletiveToGlobal(QPointF& point, const ImageTexture& image);
+	void raletiveToGlobal(QPointF& point, const ImageTransform& transform);
+	void raletiveToGlobalWithoutTrans(QPointF& point, const ImageTransform& transform);
+
+	QPointF getRaletiveToRect(const QPointF& point, const ImageTexture& image);
+	QPointF getRaletiveToRect(const QPointF& point, const ImageTransform& transform);
+	QPointF getRaletiveToRectWithoutTrans(const QPointF& point, const ImageTransform& transform);
+	QPointF getRaletiveToGlobal(const QPointF& point, const ImageTexture& image);
+	QPointF getRaletiveToGlobal(const QPointF& point, const ImageTransform& transform);
+	QPointF getRaletiveToGlobalWithoutTrans(const QPointF& point, const ImageTransform& transform);
 
 	bool isInsideSquare(const QPointF& point, float side = 2.0f);
+
+	MousePos getMousePosType(const QPointF& point, const ImageTexture& image);
+	Qt::CursorShape getCursorShape(const MousePos& pos);
 
 	inline QPointF mapToGL(const QPointF& point);
 
@@ -70,6 +101,11 @@ private:
 	QMatrix4x4 proj;
 	QMatrix4x4 insProj;
 
-	QPointF LastSelectMousePos;
+	ImageTransform LastImageTransform;
+
+	QPointF LastSelectCenterToMousePos;
+	QPointF LastMousePos;
+
+	MousePos LastMousePosType = MousePos::OutSide;
 };
 

@@ -27,6 +27,9 @@
     <Filter Include="Shader">
       <UniqueIdentifier>{a537cbf0-5617-423e-a107-08e2c3b012d5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\piYingGL">
+      <UniqueIdentifier>{6254f304-1aac-45cf-9ae6-ffe29263975d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <QtRcc Include="PiYing.qrc">
@@ -46,14 +49,17 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="piYingGL.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="RatioDialog.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="piYingGLContainer.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="piYingGL.cpp">
+      <Filter>Source Files\piYingGL</Filter>
+    </ClCompile>
+    <ClCompile Include="RaletiveTransform.cpp">
+      <Filter>Source Files\piYingGL</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
