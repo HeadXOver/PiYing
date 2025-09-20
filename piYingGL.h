@@ -8,8 +8,12 @@
 #include <QFile>
 #include <QMenu>
 #include <QMenuBar>
+#include <QPainter>
+#include <QMessageBox>
+#include <QMouseEvent>
 
 #include "Element.h"
+#include "KeyboardStateWin.h"
 
 enum class MousePos {
 	Inside,
@@ -22,6 +26,11 @@ enum class MousePos {
 	TopEdge,
 	BottomEdge,
 	OutSide
+};
+
+enum class EditMode {
+	Default,
+	BackGround
 };
 
 class PiYingGL : public QOpenGLWidget, QOpenGLFunctions_3_3_Core
@@ -69,12 +78,14 @@ public:
 	inline void raletiveToGlobal(QPointF& point, const ImageTransform& transform)				{ point = getRaletiveToGlobal(point, transform); }
 	inline void raletiveToGlobalWithoutTrans(QPointF& point, const ImageTransform& transform)	{ point = getRaletiveToGlobalWithoutTrans(point, transform); }
 
-	inline QPointF getRaletiveToRect(const QPointF& point, const ImageTexture& image) const						{ return getRaletiveToRect(point, { image.trans, image.rot,image.scale }); }
-	inline QPointF getRaletiveToRect(const QPointF& point, const ImageTransform& transform) const				{ return (proj * transform.scale.inverted() * transform.rot.inverted() * transform.trans.inverted() * getViewMatrixInvert() * insProj).map(point); }
-	inline QPointF getRaletiveToRectWithoutTrans(const QPointF& point, const ImageTransform& transform) const	{ return (proj * transform.scale.inverted() * transform.rot.inverted() * getViewMatrixInvert() * insProj).map(point); }
-	inline QPointF getRaletiveToGlobal(const QPointF& point, const ImageTexture& image) const					{ return getRaletiveToGlobal(point, { image.trans, image.rot,image.scale }); }
-	inline QPointF getRaletiveToGlobal(const QPointF& point, const ImageTransform& transform) const				{ return (proj * getViewMatrix() * transform.trans * transform.rot * transform.scale * insProj).map(point); }
-	inline QPointF getRaletiveToGlobalWithoutTrans(const QPointF& point, const ImageTransform& transform) const { return (proj * getViewMatrix() * transform.rot * transform.scale * insProj).map(point); }
+	inline QPointF getRaletiveToRect(const QPointF& point, const ImageTexture& image) const							{ return getRaletiveToRect(point, { image.trans, image.rot,image.scale }); }
+	inline QPointF getRaletiveToRect(const QPointF& point, const ImageTransform& transform) const					{ return (proj * transform.scale.inverted() * transform.rot.inverted() * transform.trans.inverted() * getViewMatrixInvert() * insProj).map(point); }
+	inline QPointF getRaletiveToRectWithoutTrans(const QPointF& point, const ImageTransform& transform) const		{ return (proj * transform.scale.inverted() * transform.rot.inverted() * getViewMatrixInvert() * insProj).map(point); }
+	inline QPointF getRaletiveToRectWithoutTransProj(const QPointF& point, const ImageTransform& transform) const	{ return (transform.scale.inverted() * transform.rot.inverted() * getViewMatrixInvert() * insProj).map(point); }
+	inline QPointF getRaletiveToGlobal(const QPointF& point, const ImageTexture& image) const						{ return getRaletiveToGlobal(point, { image.trans, image.rot,image.scale }); }
+	inline QPointF getRaletiveToGlobal(const QPointF& point, const ImageTransform& transform) const					{ return (proj * getViewMatrix() * transform.trans * transform.rot * transform.scale * insProj).map(point); }
+	inline QPointF getRaletiveToGlobalWithoutTrans(const QPointF& point, const ImageTransform& transform) const		{ return (proj * getViewMatrix() * transform.rot * transform.scale * insProj).map(point); }
+	inline QPointF getRaletiveToGlobalWithoutTransProj(const QPointF& point, const ImageTransform& transform) const	{ return (getViewMatrix() * transform.rot * transform.scale * insProj).map(point); }
 
 	inline QPointF mapToGL(const QPointF& point) { return QPointF((point.x() / float(width())) * 2.0f - 1.0f, 1.0f - (point.y() / float(height())) * 2.0f); }
 
@@ -97,7 +108,11 @@ public:
 	QAction* actionSetViewToStandard;
 	QAction* actionReturnToStandard;
 
+	EditMode editMode = EditMode::Default;
+
 private:
+	unsigned int VAO = 0, VBO = 0, EBO = 0;
+
 	QOpenGLShaderProgram shaderProgram;
 
 	// imageTextures
@@ -123,5 +138,7 @@ private:
 	MousePos LastMousePosType = MousePos::OutSide;
 
 	QColor backGroundColor;
+
+	QPen framePen = QPen(Qt::red);
 };
 

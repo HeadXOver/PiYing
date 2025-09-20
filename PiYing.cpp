@@ -53,6 +53,17 @@ PiYing::PiYing(QWidget* parent) : QMainWindow(parent) {
 PiYing::~PiYing()
 {}
 
+void PiYing::keyPressEvent(QKeyEvent * event)
+{
+    if (event->key() == Qt::Key::Key_B) {
+        if (piYingGL->editMode == EditMode::BackGround) {
+            piYingGL->editMode = EditMode::Default;
+        }
+        else piYingGL->editMode = EditMode::BackGround;
+        piYingGL->currentUpdate();
+    }
+}
+
 void PiYing::importCharacter(){
 
 }

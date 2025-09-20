@@ -1,9 +1,5 @@
 #include "piYingGL.h"
 
-#include <QMouseEvent>
-
-#include "KeyboardStateWin.h"
-
 void PiYingGL::mousePressEvent(QMouseEvent* event)
 {
 	if (event->button() == Qt::LeftButton) {
@@ -13,7 +9,7 @@ void PiYingGL::mousePressEvent(QMouseEvent* event)
 		LastMousePosType = MousePos::OutSide;
 
 		for (ImageTexture& item : backGrounds)  item.selected = false;
-		if (KeyboardStateWin::isKeyHeld(Qt::Key_B)) {
+		if (editMode == EditMode::BackGround) {
 			for (int i = backGrounds.size() - 1; i >= 0; i--) {
 				ImageTexture& item = backGrounds[i];
 				QPointF posV = getRaletiveToRect(QPointF(LastMousePos.x(), LastMousePos.y()), item);
@@ -38,15 +34,16 @@ void PiYingGL::mouseMoveEvent(QMouseEvent* event) {
 		ImageTexture& item = backGrounds[currentSelectedBackGround];
 		QPointF mouse = mapToGL(event->position());
 		if (event->buttons() == Qt::LeftButton) {
-			// move
-			if (KeyboardStateWin::isKeyHeld(Qt::Key_B) && LastMousePosType == MousePos::Inside) 
-				bgTranslateControl(mouse, item);
-			else if (LastMousePosType == MousePos::Inside) 
-				bgRotationControl(mouse, item);
-			else  
-				bgScaleControl(mouse, item);
+			if (editMode == EditMode::BackGround) {
+				if (KeyboardStateWin::isAltHeld())
+					bgRotationControl(mouse, item);
+				else if (LastMousePosType == MousePos::Inside)
+					bgTranslateControl(mouse, item);
+				else
+					bgScaleControl(mouse, item);
 
-			currentUpdate();
+				currentUpdate();
+			}
 		}
 		else {
 			raletiveToRect(mouse, item);

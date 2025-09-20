@@ -67,6 +67,9 @@
     <ClCompile Include="Controls.cpp">
       <Filter>Source Files\piYingGL</Filter>
     </ClCompile>
+    <ClCompile Include="GLFunc.cpp">
+      <Filter>Source Files\piYingGL</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Layer.h">

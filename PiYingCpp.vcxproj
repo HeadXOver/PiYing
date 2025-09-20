@@ -99,6 +99,7 @@
     <ClCompile Include="piYingGLContainer.cpp" />
     <ClCompile Include="RaletiveTransform.cpp" />
     <ClCompile Include="RatioDialog.cpp" />
+    <ClCompile Include="GLFunc.cpp" />
     <QtRcc Include="PiYing.qrc" />
     <QtUic Include="PiYing.ui" />
     <QtMoc Include="PiYing.h" />

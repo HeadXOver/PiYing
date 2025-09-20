@@ -1,9 +1,6 @@
 ﻿#include "piYingGL.h"
 
-#include <QMessageBox>
 #include <QColorDialog>
-
-unsigned int VAO = 0, VBO = 0, EBO = 0;
 
 PiYingGL::PiYingGL(QWidget* parent) : QOpenGLWidget(parent)
 {
@@ -30,6 +27,8 @@ PiYingGL::PiYingGL(QWidget* parent) : QOpenGLWidget(parent)
 	setMouseTracking(true);
 
 	backGroundColor.setRgbF(0.0f, 0.1f, 0.067f, 1.f);
+
+	framePen.setWidth(6);
 }
 
 PiYingGL::~PiYingGL()
@@ -77,6 +76,16 @@ void PiYingGL::paintBackgrounds()
 	}
 }
 
+void PiYingGL::addBackground(QString& imageName) {
+	QImage img;
+	if (!img.load(imageName)) {
+		QMessageBox::warning(this, "Warning", "Failed to load image: " + imageName);
+		return;
+	}
+	backGrounds.append(img);
+	update();
+}
+
 void PiYingGL::fullScreenBackGround()
 {
 	if (currentSelectedBackGround < 0) return;
@@ -98,54 +107,6 @@ void PiYingGL::setViewToStandard()
 void PiYingGL::returnToStandard()
 {
 	viewScale = 1.0f;
-	update();
-}
-
-void PiYingGL::initializeGL()
-{
-	aspect = width() / float(height());
-	initializeOpenGLFunctions();
-
-	glGenVertexArrays(1, &VAO);
-	glGenBuffers(1, &VBO);
-	glGenBuffers(1, &EBO);
-
-	glBindVertexArray(VAO);
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-
-	/////////////////////////////////////////////
-
-	shaderProgram.addShaderFromSourceFile(QOpenGLShader::Vertex, ":/PiYing/bgshapes.vert");
-	shaderProgram.addShaderFromSourceFile(QOpenGLShader::Fragment, ":/PiYing/bgshapes.frag");
-	shaderProgram.link();
-	shaderProgram.bind();
-
-	/////////////////////////////////////////////
-
-	glBindVertexArray(0);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-
-	glClearColor(backGroundColor.redF(), backGroundColor.greenF(), backGroundColor.blueF(), backGroundColor.alphaF());
-	glClear(GL_COLOR_BUFFER_BIT);
-}
-
-void PiYingGL::resizeGL(int w, int h){
-
-}
-
-void PiYingGL::paintGL(){
-	paintBackgrounds();
-}
-
-void PiYingGL::addBackground(QString& imageName){
-	QImage img;
-	if (!img.load(imageName)) {
-		QMessageBox::warning(this, "Warning", "Failed to load image: " + imageName);
-		return;
-	}
-	backGrounds.append(img);
 	update();
 }
 
@@ -189,14 +150,6 @@ void PiYingGL::importBackground()
 	addBackground(fileName);
 }
 
-void PiYingGL::currentUpdate()
-{
-	makeCurrent();
-	paintBackgrounds();
-	update();
-	doneCurrent();
-}
-
 bool PiYingGL::isInsideSquare(const QPointF& point, float side)
 {
 	return (point.x() >= -side / 2.f && point.x() <= side / 2.f && point.y() >= -side / 2.f && point.y() <= side / 2.f);
@@ -225,7 +178,6 @@ MousePos PiYingGL::getMousePosType(const QPointF& point, const ImageTexture& ima
 Qt::CursorShape PiYingGL::getCursorShape(const MousePos& pos)
 {
 	switch (pos) {
-	case MousePos::Inside:		return Qt::OpenHandCursor;
 	case MousePos::LeftTop:
 	case MousePos::RightBottom:	//return Qt::SizeFDiagCursor;
 	case MousePos::LeftBottom:
@@ -233,7 +185,8 @@ Qt::CursorShape PiYingGL::getCursorShape(const MousePos& pos)
 	case MousePos::LeftEdge:
 	case MousePos::RightEdge:	//return Qt::SizeHorCursor;
 	case MousePos::TopEdge:
-	case MousePos::BottomEdge:	return Qt::CursorShape::SizeAllCursor;
+	case MousePos::BottomEdge:  if (!KeyboardStateWin::isAltHeld()) return Qt::CursorShape::CrossCursor;
+	case MousePos::Inside:		return Qt::OpenHandCursor;
 	default:					return Qt::ArrowCursor;
 	}
 }
