@@ -20,7 +20,7 @@ struct ImageTexture {
         rot.setToIdentity();
         scale.setToIdentity();
         //rot.rotate(30.f, 0.f, 0.f, 1.0f);
-		//scale.scale(0.5f, 0.5f, 1.0f);
+        //scale.scale(0.5f, 0.5f, 1.0f);
     }
 
     ~ImageTexture() {
@@ -29,18 +29,32 @@ struct ImageTexture {
 
     void setTrans(float x, float y) {
         trans.setToIdentity();
-		trans.translate(x, y);
+        trans.translate(x, y);
     }
-    
+
+    void setTrans(QPointF point) {
+        trans.setToIdentity();
+        trans.translate(point.x(), point.y());
+    }
+
+    inline void addTrans(QPointF point) { trans.translate(point.x(), point.y()); }
+
     void setRot(float r) {
-		rot.setToIdentity();
-		rot.rotate(r, 0.f, 0.f, 1.0f);
+        rot.setToIdentity();
+        rot.rotate(r, 0.f, 0.f, 1.0f);
     }
-    
+
     void setScale(float x, float y) {
-		scale.setToIdentity();
-		scale.scale(x, y);
+        scale.setToIdentity();
+        scale.scale(x, y);
     }
+
+    void setScale(QPointF point) {
+        scale.setToIdentity();
+        scale.scale(point.x(), point.y());
+    }
+
+    inline void addScale(QPointF point) { scale.scale(point.x(), point.y()); }
 
     void setScale(float s) {
 		scale.setToIdentity();

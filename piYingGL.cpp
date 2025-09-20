@@ -18,10 +18,14 @@ PiYingGL::PiYingGL(QWidget* parent) : QOpenGLWidget(parent)
 	actionAddBackGround = new QAction("添加背景图", this);
 	actionFullScreenBackGround = new QAction("背景图全屏", this);
 	actionChoseBackGroundColor = new QAction("选择幕布底色", this);
+	actionSetViewToStandard = new QAction("将视图设为标准幕布", this);
+	actionReturnToStandard = new QAction("返回标准幕布视图", this);
 
 	connect(actionAddBackGround,		SIGNAL(triggered()), this, SLOT(importBackGround()));
 	connect(actionFullScreenBackGround, SIGNAL(triggered()), this, SLOT(fullScreenBackGround()));
 	connect(actionChoseBackGroundColor, SIGNAL(triggered()), this, SLOT(choseBackGroundColor()));
+	connect(actionSetViewToStandard,	SIGNAL(triggered()), this, SLOT(setViewToStandard()));
+	connect(actionReturnToStandard,		SIGNAL(triggered()), this, SLOT(returnToStandard()));
 
 	setMouseTracking(true);
 
@@ -50,10 +54,8 @@ void PiYingGL::paintBackgrounds()
 		shaderProgram.bind();
 		glActiveTexture(GL_TEXTURE0);
 		it.tex->bind();
-		QMatrix4x4 mViewScale;
-		mViewScale.scale(viewScale);
 		shaderProgram.setUniformValue("texture1", 0);
-		shaderProgram.setUniformValue("trc", proj * it.trans * it.rot * it.scale * mViewScale * insProj);
+		shaderProgram.setUniformValue("trc", proj * getViewMatrix() * it.trans * it.rot * it.scale * insProj);
 		shaderProgram.setUniformValue("selected", it.selected);
 
 		glBindVertexArray(VAO);
@@ -87,6 +89,16 @@ void PiYingGL::fullScreenBackGround()
 void PiYingGL::choseBackGroundColor()
 {
 	choseBackgroundColor();
+}
+
+void PiYingGL::setViewToStandard()
+{
+}
+
+void PiYingGL::returnToStandard()
+{
+	viewScale = 1.0f;
+	update();
 }
 
 void PiYingGL::initializeGL()
@@ -183,70 +195,6 @@ void PiYingGL::currentUpdate()
 	paintBackgrounds();
 	update();
 	doneCurrent();
-}
-
-void PiYingGL::rotationControl(const QPointF& mouse, ImageTexture& image)
-{
-	QPointF center = LastImageTransform.trans.map(QPointF(0.f, 0.f));
-	QPointF vec1 = LastMousePos - center;
-	QPointF vec2 = mouse - center;
-	float r = (atan2f(vec2.y(), vec2.x()) - atan2f(vec1.y(), vec1.x())) * 180.f / 3.1415926f;
-
-	image.setRot(r);
-	image.rot *= LastImageTransform.rot;
-}
-
-void PiYingGL::scaleControl(const QPointF& mouse, ImageTexture& image)
-{
-	QPointF mouseRaletiveStatic = getRaletiveToRect(QPointF(mouse.x(), mouse.y()), LastImageTransform);
-	QPointF LastMouseRaletive = getRaletiveToRect(QPointF(LastMousePos.x(), LastMousePos.y()), LastImageTransform);
-	QPointF toMoveRaletive = getRaletiveToRectWithoutTrans((mouse - LastMousePos), LastImageTransform);
-
-	image.trans = LastImageTransform.trans;
-
-	if (LastMousePosType == MousePos::BottomEdge) {
-		image.setScale(1.f, (1.0f - mouseRaletiveStatic.y()) / (1.0f - LastMouseRaletive.y()));
-		toMoveRaletive = getRaletiveToGlobalWithoutTrans(QPointF(0.f, toMoveRaletive.y() / 2.f), LastImageTransform);
-		image.trans.translate(toMoveRaletive.x() * aspect / (1.0f - LastMouseRaletive.y()) * 2.f, toMoveRaletive.y() / (1.0f - LastMouseRaletive.y()) * 2.f);
-	}
-	else if(LastMousePosType == MousePos::TopEdge) {
-		image.setScale(1.f, (1.0f + mouseRaletiveStatic.y()) / (1.0f + LastMouseRaletive.y()));
-		toMoveRaletive = getRaletiveToGlobalWithoutTrans(QPointF(0.f, toMoveRaletive.y() / 2.f), LastImageTransform);
-		image.trans.translate(toMoveRaletive.x() * aspect / (1.0f + LastMouseRaletive.y()) * 2.f, toMoveRaletive.y() / (1.0f + LastMouseRaletive.y()) * 2.f);
-	}
-	else if (LastMousePosType == MousePos::LeftEdge) {
-		image.setScale((1.0f - mouseRaletiveStatic.x()) / (1.0f - LastMouseRaletive.x()), 1.f);
-		toMoveRaletive = getRaletiveToGlobalWithoutTrans(QPointF(toMoveRaletive.x() / 2.f, 0.f), LastImageTransform);
-		image.trans.translate(toMoveRaletive.x() * aspect / (1.0f - LastMouseRaletive.x()) * 2.f, toMoveRaletive.y() / (1.0f - LastMouseRaletive.x()) * 2.f);
-	}
-	else if (LastMousePosType == MousePos::RightEdge) {
-		image.setScale((1.0f + mouseRaletiveStatic.x()) / (1.0f + LastMouseRaletive.x()), 1.f);
-		toMoveRaletive =  getRaletiveToGlobalWithoutTrans(QPointF(toMoveRaletive.x() / 2.f, 0.f), LastImageTransform);
-		image.trans.translate(toMoveRaletive.x() * aspect / (1.0f + LastMouseRaletive.x()) * 2.f, toMoveRaletive.y() / (1.0f + LastMouseRaletive.x()) * 2.f);
-	}
-	else if (LastMousePosType == MousePos::LeftTop) {
-		image.setScale((1.0f - mouseRaletiveStatic.x()) / (1.0f - LastMouseRaletive.x()), (1.0f + mouseRaletiveStatic.y()) / (1.0f + LastMouseRaletive.y()));
-		toMoveRaletive = getRaletiveToGlobalWithoutTrans(QPointF(toMoveRaletive.x() / 2.f, toMoveRaletive.y() / 2.f), LastImageTransform);
-		image.trans.translate(toMoveRaletive.x() * aspect / (1.0f - LastMouseRaletive.x()) * 2.f, toMoveRaletive.y() / (1.0f + LastMouseRaletive.y()) * 2.f);
-	}
-	else if (LastMousePosType == MousePos::LeftBottom) {
-		image.setScale((1.0f - mouseRaletiveStatic.x()) / (1.0f - LastMouseRaletive.x()), (1.0f - mouseRaletiveStatic.y()) / (1.0f - LastMouseRaletive.y()));
-		toMoveRaletive = getRaletiveToGlobalWithoutTrans(QPointF(toMoveRaletive.x() / 2.f, toMoveRaletive.y() / 2.f), LastImageTransform);
-		image.trans.translate(toMoveRaletive.x() * aspect / (1.0f - LastMouseRaletive.x()) * 2.f, toMoveRaletive.y() / (1.0f - LastMouseRaletive.y()) * 2.f);
-	}
-	else if (LastMousePosType == MousePos::RightTop) {
-		image.setScale((1.0f + mouseRaletiveStatic.x()) / (1.0f + LastMouseRaletive.x()), (1.0f + mouseRaletiveStatic.y()) / (1.0f + LastMouseRaletive.y()));
-		toMoveRaletive = getRaletiveToGlobalWithoutTrans(QPointF(toMoveRaletive.x() / 2.f, toMoveRaletive.y() / 2.f), LastImageTransform);
-		image.trans.translate(toMoveRaletive.x() * aspect / (1.0f + LastMouseRaletive.x()) * 2.f, toMoveRaletive.y() / (1.0f + LastMouseRaletive.y()) * 2.f);
-	}
-	else if (LastMousePosType == MousePos::RightBottom) {
-		image.setScale((1.0f + mouseRaletiveStatic.x()) / (1.0f + LastMouseRaletive.x()), (1.0f - mouseRaletiveStatic.y()) / (1.0f - LastMouseRaletive.y()));
-		toMoveRaletive = getRaletiveToGlobalWithoutTrans(QPointF(toMoveRaletive.x() / 2.f, toMoveRaletive.y() / 2.f), LastImageTransform);
-		image.trans.translate(toMoveRaletive.x() * aspect / (1.0f + LastMouseRaletive.x()) * 2.f, toMoveRaletive.y() / (1.0f - LastMouseRaletive.y()) * 2.f);
-	}
-
-
-	image.scale *= LastImageTransform.scale;
 }
 
 bool PiYingGL::isInsideSquare(const QPointF& point, float side)

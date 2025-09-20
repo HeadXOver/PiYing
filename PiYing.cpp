@@ -78,7 +78,7 @@ void PiYing::exportCurrentFrame(){
 
     QImage img = piYingGL->grabFramebuffer();
 
-    if (!img.save(path, format, 95))  QMessageBox::warning(this, tr("Error"), tr("保存失败"));
+    if (!img.save(path, format, 95))  QMessageBox::warning(this, tr("Error"), tr("Failed to save"));
 }
 
 void PiYing::askScreenScale(){

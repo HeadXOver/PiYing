@@ -64,6 +64,9 @@
     <ClCompile Include="events.cpp">
       <Filter>Source Files\piYingGL</Filter>
     </ClCompile>
+    <ClCompile Include="Controls.cpp">
+      <Filter>Source Files\piYingGL</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Layer.h">
@@ -97,5 +100,6 @@
     <None Include="bgshapes.frag">
       <Filter>Shader</Filter>
     </None>
+    <None Include="readme.md" />
   </ItemGroup>
 </Project>
