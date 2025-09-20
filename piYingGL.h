@@ -91,6 +91,8 @@ public:
 
 	QMatrix4x4 getViewMatrixInvert() const;
 	QMatrix4x4 getViewMatrix() const;
+	QMatrix4x4 getViewMatrixInvertWithoutTrans() const;
+	QMatrix4x4 getViewMatrixWithoutTrans() const;
 
 	bool isInsideSquare(const QPointF& point, float side = 2.0f);
 
@@ -126,16 +128,19 @@ private:
 	float viewRotate = 0.f;
 	float viewTransX = 0.f;
 	float viewTransY = 0.f;
+	float lastViewRotate = 0.f;
+	float lastViewTransX = 0.f;
+	float lastViewTransY = 0.f;
 
 	QMatrix4x4 proj;
 	QMatrix4x4 insProj;
 
-	ImageTransform LastImageTransform;
+	ImageTransform lastImageTransform;
 
-	QPointF LastMousePos;
-	QPointF LastMiddleButtonPos;
+	QPointF lastMousePos;
+	QPointF lastMiddleButtonPos;
 
-	MousePos LastMousePosType = MousePos::OutSide;
+	MousePos lastMousePosType = MousePos::OutSide;
 
 	QColor backGroundColor;
 

@@ -107,6 +107,9 @@ void PiYingGL::setViewToStandard()
 void PiYingGL::returnToStandard()
 {
 	viewScale = 1.0f;
+	viewRotate = 0.f;
+	viewTransX = 0.f;
+	viewTransY = 0.f;
 	update();
 }
 

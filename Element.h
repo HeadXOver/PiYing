@@ -55,6 +55,7 @@ struct ImageTexture {
     }
 
     inline void addScale(QPointF point) { scale.scale(point.x(), point.y()); }
+    inline void addScale(float x, float y) { scale.scale(x, y); }
 
     void setScale(float s) {
 		scale.setToIdentity();
