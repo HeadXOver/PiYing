@@ -101,9 +101,10 @@ void PiYingGL::choseBackGroundColor()
 void PiYingGL::setViewToStandard()
 {
 	for (ImageTexture& item : backGrounds) {
-		item.addScale(viewScale);
-		item.addRot(viewRotate);
-		item.addTrans(viewTransX, viewTransY);
+		QMatrix4x4 combined = getViewMatrix() * item.getMatrix();
+		item.transform.trans = getTrans(combined);
+		item.transform.rot = getRot(combined);
+		item.transform.scale = getScale(combined);
 	}
 
 	viewRotate = 0.f;
