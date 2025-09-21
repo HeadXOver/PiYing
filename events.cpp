@@ -12,10 +12,10 @@ void PiYingGL::mousePressEvent(QMouseEvent* event)
 		if (editMode == EditMode::BackGround) {
 			for (int i = backGrounds.size() - 1; i >= 0; i--) {
 				ImageTexture& item = backGrounds[i];
-				QPointF posV = getRaletiveToRect(QPointF(lastMousePos.x(), lastMousePos.y()), item);
+				QPointF posV = getRaletiveToRect(QPointF(lastMousePos.x(), lastMousePos.y()), item.transform);
 				if (isInsideSquare(posV)) {
-					lastMousePosType = getMousePosType(posV, item);
-					lastImageTransform = { item.trans, item.rot, item.scale };
+					lastMousePosType = getMousePosType(posV);
+					lastImageTransform = item.transform;
 					item.selected = true;
 					currentSelectedBackGround = i;
 					break;
@@ -61,7 +61,7 @@ void PiYingGL::mouseMoveEvent(QMouseEvent* event) {
 	}
 	else if (currentSelectedBackGround >= 0) {
 		ImageTexture& item = backGrounds[currentSelectedBackGround];
-		setCursor(getCursorShape(getMousePosType(getRaletiveToRect(mouse, item), item)));
+		setCursor(getCursorShape(getMousePosType(getRaletiveToRect(mouse, item.transform))));
 	}
 	else {
 		setCursor(Qt::CursorShape::ArrowCursor);

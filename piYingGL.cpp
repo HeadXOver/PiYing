@@ -54,7 +54,7 @@ void PiYingGL::paintBackgrounds()
 		glActiveTexture(GL_TEXTURE0);
 		it.tex->bind();
 		shaderProgram.setUniformValue("texture1", 0);
-		shaderProgram.setUniformValue("trc", getBgShaderMatrix(it));
+		shaderProgram.setUniformValue("trc", getBgShaderMatrix(it.transform));
 		shaderProgram.setUniformValue("selected", it.selected);
 
 		glBindVertexArray(VAO);
@@ -89,10 +89,8 @@ void PiYingGL::addBackground(const QString& imageName) {
 void PiYingGL::fullScreenBackGround()
 {
 	if (currentSelectedBackGround < 0) return;
-	backGrounds[currentSelectedBackGround].rot.setToIdentity();
-	backGrounds[currentSelectedBackGround].scale.setToIdentity();
-	backGrounds[currentSelectedBackGround].scale.scale(1 / viewScale);
-	backGrounds[currentSelectedBackGround].trans.setToIdentity();
+	backGrounds[currentSelectedBackGround].transform.reset();
+	backGrounds[currentSelectedBackGround].setScale(1 / viewScale);
 }
 
 void PiYingGL::choseBackGroundColor()
@@ -161,12 +159,7 @@ void PiYingGL::importBackground()
 	for (const QString& fileName : fileNames) addBackground(fileName);
 }
 
-bool PiYingGL::isInsideSquare(const QPointF& point, float side)
-{
-	return (point.x() >= -side / 2.f && point.x() <= side / 2.f && point.y() >= -side / 2.f && point.y() <= side / 2.f);
-}
-
-MousePos PiYingGL::getMousePosType(const QPointF& point, const ImageTexture& image)
+MousePos PiYingGL::getMousePosType(const QPointF& point) const
 {
 	if (isInsideSquare(point)) {
 		if (point.x() < -0.9f) {

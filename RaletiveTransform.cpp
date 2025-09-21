@@ -34,12 +34,7 @@ QMatrix4x4 PiYingGL::getViewMatrixWithoutTrans() const
 	return mViewTransform;
 }
 
-QMatrix4x4 PiYingGL::getBgShaderMatrix(const ImageTexture& image) const
+QMatrix4x4 PiYingGL::getBgShaderMatrix(const ImageTransform& transform) const
 {
-	return proj* getViewMatrix()* image.getMatrix()* insProj;
-}
-
-QMatrix4x4 PiYingGL::getBgShaderMatrix(const ImageTransform& image) const
-{
-	return proj * getViewMatrix() * image.getMatrix() * insProj;
+	return proj * getViewMatrix() * transform.getMatrix() * insProj;
 }

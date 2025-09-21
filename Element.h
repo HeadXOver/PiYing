@@ -12,6 +12,12 @@ struct ImageTransform {
         return scale.inverted() * rot.inverted() * trans.inverted();
     }
 
+    void reset() {
+        trans.setToIdentity();
+        rot.setToIdentity();
+        scale.setToIdentity();
+    }
+
     QMatrix4x4 trans;
     QMatrix4x4 rot;
     QMatrix4x4 scale;
@@ -24,9 +30,6 @@ struct ImageTexture {
         tex->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
         tex->setMagnificationFilter(QOpenGLTexture::Linear);
         tex->setWrapMode(QOpenGLTexture::Repeat);
-        trans.setToIdentity();
-        rot.setToIdentity();
-        scale.setToIdentity();
         //rot.rotate(30.f, 0.f, 0.f, 1.0f);
         //scale.scale(0.5f, 0.5f, 1.0f);
     }
@@ -36,52 +39,55 @@ struct ImageTexture {
     }
 
     void setTrans(float x, float y) {
-        trans.setToIdentity();
-        trans.translate(x, y);
+        transform.trans.setToIdentity();
+        transform.trans.translate(x, y);
     }
 
     void setTrans(QPointF point) {
-        trans.setToIdentity();
-        trans.translate(point.x(), point.y());
+        transform.trans.setToIdentity();
+        transform.trans.translate(point.x(), point.y());
     }
 
     inline void addTrans(QPointF point) { addTrans(point.x(), point.y()); }
-    inline void addTrans(float x, float y) { trans.translate(x, y); }
+    inline void addTrans(float x, float y) { transform.trans.translate(x, y); }
 
     void setRot(float r) {
-        rot.setToIdentity();
-        rot.rotate(r, 0.f, 0.f, 1.0f);
+        transform.rot.setToIdentity();
+        transform.rot.rotate(r, 0.f, 0.f, 1.0f);
     }
 
     void setScale(float x, float y) {
-        scale.setToIdentity();
-        scale.scale(x, y);
+        transform.scale.setToIdentity();
+        transform.scale.scale(x, y);
     }
 
     void setScale(QPointF point) {
-        scale.setToIdentity();
-        scale.scale(point.x(), point.y());
+        transform.scale.setToIdentity();
+        transform.scale.scale(point.x(), point.y());
     }
 
-    inline void addScale(QPointF point) { scale.scale(point.x(), point.y()); }
-    inline void addScale(float x, float y) { scale.scale(x, y); }
-    inline void addScale(float s) { scale.scale(s); }
+    inline void addScale(QPointF point) { transform.scale.scale(point.x(), point.y()); }
+    inline void addScale(float x, float y) { transform.scale.scale(x, y); }
+    inline void addScale(float s) { transform.scale.scale(s); }
 
     void setScale(float s) {
-		scale.setToIdentity();
-		scale.scale(s);
+        transform.scale.setToIdentity();
+        transform.scale.scale(s);
 	}
 
-    inline void addRot(float r) { rot.rotate(r, 0.0f, 0.0f, 1.0f); }
+    inline void addRot(float r) { transform.rot.rotate(r, 0.0f, 0.0f, 1.0f); }
 
     inline QMatrix4x4 getMatrix() const{
-        return trans * rot * scale;
+        return transform.getMatrix();
+    }
+
+    inline QMatrix4x4 getMatrixInvert() const {
+        return transform.getMatrixInvert();
     }
 
     QOpenGLTexture* tex;
-    QMatrix4x4 trans;
-    QMatrix4x4 rot;
-    QMatrix4x4 scale;
+
+    ImageTransform transform;
     
 	bool selected = false;
 };
