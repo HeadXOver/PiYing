@@ -54,7 +54,7 @@ void PiYingGL::paintBackgrounds()
 		glActiveTexture(GL_TEXTURE0);
 		it.tex->bind();
 		shaderProgram.setUniformValue("texture1", 0);
-		shaderProgram.setUniformValue("trc", proj * getViewMatrix() * it.trans * it.rot * it.scale * insProj);
+		shaderProgram.setUniformValue("trc", getBgShaderMatrix(it));
 		shaderProgram.setUniformValue("selected", it.selected);
 
 		glBindVertexArray(VAO);

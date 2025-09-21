@@ -33,3 +33,13 @@ QMatrix4x4 PiYingGL::getViewMatrixWithoutTrans() const
 	mViewTransform.rotate(viewRotate, 0.0f, 0.0f, 1.0f);
 	return mViewTransform;
 }
+
+QMatrix4x4 PiYingGL::getBgShaderMatrix(const ImageTexture& image) const
+{
+	return proj* getViewMatrix()* image.getMatrix()* insProj;
+}
+
+QMatrix4x4 PiYingGL::getBgShaderMatrix(const ImageTransform& image) const
+{
+	return proj * getViewMatrix() * image.getMatrix() * insProj;
+}

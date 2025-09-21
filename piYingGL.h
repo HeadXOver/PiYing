@@ -72,15 +72,9 @@ public:
 	void bgScaleControl(const QPointF& mouse, ImageTexture& image);
 	void viewRotationControl(const QPointF& mouse);
 
-	inline void raletiveToRect(QPointF& point, const ImageTexture& image)						{ point = getRaletiveToRect(point, image); }
-	inline void raletiveToRect(QPointF& point, const ImageTransform& transform)					{ point = getRaletiveToRect(point, transform); }
-	inline void raletiveToGlobal(QPointF& point, const ImageTexture& image)						{ point = getRaletiveToGlobal(point, image); }
-	inline void raletiveToGlobal(QPointF& point, const ImageTransform& transform)				{ point = getRaletiveToGlobal(point, transform); }
-
 	inline QPointF getRaletiveToRect(const QPointF& point, const ImageTexture& image) const			{ return getRaletiveToRect(point, { image.trans, image.rot,image.scale }); }
 	inline QPointF getRaletiveToRect(const QPointF& point, const ImageTransform& transform) const	{ return (proj * transform.getMatrixInvert() * getViewMatrixInvert() * insProj).map(point); }
-	inline QPointF getRaletiveToGlobal(const QPointF& point, const ImageTexture& image) const		{ return getRaletiveToGlobal(point, { image.trans, image.rot,image.scale }); }
-	inline QPointF getRaletiveToGlobal(const QPointF& point, const ImageTransform& transform) const	{ return (proj * getViewMatrix() * transform.getMatrix() * insProj).map(point); }
+	inline QPointF getRaletiveToGlobal(const QPointF& point, const ImageTexture& image) const		{ return getBgShaderMatrix(image).map(point); }
 
 	inline QPointF mapToGL(const QPointF& point) { return QPointF((point.x() / float(width())) * 2.0f - 1.0f, 1.0f - (point.y() / float(height())) * 2.0f); }
 
@@ -88,6 +82,8 @@ public:
 	QMatrix4x4 getViewMatrix() const;
 	QMatrix4x4 getViewMatrixInvertWithoutTrans() const;
 	QMatrix4x4 getViewMatrixWithoutTrans() const;
+	QMatrix4x4 getBgShaderMatrix(const ImageTexture& image) const;
+	QMatrix4x4 getBgShaderMatrix(const ImageTransform& image) const;
 
 	bool isInsideSquare(const QPointF& point, float side = 2.0f);
 

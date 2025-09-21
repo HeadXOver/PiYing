@@ -61,9 +61,7 @@ void PiYingGL::mouseMoveEvent(QMouseEvent* event) {
 	}
 	else if (currentSelectedBackGround >= 0) {
 		ImageTexture& item = backGrounds[currentSelectedBackGround];
-		QPointF mouse = mapToGL(event->position());
-		raletiveToRect(mouse, item);
-		setCursor(getCursorShape(getMousePosType(mouse, item)));
+		setCursor(getCursorShape(getMousePosType(getRaletiveToRect(mouse, item), item)));
 	}
 	else {
 		setCursor(Qt::CursorShape::ArrowCursor);
