@@ -4,6 +4,14 @@
 #include <QMatrix4x4>
 
 struct ImageTransform {
+    inline QMatrix4x4 getMatrix() const{
+        return trans * rot * scale;
+    }
+
+    inline QMatrix4x4 getMatrixInvert() const {
+        return scale.inverted() * rot.inverted() * trans.inverted();
+    }
+
     QMatrix4x4 trans;
     QMatrix4x4 rot;
     QMatrix4x4 scale;
@@ -37,7 +45,8 @@ struct ImageTexture {
         trans.translate(point.x(), point.y());
     }
 
-    inline void addTrans(QPointF point) { trans.translate(point.x(), point.y()); }
+    inline void addTrans(QPointF point) { addTrans(point.x(), point.y()); }
+    inline void addTrans(float x, float y) { trans.translate(x, y); }
 
     void setRot(float r) {
         rot.setToIdentity();
@@ -56,11 +65,18 @@ struct ImageTexture {
 
     inline void addScale(QPointF point) { scale.scale(point.x(), point.y()); }
     inline void addScale(float x, float y) { scale.scale(x, y); }
+    inline void addScale(float s) { scale.scale(s); }
 
     void setScale(float s) {
 		scale.setToIdentity();
 		scale.scale(s);
 	}
+
+    inline void addRot(float r) { rot.rotate(r, 0.0f, 0.0f, 1.0f); }
+
+    inline QMatrix4x4 getMatrix() const{
+        return trans * rot * scale;
+    }
 
     QOpenGLTexture* tex;
     QMatrix4x4 trans;

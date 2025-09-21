@@ -62,7 +62,7 @@ protected:
 	void contextMenuEvent(QContextMenuEvent* e) override;
 
 public:
-	void addBackground(QString& imageName);
+	void addBackground(const QString& imageName);
 	void choseBackgroundColor();
 	void changeRatio(float ratio);
 	void importBackground();
@@ -70,22 +70,17 @@ public:
 	void bgRotationControl(const QPointF& mouse, ImageTexture& image);
 	void bgTranslateControl(const QPointF& mouse, ImageTexture& image);
 	void bgScaleControl(const QPointF& mouse, ImageTexture& image);
+	void viewRotationControl(const QPointF& mouse);
 
 	inline void raletiveToRect(QPointF& point, const ImageTexture& image)						{ point = getRaletiveToRect(point, image); }
 	inline void raletiveToRect(QPointF& point, const ImageTransform& transform)					{ point = getRaletiveToRect(point, transform); }
-	inline void raletiveToRectWithoutTrans(QPointF& point, const ImageTransform& transform)		{ point = getRaletiveToRectWithoutTrans(point, transform); }
 	inline void raletiveToGlobal(QPointF& point, const ImageTexture& image)						{ point = getRaletiveToGlobal(point, image); }
 	inline void raletiveToGlobal(QPointF& point, const ImageTransform& transform)				{ point = getRaletiveToGlobal(point, transform); }
-	inline void raletiveToGlobalWithoutTrans(QPointF& point, const ImageTransform& transform)	{ point = getRaletiveToGlobalWithoutTrans(point, transform); }
 
-	inline QPointF getRaletiveToRect(const QPointF& point, const ImageTexture& image) const							{ return getRaletiveToRect(point, { image.trans, image.rot,image.scale }); }
-	inline QPointF getRaletiveToRect(const QPointF& point, const ImageTransform& transform) const					{ return (proj * transform.scale.inverted() * transform.rot.inverted() * transform.trans.inverted() * getViewMatrixInvert() * insProj).map(point); }
-	inline QPointF getRaletiveToRectWithoutTrans(const QPointF& point, const ImageTransform& transform) const		{ return (proj * transform.scale.inverted() * transform.rot.inverted() * getViewMatrixInvert() * insProj).map(point); }
-	inline QPointF getRaletiveToRectWithoutTransProj(const QPointF& point, const ImageTransform& transform) const	{ return (transform.scale.inverted() * transform.rot.inverted() * getViewMatrixInvert() * insProj).map(point); }
-	inline QPointF getRaletiveToGlobal(const QPointF& point, const ImageTexture& image) const						{ return getRaletiveToGlobal(point, { image.trans, image.rot,image.scale }); }
-	inline QPointF getRaletiveToGlobal(const QPointF& point, const ImageTransform& transform) const					{ return (proj * getViewMatrix() * transform.trans * transform.rot * transform.scale * insProj).map(point); }
-	inline QPointF getRaletiveToGlobalWithoutTrans(const QPointF& point, const ImageTransform& transform) const		{ return (proj * getViewMatrix() * transform.rot * transform.scale * insProj).map(point); }
-	inline QPointF getRaletiveToGlobalWithoutTransProj(const QPointF& point, const ImageTransform& transform) const	{ return (getViewMatrix() * transform.rot * transform.scale * insProj).map(point); }
+	inline QPointF getRaletiveToRect(const QPointF& point, const ImageTexture& image) const			{ return getRaletiveToRect(point, { image.trans, image.rot,image.scale }); }
+	inline QPointF getRaletiveToRect(const QPointF& point, const ImageTransform& transform) const	{ return (proj * transform.getMatrixInvert() * getViewMatrixInvert() * insProj).map(point); }
+	inline QPointF getRaletiveToGlobal(const QPointF& point, const ImageTexture& image) const		{ return getRaletiveToGlobal(point, { image.trans, image.rot,image.scale }); }
+	inline QPointF getRaletiveToGlobal(const QPointF& point, const ImageTransform& transform) const	{ return (proj * getViewMatrix() * transform.getMatrix() * insProj).map(point); }
 
 	inline QPointF mapToGL(const QPointF& point) { return QPointF((point.x() / float(width())) * 2.0f - 1.0f, 1.0f - (point.y() / float(height())) * 2.0f); }
 

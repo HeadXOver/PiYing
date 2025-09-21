@@ -50,3 +50,17 @@ void PiYingGL::bgScaleControl(const QPointF& mouse, ImageTexture& image)
 	pAspect.setY(PN[0] * (1.f - pAspect.y()));
 	image.addTrans((lastImageTransform.rot * lastImageTransform.scale * insProj).map(pAspect));
 }
+
+void PiYingGL::viewRotationControl(const QPointF& mouse)
+{
+	setCursor(Qt::CursorShape::ClosedHandCursor);
+	float r = (atan2f(mouse.y(), mouse.x()) - atan2f(lastMiddleButtonPos.y(), lastMiddleButtonPos.x())) * 180.f / 3.1415926f;
+	viewRotate = lastViewRotate + r;
+
+	QMatrix4x4 toTrans;
+	toTrans.rotate(r, 0.f, 0.0f, 1.0f);
+	QPointF viewTrans(lastViewTransX, lastViewTransY);
+	QPointF rotatedTrans = toTrans.map(viewTrans) - viewTrans;
+	viewTransX = lastViewTransX + rotatedTrans.x();
+	viewTransY = lastViewTransY + rotatedTrans.y();
+}

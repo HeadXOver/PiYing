@@ -76,7 +76,7 @@ void PiYingGL::paintBackgrounds()
 	}
 }
 
-void PiYingGL::addBackground(QString& imageName) {
+void PiYingGL::addBackground(const QString& imageName) {
 	QImage img;
 	if (!img.load(imageName)) {
 		QMessageBox::warning(this, "Warning", "Failed to load image: " + imageName);
@@ -102,6 +102,16 @@ void PiYingGL::choseBackGroundColor()
 
 void PiYingGL::setViewToStandard()
 {
+	for (ImageTexture& item : backGrounds) {
+		item.addScale(viewScale);
+		item.addRot(viewRotate);
+		item.addTrans(viewTransX, viewTransY);
+	}
+
+	viewRotate = 0.f;
+	viewScale = 1.f;
+	viewTransX = 0.f;
+	viewTransY = 0.f;
 }
 
 void PiYingGL::returnToStandard()
@@ -146,11 +156,9 @@ void PiYingGL::changeRatio(float ratio)
 
 void PiYingGL::importBackground()
 {
-	QString fileName = QFileDialog::getOpenFileName(this, "选择背景图", ".", "Images (*.png *.xpm *.jpg)");
-	if (fileName.isEmpty()) {
-		return;
-	}
-	addBackground(fileName);
+	QStringList fileNames = QFileDialog::getOpenFileNames(this, "选择背景图", ".", "Images (*.png *.xpm *.jpg)");
+
+	for (const QString& fileName : fileNames) addBackground(fileName);
 }
 
 bool PiYingGL::isInsideSquare(const QPointF& point, float side)

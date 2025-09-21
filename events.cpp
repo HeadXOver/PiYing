@@ -2,7 +2,7 @@
 
 void PiYingGL::mousePressEvent(QMouseEvent* event)
 {
-	if (event->button() == Qt::LeftButton) {
+	if (event->button() == Qt::LeftButton || event->button() == Qt::RightButton) {
 		lastMousePos = mapToGL(event->position());
 
 		currentSelectedBackGround = -1;
@@ -51,18 +51,7 @@ void PiYingGL::mouseMoveEvent(QMouseEvent* event) {
 		}
 	}
 	else if (event->buttons() == Qt::MiddleButton) {
-		if (KeyboardStateWin::isAltHeld()) {
-			setCursor(Qt::CursorShape::ClosedHandCursor);
-			float r = (atan2f(mouse.y(), mouse.x()) - atan2f(lastMiddleButtonPos.y(), lastMiddleButtonPos.x())) * 180.f / 3.1415926f;
-			viewRotate = lastViewRotate + r;
-
-			QMatrix4x4 toTrans;
-			toTrans.rotate(r, 0.f, 0.0f, 1.0f);
-			QPointF viewTrans(lastViewTransX, lastViewTransY);
-			QPointF rotatedTrans = toTrans.map(viewTrans) - viewTrans;
-			viewTransX = lastViewTransX + rotatedTrans.x();
-			viewTransY = lastViewTransY + rotatedTrans.y();
-		}
+		if (KeyboardStateWin::isAltHeld()) viewRotationControl(mouse);
 		else {
 			QPointF toTrans = insProj.map(mouse - lastMiddleButtonPos);
 			viewTransX = lastViewTransX + toTrans.x();
