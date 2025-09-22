@@ -53,9 +53,7 @@ private:
 	void paintBackgrounds();
 
 private slots:
-	void importBackGround();
 	void fullScreenBackGround();
-	void choseBackGroundColor();
 	void setViewToStandard();
 	void returnToStandard();
 	void bgSetTransform();

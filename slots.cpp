@@ -7,11 +7,6 @@ void PiYingGL::fullScreenBackGround()
 	backGrounds[currentSelectedBackGround].setScale(1 / viewScale.value());
 }
 
-void PiYingGL::choseBackGroundColor()
-{
-	choseBackgroundColor();
-}
-
 void PiYingGL::setViewToStandard()
 {
 	for (ImageTexture& item : backGrounds) {
@@ -104,6 +99,3 @@ void PiYingGL::deleteAllBg()
 	}
 }
 
-void PiYingGL::importBackGround() {
-	importBackground();
-}

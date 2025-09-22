@@ -28,15 +28,15 @@ PiYingGL::PiYingGL(PiYing* parent) : QOpenGLWidget(parent), parent(parent)
 	labelViewTransY = new QLabel("0", this);
 	labelViewRot = new QLabel("0", this);
 
-	connect(actionAddBackGround,		SIGNAL(triggered()), this, SLOT(importBackGround()));
 	connect(actionFullScreenBackGround, SIGNAL(triggered()), this, SLOT(fullScreenBackGround()));
-	connect(actionChoseBackGroundColor, SIGNAL(triggered()), this, SLOT(choseBackGroundColor()));
 	connect(actionSetViewToStandard,	SIGNAL(triggered()), this, SLOT(setViewToStandard()));
 	connect(actionReturnToStandard,		SIGNAL(triggered()), this, SLOT(returnToStandard()));
 	connect(actionDeleteBg,				SIGNAL(triggered()), this, SLOT(deleteBg()));
 	connect(actionDeleteAllBg,			SIGNAL(triggered()), this, SLOT(deleteAllBg()));
 	connect(actionAgainstBg,			SIGNAL(triggered()), this, SLOT(againstBg()));
 	connect(actionBgSetTransform,		SIGNAL(triggered()), this, SLOT(bgSetTransform()));
+	connect(actionAddBackGround,		&QAction::triggered, this, [this]() {importBackground(); });
+	connect(actionChoseBackGroundColor, &QAction::triggered, this, [this]() {choseBackgroundColor(); });
 	connect(&viewScale,		&ViewData::valueChanged, this, [&](float v) {labelViewScale->setText(tr("%1  ").arg(v)); });
 	connect(&viewTransX,	&ViewData::valueChanged, this, [&](float v) {labelViewTransX->setText(tr("%1  ").arg(v)); });
 	connect(&viewTransY,	&ViewData::valueChanged, this, [&](float v) {labelViewTransY->setText(tr("%1  ").arg(v)); });
