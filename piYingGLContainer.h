@@ -7,7 +7,7 @@ class PiYingGLContainer : public QWidget
 {
     Q_OBJECT
 public:
-    PiYingGLContainer(QWidget* content, double w, double h, QWidget* parent = nullptr);
+    PiYingGLContainer(QWidget* content, double ratio, QWidget* parent = nullptr);
 
     void setRatio(double r);
 

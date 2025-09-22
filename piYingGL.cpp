@@ -22,6 +22,7 @@ PiYingGL::PiYingGL(PiYing* parent) : QOpenGLWidget(parent), parent(parent)
 	actionDeleteAllBg = new QAction("删除所有背景图");
 	actionBgSetTransform = new QAction("设置变换...");
 	actionAgainstBg = new QAction("将摄像机对准图片");
+	actionReturnbgTransform = new QAction("还原变换");
 
 	labelViewScale = new QLabel("1", this);
 	labelViewTransX = new QLabel("0", this);
@@ -35,6 +36,7 @@ PiYingGL::PiYingGL(PiYing* parent) : QOpenGLWidget(parent), parent(parent)
 	connect(actionDeleteAllBg,			SIGNAL(triggered()), this, SLOT(deleteAllBg()));
 	connect(actionAgainstBg,			SIGNAL(triggered()), this, SLOT(againstBg()));
 	connect(actionBgSetTransform,		SIGNAL(triggered()), this, SLOT(bgSetTransform()));
+	connect(actionReturnbgTransform,	SIGNAL(triggered()), this, SLOT(returnbgTransform()));
 	connect(actionAddBackGround,		&QAction::triggered, this, [this]() {importBackground(); });
 	connect(actionChoseBackGroundColor, &QAction::triggered, this, [this]() {choseBackgroundColor(); });
 	connect(&viewScale,		&ViewData::valueChanged, this, [&](float v) {labelViewScale->setText(tr("%1  ").arg(v)); });
@@ -104,8 +106,8 @@ void PiYingGL::paintCharacters()
 	chShaderProgram.bind();
 	glActiveTexture(GL_TEXTURE0);
 
-	glBufferData(GL_ARRAY_BUFFER, vRECTANGLE_VERT.size() * sizeof(float), vRECTANGLE_VERT.data(), GL_DYNAMIC_DRAW);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, vRECTANGLE_INDECES.size() * sizeof(float), vRECTANGLE_INDECES.data(), GL_DYNAMIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, characterVerts.size() * sizeof(float), characterVerts.data(), GL_DYNAMIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, characterIndices.size() * sizeof(float), characterIndices.data(), GL_DYNAMIC_DRAW);
 
 	// position attribute
 	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);

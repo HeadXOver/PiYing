@@ -64,11 +64,6 @@ void PiYingGL::paintGL() {
 	glClear(GL_COLOR_BUFFER_BIT);
 	paintBackgrounds();
 	paintCharacters();
-	if (editMode == EditMode::BackGround) {
-		QPainter p(this);
-		p.setPen(framePen);
-		p.drawRect(rect());
-	}
 }
 
 void PiYingGL::resizeGL(int w, int h) {

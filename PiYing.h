@@ -1,6 +1,8 @@
 #pragma once
 
 #include <QtWidgets/QMainWindow>
+#include <QToolBar>
+#include <QComboBox>
 #include "ui_PiYing.h"
 
 #include "cusMode.h"
@@ -20,15 +22,13 @@ public:
     PiYing(QWidget *parent = nullptr);
     ~PiYing();
 
-protected:
-	void keyPressEvent(QKeyEvent* event) override;
-
 private slots:
 	void importCharacter();
 	void importBackGround();
     void exportCurrentFrame();
 	void askScreenScale();
 	void askDefaultColor();
+	void onModeChanged(int mode);
 
 private:
     Ui::PiYingClass ui;
@@ -56,6 +56,15 @@ private:
 
 	// OpenGL widget
     PiYingGL* piYingGL = nullptr;
+
+	QListWidget* imageList = nullptr;
+
+	QSplitter* splitListOpenGL;
+	QSplitter* splitTimelineOpenGL;
+
+	QWidget* timeLine;
+
+	QComboBox* modeBox;
 
 public:
 	PiYingGLContainer* piYingGLContainer = nullptr;

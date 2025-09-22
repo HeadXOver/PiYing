@@ -104,19 +104,6 @@ static const unsigned int RECTANGLE_INDECES[] = {
     1, 2, 3  // second triangle
 };
 
-static std::vector<float> vRECTANGLE_VERT{
-    // positions
-     1.0f,  1.0f,
-     1.0f, -1.0f,
-    -1.0f, -1.0f,
-    -1.0f,  1.0f
-};
-
-static std::vector<unsigned int> vRECTANGLE_INDECES{
-    0, 1, 3, // first triangle
-    1, 2, 3  // second triangle
-};
-
 static QMatrix4x4 getTrans(const QMatrix4x4& M) {
     QMatrix4x4 trans;
     trans.translate(M(0, 3), M(1, 3));

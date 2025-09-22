@@ -15,6 +15,8 @@
 #include <QStatusBar>
 #include <QLabel>
 #include <QList>
+#include <QListWidget>
+#include <QSplitter>
 
 #include "Element.h"
 #include "KeyboardStateWin.h"
@@ -57,6 +59,7 @@ private slots:
 	void fullScreenBackGround();
 	void setViewToStandard();
 	void returnToStandard();
+	void returnbgTransform();
 	void bgSetTransform();
 	void againstBg();
 	void deleteBg();
@@ -112,6 +115,7 @@ public:
 	QAction* actionChoseBackGroundColor;
 	QAction* actionSetViewToStandard;
 	QAction* actionReturnToStandard;
+	QAction* actionReturnbgTransform;
 	QAction* actionDeleteBg;
 	QAction* actionDeleteAllBg;
 	QAction* actionBgSetTransform;
@@ -162,5 +166,8 @@ private:
 	QPen framePen = QPen(Qt::red);
 
 	PiYing* parent;
+
+	std::vector<float> characterVerts;
+	std::vector<unsigned int> characterIndices;
 };
 

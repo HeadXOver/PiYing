@@ -31,6 +31,16 @@ void PiYingGL::returnToStandard()
 	update();
 }
 
+void PiYingGL::returnbgTransform()
+{
+	if (currentSelectedBackGround >= 0) {
+		ImageTransform& transform = backGrounds[currentSelectedBackGround].transform;
+		transform.trans.setToIdentity();
+		transform.rot.setToIdentity();
+		transform.scale.setToIdentity();
+	}
+}
+
 void PiYingGL::bgSetTransform()
 {
 	if (currentSelectedBackGround >= 0) {
