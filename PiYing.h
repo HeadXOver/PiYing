@@ -57,8 +57,6 @@ private:
 	// OpenGL widget
     PiYingGL* piYingGL = nullptr;
 
-	QListWidget* imageList = nullptr;
-
 	QSplitter* splitListOpenGL;
 	QSplitter* splitTimelineOpenGL;
 
@@ -68,5 +66,7 @@ private:
 
 public:
 	PiYingGLContainer* piYingGLContainer = nullptr;
+
+	QListWidget* bgImageList = nullptr;
 };
 

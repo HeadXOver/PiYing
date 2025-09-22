@@ -16,10 +16,7 @@ void PiYingGL::setViewToStandard()
 		item.transform.scale = getScale(combined);
 	}
 
-	viewRotate.setValue(0.f);
-	viewScale.setValue(1.f);
-	viewTransX.setValue(0.f);
-	viewTransY.setValue(0.f);
+	returnToStandard();
 }
 
 void PiYingGL::returnToStandard()
@@ -90,6 +87,7 @@ void PiYingGL::deleteBg()
 	if (ret == QMessageBox::Yes) {
 		backGrounds.removeAt(currentSelectedBackGround);
 		currentSelectedBackGround = -1;
+		update();
 	}
 }
 
@@ -106,6 +104,7 @@ void PiYingGL::deleteAllBg()
 	if (ret == QMessageBox::Yes) {
 		backGrounds.clear();
 		currentSelectedBackGround = -1;
+		update();
 	}
 }
 

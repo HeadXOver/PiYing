@@ -56,7 +56,7 @@ PiYing::PiYing(QWidget* parent) : QMainWindow(parent) {
     statusBar()->addPermanentWidget(new QLabel(tr("视图缩放"), this));
     statusBar()->addPermanentWidget(piYingGL->labelViewScale);
 
-    imageList = new QListWidget(this);
+    bgImageList = new QListWidget(this);
     timeLine = new QWidget(this);
 
     splitTimelineOpenGL = new QSplitter(Qt::Vertical, this);
@@ -64,14 +64,14 @@ PiYing::PiYing(QWidget* parent) : QMainWindow(parent) {
 
     splitTimelineOpenGL->addWidget(piYingGLContainer);
     splitTimelineOpenGL->addWidget(timeLine);
-    splitListOpenGL->addWidget(imageList);
+    splitListOpenGL->addWidget(bgImageList);
     splitListOpenGL->addWidget(splitTimelineOpenGL);
     splitTimelineOpenGL->setStretchFactor(0, 1);
     splitTimelineOpenGL->setStretchFactor(1, 2);
     splitListOpenGL->setStretchFactor(0, 1);
     splitListOpenGL->setStretchFactor(1, 3);
 
-    imageList->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    bgImageList->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     piYingGL->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     timeLine->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 

@@ -138,6 +138,8 @@ void PiYingGL::addBackground(const QString& imageName) {
 		return;
 	}
 	backGrounds.append(img);
+	parent->bgImageList->addItem(imageName);
+
 	update();
 }
 
@@ -199,6 +201,7 @@ void PiYingGL::importBackground()
 			return;
 		}
 		backGrounds.append(img);
+		parent->bgImageList->addItem(fileNames[0]);
 
 		int ret = QMessageBox::question(
 			this,
