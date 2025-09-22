@@ -8,7 +8,6 @@ void PiYingGL::mousePressEvent(QMouseEvent* event)
 		currentSelectedBackGround = -1;
 		lastMousePosType = MousePos::OutSide;
 
-		for (ImageTexture& item : backGrounds)  item.selected = false;
 		if (editMode == EditMode::BackGround) {
 			for (int i = backGrounds.size() - 1; i >= 0; i--) {
 				ImageTexture& item = backGrounds[i];
@@ -16,7 +15,6 @@ void PiYingGL::mousePressEvent(QMouseEvent* event)
 				if (isInsideSquare(posV)) {
 					lastMousePosType = getMousePosType(posV);
 					lastImageTransform = item.transform;
-					item.selected = true;
 					currentSelectedBackGround = i;
 					break;
 				}
@@ -90,10 +88,12 @@ void PiYingGL::contextMenuEvent(QContextMenuEvent* e)
 		menu.addAction(actionAddBackGround);
 		menu.addAction(actionChoseBackGroundColor);
 		menu.addAction(actionSetViewToStandard);
+		menu.addAction(actionDeleteAllBg);
 		menu.addAction(actionReturnToStandard);
 	}
 	else {
 		menu.addAction(actionFullScreenBackGround);
+		menu.addAction(actionDeleteBg);
 	}
 	menu.exec(e->globalPos());
 	e->accept();

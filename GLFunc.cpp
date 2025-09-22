@@ -2,8 +2,10 @@
 
 void PiYingGL::initializeGL()
 {
-	aspect = width() / float(height());
 	initializeOpenGLFunctions();
+
+	aspect = width() / float(height());
+	updateProjMatrix();
 
 	glGenVertexArrays(1, &VAO);
 	glGenBuffers(1, &VBO);
@@ -15,10 +17,12 @@ void PiYingGL::initializeGL()
 
 	/////////////////////////////////////////////
 
+	glBufferData(GL_ARRAY_BUFFER, sizeof(RECTANGLE_VERT), RECTANGLE_VERT, GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(RECTANGLE_INDECES), RECTANGLE_INDECES, GL_STATIC_DRAW);
+
 	shaderProgram.addShaderFromSourceFile(QOpenGLShader::Vertex, ":/PiYing/bgshapes.vert");
 	shaderProgram.addShaderFromSourceFile(QOpenGLShader::Fragment, ":/PiYing/bgshapes.frag");
 	shaderProgram.link();
-	shaderProgram.bind();
 
 	/////////////////////////////////////////////
 
@@ -31,6 +35,7 @@ void PiYingGL::initializeGL()
 }
 
 void PiYingGL::paintGL() {
+	glClear(GL_COLOR_BUFFER_BIT);
 	paintBackgrounds();
 	if (editMode == EditMode::BackGround) {
 		QPainter p(this);

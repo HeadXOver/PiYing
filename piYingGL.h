@@ -50,6 +50,8 @@ private slots:
 	void choseBackGroundColor();
 	void setViewToStandard();
 	void returnToStandard();
+	void deleteBg();
+	void deleteAllBg();
 
 protected:
 	void initializeGL() override;
@@ -65,6 +67,7 @@ public:
 	void addBackground(const QString& imageName);
 	void choseBackgroundColor();
 	void changeRatio(float ratio);
+	void updateProjMatrix();
 	void importBackground();
 	void currentUpdate();
 	void bgRotationControl(const QPointF& mouse, ImageTexture& image);
@@ -98,6 +101,8 @@ public:
 	QAction* actionChoseBackGroundColor;
 	QAction* actionSetViewToStandard;
 	QAction* actionReturnToStandard;
+	QAction* actionDeleteBg;
+	QAction* actionDeleteAllBg;
 
 	EditMode editMode = EditMode::Default;
 

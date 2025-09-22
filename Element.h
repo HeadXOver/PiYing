@@ -88,8 +88,6 @@ struct ImageTexture {
     QOpenGLTexture* tex;
 
     ImageTransform transform;
-    
-	bool selected = false;
 };
 
 static const float RECTANGLE_VERT[] = {

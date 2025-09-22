@@ -5,7 +5,7 @@ out vec4 FragColor;
 in vec2 TexCoord;
 
 uniform sampler2D texture1;
-uniform bool selected;
+uniform bool selected = false;
 
 void main()
 {

@@ -17,12 +17,16 @@ PiYingGL::PiYingGL(QWidget* parent) : QOpenGLWidget(parent)
 	actionChoseBackGroundColor = new QAction("选择幕布底色", this);
 	actionSetViewToStandard = new QAction("将视图设为标准幕布", this);
 	actionReturnToStandard = new QAction("返回标准幕布视图", this);
+	actionDeleteBg = new QAction("删除当前背景图");
+	actionDeleteAllBg = new QAction("删除所有背景图");
 
 	connect(actionAddBackGround,		SIGNAL(triggered()), this, SLOT(importBackGround()));
 	connect(actionFullScreenBackGround, SIGNAL(triggered()), this, SLOT(fullScreenBackGround()));
 	connect(actionChoseBackGroundColor, SIGNAL(triggered()), this, SLOT(choseBackGroundColor()));
 	connect(actionSetViewToStandard,	SIGNAL(triggered()), this, SLOT(setViewToStandard()));
 	connect(actionReturnToStandard,		SIGNAL(triggered()), this, SLOT(returnToStandard()));
+	connect(actionDeleteBg,				SIGNAL(triggered()), this, SLOT(deleteBg()));
+	connect(actionDeleteAllBg,			SIGNAL(triggered()), this, SLOT(deleteAllBg()));
 
 	setMouseTracking(true);
 
@@ -48,32 +52,35 @@ PiYingGL::~PiYingGL()
 
 void PiYingGL::paintBackgrounds()
 {
-	glClear(GL_COLOR_BUFFER_BIT);
-	for (ImageTexture& it : backGrounds) {
-		shaderProgram.bind();
-		glActiveTexture(GL_TEXTURE0);
+	glBindVertexArray(VAO);
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+	shaderProgram.bind();
+	glActiveTexture(GL_TEXTURE0);
+
+	// position attribute
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(0);
+
+	// texture coord attribute
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+	glEnableVertexAttribArray(1);
+
+	for (int i = 0; i < backGrounds.size(); i++) {
+		ImageTexture& it = backGrounds[i];
 		it.tex->bind();
+
 		shaderProgram.setUniformValue("texture1", 0);
 		shaderProgram.setUniformValue("trc", getBgShaderMatrix(it.transform));
-		shaderProgram.setUniformValue("selected", it.selected);
-
-		glBindVertexArray(VAO);
-		glBindBuffer(GL_ARRAY_BUFFER, VBO);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(RECTANGLE_VERT), RECTANGLE_VERT, GL_STATIC_DRAW);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(RECTANGLE_INDECES), RECTANGLE_INDECES, GL_STATIC_DRAW);
-
-		// position attribute
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
-		glEnableVertexAttribArray(0);
-
-		// texture coord attribute
-		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
-		glEnableVertexAttribArray(1);
+		if (i == currentSelectedBackGround)shaderProgram.setUniformValue("selected", true);
+		else shaderProgram.setUniformValue("selected", false);
 
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-		glBindVertexArray(0);
 	}
+
+	glBindVertexArray(0);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
 void PiYingGL::addBackground(const QString& imageName) {
@@ -83,42 +90,6 @@ void PiYingGL::addBackground(const QString& imageName) {
 		return;
 	}
 	backGrounds.append(img);
-	update();
-}
-
-void PiYingGL::fullScreenBackGround()
-{
-	if (currentSelectedBackGround < 0) return;
-	backGrounds[currentSelectedBackGround].transform.reset();
-	backGrounds[currentSelectedBackGround].setScale(1 / viewScale);
-}
-
-void PiYingGL::choseBackGroundColor()
-{
-	choseBackgroundColor();
-}
-
-void PiYingGL::setViewToStandard()
-{
-	for (ImageTexture& item : backGrounds) {
-		QMatrix4x4 combined = getViewMatrix() * item.getMatrix();
-		item.transform.trans = getTrans(combined);
-		item.transform.rot = getRot(combined);
-		item.transform.scale = getScale(combined);
-	}
-
-	viewRotate = 0.f;
-	viewScale = 1.f;
-	viewTransX = 0.f;
-	viewTransY = 0.f;
-}
-
-void PiYingGL::returnToStandard()
-{
-	viewScale = 1.0f;
-	viewRotate = 0.f;
-	viewTransX = 0.f;
-	viewTransY = 0.f;
 	update();
 }
 
@@ -137,6 +108,12 @@ void PiYingGL::choseBackgroundColor()
 void PiYingGL::changeRatio(float ratio)
 {
 	aspect = ratio;
+	updateProjMatrix();
+	update();
+}
+
+void PiYingGL::updateProjMatrix()
+{
 	if (aspect > 1.0f) {
 		proj.setToIdentity();
 		proj.ortho(-aspect, aspect, -1, 1, -1, 1);
@@ -149,8 +126,6 @@ void PiYingGL::changeRatio(float ratio)
 		insProj.setToIdentity();
 		insProj.ortho(-1, 1, aspect, aspect, -1, 1);
 	}
-
-	update();
 }
 
 void PiYingGL::importBackground()
@@ -194,8 +169,4 @@ Qt::CursorShape PiYingGL::getCursorShape(const MousePos& pos)
 	case MousePos::Inside:		return Qt::OpenHandCursor;
 	default:					return Qt::ArrowCursor;
 	}
-}
-
-void PiYingGL::importBackGround() {
-	importBackground();
 }
