@@ -56,6 +56,8 @@ private:
 
 	// OpenGL widget
     PiYingGL* piYingGL = nullptr;
+
+public:
 	PiYingGLContainer* piYingGLContainer = nullptr;
 };
 

@@ -20,6 +20,8 @@
 #include "KeyboardStateWin.h"
 #include "ViewData.h"
 
+class PiYing;
+
 enum class MousePos {
 	Inside,
 	LeftTop,
@@ -43,7 +45,7 @@ class PiYingGL : public QOpenGLWidget, QOpenGLFunctions_3_3_Core
 	Q_OBJECT
 
 public:
-	explicit PiYingGL(QWidget* parent = nullptr);
+	explicit PiYingGL(PiYing* parent = nullptr);
 	~PiYingGL();
 
 private:
@@ -150,5 +152,7 @@ private:
 	QColor backGroundColor;
 
 	QPen framePen = QPen(Qt::red);
+
+	PiYing* parent;
 };
 

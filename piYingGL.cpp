@@ -1,8 +1,9 @@
 ﻿#include "piYingGL.h"
+#include "piYing.h"
 
 #include <QColorDialog>
 
-PiYingGL::PiYingGL(QWidget* parent) : QOpenGLWidget(parent)
+PiYingGL::PiYingGL(PiYing* parent) : QOpenGLWidget(parent), parent(parent)
 {
 	setAutoFillBackground(false);
 
@@ -141,7 +142,32 @@ void PiYingGL::importBackground()
 {
 	QStringList fileNames = QFileDialog::getOpenFileNames(this, "选择背景图", ".", "Images (*.png *.xpm *.jpg)");
 
-	for (const QString& fileName : fileNames) addBackground(fileName);
+	if (fileNames.size() == 1) {
+		QImage img;
+		if (!img.load(fileNames[0])) {
+			QMessageBox::warning(this, "Warning", "Failed to load image: " + fileNames[0]);
+			return;
+		}
+		backGrounds.append(img);
+
+		int ret = QMessageBox::question(
+			this,
+			tr("提示"),
+			tr("是否使用图片比例？"),
+			QMessageBox::Yes | QMessageBox::No,
+			QMessageBox::Yes
+		);
+
+		if (ret == QMessageBox::Yes) {
+			float ratio = img.width() / (float)img.height();
+			parent->piYingGLContainer->setRatio(ratio);
+			parent->piYingGLContainer->update();
+			changeRatio(ratio);
+		}
+
+		update();
+	}
+	else for (const QString& fileName : fileNames) addBackground(fileName);
 }
 
 MousePos PiYingGL::getMousePosType(const QPointF& point) const
