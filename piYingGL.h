@@ -3,14 +3,17 @@
 #include <QOpenGLWidget.h>
 #include <qopenglfunctions_3_3_Core>
 #include <QOpenGLShaderProgram.h>
+
+#include <QMenu>
+#include <QMenuBar>
 #include <QAction>
 #include <QFileDialog>
 #include <QFile>
-#include <QMenu>
-#include <QMenuBar>
 #include <QPainter>
 #include <QMessageBox>
 #include <QMouseEvent>
+#include <QStatusBar>
+#include <QLabel>
 
 #include "Element.h"
 #include "KeyboardStateWin.h"

@@ -1,7 +1,5 @@
 #include "piYingGL.h"
 
-#include <QMessageBox>
-
 QMatrix4x4 PiYingGL::getViewMatrixInvert() const {
 	QMatrix4x4 mViewTransform;
 	mViewTransform.rotate(-viewRotate, 0.0f, 0.0f, 1.0f);

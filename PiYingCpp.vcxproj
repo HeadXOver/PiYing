@@ -97,10 +97,10 @@
     <ClCompile Include="events.cpp" />
     <ClCompile Include="piYingGL.cpp" />
     <ClCompile Include="piYingGLContainer.cpp" />
-    <ClCompile Include="RaletiveTransform.cpp" />
     <ClCompile Include="RatioDialog.cpp" />
     <ClCompile Include="GLFunc.cpp" />
     <ClCompile Include="slots.cpp" />
+    <ClCompile Include="RaletiveTransform.cpp" />
     <QtRcc Include="PiYing.qrc" />
     <QtUic Include="PiYing.ui" />
     <QtMoc Include="PiYing.h" />
@@ -112,6 +112,7 @@
     <ClInclude Include="Element.h" />
     <ClInclude Include="KeyboardStateWin.h" />
     <ClInclude Include="Layer.h" />
+    <QtMoc Include="ViewData.h" />
     <QtMoc Include="piYingGLContainer.h" />
     <QtMoc Include="RatioDialog.h" />
     <QtMoc Include="piYingGL.h" />

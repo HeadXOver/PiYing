@@ -38,8 +38,18 @@ void PiYingGL::returnToStandard()
 
 void PiYingGL::deleteBg()
 {
-	backGrounds.removeAt(currentSelectedBackGround);
-	currentSelectedBackGround = -1;
+	int ret = QMessageBox::question(
+		this,
+		tr("提示"),
+		tr("删除背景图？"),
+		QMessageBox::Yes | QMessageBox::No,
+		QMessageBox::No
+	);
+
+	if (ret == QMessageBox::Yes) {
+		backGrounds.removeAt(currentSelectedBackGround);
+		currentSelectedBackGround = -1;
+	}
 }
 
 void PiYingGL::deleteAllBg()

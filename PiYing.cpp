@@ -48,6 +48,15 @@ PiYing::PiYing(QWidget* parent) : QMainWindow(parent) {
 	float ratio = 16.0f / 9.0f;
     piYingGLContainer->setRatio(ratio);
     piYingGL->changeRatio(ratio);
+
+    /*statusBar()->addPermanentWidget(new QLabel(tr("视图x"), this));
+    statusBar()->addPermanentWidget(spinViewTransX);
+    statusBar()->addPermanentWidget(new QLabel(tr("视图y"), this));
+    statusBar()->addPermanentWidget(spinViewTransY);
+    statusBar()->addPermanentWidget(new QLabel(tr("视图旋转"), this));
+    statusBar()->addPermanentWidget(spinViewRot);
+    statusBar()->addPermanentWidget(new QLabel(tr("视图缩放"), this));
+    statusBar()->addPermanentWidget(spinViewScale);*/
 }
 
 PiYing::~PiYing()

@@ -58,9 +58,6 @@
     <ClCompile Include="piYingGL.cpp">
       <Filter>Source Files\piYingGL</Filter>
     </ClCompile>
-    <ClCompile Include="RaletiveTransform.cpp">
-      <Filter>Source Files\piYingGL</Filter>
-    </ClCompile>
     <ClCompile Include="events.cpp">
       <Filter>Source Files\piYingGL</Filter>
     </ClCompile>
@@ -71,6 +68,9 @@
       <Filter>Source Files\piYingGL</Filter>
     </ClCompile>
     <ClCompile Include="slots.cpp">
+      <Filter>Source Files\piYingGL</Filter>
+    </ClCompile>
+    <ClCompile Include="RaletiveTransform.cpp">
       <Filter>Source Files\piYingGL</Filter>
     </ClCompile>
   </ItemGroup>
@@ -96,6 +96,9 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="piYingGLContainer.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="ViewData.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
