@@ -36,6 +36,28 @@ void PiYingGL::returnToStandard()
 	update();
 }
 
+void PiYingGL::bgSetTransform()
+{
+	if (currentSelectedBackGround >= 0) {
+		float transX, transY, Rot, ScaleX, ScaleY;
+		ImageTexture& image = backGrounds[currentSelectedBackGround];
+		ImageTransform& transform = image.transform;
+		float d[5] = { 
+			transform.trans(0, 3), 
+			transform.trans(1, 3), 
+			qAtan2(transform.rot(1, 0), transform.rot(0, 0)) * 180.f / 3.141593f, 
+			qSqrt(transform.scale(0,0) * transform.scale(0,0) + transform.scale(1,0) * transform.scale(1,0)), 
+			qSqrt(transform.scale(0,1) * transform.scale(0,1) + transform.scale(1,1) * transform.scale(1,1)) 
+		};
+		QString s[5] = { QString("X位移"), QString("Y位移"), QString("旋转"), QString("X缩放"), QString("Y缩放") };
+		if (Ask3DoublesDialog("设置变换", s, d, this).getValues(transX, transY, Rot, ScaleX, ScaleY)) {
+			image.setTrans(transX, transY);
+			image.setRot(Rot);
+			image.setScale(ScaleX, ScaleY);
+		}
+	}
+}
+
 void PiYingGL::deleteBg()
 {
 	int ret = QMessageBox::question(

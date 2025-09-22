@@ -94,6 +94,7 @@ void PiYingGL::contextMenuEvent(QContextMenuEvent* e)
 	else {
 		menu.addAction(actionFullScreenBackGround);
 		menu.addAction(actionDeleteBg);
+		menu.addAction(actionBgSetTransform);
 	}
 	menu.exec(e->globalPos());
 	e->accept();

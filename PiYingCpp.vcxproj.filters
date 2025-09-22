@@ -73,6 +73,9 @@
     <ClCompile Include="RaletiveTransform.cpp">
       <Filter>Source Files\piYingGL</Filter>
     </ClCompile>
+    <ClCompile Include="AskTransformDialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Layer.h">
@@ -99,6 +102,9 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="ViewData.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="AskTransformDialog.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>

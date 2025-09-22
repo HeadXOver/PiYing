@@ -19,6 +19,7 @@
 #include "Element.h"
 #include "KeyboardStateWin.h"
 #include "ViewData.h"
+#include "AskTransformDialog.h"
 
 class PiYing;
 
@@ -57,6 +58,7 @@ private slots:
 	void choseBackGroundColor();
 	void setViewToStandard();
 	void returnToStandard();
+	void bgSetTransform();
 	void deleteBg();
 	void deleteAllBg();
 
@@ -110,6 +112,7 @@ public:
 	QAction* actionReturnToStandard;
 	QAction* actionDeleteBg;
 	QAction* actionDeleteAllBg;
+	QAction* actionBgSetTransform;
 
 	EditMode editMode = EditMode::Default;
 
