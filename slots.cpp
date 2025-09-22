@@ -58,6 +58,20 @@ void PiYingGL::bgSetTransform()
 	}
 }
 
+void PiYingGL::againstBg()
+{
+	if (currentSelectedBackGround >= 0) {
+		ImageTransform& transform = backGrounds[currentSelectedBackGround].transform;
+		QMatrix4x4 r;
+		r.rotate(-qAtan2(transform.rot(1, 0), transform.rot(0, 0)) * 180.f / 3.141593f, 0.0f, 0.0f ,1.0f);
+		QPointF toTrans = r.map(QPointF(- transform.trans(0, 3), -transform.trans(1, 3)));
+		viewTransX.setValue(toTrans.x());
+		viewTransY.setValue(toTrans.y());
+		viewScale.setValue(qSqrt(transform.scale(0, 0) * transform.scale(0, 0) + transform.scale(1, 0) * transform.scale(1, 0)));
+		viewRotate.setValue(-qAtan2(transform.rot(1, 0), transform.rot(0, 0)) * 180.f / 3.141593f);
+	}
+}
+
 void PiYingGL::deleteBg()
 {
 	int ret = QMessageBox::question(

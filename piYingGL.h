@@ -59,6 +59,7 @@ private slots:
 	void setViewToStandard();
 	void returnToStandard();
 	void bgSetTransform();
+	void againstBg();
 	void deleteBg();
 	void deleteAllBg();
 
@@ -113,6 +114,7 @@ public:
 	QAction* actionDeleteBg;
 	QAction* actionDeleteAllBg;
 	QAction* actionBgSetTransform;
+	QAction* actionAgainstBg;
 
 	EditMode editMode = EditMode::Default;
 

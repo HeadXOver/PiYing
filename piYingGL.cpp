@@ -21,6 +21,7 @@ PiYingGL::PiYingGL(PiYing* parent) : QOpenGLWidget(parent), parent(parent)
 	actionDeleteBg = new QAction("删除当前背景图");
 	actionDeleteAllBg = new QAction("删除所有背景图");
 	actionBgSetTransform = new QAction("设置变换...");
+	actionAgainstBg = new QAction("将摄像机对准图片");
 
 	labelViewScale = new QLabel("1", this);
 	labelViewTransX = new QLabel("0", this);
@@ -34,6 +35,7 @@ PiYingGL::PiYingGL(PiYing* parent) : QOpenGLWidget(parent), parent(parent)
 	connect(actionReturnToStandard,		SIGNAL(triggered()), this, SLOT(returnToStandard()));
 	connect(actionDeleteBg,				SIGNAL(triggered()), this, SLOT(deleteBg()));
 	connect(actionDeleteAllBg,			SIGNAL(triggered()), this, SLOT(deleteAllBg()));
+	connect(actionAgainstBg,			SIGNAL(triggered()), this, SLOT(againstBg()));
 	connect(actionBgSetTransform,		SIGNAL(triggered()), this, SLOT(bgSetTransform()));
 	connect(&viewScale,		&ViewData::valueChanged, this, [&](float v) {labelViewScale->setText(tr("%1  ").arg(v)); });
 	connect(&viewTransX,	&ViewData::valueChanged, this, [&](float v) {labelViewTransX->setText(tr("%1  ").arg(v)); });
