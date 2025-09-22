@@ -55,9 +55,9 @@ PiYingGL::~PiYingGL()
 
 	////////////////////////////////////////
 
-	glDeleteBuffers(1, &VBO);
-	glDeleteVertexArrays(1, &VAO);
-	glDeleteBuffers(1, &EBO);
+	glDeleteBuffers(1, &bgVBO);
+	glDeleteVertexArrays(1, &bgVAO);
+	glDeleteBuffers(1, &bgEBO);
 
 	////////////////////////////////////////
 
@@ -66,28 +66,57 @@ PiYingGL::~PiYingGL()
 
 void PiYingGL::paintBackgrounds()
 {
-	glBindVertexArray(VAO);
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-	shaderProgram.bind();
+	glBindVertexArray(bgVAO);
+	glBindBuffer(GL_ARRAY_BUFFER, bgVBO);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, bgEBO);
+	bgShaderProgram.bind();
 	glActiveTexture(GL_TEXTURE0);
 
 	// position attribute
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
 
-	// texture coord attribute
-	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
-	glEnableVertexAttribArray(1);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	for (int i = 0; i < backGrounds.size(); i++) {
 		ImageTexture& it = backGrounds[i];
 		it.tex->bind();
 
-		shaderProgram.setUniformValue("texture1", 0);
-		shaderProgram.setUniformValue("trc", getBgShaderMatrix(it.transform));
-		if (i == currentSelectedBackGround)shaderProgram.setUniformValue("selected", true);
-		else shaderProgram.setUniformValue("selected", false);
+		bgShaderProgram.setUniformValue("texture1", 0);
+		bgShaderProgram.setUniformValue("trc", getBgShaderMatrix(it.transform));
+		if (i == currentSelectedBackGround)bgShaderProgram.setUniformValue("selected", true);
+		else bgShaderProgram.setUniformValue("selected", false);
+
+		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+	}
+
+	glBindVertexArray(0);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+}
+
+void PiYingGL::paintCharacters()
+{
+	glBindVertexArray(chVAO);
+	glBindBuffer(GL_ARRAY_BUFFER, chVBO);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, chEBO);
+	chShaderProgram.bind();
+	glActiveTexture(GL_TEXTURE0);
+
+	// position attribute
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(0);
+
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	if(characterTextures.size() > 0) {
+		ImageTexture& it = characterTextures[0];
+		it.tex->bind();
+
+		bgShaderProgram.setUniformValue("texture1", 0);
+		bgShaderProgram.setUniformValue("trc", getBgShaderMatrix(it.transform));
 
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 	}
@@ -104,6 +133,18 @@ void PiYingGL::addBackground(const QString& imageName) {
 		return;
 	}
 	backGrounds.append(img);
+	update();
+}
+
+void PiYingGL::addCharacter(const QString& imageName)
+{
+	QImage img;
+	if (!img.load(imageName)) {
+		QMessageBox::warning(this, "Warning", "Failed to load image: " + imageName);
+		return;
+	}
+	img = img.convertToFormat(QImage::Format_RGBA8888);
+	characterTextures.append(img);
 	update();
 }
 
@@ -172,6 +213,13 @@ void PiYingGL::importBackground()
 		update();
 	}
 	else for (const QString& fileName : fileNames) addBackground(fileName);
+}
+
+void PiYingGL::importChatacter()
+{
+	QStringList fileNames = QFileDialog::getOpenFileNames(this, "选择角色图", ".", "Images (*.png *.xpm *.jpg)");
+
+	for (const QString& fileName : fileNames) addCharacter(fileName);
 }
 
 MousePos PiYingGL::getMousePosType(const QPointF& point) const

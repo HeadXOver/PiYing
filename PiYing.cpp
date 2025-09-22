@@ -74,7 +74,7 @@ void PiYing::keyPressEvent(QKeyEvent * event)
 }
 
 void PiYing::importCharacter(){
-
+    piYingGL->importChatacter();
 }
 
 void PiYing::exportCurrentFrame(){

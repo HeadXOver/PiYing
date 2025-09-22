@@ -43,7 +43,9 @@ void PiYingGL::bgScaleControl(const QPointF& mouse, ImageTexture& image)
 		pAspect.setX((1.0f + mouseRaletive.x()) / (1.0f + LastMouseRaletive.x()));
 		PN[1] = -1;
 	}
-
+	if (KeyboardStateWin::isShiftHeld()) {
+		pAspect.setY(pAspect.x());
+	}
 	image.addScale(pAspect);
 	pAspect.setX(PN[1] * (1.f - pAspect.x()));
 	pAspect.setY(PN[0] * (1.f - pAspect.y()));

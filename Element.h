@@ -91,11 +91,11 @@ struct ImageTexture {
 };
 
 static const float RECTANGLE_VERT[] = {
-    // positions          // texture coords
-     1.0,  1.0, 0.0f,   1.0, 1.0,   // top right
-     1.0, -1.0, 0.0f,   1.0, 0.0f,  // bottom right
-    -1.0, -1.0, 0.0f,   0.0f, 0.0f, // bottom left
-    -1.0,  1.0, 0.0f,   0.0f, 1.0   // top left 
+    // positions
+     1.0,  1.0,
+     1.0, -1.0,
+    -1.0, -1.0,
+    -1.0,  1.0
 };
 
 static const unsigned int RECTANGLE_INDECES[] = {

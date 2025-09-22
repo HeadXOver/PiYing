@@ -51,6 +51,7 @@ public:
 
 private:
 	void paintBackgrounds();
+	void paintCharacters();
 
 private slots:
 	void fullScreenBackGround();
@@ -73,10 +74,12 @@ protected:
 
 public:
 	void addBackground(const QString& imageName);
+	void addCharacter(const QString& imageName);
 	void choseBackgroundColor();
 	void changeRatio(float ratio);
 	void updateProjMatrix();
 	void importBackground();
+	void importChatacter();
 	void currentUpdate();
 	void bgRotationControl(const QPointF& mouse, ImageTexture& image);
 	void bgTranslateControl(const QPointF& mouse, ImageTexture& image);
@@ -127,9 +130,11 @@ public:
 	QLabel* labelViewRot;
 
 private:
-	unsigned int VAO = 0, VBO = 0, EBO = 0;
+	unsigned int bgVAO = 0, bgVBO = 0, bgEBO = 0;
+	unsigned int chVAO = 0, chVBO = 0, chEBO = 0;
 
-	QOpenGLShaderProgram shaderProgram;
+	QOpenGLShaderProgram bgShaderProgram;
+	QOpenGLShaderProgram chShaderProgram;
 
 	// imageTextures
 	QList<ImageTexture> backGrounds;

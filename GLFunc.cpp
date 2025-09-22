@@ -7,28 +7,57 @@ void PiYingGL::initializeGL()
 	aspect = width() / float(height());
 	updateProjMatrix();
 
-	glGenVertexArrays(1, &VAO);
-	glGenBuffers(1, &VBO);
-	glGenBuffers(1, &EBO);
+	//////////////initialize background///////////////////////
 
-	glBindVertexArray(VAO);
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+	glGenVertexArrays(1, &bgVAO);
+	glGenBuffers(1, &bgVBO);
+	glGenBuffers(1, &bgEBO);
+
+	glBindVertexArray(bgVAO);
+	glBindBuffer(GL_ARRAY_BUFFER, bgVBO);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, bgEBO);
 
 	/////////////////////////////////////////////
 
 	glBufferData(GL_ARRAY_BUFFER, sizeof(RECTANGLE_VERT), RECTANGLE_VERT, GL_STATIC_DRAW);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(RECTANGLE_INDECES), RECTANGLE_INDECES, GL_STATIC_DRAW);
 
-	shaderProgram.addShaderFromSourceFile(QOpenGLShader::Vertex, ":/PiYing/bgshapes.vert");
-	shaderProgram.addShaderFromSourceFile(QOpenGLShader::Fragment, ":/PiYing/bgshapes.frag");
-	shaderProgram.link();
+	bgShaderProgram.addShaderFromSourceFile(QOpenGLShader::Vertex, ":/PiYing/bgshapes.vert");
+	bgShaderProgram.addShaderFromSourceFile(QOpenGLShader::Fragment, ":/PiYing/bgshapes.frag");
+	bgShaderProgram.link();
 
 	/////////////////////////////////////////////
 
 	glBindVertexArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+	////////////////initialize character///////////////////////
+
+	glGenVertexArrays(1, &chVAO);
+	glGenBuffers(1, &chVBO);
+	glGenBuffers(1, &chEBO);
+
+	glBindVertexArray(chVAO);
+	glBindBuffer(GL_ARRAY_BUFFER, chVBO);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, chEBO);
+
+	/////////////////////////////////////////////
+
+	glBufferData(GL_ARRAY_BUFFER, sizeof(RECTANGLE_VERT), RECTANGLE_VERT, GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(RECTANGLE_INDECES), RECTANGLE_INDECES, GL_STATIC_DRAW);
+
+	chShaderProgram.addShaderFromSourceFile(QOpenGLShader::Vertex, ":/PiYing/bgshapes.vert");
+	chShaderProgram.addShaderFromSourceFile(QOpenGLShader::Fragment, ":/PiYing/bgshapes.frag");
+	chShaderProgram.link();
+
+	/////////////////////////////////////////////
+
+	glBindVertexArray(0);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+	////////////////end initialize//////////////////////////
 
 	glClearColor(backGroundColor.redF(), backGroundColor.greenF(), backGroundColor.blueF(), backGroundColor.alphaF());
 	glClear(GL_COLOR_BUFFER_BIT);
@@ -37,6 +66,7 @@ void PiYingGL::initializeGL()
 void PiYingGL::paintGL() {
 	glClear(GL_COLOR_BUFFER_BIT);
 	paintBackgrounds();
+	paintCharacters();
 	if (editMode == EditMode::BackGround) {
 		QPainter p(this);
 		p.setPen(framePen);
