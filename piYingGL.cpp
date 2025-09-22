@@ -104,6 +104,9 @@ void PiYingGL::paintCharacters()
 	chShaderProgram.bind();
 	glActiveTexture(GL_TEXTURE0);
 
+	glBufferData(GL_ARRAY_BUFFER, vRECTANGLE_VERT.size() * sizeof(float), vRECTANGLE_VERT.data(), GL_DYNAMIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, vRECTANGLE_INDECES.size() * sizeof(float), vRECTANGLE_INDECES.data(), GL_DYNAMIC_DRAW);
+
 	// position attribute
 	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
