@@ -4,7 +4,7 @@ void PiYingGL::fullScreenBackGround()
 {
 	if (currentSelectedBackGround < 0) return;
 	backGrounds[currentSelectedBackGround].transform.reset();
-	backGrounds[currentSelectedBackGround].setScale(1 / viewScale);
+	backGrounds[currentSelectedBackGround].setScale(1 / viewScale.value());
 }
 
 void PiYingGL::choseBackGroundColor()
@@ -21,18 +21,18 @@ void PiYingGL::setViewToStandard()
 		item.transform.scale = getScale(combined);
 	}
 
-	viewRotate = 0.f;
-	viewScale = 1.f;
-	viewTransX = 0.f;
-	viewTransY = 0.f;
+	viewRotate.setValue(0.f);
+	viewScale.setValue(1.f);
+	viewTransX.setValue(0.f);
+	viewTransY.setValue(0.f);
 }
 
 void PiYingGL::returnToStandard()
 {
-	viewScale = 1.0f;
-	viewRotate = 0.f;
-	viewTransX = 0.f;
-	viewTransY = 0.f;
+	viewScale.setValue(1.0f);
+	viewRotate.setValue(0.f);
+	viewTransX.setValue(0.f);
+	viewTransY.setValue(0.f);
 	update();
 }
 

@@ -8,7 +8,7 @@ PiYingGL::PiYingGL(QWidget* parent) : QOpenGLWidget(parent)
 
 	proj.setToIdentity();
 	insProj.setToIdentity();
-	viewScale = 1.0f;
+	viewScale.setValue(1.0f);
 
 	aspect = 16.0f / 9.0f;
 
@@ -20,6 +20,11 @@ PiYingGL::PiYingGL(QWidget* parent) : QOpenGLWidget(parent)
 	actionDeleteBg = new QAction("删除当前背景图");
 	actionDeleteAllBg = new QAction("删除所有背景图");
 
+	labelViewScale = new QLabel("1", this);
+	labelViewTransX = new QLabel("0", this);
+	labelViewTransY = new QLabel("0", this);
+	labelViewRot = new QLabel("0", this);
+
 	connect(actionAddBackGround,		SIGNAL(triggered()), this, SLOT(importBackGround()));
 	connect(actionFullScreenBackGround, SIGNAL(triggered()), this, SLOT(fullScreenBackGround()));
 	connect(actionChoseBackGroundColor, SIGNAL(triggered()), this, SLOT(choseBackGroundColor()));
@@ -27,6 +32,10 @@ PiYingGL::PiYingGL(QWidget* parent) : QOpenGLWidget(parent)
 	connect(actionReturnToStandard,		SIGNAL(triggered()), this, SLOT(returnToStandard()));
 	connect(actionDeleteBg,				SIGNAL(triggered()), this, SLOT(deleteBg()));
 	connect(actionDeleteAllBg,			SIGNAL(triggered()), this, SLOT(deleteAllBg()));
+	connect(&viewScale,		&ViewData::valueChanged, this, [&](float v) {labelViewScale->setText(tr("%1  ").arg(v)); });
+	connect(&viewTransX,	&ViewData::valueChanged, this, [&](float v) {labelViewTransX->setText(tr("%1  ").arg(v)); });
+	connect(&viewTransY,	&ViewData::valueChanged, this, [&](float v) {labelViewTransY->setText(tr("%1  ").arg(v)); });
+	connect(&viewRotate,	&ViewData::valueChanged, this, [&](float v) {labelViewRot->setText(tr("%1  ").arg(v)); });
 
 	setMouseTracking(true);
 

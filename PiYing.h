@@ -3,8 +3,6 @@
 #include <QtWidgets/QMainWindow>
 #include "ui_PiYing.h"
 
-#include <QList>
-
 #include "cusMode.h"
 #include "piYingGL.h"
 #include "piYingGLContainer.h"

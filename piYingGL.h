@@ -14,9 +14,11 @@
 #include <QMouseEvent>
 #include <QStatusBar>
 #include <QLabel>
+#include <QList>
 
 #include "Element.h"
 #include "KeyboardStateWin.h"
+#include "ViewData.h"
 
 enum class MousePos {
 	Inside,
@@ -109,6 +111,16 @@ public:
 
 	EditMode editMode = EditMode::Default;
 
+	ViewData viewScale;
+	ViewData viewRotate;
+	ViewData viewTransX;
+	ViewData viewTransY;
+
+	QLabel* labelViewScale;
+	QLabel* labelViewTransX;
+	QLabel* labelViewTransY;
+	QLabel* labelViewRot;
+
 private:
 	unsigned int VAO = 0, VBO = 0, EBO = 0;
 
@@ -121,10 +133,6 @@ private:
 	int currentSelectedBackGround = -1;
 
 	float aspect;
-	float viewScale;
-	float viewRotate = 0.f;
-	float viewTransX = 0.f;
-	float viewTransY = 0.f;
 	float lastViewRotate = 0.f;
 	float lastViewTransX = 0.f;
 	float lastViewTransY = 0.f;

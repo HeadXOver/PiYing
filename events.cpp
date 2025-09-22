@@ -25,9 +25,9 @@ void PiYingGL::mousePressEvent(QMouseEvent* event)
 	}
 	else if (event->button() == Qt::MiddleButton) {
 		lastMiddleButtonPos = mapToGL(event->position());
-		lastViewTransX = viewTransX;
-		lastViewTransY = viewTransY;
-		lastViewRotate = viewRotate;
+		lastViewTransX = viewTransX.value();
+		lastViewTransY = viewTransY.value();
+		lastViewRotate = viewRotate.value();
 	}
 }
 
@@ -52,8 +52,8 @@ void PiYingGL::mouseMoveEvent(QMouseEvent* event) {
 		if (KeyboardStateWin::isAltHeld()) viewRotationControl(mouse);
 		else {
 			QPointF toTrans = insProj.map(mouse - lastMiddleButtonPos);
-			viewTransX = lastViewTransX + toTrans.x();
-			viewTransY = lastViewTransY + toTrans.y();
+			viewTransX.setValue(lastViewTransX + toTrans.x());
+			viewTransY.setValue(lastViewTransY + toTrans.y());
 		}
 		currentUpdate();
 	}
@@ -73,7 +73,7 @@ void PiYingGL::wheelEvent(QWheelEvent* ev) {
 		int delta = numSteps.y();
 		float scaleFactor = 1.0f + delta * 0.1f;
 		if (scaleFactor < 0.1f) scaleFactor = 0.1f;
-		viewScale *= scaleFactor;
+		viewScale.setValue(viewScale.value() * scaleFactor);
 
 		currentUpdate();
 	}
