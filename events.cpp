@@ -11,7 +11,7 @@ void PiYingGL::mousePressEvent(QMouseEvent* event)
 		if (editMode == EditMode::BackGround) {
 			for (int i = backGrounds.size() - 1; i >= 0; i--) {
 				ImageTexture& item = backGrounds[i];
-				QPointF posV = getRaletiveToRect(QPointF(lastMousePos.x(), lastMousePos.y()), item.transform);
+				QPointF posV = getRaletiveToRect(lastMousePos, item.transform);
 				if (isInsideSquare(posV)) {
 					lastMousePosType = getMousePosType(posV);
 					lastImageTransform = item.transform;

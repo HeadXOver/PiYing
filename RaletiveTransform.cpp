@@ -1,7 +1,7 @@
 #include "piYingGL.h"
 
 QMatrix4x4 PiYingGL::getViewMatrixInvert() const {
-	QMatrix4x4 mViewTransform = getViewMatrixInvertWithoutTrans();
+	QMatrix4x4 mViewTransform;
 	mViewTransform.rotate(-viewRotate.value(), 0.0f, 0.0f, 1.0f);
 	mViewTransform.scale(1 / viewScale.value());
 	mViewTransform.translate(-viewTransX.value(), -viewTransY.value());
