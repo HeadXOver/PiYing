@@ -137,10 +137,29 @@ void PiYingGL::addBackground(const QString& imageName) {
 		QMessageBox::warning(this, "Warning", "Failed to load image: " + imageName);
 		return;
 	}
-	backGrounds.append(img);
-	parent->bgImageList->addItem(imageName);
+	appendBgList(img);
 
 	update();
+}
+
+bool PiYingGL::addBackground(const QString& imageName, QImage& image)
+{
+	QImage img;
+	if (!img.load(imageName)) {
+		QMessageBox::warning(this, "Warning", "Failed to load image: " + imageName);
+		return false;
+	}
+	appendBgList(img);
+	image = img;
+
+	update();
+	return true;
+}
+
+void PiYingGL::appendBgList(QImage& image)
+{
+	backGrounds.append(image);
+	parent->bgImageList->addItem(getUniquebgName(parent->bgImageList));
 }
 
 void PiYingGL::addCharacter(const QString& imageName)
@@ -196,12 +215,7 @@ void PiYingGL::importBackground()
 
 	if (fileNames.size() == 1) {
 		QImage img;
-		if (!img.load(fileNames[0])) {
-			QMessageBox::warning(this, "Warning", "Failed to load image: " + fileNames[0]);
-			return;
-		}
-		backGrounds.append(img);
-		parent->bgImageList->addItem(fileNames[0]);
+		if (!addBackground(fileNames[0], img)) return;
 
 		int ret = QMessageBox::question(
 			this,
@@ -263,5 +277,18 @@ Qt::CursorShape PiYingGL::getCursorShape(const MousePos& pos)
 	case MousePos::BottomEdge:  if (!KeyboardStateWin::isAltHeld()) return Qt::CursorShape::CrossCursor;
 	case MousePos::Inside:		return Qt::OpenHandCursor;
 	default:					return Qt::ArrowCursor;
+	}
+}
+
+QString PiYingGL::getUniquebgName(const QListWidget* list)
+{
+	QString s;
+	bool repeat = false;
+	for (int i = 1;; i++) {
+		s = QString::number(i);
+		repeat = false;
+		for (int j = 0; j < list->count(); ++j)
+			if (list->item(j)->text() == s) repeat = true;
+		if (!repeat) return s;
 	}
 }

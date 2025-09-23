@@ -77,6 +77,7 @@ protected:
 
 public:
 	void addBackground(const QString& imageName);
+	void appendBgList(QImage& image);
 	void addCharacter(const QString& imageName);
 	void choseBackgroundColor();
 	void changeRatio(float ratio);
@@ -89,6 +90,8 @@ public:
 	void bgScaleControl(const QPointF& mouse, ImageTexture& image);
 	void viewRotationControl(const QPointF& mouse);
 
+	bool addBackground(const QString& imageName, QImage& image);
+
 	inline QPointF getRaletiveToRect(const QPointF& point, const ImageTransform& transform) const	{ return (proj * transform.getMatrixInvert() * getViewMatrixInvert() * insProj).map(point); }
 	inline QPointF getRaletiveToGlobal(const QPointF& point, const ImageTransform& transform) const		{ return getBgShaderMatrix(transform).map(point); }
 
@@ -99,6 +102,8 @@ public:
 	QMatrix4x4 getViewMatrixInvertWithoutTrans() const;
 	QMatrix4x4 getViewMatrixWithoutTrans() const;
 	QMatrix4x4 getBgShaderMatrix(const ImageTransform& transform) const;
+
+	static QString getUniquebgName(const QListWidget* list);
 
 	inline bool isInsideSquare(const QPointF& point, float side = 2.0f) const { return (point.x() >= -side / 2.f && point.x() <= side / 2.f && point.y() >= -side / 2.f && point.y() <= side / 2.f); }
 

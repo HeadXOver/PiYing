@@ -71,6 +71,10 @@ PiYing::PiYing(QWidget* parent) : QMainWindow(parent) {
     splitListOpenGL->setStretchFactor(0, 1);
     splitListOpenGL->setStretchFactor(1, 3);
 
+    bgImageList->setUniformItemSizes(true);
+    bgImageList->setStyleSheet("QListWidget::item {"
+        "height: 60px;"
+        " }");
     bgImageList->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     piYingGL->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     timeLine->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
@@ -79,10 +83,8 @@ PiYing::PiYing(QWidget* parent) : QMainWindow(parent) {
     modeBox->addItems({ "预览模式", "背景编辑" });
     ui.mainToolBar->addWidget(modeBox);
 
-    connect(modeBox, QOverload<int>::of(&QComboBox::currentIndexChanged),
-        this, &PiYing::onModeChanged);
+    connect(modeBox, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &PiYing::onModeChanged);
 
-    /* 初始模式 */
     onModeChanged(0);
 
     setCentralWidget(splitListOpenGL);
