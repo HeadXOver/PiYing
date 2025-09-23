@@ -68,5 +68,7 @@ public:
 	PiYingGLContainer* piYingGLContainer = nullptr;
 
 	QListWidget* bgImageList = nullptr;
+	QListWidget* chImageList = nullptr;
+	QListWidget* voidListWidget;
 };
 

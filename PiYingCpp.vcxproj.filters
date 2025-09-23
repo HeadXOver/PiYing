@@ -30,6 +30,9 @@
     <Filter Include="Source Files\piYingGL">
       <UniqueIdentifier>{6254f304-1aac-45cf-9ae6-ffe29263975d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="StyleSheets">
+      <UniqueIdentifier>{62c7bb89-d07b-49a5-893d-c2a87f10ba01}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <QtRcc Include="PiYing.qrc">
@@ -116,5 +119,8 @@
       <Filter>Shader</Filter>
     </None>
     <None Include="readme.md" />
+    <None Include="darkStyle.qss">
+      <Filter>StyleSheets</Filter>
+    </None>
   </ItemGroup>
 </Project>

@@ -40,7 +40,8 @@ enum class MousePos {
 
 enum class EditMode {
 	Default,
-	BackGround
+	BackGround,
+	characterOverView
 };
 
 class PiYingGL : public QOpenGLWidget, QOpenGLFunctions_3_3_Core
@@ -53,7 +54,7 @@ public:
 
 private:
 	void paintBackgrounds();
-	void paintCharacters();
+	void paintCharactersOverView();
 
 private slots:
 	void fullScreenBackGround();

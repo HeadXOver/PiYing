@@ -46,7 +46,8 @@ PiYingGL::PiYingGL(PiYing* parent) : QOpenGLWidget(parent), parent(parent)
 
 	setMouseTracking(true);
 
-	backGroundColor.setRgbF(0.0f, 0.1f, 0.067f, 1.f);
+	//backGroundColor.setRgb(198, 220, 255);
+	backGroundColor.setRgb(0, 0, 0);
 
 	framePen.setWidth(6);
 }
@@ -98,7 +99,7 @@ void PiYingGL::paintBackgrounds()
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
-void PiYingGL::paintCharacters()
+void PiYingGL::paintCharactersOverView()
 {
 	glBindVertexArray(chVAO);
 	glBindBuffer(GL_ARRAY_BUFFER, chVBO);
@@ -106,8 +107,11 @@ void PiYingGL::paintCharacters()
 	chShaderProgram.bind();
 	glActiveTexture(GL_TEXTURE0);
 
-	glBufferData(GL_ARRAY_BUFFER, characterVerts.size() * sizeof(float), characterVerts.data(), GL_DYNAMIC_DRAW);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, characterIndices.size() * sizeof(float), characterIndices.data(), GL_DYNAMIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(RECTANGLE_VERT), RECTANGLE_VERT, GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(RECTANGLE_INDECES), RECTANGLE_INDECES, GL_STATIC_DRAW);
+
+	//glBufferData(GL_ARRAY_BUFFER, characterVerts.size() * sizeof(float), characterVerts.data(), GL_DYNAMIC_DRAW);
+	//glBufferData(GL_ELEMENT_ARRAY_BUFFER, characterIndices.size() * sizeof(float), characterIndices.data(), GL_DYNAMIC_DRAW);
 
 	// position attribute
 	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
@@ -159,7 +163,15 @@ bool PiYingGL::addBackground(const QString& imageName, QImage& image)
 void PiYingGL::appendBgList(QImage& image)
 {
 	backGrounds.append(image);
-	parent->bgImageList->addItem(getUniquebgName(parent->bgImageList));
+
+	QIcon icon(QPixmap::fromImage(image).scaled(50, 50, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+
+	QListWidgetItem* item = new QListWidgetItem(icon, getUniquebgName(parent->bgImageList));
+	item->setTextAlignment(Qt::AlignCenter);
+
+	parent->bgImageList->addItem(item);
+
+	if (parent->bgImageList->currentRow() < 0) parent->bgImageList->setCurrentRow(0);
 }
 
 void PiYingGL::addCharacter(const QString& imageName)
@@ -169,8 +181,17 @@ void PiYingGL::addCharacter(const QString& imageName)
 		QMessageBox::warning(this, "Warning", "Failed to load image: " + imageName);
 		return;
 	}
-	img = img.convertToFormat(QImage::Format_RGBA8888);
 	characterTextures.append(img);
+
+	QIcon icon(QPixmap::fromImage(img).scaled(50, 50, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+
+	QListWidgetItem* item = new QListWidgetItem(icon, getUniquebgName(parent->chImageList));
+	item->setTextAlignment(Qt::AlignCenter);
+
+	parent->chImageList->addItem(item);
+
+	if (parent->chImageList->currentRow() < 0) parent->chImageList->setCurrentRow(0);
+
 	update();
 }
 

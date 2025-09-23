@@ -122,6 +122,7 @@
   <ItemGroup>
     <None Include="bgshapes.frag" />
     <None Include="bgshapes.vert" />
+    <None Include="darkStyle.qss" />
     <None Include="readme.md">
       <SubType>
       </SubType>

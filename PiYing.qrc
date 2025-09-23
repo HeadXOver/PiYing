@@ -2,5 +2,6 @@
     <qresource prefix="/PiYing">
         <file>bgshapes.frag</file>
         <file>bgshapes.vert</file>
+        <file>darkStyle.qss</file>
     </qresource>
 </RCC>

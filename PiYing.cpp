@@ -7,6 +7,8 @@ PiYing::PiYing(QWidget* parent) : QMainWindow(parent) {
     ui.setupUi(this);
     setWindowTitle("皮影");
 
+    voidListWidget = new QListWidget();
+
     // menuBar
     menuFile = new QMenu("文件(&F)");
 	menuEdit = new QMenu("编辑(&E)");
@@ -56,7 +58,8 @@ PiYing::PiYing(QWidget* parent) : QMainWindow(parent) {
     statusBar()->addPermanentWidget(new QLabel(tr("视图缩放"), this));
     statusBar()->addPermanentWidget(piYingGL->labelViewScale);
 
-    bgImageList = new QListWidget(this);
+    bgImageList = new QListWidget();
+    chImageList = new QListWidget();
     timeLine = new QWidget(this);
 
     splitTimelineOpenGL = new QSplitter(Qt::Vertical, this);
@@ -64,7 +67,7 @@ PiYing::PiYing(QWidget* parent) : QMainWindow(parent) {
 
     splitTimelineOpenGL->addWidget(piYingGLContainer);
     splitTimelineOpenGL->addWidget(timeLine);
-    splitListOpenGL->addWidget(bgImageList);
+    splitListOpenGL->addWidget(voidListWidget);
     splitListOpenGL->addWidget(splitTimelineOpenGL);
     splitTimelineOpenGL->setStretchFactor(0, 1);
     splitTimelineOpenGL->setStretchFactor(1, 2);
@@ -72,15 +75,27 @@ PiYing::PiYing(QWidget* parent) : QMainWindow(parent) {
     splitListOpenGL->setStretchFactor(1, 3);
 
     bgImageList->setUniformItemSizes(true);
-    bgImageList->setStyleSheet("QListWidget::item {"
-        "height: 60px;"
-        " }");
-    bgImageList->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    bgImageList->setIconSize(QSize(50, 50));
+    bgImageList->setStyleSheet(
+        "QListWidget { background-color: rgb(35, 8, 8); }"
+        "QListWidget::item { background-color: rgb(255, 253, 226);}"
+        "QListWidget::item:selected { background-color: rgb(112, 112, 112); }"
+    );
+
+    chImageList->setUniformItemSizes(true);
+    chImageList->setIconSize(QSize(50, 50));
+    chImageList->setStyleSheet(
+        "QListWidget { background-color: rgb(35, 8, 8); }"
+        "QListWidget::item { background-color: rgb(255, 253, 226);}"
+        "QListWidget::item:selected { background-color: rgb(112, 112, 112); }"
+    );
+
     piYingGL->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     timeLine->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    voidListWidget->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
 
     modeBox = new QComboBox;
-    modeBox->addItems({ "预览模式", "背景编辑" });
+    modeBox->addItems({ "预览模式", "背景编辑", "角色编辑"});
     ui.mainToolBar->addWidget(modeBox);
 
     connect(modeBox, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &PiYing::onModeChanged);
@@ -142,10 +157,23 @@ void PiYing::onModeChanged(int mode)
 {
     if (mode == 0) {
         piYingGL->editMode = EditMode::Default;
+
+        splitListOpenGL->widget(0)->setParent(this);
+        splitListOpenGL->insertWidget(0, voidListWidget);
     }
-    else {
+    else if(mode == 1){
         piYingGL->editMode = EditMode::BackGround;
+
+        splitListOpenGL->widget(0)->setParent(this);
+        splitListOpenGL->insertWidget(0, bgImageList);
     }
+    else if (mode == 2) {
+        piYingGL->editMode = EditMode::characterOverView;
+
+        splitListOpenGL->widget(0)->setParent(this);
+        splitListOpenGL->insertWidget(0, chImageList);
+    }
+    piYingGL->update();
 }
 
 void PiYing::importBackGround(){
