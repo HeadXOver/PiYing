@@ -14,6 +14,7 @@ PiYingGL::PiYingGL(PiYing* parent) : QOpenGLWidget(parent), parent(parent)
 	aspect = 16.0f / 9.0f;
 
 	actionAddBackGround = new QAction("添加背景图", this);
+	actionAddCharacterTexture = new QAction("添加角色图", this);
 	actionFullScreenBackGround = new QAction("背景图全屏", this);
 	actionChoseBackGroundColor = new QAction("选择幕布底色", this);
 	actionSetViewToStandard = new QAction("将视图设为标准幕布", this);
@@ -37,6 +38,7 @@ PiYingGL::PiYingGL(PiYing* parent) : QOpenGLWidget(parent), parent(parent)
 	connect(actionAgainstBg,			SIGNAL(triggered()), this, SLOT(againstBg()));
 	connect(actionBgSetTransform,		SIGNAL(triggered()), this, SLOT(bgSetTransform()));
 	connect(actionReturnbgTransform,	SIGNAL(triggered()), this, SLOT(returnbgTransform()));
+	connect(actionAddCharacterTexture,	&QAction::triggered, this, [this]() {importChatacter(); });
 	connect(actionAddBackGround,		&QAction::triggered, this, [this]() {importBackground(); });
 	connect(actionChoseBackGroundColor, &QAction::triggered, this, [this]() {choseBackgroundColor(); });
 	connect(&viewScale,		&ViewData::valueChanged, this, [&](float v) {labelViewScale->setText(tr("%1  ").arg(v)); });
@@ -192,6 +194,13 @@ void PiYingGL::addCharacter(const QString& imageName)
 
 	if (parent->chImageList->currentRow() < 0) parent->chImageList->setCurrentRow(0);
 
+	update();
+}
+
+void PiYingGL::setEditMode(EditMode mode)
+{
+	editMode = mode;
+	currentSelectedBackGround = -1;
 	update();
 }
 

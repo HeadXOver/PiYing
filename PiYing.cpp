@@ -156,24 +156,21 @@ void PiYing::askDefaultColor(){
 void PiYing::onModeChanged(int mode)
 {
     if (mode == 0) {
-        piYingGL->editMode = EditMode::Default;
-
         splitListOpenGL->widget(0)->setParent(this);
         splitListOpenGL->insertWidget(0, voidListWidget);
+
+        piYingGL->setEditMode(EditMode::Default);
     }
     else if(mode == 1){
-        piYingGL->editMode = EditMode::BackGround;
-
         splitListOpenGL->widget(0)->setParent(this);
         splitListOpenGL->insertWidget(0, bgImageList);
+        piYingGL->setEditMode(EditMode::BackGround);
     }
     else if (mode == 2) {
-        piYingGL->editMode = EditMode::characterOverView;
-
         splitListOpenGL->widget(0)->setParent(this);
         splitListOpenGL->insertWidget(0, chImageList);
+        piYingGL->setEditMode(EditMode::characterOverView);
     }
-    piYingGL->update();
 }
 
 void PiYing::importBackGround(){

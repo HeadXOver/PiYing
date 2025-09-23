@@ -80,6 +80,7 @@ public:
 	void addBackground(const QString& imageName);
 	void appendBgList(QImage& image);
 	void addCharacter(const QString& imageName);
+	void setEditMode(EditMode mode);
 	void choseBackgroundColor();
 	void changeRatio(float ratio);
 	void updateProjMatrix();
@@ -117,6 +118,7 @@ public:
 	bool drawVisible = true;
 
 	QAction* actionAddBackGround;
+	QAction* actionAddCharacterTexture;
 	QAction* actionFullScreenBackGround;
 	QAction* actionChoseBackGroundColor;
 	QAction* actionSetViewToStandard;
