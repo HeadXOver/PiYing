@@ -103,17 +103,11 @@ void PiYingGL::paintBackgrounds()
 
 void PiYingGL::paintCharactersOverView()
 {
-	glBindVertexArray(chVAO);
-	glBindBuffer(GL_ARRAY_BUFFER, chVBO);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, chEBO);
-	chShaderProgram.bind();
+	glBindVertexArray(bgVAO);
+	glBindBuffer(GL_ARRAY_BUFFER, bgVBO);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, bgEBO);
+	bgShaderProgram.bind();
 	glActiveTexture(GL_TEXTURE0);
-
-	glBufferData(GL_ARRAY_BUFFER, sizeof(RECTANGLE_VERT), RECTANGLE_VERT, GL_STATIC_DRAW);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(RECTANGLE_INDECES), RECTANGLE_INDECES, GL_STATIC_DRAW);
-
-	//glBufferData(GL_ARRAY_BUFFER, characterVerts.size() * sizeof(float), characterVerts.data(), GL_DYNAMIC_DRAW);
-	//glBufferData(GL_ELEMENT_ARRAY_BUFFER, characterIndices.size() * sizeof(float), characterIndices.data(), GL_DYNAMIC_DRAW);
 
 	// position attribute
 	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
@@ -121,13 +115,11 @@ void PiYingGL::paintCharactersOverView()
 
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-	if(characterTextures.size() > 0) {
-		ImageTexture& it = characterTextures[0];
-		it.tex->bind();
-
+	int i = parent->chImageList->currentRow();
+	if (i >= 0) {
+		characterTextures[i].tex->bind();
 		bgShaderProgram.setUniformValue("texture1", 0);
-		bgShaderProgram.setUniformValue("trc", getBgShaderMatrix(it.transform));
+		bgShaderProgram.setUniformValue("trc", QMatrix4x4());
 
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 	}
@@ -135,6 +127,12 @@ void PiYingGL::paintCharactersOverView()
 	glBindVertexArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+	QPainter painter(this);
+	painter.setPen(framePen);
+	for (int i = 0; i < first2Vert.index; i++) {
+		painter.drawPoint(first2Vert.vert[i]);
+	}
 }
 
 void PiYingGL::addBackground(const QString& imageName) {

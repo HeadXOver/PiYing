@@ -121,3 +121,8 @@ static QMatrix4x4 getScale(const QMatrix4x4& M) {
     trans.scale(qSqrt(M(0, 0) * M(0, 0) + M(1, 0) * M(1, 0)));
     return trans;
 }
+
+struct First2Vert {
+    QPointF vert[2] = {QPointF(0.f, 0.f), QPointF(0.f, 0.f)};
+    int index = 0;
+};

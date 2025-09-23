@@ -32,7 +32,7 @@ void PiYingGL::initializeGL()
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
-	////////////////initialize character///////////////////////
+	////////////////initialize character texture///////////////////////
 
 	glGenVertexArrays(1, &chVAO);
 	glGenBuffers(1, &chVBO);
@@ -63,7 +63,9 @@ void PiYingGL::initializeGL()
 void PiYingGL::paintGL() {
 	glClear(GL_COLOR_BUFFER_BIT);
 	if(editMode != EditMode::characterOverView) paintBackgrounds();
-	else paintCharactersOverView();
+	else {
+		paintCharactersOverView();
+	}
 }
 
 void PiYingGL::resizeGL(int w, int h) {

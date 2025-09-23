@@ -176,6 +176,8 @@ private:
 	PiYing* parent;
 
 	std::vector<float> characterVerts;
-	std::vector<unsigned int> characterIndices;
+	std::vector<unsigned int> characterTriangleIndices;
+
+	First2Vert first2Vert;
 };
 

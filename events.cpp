@@ -3,12 +3,12 @@
 void PiYingGL::mousePressEvent(QMouseEvent* event)
 {
 	if (event->button() == Qt::LeftButton || event->button() == Qt::RightButton) {
-		lastMousePos = mapToGL(event->position());
-
-		currentSelectedBackGround = -1;
-		lastMousePosType = MousePos::OutSide;
+		QPointF mouse = event->position();
+		lastMousePos = mapToGL(mouse);
 
 		if (editMode == EditMode::BackGround) {
+			currentSelectedBackGround = -1;
+			lastMousePosType = MousePos::OutSide;
 			for (int i = backGrounds.size() - 1; i >= 0; i--) {
 				ImageTexture& item = backGrounds[i];
 				QPointF posV = getRaletiveToRect(lastMousePos, item.transform);
@@ -18,6 +18,30 @@ void PiYingGL::mousePressEvent(QMouseEvent* event)
 					currentSelectedBackGround = i;
 					break;
 				}
+			}
+		}
+		else if (editMode == EditMode::characterOverView && event->button() == Qt::LeftButton) {
+			if (first2Vert.index == 0) {
+				first2Vert.vert[0] = mouse;
+				first2Vert.index++;
+			}
+			else if (first2Vert.index == 1) {
+				first2Vert.vert[1] = mouse;
+				first2Vert.index++;
+			}
+			else {
+				first2Vert.index = 0;
+				first2Vert.vert[0] = mapToGL(first2Vert.vert[0]);
+				first2Vert.vert[1] = mapToGL(first2Vert.vert[1]);
+				characterTriangleIndices.push_back((unsigned int)characterVerts.size() / 2);
+				characterVerts.push_back(first2Vert.vert[0].x());
+				characterVerts.push_back(first2Vert.vert[0].y());
+				characterTriangleIndices.push_back((unsigned int)characterVerts.size() / 2);
+				characterVerts.push_back(first2Vert.vert[1].x());
+				characterVerts.push_back(first2Vert.vert[1].y());
+				characterTriangleIndices.push_back((unsigned int)characterVerts.size() / 2);
+				characterVerts.push_back(lastMousePos.x());
+				characterVerts.push_back(lastMousePos.y());
 			}
 		}
 
@@ -78,7 +102,7 @@ void PiYingGL::wheelEvent(QWheelEvent* ev) {
 		currentUpdate();
 	}
 
-	ev->accept();   // self event
+	ev->accept();
 }
 
 void PiYingGL::contextMenuEvent(QContextMenuEvent* e)
