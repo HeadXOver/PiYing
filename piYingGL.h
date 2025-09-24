@@ -80,6 +80,7 @@ public:
 	void addBackground(const QString& imageName);
 	void appendBgList(QImage& image);
 	void addCharacter(const QString& imageName);
+	void addChVert(const QPointF& point);
 	void setEditMode(EditMode mode);
 	void choseBackgroundColor();
 	void changeRatio(float ratio);

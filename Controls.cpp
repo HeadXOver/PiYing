@@ -89,7 +89,7 @@ void PiYingGL::chEditVertControl(const QPointF& mouse)
 			QPointF readyPoint(characterVerts[i], characterVerts[i + 1]);
 			readyPoint = glToMap(readyPoint);
 			if (QLineF(readyPoint, mouse).length() < 6) {
-				if (first2Index.first != i) {
+				if (first2Index.first != i / 2) {
 					first2VertState = First2VertState::Full2Select;
 					first2Index.second = (unsigned int)i / 2;
 				}
@@ -127,31 +127,17 @@ void PiYingGL::chEditVertControl(const QPointF& mouse)
 			readyPoint = glToMap(readyPoint);
 			if (QLineF(readyPoint, mouse).length() < 6) {
 				first2VertState = First2VertState::None;
-				first2Vert.first = mapToGL(first2Vert.first);
-				first2Vert.second = mapToGL(first2Vert.second);
 				characterTriangleIndices.push_back((unsigned int)i / 2);
-				characterTriangleIndices.push_back((unsigned int)characterVerts.size() / 2);
-				characterVerts.push_back(first2Vert.first.x());
-				characterVerts.push_back(first2Vert.first.y());
-				characterTriangleIndices.push_back((unsigned int)characterVerts.size() / 2);
-				characterVerts.push_back(first2Vert.second.x());
-				characterVerts.push_back(first2Vert.second.y());
+				addChVert(mapToGL(first2Vert.first));
+				addChVert(mapToGL(first2Vert.second));
 				return;
 			}
 		}
 
 		first2VertState = First2VertState::None;
-		first2Vert.first = mapToGL(first2Vert.first);
-		first2Vert.second = mapToGL(first2Vert.second);
-		characterTriangleIndices.push_back((unsigned int)characterVerts.size() / 2);
-		characterVerts.push_back(lastMousePos.x());
-		characterVerts.push_back(lastMousePos.y());
-		characterTriangleIndices.push_back((unsigned int)characterVerts.size() / 2);
-		characterVerts.push_back(first2Vert.first.x());
-		characterVerts.push_back(first2Vert.first.y());
-		characterTriangleIndices.push_back((unsigned int)characterVerts.size() / 2);
-		characterVerts.push_back(first2Vert.second.x());
-		characterVerts.push_back(first2Vert.second.y());
+		addChVert(mapToGL(first2Vert.first));
+		addChVert(mapToGL(first2Vert.second));
+		addChVert(lastMousePos);
 		return;
 	}
 	else if (first2VertState == First2VertState::Full2Select) {
@@ -160,29 +146,26 @@ void PiYingGL::chEditVertControl(const QPointF& mouse)
 			readyPoint = glToMap(readyPoint);
 			if (QLineF(readyPoint, mouse).length() < 6) {
 				if (i / 2 == first2Index.first && i / 2 == first2Index.second) return;
-				bool repeat = false;
 				for (int j = 0; j < characterTriangleIndices.size(); j += 3) {
 					unsigned int x[3] = { characterTriangleIndices[j + 0], characterTriangleIndices[j + 1], characterTriangleIndices[j + 2] };
 					unsigned int y[3] = { i / 2, first2Index.first, first2Index.second };
 					std::sort(x, x + 3);
 					std::sort(y, y + 3);
-					if (x[0] == y[0] && x[1] == y[1] && x[2] == y[2]) {
-						repeat = true;
-						break;
-					}
+					if (x[0] == y[0] && x[1] == y[1] && x[2] == y[2]) 
+						return;
 				}
-				if (repeat) return;
 
+				first2VertState = First2VertState::None;
 				characterTriangleIndices.push_back(first2Index.first);
 				characterTriangleIndices.push_back(first2Index.second);
 				characterTriangleIndices.push_back(i / 2);
+
+				return;
 			}
 		}
 
 		first2VertState = First2VertState::None;
-		characterTriangleIndices.push_back((unsigned int)characterVerts.size() / 2);
-		characterVerts.push_back(lastMousePos.x());
-		characterVerts.push_back(lastMousePos.y());
+		addChVert(lastMousePos);
 		characterTriangleIndices.push_back(first2Index.first);
 		characterTriangleIndices.push_back(first2Index.second);
 		return;
@@ -194,28 +177,20 @@ void PiYingGL::chEditVertControl(const QPointF& mouse)
 			QPointF readyPoint(characterVerts[i], characterVerts[i + 1]);
 			readyPoint = glToMap(readyPoint);
 			if (QLineF(readyPoint, mouse).length() < 6) {
-				if (first2Index.first != i) {
+				if (first2Index.first != i / 2) {
 					first2VertState = First2VertState::None;
-					first2Vert.first = mapToGL(first2Vert.first);
 					characterTriangleIndices.push_back((unsigned int)i / 2);
-					characterTriangleIndices.push_back(first2Index.first);
-					characterTriangleIndices.push_back((unsigned int)characterVerts.size() / 2);
-					characterVerts.push_back(first2Vert.first.x());
-					characterVerts.push_back(first2Vert.first.y());
+					characterTriangleIndices.push_back(first2Index.first); 
+					addChVert(mapToGL(first2Vert.first));
 				}
 				return;
 			}
 		}
 
 		first2VertState = First2VertState::None;
-		first2Vert.first = mapToGL(first2Vert.first);
 		characterTriangleIndices.push_back(first2Index.first);
-		characterTriangleIndices.push_back((unsigned int)characterVerts.size() / 2);
-		characterVerts.push_back(lastMousePos.x());
-		characterVerts.push_back(lastMousePos.y());
-		characterTriangleIndices.push_back((unsigned int)characterVerts.size() / 2);
-		characterVerts.push_back(first2Vert.first.x());
-		characterVerts.push_back(first2Vert.first.y());
+		addChVert(lastMousePos);
+		addChVert(mapToGL(first2Vert.first));
 		return;
 	}
 }

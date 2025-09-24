@@ -126,6 +126,13 @@ void PiYingGL::addCharacter(const QString& imageName)
 	update();
 }
 
+void PiYingGL::addChVert(const QPointF& point)
+{
+	characterTriangleIndices.push_back((unsigned int)characterVerts.size() / 2);
+	characterVerts.push_back(point.x());
+	characterVerts.push_back(point.y());
+}
+
 void PiYingGL::setEditMode(EditMode mode)
 {
 	editMode = mode;
