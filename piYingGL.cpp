@@ -50,8 +50,6 @@ PiYingGL::PiYingGL(PiYing* parent) : QOpenGLWidget(parent), parent(parent)
 
 	//backGroundColor.setRgb(198, 220, 255);
 	backGroundColor.setRgb(0, 0, 0);
-	chTriangleframePen.setColor(QColor(184, 255, 171));
-	chTriangleframePen.setWidth(2);
 }
 
 PiYingGL::~PiYingGL()
@@ -130,18 +128,27 @@ void PiYingGL::paintCharactersOverView()
 
 	QPainter painter(this);
 	painter.setRenderHint(QPainter::Antialiasing);
-	painter.setPen(chEditerPointPen);
+	painter.setPen(QPen(Qt::red, 6));
 	painter.setBrush(Qt::NoBrush);
+	QPen triangleLinePenSide(Qt::black, 3);
+	QPen triangleLinePen(Qt::green, 1);
 
-	for (int i = 0; i < first2Vert.index; i++)  painter.drawPoint(first2Vert.vert[i]);
+	for (int i = 0; i < first2Vert.index; i++) {
+		painter.setPen(QPen(Qt::black, 8));
+		painter.drawPoint(first2Vert.vert[i]);
+		painter.setPen(QPen(Qt::red, 6));
+		painter.drawPoint(first2Vert.vert[i]);
+	}
 
-	painter.setPen(chTriangleframePen);
 	for (int i = 0; i < characterTriangleIndices.size();) {
 		QPolygonF poly;
 		int j = 0;
 		for (; j < 3; j++) {
 			QPointF p(characterVerts[characterTriangleIndices[i + j] * 2], characterVerts[characterTriangleIndices[i + j] * 2 + 1]);
 			poly << glToMap(p);
+			painter.setPen(QPen(Qt::black, 3));
+			painter.drawPolygon(poly);
+			painter.setPen(QPen(Qt::green, 1));
 			painter.drawPolygon(poly);
 		}
 		i += j;

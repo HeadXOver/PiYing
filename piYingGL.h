@@ -172,9 +172,6 @@ private:
 
 	QColor backGroundColor;
 
-	QPen chEditerPointPen = QPen(Qt::red, 6);
-	QPen chTriangleframePen;
-
 	PiYing* parent;
 
 	std::vector<float> characterVerts;
