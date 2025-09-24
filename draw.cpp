@@ -5,6 +5,7 @@ void PiYingGL::drawChEditVert()
 {
 	QPainter painter(this);
 	painter.setRenderHint(QPainter::Antialiasing);
+	painter.setBrush(QColor(225, 0, 0, 20));
 
 	for (int i = 0; i < characterTriangleIndices.size();) {
 		QPolygonF poly;
