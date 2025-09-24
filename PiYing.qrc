@@ -3,5 +3,7 @@
         <file>bgshapes.frag</file>
         <file>bgshapes.vert</file>
         <file>darkStyle.qss</file>
+        <file>chEditershapes.frag</file>
+        <file>chEditershapes.vert</file>
     </qresource>
 </RCC>

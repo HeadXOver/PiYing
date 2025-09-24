@@ -32,7 +32,7 @@ void PiYingGL::initializeGL()
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
-	////////////////initialize character texture///////////////////////
+	////////////////initialize character editer///////////////////////
 
 	glGenVertexArrays(1, &chVAO);
 	glGenBuffers(1, &chVBO);
@@ -44,8 +44,8 @@ void PiYingGL::initializeGL()
 
 	/////////////////////////////////////////////
 
-	chShaderProgram.addShaderFromSourceFile(QOpenGLShader::Vertex, ":/PiYing/bgshapes.vert");
-	chShaderProgram.addShaderFromSourceFile(QOpenGLShader::Fragment, ":/PiYing/bgshapes.frag");
+	chShaderProgram.addShaderFromSourceFile(QOpenGLShader::Vertex, ":/PiYing/chEditershapes.vert");
+	chShaderProgram.addShaderFromSourceFile(QOpenGLShader::Fragment, ":/PiYing/chEditershapes.frag");
 	chShaderProgram.link();
 
 	/////////////////////////////////////////////

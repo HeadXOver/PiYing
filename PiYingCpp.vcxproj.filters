@@ -122,5 +122,11 @@
     <None Include="darkStyle.qss">
       <Filter>StyleSheets</Filter>
     </None>
+    <None Include="chEditershapes.frag">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="chEditershapes.vert">
+      <Filter>Shader</Filter>
+    </None>
   </ItemGroup>
 </Project>

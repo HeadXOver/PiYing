@@ -98,6 +98,7 @@ public:
 	inline QPointF getRaletiveToGlobal(const QPointF& point, const ImageTransform& transform) const		{ return getBgShaderMatrix(transform).map(point); }
 
 	inline QPointF mapToGL(const QPointF& point) { return QPointF((point.x() / float(width())) * 2.0f - 1.0f, 1.0f - (point.y() / float(height())) * 2.0f); }
+	inline QPointF glToMap(const QPointF& point) { return QPointF((point.x() + 1.0f) * width() / 2, (1.0f - point.y()) * height() / 2); }
 
 	QMatrix4x4 getViewMatrixInvert() const;
 	QMatrix4x4 getViewMatrix() const;
@@ -171,7 +172,8 @@ private:
 
 	QColor backGroundColor;
 
-	QPen framePen = QPen(Qt::red);
+	QPen chEditerPointPen = QPen(Qt::red, 6);
+	QPen chTriangleframePen;
 
 	PiYing* parent;
 
