@@ -79,6 +79,9 @@
     <ClCompile Include="AskTransformDialog.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="draw.cpp">
+      <Filter>Source Files\piYingGL</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Layer.h">

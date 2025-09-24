@@ -102,6 +102,7 @@
     <ClCompile Include="GLFunc.cpp" />
     <ClCompile Include="slots.cpp" />
     <ClCompile Include="RaletiveTransform.cpp" />
+    <ClCompile Include="draw.cpp" />
     <QtRcc Include="PiYing.qrc" />
     <QtUic Include="PiYing.ui" />
     <QtMoc Include="PiYing.h" />

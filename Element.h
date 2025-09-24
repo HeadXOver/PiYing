@@ -3,6 +3,7 @@
 #include <QOpenGLTexture>
 #include <QMatrix4x4>
 #include <vector>
+#include <QLineF>
 
 struct ImageTransform {
     inline QMatrix4x4 getMatrix() const{
@@ -122,7 +123,21 @@ static QMatrix4x4 getScale(const QMatrix4x4& M) {
     return trans;
 }
 
+enum class First2VertState {
+    None,
+    HalfPoint,
+    Halfselect,
+    Full2Point,
+    Full2Select,
+    FullSelectPoint,
+};
+
 struct First2Vert {
-    QPointF vert[2] = {QPointF(0.f, 0.f), QPointF(0.f, 0.f)};
-    int index = 0;
+    QPointF first;
+    QPointF second;
+};
+
+struct First2Index {
+    unsigned int first = -1;
+    unsigned int second = -1;
 };

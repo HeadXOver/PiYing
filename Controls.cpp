@@ -1,4 +1,4 @@
-#include "piYingGL.h"
+﻿#include "piYingGL.h"
 
 void PiYingGL::bgRotationControl(const QPointF& mouse, ImageTexture& image)
 {
@@ -64,4 +64,158 @@ void PiYingGL::viewRotationControl(const QPointF& mouse)
 	QPointF rotatedTrans = toTrans.map(viewTrans) - viewTrans;
 	viewTransX.setValue(lastViewTransX + rotatedTrans.x());
 	viewTransY.setValue(lastViewTransY + rotatedTrans.y());
+}
+
+void PiYingGL::chEditVertControl(const QPointF& mouse)
+{
+	if (first2VertState == First2VertState::None) {
+		for (int i = 0; i < characterVerts.size(); i += 2) {
+			QPointF readyPoint(characterVerts[i], characterVerts[i + 1]);
+			readyPoint = glToMap(readyPoint);
+			if (QLineF(readyPoint, mouse).length() < 6) {
+				first2VertState = First2VertState::Halfselect;
+				first2Index.first = (unsigned int)i / 2;
+				return;
+			}
+		}
+
+		// 如果与已有的点不重复
+		first2VertState = First2VertState::HalfPoint;
+		first2Vert.first = mouse;
+		return;
+	}
+	else if (first2VertState == First2VertState::Halfselect) {
+		for (int i = 0; i < characterVerts.size(); i += 2) {
+			QPointF readyPoint(characterVerts[i], characterVerts[i + 1]);
+			readyPoint = glToMap(readyPoint);
+			if (QLineF(readyPoint, mouse).length() < 6) {
+				if (first2Index.first != i) {
+					first2VertState = First2VertState::Full2Select;
+					first2Index.second = (unsigned int)i / 2;
+				}
+				return;
+			}
+		}
+
+		// 如果与已有的点不重复
+		first2VertState = First2VertState::FullSelectPoint;
+		first2Vert.first = mouse;
+		return;
+	}
+	else if (first2VertState == First2VertState::HalfPoint) {
+		if (QLineF(first2Vert.first, mouse).length() < 6)  return;
+
+		for (int i = 0; i < characterVerts.size(); i += 2) {
+			QPointF readyPoint(characterVerts[i], characterVerts[i + 1]);
+			readyPoint = glToMap(readyPoint);
+			if (QLineF(readyPoint, mouse).length() < 6) {
+				first2VertState = First2VertState::FullSelectPoint;
+				first2Index.first = (unsigned int)i / 2;
+				return;
+			}
+		}
+
+		first2VertState = First2VertState::Full2Point;
+		first2Vert.second = mouse;
+		return;
+	}
+	else if (first2VertState == First2VertState::Full2Point) {
+		if (QLineF(first2Vert.first, mouse).length() < 6 || QLineF(first2Vert.second, mouse).length() < 6)  return;
+
+		for (int i = 0; i < characterVerts.size(); i += 2) {
+			QPointF readyPoint(characterVerts[i], characterVerts[i + 1]);
+			readyPoint = glToMap(readyPoint);
+			if (QLineF(readyPoint, mouse).length() < 6) {
+				first2VertState = First2VertState::None;
+				first2Vert.first = mapToGL(first2Vert.first);
+				first2Vert.second = mapToGL(first2Vert.second);
+				characterTriangleIndices.push_back((unsigned int)i / 2);
+				characterTriangleIndices.push_back((unsigned int)characterVerts.size() / 2);
+				characterVerts.push_back(first2Vert.first.x());
+				characterVerts.push_back(first2Vert.first.y());
+				characterTriangleIndices.push_back((unsigned int)characterVerts.size() / 2);
+				characterVerts.push_back(first2Vert.second.x());
+				characterVerts.push_back(first2Vert.second.y());
+				return;
+			}
+		}
+
+		first2VertState = First2VertState::None;
+		first2Vert.first = mapToGL(first2Vert.first);
+		first2Vert.second = mapToGL(first2Vert.second);
+		characterTriangleIndices.push_back((unsigned int)characterVerts.size() / 2);
+		characterVerts.push_back(lastMousePos.x());
+		characterVerts.push_back(lastMousePos.y());
+		characterTriangleIndices.push_back((unsigned int)characterVerts.size() / 2);
+		characterVerts.push_back(first2Vert.first.x());
+		characterVerts.push_back(first2Vert.first.y());
+		characterTriangleIndices.push_back((unsigned int)characterVerts.size() / 2);
+		characterVerts.push_back(first2Vert.second.x());
+		characterVerts.push_back(first2Vert.second.y());
+		return;
+	}
+	else if (first2VertState == First2VertState::Full2Select) {
+		for (int i = 0; i < characterVerts.size(); i += 2) {
+			QPointF readyPoint(characterVerts[i], characterVerts[i + 1]);
+			readyPoint = glToMap(readyPoint);
+			if (QLineF(readyPoint, mouse).length() < 6) {
+				if (i / 2 == first2Index.first && i / 2 == first2Index.second) return;
+				bool repeat = false;
+				for (int j = 0; j < characterTriangleIndices.size(); j += 3) {
+					unsigned int x[3] = { characterTriangleIndices[j + 0], characterTriangleIndices[j + 1], characterTriangleIndices[j + 2] };
+					unsigned int y[3] = { i / 2, first2Index.first, first2Index.second };
+					std::sort(x, x + 3);
+					std::sort(y, y + 3);
+					if (x[0] == y[0] && x[1] == y[1] && x[2] == y[2]) {
+						repeat = true;
+						break;
+					}
+				}
+				if (repeat) return;
+
+				characterTriangleIndices.push_back(first2Index.first);
+				characterTriangleIndices.push_back(first2Index.second);
+				characterTriangleIndices.push_back(i / 2);
+			}
+		}
+
+		first2VertState = First2VertState::None;
+		characterTriangleIndices.push_back((unsigned int)characterVerts.size() / 2);
+		characterVerts.push_back(lastMousePos.x());
+		characterVerts.push_back(lastMousePos.y());
+		characterTriangleIndices.push_back(first2Index.first);
+		characterTriangleIndices.push_back(first2Index.second);
+		return;
+	}
+	else if (first2VertState == First2VertState::FullSelectPoint) {
+		if (QLineF(first2Vert.first, mouse).length() < 6)  return;
+
+		for (int i = 0; i < characterVerts.size(); i += 2) {
+			QPointF readyPoint(characterVerts[i], characterVerts[i + 1]);
+			readyPoint = glToMap(readyPoint);
+			if (QLineF(readyPoint, mouse).length() < 6) {
+				if (first2Index.first != i) {
+					first2VertState = First2VertState::None;
+					first2Vert.first = mapToGL(first2Vert.first);
+					characterTriangleIndices.push_back((unsigned int)i / 2);
+					characterTriangleIndices.push_back(first2Index.first);
+					characterTriangleIndices.push_back((unsigned int)characterVerts.size() / 2);
+					characterVerts.push_back(first2Vert.first.x());
+					characterVerts.push_back(first2Vert.first.y());
+				}
+				return;
+			}
+		}
+
+		first2VertState = First2VertState::None;
+		first2Vert.first = mapToGL(first2Vert.first);
+		characterTriangleIndices.push_back(first2Index.first);
+		characterTriangleIndices.push_back((unsigned int)characterVerts.size() / 2);
+		characterVerts.push_back(lastMousePos.x());
+		characterVerts.push_back(lastMousePos.y());
+		characterTriangleIndices.push_back((unsigned int)characterVerts.size() / 2);
+		characterVerts.push_back(first2Vert.first.x());
+		characterVerts.push_back(first2Vert.first.y());
+		return;
+	}
 }

@@ -91,6 +91,8 @@ public:
 	void bgTranslateControl(const QPointF& mouse, ImageTexture& image);
 	void bgScaleControl(const QPointF& mouse, ImageTexture& image);
 	void viewRotationControl(const QPointF& mouse);
+	void chEditVertControl(const QPointF& mouse);
+	void drawChEditVert();
 
 	bool addBackground(const QString& imageName, QImage& image);
 
@@ -178,5 +180,7 @@ private:
 	std::vector<unsigned int> characterTriangleIndices;
 
 	First2Vert first2Vert;
+	First2Index first2Index;
+	First2VertState first2VertState = First2VertState::None;
 };
 

@@ -21,28 +21,7 @@ void PiYingGL::mousePressEvent(QMouseEvent* event)
 			}
 		}
 		else if (editMode == EditMode::characterOverView && event->button() == Qt::LeftButton) {
-			if (first2Vert.index == 0) {
-				first2Vert.vert[0] = mouse;
-				first2Vert.index++;
-			}
-			else if (first2Vert.index == 1) {
-				first2Vert.vert[1] = mouse;
-				first2Vert.index++;
-			}
-			else {
-				first2Vert.index = 0;
-				first2Vert.vert[0] = mapToGL(first2Vert.vert[0]);
-				first2Vert.vert[1] = mapToGL(first2Vert.vert[1]);
-				characterTriangleIndices.push_back((unsigned int)characterVerts.size() / 2);
-				characterVerts.push_back(first2Vert.vert[0].x());
-				characterVerts.push_back(first2Vert.vert[0].y());
-				characterTriangleIndices.push_back((unsigned int)characterVerts.size() / 2);
-				characterVerts.push_back(first2Vert.vert[1].x());
-				characterVerts.push_back(first2Vert.vert[1].y());
-				characterTriangleIndices.push_back((unsigned int)characterVerts.size() / 2);
-				characterVerts.push_back(lastMousePos.x());
-				characterVerts.push_back(lastMousePos.y());
-			}
+			chEditVertControl(mouse);
 		}
 
 		currentUpdate();
