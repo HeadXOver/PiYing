@@ -126,10 +126,11 @@ static QMatrix4x4 getScale(const QMatrix4x4& M) {
 enum class First2VertState {
     None,
     HalfPoint,
-    Halfselect,
+    HalfSelect,
     Full2Point,
     Full2Select,
     FullSelectPoint,
+    FullPointSelect,
 };
 
 struct First2Vert {

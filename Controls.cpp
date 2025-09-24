@@ -74,7 +74,7 @@ void PiYingGL::chEditVertControl(const QPointF& origMouse)
 			QPointF readyPoint(characterVerts[i], characterVerts[i + 1]);
 			readyPoint = glToMap(readyPoint);
 			if (QLineF(readyPoint, mouse).length() < 6) {
-				first2VertState = First2VertState::Halfselect;
+				first2VertState = First2VertState::HalfSelect;
 				first2Index.first = (unsigned int)i / 2;
 				return;
 			}
@@ -85,7 +85,7 @@ void PiYingGL::chEditVertControl(const QPointF& origMouse)
 		first2Vert.first = mouse;
 		return;
 	}
-	else if (first2VertState == First2VertState::Halfselect) {
+	else if (first2VertState == First2VertState::HalfSelect) {
 		for (int i = 0; i < characterVerts.size(); i += 2) {
 			QPointF readyPoint(characterVerts[i], characterVerts[i + 1]);
 			readyPoint = glToMap(readyPoint);
@@ -109,7 +109,7 @@ void PiYingGL::chEditVertControl(const QPointF& origMouse)
 			QPointF readyPoint(characterVerts[i], characterVerts[i + 1]);
 			readyPoint = glToMap(readyPoint);
 			if (QLineF(readyPoint, mouse).length() < 6) {
-				first2VertState = First2VertState::FullSelectPoint;
+				first2VertState = First2VertState::FullPointSelect;
 				first2Index.first = (unsigned int)i / 2;
 				return;
 			}
@@ -170,7 +170,7 @@ void PiYingGL::chEditVertControl(const QPointF& origMouse)
 		characterTriangleIndices.push_back(first2Index.second);
 		return;
 	}
-	else if (first2VertState == First2VertState::FullSelectPoint) {
+	else if (first2VertState == First2VertState::FullSelectPoint || first2VertState == First2VertState::FullPointSelect) {
 		if (QLineF(first2Vert.first, mouse).length() < 6)  return;
 
 		for (int i = 0; i < characterVerts.size(); i += 2) {

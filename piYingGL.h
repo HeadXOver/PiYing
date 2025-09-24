@@ -149,6 +149,8 @@ public:
 	QLabel* labelViewTransY;
 	QLabel* labelViewRot;
 
+	First2VertState first2VertState = First2VertState::None;
+
 private:
 	unsigned int bgVAO = 0, bgVBO = 0, bgEBO = 0;
 	unsigned int chVAO = 0, chVBO = 0, chEBO = 0;
@@ -186,6 +188,5 @@ private:
 
 	First2Vert first2Vert;
 	First2Index first2Index;
-	First2VertState first2VertState = First2VertState::None;
 };
 

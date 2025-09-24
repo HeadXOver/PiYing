@@ -22,6 +22,9 @@ public:
     PiYing(QWidget *parent = nullptr);
     ~PiYing();
 
+protected:
+	void keyPressEvent(QKeyEvent* event) override;
+
 private slots:
 	void importCharacter();
 	void importBackGround();

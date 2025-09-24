@@ -23,7 +23,7 @@ void PiYingGL::drawChEditVert()
 
 	if (first2VertState == First2VertState::None) return;
 
-	if (first2VertState == First2VertState::Halfselect) {
+	if (first2VertState == First2VertState::HalfSelect) {
 		QPointF selectPoint(characterVerts[first2Index.first * 2], characterVerts[first2Index.first * 2 + 1]);
 		selectPoint = glToMap(getViewProjMatrix().map(selectPoint));
 		painter.setPen(QPen(Qt::black, 8));
@@ -58,7 +58,7 @@ void PiYingGL::drawChEditVert()
 		painter.drawPoint(selectPoint);
 		painter.drawPoint(selectPoint2);
 	}
-	else if (first2VertState == First2VertState::FullSelectPoint) {
+	else if (first2VertState == First2VertState::FullSelectPoint || first2VertState == First2VertState::FullPointSelect) {
 		QPointF selectPoint(characterVerts[first2Index.first * 2], characterVerts[first2Index.first * 2 + 1]);
 		selectPoint = glToMap(getViewProjMatrix().map(selectPoint));
 		painter.setPen(QPen(Qt::black, 8));
