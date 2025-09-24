@@ -66,8 +66,9 @@ void PiYingGL::viewRotationControl(const QPointF& mouse)
 	viewTransY.setValue(lastViewTransY + rotatedTrans.y());
 }
 
-void PiYingGL::chEditVertControl(const QPointF& mouse)
+void PiYingGL::chEditVertControl(const QPointF& origMouse)
 {
+	QPointF mouse = glToMap(getViewProjMatrixInvert().map(mapToGL(origMouse)));
 	if (first2VertState == First2VertState::None) {
 		for (int i = 0; i < characterVerts.size(); i += 2) {
 			QPointF readyPoint(characterVerts[i], characterVerts[i + 1]);
@@ -97,7 +98,6 @@ void PiYingGL::chEditVertControl(const QPointF& mouse)
 			}
 		}
 
-		// 如果与已有的点不重复
 		first2VertState = First2VertState::FullSelectPoint;
 		first2Vert.first = mouse;
 		return;
@@ -137,11 +137,11 @@ void PiYingGL::chEditVertControl(const QPointF& mouse)
 		first2VertState = First2VertState::None;
 		addChVert(mapToGL(first2Vert.first));
 		addChVert(mapToGL(first2Vert.second));
-		addChVert(lastMousePos);
+		addChVert(getViewProjMatrixInvert().map(lastMousePos));
 		return;
 	}
 	else if (first2VertState == First2VertState::Full2Select) {
-		for (int i = 0; i < characterVerts.size(); i += 2) {
+		for (unsigned int i = 0; i < characterVerts.size(); i += 2) {
 			QPointF readyPoint(characterVerts[i], characterVerts[i + 1]);
 			readyPoint = glToMap(readyPoint);
 			if (QLineF(readyPoint, mouse).length() < 6) {
@@ -165,7 +165,7 @@ void PiYingGL::chEditVertControl(const QPointF& mouse)
 		}
 
 		first2VertState = First2VertState::None;
-		addChVert(lastMousePos);
+		addChVert(getViewProjMatrixInvert().map(lastMousePos));
 		characterTriangleIndices.push_back(first2Index.first);
 		characterTriangleIndices.push_back(first2Index.second);
 		return;
@@ -189,7 +189,7 @@ void PiYingGL::chEditVertControl(const QPointF& mouse)
 
 		first2VertState = First2VertState::None;
 		characterTriangleIndices.push_back(first2Index.first);
-		addChVert(lastMousePos);
+		addChVert(getViewProjMatrixInvert().map(lastMousePos));
 		addChVert(mapToGL(first2Vert.first));
 		return;
 	}

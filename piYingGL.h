@@ -102,12 +102,16 @@ public:
 
 	inline QPointF mapToGL(const QPointF& point) { return QPointF((point.x() / float(width())) * 2.0f - 1.0f, 1.0f - (point.y() / float(height())) * 2.0f); }
 	inline QPointF glToMap(const QPointF& point) { return QPointF((point.x() + 1.0f) * width() / 2, (1.0f - point.y()) * height() / 2); }
+	inline QPointF mapViewProjMatrix(const QPointF& point) { return glToMap(getViewProjMatrix().map(mapToGL(point))); }
 
 	QMatrix4x4 getViewMatrixInvert() const;
 	QMatrix4x4 getViewMatrix() const;
 	QMatrix4x4 getViewMatrixInvertWithoutTrans() const;
 	QMatrix4x4 getViewMatrixWithoutTrans() const;
 	QMatrix4x4 getBgShaderMatrix(const ImageTransform& transform) const;
+
+	inline QMatrix4x4 getViewProjMatrixInvert() const { return proj * getViewMatrixInvert() * insProj; }
+	inline QMatrix4x4 getViewProjMatrix() const { return proj * getViewMatrix() * insProj; }
 
 	static QString getUniquebgName(const QListWidget* list);
 
