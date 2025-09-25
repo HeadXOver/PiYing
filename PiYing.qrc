@@ -8,5 +8,7 @@
         <file>addChVert.png</file>
         <file>selectChVert.png</file>
         <file>imageListStyle.qss</file>
+        <file>addChVert_S.png</file>
+        <file>selectChVert_S.png</file>
     </qresource>
 </RCC>

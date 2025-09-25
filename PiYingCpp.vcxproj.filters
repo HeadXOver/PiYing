@@ -84,7 +84,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Layer.h">
+    <ClInclude Include="CusEnum.h">
       <Filter>Header Files\CusStruct</Filter>
     </ClInclude>
     <ClInclude Include="cusMode.h">
@@ -95,6 +95,12 @@
     </ClInclude>
     <ClInclude Include="KeyboardStateWin.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CusInclude.h">
+      <Filter>Header Files\CusStruct</Filter>
+    </ClInclude>
+    <ClInclude Include="CusFunc.h">
+      <Filter>Header Files\CusStruct</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

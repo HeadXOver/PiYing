@@ -21,7 +21,7 @@ void PiYingGL::mousePressEvent(QMouseEvent* event)
 			}
 		}
 		else if (editMode == EditMode::characterTexture && event->button() == Qt::LeftButton) {
-			chEditVertControl(mouse);
+			if(toolState == ToolState::AddVert) chEditVertControl(mouse);
 		}
 
 		currentUpdate();
@@ -73,10 +73,15 @@ void PiYingGL::wheelEvent(QWheelEvent* ev) {
 	QPoint numSteps = ev->angleDelta() / 120.f;
 
 	if (!numSteps.isNull()) {
+		QPointF mouse = mapToGL(ev->position());
 		int delta = numSteps.y();
 		float scaleFactor = 1.0f + delta * 0.1f;
 		if (scaleFactor < 0.1f) scaleFactor = 0.1f;
+
+		QPointF toTrans = insProj.map(mouse + (QPointF(0.f, 0.f) - mouse) * scaleFactor);
 		viewScale.setValue(viewScale.value() * scaleFactor);
+		viewTransX.setValue(viewTransX.value() * scaleFactor + toTrans.x());
+		viewTransY.setValue(viewTransY.value() * scaleFactor + toTrans.y());
 
 		currentUpdate();
 	}

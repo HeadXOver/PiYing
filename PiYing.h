@@ -34,6 +34,9 @@ private slots:
 	void onModeChanged(int mode);
 
 private:
+	void selectTool(ToolButton& toolButton);
+
+private:
     Ui::PiYingClass ui;
 
 	// OpenGL widget
@@ -43,6 +46,8 @@ private:
 	QSplitter* splitTimelineOpenGL;
 
 	QWidget* timeLine;
+
+	QList<ToolButton> toolList;
 
 public:
 	PiYingGLContainer* piYingGLContainer = nullptr;

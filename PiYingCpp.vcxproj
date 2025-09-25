@@ -110,11 +110,13 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CusInclude.h" />
+    <ClInclude Include="CusFunc.h" />
     <QtMoc Include="AskTransformDialog.h" />
     <ClInclude Include="cusMode.h" />
     <ClInclude Include="Element.h" />
     <ClInclude Include="KeyboardStateWin.h" />
-    <ClInclude Include="Layer.h" />
+    <ClInclude Include="CusEnum.h" />
     <QtMoc Include="ViewData.h" />
     <QtMoc Include="piYingGLContainer.h" />
     <QtMoc Include="RatioDialog.h" />

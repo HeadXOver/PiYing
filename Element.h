@@ -3,7 +3,10 @@
 #include <QOpenGLTexture>
 #include <QMatrix4x4>
 #include <vector>
-#include <QLineF>
+#include <QIcon>
+#include <QAction>
+
+#include "CusEnum.h"
 
 struct ImageTransform {
     inline QMatrix4x4 getMatrix() const{
@@ -105,34 +108,6 @@ static const unsigned int RECTANGLE_INDECES[] = {
     1, 2, 3  // second triangle
 };
 
-static QMatrix4x4 getTrans(const QMatrix4x4& M) {
-    QMatrix4x4 trans;
-    trans.translate(M(0, 3), M(1, 3));
-    return trans;
-}
-
-static QMatrix4x4 getRot(const QMatrix4x4& M) {
-    QMatrix4x4 trans;
-    trans.rotate(qAtan2(M(1, 0), M(0, 0)) * 180.f / 3.141593, 0.0f, 0.0f, 1.0f);
-    return trans;
-}
-
-static QMatrix4x4 getScale(const QMatrix4x4& M) {
-    QMatrix4x4 trans;
-    trans.scale(qSqrt(M(0, 0) * M(0, 0) + M(1, 0) * M(1, 0)));
-    return trans;
-}
-
-enum class First2VertState {
-    None,
-    HalfPoint,
-    HalfSelect,
-    Full2Point,
-    Full2Select,
-    FullSelectPoint,
-    FullPointSelect,
-};
-
 struct First2Vert {
     QPointF first;
     QPointF second;
@@ -141,4 +116,26 @@ struct First2Vert {
 struct First2Index {
     unsigned int first = -1;
     unsigned int second = -1;
+};
+
+struct ToolButton {
+    ToolButton(QString selectedFileName, QString unselectedFileName, QString actionName, ToolState state) {
+        selected = QIcon(selectedFileName);
+        unselected = QIcon(unselectedFileName);
+        action = new QAction(unselected, actionName);
+        toolState = state;
+    }
+
+    void select() {
+        action->setIcon(selected);
+    }
+
+    void unSelect() {
+        action->setIcon(unselected);
+    }
+
+    QAction* action;
+    QIcon selected;
+    QIcon unselected;
+    ToolState toolState;
 };

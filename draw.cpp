@@ -25,56 +25,58 @@ void PiYingGL::drawChEditVert()
 		i += j;
 	}
 
-	if (first2VertState == First2VertState::None) return;
+	if (toolState == ToolState::AddVert) {
+		if (first2VertState == First2VertState::None) return;
 
-	if (first2VertState == First2VertState::HalfSelect) {
-		int index = first2Index.first * 2;
-		QPointF selectPoint(characterVerts[currentVector][index], characterVerts[currentVector][index + 1]);
-		selectPoint = glToMap(getViewProjMatrix().map(selectPoint));
-		painter.setPen(QPen(Qt::black, 8));
-		painter.drawPoint(selectPoint);
-		painter.setPen(QPen(Qt::red, 6));
-		painter.drawPoint(selectPoint);
-	}
-	else if (first2VertState == First2VertState::HalfPoint) {
-		painter.setPen(QPen(Qt::black, 8));
-		painter.drawPoint(mapViewProjMatrix(first2Vert.first));
-		painter.setPen(QPen(Qt::red, 6));
-		painter.drawPoint(mapViewProjMatrix(first2Vert.first));
-	}
+		if (first2VertState == First2VertState::HalfSelect) {
+			int index = first2Index.first * 2;
+			QPointF selectPoint(characterVerts[currentVector][index], characterVerts[currentVector][index + 1]);
+			selectPoint = glToMap(getViewProjMatrix().map(selectPoint));
+			painter.setPen(QPen(Qt::black, 8));
+			painter.drawPoint(selectPoint);
+			painter.setPen(QPen(Qt::red, 6));
+			painter.drawPoint(selectPoint);
+		}
+		else if (first2VertState == First2VertState::HalfPoint) {
+			painter.setPen(QPen(Qt::black, 8));
+			painter.drawPoint(mapViewProjMatrix(first2Vert.first));
+			painter.setPen(QPen(Qt::red, 6));
+			painter.drawPoint(mapViewProjMatrix(first2Vert.first));
+		}
 
-	else if (first2VertState == First2VertState::Full2Point) {
-		painter.setPen(QPen(Qt::black, 8));
-		painter.drawPoint(mapViewProjMatrix(first2Vert.first));
-		painter.drawPoint(mapViewProjMatrix(first2Vert.second));
-		painter.setPen(QPen(Qt::red, 6));
-		painter.drawPoint(mapViewProjMatrix(first2Vert.first));
-		painter.drawPoint(mapViewProjMatrix(first2Vert.second));
-	}
-	else if (first2VertState == First2VertState::Full2Select) {
-		int index = first2Index.first * 2;
-		QPointF selectPoint(characterVerts[currentVector][index], characterVerts[currentVector][index + 1]);
-		selectPoint = glToMap(getViewProjMatrix().map(selectPoint));
-		index = first2Index.second * 2;
-		QPointF selectPoint2(characterVerts[currentVector][index], characterVerts[currentVector][index + 1]);
-		selectPoint2 = glToMap(getViewProjMatrix().map(selectPoint2));
-		painter.setPen(QPen(Qt::black, 8));
-		painter.drawPoint(selectPoint);
-		painter.drawPoint(selectPoint2);
-		painter.setPen(QPen(Qt::red, 6));
-		painter.drawPoint(selectPoint);
-		painter.drawPoint(selectPoint2);
-	}
-	else if (first2VertState == First2VertState::FullSelectPoint || first2VertState == First2VertState::FullPointSelect) {
-		int index = first2Index.first * 2;
-		QPointF selectPoint(characterVerts[currentVector][index], characterVerts[currentVector][index + 1]);
-		selectPoint = glToMap(getViewProjMatrix().map(selectPoint));
-		painter.setPen(QPen(Qt::black, 8));
-		painter.drawPoint(selectPoint);
-		painter.drawPoint(mapViewProjMatrix(first2Vert.first));
-		painter.setPen(QPen(Qt::red, 6));
-		painter.drawPoint(selectPoint);
-		painter.drawPoint(mapViewProjMatrix(first2Vert.first));
+		else if (first2VertState == First2VertState::Full2Point) {
+			painter.setPen(QPen(Qt::black, 8));
+			painter.drawPoint(mapViewProjMatrix(first2Vert.first));
+			painter.drawPoint(mapViewProjMatrix(first2Vert.second));
+			painter.setPen(QPen(Qt::red, 6));
+			painter.drawPoint(mapViewProjMatrix(first2Vert.first));
+			painter.drawPoint(mapViewProjMatrix(first2Vert.second));
+		}
+		else if (first2VertState == First2VertState::Full2Select) {
+			int index = first2Index.first * 2;
+			QPointF selectPoint(characterVerts[currentVector][index], characterVerts[currentVector][index + 1]);
+			selectPoint = glToMap(getViewProjMatrix().map(selectPoint));
+			index = first2Index.second * 2;
+			QPointF selectPoint2(characterVerts[currentVector][index], characterVerts[currentVector][index + 1]);
+			selectPoint2 = glToMap(getViewProjMatrix().map(selectPoint2));
+			painter.setPen(QPen(Qt::black, 8));
+			painter.drawPoint(selectPoint);
+			painter.drawPoint(selectPoint2);
+			painter.setPen(QPen(Qt::red, 6));
+			painter.drawPoint(selectPoint);
+			painter.drawPoint(selectPoint2);
+		}
+		else if (first2VertState == First2VertState::FullSelectPoint || first2VertState == First2VertState::FullPointSelect) {
+			int index = first2Index.first * 2;
+			QPointF selectPoint(characterVerts[currentVector][index], characterVerts[currentVector][index + 1]);
+			selectPoint = glToMap(getViewProjMatrix().map(selectPoint));
+			painter.setPen(QPen(Qt::black, 8));
+			painter.drawPoint(selectPoint);
+			painter.drawPoint(mapViewProjMatrix(first2Vert.first));
+			painter.setPen(QPen(Qt::red, 6));
+			painter.drawPoint(selectPoint);
+			painter.drawPoint(mapViewProjMatrix(first2Vert.first));
+		}
 	}
 }
 

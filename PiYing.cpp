@@ -17,13 +17,15 @@ PiYing::PiYing(QWidget* parent) : QMainWindow(parent) {
 
     // OpenGL widget
     piYingGL = new PiYingGL(this);
-    piYingGLContainer = new PiYingGLContainer(piYingGL, ratio); // 16:9
+    piYingGLContainer = new PiYingGLContainer(piYingGL, ratio);
 
     splitTimelineOpenGL = new QSplitter(Qt::Vertical, this);
     splitListOpenGL = new QSplitter(Qt::Horizontal, this);
 
-    QIcon addVertIcon = QIcon(":/PiYing/addChVert.png");
-    QIcon selectVertIcon = QIcon(":/PiYing/selectChVert.png");
+    toolList.append(ToolButton(":/PiYing/selectChVert_S.png", ":/PiYing/selectChVert.png", "selectChVert", ToolState::SelectVert));
+    toolList.append(ToolButton(":/PiYing/addChVert_S.png", ":/PiYing/addChVert.png", "addChVert", ToolState::AddVert));
+
+    toolList[0].select();
 
     QComboBox* modeBox = new QComboBox(this);
 
@@ -50,14 +52,11 @@ PiYing::PiYing(QWidget* parent) : QMainWindow(parent) {
     QAction* actionScreenScale           = childMenuScreen->     addAction("比例...");
     QAction* actionDefaultColor          = childMenuScreen->     addAction("底色...");
 
-    QAction* actionAddVert = ui.mainToolBar->addAction(addVertIcon, "Open");
-    QAction* actionSelectVert = ui.mainToolBar->addAction(selectVertIcon, "Save");
+    for (ToolButton& item : toolList) {
+        ui.mainToolBar->addAction(item.action);
+        connect(item.action, &QAction::triggered, this, [this, &item]() {selectTool(item); });
+    }
 
-   
-    QObject::connect(actionAddVert, &QAction::triggered, this, [this] { QMessageBox::warning(this, "s", "add"); });
-    QObject::connect(actionSelectVert, &QAction::triggered, this, [this] { QMessageBox::warning(this, "s", "select"); });
-
-	// signals of actions
     connect(actionExit,                 SIGNAL(triggered()), this, SLOT(close()));
     connect(actionImportBackGround,     SIGNAL(triggered()), this, SLOT(importBackGround()));
     connect(actionImportCharacter,      SIGNAL(triggered()), this, SLOT(importCharacter()));
@@ -207,6 +206,13 @@ void PiYing::onModeChanged(int mode)
         splitListOpenGL->insertWidget(0, chImageList);
         piYingGL->setEditMode(EditMode::characterSkeleton);
     }
+}
+
+void PiYing::selectTool(ToolButton& toolButton)
+{
+    for (ToolButton& item : toolList) item.unSelect();
+    toolButton.select();
+    piYingGL->setToolState(toolButton.toolState);
 }
 
 void PiYing::importBackGround(){

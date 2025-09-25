@@ -142,6 +142,12 @@ void PiYingGL::setEditMode(EditMode mode)
 	update();
 }
 
+void PiYingGL::setToolState(ToolState state)
+{
+	toolState = state;
+	update();
+}
+
 void PiYingGL::deleteChVert()
 {
 	

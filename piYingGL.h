@@ -18,32 +18,12 @@
 #include <QListWidget>
 #include <QSplitter>
 
-#include "Element.h"
+#include "CusInclude.h"
 #include "KeyboardStateWin.h"
 #include "ViewData.h"
 #include "AskTransformDialog.h"
 
 class PiYing;
-
-enum class MousePos {
-	Inside,
-	LeftTop,
-	LeftBottom,
-	RightTop,
-	RightBottom,
-	LeftEdge,
-	RightEdge,
-	TopEdge,
-	BottomEdge,
-	OutSide
-};
-
-enum class EditMode {
-	Default,
-	BackGround,
-	characterTexture,
-	characterSkeleton,
-};
 
 class PiYingGL : public QOpenGLWidget, QOpenGLFunctions_3_3_Core
 {
@@ -84,6 +64,7 @@ public:
 	void addCharacter(const QString& imageName);
 	void addChVert(const QPointF& point, int currentVector);
 	void setEditMode(EditMode mode);
+	void setToolState(ToolState state);
 	void deleteChVert();
 	void choseBackgroundColor();
 	void changeRatio(float ratio);
@@ -191,4 +172,6 @@ private:
 
 	First2Vert first2Vert;
 	First2Index first2Index;
+
+	ToolState toolState;
 };
