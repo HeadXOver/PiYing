@@ -4,20 +4,6 @@
 #include <qopenglfunctions_3_3_Core>
 #include <QOpenGLShaderProgram.h>
 
-#include <QMenu>
-#include <QMenuBar>
-#include <QAction>
-#include <QFileDialog>
-#include <QFile>
-#include <QPainter>
-#include <QMessageBox>
-#include <QMouseEvent>
-#include <QStatusBar>
-#include <QLabel>
-#include <QList>
-#include <QListWidget>
-#include <QSplitter>
-
 #include "CusInclude.h"
 #include "KeyboardStateWin.h"
 #include "ViewData.h"
@@ -42,7 +28,7 @@ private slots:
 	void fullScreenBackGround();
 	void setViewToStandard();
 	void returnToStandard();
-	void returnbgTransform();
+	void returnBgTransform();
 	void bgSetTransform();
 	void againstBg();
 	void deleteBg();
@@ -92,7 +78,7 @@ public:
 	QMatrix4x4 getViewMatrix() const;
 	QMatrix4x4 getViewMatrixInvertWithoutTrans() const;
 	QMatrix4x4 getViewMatrixWithoutTrans() const;
-	QMatrix4x4 getBgShaderMatrix(const ImageTransform& transform) const;
+	QMatrix4x4 getBgShaderMatrix(const ImageTransform& transform) const { return proj * getViewMatrix() * transform.getMatrix() * insProj; }
 
 	inline QMatrix4x4 getViewProjMatrixInvert() const { return proj * getViewMatrixInvert() * insProj; }
 	inline QMatrix4x4 getViewProjMatrix() const { return proj * getViewMatrix() * insProj; }

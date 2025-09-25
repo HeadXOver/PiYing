@@ -70,22 +70,15 @@ void PiYingGL::mouseMoveEvent(QMouseEvent* event) {
 }
 
 void PiYingGL::wheelEvent(QWheelEvent* ev) {
-	QPoint numSteps = ev->angleDelta() / 120.f;
+	float scaleFactor = 1.0f + ev->angleDelta().y() / 1200.f;
+	if (scaleFactor < 0.1f) scaleFactor = 0.1f;
 
-	if (!numSteps.isNull()) {
-		QPointF mouse = mapToGL(ev->position());
-		int delta = numSteps.y();
-		float scaleFactor = 1.0f + delta * 0.1f;
-		if (scaleFactor < 0.1f) scaleFactor = 0.1f;
+	QPointF toTrans = insProj.map(mapToGL(ev->position()) * (1 - scaleFactor));
+	viewScale.setValue(viewScale.value() * scaleFactor);
+	viewTransX.setValue(viewTransX.value() * scaleFactor + toTrans.x());
+	viewTransY.setValue(viewTransY.value() * scaleFactor + toTrans.y());
 
-		QPointF toTrans = insProj.map(mouse + (QPointF(0.f, 0.f) - mouse) * scaleFactor);
-		viewScale.setValue(viewScale.value() * scaleFactor);
-		viewTransX.setValue(viewTransX.value() * scaleFactor + toTrans.x());
-		viewTransY.setValue(viewTransY.value() * scaleFactor + toTrans.y());
-
-		currentUpdate();
-	}
-
+	currentUpdate();
 	ev->accept();
 }
 

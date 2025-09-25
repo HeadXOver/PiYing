@@ -13,22 +13,22 @@ PiYingGL::PiYingGL(PiYing* parent) : QOpenGLWidget(parent), parent(parent)
 
 	aspect = 16.0f / 9.0f;
 
-	actionAddBackGround = new QAction("添加背景图", this);
-	actionAddCharacterTexture = new QAction("添加角色图", this);
-	actionFullScreenBackGround = new QAction("背景图全屏", this);
-	actionChoseBackGroundColor = new QAction("选择幕布底色", this);
-	actionSetViewToStandard = new QAction("将视图设为标准幕布", this);
-	actionReturnToStandard = new QAction("返回标准幕布视图", this);
-	actionDeleteBg = new QAction("删除当前背景图");
-	actionDeleteAllBg = new QAction("删除所有背景图");
-	actionBgSetTransform = new QAction("设置变换...");
-	actionAgainstBg = new QAction("将摄像机对准图片");
-	actionReturnbgTransform = new QAction("还原变换");
+	actionAddBackGround			= new QAction("添加背景图", this);
+	actionAddCharacterTexture	= new QAction("添加角色图", this);
+	actionFullScreenBackGround	= new QAction("背景图全屏", this);
+	actionChoseBackGroundColor	= new QAction("选择幕布底色", this);
+	actionSetViewToStandard		= new QAction("将视图设为标准幕布", this);
+	actionReturnToStandard		= new QAction("返回标准幕布视图", this);
+	actionDeleteBg				= new QAction("删除当前背景图");
+	actionDeleteAllBg			= new QAction("删除所有背景图");
+	actionBgSetTransform		= new QAction("设置变换...");
+	actionAgainstBg				= new QAction("将摄像机对准图片");
+	actionReturnbgTransform		= new QAction("还原变换");
 
-	labelViewScale = new QLabel("1", this);
+	labelViewScale	= new QLabel("1", this);
 	labelViewTransX = new QLabel("0", this);
 	labelViewTransY = new QLabel("0", this);
-	labelViewRot = new QLabel("0", this);
+	labelViewRot	= new QLabel("0", this);
 
 	connect(actionFullScreenBackGround, SIGNAL(triggered()), this, SLOT(fullScreenBackGround()));
 	connect(actionSetViewToStandard,	SIGNAL(triggered()), this, SLOT(setViewToStandard()));
@@ -37,7 +37,7 @@ PiYingGL::PiYingGL(PiYing* parent) : QOpenGLWidget(parent), parent(parent)
 	connect(actionDeleteAllBg,			SIGNAL(triggered()), this, SLOT(deleteAllBg()));
 	connect(actionAgainstBg,			SIGNAL(triggered()), this, SLOT(againstBg()));
 	connect(actionBgSetTransform,		SIGNAL(triggered()), this, SLOT(bgSetTransform()));
-	connect(actionReturnbgTransform,	SIGNAL(triggered()), this, SLOT(returnbgTransform()));
+	connect(actionReturnbgTransform,	SIGNAL(triggered()), this, SLOT(returnBgTransform()));
 	connect(actionAddCharacterTexture,	&QAction::triggered, this, [this]() {importChatacter(); });
 	connect(actionAddBackGround,		&QAction::triggered, this, [this]() {importBackground(); });
 	connect(actionChoseBackGroundColor, &QAction::triggered, this, [this]() {choseBackgroundColor(); });

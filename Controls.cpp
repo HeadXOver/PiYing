@@ -4,21 +4,18 @@
 void PiYingGL::bgRotationControl(const QPointF& mouse, ImageTexture& image)
 {
 	setCursor(Qt::CursorShape::ClosedHandCursor);
-	QPointF center = (getViewMatrix() * lastImageTransform.trans).map(QPointF(0.f, 0.f));
-	center.setX(center.x() / aspect);
-	QPointF vec1 = lastMousePos - center;
-	QPointF vec2 = mouse - center;
-	float r = (atan2f(vec2.y(), vec2.x()) - atan2f(vec1.y(), vec1.x())) * 180.f / 3.1415926f;
-
+	QPointF center = getBgShaderMatrix(lastImageTransform).map(QPointF(0.f, 0.f));
+	QPointF vec1 = insProj.map(lastMousePos - center);
+	QPointF vec2 = insProj.map(mouse - center);
 	image.transform = lastImageTransform;
-	image.addRot(r);
+	image.addRot(angleBetweenPointDegree(vec2, vec1));
 }
 
 void PiYingGL::bgTranslateControl(const QPointF& mouse, ImageTexture& image)
 {
 	setCursor(Qt::ClosedHandCursor);
 	image.transform = lastImageTransform;
-	image.addTrans((getViewMatrixInvertWithoutTrans() * insProj).map(QPointF(mouse.x() - lastMousePos.x(), mouse.y() - lastMousePos.y())));
+	image.addTrans((getViewMatrixInvertWithoutTrans() * insProj).map(mouse - lastMousePos));
 }
 
 void PiYingGL::bgScaleControl(const QPointF& mouse, ImageTexture& image)
@@ -56,15 +53,10 @@ void PiYingGL::bgScaleControl(const QPointF& mouse, ImageTexture& image)
 void PiYingGL::viewRotationControl(const QPointF& mouse)
 {
 	setCursor(Qt::CursorShape::ClosedHandCursor);
-	float r = (atan2f(mouse.y(), mouse.x()) - atan2f(lastMiddleButtonPos.y(), lastMiddleButtonPos.x())) * 180.f / 3.1415926f;
-	viewRotate.setValue(lastViewRotate + r);
-
-	QMatrix4x4 toTrans;
-	toTrans.rotate(r, 0.f, 0.0f, 1.0f);
-	QPointF viewTrans(lastViewTransX, lastViewTransY);
-	QPointF rotatedTrans = toTrans.map(viewTrans) - viewTrans;
-	viewTransX.setValue(lastViewTransX + rotatedTrans.x());
-	viewTransY.setValue(lastViewTransY + rotatedTrans.y());
+	float r = angleBetweenPoint(insProj.map(mouse), insProj.map(lastMiddleButtonPos));
+	viewRotate.setValue(lastViewRotate + r * 180.f / 3.1415926f);
+	viewTransX.setValue(lastViewTransX * cos(r) - lastViewTransY * sin(r));
+	viewTransY.setValue(lastViewTransX * sin(r) + lastViewTransY * cos(r));
 }
 
 void PiYingGL::chEditVertControl(const QPointF& origMouse)
@@ -84,10 +76,8 @@ void PiYingGL::chEditVertControl(const QPointF& origMouse)
 			}
 		}
 
-		// 如果与已有的点不重复
 		first2VertState = First2VertState::HalfPoint;
 		first2Vert.first = mouse;
-		return;
 	}
 	else if (first2VertState == First2VertState::HalfSelect) {
 		for (int i = 0; i < characterVerts[currentVector].size(); i += 2) {
@@ -104,7 +94,6 @@ void PiYingGL::chEditVertControl(const QPointF& origMouse)
 
 		first2VertState = First2VertState::FullSelectPoint;
 		first2Vert.first = mouse;
-		return;
 	}
 	else if (first2VertState == First2VertState::HalfPoint) {
 		if (QLineF(first2Vert.first, mouse).length() < 6)  return;
@@ -121,7 +110,6 @@ void PiYingGL::chEditVertControl(const QPointF& origMouse)
 
 		first2VertState = First2VertState::Full2Point;
 		first2Vert.second = mouse;
-		return;
 	}
 	else if (first2VertState == First2VertState::Full2Point) {
 		if (QLineF(first2Vert.first, mouse).length() < 6 || QLineF(first2Vert.second, mouse).length() < 6)  return;
@@ -142,7 +130,6 @@ void PiYingGL::chEditVertControl(const QPointF& origMouse)
 		addChVert(mapToGL(first2Vert.first), currentVector);
 		addChVert(mapToGL(first2Vert.second), currentVector);
 		addChVert(getViewProjMatrixInvert().map(lastMousePos), currentVector);
-		return;
 	}
 	else if (first2VertState == First2VertState::Full2Select) {
 		for (unsigned int i = 0; i < characterVerts[currentVector].size(); i += 2) {
@@ -172,7 +159,6 @@ void PiYingGL::chEditVertControl(const QPointF& origMouse)
 		addChVert(getViewProjMatrixInvert().map(lastMousePos), currentVector);
 		characterTriangleIndices[currentVector].push_back(first2Index.first);
 		characterTriangleIndices[currentVector].push_back(first2Index.second);
-		return;
 	}
 	else if (first2VertState == First2VertState::FullSelectPoint || first2VertState == First2VertState::FullPointSelect) {
 		if (QLineF(first2Vert.first, mouse).length() < 6)  return;
@@ -195,6 +181,5 @@ void PiYingGL::chEditVertControl(const QPointF& origMouse)
 		characterTriangleIndices[currentVector].push_back(first2Index.first);
 		addChVert(getViewProjMatrixInvert().map(lastMousePos), currentVector);
 		addChVert(mapToGL(first2Vert.first), currentVector);
-		return;
 	}
 }

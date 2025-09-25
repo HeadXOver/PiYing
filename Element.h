@@ -1,21 +1,10 @@
 ﻿#pragma once
 
-#include <QOpenGLTexture>
-#include <QMatrix4x4>
-#include <vector>
-#include <QIcon>
-#include <QAction>
-
 #include "CusEnum.h"
 
 struct ImageTransform {
-    inline QMatrix4x4 getMatrix() const{
-        return trans * rot * scale;
-    }
-
-    inline QMatrix4x4 getMatrixInvert() const {
-        return scale.inverted() * rot.inverted() * trans.inverted();
-    }
+    QMatrix4x4 getMatrix() const         { return trans * rot * scale; }
+    QMatrix4x4 getMatrixInvert() const   { return scale.inverted() * rot.inverted() * trans.inverted(); }
 
     void reset() {
         trans.setToIdentity();
@@ -35,12 +24,6 @@ struct ImageTexture {
         tex->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
         tex->setMagnificationFilter(QOpenGLTexture::Linear);
         tex->setWrapMode(QOpenGLTexture::Repeat);
-        //rot.rotate(30.f, 0.f, 0.f, 1.0f);
-        //scale.scale(0.5f, 0.5f, 1.0f);
-    }
-
-    ~ImageTexture() {
-
     }
 
     void setTrans(float x, float y) {
@@ -52,9 +35,6 @@ struct ImageTexture {
         transform.trans.setToIdentity();
         transform.trans.translate(point.x(), point.y());
     }
-
-    inline void addTrans(QPointF point) { addTrans(point.x(), point.y()); }
-    inline void addTrans(float x, float y) { transform.trans.translate(x, y); }
 
     void setRot(float r) {
         transform.rot.setToIdentity();
@@ -71,39 +51,34 @@ struct ImageTexture {
         transform.scale.scale(point.x(), point.y());
     }
 
-    inline void addScale(QPointF point) { transform.scale.scale(point.x(), point.y()); }
-    inline void addScale(float x, float y) { transform.scale.scale(x, y); }
-    inline void addScale(float s) { transform.scale.scale(s); }
-
     void setScale(float s) {
         transform.scale.setToIdentity();
         transform.scale.scale(s);
-	}
-
-    inline void addRot(float r) { transform.rot.rotate(r, 0.0f, 0.0f, 1.0f); }
-
-    inline QMatrix4x4 getMatrix() const{
-        return transform.getMatrix();
     }
 
-    inline QMatrix4x4 getMatrixInvert() const {
-        return transform.getMatrixInvert();
-    }
+    void addTrans(QPointF point)        { addTrans(point.x(), point.y()); }
+    void addScale(QPointF point)        { transform.scale.scale(point.x(), point.y()); }
+    void addTrans(float x, float y)     { transform.trans.translate(x, y); }
+    void addScale(float x, float y)     { transform.scale.scale(x, y); }
+    void addScale(float s)              { transform.scale.scale(s); }
+    void addRot(float r)                { transform.rot.rotate(r, 0.0f, 0.0f, 1.0f); }
+
+    QMatrix4x4 getMatrix() const        { return transform.getMatrix(); }
+    QMatrix4x4 getMatrixInvert() const  { return transform.getMatrixInvert(); }
 
     QOpenGLTexture* tex;
 
     ImageTransform transform;
 };
 
-static const float RECTANGLE_VERT[] = {
-    // positions
+const float RECTANGLE_VERT[8] = {
      1.0,  1.0,
      1.0, -1.0,
     -1.0, -1.0,
     -1.0,  1.0
 };
 
-static const unsigned int RECTANGLE_INDECES[] = {
+const unsigned int RECTANGLE_INDECES[6] = {
     0, 1, 3, // first triangle
     1, 2, 3  // second triangle
 };
@@ -126,13 +101,8 @@ struct ToolButton {
         toolState = state;
     }
 
-    void select() {
-        action->setIcon(selected);
-    }
-
-    void unSelect() {
-        action->setIcon(unselected);
-    }
+    void select()   { action->setIcon(selected); }
+    void unSelect() { action->setIcon(unselected); }
 
     QAction* action;
     QIcon selected;

@@ -28,7 +28,7 @@ void PiYingGL::returnToStandard()
 	update();
 }
 
-void PiYingGL::returnbgTransform()
+void PiYingGL::returnBgTransform()
 {
 	if (currentSelectedBackGround >= 0) {
 		ImageTransform& transform = backGrounds[currentSelectedBackGround].transform;
