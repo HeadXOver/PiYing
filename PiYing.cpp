@@ -95,7 +95,7 @@ PiYing::PiYing(QWidget* parent) : QMainWindow(parent) {
     voidListWidget->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
 
     modeBox = new QComboBox;
-    modeBox->addItems({ "预览模式", "背景编辑", "角色编辑"});
+    modeBox->addItems({ "预览模式", "背景编辑", "角色纹理编辑", "角色骨骼编辑" });
     ui.mainToolBar->addWidget(modeBox);
 
     connect(modeBox, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &PiYing::onModeChanged);
@@ -111,7 +111,7 @@ PiYing::~PiYing()
 void PiYing::keyPressEvent(QKeyEvent* event)
 {
     if (event->key() == Qt::Key_Escape) {
-        if (piYingGL->editMode == EditMode::characterOverView) {
+        if (piYingGL->editMode == EditMode::characterTexture) {
             if (piYingGL->first2VertState == First2VertState::None) return;
             if (piYingGL->first2VertState == First2VertState::HalfSelect || piYingGL->first2VertState == First2VertState::HalfPoint)
                 piYingGL->first2VertState = First2VertState::None;
@@ -186,7 +186,12 @@ void PiYing::onModeChanged(int mode)
     else if (mode == 2) {
         splitListOpenGL->widget(0)->setParent(this);
         splitListOpenGL->insertWidget(0, chImageList);
-        piYingGL->setEditMode(EditMode::characterOverView);
+        piYingGL->setEditMode(EditMode::characterTexture);
+    }
+    else if (mode == 3) {
+        splitListOpenGL->widget(0)->setParent(this);
+        splitListOpenGL->insertWidget(0, chImageList);
+        piYingGL->setEditMode(EditMode::characterSkeleton);
     }
 }
 

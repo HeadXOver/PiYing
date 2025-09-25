@@ -62,10 +62,9 @@ void PiYingGL::initializeGL()
 
 void PiYingGL::paintGL() {
 	glClear(GL_COLOR_BUFFER_BIT);
-	if(editMode != EditMode::characterOverView) paintBackgrounds();
-	else {
-		paintCharactersOverView();
-	}
+	if (editMode == EditMode::BackGround || editMode == EditMode::Default) paintBackgrounds();
+	else if (editMode == EditMode::characterTexture)  paintCharacterTexture();
+	else if (editMode == EditMode::characterSkeleton)  paintCharacterSkeleton();
 }
 
 void PiYingGL::resizeGL(int w, int h) {

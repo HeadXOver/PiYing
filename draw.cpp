@@ -102,7 +102,7 @@ void PiYingGL::paintBackgrounds()
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
-void PiYingGL::paintCharactersOverView()
+void PiYingGL::paintCharacterTexture()
 {
 	glBindVertexArray(bgVAO);
 	glBindBuffer(GL_ARRAY_BUFFER, bgVBO);
@@ -130,4 +130,34 @@ void PiYingGL::paintCharactersOverView()
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
 	drawChEditVert();
+}
+
+void PiYingGL::paintCharacterSkeleton()
+{
+	glBindVertexArray(chVAO);
+	glBindBuffer(GL_ARRAY_BUFFER, chVBO);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, chEBO);
+	chShaderProgram.bind();
+	glActiveTexture(GL_TEXTURE0);
+
+	glBufferData(GL_ARRAY_BUFFER, characterVerts.size() * sizeof(float), characterVerts.data(), GL_DYNAMIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, characterTriangleIndices.size() * sizeof(unsigned int), characterTriangleIndices.data(), GL_DYNAMIC_DRAW);
+
+	// position attribute
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(0);
+
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	int i = parent->chImageList->currentRow();
+	if (i >= 0) {
+		characterTextures[i].tex->bind();
+		chShaderProgram.setUniformValue("texture1", 0);
+		chShaderProgram.setUniformValue("trc", getViewProjMatrix());
+		glDrawElements(GL_TRIANGLES, characterTriangleIndices.size(), GL_UNSIGNED_INT, 0);
+	}
+
+	glBindVertexArray(0);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }

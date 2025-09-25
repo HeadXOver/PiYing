@@ -20,7 +20,7 @@ void PiYingGL::mousePressEvent(QMouseEvent* event)
 				}
 			}
 		}
-		else if (editMode == EditMode::characterOverView && event->button() == Qt::LeftButton) {
+		else if (editMode == EditMode::characterTexture && event->button() == Qt::LeftButton) {
 			chEditVertControl(mouse);
 		}
 
@@ -88,7 +88,7 @@ void PiYingGL::contextMenuEvent(QContextMenuEvent* e)
 {
 	QMenu menu(this);
 
-	if (editMode == EditMode::characterOverView) {
+	if (editMode == EditMode::characterTexture) {
 		menu.addAction(actionAddCharacterTexture);
 	}
 	else if (editMode == EditMode::BackGround) {
