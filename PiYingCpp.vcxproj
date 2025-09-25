@@ -126,10 +126,15 @@
     <None Include="chEditershapes.frag" />
     <None Include="chEditershapes.vert" />
     <None Include="darkStyle.qss" />
+    <None Include="imageListStyle.qss" />
     <None Include="readme.md">
       <SubType>
       </SubType>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="addChVert.png" />
+    <Image Include="selectChVert.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

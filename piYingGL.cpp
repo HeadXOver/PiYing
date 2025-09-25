@@ -142,6 +142,11 @@ void PiYingGL::setEditMode(EditMode mode)
 	update();
 }
 
+void PiYingGL::deleteChVert()
+{
+	
+}
+
 void PiYingGL::choseBackgroundColor()
 {
 	QColor color = QColorDialog::getColor(backGroundColor, this, "选择幕布底色");

@@ -6,8 +6,10 @@ int main(int argc, char *argv[])
     QApplication app(argc, argv);
 
     QFile qss(":/PiYing/darkStyle.qss");
-    if (qss.open(QFile::ReadOnly))
+    if (qss.open(QFile::ReadOnly)) {
         app.setStyleSheet(qss.readAll());
+        qss.close();
+    }
     app.setFont(QFont("Segoe UI", 9));
 
     PiYing window;

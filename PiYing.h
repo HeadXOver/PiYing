@@ -36,27 +36,6 @@ private slots:
 private:
     Ui::PiYingClass ui;
 
-    // menus
-    QMenu* menuFile;
-	QMenu* menuEdit;
-
-	// child menus of menuFile
-	QMenu* childMenuImport;
-    QMenu* childMenuExport;
-
-	// child menus of menuEdit
-	QMenu* childMenuScreen;
-
-	// actions of menuFile
-    QAction* actionExit;
-	QAction* actionImportCharacter;
-    QAction* actionExportCurrentFrame;
-	QAction* actionImportBackGround;
-
-	// actions of menuEdit
-	QAction* actionScreenScale;
-	QAction* actionDefaultColor;
-
 	// OpenGL widget
     PiYingGL* piYingGL = nullptr;
 
@@ -64,8 +43,6 @@ private:
 	QSplitter* splitTimelineOpenGL;
 
 	QWidget* timeLine;
-
-	QComboBox* modeBox;
 
 public:
 	PiYingGLContainer* piYingGLContainer = nullptr;

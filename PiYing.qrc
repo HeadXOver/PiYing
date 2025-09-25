@@ -5,5 +5,8 @@
         <file>darkStyle.qss</file>
         <file>chEditershapes.frag</file>
         <file>chEditershapes.vert</file>
+        <file>addChVert.png</file>
+        <file>selectChVert.png</file>
+        <file>imageListStyle.qss</file>
     </qresource>
 </RCC>

@@ -19,28 +19,43 @@ PiYing::PiYing(QWidget* parent) : QMainWindow(parent) {
     piYingGL = new PiYingGL(this);
     piYingGLContainer = new PiYingGLContainer(piYingGL, ratio); // 16:9
 
+    splitTimelineOpenGL = new QSplitter(Qt::Vertical, this);
+    splitListOpenGL = new QSplitter(Qt::Horizontal, this);
+
+    QIcon addVertIcon = QIcon(":/PiYing/addChVert.png");
+    QIcon selectVertIcon = QIcon(":/PiYing/selectChVert.png");
+
+    QComboBox* modeBox = new QComboBox(this);
+
     // menuBar
-    menuFile = new QMenu("文件(&F)");
-	menuEdit = new QMenu("编辑(&E)");
+    QMenu* menuFile = new QMenu("文件(&F)", this);
+    QMenu* menuEdit = new QMenu("编辑(&E)", this);
     ui.menuBar->addMenu(menuFile);
 	ui.menuBar->addMenu(menuEdit);
 
 	// child menu of menu File
-    childMenuImport = menuFile->addMenu("导入");
-    childMenuExport = menuFile->addMenu("导出");
+    QMenu* childMenuImport = menuFile->addMenu("导入");
+    QMenu* childMenuExport = menuFile->addMenu("导出");
 
 	// child menu of menu Edit
-	childMenuScreen = menuEdit->addMenu("幕布");
+    QMenu* childMenuScreen = menuEdit->addMenu("幕布");
 
 	// actions of menu File
-    actionExit                              = menuFile->            addAction("退出");
-    actionImportBackGround                  = childMenuImport->     addAction("背景图");
-    actionImportCharacter                   = childMenuImport->     addAction("角色图");
-    actionExportCurrentFrame                = childMenuExport->     addAction("当前帧");
+    QAction* actionExit                  = menuFile->            addAction("退出");
+    QAction* actionImportBackGround      = childMenuImport->     addAction("背景图");
+    QAction* actionImportCharacter       = childMenuImport->     addAction("角色图");
+    QAction* actionExportCurrentFrame    = childMenuExport->     addAction("当前帧");
 
 	// actions of menu Edit
-	actionScreenScale           = childMenuScreen->     addAction("比例...");
-	actionDefaultColor          = childMenuScreen->     addAction("底色...");
+    QAction* actionScreenScale           = childMenuScreen->     addAction("比例...");
+    QAction* actionDefaultColor          = childMenuScreen->     addAction("底色...");
+
+    QAction* actionAddVert = ui.mainToolBar->addAction(addVertIcon, "Open");
+    QAction* actionSelectVert = ui.mainToolBar->addAction(selectVertIcon, "Save");
+
+   
+    QObject::connect(actionAddVert, &QAction::triggered, this, [this] { QMessageBox::warning(this, "s", "add"); });
+    QObject::connect(actionSelectVert, &QAction::triggered, this, [this] { QMessageBox::warning(this, "s", "select"); });
 
 	// signals of actions
     connect(actionExit,                 SIGNAL(triggered()), this, SLOT(close()));
@@ -63,9 +78,6 @@ PiYing::PiYing(QWidget* parent) : QMainWindow(parent) {
     statusBar()->addPermanentWidget(new QLabel(tr("视图缩放"), this));
     statusBar()->addPermanentWidget(piYingGL->labelViewScale);
 
-    splitTimelineOpenGL = new QSplitter(Qt::Vertical, this);
-    splitListOpenGL = new QSplitter(Qt::Horizontal, this);
-
     splitTimelineOpenGL->addWidget(piYingGLContainer);
     splitTimelineOpenGL->addWidget(timeLine);
     splitListOpenGL->addWidget(voidListWidget);
@@ -76,28 +88,23 @@ PiYing::PiYing(QWidget* parent) : QMainWindow(parent) {
     splitListOpenGL->setStretchFactor(1, 3);
 
     bgImageList->setUniformItemSizes(true);
-    bgImageList->setIconSize(QSize(50, 50));
-    bgImageList->setStyleSheet(
-        "QListWidget { background-color: rgb(35, 8, 8); }"
-        "QListWidget::item { background-color: rgb(255, 253, 226);}"
-        "QListWidget::item:selected { background-color: rgb(112, 112, 112); }"
-    );
-
     chImageList->setUniformItemSizes(true);
+    bgImageList->setIconSize(QSize(50, 50));
     chImageList->setIconSize(QSize(50, 50));
-    chImageList->setStyleSheet(
-        "QListWidget { background-color: rgb(35, 8, 8); }"
-        "QListWidget::item { background-color: rgb(255, 253, 226);}"
-        "QListWidget::item:selected { background-color: rgb(112, 112, 112); }"
-    );
+
+    QFile qss(":/PiYing/imageListStyle.qss");
+    if (qss.open(QFile::ReadOnly)) {
+        bgImageList->setStyleSheet(qss.readAll());
+        chImageList->setStyleSheet(qss.readAll());
+        qss.close();
+    }
 
     piYingGL->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     timeLine->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     voidListWidget->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
 
-    modeBox = new QComboBox;
     modeBox->addItems({ "预览模式", "背景编辑", "角色纹理编辑", "角色骨骼编辑" });
-    ui.mainToolBar->addWidget(modeBox);
+    ui.statusBar->addWidget(modeBox);
 
     connect(modeBox, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &PiYing::onModeChanged);
 
@@ -122,6 +129,11 @@ void PiYing::keyPressEvent(QKeyEvent* event)
             else if (piYingGL->first2VertState == First2VertState::FullPointSelect) piYingGL->first2VertState = First2VertState::HalfPoint;
 
             piYingGL->update();
+        }
+    }
+    else if (event->key() == Qt::Key_Delete) {
+        if (piYingGL->editMode == EditMode::characterTexture) {
+            piYingGL->deleteChVert();
         }
     }
 }
@@ -159,7 +171,8 @@ void PiYing::askScreenScale(){
     if (dlg.exec() == QDialog::Accepted) {
         Ratio r = dlg.ratio();
 
-        //QMessageBox::warning(this, tr("Info"), QString("比例: %1:%2").arg(r.w).arg(r.h));
+        if (r.w == 0 || r.h == 0) return;
+
 		float ratio = float(r.w) / float(r.h);
 		piYingGLContainer->setRatio(ratio);
 		piYingGLContainer->update();

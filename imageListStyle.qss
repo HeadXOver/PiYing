@@ -1,0 +1,11 @@
+QListWidget {
+	background-color: rgb(35, 8, 8); 
+}
+
+QListWidget::item {
+	background-color: rgb(255, 253, 226);
+}
+
+QListWidget::item:selected {
+	background-color: rgb(112, 112, 112); 
+}

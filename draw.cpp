@@ -162,7 +162,7 @@ void PiYingGL::paintCharacterSkeleton()
 		characterTextures[i].tex->bind();
 		chShaderProgram.setUniformValue("texture1", 0);
 		chShaderProgram.setUniformValue("trc", getViewProjMatrix());
-		glDrawElements(GL_TRIANGLES, characterTriangleIndices[i].size(), GL_UNSIGNED_INT, 0);
+		glDrawElements(GL_TRIANGLES, (GLsizei)characterTriangleIndices[i].size(), GL_UNSIGNED_INT, 0);
 	}
 
 	glBindVertexArray(0);

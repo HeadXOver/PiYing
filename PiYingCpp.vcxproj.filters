@@ -131,5 +131,16 @@
     <None Include="chEditershapes.vert">
       <Filter>Shader</Filter>
     </None>
+    <None Include="imageListStyle.qss">
+      <Filter>StyleSheets</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="addChVert.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="selectChVert.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

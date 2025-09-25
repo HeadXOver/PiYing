@@ -84,6 +84,7 @@ public:
 	void addCharacter(const QString& imageName);
 	void addChVert(const QPointF& point, int currentVector);
 	void setEditMode(EditMode mode);
+	void deleteChVert();
 	void choseBackgroundColor();
 	void changeRatio(float ratio);
 	void updateProjMatrix();
@@ -191,4 +192,3 @@ private:
 	First2Vert first2Vert;
 	First2Index first2Index;
 };
-
