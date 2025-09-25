@@ -3,15 +3,19 @@
 
 void PiYingGL::drawChEditVert()
 {
+	int currentVector = parent->chImageList->currentRow();
+	if (currentVector < 0) return;
+
 	QPainter painter(this);
 	painter.setRenderHint(QPainter::Antialiasing);
 	painter.setBrush(QColor(225, 0, 0, 20));
 
-	for (int i = 0; i < characterTriangleIndices.size();) {
+	for (int i = 0; i < characterTriangleIndices[currentVector].size();) {
 		QPolygonF poly;
 		int j = 0;
 		for (; j < 3; j++) {
-			QPointF p(characterVerts[characterTriangleIndices[i + j] * 2], characterVerts[characterTriangleIndices[i + j] * 2 + 1]);
+			int index = characterTriangleIndices[currentVector][i + j];
+			QPointF p(characterVerts[currentVector][index * 2], characterVerts[currentVector][index * 2 + 1]);
 			poly << glToMap(getViewProjMatrix().map(p));
 		}
 		painter.setPen(QPen(Qt::black, 3));
@@ -24,7 +28,8 @@ void PiYingGL::drawChEditVert()
 	if (first2VertState == First2VertState::None) return;
 
 	if (first2VertState == First2VertState::HalfSelect) {
-		QPointF selectPoint(characterVerts[first2Index.first * 2], characterVerts[first2Index.first * 2 + 1]);
+		int index = first2Index.first * 2;
+		QPointF selectPoint(characterVerts[currentVector][index], characterVerts[currentVector][index + 1]);
 		selectPoint = glToMap(getViewProjMatrix().map(selectPoint));
 		painter.setPen(QPen(Qt::black, 8));
 		painter.drawPoint(selectPoint);
@@ -47,9 +52,11 @@ void PiYingGL::drawChEditVert()
 		painter.drawPoint(mapViewProjMatrix(first2Vert.second));
 	}
 	else if (first2VertState == First2VertState::Full2Select) {
-		QPointF selectPoint(characterVerts[first2Index.first * 2], characterVerts[first2Index.first * 2 + 1]);
+		int index = first2Index.first * 2;
+		QPointF selectPoint(characterVerts[currentVector][index], characterVerts[currentVector][index + 1]);
 		selectPoint = glToMap(getViewProjMatrix().map(selectPoint));
-		QPointF selectPoint2(characterVerts[first2Index.second * 2], characterVerts[first2Index.second * 2 + 1]);
+		index = first2Index.second * 2;
+		QPointF selectPoint2(characterVerts[currentVector][index], characterVerts[currentVector][index + 1]);
 		selectPoint2 = glToMap(getViewProjMatrix().map(selectPoint2));
 		painter.setPen(QPen(Qt::black, 8));
 		painter.drawPoint(selectPoint);
@@ -59,7 +66,8 @@ void PiYingGL::drawChEditVert()
 		painter.drawPoint(selectPoint2);
 	}
 	else if (first2VertState == First2VertState::FullSelectPoint || first2VertState == First2VertState::FullPointSelect) {
-		QPointF selectPoint(characterVerts[first2Index.first * 2], characterVerts[first2Index.first * 2 + 1]);
+		int index = first2Index.first * 2;
+		QPointF selectPoint(characterVerts[currentVector][index], characterVerts[currentVector][index + 1]);
 		selectPoint = glToMap(getViewProjMatrix().map(selectPoint));
 		painter.setPen(QPen(Qt::black, 8));
 		painter.drawPoint(selectPoint);
@@ -116,6 +124,7 @@ void PiYingGL::paintCharacterTexture()
 
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
 	int i = parent->chImageList->currentRow();
 	if (i >= 0) {
 		characterTextures[i].tex->bind();
@@ -140,9 +149,6 @@ void PiYingGL::paintCharacterSkeleton()
 	chShaderProgram.bind();
 	glActiveTexture(GL_TEXTURE0);
 
-	glBufferData(GL_ARRAY_BUFFER, characterVerts.size() * sizeof(float), characterVerts.data(), GL_DYNAMIC_DRAW);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, characterTriangleIndices.size() * sizeof(unsigned int), characterTriangleIndices.data(), GL_DYNAMIC_DRAW);
-
 	// position attribute
 	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
@@ -151,10 +157,12 @@ void PiYingGL::paintCharacterSkeleton()
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	int i = parent->chImageList->currentRow();
 	if (i >= 0) {
+		glBufferData(GL_ARRAY_BUFFER, characterVerts[i].size() * sizeof(float), characterVerts[i].data(), GL_DYNAMIC_DRAW);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, characterTriangleIndices[i].size() * sizeof(unsigned int), characterTriangleIndices[i].data(), GL_DYNAMIC_DRAW);
 		characterTextures[i].tex->bind();
 		chShaderProgram.setUniformValue("texture1", 0);
 		chShaderProgram.setUniformValue("trc", getViewProjMatrix());
-		glDrawElements(GL_TRIANGLES, characterTriangleIndices.size(), GL_UNSIGNED_INT, 0);
+		glDrawElements(GL_TRIANGLES, characterTriangleIndices[i].size(), GL_UNSIGNED_INT, 0);
 	}
 
 	glBindVertexArray(0);

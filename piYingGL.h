@@ -82,7 +82,7 @@ public:
 	void addBackground(const QString& imageName);
 	void appendBgList(QImage& image);
 	void addCharacter(const QString& imageName);
-	void addChVert(const QPointF& point);
+	void addChVert(const QPointF& point, int currentVector);
 	void setEditMode(EditMode mode);
 	void choseBackgroundColor();
 	void changeRatio(float ratio);
@@ -164,6 +164,9 @@ private:
 	QList<ImageTexture> backGrounds;
 	QList<ImageTexture> characterTextures;
 
+	QList<std::vector<float>> characterVerts;
+	QList<std::vector<unsigned int>> characterTriangleIndices;
+
 	int currentSelectedBackGround = -1;
 
 	float aspect;
@@ -184,9 +187,6 @@ private:
 	QColor backGroundColor;
 
 	PiYing* parent;
-
-	std::vector<float> characterVerts;
-	std::vector<unsigned int> characterTriangleIndices;
 
 	First2Vert first2Vert;
 	First2Index first2Index;

@@ -1,4 +1,5 @@
 ﻿#include "piYingGL.h"
+#include "piYing.h"
 
 void PiYingGL::bgRotationControl(const QPointF& mouse, ImageTexture& image)
 {
@@ -68,10 +69,13 @@ void PiYingGL::viewRotationControl(const QPointF& mouse)
 
 void PiYingGL::chEditVertControl(const QPointF& origMouse)
 {
+	int currentVector = parent->chImageList->currentRow();
+	if (currentVector < 0) return;
+
 	QPointF mouse = glToMap(getViewProjMatrixInvert().map(mapToGL(origMouse)));
 	if (first2VertState == First2VertState::None) {
-		for (int i = 0; i < characterVerts.size(); i += 2) {
-			QPointF readyPoint(characterVerts[i], characterVerts[i + 1]);
+		for (int i = 0; i < characterVerts[currentVector].size(); i += 2) {
+			QPointF readyPoint(characterVerts[currentVector][i], characterVerts[currentVector][i + 1]);
 			readyPoint = glToMap(readyPoint);
 			if (QLineF(readyPoint, mouse).length() < 6) {
 				first2VertState = First2VertState::HalfSelect;
@@ -86,8 +90,8 @@ void PiYingGL::chEditVertControl(const QPointF& origMouse)
 		return;
 	}
 	else if (first2VertState == First2VertState::HalfSelect) {
-		for (int i = 0; i < characterVerts.size(); i += 2) {
-			QPointF readyPoint(characterVerts[i], characterVerts[i + 1]);
+		for (int i = 0; i < characterVerts[currentVector].size(); i += 2) {
+			QPointF readyPoint(characterVerts[currentVector][i], characterVerts[currentVector][i + 1]);
 			readyPoint = glToMap(readyPoint);
 			if (QLineF(readyPoint, mouse).length() < 6) {
 				if (first2Index.first != i / 2) {
@@ -105,8 +109,8 @@ void PiYingGL::chEditVertControl(const QPointF& origMouse)
 	else if (first2VertState == First2VertState::HalfPoint) {
 		if (QLineF(first2Vert.first, mouse).length() < 6)  return;
 
-		for (int i = 0; i < characterVerts.size(); i += 2) {
-			QPointF readyPoint(characterVerts[i], characterVerts[i + 1]);
+		for (int i = 0; i < characterVerts[currentVector].size(); i += 2) {
+			QPointF readyPoint(characterVerts[currentVector][i], characterVerts[currentVector][i + 1]);
 			readyPoint = glToMap(readyPoint);
 			if (QLineF(readyPoint, mouse).length() < 6) {
 				first2VertState = First2VertState::FullPointSelect;
@@ -122,32 +126,32 @@ void PiYingGL::chEditVertControl(const QPointF& origMouse)
 	else if (first2VertState == First2VertState::Full2Point) {
 		if (QLineF(first2Vert.first, mouse).length() < 6 || QLineF(first2Vert.second, mouse).length() < 6)  return;
 
-		for (int i = 0; i < characterVerts.size(); i += 2) {
-			QPointF readyPoint(characterVerts[i], characterVerts[i + 1]);
+		for (int i = 0; i < characterVerts[currentVector].size(); i += 2) {
+			QPointF readyPoint(characterVerts[currentVector][i], characterVerts[currentVector][i + 1]);
 			readyPoint = glToMap(readyPoint);
 			if (QLineF(readyPoint, mouse).length() < 6) {
 				first2VertState = First2VertState::None;
-				characterTriangleIndices.push_back((unsigned int)i / 2);
-				addChVert(mapToGL(first2Vert.first));
-				addChVert(mapToGL(first2Vert.second));
+				characterTriangleIndices[currentVector].push_back((unsigned int)i / 2);
+				addChVert(mapToGL(first2Vert.first), currentVector);
+				addChVert(mapToGL(first2Vert.second), currentVector);
 				return;
 			}
 		}
 
 		first2VertState = First2VertState::None;
-		addChVert(mapToGL(first2Vert.first));
-		addChVert(mapToGL(first2Vert.second));
-		addChVert(getViewProjMatrixInvert().map(lastMousePos));
+		addChVert(mapToGL(first2Vert.first), currentVector);
+		addChVert(mapToGL(first2Vert.second), currentVector);
+		addChVert(getViewProjMatrixInvert().map(lastMousePos), currentVector);
 		return;
 	}
 	else if (first2VertState == First2VertState::Full2Select) {
-		for (unsigned int i = 0; i < characterVerts.size(); i += 2) {
-			QPointF readyPoint(characterVerts[i], characterVerts[i + 1]);
+		for (unsigned int i = 0; i < characterVerts[currentVector].size(); i += 2) {
+			QPointF readyPoint(characterVerts[currentVector][i], characterVerts[currentVector][i + 1]);
 			readyPoint = glToMap(readyPoint);
 			if (QLineF(readyPoint, mouse).length() < 6) {
 				if (i / 2 == first2Index.first && i / 2 == first2Index.second) return;
-				for (int j = 0; j < characterTriangleIndices.size(); j += 3) {
-					unsigned int x[3] = { characterTriangleIndices[j + 0], characterTriangleIndices[j + 1], characterTriangleIndices[j + 2] };
+				for (int j = 0; j < characterTriangleIndices[currentVector].size(); j += 3) {
+					unsigned int x[3] = { characterTriangleIndices[currentVector][j + 0], characterTriangleIndices[currentVector][j + 1], characterTriangleIndices[currentVector][j + 2] };
 					unsigned int y[3] = { i / 2, first2Index.first, first2Index.second };
 					std::sort(x, x + 3);
 					std::sort(y, y + 3);
@@ -156,41 +160,41 @@ void PiYingGL::chEditVertControl(const QPointF& origMouse)
 				}
 
 				first2VertState = First2VertState::None;
-				characterTriangleIndices.push_back(first2Index.first);
-				characterTriangleIndices.push_back(first2Index.second);
-				characterTriangleIndices.push_back(i / 2);
+				characterTriangleIndices[currentVector].push_back(first2Index.first);
+				characterTriangleIndices[currentVector].push_back(first2Index.second);
+				characterTriangleIndices[currentVector].push_back(i / 2);
 
 				return;
 			}
 		}
 
 		first2VertState = First2VertState::None;
-		addChVert(getViewProjMatrixInvert().map(lastMousePos));
-		characterTriangleIndices.push_back(first2Index.first);
-		characterTriangleIndices.push_back(first2Index.second);
+		addChVert(getViewProjMatrixInvert().map(lastMousePos), currentVector);
+		characterTriangleIndices[currentVector].push_back(first2Index.first);
+		characterTriangleIndices[currentVector].push_back(first2Index.second);
 		return;
 	}
 	else if (first2VertState == First2VertState::FullSelectPoint || first2VertState == First2VertState::FullPointSelect) {
 		if (QLineF(first2Vert.first, mouse).length() < 6)  return;
 
-		for (int i = 0; i < characterVerts.size(); i += 2) {
-			QPointF readyPoint(characterVerts[i], characterVerts[i + 1]);
+		for (int i = 0; i < characterVerts[currentVector].size(); i += 2) {
+			QPointF readyPoint(characterVerts[currentVector][i], characterVerts[currentVector][i + 1]);
 			readyPoint = glToMap(readyPoint);
 			if (QLineF(readyPoint, mouse).length() < 6) {
 				if (first2Index.first != i / 2) {
 					first2VertState = First2VertState::None;
-					characterTriangleIndices.push_back((unsigned int)i / 2);
-					characterTriangleIndices.push_back(first2Index.first); 
-					addChVert(mapToGL(first2Vert.first));
+					characterTriangleIndices[currentVector].push_back((unsigned int)i / 2);
+					characterTriangleIndices[currentVector].push_back(first2Index.first);
+					addChVert(mapToGL(first2Vert.first), currentVector);
 				}
 				return;
 			}
 		}
 
 		first2VertState = First2VertState::None;
-		characterTriangleIndices.push_back(first2Index.first);
-		addChVert(getViewProjMatrixInvert().map(lastMousePos));
-		addChVert(mapToGL(first2Vert.first));
+		characterTriangleIndices[currentVector].push_back(first2Index.first);
+		addChVert(getViewProjMatrixInvert().map(lastMousePos), currentVector);
+		addChVert(mapToGL(first2Vert.first), currentVector);
 		return;
 	}
 }

@@ -7,7 +7,17 @@ PiYing::PiYing(QWidget* parent) : QMainWindow(parent) {
     ui.setupUi(this);
     setWindowTitle("皮影");
 
+    float ratio = 16.0f / 9.0f;
+
     voidListWidget = new QListWidget();
+
+    bgImageList = new QListWidget();
+    chImageList = new QListWidget();
+    timeLine = new QWidget(this);
+
+    // OpenGL widget
+    piYingGL = new PiYingGL(this);
+    piYingGLContainer = new PiYingGLContainer(piYingGL, ratio); // 16:9
 
     // menuBar
     menuFile = new QMenu("文件(&F)");
@@ -39,12 +49,7 @@ PiYing::PiYing(QWidget* parent) : QMainWindow(parent) {
     connect(actionExportCurrentFrame,   SIGNAL(triggered()), this, SLOT(exportCurrentFrame()));
 	connect(actionScreenScale,          SIGNAL(triggered()), this, SLOT(askScreenScale()));
 	connect(actionDefaultColor,         SIGNAL(triggered()), this, SLOT(askDefaultColor()));
-
-    float ratio = 16.0f / 9.0f;
-
-	// OpenGL widget
-    piYingGL = new PiYingGL(this);
-    piYingGLContainer = new PiYingGLContainer(piYingGL, ratio); // 16:9
+    connect(chImageList, &QListWidget::currentItemChanged, this, [this]() {piYingGL->update(); });
 
     piYingGLContainer->setRatio(ratio);
     piYingGL->changeRatio(ratio);
@@ -57,10 +62,6 @@ PiYing::PiYing(QWidget* parent) : QMainWindow(parent) {
     statusBar()->addPermanentWidget(piYingGL->labelViewRot);
     statusBar()->addPermanentWidget(new QLabel(tr("视图缩放"), this));
     statusBar()->addPermanentWidget(piYingGL->labelViewScale);
-
-    bgImageList = new QListWidget();
-    chImageList = new QListWidget();
-    timeLine = new QWidget(this);
 
     splitTimelineOpenGL = new QSplitter(Qt::Vertical, this);
     splitListOpenGL = new QSplitter(Qt::Horizontal, this);

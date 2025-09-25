@@ -113,6 +113,8 @@ void PiYingGL::addCharacter(const QString& imageName)
 		return;
 	}
 	characterTextures.append(img);
+	characterTriangleIndices.push_back(std::vector<unsigned int>());
+	characterVerts.push_back(std::vector<float>());
 
 	QIcon icon(QPixmap::fromImage(img).scaled(50, 50, Qt::KeepAspectRatio, Qt::SmoothTransformation));
 
@@ -126,11 +128,11 @@ void PiYingGL::addCharacter(const QString& imageName)
 	update();
 }
 
-void PiYingGL::addChVert(const QPointF& point)
+void PiYingGL::addChVert(const QPointF& point, int currentVector)
 {
-	characterTriangleIndices.push_back((unsigned int)characterVerts.size() / 2);
-	characterVerts.push_back(point.x());
-	characterVerts.push_back(point.y());
+	characterTriangleIndices[currentVector].push_back((unsigned int)characterVerts[currentVector].size() / 2);
+	characterVerts[currentVector].push_back(point.x());
+	characterVerts[currentVector].push_back(point.y());
 }
 
 void PiYingGL::setEditMode(EditMode mode)

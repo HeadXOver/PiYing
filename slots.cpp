@@ -107,4 +107,3 @@ void PiYingGL::deleteAllBg()
 		update();
 	}
 }
-
