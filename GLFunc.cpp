@@ -4,9 +4,6 @@ void PiYingGL::initializeGL()
 {
 	initializeOpenGLFunctions();
 
-	aspect = width() / float(height());
-	updateProjMatrix();
-
 	//////////////initialize background///////////////////////
 
 	glGenVertexArrays(1, &bgVAO);

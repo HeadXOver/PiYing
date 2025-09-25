@@ -68,15 +68,6 @@ PiYing::PiYing(QWidget* parent) : QMainWindow(parent) {
     piYingGLContainer->setRatio(ratio);
     piYingGL->changeRatio(ratio);
 
-    statusBar()->addPermanentWidget(new QLabel(tr("视图x"), this));
-    statusBar()->addPermanentWidget(piYingGL->labelViewTransX);
-    statusBar()->addPermanentWidget(new QLabel(tr("视图y"), this));
-    statusBar()->addPermanentWidget(piYingGL->labelViewTransY);
-    statusBar()->addPermanentWidget(new QLabel(tr("视图旋转"), this));
-    statusBar()->addPermanentWidget(piYingGL->labelViewRot);
-    statusBar()->addPermanentWidget(new QLabel(tr("视图缩放"), this));
-    statusBar()->addPermanentWidget(piYingGL->labelViewScale);
-
     splitTimelineOpenGL->addWidget(piYingGLContainer);
     splitTimelineOpenGL->addWidget(timeLine);
     splitListOpenGL->addWidget(voidListWidget);
@@ -94,6 +85,7 @@ PiYing::PiYing(QWidget* parent) : QMainWindow(parent) {
     QFile qss(":/PiYing/imageListStyle.qss");
     if (qss.open(QFile::ReadOnly)) {
         bgImageList->setStyleSheet(qss.readAll());
+        qss.seek(0);
         chImageList->setStyleSheet(qss.readAll());
         qss.close();
     }

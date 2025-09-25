@@ -4,10 +4,10 @@
 #include <qopenglfunctions_3_3_Core>
 #include <QOpenGLShaderProgram.h>
 
-#include "CusInclude.h"
 #include "KeyboardStateWin.h"
 #include "ViewData.h"
 #include "AskTransformDialog.h"
+#include "ChElementSelect.h"
 
 class PiYing;
 
@@ -23,6 +23,7 @@ private:
 	void paintBackgrounds();
 	void paintCharacterTexture();
 	void paintCharacterSkeleton();
+	void addGlobalAction(QMenu* menu, const QList<QAction*> action) { for (QAction* item : action)  menu->addAction(item); }
 
 private slots:
 	void fullScreenBackGround();
@@ -54,7 +55,6 @@ public:
 	void deleteChVert();
 	void choseBackgroundColor();
 	void changeRatio(float ratio);
-	void updateProjMatrix();
 	void importBackground();
 	void importChatacter();
 	void currentUpdate();
@@ -95,18 +95,6 @@ public:
 	bool lineMode = true;
 	bool drawVisible = true;
 
-	QAction* actionAddBackGround;
-	QAction* actionAddCharacterTexture;
-	QAction* actionFullScreenBackGround;
-	QAction* actionChoseBackGroundColor;
-	QAction* actionSetViewToStandard;
-	QAction* actionReturnToStandard;
-	QAction* actionReturnbgTransform;
-	QAction* actionDeleteBg;
-	QAction* actionDeleteAllBg;
-	QAction* actionBgSetTransform;
-	QAction* actionAgainstBg;
-
 	EditMode editMode = EditMode::Default;
 
 	ViewData viewScale;
@@ -114,14 +102,11 @@ public:
 	ViewData viewTransX;
 	ViewData viewTransY;
 
-	QLabel* labelViewScale;
-	QLabel* labelViewTransX;
-	QLabel* labelViewTransY;
-	QLabel* labelViewRot;
-
 	First2VertState first2VertState = First2VertState::None;
 
 private:
+	PiYing* parent;
+
 	unsigned int bgVAO = 0, bgVBO = 0, bgEBO = 0;
 	unsigned int chVAO = 0, chVBO = 0, chEBO = 0;
 
@@ -137,7 +122,6 @@ private:
 
 	int currentSelectedBackGround = -1;
 
-	float aspect;
 	float lastViewRotate = 0.f;
 	float lastViewTransX = 0.f;
 	float lastViewTransY = 0.f;
@@ -154,10 +138,15 @@ private:
 
 	QColor backGroundColor;
 
-	PiYing* parent;
-
 	First2Vert first2Vert;
 	First2Index first2Index;
 
 	ToolState toolState;
+
+	QMenu* rightButtonMenuChTex;
+	QMenu* rightButtonMenuBg_S;
+	QMenu* rightButtonMenuBg;
+	QMenu* rightButtonMenu;
+
+	ChElementSelect* chElementSelect = nullptr;
 };

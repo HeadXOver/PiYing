@@ -3,54 +3,6 @@
 
 #include <QColorDialog>
 
-PiYingGL::PiYingGL(PiYing* parent) : QOpenGLWidget(parent), parent(parent)
-{
-	setAutoFillBackground(false);
-
-	proj.setToIdentity();
-	insProj.setToIdentity();
-	viewScale.setValue(1.0f);
-
-	aspect = 16.0f / 9.0f;
-
-	actionAddBackGround			= new QAction("添加背景图", this);
-	actionAddCharacterTexture	= new QAction("添加角色图", this);
-	actionFullScreenBackGround	= new QAction("背景图全屏", this);
-	actionChoseBackGroundColor	= new QAction("选择幕布底色", this);
-	actionSetViewToStandard		= new QAction("将视图设为标准幕布", this);
-	actionReturnToStandard		= new QAction("返回标准幕布视图", this);
-	actionDeleteBg				= new QAction("删除当前背景图");
-	actionDeleteAllBg			= new QAction("删除所有背景图");
-	actionBgSetTransform		= new QAction("设置变换...");
-	actionAgainstBg				= new QAction("将摄像机对准图片");
-	actionReturnbgTransform		= new QAction("还原变换");
-
-	labelViewScale	= new QLabel("1", this);
-	labelViewTransX = new QLabel("0", this);
-	labelViewTransY = new QLabel("0", this);
-	labelViewRot	= new QLabel("0", this);
-
-	connect(actionFullScreenBackGround, SIGNAL(triggered()), this, SLOT(fullScreenBackGround()));
-	connect(actionSetViewToStandard,	SIGNAL(triggered()), this, SLOT(setViewToStandard()));
-	connect(actionReturnToStandard,		SIGNAL(triggered()), this, SLOT(returnToStandard()));
-	connect(actionDeleteBg,				SIGNAL(triggered()), this, SLOT(deleteBg()));
-	connect(actionDeleteAllBg,			SIGNAL(triggered()), this, SLOT(deleteAllBg()));
-	connect(actionAgainstBg,			SIGNAL(triggered()), this, SLOT(againstBg()));
-	connect(actionBgSetTransform,		SIGNAL(triggered()), this, SLOT(bgSetTransform()));
-	connect(actionReturnbgTransform,	SIGNAL(triggered()), this, SLOT(returnBgTransform()));
-	connect(actionAddCharacterTexture,	&QAction::triggered, this, [this]() {importChatacter(); });
-	connect(actionAddBackGround,		&QAction::triggered, this, [this]() {importBackground(); });
-	connect(actionChoseBackGroundColor, &QAction::triggered, this, [this]() {choseBackgroundColor(); });
-	connect(&viewScale,		&ViewData::valueChanged, this, [&](float v) {labelViewScale->setText(tr("%1  ").arg(v)); });
-	connect(&viewTransX,	&ViewData::valueChanged, this, [&](float v) {labelViewTransX->setText(tr("%1  ").arg(v)); });
-	connect(&viewTransY,	&ViewData::valueChanged, this, [&](float v) {labelViewTransY->setText(tr("%1  ").arg(v)); });
-	connect(&viewRotate,	&ViewData::valueChanged, this, [&](float v) {labelViewRot->setText(tr("%1  ").arg(v)); });
-
-	setMouseTracking(true);
-
-	backGroundColor.setRgb(0, 0, 0);
-}
-
 PiYingGL::~PiYingGL()
 {
 	makeCurrent();
@@ -64,6 +16,8 @@ PiYingGL::~PiYingGL()
 	////////////////////////////////////////
 
 	doneCurrent();
+
+	if (chElementSelect) delete chElementSelect;
 }
 
 void PiYingGL::addBackground(const QString& imageName) {
@@ -167,25 +121,19 @@ void PiYingGL::choseBackgroundColor()
 
 void PiYingGL::changeRatio(float ratio)
 {
-	aspect = ratio;
-	updateProjMatrix();
-	update();
-}
-
-void PiYingGL::updateProjMatrix()
-{
-	if (aspect > 1.0f) {
+	if (ratio > 1.0f) {
 		proj.setToIdentity();
-		proj.ortho(-aspect, aspect, -1, 1, -1, 1);
+		proj.ortho(-ratio, ratio, -1, 1, -1, 1);
 		insProj.setToIdentity();
-		insProj.ortho(-1.0f / aspect, 1.0f / aspect, -1, 1, -1, 1);
+		insProj.ortho(-1.0f / ratio, 1.0f / ratio, -1, 1, -1, 1);
 	}
 	else {
 		proj.setToIdentity();
-		proj.ortho(-1, 1, -1.0f / aspect, 1.0f / aspect, -1, 1);
+		proj.ortho(-1, 1, -1.0f / ratio, 1.0f / ratio, -1, 1);
 		insProj.setToIdentity();
-		insProj.ortho(-1, 1, aspect, aspect, -1, 1);
+		insProj.ortho(-1, 1, ratio, ratio, -1, 1);
 	}
+	update();
 }
 
 void PiYingGL::importBackground()

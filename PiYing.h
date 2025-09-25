@@ -9,11 +9,6 @@
 #include "piYingGL.h"
 #include "piYingGLContainer.h"
 
-QT_BEGIN_NAMESPACE
-class QSpinBox;
-class QDialogButtonBox;
-QT_END_NAMESPACE
-
 class PiYing : public QMainWindow
 {
     Q_OBJECT

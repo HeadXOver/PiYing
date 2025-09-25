@@ -82,6 +82,12 @@
     <ClCompile Include="draw.cpp">
       <Filter>Source Files\piYingGL</Filter>
     </ClCompile>
+    <ClCompile Include="ChElementSelect.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="construct.cpp">
+      <Filter>Source Files\piYingGL</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CusEnum.h">
@@ -101,6 +107,9 @@
     </ClInclude>
     <ClInclude Include="CusFunc.h">
       <Filter>Header Files\CusStruct</Filter>
+    </ClInclude>
+    <ClInclude Include="ChElementSelect.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

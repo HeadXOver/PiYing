@@ -84,28 +84,12 @@ void PiYingGL::wheelEvent(QWheelEvent* ev) {
 
 void PiYingGL::contextMenuEvent(QContextMenuEvent* e)
 {
-	QMenu menu(this);
-
-	if (editMode == EditMode::characterTexture) {
-		menu.addAction(actionAddCharacterTexture);
-	}
+	if (editMode == EditMode::characterTexture)  rightButtonMenuChTex->exec(e->globalPos());
 	else if (editMode == EditMode::BackGround) {
-		if (currentSelectedBackGround >= 0) {
-			menu.addAction(actionFullScreenBackGround);
-			menu.addAction(actionDeleteBg);
-			menu.addAction(actionBgSetTransform);
-			menu.addAction(actionAgainstBg);
-			menu.addAction(actionReturnbgTransform);
-		}
-		else {
-			menu.addAction(actionAddBackGround);
-			menu.addAction(actionDeleteAllBg);
-		}
+		if (currentSelectedBackGround >= 0) rightButtonMenuBg_S->exec(e->globalPos());
+		else rightButtonMenuBg->exec(e->globalPos());
 	}
-	menu.addAction(actionChoseBackGroundColor);
-	menu.addAction(actionSetViewToStandard);
-	menu.addAction(actionReturnToStandard);
+	else rightButtonMenu->exec(e->globalPos());
 
-	menu.exec(e->globalPos());
 	e->accept();
 }
