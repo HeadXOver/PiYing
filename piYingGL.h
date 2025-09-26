@@ -53,6 +53,7 @@ public:
 	void setEditMode(EditMode mode);
 	void setChToolState(ChToolState state);
 	void deleteChVert();
+	void escapeChVert();
 	void choseBackgroundColor();
 	void changeRatio(float ratio);
 	void importBackground();

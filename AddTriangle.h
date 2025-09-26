@@ -10,6 +10,7 @@ public:
 	virtual bool addIndex(unsigned int i) override;
 	virtual bool checkPointRepeat(const QPointF& point) override;
 	virtual void addVert(const QPointF& point) override;
+	virtual void escape() override;
 	virtual unsigned int getIndex(int i) override { return i == 0 ? firstIndex : secondIndex; }
 	virtual QPointF getVert(int i) override { return i == 0 ? first : second; }
 
@@ -19,4 +20,6 @@ private:
 
 	unsigned int firstIndex = 0;
 	unsigned int secondIndex = 0;
+
+	bool vertThenInd;
 };

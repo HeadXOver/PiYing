@@ -114,6 +114,12 @@ void PiYingGL::deleteChVert()
 	
 }
 
+void PiYingGL::escapeChVert()
+{
+	if (chElementTool) chElementTool->escape();
+	update();
+}
+
 void PiYingGL::choseBackgroundColor()
 {
 	QColor color = QColorDialog::getColor(backGroundColor, this, "选择幕布底色");

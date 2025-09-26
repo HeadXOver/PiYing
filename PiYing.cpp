@@ -110,17 +110,9 @@ PiYing::~PiYing()
 void PiYing::keyPressEvent(QKeyEvent* event)
 {
     if (event->key() == Qt::Key_Escape) {
-        /*if (piYingGL->editMode == EditMode::characterTexture) {
-            if (piYingGL->first2VertState == First2VertState::None) return;
-            if (piYingGL->first2VertState == First2VertState::HalfSelect || piYingGL->first2VertState == First2VertState::HalfPoint)
-                piYingGL->first2VertState = First2VertState::None;
-            else if (piYingGL->first2VertState == First2VertState::Full2Point) piYingGL->first2VertState = First2VertState::HalfPoint;
-            else if (piYingGL->first2VertState == First2VertState::Full2Select) piYingGL->first2VertState = First2VertState::HalfSelect;
-            else if (piYingGL->first2VertState == First2VertState::FullSelectPoint) piYingGL->first2VertState = First2VertState::HalfSelect;
-            else if (piYingGL->first2VertState == First2VertState::FullPointSelect) piYingGL->first2VertState = First2VertState::HalfPoint;
-
-            piYingGL->update();
-        }*/
+        if (piYingGL->editMode == EditMode::characterTexture) {
+            piYingGL->escapeChVert();
+        }
     }
     else if (event->key() == Qt::Key_Delete) {
         if (piYingGL->editMode == EditMode::characterTexture) {
