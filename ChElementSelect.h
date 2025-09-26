@@ -9,7 +9,6 @@ public:
 
 private:
 	QList<unsigned int> index;
-	QList<QPointF> vert;
 
 	std::vector<float>& glVert;
 	std::vector<unsigned int>& glIndex;

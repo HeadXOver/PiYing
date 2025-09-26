@@ -33,6 +33,9 @@
     <Filter Include="StyleSheets">
       <UniqueIdentifier>{62c7bb89-d07b-49a5-893d-c2a87f10ba01}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\ChELementSelect">
+      <UniqueIdentifier>{f755ae81-636b-4048-95f4-0ff9883fdb74}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <QtRcc Include="PiYing.qrc">
@@ -109,7 +112,10 @@
       <Filter>Header Files\CusStruct</Filter>
     </ClInclude>
     <ClInclude Include="ChElementSelect.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\ChELementSelect</Filter>
+    </ClInclude>
+    <ClInclude Include="AddTriangle.h">
+      <Filter>Header Files\ChELementSelect</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

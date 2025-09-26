@@ -148,5 +148,5 @@ private:
 	QMenu* rightButtonMenuBg;
 	QMenu* rightButtonMenu;
 
-	ChElementSelect* chElementSelect = nullptr;
+	ChElementSelect* chElementSelect;
 };

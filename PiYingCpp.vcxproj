@@ -115,6 +115,7 @@
     <ClInclude Include="ChElementSelect.h" />
     <ClInclude Include="CusInclude.h" />
     <ClInclude Include="CusFunc.h" />
+    <ClInclude Include="AddTriangle.h" />
     <QtMoc Include="AskTransformDialog.h" />
     <ClInclude Include="cusMode.h" />
     <ClInclude Include="Element.h" />
