@@ -15,7 +15,7 @@ void PiYingGL::bgTranslateControl(const QPointF& mouse, ImageTexture& image)
 {
 	setCursor(Qt::ClosedHandCursor);
 	image.transform = lastImageTransform;
-	image.addTrans((getViewMatrixInvertWithoutTrans() * insProj).map(mouse - lastMousePos));
+	image.addTrans(getRotatedPoint(insProj.map(mouse - lastMousePos) / viewScale.value(), -viewRotate.value() * 3.1415926f / 180.f));
 }
 
 void PiYingGL::bgScaleControl(const QPointF& mouse, ImageTexture& image)
@@ -55,8 +55,9 @@ void PiYingGL::viewRotationControl(const QPointF& mouse)
 	setCursor(Qt::CursorShape::ClosedHandCursor);
 	float r = angleBetweenPoint(insProj.map(mouse), insProj.map(lastMiddleButtonPos));
 	viewRotate.setValue(lastViewRotate + r * 180.f / 3.1415926f);
-	viewTransX.setValue(lastViewTransX * cos(r) - lastViewTransY * sin(r));
-	viewTransY.setValue(lastViewTransX * sin(r) + lastViewTransY * cos(r));
+	QPointF toRot = getRotatedPoint(lastViewTransX, lastViewTransY, r);
+	viewTransX.setValue(toRot.x());
+	viewTransY.setValue(toRot.y());
 }
 
 void PiYingGL::chToolControl(const QPointF& origMouse)
@@ -66,5 +67,5 @@ void PiYingGL::chToolControl(const QPointF& origMouse)
 
 	QPointF mouse = getViewProjMatrixInvert().map(mapToGL(origMouse));
 	
-	chElementTool->clickPos(mouse, viewScale.value(), currentVector);
+	if(chElementTool) chElementTool->clickPos(mouse, viewScale.value(), currentVector);
 }

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "ChElementSelect.h"
+#include "ChElementTool.h"
 
 class AddTriangle : public ChElementTool {
 public:

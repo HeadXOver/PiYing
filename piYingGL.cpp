@@ -95,7 +95,10 @@ void PiYingGL::setChToolState(ChTexToolState state)
 	if (chToolState == state) return;
 	chToolState = state;
 
-	if (chElementTool) delete chElementTool;
+	if (chElementTool) {
+		delete chElementTool;
+		chElementTool = nullptr;
+	}
 	
 	if (state == ChTexToolState::None) return;
 	else if (state == ChTexToolState::AddTriangle) chElementTool = new AddTriangle(characterTriangleIndices, characterVerts);
@@ -208,17 +211,4 @@ Qt::CursorShape PiYingGL::getCursorShape(const MousePos& pos)
 	if (pos == MousePos::Inside) return Qt::OpenHandCursor;
 	if (!KeyboardStateWin::isAltHeld()) return Qt::CursorShape::CrossCursor;
 	return Qt::OpenHandCursor;
-}
-
-QString PiYingGL::getUniquebgName(const QListWidget* list)
-{
-	QString s;
-	bool repeat = false;
-	for (int i = 1;; i++) {
-		s = QString::number(i);
-		repeat = false;
-		for (int j = 0; j < list->count(); ++j)
-			if (list->item(j)->text() == s) repeat = true;
-		if (!repeat) return s;
-	}
 }

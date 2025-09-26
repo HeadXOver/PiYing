@@ -8,6 +8,7 @@
 #include "ViewData.h"
 #include "AskTransformDialog.h"
 #include "ChElementSelect.h"
+#include "AddTriangle.h"
 
 class PiYing;
 
@@ -67,25 +68,19 @@ public:
 
 	bool addBackground(const QString& imageName, QImage& image);
 
-	inline QPointF getRaletiveToRect(const QPointF& point, const ImageTransform& transform) const	{ return (proj * transform.getMatrixInvert() * getViewMatrixInvert() * insProj).map(point); }
-	inline QPointF getRaletiveToGlobal(const QPointF& point, const ImageTransform& transform) const		{ return getBgShaderMatrix(transform).map(point); }
-
-	inline QPointF mapToGL(const QPointF& point) { return QPointF((point.x() / float(width())) * 2.0f - 1.0f, 1.0f - (point.y() / float(height())) * 2.0f); }
-	inline QPointF glToMap(const QPointF& point) { return QPointF((point.x() + 1.0f) * width() / 2, (1.0f - point.y()) * height() / 2); }
-	inline QPointF mapViewProjMatrix(const QPointF& point) { return glToMap(getViewProjMatrix().map(point)); }
+	QPointF getRaletiveToRect(const QPointF& point, const ImageTransform& transform) const		{ return (proj * transform.getMatrixInvert() * getViewMatrixInvert() * insProj).map(point); }
+	QPointF getRaletiveToGlobal(const QPointF& point, const ImageTransform& transform) const	{ return getBgShaderMatrix(transform).map(point); }
+	QPointF mapToGL(const QPointF& point) { return QPointF((point.x() / float(width())) * 2.0f - 1.0f, 1.0f - (point.y() / float(height())) * 2.0f); }
+	QPointF glToMap(const QPointF& point) { return QPointF((point.x() + 1.0f) * width() / 2, (1.0f - point.y()) * height() / 2); }
+	QPointF mapViewProjMatrix(const QPointF& point) { return glToMap(getViewProjMatrix().map(point)); }
 
 	QMatrix4x4 getViewMatrixInvert() const;
 	QMatrix4x4 getViewMatrix() const;
-	QMatrix4x4 getViewMatrixInvertWithoutTrans() const;
-	QMatrix4x4 getViewMatrixWithoutTrans() const;
 	QMatrix4x4 getBgShaderMatrix(const ImageTransform& transform) const { return proj * getViewMatrix() * transform.getMatrix() * insProj; }
+	QMatrix4x4 getViewProjMatrixInvert() const { return proj * getViewMatrixInvert() * insProj; }
+	QMatrix4x4 getViewProjMatrix() const { return proj * getViewMatrix() * insProj; }
 
-	inline QMatrix4x4 getViewProjMatrixInvert() const { return proj * getViewMatrixInvert() * insProj; }
-	inline QMatrix4x4 getViewProjMatrix() const { return proj * getViewMatrix() * insProj; }
-
-	static QString getUniquebgName(const QListWidget* list);
-
-	inline bool isInsideSquare(const QPointF& point, float side = 2.0f) const { return (point.x() >= -side / 2.f && point.x() <= side / 2.f && point.y() >= -side / 2.f && point.y() <= side / 2.f); }
+	bool isInsideSquare(const QPointF& point, float side = 2.0f) const { return (point.x() >= -side / 2.f && point.x() <= side / 2.f && point.y() >= -side / 2.f && point.y() <= side / 2.f); }
 
 	MousePos getMousePosType(const QPointF& point) const;
 

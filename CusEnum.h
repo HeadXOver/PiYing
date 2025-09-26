@@ -1,7 +1,6 @@
 #pragma once
 
 #include <QOpenGLTexture>
-#include <QMatrix4x4>
 #include <vector>
 #include <QIcon>
 #include <QAction>
@@ -15,7 +14,7 @@
 #include <QStatusBar>
 #include <QLabel>
 #include <QList>
-#include <QListWidget>
+#include <QMatrix4x4>
 #include <QSplitter>
 
 enum class First2VertState {
@@ -32,6 +31,7 @@ enum class ChTexToolState {
     None,
     AddTriangle,
     SelectVert,
+	AddVert,
 };
 
 enum class MousePos {

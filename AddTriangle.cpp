@@ -38,21 +38,11 @@ void AddTriangle::escape()
 	if (numVert == 0 && numInd == 1 || numVert == 1 && numInd == 0) {
 		numInd = 0;
 		numVert = 0;
-		return;
 	}
-	if (numInd == 2) {
-		numInd--;
-		return;
-	}
-	if (numVert == 2) {
-		numVert--;
-		return;
-	}
-	if (vertThenInd) {
-		numInd--;
-		return;
-	}
-	numVert--;
+	else if (numInd == 2) numInd--;
+	else if (numVert == 2) numVert--;
+	else if (vertThenInd) numInd--;
+	else numVert--;
 }
 
 void AddTriangle::deleteElement(int currentVector)

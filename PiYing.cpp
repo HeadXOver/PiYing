@@ -24,6 +24,7 @@ PiYing::PiYing(QWidget* parent) : QMainWindow(parent) {
 
     toolChTexList.append(ToolButton(":/PiYing/selectChVert_S.png", ":/PiYing/selectChVert.png", "selectChVert", ChTexToolState::SelectVert, this));
     toolChTexList.append(ToolButton(":/PiYing/addChVert_S.png", ":/PiYing/addChVert.png", "addChVert", ChTexToolState::AddTriangle, this));
+    toolChTexList.append(ToolButton(":/PiYing/chAddPoly_S.png", ":/PiYing/chAddPoly.png", "chAddPoly", ChTexToolState::AddVert, this));
 
     QComboBox* modeBox = new QComboBox(this);
 
@@ -54,13 +55,13 @@ PiYing::PiYing(QWidget* parent) : QMainWindow(parent) {
         connect(item.action, &QAction::triggered, this, [this, &item]() {selectTool(item); });
     }
 
-    connect(actionExit,                 SIGNAL(triggered()), this, SLOT(close()));
-    connect(actionImportBackGround,     SIGNAL(triggered()), this, SLOT(importBackGround()));
-    connect(actionImportCharacter,      SIGNAL(triggered()), this, SLOT(importCharacter()));
     connect(actionExportCurrentFrame,   SIGNAL(triggered()), this, SLOT(exportCurrentFrame()));
 	connect(actionScreenScale,          SIGNAL(triggered()), this, SLOT(askScreenScale()));
 	connect(actionDefaultColor,         SIGNAL(triggered()), this, SLOT(askDefaultColor()));
-    connect(chImageList, &QListWidget::currentItemChanged, this, [this]() {piYingGL->update(); });
+    connect(actionExit,             &QAction::triggered,                this, [this]() {close(); });
+    connect(actionImportBackGround, &QAction::triggered,                this, [this]() {piYingGL->importBackground(); });
+    connect(actionImportCharacter,  &QAction::triggered,                this, [this]() {piYingGL->importChatacter(); });
+    connect(chImageList,            &QListWidget::currentItemChanged,   this, [this]() {piYingGL->update(); });
 
     piYingGLContainer->setRatio(ratio);
     piYingGL->changeRatio(ratio);
@@ -116,10 +117,6 @@ void PiYing::keyPressEvent(QKeyEvent* event)
             piYingGL->deleteChElement();
         }
     }
-}
-
-void PiYing::importCharacter(){
-    piYingGL->importChatacter();
 }
 
 void PiYing::exportCurrentFrame(){
@@ -200,8 +197,4 @@ void PiYing::selectTool(ToolButton& toolButton)
         item.unSelect();
     toolButton.select();
     piYingGL->setChToolState(toolButton.toolState);
-}
-
-void PiYing::importBackGround(){
-    piYingGL->importBackground();
 }

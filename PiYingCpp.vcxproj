@@ -106,6 +106,7 @@
     <ClCompile Include="RaletiveTransform.cpp" />
     <ClCompile Include="draw.cpp" />
     <ClCompile Include="construct.cpp" />
+    <ClCompile Include="CusFunc.cpp" />
     <QtRcc Include="PiYing.qrc" />
     <QtUic Include="PiYing.ui" />
     <QtMoc Include="PiYing.h" />
@@ -113,10 +114,11 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ChElementSelect.h" />
+    <ClInclude Include="ChElementTool.h" />
     <ClInclude Include="CusInclude.h" />
     <ClInclude Include="CusFunc.h" />
     <ClInclude Include="AddTriangle.h" />
+    <ClInclude Include="ChElementSelect.h" />
     <QtMoc Include="AskTransformDialog.h" />
     <ClInclude Include="cusMode.h" />
     <ClInclude Include="Element.h" />

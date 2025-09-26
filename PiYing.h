@@ -21,8 +21,6 @@ protected:
 	void keyPressEvent(QKeyEvent* event) override;
 
 private slots:
-	void importCharacter();
-	void importBackGround();
     void exportCurrentFrame();
 	void askScreenScale();
 	void askDefaultColor();
