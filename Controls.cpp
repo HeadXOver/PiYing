@@ -65,29 +65,8 @@ void PiYingGL::chAddTriangleControl(const QPointF& origMouse)
 	if (currentVector < 0) return;
 
 	QPointF mouse = glToMap(getViewProjMatrixInvert().map(mapToGL(origMouse)));
-	if (chElementTool->getNumInd() == 0 && chElementTool->getNumVert() == 0) {
-		for (unsigned int i = 0; i < characterVerts[currentVector].size() / 2; i++) {
-			QPointF readyPoint(characterVerts[currentVector][i + i], characterVerts[currentVector][i + i + 1]);
-			readyPoint = glToMap(readyPoint);
-			if (QLineF(readyPoint, mouse).length() < 6) {
-				if (chElementTool->addIndex(i)) return;
-			}
-		}
 
-		chElementTool->addVert(mouse);
-	}
-	else if (chElementTool->getNumInd() == 1 && chElementTool->getNumVert() == 0) {
-		for (unsigned int i = 0; i < characterVerts[currentVector].size() / 2; i++) {
-			QPointF readyPoint(characterVerts[currentVector][i + i], characterVerts[currentVector][i + i + 1]);
-			readyPoint = glToMap(readyPoint);
-			if (QLineF(readyPoint, mouse).length() < 6) {
-				if (chElementTool->addIndex(i)) return;
-			}
-		}
-
-		chElementTool->addVert(mouse);
-	}
-	else if (chElementTool->getNumInd() == 0 && chElementTool->getNumVert() == 1) {
+	if (chElementTool->getNumInd() + chElementTool->getNumVert() <= 1) {
 		if (chElementTool->checkPointRepeat(mouse))  return;
 
 		for (unsigned int i = 0; i < characterVerts[currentVector].size() / 2; i++) {
@@ -120,9 +99,11 @@ void PiYingGL::chAddTriangleControl(const QPointF& origMouse)
 		chElementTool->setNumVert(0);
 		addChVert(mapToGL(chElementTool->getVert(0)), currentVector);
 		addChVert(mapToGL(chElementTool->getVert(1)), currentVector);
-		addChVert(getViewProjMatrixInvert().map(lastMousePos), currentVector);
+		addChVert(mapToGL(mouse), currentVector);
 	}
 	else if (chElementTool->getNumInd() == 2) {
+		if (chElementTool->checkPointRepeat(mouse))  return;
+
 		for (unsigned int i = 0; i < characterVerts[currentVector].size() / 2; i++) {
 			QPointF readyPoint(characterVerts[currentVector][i + i], characterVerts[currentVector][i + i + 1]);
 			readyPoint = glToMap(readyPoint);
@@ -174,7 +155,7 @@ void PiYingGL::chAddTriangleControl(const QPointF& origMouse)
 		chElementTool->setNumInd(0);
 		chElementTool->setNumVert(0);
 		characterTriangleIndices[currentVector].push_back(chElementTool->getIndex(0));
-		addChVert(getViewProjMatrixInvert().map(lastMousePos), currentVector);
+		addChVert(mapToGL(mouse), currentVector);
 		addChVert(mapToGL(chElementTool->getVert(0)), currentVector);
 	}
 }
