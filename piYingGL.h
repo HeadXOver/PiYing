@@ -73,7 +73,7 @@ public:
 
 	inline QPointF mapToGL(const QPointF& point) { return QPointF((point.x() / float(width())) * 2.0f - 1.0f, 1.0f - (point.y() / float(height())) * 2.0f); }
 	inline QPointF glToMap(const QPointF& point) { return QPointF((point.x() + 1.0f) * width() / 2, (1.0f - point.y()) * height() / 2); }
-	inline QPointF mapViewProjMatrix(const QPointF& point) { return glToMap(getViewProjMatrix().map(mapToGL(point))); }
+	inline QPointF mapViewProjMatrix(const QPointF& point) { return glToMap(getViewProjMatrix().map(point)); }
 
 	QMatrix4x4 getViewMatrixInvert() const;
 	QMatrix4x4 getViewMatrix() const;

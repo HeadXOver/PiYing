@@ -27,6 +27,7 @@ void AddTriangle::addVert(const QPointF& point)
 {
 	if (numVert == 0) first = point;
 	else if (numVert == 1) second = point;
+	else return;
 	vertThenInd = false;
 	numVert++;
 }
@@ -52,4 +53,9 @@ void AddTriangle::escape()
 		return;
 	}
 	numVert--;
+}
+
+void AddTriangle::clickPos(const QPointF& mouse)
+{
+
 }

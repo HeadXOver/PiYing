@@ -64,98 +64,71 @@ void PiYingGL::chAddTriangleControl(const QPointF& origMouse)
 	int currentVector = parent->chImageList->currentRow();
 	if (currentVector < 0) return;
 
-	QPointF mouse = glToMap(getViewProjMatrixInvert().map(mapToGL(origMouse)));
+	QPointF mouse = getViewProjMatrixInvert().map(mapToGL(origMouse));
+
+	if (chElementTool->checkPointRepeat(mouse))  return;
+
+	int indRepeat = -1;
+	for (unsigned int i = 0; i < characterVerts[currentVector].size() / 2; i++) {
+		QPointF readyPoint(characterVerts[currentVector][i + i], characterVerts[currentVector][i + i + 1]);
+		if (QLineF(readyPoint, mouse).length() < 0.02f / viewScale.value()) {
+			indRepeat = i;
+			break;
+		}
+	}
+
 
 	if (chElementTool->getNumInd() + chElementTool->getNumVert() <= 1) {
-		if (chElementTool->checkPointRepeat(mouse))  return;
-
-		for (unsigned int i = 0; i < characterVerts[currentVector].size() / 2; i++) {
-			QPointF readyPoint(characterVerts[currentVector][i + i], characterVerts[currentVector][i + i + 1]);
-			readyPoint = glToMap(readyPoint);
-			if (QLineF(readyPoint, mouse).length() < 6) {
-				if (chElementTool->addIndex(i)) return;
-			}
-		}
-
-		chElementTool->addVert(mouse);
+		if (indRepeat >= 0) if (!chElementTool->addIndex(indRepeat)) chElementTool->addVert(mouse);
 	}
 	else if (chElementTool->getNumVert() == 2) {
-		if (chElementTool->checkPointRepeat(mouse))  return;
-
-		for (unsigned int i = 0; i < characterVerts[currentVector].size() / 2; i++) {
-			QPointF readyPoint(characterVerts[currentVector][i + i], characterVerts[currentVector][i + i + 1]);
-			readyPoint = glToMap(readyPoint);
-			if (QLineF(readyPoint, mouse).length() < 6) {
-				chElementTool->setNumInd(0);
-				chElementTool->setNumVert(0);
-				characterTriangleIndices[currentVector].push_back(i);
-				addChVert(mapToGL(chElementTool->getVert(0)), currentVector);
-				addChVert(mapToGL(chElementTool->getVert(1)), currentVector);
-				return;
-			}
-		}
-
 		chElementTool->setNumInd(0);
 		chElementTool->setNumVert(0);
-		addChVert(mapToGL(chElementTool->getVert(0)), currentVector);
-		addChVert(mapToGL(chElementTool->getVert(1)), currentVector);
-		addChVert(mapToGL(mouse), currentVector);
+		if (indRepeat >= 0) characterTriangleIndices[currentVector].push_back(indRepeat);
+		else  addChVert(mouse, currentVector);
+		addChVert(chElementTool->getVert(0), currentVector);
+		addChVert(chElementTool->getVert(1), currentVector);
 	}
 	else if (chElementTool->getNumInd() == 2) {
-		if (chElementTool->checkPointRepeat(mouse))  return;
-
-		for (unsigned int i = 0; i < characterVerts[currentVector].size() / 2; i++) {
-			QPointF readyPoint(characterVerts[currentVector][i + i], characterVerts[currentVector][i + i + 1]);
-			readyPoint = glToMap(readyPoint);
-			if (QLineF(readyPoint, mouse).length() < 6) {
-				if (i == chElementTool->getIndex(0) && i == chElementTool->getIndex(1)) return;
-				for (int j = 0; j < characterTriangleIndices[currentVector].size(); j += 3) {
-					unsigned int x[3] = { characterTriangleIndices[currentVector][j + 0], characterTriangleIndices[currentVector][j + 1], characterTriangleIndices[currentVector][j + 2] };
-					unsigned int y[3] = { i, chElementTool->getIndex(0), chElementTool->getIndex(1) };
-					std::sort(x, x + 3);
-					std::sort(y, y + 3);
-					if (x[0] == y[0] && x[1] == y[1] && x[2] == y[2]) 
-						return;
-				}
-
-				chElementTool->setNumInd(0);
-				chElementTool->setNumVert(0);
-				characterTriangleIndices[currentVector].push_back(chElementTool->getIndex(0));
-				characterTriangleIndices[currentVector].push_back(chElementTool->getIndex(1));
-				characterTriangleIndices[currentVector].push_back(i);
-
-				return;
+		if (indRepeat >= 0) {
+			if (indRepeat == chElementTool->getIndex(0) && indRepeat == chElementTool->getIndex(1)) return;
+			for (int j = 0; j < characterTriangleIndices[currentVector].size(); j += 3) {
+				unsigned int x[3] = { characterTriangleIndices[currentVector][j + 0], characterTriangleIndices[currentVector][j + 1], characterTriangleIndices[currentVector][j + 2] };
+				unsigned int y[3] = { (unsigned int)indRepeat, chElementTool->getIndex(0), chElementTool->getIndex(1) };
+				std::sort(x, x + 3);
+				std::sort(y, y + 3);
+				if (x[0] == y[0] && x[1] == y[1] && x[2] == y[2])
+					return;
 			}
-		}
 
-		chElementTool->setNumInd(0);
-		chElementTool->setNumVert(0);
-		addChVert(getViewProjMatrixInvert().map(lastMousePos), currentVector);
+			chElementTool->setNumInd(0);
+			chElementTool->setNumVert(0);
+			characterTriangleIndices[currentVector].push_back(indRepeat);
+		}
+		else {
+			chElementTool->setNumInd(0);
+			chElementTool->setNumVert(0);
+			addChVert(mouse, currentVector);
+		}
 		characterTriangleIndices[currentVector].push_back(chElementTool->getIndex(0));
 		characterTriangleIndices[currentVector].push_back(chElementTool->getIndex(1));
 	}
 	else if (chElementTool->getNumInd() == 1 && chElementTool->getNumVert() == 1) {
-		if (chElementTool->checkPointRepeat(mouse))  return;
-
-		for (unsigned int i = 0; i < characterVerts[currentVector].size() / 2; i++) {
-			QPointF readyPoint(characterVerts[currentVector][i + i], characterVerts[currentVector][i + i + 1]);
-			readyPoint = glToMap(readyPoint);
-			if (QLineF(readyPoint, mouse).length() < 6) {
-				if (chElementTool->getIndex(0) != i) {
-					chElementTool->setNumInd(0);
-					chElementTool->setNumVert(0);
-					characterTriangleIndices[currentVector].push_back(i);
-					characterTriangleIndices[currentVector].push_back(chElementTool->getIndex(0));
-					addChVert(mapToGL(chElementTool->getVert(0)), currentVector);
-				}
-				return;
+		if (indRepeat >= 0) {
+			if (chElementTool->getIndex(0) != indRepeat) {
+				chElementTool->setNumInd(0);
+				chElementTool->setNumVert(0);
+				characterTriangleIndices[currentVector].push_back((unsigned int)indRepeat);
+				characterTriangleIndices[currentVector].push_back(chElementTool->getIndex(0));
+				addChVert(chElementTool->getVert(0), currentVector);
 			}
 		}
-
-		chElementTool->setNumInd(0);
-		chElementTool->setNumVert(0);
-		characterTriangleIndices[currentVector].push_back(chElementTool->getIndex(0));
-		addChVert(mapToGL(mouse), currentVector);
-		addChVert(mapToGL(chElementTool->getVert(0)), currentVector);
+		else {
+			chElementTool->setNumInd(0);
+			chElementTool->setNumVert(0);
+			characterTriangleIndices[currentVector].push_back(chElementTool->getIndex(0));
+			addChVert(mouse, currentVector);
+			addChVert(chElementTool->getVert(0), currentVector);
+		}
 	}
 }

@@ -11,6 +11,7 @@ public:
 	virtual bool checkPointRepeat(const QPointF& point) override;
 	virtual void addVert(const QPointF& point) override;
 	virtual void escape() override;
+	virtual void clickPos(const QPointF& mouse) override;
 	virtual unsigned int getIndex(int i) override { return i == 0 ? firstIndex : secondIndex; }
 	virtual QPointF getVert(int i) override { return i == 0 ? first : second; }
 
