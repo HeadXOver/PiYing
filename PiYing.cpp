@@ -25,8 +25,6 @@ PiYing::PiYing(QWidget* parent) : QMainWindow(parent) {
     toolList.append(ToolButton(":/PiYing/selectChVert_S.png", ":/PiYing/selectChVert.png", "selectChVert", ChToolState::SelectVert));
     toolList.append(ToolButton(":/PiYing/addChVert_S.png", ":/PiYing/addChVert.png", "addChVert", ChToolState::AddTriangle));
 
-    toolList[0].select();
-
     QComboBox* modeBox = new QComboBox(this);
 
     // menuBar

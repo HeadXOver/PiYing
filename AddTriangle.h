@@ -7,13 +7,16 @@ public:
 	AddTriangle(QList<std::vector<unsigned int>>& ind, QList<std::vector<float>>& v) :ChElementTool(ind, v) {}
 
 public:
-	virtual bool addIndex(unsigned int i) override;
-	virtual bool checkPointRepeat(const QPointF& point) override;
-	virtual void addVert(const QPointF& point) override;
+	bool addIndex(unsigned int i);
+	bool checkPointRepeat(const QPointF& point);
+	void addVert(const QPointF& point);
+
 	virtual void escape() override;
-	virtual void clickPos(const QPointF& mouse) override;
-	virtual unsigned int getIndex(int i) override { return i == 0 ? firstIndex : secondIndex; }
-	virtual QPointF getVert(int i) override { return i == 0 ? first : second; }
+	virtual void clickPos(const QPointF& mouse, float viewScale, int currentVector) override;
+	virtual QList<QPointF> getToDrawVert(int currentVector) override;
+
+private:
+	void addChVert(const QPointF& point, int currentVector);
 
 private:
 	QPointF first;
@@ -22,5 +25,8 @@ private:
 	unsigned int firstIndex = 0;
 	unsigned int secondIndex = 0;
 
-	bool vertThenInd;
+	bool vertThenInd = false;
+
+	int numVert = 0;
+	int numInd = 0;
 };
