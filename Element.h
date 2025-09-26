@@ -83,29 +83,26 @@ const unsigned int RECTANGLE_INDECES[6] = {
     1, 2, 3  // second triangle
 };
 
-struct First2Vert {
-    QPointF first;
-    QPointF second;
-};
-
-struct First2Index {
-    unsigned int first = -1;
-    unsigned int second = -1;
-};
-
 struct ToolButton {
-    ToolButton(QString selectedFileName, QString unselectedFileName, QString actionName, ToolState state) {
+    ToolButton(QString selectedFileName, QString unselectedFileName, QString actionName, ChToolState state) {
         selected = QIcon(selectedFileName);
         unselected = QIcon(unselectedFileName);
         action = new QAction(unselected, actionName);
         toolState = state;
     }
 
-    void select()   { action->setIcon(selected); }
-    void unSelect() { action->setIcon(unselected); }
+    void select() {
+        action->setIcon(selected);
+        isSelect = true;
+    }
+    void unSelect() { 
+        action->setIcon(unselected);
+        isSelect = false;
+    }
 
     QAction* action;
     QIcon selected;
     QIcon unselected;
-    ToolState toolState;
+    ChToolState toolState;
+    bool isSelect = false;
 };

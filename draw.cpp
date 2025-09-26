@@ -25,11 +25,11 @@ void PiYingGL::drawChEditVert()
 		i += j;
 	}
 
-	if (toolState == ToolState::AddVert) {
-		if (first2VertState == First2VertState::None) return;
+	if (chToolState == ChToolState::AddTriangle) {
+		if (chElementTool->getNumInd() == 0 && chElementTool->getNumVert() == 0) return;
 
-		if (first2VertState == First2VertState::HalfSelect) {
-			int index = first2Index.first * 2;
+		if (chElementTool->getNumInd() == 1 && chElementTool->getNumVert() == 0) {
+			int index = chElementTool->getIndex(0) * 2;
 			QPointF selectPoint(characterVerts[currentVector][index], characterVerts[currentVector][index + 1]);
 			selectPoint = glToMap(getViewProjMatrix().map(selectPoint));
 			painter.setPen(QPen(Qt::black, 8));
@@ -37,26 +37,26 @@ void PiYingGL::drawChEditVert()
 			painter.setPen(QPen(Qt::red, 6));
 			painter.drawPoint(selectPoint);
 		}
-		else if (first2VertState == First2VertState::HalfPoint) {
+		else if (chElementTool->getNumInd() == 0 && chElementTool->getNumVert() == 1) {
 			painter.setPen(QPen(Qt::black, 8));
-			painter.drawPoint(mapViewProjMatrix(first2Vert.first));
+			painter.drawPoint(mapViewProjMatrix(chElementTool->getVert(0)));
 			painter.setPen(QPen(Qt::red, 6));
-			painter.drawPoint(mapViewProjMatrix(first2Vert.first));
+			painter.drawPoint(mapViewProjMatrix(chElementTool->getVert(0)));
 		}
 
-		else if (first2VertState == First2VertState::Full2Point) {
+		else if (chElementTool->getNumVert() == 2) {
 			painter.setPen(QPen(Qt::black, 8));
-			painter.drawPoint(mapViewProjMatrix(first2Vert.first));
-			painter.drawPoint(mapViewProjMatrix(first2Vert.second));
+			painter.drawPoint(mapViewProjMatrix(chElementTool->getVert(0)));
+			painter.drawPoint(mapViewProjMatrix(chElementTool->getVert(1)));
 			painter.setPen(QPen(Qt::red, 6));
-			painter.drawPoint(mapViewProjMatrix(first2Vert.first));
-			painter.drawPoint(mapViewProjMatrix(first2Vert.second));
+			painter.drawPoint(mapViewProjMatrix(chElementTool->getVert(0)));
+			painter.drawPoint(mapViewProjMatrix(chElementTool->getVert(1)));
 		}
-		else if (first2VertState == First2VertState::Full2Select) {
-			int index = first2Index.first * 2;
+		else if (chElementTool->getNumInd() == 2) {
+			int index = chElementTool->getIndex(0) * 2;
 			QPointF selectPoint(characterVerts[currentVector][index], characterVerts[currentVector][index + 1]);
 			selectPoint = glToMap(getViewProjMatrix().map(selectPoint));
-			index = first2Index.second * 2;
+			index = chElementTool->getIndex(1) * 2;
 			QPointF selectPoint2(characterVerts[currentVector][index], characterVerts[currentVector][index + 1]);
 			selectPoint2 = glToMap(getViewProjMatrix().map(selectPoint2));
 			painter.setPen(QPen(Qt::black, 8));
@@ -66,16 +66,16 @@ void PiYingGL::drawChEditVert()
 			painter.drawPoint(selectPoint);
 			painter.drawPoint(selectPoint2);
 		}
-		else if (first2VertState == First2VertState::FullSelectPoint || first2VertState == First2VertState::FullPointSelect) {
-			int index = first2Index.first * 2;
+		else if (chElementTool->getNumInd() == 1 && chElementTool->getNumVert() == 1) {
+			int index = chElementTool->getIndex(0) * 2;
 			QPointF selectPoint(characterVerts[currentVector][index], characterVerts[currentVector][index + 1]);
 			selectPoint = glToMap(getViewProjMatrix().map(selectPoint));
 			painter.setPen(QPen(Qt::black, 8));
 			painter.drawPoint(selectPoint);
-			painter.drawPoint(mapViewProjMatrix(first2Vert.first));
+			painter.drawPoint(mapViewProjMatrix(chElementTool->getVert(0)));
 			painter.setPen(QPen(Qt::red, 6));
 			painter.drawPoint(selectPoint);
-			painter.drawPoint(mapViewProjMatrix(first2Vert.first));
+			painter.drawPoint(mapViewProjMatrix(chElementTool->getVert(0)));
 		}
 	}
 }

@@ -51,7 +51,7 @@ public:
 	void addCharacter(const QString& imageName);
 	void addChVert(const QPointF& point, int currentVector);
 	void setEditMode(EditMode mode);
-	void setToolState(ToolState state);
+	void setChToolState(ChToolState state);
 	void deleteChVert();
 	void choseBackgroundColor();
 	void changeRatio(float ratio);
@@ -62,7 +62,7 @@ public:
 	void bgTranslateControl(const QPointF& mouse, ImageTexture& image);
 	void bgScaleControl(const QPointF& mouse, ImageTexture& image);
 	void viewRotationControl(const QPointF& mouse);
-	void chEditVertControl(const QPointF& mouse);
+	void chAddTriangleControl(const QPointF& mouse);
 	void drawChEditVert();
 
 	bool addBackground(const QString& imageName, QImage& image);
@@ -102,8 +102,6 @@ public:
 	ViewData viewTransX;
 	ViewData viewTransY;
 
-	First2VertState first2VertState = First2VertState::None;
-
 private:
 	PiYing* parent;
 
@@ -138,15 +136,12 @@ private:
 
 	QColor backGroundColor;
 
-	First2Vert first2Vert;
-	First2Index first2Index;
-
-	ToolState toolState;
+	ChToolState chToolState;
 
 	QMenu* rightButtonMenuChTex;
 	QMenu* rightButtonMenuBg_S;
 	QMenu* rightButtonMenuBg;
 	QMenu* rightButtonMenu;
 
-	ChElementSelect* chElementSelect;
+	ChElementTool* chElementTool;
 };

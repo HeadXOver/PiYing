@@ -91,6 +91,9 @@
     <ClCompile Include="construct.cpp">
       <Filter>Source Files\piYingGL</Filter>
     </ClCompile>
+    <ClCompile Include="AddTriangle.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CusEnum.h">

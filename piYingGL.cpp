@@ -1,5 +1,6 @@
 ﻿#include "piYingGL.h"
 #include "piYing.h"
+#include "AddTriangle.h"
 
 #include <QColorDialog>
 
@@ -17,7 +18,7 @@ PiYingGL::~PiYingGL()
 
 	doneCurrent();
 
-	if (chElementSelect) delete chElementSelect;
+	if (chElementTool) delete chElementTool;
 }
 
 void PiYingGL::addBackground(const QString& imageName) {
@@ -96,10 +97,16 @@ void PiYingGL::setEditMode(EditMode mode)
 	update();
 }
 
-void PiYingGL::setToolState(ToolState state)
+void PiYingGL::setChToolState(ChToolState state)
 {
-	toolState = state;
-	update();
+	if (chToolState == state) return;
+	chToolState = state;
+
+	if (chElementTool) delete chElementTool;
+	
+	if (state == ChToolState::None) return;
+	else if (state == ChToolState::AddTriangle) chElementTool = new AddTriangle(characterTriangleIndices, characterVerts);
+	else if (state == ChToolState::SelectVert) chElementTool = new ChElementSelect(characterTriangleIndices, characterVerts);
 }
 
 void PiYingGL::deleteChVert()
@@ -193,18 +200,10 @@ MousePos PiYingGL::getMousePosType(const QPointF& point) const
 
 Qt::CursorShape PiYingGL::getCursorShape(const MousePos& pos)
 {
-	switch (pos) {
-	case MousePos::LeftTop:
-	case MousePos::RightBottom:	//return Qt::SizeFDiagCursor;
-	case MousePos::LeftBottom:
-	case MousePos::RightTop:	//return Qt::SizeBDiagCursor;
-	case MousePos::LeftEdge:
-	case MousePos::RightEdge:	//return Qt::SizeHorCursor;
-	case MousePos::TopEdge:
-	case MousePos::BottomEdge:  if (!KeyboardStateWin::isAltHeld()) return Qt::CursorShape::CrossCursor;
-	case MousePos::Inside:		return Qt::OpenHandCursor;
-	default:					return Qt::ArrowCursor;
-	}
+	if (pos == MousePos::OutSide) return Qt::ArrowCursor;
+	if (pos == MousePos::Inside) return Qt::OpenHandCursor;
+	if (!KeyboardStateWin::isAltHeld()) return Qt::CursorShape::CrossCursor;
+	return Qt::OpenHandCursor;
 }
 
 QString PiYingGL::getUniquebgName(const QListWidget* list)

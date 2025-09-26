@@ -21,7 +21,7 @@ void PiYingGL::mousePressEvent(QMouseEvent* event)
 			}
 		}
 		else if (editMode == EditMode::characterTexture && event->button() == Qt::LeftButton) {
-			if(toolState == ToolState::AddVert) chEditVertControl(mouse);
+			if(chToolState == ChToolState::AddTriangle) chAddTriangleControl(mouse);
 		}
 
 		currentUpdate();

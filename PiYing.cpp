@@ -22,8 +22,8 @@ PiYing::PiYing(QWidget* parent) : QMainWindow(parent) {
     splitTimelineOpenGL = new QSplitter(Qt::Vertical, this);
     splitListOpenGL = new QSplitter(Qt::Horizontal, this);
 
-    toolList.append(ToolButton(":/PiYing/selectChVert_S.png", ":/PiYing/selectChVert.png", "selectChVert", ToolState::SelectVert));
-    toolList.append(ToolButton(":/PiYing/addChVert_S.png", ":/PiYing/addChVert.png", "addChVert", ToolState::AddVert));
+    toolList.append(ToolButton(":/PiYing/selectChVert_S.png", ":/PiYing/selectChVert.png", "selectChVert", ChToolState::SelectVert));
+    toolList.append(ToolButton(":/PiYing/addChVert_S.png", ":/PiYing/addChVert.png", "addChVert", ChToolState::AddTriangle));
 
     toolList[0].select();
 
@@ -110,7 +110,7 @@ PiYing::~PiYing()
 void PiYing::keyPressEvent(QKeyEvent* event)
 {
     if (event->key() == Qt::Key_Escape) {
-        if (piYingGL->editMode == EditMode::characterTexture) {
+        /*if (piYingGL->editMode == EditMode::characterTexture) {
             if (piYingGL->first2VertState == First2VertState::None) return;
             if (piYingGL->first2VertState == First2VertState::HalfSelect || piYingGL->first2VertState == First2VertState::HalfPoint)
                 piYingGL->first2VertState = First2VertState::None;
@@ -120,7 +120,7 @@ void PiYing::keyPressEvent(QKeyEvent* event)
             else if (piYingGL->first2VertState == First2VertState::FullPointSelect) piYingGL->first2VertState = First2VertState::HalfPoint;
 
             piYingGL->update();
-        }
+        }*/
     }
     else if (event->key() == Qt::Key_Delete) {
         if (piYingGL->editMode == EditMode::characterTexture) {
@@ -202,9 +202,11 @@ void PiYing::onModeChanged(int mode)
 
 void PiYing::selectTool(ToolButton& toolButton)
 {
-    for (ToolButton& item : toolList) item.unSelect();
+    if (toolButton.isSelect) return;
+    for (ToolButton& item : toolList)
+        item.unSelect();
     toolButton.select();
-    piYingGL->setToolState(toolButton.toolState);
+    piYingGL->setChToolState(toolButton.toolState);
 }
 
 void PiYing::importBackGround(){
