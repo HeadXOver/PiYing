@@ -31,7 +31,7 @@ enum class ChTexToolState {
     None,
     AddTriangle,
     SelectVert,
-	AddVert,
+	AddPoly,
 };
 
 enum class MousePos {

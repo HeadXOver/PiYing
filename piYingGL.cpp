@@ -1,6 +1,8 @@
 ﻿#include "piYingGL.h"
 #include "piYing.h"
 #include "AddTriangle.h"
+#include "ChElementSelect.h"
+#include "AddChTexPoly.h"
 
 #include <QColorDialog>
 
@@ -103,6 +105,7 @@ void PiYingGL::setChToolState(ChTexToolState state)
 	if (state == ChTexToolState::None) return;
 	else if (state == ChTexToolState::AddTriangle) chElementTool = new AddTriangle(characterTriangleIndices, characterVerts);
 	else if (state == ChTexToolState::SelectVert) chElementTool = new ChElementSelect(characterTriangleIndices, characterVerts);
+	else if (state == ChTexToolState::AddPoly) chElementTool = new AddChTexPoly(characterTriangleIndices, characterVerts);
 
 	update();
 }
@@ -112,6 +115,14 @@ void PiYingGL::deleteChElement()
 	int currentVector = parent->chImageList->currentRow();
 	if (currentVector < 0) return;
 	if (chElementTool) chElementTool->deleteElement(currentVector);
+	update();
+}
+
+void PiYingGL::enterChElement()
+{
+	int currentVector = parent->chImageList->currentRow();
+	if (currentVector < 0) return;
+	if (chElementTool) chElementTool->enter(currentVector);
 	update();
 }
 

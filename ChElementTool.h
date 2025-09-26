@@ -9,6 +9,7 @@ public:
 
 public:
 	virtual void escape() = 0;
+	virtual void enter(int currentVector) = 0;
 	virtual void deleteElement(int currentVector) = 0;
 	virtual void clickPos(const QPointF& mouse, float viewScale, int currentVector) = 0;
 	virtual QList<QPointF> getToDrawVert(int currentVector) = 0;

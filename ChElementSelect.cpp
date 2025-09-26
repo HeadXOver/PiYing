@@ -16,7 +16,7 @@ void ChElementSelect::clickPos(const QPointF& mouse, float viewScale, int curren
 {
 	for (unsigned int i = 0; i < glVert[currentVector].size() / 2; i++) {
 		QPointF readyPoint(glVert[currentVector][i + i], glVert[currentVector][i + i + 1]);
-		if (QLineF(readyPoint, mouse).length() < 0.02f / viewScale) {
+		if (QLineF(readyPoint, mouse).length() < 0.02f / viewScale && !index.contains(i)) {
 			index.append(i);
 			return;
 		}

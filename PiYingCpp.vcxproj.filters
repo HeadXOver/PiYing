@@ -100,6 +100,9 @@
     <ClCompile Include="CusFunc.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="AddChTexPoly.cpp">
+      <Filter>Source Files\ChELementTool</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CusEnum.h">
@@ -127,6 +130,9 @@
       <Filter>Header Files\ChELementTool</Filter>
     </ClInclude>
     <ClInclude Include="ChElementSelect.h">
+      <Filter>Header Files\ChELementTool</Filter>
+    </ClInclude>
+    <ClInclude Include="AddChTexPoly.h">
       <Filter>Header Files\ChELementTool</Filter>
     </ClInclude>
   </ItemGroup>

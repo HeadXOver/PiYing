@@ -3,6 +3,7 @@
 #include "ChElementTool.h"
 
 class AddTriangle : public ChElementTool {
+
 public:
 	AddTriangle(QList<std::vector<unsigned int>>& ind, QList<std::vector<float>>& v) :ChElementTool(ind, v) {}
 
@@ -12,6 +13,7 @@ public:
 	void addVert(const QPointF& point);
 
 	virtual void escape() override;
+	virtual void enter(int currentVector) override {}
 	virtual void deleteElement(int currentVector) override;
 	virtual void clickPos(const QPointF& mouse, float viewScale, int currentVector) override;
 	virtual QList<QPointF> getToDrawVert(int currentVector) override;

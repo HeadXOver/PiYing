@@ -24,7 +24,7 @@ PiYing::PiYing(QWidget* parent) : QMainWindow(parent) {
 
     toolChTexList.append(ToolButton(":/PiYing/selectChVert_S.png", ":/PiYing/selectChVert.png", "selectChVert", ChTexToolState::SelectVert, this));
     toolChTexList.append(ToolButton(":/PiYing/addChVert_S.png", ":/PiYing/addChVert.png", "addChVert", ChTexToolState::AddTriangle, this));
-    toolChTexList.append(ToolButton(":/PiYing/chAddPoly_S.png", ":/PiYing/chAddPoly.png", "chAddPoly", ChTexToolState::AddVert, this));
+    toolChTexList.append(ToolButton(":/PiYing/chAddPoly_S.png", ":/PiYing/chAddPoly.png", "chAddPoly", ChTexToolState::AddPoly, this));
 
     QComboBox* modeBox = new QComboBox(this);
 
@@ -115,6 +115,11 @@ void PiYing::keyPressEvent(QKeyEvent* event)
     else if (event->key() == Qt::Key_Delete) {
         if (piYingGL->editMode == EditMode::characterTexture) {
             piYingGL->deleteChElement();
+        }
+    }
+    else if (event->key() == Qt::Key_Enter || event->key() == Qt::Key_Return) {
+        if (piYingGL->editMode == EditMode::characterTexture) {
+            piYingGL->enterChElement();
         }
     }
 }
