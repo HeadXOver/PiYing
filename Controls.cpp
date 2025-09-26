@@ -59,7 +59,7 @@ void PiYingGL::viewRotationControl(const QPointF& mouse)
 	viewTransY.setValue(lastViewTransX * sin(r) + lastViewTransY * cos(r));
 }
 
-void PiYingGL::chAddTriangleControl(const QPointF& origMouse)
+void PiYingGL::chToolControl(const QPointF& origMouse)
 {
 	int currentVector = parent->chImageList->currentRow();
 	if (currentVector < 0) return;

@@ -28,7 +28,7 @@ enum class First2VertState {
     FullPointSelect,
 };
 
-enum class ChToolState {
+enum class ChTexToolState {
     None,
     AddTriangle,
     SelectVert,

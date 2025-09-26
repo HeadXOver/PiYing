@@ -55,6 +55,12 @@ void AddTriangle::escape()
 	numVert--;
 }
 
+void AddTriangle::deleteElement(int currentVector)
+{
+	numInd = 0;
+	numVert = 0;
+}
+
 void AddTriangle::addChVert(const QPointF& point, int currentVector)
 {
 	glIndex[currentVector].push_back((unsigned int)glVert[currentVector].size() / 2);

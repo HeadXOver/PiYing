@@ -90,23 +90,26 @@ void PiYingGL::setEditMode(EditMode mode)
 	update();
 }
 
-void PiYingGL::setChToolState(ChToolState state)
+void PiYingGL::setChToolState(ChTexToolState state)
 {
 	if (chToolState == state) return;
 	chToolState = state;
 
 	if (chElementTool) delete chElementTool;
 	
-	if (state == ChToolState::None) return;
-	else if (state == ChToolState::AddTriangle) chElementTool = new AddTriangle(characterTriangleIndices, characterVerts);
-	else if (state == ChToolState::SelectVert) chElementTool = new ChElementSelect(characterTriangleIndices, characterVerts);
+	if (state == ChTexToolState::None) return;
+	else if (state == ChTexToolState::AddTriangle) chElementTool = new AddTriangle(characterTriangleIndices, characterVerts);
+	else if (state == ChTexToolState::SelectVert) chElementTool = new ChElementSelect(characterTriangleIndices, characterVerts);
 
 	update();
 }
 
-void PiYingGL::deleteChVert()
+void PiYingGL::deleteChElement()
 {
-	
+	int currentVector = parent->chImageList->currentRow();
+	if (currentVector < 0) return;
+	if (chElementTool) chElementTool->deleteElement(currentVector);
+	update();
 }
 
 void PiYingGL::escapeChVert()

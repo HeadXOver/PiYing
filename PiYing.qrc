@@ -10,5 +10,7 @@
         <file>imageListStyle.qss</file>
         <file>addChVert_S.png</file>
         <file>selectChVert_S.png</file>
+        <file>chAddPoly.png</file>
+        <file>chAddPoly_S.png</file>
     </qresource>
 </RCC>

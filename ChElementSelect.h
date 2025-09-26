@@ -9,6 +9,7 @@ public:
 
 public:
 	virtual void escape() = 0;
+	virtual void deleteElement(int currentVector) = 0;
 	virtual void clickPos(const QPointF& mouse, float viewScale, int currentVector) = 0;
 	virtual QList<QPointF> getToDrawVert(int currentVector) = 0;
 
@@ -24,9 +25,10 @@ public:
 	ChElementSelect(QList<std::vector<unsigned int>>& ind, QList<std::vector<float>>& v) :ChElementTool(ind, v) {}
 
 public:
-	virtual void escape() override {}
-	virtual void clickPos(const QPointF& mouse, float viewScale, int currentVector)override {}
-	virtual QList<QPointF> getToDrawVert(int currentVector) override { return QList<QPointF>(); }
+	virtual void escape() override { index.removeLast(); }
+	virtual void deleteElement(int currentVector) override;
+	virtual void clickPos(const QPointF& mouse, float viewScale, int currentVector) override;
+	virtual QList<QPointF> getToDrawVert(int currentVector) override;
 
 private:
 	QList<unsigned int> index;

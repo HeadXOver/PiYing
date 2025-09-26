@@ -12,6 +12,7 @@ public:
 	void addVert(const QPointF& point);
 
 	virtual void escape() override;
+	virtual void deleteElement(int currentVector) override;
 	virtual void clickPos(const QPointF& mouse, float viewScale, int currentVector) override;
 	virtual QList<QPointF> getToDrawVert(int currentVector) override;
 

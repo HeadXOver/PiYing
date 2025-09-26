@@ -22,8 +22,8 @@ PiYing::PiYing(QWidget* parent) : QMainWindow(parent) {
     splitTimelineOpenGL = new QSplitter(Qt::Vertical, this);
     splitListOpenGL = new QSplitter(Qt::Horizontal, this);
 
-    toolList.append(ToolButton(":/PiYing/selectChVert_S.png", ":/PiYing/selectChVert.png", "selectChVert", ChToolState::SelectVert));
-    toolList.append(ToolButton(":/PiYing/addChVert_S.png", ":/PiYing/addChVert.png", "addChVert", ChToolState::AddTriangle));
+    toolChTexList.append(ToolButton(":/PiYing/selectChVert_S.png", ":/PiYing/selectChVert.png", "selectChVert", ChTexToolState::SelectVert, this));
+    toolChTexList.append(ToolButton(":/PiYing/addChVert_S.png", ":/PiYing/addChVert.png", "addChVert", ChTexToolState::AddTriangle, this));
 
     QComboBox* modeBox = new QComboBox(this);
 
@@ -50,8 +50,7 @@ PiYing::PiYing(QWidget* parent) : QMainWindow(parent) {
     QAction* actionScreenScale           = childMenuScreen->     addAction("比例...");
     QAction* actionDefaultColor          = childMenuScreen->     addAction("底色...");
 
-    for (ToolButton& item : toolList) {
-        ui.mainToolBar->addAction(item.action);
+    for (ToolButton& item : toolChTexList) {
         connect(item.action, &QAction::triggered, this, [this, &item]() {selectTool(item); });
     }
 
@@ -114,7 +113,7 @@ void PiYing::keyPressEvent(QKeyEvent* event)
     }
     else if (event->key() == Qt::Key_Delete) {
         if (piYingGL->editMode == EditMode::characterTexture) {
-            piYingGL->deleteChVert();
+            piYingGL->deleteChElement();
         }
     }
 }
@@ -167,6 +166,7 @@ void PiYing::askDefaultColor(){
 
 void PiYing::onModeChanged(int mode)
 {
+    ui.mainToolBar->clear();
     if (mode == 0) {
         splitListOpenGL->widget(0)->setParent(this);
         splitListOpenGL->insertWidget(0, voidListWidget);
@@ -182,6 +182,9 @@ void PiYing::onModeChanged(int mode)
         splitListOpenGL->widget(0)->setParent(this);
         splitListOpenGL->insertWidget(0, chImageList);
         piYingGL->setEditMode(EditMode::characterTexture);
+        for (ToolButton& item : toolChTexList) {
+            ui.mainToolBar->addAction(item.action);
+        }
     }
     else if (mode == 3) {
         splitListOpenGL->widget(0)->setParent(this);
@@ -193,7 +196,7 @@ void PiYing::onModeChanged(int mode)
 void PiYing::selectTool(ToolButton& toolButton)
 {
     if (toolButton.isSelect) return;
-    for (ToolButton& item : toolList)
+    for (ToolButton& item : toolChTexList)
         item.unSelect();
     toolButton.select();
     piYingGL->setChToolState(toolButton.toolState);

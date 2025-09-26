@@ -50,8 +50,8 @@ public:
 	void appendBgList(QImage& image);
 	void addCharacter(const QString& imageName);
 	void setEditMode(EditMode mode);
-	void setChToolState(ChToolState state);
-	void deleteChVert();
+	void setChToolState(ChTexToolState state);
+	void deleteChElement();
 	void escapeChVert();
 	void choseBackgroundColor();
 	void changeRatio(float ratio);
@@ -62,7 +62,7 @@ public:
 	void bgTranslateControl(const QPointF& mouse, ImageTexture& image);
 	void bgScaleControl(const QPointF& mouse, ImageTexture& image);
 	void viewRotationControl(const QPointF& mouse);
-	void chAddTriangleControl(const QPointF& mouse);
+	void chToolControl(const QPointF& mouse);
 	void drawChEditVert();
 
 	bool addBackground(const QString& imageName, QImage& image);
@@ -136,7 +136,7 @@ private:
 
 	QColor backGroundColor;
 
-	ChToolState chToolState;
+	ChTexToolState chToolState;
 
 	QMenu* rightButtonMenuChTex;
 	QMenu* rightButtonMenuBg_S;

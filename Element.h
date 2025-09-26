@@ -84,10 +84,10 @@ const unsigned int RECTANGLE_INDECES[6] = {
 };
 
 struct ToolButton {
-    ToolButton(QString selectedFileName, QString unselectedFileName, QString actionName, ChToolState state) {
+    ToolButton(QString selectedFileName, QString unselectedFileName, QString actionName, ChTexToolState state, QWidget* parent) {
         selected = QIcon(selectedFileName);
         unselected = QIcon(unselectedFileName);
-        action = new QAction(unselected, actionName);
+        action = new QAction(unselected, actionName, parent);
         toolState = state;
     }
 
@@ -103,6 +103,6 @@ struct ToolButton {
     QAction* action;
     QIcon selected;
     QIcon unselected;
-    ChToolState toolState;
+    ChTexToolState toolState;
     bool isSelect = false;
 };

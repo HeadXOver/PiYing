@@ -42,7 +42,7 @@ private:
 
 	QWidget* timeLine;
 
-	QList<ToolButton> toolList;
+	QList<ToolButton> toolChTexList;
 
 public:
 	PiYingGLContainer* piYingGLContainer = nullptr;
