@@ -57,7 +57,7 @@ PiYing::PiYing(QWidget* parent) : QMainWindow(parent) {
 
     connect(actionExportCurrentFrame,   SIGNAL(triggered()), this, SLOT(exportCurrentFrame()));
 	connect(actionScreenScale,          SIGNAL(triggered()), this, SLOT(askScreenScale()));
-	connect(actionDefaultColor,         SIGNAL(triggered()), this, SLOT(askDefaultColor()));
+    connect(actionDefaultColor,     &QAction::triggered,                this, [this]() {piYingGL->choseBackgroundColor(); });
     connect(actionExit,             &QAction::triggered,                this, [this]() {close(); });
     connect(actionImportBackGround, &QAction::triggered,                this, [this]() {piYingGL->importBackground(); });
     connect(actionImportCharacter,  &QAction::triggered,                this, [this]() {piYingGL->importChatacter(); });
@@ -160,10 +160,6 @@ void PiYing::askScreenScale(){
 		piYingGLContainer->update();
 		piYingGL->changeRatio(ratio);
     }
-}
-
-void PiYing::askDefaultColor(){
-	piYingGL->choseBackgroundColor();
 }
 
 void PiYing::onModeChanged(int mode)

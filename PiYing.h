@@ -23,7 +23,6 @@ protected:
 private slots:
     void exportCurrentFrame();
 	void askScreenScale();
-	void askDefaultColor();
 	void onModeChanged(int mode);
 
 private:
