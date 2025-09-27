@@ -12,6 +12,14 @@ void AddChTexPoly::enter(int currentVector)
 {
 	if (index.size() < 3) return;
 
+	for (int i = 0; i < index.size(); i++) {
+		if (index[i] < 0) {
+			index[i] = (unsigned int)glVert[currentVector].size() / 2;
+			glVert[currentVector].push_back(points[i].x());
+			glVert[currentVector].push_back(points[i].y());
+		}
+	}
+
 	int last2point[2] = { 0,1 };
 	int front = 2;
 	int back = index.size() - 1;
@@ -69,14 +77,6 @@ bool AddChTexPoly::checkPointRepeat(const QPointF& point)
 void AddChTexPoly::addTriangle(int v[3], int currentVector)
 {
 	for (int i = 0; i < 3; i++) {
-		if (index[v[i]] < 0) addChVert(points[v[i]], currentVector);
-		else glIndex[currentVector].push_back(index[v[i]]);
+		glIndex[currentVector].push_back(index[v[i]]);
 	}
-}
-
-void AddChTexPoly::addChVert(const QPointF& point, int currentVector)
-{
-	glIndex[currentVector].push_back((unsigned int)glVert[currentVector].size() / 2);
-	glVert[currentVector].push_back(point.x());
-	glVert[currentVector].push_back(point.y());
 }

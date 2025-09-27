@@ -17,7 +17,6 @@ public:
 private:
 	bool checkPointRepeat(const QPointF& point);
 	void addTriangle(int v[3], int currentVector);
-	void addChVert(const QPointF& point, int currentVector);
 
 private:
 	QList<QPointF> points;
