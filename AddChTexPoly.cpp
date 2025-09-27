@@ -61,11 +61,6 @@ void AddChTexPoly::clickPos(const QPointF& mouse, float viewScale, int currentVe
 	points.append(mouse);
 }
 
-QList<QPointF> AddChTexPoly::getToDrawVert(int currentVector)
-{
-	return points;
-}
-
 bool AddChTexPoly::checkPointRepeat(const QPointF& point)
 {
 	for (QPointF& readyPoint : points) {

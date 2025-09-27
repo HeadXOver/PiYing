@@ -12,7 +12,7 @@ public:
 	virtual void enter(int currentVector) override;
 	virtual void deleteElement(int currentVector) override;
 	virtual void clickPos(const QPointF& mouse, float viewScale, int currentVector) override;
-	virtual QList<QPointF> getToDrawVert(int currentVector) override;
+	virtual QList<QPointF> getToDrawVert(int currentVector) override { return points; }
 
 private:
 	bool checkPointRepeat(const QPointF& point);
