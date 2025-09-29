@@ -34,6 +34,13 @@ void PiYingGL::mousePressEvent(QMouseEvent* event)
 	}
 }
 
+void PiYingGL::mouseReleaseEvent(QMouseEvent* e)
+{
+	if (e->button() == Qt::LeftButton) {
+
+	}
+}
+
 void PiYingGL::mouseMoveEvent(QMouseEvent* event) {
 	QPointF mouse = mapToGL(event->position());
 	if (event->buttons() == Qt::LeftButton) {

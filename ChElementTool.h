@@ -14,6 +14,7 @@ public:
 	virtual void clickPos(const QPointF& mouse, float viewScale, int currentVector) = 0;
 	virtual QList<QPointF> getToDrawVert(int currentVector) = 0;
 
+
 protected:
 	QList<std::vector<float>>& glVert;
 	QList<std::vector<unsigned int>>& glIndex;

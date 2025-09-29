@@ -104,7 +104,7 @@ void PiYingGL::setChToolState(ChTexToolState state)
 	
 	if (state == ChTexToolState::None) return;
 	else if (state == ChTexToolState::AddTriangle) chElementTool = new AddTriangle(characterTriangleIndices, characterVerts);
-	else if (state == ChTexToolState::SelectVert) chElementTool = new ChElementSelect(characterTriangleIndices, characterVerts);
+	else if (state == ChTexToolState::RectSelectVert) chElementTool = new ChElementrrRectSelect(characterTriangleIndices, characterVerts);
 	else if (state == ChTexToolState::AddPoly) chElementTool = new AddChTexPoly(characterTriangleIndices, characterVerts);
 
 	update();

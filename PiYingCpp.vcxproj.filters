@@ -91,7 +91,7 @@
     <ClCompile Include="construct.cpp">
       <Filter>Source Files\piYingGL</Filter>
     </ClCompile>
-    <ClCompile Include="ChElementSelect.cpp">
+    <ClCompile Include="ChElementRectSelect.cpp">
       <Filter>Source Files\ChELementTool</Filter>
     </ClCompile>
     <ClCompile Include="AddTriangle.cpp">
@@ -102,6 +102,9 @@
     </ClCompile>
     <ClCompile Include="AddChTexPoly.cpp">
       <Filter>Source Files\ChELementTool</Filter>
+    </ClCompile>
+    <ClCompile Include="ChElementSelect.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

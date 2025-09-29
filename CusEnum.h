@@ -17,20 +17,10 @@
 #include <QMatrix4x4>
 #include <QSplitter>
 
-enum class First2VertState {
-    None,
-    HalfPoint,
-    HalfSelect,
-    Full2Point,
-    Full2Select,
-    FullSelectPoint,
-    FullPointSelect,
-};
-
 enum class ChTexToolState {
     None,
     AddTriangle,
-    SelectVert,
+    RectSelectVert,
 	AddPoly,
 };
 

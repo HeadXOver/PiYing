@@ -96,6 +96,7 @@
     <ClCompile Include="AddChTexPoly.cpp" />
     <ClCompile Include="AddTriangle.cpp" />
     <ClCompile Include="AskTransformDialog.cpp" />
+    <ClCompile Include="ChElementRectSelect.cpp" />
     <ClCompile Include="ChElementSelect.cpp" />
     <ClCompile Include="Controls.cpp" />
     <ClCompile Include="events.cpp" />

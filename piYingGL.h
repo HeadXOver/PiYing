@@ -42,6 +42,7 @@ protected:
 	void paintGL() override;
 
 	void mousePressEvent(QMouseEvent* event) override;
+	void mouseReleaseEvent(QMouseEvent* e) override;
 	void mouseMoveEvent(QMouseEvent* event) override;
 	void wheelEvent(QWheelEvent* ev) override;
 	void contextMenuEvent(QContextMenuEvent* e) override;
