@@ -69,6 +69,8 @@ public:
 	void chToolControl(const QPointF& mouse);
 	void drawChEditVert();
 
+	int getChCurrentRow() const;
+
 	bool addBackground(const QString& imageName, QImage& image);
 
 	QPointF getRaletiveToRect(const QPointF& point, const ImageTransform& transform) const		{ return (proj * transform.getMatrixInvert() * getViewMatrixInvert() * insProj).map(point); }

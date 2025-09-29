@@ -103,11 +103,16 @@ void PiYingGL::updateChTexTool()
 	if (currentVector < 0) return;
 
 	if (chToolState == ChTexToolState::None) return;
-	else if (chToolState == ChTexToolState::AddTriangle) chElementTool = new AddTriangle(characterTriangleIndices, characterVerts, currentVector);
-	else if (chToolState == ChTexToolState::RectSelectVert) chElementTool = new ChElementrrRectSelect(characterTriangleIndices, characterVerts, currentVector);
-	else if (chToolState == ChTexToolState::AddPoly) chElementTool = new AddChTexPoly(characterTriangleIndices, characterVerts, currentVector);
+	else if (chToolState == ChTexToolState::AddTriangle) chElementTool = new AddTriangle(characterTriangleIndices, characterVerts, this);
+	else if (chToolState == ChTexToolState::RectSelectVert) chElementTool = new ChElementrrRectSelect(characterTriangleIndices, characterVerts, this);
+	else if (chToolState == ChTexToolState::AddPoly) chElementTool = new AddChTexPoly(characterTriangleIndices, characterVerts, this);
 
 	update();
+}
+
+int PiYingGL::getChCurrentRow() const
+{
+	return parent->chImageList->currentRow();
 }
 
 void PiYingGL::setChToolState(ChTexToolState state)
@@ -123,9 +128,9 @@ void PiYingGL::setChToolState(ChTexToolState state)
 	if (currentVector < 0) return;
 	
 	if (state == ChTexToolState::None) return;
-	else if (state == ChTexToolState::AddTriangle) chElementTool = new AddTriangle(characterTriangleIndices, characterVerts, currentVector);
-	else if (state == ChTexToolState::RectSelectVert) chElementTool = new ChElementrrRectSelect(characterTriangleIndices, characterVerts, currentVector);
-	else if (state == ChTexToolState::AddPoly) chElementTool = new AddChTexPoly(characterTriangleIndices, characterVerts, currentVector);
+	else if (state == ChTexToolState::AddTriangle) chElementTool = new AddTriangle(characterTriangleIndices, characterVerts, this);
+	else if (state == ChTexToolState::RectSelectVert) chElementTool = new ChElementrrRectSelect(characterTriangleIndices, characterVerts, this);
+	else if (state == ChTexToolState::AddPoly) chElementTool = new AddChTexPoly(characterTriangleIndices, characterVerts, this);
 
 	update();
 }

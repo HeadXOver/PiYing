@@ -1,7 +1,7 @@
 #include "ChElementSelect.h"
 #include "piYingGL.h"
 
-void ChElementrrRectSelect::draw(QPainter& painter, PiYingGL* gl)
+void ChElementrrRectSelect::draw(QPainter& painter)
 {
 	for (int i = 0; i < index.size(); i++) {
 		int ind = index[i];
@@ -12,4 +12,9 @@ void ChElementrrRectSelect::draw(QPainter& painter, PiYingGL* gl)
 		painter.setPen(QPen(Qt::red, 6));
 		painter.drawPoint(selectPoint);
 	}
+}
+
+void ChElementrrRectSelect::movePos(const QPointF& mouse)
+{
+	
 }

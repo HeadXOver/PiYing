@@ -1,5 +1,6 @@
 #include "ChElementSelect.h"
 #include "KeyboardStateWin.h"
+#include "piYingGL.h"
 
 void ChElementrrSelect::deleteElement()
 {
@@ -60,12 +61,13 @@ void ChElementrrSelect::deleteElement()
     index.clear();
 }
 
-void ChElementrrSelect::clickPos(const QPointF& mouse, float viewScale)
+void ChElementrrSelect::clickPos(const QPointF& mouse)
 {
     lastPos = mouse;
+    isPress = true;
     for (unsigned int i = 0; i < glVert[currentVector].size() / 2; i++) {
         QPointF readyPoint(glVert[currentVector][i + i], glVert[currentVector][i + i + 1]);
-        if (QLineF(readyPoint, mouse).length() < 0.02f / viewScale) {
+        if (QLineF(readyPoint, mouse).length() < 0.02f / gl->viewScale.value()) {
             if (!index.contains(i)) {
                 if (!KeyboardStateWin::isCtrlHeld()) {
                     index.clear();
@@ -83,4 +85,14 @@ void ChElementrrSelect::clickPos(const QPointF& mouse, float viewScale)
 
 void ChElementrrSelect::releasePos()
 {
+    isPress = false;
+
+    if (preIndex.size() == 0) return;
+
+    index.append(preIndex);
+
+    QSet<unsigned int> set = QSet<unsigned int>(index.begin(), index.end());
+    set.unite(QSet<unsigned int>(preIndex.begin(), preIndex.end()));
+
+    index = set.values();
 }

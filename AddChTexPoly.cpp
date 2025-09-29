@@ -47,13 +47,13 @@ void AddChTexPoly::deleteElement()
 	points.clear();
 }
 
-void AddChTexPoly::clickPos(const QPointF& mouse, float viewScale)
+void AddChTexPoly::clickPos(const QPointF& mouse)
 {
 	if (checkPointRepeat(mouse))  return;
 
 	for (unsigned int i = 0; i < glVert[currentVector].size() / 2; i++) {
 		QPointF readyPoint(glVert[currentVector][i + i], glVert[currentVector][i + i + 1]);
-		if (QLineF(readyPoint, mouse).length() < 0.02f / viewScale) {
+		if (QLineF(readyPoint, mouse).length() < 0.02f / gl->viewScale.value()) {
 			if (!index.contains(i)) {
 				index.append(i);
 				points.append(readyPoint);
@@ -66,7 +66,7 @@ void AddChTexPoly::clickPos(const QPointF& mouse, float viewScale)
 	points.append(mouse);
 }
 
-void AddChTexPoly::draw(QPainter& painter, PiYingGL* gl)
+void AddChTexPoly::draw(QPainter& painter)
 {
 	for (QPointF selectPoint : points) {
 		selectPoint = gl->mapViewProjMatrix(selectPoint);

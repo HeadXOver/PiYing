@@ -98,6 +98,7 @@
     <ClCompile Include="AskTransformDialog.cpp" />
     <ClCompile Include="ChElementRectSelect.cpp" />
     <ClCompile Include="ChElementSelect.cpp" />
+    <ClCompile Include="ChElementTool.cpp" />
     <ClCompile Include="Controls.cpp" />
     <ClCompile Include="events.cpp" />
     <ClCompile Include="piYingGL.cpp" />

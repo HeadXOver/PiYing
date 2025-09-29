@@ -14,6 +14,7 @@
 #include <QStatusBar>
 #include <QLabel>
 #include <QList>
+#include <QSet>
 #include <QMatrix4x4>
 #include <QSplitter>
 

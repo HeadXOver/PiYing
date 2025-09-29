@@ -63,5 +63,5 @@ void PiYingGL::viewRotationControl(const QPointF& mouse)
 void PiYingGL::chToolControl(const QPointF& origMouse)
 {
 	QPointF mouse = getViewProjMatrixInvert().map(mapToGL(origMouse));
-	if(chElementTool) chElementTool->clickPos(mouse, viewScale.value());
+	if(chElementTool) chElementTool->clickPos(mouse);
 }

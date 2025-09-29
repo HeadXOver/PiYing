@@ -36,9 +36,7 @@ void PiYingGL::mousePressEvent(QMouseEvent* event)
 
 void PiYingGL::mouseReleaseEvent(QMouseEvent* e)
 {
-	if (e->button() == Qt::LeftButton) {
-
-	}
+	if (chElementTool) chElementTool->releasePos();
 }
 
 void PiYingGL::mouseMoveEvent(QMouseEvent* event) {

@@ -59,14 +59,14 @@ void AddTriangle::addChVert(const QPointF& point)
 	glVert[currentVector].push_back(point.y());
 }
 
-void AddTriangle::clickPos(const QPointF& mouse, float viewScale)
+void AddTriangle::clickPos(const QPointF& mouse)
 {
 	if (checkPointRepeat(mouse))  return;
 
 	int indRepeat = -1;
 	for (unsigned int i = 0; i < glVert[currentVector].size() / 2; i++) {
 		QPointF readyPoint(glVert[currentVector][i + i], glVert[currentVector][i + i + 1]);
-		if (QLineF(readyPoint, mouse).length() < 0.02f / viewScale) {
+		if (QLineF(readyPoint, mouse).length() < 0.02f / gl->viewScale.value()) {
 			indRepeat = i;
 			break;
 		}
@@ -128,7 +128,7 @@ void AddTriangle::clickPos(const QPointF& mouse, float viewScale)
 	}
 }
 
-void AddTriangle::draw(QPainter& painter, PiYingGL* gl)
+void AddTriangle::draw(QPainter& painter)
 {
 	if (numInd == 0 && numVert == 0) return;
 	std::vector<QPointF> toDraw;
