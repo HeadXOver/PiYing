@@ -52,6 +52,7 @@ public:
 	void appendBgList(QImage& image);
 	void addCharacter(const QString& imageName);
 	void setEditMode(EditMode mode);
+	void updateChTexTool();
 	void setChToolState(ChTexToolState state);
 	void deleteChElement();
 	void enterChElement();

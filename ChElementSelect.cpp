@@ -1,7 +1,7 @@
 #include "ChElementSelect.h"
 #include "KeyboardStateWin.h"
 
-void ChElementrrSelect::deleteElement(int currentVector)
+void ChElementrrSelect::deleteElement()
 {
     std::vector<unsigned int>& idx = glIndex[currentVector];
     std::vector <float>& vert = glVert[currentVector];
@@ -60,16 +60,18 @@ void ChElementrrSelect::deleteElement(int currentVector)
     index.clear();
 }
 
-void ChElementrrSelect::clickPos(const QPointF& mouse, float viewScale, int currentVector)
+void ChElementrrSelect::clickPos(const QPointF& mouse, float viewScale)
 {
     lastPos = mouse;
     for (unsigned int i = 0; i < glVert[currentVector].size() / 2; i++) {
         QPointF readyPoint(glVert[currentVector][i + i], glVert[currentVector][i + i + 1]);
-        if (QLineF(readyPoint, mouse).length() < 0.02f / viewScale && !index.contains(i)) {
-            if (!KeyboardStateWin::isCtrlHeld()) {
-                index.clear();
+        if (QLineF(readyPoint, mouse).length() < 0.02f / viewScale) {
+            if (!index.contains(i)) {
+                if (!KeyboardStateWin::isCtrlHeld()) {
+                    index.clear();
+                }
+                index.append(i);
             }
-            index.append(i);
             return;
         }
     }

@@ -5,13 +5,13 @@
 class ChElementrrSelect : public ChElementTool
 {
 public:
-	ChElementrrSelect(QList<std::vector<unsigned int>>& ind, QList<std::vector<float>>& v) :ChElementTool(ind, v) {}
+	ChElementrrSelect(QList<std::vector<unsigned int>>& ind, QList<std::vector<float>>& v, int current) :ChElementTool(ind, v, current) {}
 
 public:
 	virtual void escape() override { if (index.size() > 0)index.removeLast(); }
-	virtual void enter(int currentVector) override {}
-	virtual void deleteElement(int currentVector) override;
-	virtual void clickPos(const QPointF& mouse, float viewScale, int currentVector) override;
+	virtual void enter() override {}
+	virtual void deleteElement() override;
+	virtual void clickPos(const QPointF& mouse, float viewScale) override;
 
 protected:
 	QList<unsigned int> index;
@@ -21,8 +21,8 @@ protected:
 class ChElementrrRectSelect : public ChElementrrSelect
 {
 public:
-	ChElementrrRectSelect(QList<std::vector<unsigned int>>& ind, QList<std::vector<float>>& v) :ChElementrrSelect(ind, v) {}
+	ChElementrrRectSelect(QList<std::vector<unsigned int>>& ind, QList<std::vector<float>>& v, int current) :ChElementrrSelect(ind, v, current) {}
 
 public:
-	virtual QList<QPointF> getToDrawVert(int currentVector) override;
+	virtual void draw(QPainter& painter, PiYingGL* gl) override;
 };

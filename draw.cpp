@@ -25,16 +25,7 @@ void PiYingGL::drawChEditVert()
 		i += j;
 	}
 
-	if (chElementTool) {
-		QList toDrawPoint = chElementTool->getToDrawVert(currentVector);
-		for (QPointF& selectPoint : toDrawPoint) {
-			selectPoint = mapViewProjMatrix(selectPoint);
-			painter.setPen(QPen(Qt::black, 8));
-			painter.drawPoint(selectPoint);
-			painter.setPen(QPen(Qt::red, 6));
-			painter.drawPoint(selectPoint);
-		}
-	}
+	if (chElementTool) chElementTool->draw(painter, this);
 }
 
 void PiYingGL::paintBackgrounds()

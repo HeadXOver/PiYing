@@ -1,10 +1,15 @@
 #include "ChElementSelect.h"
+#include "piYingGL.h"
 
-QList<QPointF> ChElementrrRectSelect::getToDrawVert(int currentVector)
+void ChElementrrRectSelect::draw(QPainter& painter, PiYingGL* gl)
 {
-	QList<QPointF> vert;
 	for (int i = 0; i < index.size(); i++) {
-		vert.append(QPointF(glVert[currentVector][index[i] + index[i]], glVert[currentVector][index[i] + index[i] + 1]));
+		int ind = index[i];
+		ind += ind;
+		QPointF selectPoint = gl->mapViewProjMatrix(QPointF(glVert[currentVector][ind], glVert[currentVector][ind + 1]));
+		painter.setPen(QPen(Qt::black, 8));
+		painter.drawPoint(selectPoint);
+		painter.setPen(QPen(Qt::red, 6));
+		painter.drawPoint(selectPoint);
 	}
-	return vert;
 }

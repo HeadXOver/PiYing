@@ -92,20 +92,40 @@ void PiYingGL::setEditMode(EditMode mode)
 	update();
 }
 
+void PiYingGL::updateChTexTool()
+{
+	if (chElementTool) {
+		delete chElementTool;
+		chElementTool = nullptr;
+	}
+
+	int currentVector = parent->chImageList->currentRow();
+	if (currentVector < 0) return;
+
+	if (chToolState == ChTexToolState::None) return;
+	else if (chToolState == ChTexToolState::AddTriangle) chElementTool = new AddTriangle(characterTriangleIndices, characterVerts, currentVector);
+	else if (chToolState == ChTexToolState::RectSelectVert) chElementTool = new ChElementrrRectSelect(characterTriangleIndices, characterVerts, currentVector);
+	else if (chToolState == ChTexToolState::AddPoly) chElementTool = new AddChTexPoly(characterTriangleIndices, characterVerts, currentVector);
+
+	update();
+}
+
 void PiYingGL::setChToolState(ChTexToolState state)
 {
-	if (chToolState == state) return;
 	chToolState = state;
 
 	if (chElementTool) {
 		delete chElementTool;
 		chElementTool = nullptr;
 	}
+
+	int currentVector = parent->chImageList->currentRow();
+	if (currentVector < 0) return;
 	
 	if (state == ChTexToolState::None) return;
-	else if (state == ChTexToolState::AddTriangle) chElementTool = new AddTriangle(characterTriangleIndices, characterVerts);
-	else if (state == ChTexToolState::RectSelectVert) chElementTool = new ChElementrrRectSelect(characterTriangleIndices, characterVerts);
-	else if (state == ChTexToolState::AddPoly) chElementTool = new AddChTexPoly(characterTriangleIndices, characterVerts);
+	else if (state == ChTexToolState::AddTriangle) chElementTool = new AddTriangle(characterTriangleIndices, characterVerts, currentVector);
+	else if (state == ChTexToolState::RectSelectVert) chElementTool = new ChElementrrRectSelect(characterTriangleIndices, characterVerts, currentVector);
+	else if (state == ChTexToolState::AddPoly) chElementTool = new AddChTexPoly(characterTriangleIndices, characterVerts, currentVector);
 
 	update();
 }
@@ -114,7 +134,7 @@ void PiYingGL::deleteChElement()
 {
 	int currentVector = parent->chImageList->currentRow();
 	if (currentVector < 0) return;
-	if (chElementTool) chElementTool->deleteElement(currentVector);
+	if (chElementTool) chElementTool->deleteElement();
 	update();
 }
 
@@ -122,7 +142,7 @@ void PiYingGL::enterChElement()
 {
 	int currentVector = parent->chImageList->currentRow();
 	if (currentVector < 0) return;
-	if (chElementTool) chElementTool->enter(currentVector);
+	if (chElementTool) chElementTool->enter();
 	update();
 }
 

@@ -104,7 +104,7 @@
       <Filter>Source Files\ChELementTool</Filter>
     </ClCompile>
     <ClCompile Include="ChElementSelect.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\ChELementTool</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

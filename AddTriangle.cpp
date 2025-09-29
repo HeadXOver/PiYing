@@ -1,4 +1,5 @@
 #include "AddTriangle.h"
+#include "piYingGL.h"
 
 bool AddTriangle::addIndex(unsigned int i)
 {
@@ -45,20 +46,20 @@ void AddTriangle::escape()
 	else numVert--;
 }
 
-void AddTriangle::deleteElement(int currentVector)
+void AddTriangle::deleteElement()
 {
 	numInd = 0;
 	numVert = 0;
 }
 
-void AddTriangle::addChVert(const QPointF& point, int currentVector)
+void AddTriangle::addChVert(const QPointF& point)
 {
 	glIndex[currentVector].push_back((unsigned int)glVert[currentVector].size() / 2);
 	glVert[currentVector].push_back(point.x());
 	glVert[currentVector].push_back(point.y());
 }
 
-void AddTriangle::clickPos(const QPointF& mouse, float viewScale, int currentVector)
+void AddTriangle::clickPos(const QPointF& mouse, float viewScale)
 {
 	if (checkPointRepeat(mouse))  return;
 
@@ -79,9 +80,9 @@ void AddTriangle::clickPos(const QPointF& mouse, float viewScale, int currentVec
 		numInd = 0;
 		numVert = 0;
 		if (indRepeat >= 0) glIndex[currentVector].push_back(indRepeat);
-		else  addChVert(mouse, currentVector);
-		addChVert(first, currentVector);
-		addChVert(second, currentVector);
+		else  addChVert(mouse);
+		addChVert(first);
+		addChVert(second);
 	}
 	else if (numInd == 2) {
 		if (indRepeat >= 0) {
@@ -102,7 +103,7 @@ void AddTriangle::clickPos(const QPointF& mouse, float viewScale, int currentVec
 		else {
 			numInd = 0;
 			numVert = 0;
-			addChVert(mouse, currentVector);
+			addChVert(mouse);
 		}
 		glIndex[currentVector].push_back(firstIndex);
 		glIndex[currentVector].push_back(secondIndex);
@@ -114,39 +115,51 @@ void AddTriangle::clickPos(const QPointF& mouse, float viewScale, int currentVec
 				numVert = 0;
 				glIndex[currentVector].push_back((unsigned int)indRepeat);
 				glIndex[currentVector].push_back(firstIndex);
-				addChVert(first, currentVector);
+				addChVert(first);
 			}
 		}
 		else {
 			numInd = 0;
 			numVert = 0;
 			glIndex[currentVector].push_back(firstIndex);
-			addChVert(mouse, currentVector);
-			addChVert(first, currentVector);
+			addChVert(mouse);
+			addChVert(first);
 		}
 	}
 }
 
-QList<QPointF> AddTriangle::getToDrawVert(int currentVector)
+void AddTriangle::draw(QPainter& painter, PiYingGL* gl)
 {
-	if (numInd == 0 && numVert == 0) return {};
+	if (numInd == 0 && numVert == 0) return;
+	std::vector<QPointF> toDraw;
 	if (numInd == 1 && numVert == 0) {
 		int index = firstIndex * 2;
-		return { QPointF(glVert[currentVector][index], glVert[currentVector][index + 1]) };
+		toDraw.push_back(QPointF(glVert[currentVector][index], glVert[currentVector][index + 1]));
 	}
-	else if (numInd == 0 && numVert == 1) return { first };
-	else if (numVert == 2) return { first, second };
+	else if (numInd == 0 && numVert == 1) toDraw.push_back(first);
+	else if (numVert == 2) {
+		toDraw.push_back(first);
+		toDraw.push_back(second);
+	}
 	else if (numInd == 2) {
 		int index = firstIndex * 2;
 		QPointF selectPoint(glVert[currentVector][index], glVert[currentVector][index + 1]);
 		index = secondIndex * 2;
 		QPointF selectPoint2(glVert[currentVector][index], glVert[currentVector][index + 1]);
-		return{ selectPoint , selectPoint2 };
+		toDraw.push_back(selectPoint);
+		toDraw.push_back(selectPoint2);
 	}
 	else if (numInd == 1 && numVert == 1) {
 		int index = firstIndex * 2;
-		QPointF selectPoint(glVert[currentVector][index], glVert[currentVector][index + 1]);
-		return{ first, selectPoint };
+		toDraw.push_back(first);
+		toDraw.push_back(QPointF(glVert[currentVector][index], glVert[currentVector][index + 1]));
 	}
-	return{};
+
+	for (QPointF& p : toDraw) {
+		p = gl->mapViewProjMatrix(p);
+		painter.setPen(QPen(Qt::black, 8));
+		painter.drawPoint(p);
+		painter.setPen(QPen(Qt::red, 6));
+		painter.drawPoint(p);
+	}
 }
