@@ -56,6 +56,9 @@ void PiYingGL::mouseMoveEvent(QMouseEvent* event) {
 
 				currentUpdate();
 			}
+			else if (editMode == EditMode::characterTexture) {
+				if (chElementTool) chElementTool->movePos(getViewProjMatrixInvert().map(mapToGL(mouse)));
+			}
 		}
 	}
 	else if (event->buttons() == Qt::MiddleButton) {

@@ -16,6 +16,8 @@ public:
 	virtual void enter() override {}
 	virtual void deleteElement() override;
 	virtual void clickPos(const QPointF& mouse, float viewScale) override;
+	virtual void movePos(const QPointF& mouse) override {}
+	virtual void releasePos() override {}
 	virtual void draw(QPainter& painter, PiYingGL* gl) override;
 
 private:

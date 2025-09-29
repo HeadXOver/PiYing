@@ -14,6 +14,8 @@ public:
 	virtual void enter() = 0;
 	virtual void deleteElement() = 0;
 	virtual void clickPos(const QPointF& mouse, float viewScale) = 0;
+	virtual void movePos(const QPointF& mouse) = 0;
+	virtual void releasePos() = 0;
 	virtual void draw(QPainter& painter, PiYingGL* gl) = 0;
 
 protected:

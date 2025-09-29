@@ -12,6 +12,7 @@ public:
 	virtual void enter() override {}
 	virtual void deleteElement() override;
 	virtual void clickPos(const QPointF& mouse, float viewScale) override;
+	virtual void releasePos() override;
 
 protected:
 	QList<unsigned int> index;
@@ -25,4 +26,5 @@ public:
 
 public:
 	virtual void draw(QPainter& painter, PiYingGL* gl) override;
+	virtual void movePos(const QPointF& mouse) override {}
 };

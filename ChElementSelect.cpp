@@ -80,3 +80,7 @@ void ChElementrrSelect::clickPos(const QPointF& mouse, float viewScale)
         index.clear();
     }
 }
+
+void ChElementrrSelect::releasePos()
+{
+}
