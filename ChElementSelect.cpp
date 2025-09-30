@@ -2,7 +2,7 @@
 #include "KeyboardStateWin.h"
 #include "piYingGL.h"
 
-void ChElementrrSelect::deleteElement()
+void ChElementSelect::deleteElement()
 {
     std::vector<unsigned int>& idx = glIndex[currentVector];
     std::vector <float>& vert = glVert[currentVector];
@@ -61,7 +61,7 @@ void ChElementrrSelect::deleteElement()
     index.clear();
 }
 
-void ChElementrrSelect::clickPos(const QPointF& mouse)
+void ChElementSelect::clickPos(const QPointF& mouse)
 {
     lastPos = mouse;
     isPress = true;

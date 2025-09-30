@@ -2,10 +2,10 @@
 
 #include "ChElementTool.h"
 
-class ChElementrrSelect : public ChElementTool
+class ChElementSelect : public ChElementTool
 {
 public:
-	ChElementrrSelect(QList<std::vector<unsigned int>>& ind, QList<std::vector<float>>& v, PiYingGL* gl) :ChElementTool(ind, v, gl) {}
+	ChElementSelect(QList<std::vector<unsigned int>>& ind, QList<std::vector<float>>& v, PiYingGL* gl) :ChElementTool(ind, v, gl) {}
 
 public:
 	virtual void escape() override { if (index.size() > 0)index.removeLast(); }
@@ -20,10 +20,10 @@ protected:
 	bool isPress = false;
 };
 
-class ChElementrrRectSelect : public ChElementrrSelect
+class ChElementrrRectSelect : public ChElementSelect
 {
 public:
-	ChElementrrRectSelect(QList<std::vector<unsigned int>>& ind, QList<std::vector<float>>& v, PiYingGL* gl) :ChElementrrSelect(ind, v, gl) {}
+	ChElementrrRectSelect(QList<std::vector<unsigned int>>& ind, QList<std::vector<float>>& v, PiYingGL* gl) :ChElementSelect(ind, v, gl) {}
 
 public:
 	virtual void draw(QPainter& painter) override;

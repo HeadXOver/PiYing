@@ -96,6 +96,7 @@
     <ClCompile Include="AddChTexPoly.cpp" />
     <ClCompile Include="AddTriangle.cpp" />
     <ClCompile Include="AskTransformDialog.cpp" />
+    <ClCompile Include="ChElementLibreSelect.cpp" />
     <ClCompile Include="ChElementRectSelect.cpp" />
     <ClCompile Include="ChElementSelect.cpp" />
     <ClCompile Include="ChElementTool.cpp" />
@@ -118,6 +119,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AddChTexPoly.h" />
+    <ClInclude Include="ChElementLibreSelect.h" />
     <ClInclude Include="ChElementTool.h" />
     <ClInclude Include="CusInclude.h" />
     <ClInclude Include="CusFunc.h" />

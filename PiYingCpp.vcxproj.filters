@@ -109,6 +109,9 @@
     <ClCompile Include="ChElementTool.cpp">
       <Filter>Source Files\ChELementTool</Filter>
     </ClCompile>
+    <ClCompile Include="ChElementLibreSelect.cpp">
+      <Filter>Source Files\ChELementTool</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CusEnum.h">
@@ -139,6 +142,9 @@
       <Filter>Header Files\ChELementTool</Filter>
     </ClInclude>
     <ClInclude Include="AddChTexPoly.h">
+      <Filter>Header Files\ChELementTool</Filter>
+    </ClInclude>
+    <ClInclude Include="ChElementLibreSelect.h">
       <Filter>Header Files\ChELementTool</Filter>
     </ClInclude>
   </ItemGroup>
