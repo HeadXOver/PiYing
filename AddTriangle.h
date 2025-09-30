@@ -17,7 +17,7 @@ public:
 	virtual void deleteElement() override;
 	virtual void clickPos(const QPointF& mouse) override;
 	virtual void movePos(const QPointF& mouse) override {}
-	virtual void releasePos() override {}
+	virtual void releasePos(const QPointF& mouse) override {}
 	virtual void draw(QPainter& painter) override;
 
 private:

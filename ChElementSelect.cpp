@@ -82,17 +82,3 @@ void ChElementrrSelect::clickPos(const QPointF& mouse)
         index.clear();
     }
 }
-
-void ChElementrrSelect::releasePos()
-{
-    isPress = false;
-
-    if (preIndex.size() == 0) return;
-
-    index.append(preIndex);
-
-    QSet<unsigned int> set = QSet<unsigned int>(index.begin(), index.end());
-    set.unite(QSet<unsigned int>(preIndex.begin(), preIndex.end()));
-
-    index = set.values();
-}

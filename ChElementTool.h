@@ -15,7 +15,7 @@ public:
 	virtual void deleteElement() = 0;
 	virtual void clickPos(const QPointF& mouse) = 0;
 	virtual void movePos(const QPointF& mouse) = 0;
-	virtual void releasePos() = 0;
+	virtual void releasePos(const QPointF& mouse) = 0;
 	virtual void draw(QPainter& painter) = 0;
 
 protected:

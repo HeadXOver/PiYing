@@ -12,9 +12,45 @@ void ChElementrrRectSelect::draw(QPainter& painter)
 		painter.setPen(QPen(Qt::red, 6));
 		painter.drawPoint(selectPoint);
 	}
+
+	if (isDraw) {
+		QPointF selectPoint = gl->mapViewProjMatrix(lastPos);
+		painter.setPen(QPen(Qt::yellow, 1));
+		painter.drawRect(selectPoint.x(), selectPoint.y(), rect.x() - selectPoint.x(), rect.y() - selectPoint.y());
+	}
 }
 
 void ChElementrrRectSelect::movePos(const QPointF& mouse)
 {
-	
+
+	rect = gl->mapViewProjMatrix(mouse);
+	isDraw = true;
+}
+
+void ChElementrrRectSelect::releasePos(const QPointF& mouse)
+{
+	isPress = false;
+	if (!isDraw) return;
+	isDraw = false;
+
+	std::vector<float>& glV = glVert[currentVector];
+	index.clear();
+
+	for (unsigned int i = 0; i < glV.size(); i += 2) {
+		float front = glV[i] - lastPos.x();
+		float back = glV[i] - mouse.x();
+
+		if ((front > 0 && back > 0) || (front < 0 && back < 0)) {
+			continue;
+		}
+
+		front = glV[i + 1] - lastPos.y();
+		back = glV[i + 1] - mouse.y();
+
+		if ((front > 0 && back > 0) || (front < 0 && back < 0)) {
+			continue;
+		}
+
+		index.append(i / 2);
+	}
 }

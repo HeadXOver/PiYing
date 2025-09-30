@@ -26,6 +26,8 @@ void PiYingGL::drawChEditVert()
 	}
 
 	if (chElementTool) chElementTool->draw(painter);
+
+	update();
 }
 
 void PiYingGL::paintBackgrounds()

@@ -21,7 +21,7 @@ void PiYingGL::mousePressEvent(QMouseEvent* event)
 			}
 		}
 		else if (editMode == EditMode::characterTexture && event->button() == Qt::LeftButton) {
-			chToolControl(mouse);
+			chToolControl(lastMousePos);
 		}
 
 		currentUpdate();
@@ -36,7 +36,9 @@ void PiYingGL::mousePressEvent(QMouseEvent* event)
 
 void PiYingGL::mouseReleaseEvent(QMouseEvent* e)
 {
-	if (chElementTool) chElementTool->releasePos();
+	if (chElementTool) chElementTool->releasePos(getViewProjMatrixInvert().map(mapToGL(e->position())));
+
+	update();
 }
 
 void PiYingGL::mouseMoveEvent(QMouseEvent* event) {
@@ -54,8 +56,11 @@ void PiYingGL::mouseMoveEvent(QMouseEvent* event) {
 
 				currentUpdate();
 			}
-			else if (editMode == EditMode::characterTexture) {
-				if (chElementTool) chElementTool->movePos(getViewProjMatrixInvert().map(mapToGL(mouse)));
+		}
+		else if (editMode == EditMode::characterTexture) {
+			if (chElementTool) {
+				chElementTool->movePos(getViewProjMatrixInvert().map(mouse));
+				currentUpdate();
 			}
 		}
 	}
