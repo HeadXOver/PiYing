@@ -12,5 +12,6 @@
         <file>selectChVert_S.png</file>
         <file>chAddPoly.png</file>
         <file>chAddPoly_S.png</file>
+        <file>slideStyle.qss</file>
     </qresource>
 </RCC>

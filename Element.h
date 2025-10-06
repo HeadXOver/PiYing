@@ -106,3 +106,21 @@ struct ToolButton {
     ChTexToolState toolState;
     bool isSelect = false;
 };
+
+struct controlSlide {
+
+    controlSlide(QWidget* parent, QString labelName, QString ButtonText, int min, int max, int defaultValue) {
+        label = new QLabel(labelName, parent);
+        slider = new QSlider(Qt::Horizontal, parent);
+        slider->setRange(min, max);
+        slider->setValue(defaultValue);
+        rightButton = new QPushButton(parent);
+        rightButton->setText(ButtonText);
+        rightButton->setStyleSheet("background:red");
+        rightButton->setMinimumSize(60, 30);
+    }
+
+    QLabel* label;
+    QSlider* slider;
+    QPushButton* rightButton;
+};

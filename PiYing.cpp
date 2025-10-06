@@ -1,4 +1,4 @@
-#include "PiYing.h"
+   #include "PiYing.h"
 #include <QMessageBox>
 
 #include "RatioDialog.h"
@@ -6,6 +6,22 @@
 PiYing::PiYing(QWidget* parent) : QMainWindow(parent) {
     ui.setupUi(this);
     setWindowTitle("皮影");
+
+    sliderWidget = new QWidget();
+    sliderLayout = new QVBoxLayout();
+
+    sliderCount = 1;
+
+    QHBoxLayout* row = new QHBoxLayout();
+
+    controlSlide slide(this, "main", "set", 0, 100, 50);
+
+    row->addWidget(slide.label);
+    row->addWidget(slide.slider);
+    row->addWidget(slide.rightButton);
+
+    sliderLayout->addLayout(row);
+    sliderWidget->setLayout(sliderLayout);
 
     float ratio = 16.0f / 9.0f;
 
@@ -85,14 +101,23 @@ PiYing::PiYing(QWidget* parent) : QMainWindow(parent) {
         bgImageList->setStyleSheet(qss.readAll());
         qss.seek(0);
         chImageList->setStyleSheet(qss.readAll());
+        qss.seek(0);
+        sliderWidget->setStyleSheet(qss.readAll());
+        qss.close();
+    }
+
+    qss.setFileName(":/PiYing/slideStyle.qss");
+    if (qss.open(QFile::ReadOnly)) {
+        sliderWidget->setStyleSheet(qss.readAll());
         qss.close();
     }
 
     piYingGL->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     timeLine->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     voidListWidget->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
+    sliderWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
-    modeBox->addItems({ "预览模式", "背景编辑", "角色纹理编辑", "角色骨骼编辑" });
+    modeBox->addItems({ "预览模式", "背景编辑", "角色纹理编辑", "角色骨骼编辑", "控制器"});
     ui.statusBar->addWidget(modeBox);
 
     connect(modeBox, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &PiYing::onModeChanged);
@@ -188,6 +213,11 @@ void PiYing::onModeChanged(int mode)
         splitListOpenGL->widget(0)->setParent(this);
         splitListOpenGL->insertWidget(0, chImageList);
         piYingGL->setEditMode(EditMode::characterSkeleton);
+    }
+    else if (mode == 4) {
+        splitListOpenGL->widget(0)->setParent(this);
+        splitListOpenGL->insertWidget(0, sliderWidget);
+        piYingGL->setEditMode(EditMode::controlSlide);
     }
 }
 

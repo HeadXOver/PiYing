@@ -15,6 +15,8 @@
 #include <QLabel>
 #include <QList>
 #include <QSet>
+#include <QSlider>
+#include <QPushButton>
 #include <QMatrix4x4>
 #include <QSplitter>
 
@@ -43,4 +45,5 @@ enum class EditMode {
 	BackGround,
 	characterTexture,
 	characterSkeleton,
+	controlSlide,
 };

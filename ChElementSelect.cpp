@@ -60,25 +60,3 @@ void ChElementSelect::deleteElement()
 
     index.clear();
 }
-
-void ChElementSelect::clickPos(const QPointF& mouse)
-{
-    lastPos = mouse;
-    isPress = true;
-    for (unsigned int i = 0; i < glVert[currentVector].size() / 2; i++) {
-        QPointF readyPoint(glVert[currentVector][i + i], glVert[currentVector][i + i + 1]);
-        if (QLineF(readyPoint, mouse).length() < 0.02f / gl->viewScale.value()) {
-            if (!index.contains(i)) {
-                if (!KeyboardStateWin::isCtrlHeld()) {
-                    index.clear();
-                }
-                index.append(i);
-            }
-            return;
-        }
-    }
-
-    if (!KeyboardStateWin::isCtrlHeld()) {
-        index.clear();
-    }
-}

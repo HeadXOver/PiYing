@@ -40,6 +40,7 @@ private:
 	QWidget* timeLine;
 
 	QList<ToolButton> toolChTexList;
+	QList<controlSlide> sliderList;
 
 public:
 	PiYingGLContainer* piYingGLContainer = nullptr;
@@ -47,5 +48,9 @@ public:
 	QListWidget* bgImageList = nullptr;
 	QListWidget* chImageList = nullptr;
 	QListWidget* voidListWidget;
+
+	QVBoxLayout* sliderLayout = nullptr;
+	QWidget* sliderWidget = nullptr;
+	int sliderCount = 0;
 };
 

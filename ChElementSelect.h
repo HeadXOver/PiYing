@@ -11,7 +11,6 @@ public:
 	virtual void escape() override { if (index.size() > 0)index.removeLast(); }
 	virtual void enter() override {}
 	virtual void deleteElement() override;
-	virtual void clickPos(const QPointF& mouse) override;
 
 protected:
 	QList<unsigned int> index;
@@ -20,13 +19,14 @@ protected:
 	bool isPress = false;
 };
 
-class ChElementrrRectSelect : public ChElementSelect
+class ChElementRectSelect : public ChElementSelect
 {
 public:
-	ChElementrrRectSelect(QList<std::vector<unsigned int>>& ind, QList<std::vector<float>>& v, PiYingGL* gl) :ChElementSelect(ind, v, gl) {}
+	ChElementRectSelect(QList<std::vector<unsigned int>>& ind, QList<std::vector<float>>& v, PiYingGL* gl) :ChElementSelect(ind, v, gl) {}
 
 public:
 	virtual void draw(QPainter& painter) override;
+	virtual void clickPos(const QPointF& mouse) override;
 	virtual void movePos(const QPointF& mouse) override;
 	virtual void releasePos(const QPointF& mouse) override;
 

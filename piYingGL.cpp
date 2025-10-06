@@ -1,8 +1,8 @@
 ﻿#include "piYingGL.h"
 #include "piYing.h"
 #include "AddTriangle.h"
-#include "ChElementSelect.h"
 #include "AddChTexPoly.h"
+#include "ChElementLibreSelect.h"
 
 #include <QColorDialog>
 
@@ -104,7 +104,7 @@ void PiYingGL::updateChTexTool()
 
 	if (chToolState == ChTexToolState::None) return;
 	else if (chToolState == ChTexToolState::AddTriangle) chElementTool = new AddTriangle(characterTriangleIndices, characterVerts, this);
-	else if (chToolState == ChTexToolState::RectSelectVert) chElementTool = new ChElementrrRectSelect(characterTriangleIndices, characterVerts, this);
+	else if (chToolState == ChTexToolState::RectSelectVert) chElementTool = new ChElementLibreSelect(characterTriangleIndices, characterVerts, this);
 	else if (chToolState == ChTexToolState::AddPoly) chElementTool = new AddChTexPoly(characterTriangleIndices, characterVerts, this);
 
 	update();
@@ -129,7 +129,7 @@ void PiYingGL::setChToolState(ChTexToolState state)
 	
 	if (state == ChTexToolState::None) return;
 	else if (state == ChTexToolState::AddTriangle) chElementTool = new AddTriangle(characterTriangleIndices, characterVerts, this);
-	else if (state == ChTexToolState::RectSelectVert) chElementTool = new ChElementrrRectSelect(characterTriangleIndices, characterVerts, this);
+	else if (state == ChTexToolState::RectSelectVert) chElementTool = new ChElementLibreSelect(characterTriangleIndices, characterVerts, this);
 	else if (state == ChTexToolState::AddPoly) chElementTool = new AddChTexPoly(characterTriangleIndices, characterVerts, this);
 
 	update();

@@ -185,5 +185,8 @@
     <None Include="imageListStyle.qss">
       <Filter>StyleSheets</Filter>
     </None>
+    <None Include="slideStyle.qss">
+      <Filter>StyleSheets</Filter>
+    </None>
   </ItemGroup>
 </Project>
