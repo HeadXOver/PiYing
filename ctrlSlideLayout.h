@@ -10,7 +10,8 @@ class CtrlSlideLayout : public QHBoxLayout
 {
     Q_OBJECT
 public:
-    explicit CtrlSlideLayout(QWidget* parent, QString labelName, int min, int max, int defaultValue);
+    explicit CtrlSlideLayout(QString labelName, int min, int max, int defaultValue);
+    ~CtrlSlideLayout();
 
 public:
     QLabel* label;

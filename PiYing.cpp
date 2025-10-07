@@ -85,8 +85,6 @@ PiYing::PiYing(QWidget* parent) : QMainWindow(parent) {
         bgImageList->setStyleSheet(qss.readAll());
         qss.seek(0);
         chImageList->setStyleSheet(qss.readAll());
-        qss.seek(0);
-        sliderWidget->setStyleSheet(qss.readAll());
         qss.close();
     }
 
@@ -202,6 +200,7 @@ void PiYing::onModeChanged(int mode)
         splitListOpenGL->widget(0)->setParent(this);
         splitListOpenGL->insertWidget(0, sliderWidget);
         piYingGL->setEditMode(EditMode::controlSlide);
+        splitListOpenGL->setSizes({ width() / 5, width() * 4 / 5 });
     }
 }
 

@@ -92,9 +92,6 @@ public:
 	Qt::CursorShape getCursorShape(const MousePos& pos);
 
 public:
-	bool lineMode = true;
-	bool drawVisible = true;
-
 	EditMode editMode = EditMode::Default;
 
 	ViewData viewScale;

@@ -70,32 +70,6 @@ QDockWidget::close-button, QDockWidget::float-button {
 QDockWidget::close-button:hover, QDockWidget::float-button:hover {
     background: #5A5A5A;
 }
-
-/* === 中央部件里的标签页（QTabWidget）=== */
-QTabWidget::pane {
-    border-top: 1px solid #464647;
-    background: #1E1E1E;
-}
-QTabBar::tab {
-    background: #c6dcff;
-    color: #000000;
-    padding: 6px 12px;
-    margin-right: 1px;
-}
-QTabBar::tab:selected {
-    background: #1E1E1E;
-    border-bottom: 2px solid #007ACC;
-}
-QTabBar::tab:hover:!selected {
-    background: #3E3E40;
-}
-
-/* === 滚动条 === */
-QScrollBar:vertical {
-    background: #2D2D30;
-    width: 10px;
-    border: none;
-}
 QScrollBar::handle:vertical {
     background: #686868;
     border-radius: 4px;
@@ -108,7 +82,7 @@ QScrollBar::handle:vertical:hover {
 /* === 普通按钮 === */
 QPushButton {
     background: #0E639C;
-    color: white;
+    color: black;
     border: none;
     padding: 6px 14px;
 }

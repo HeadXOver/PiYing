@@ -2,11 +2,14 @@
 
 #include <QPushbutton>
 #include <QVBoxLayout>
+#include <QHBoxLayout>
 #include <QString>
+#include <QMenu>
+#include <QInputDialog>
 
 CtrlSlideWidget::CtrlSlideWidget(QWidget* parent)
 {
-    sliderLayout = new QVBoxLayout();
+    sliderLayout = new QVBoxLayout(this);
 
     QPushButton* headButton = new QPushButton(this);
     headButton->setText("添加");
@@ -20,15 +23,68 @@ CtrlSlideWidget::CtrlSlideWidget(QWidget* parent)
         "}"
     );
 
-    sliderLayout->addWidget(headButton);
+    QHBoxLayout* headLayout = new QHBoxLayout(this);
+
+    headLayout->addWidget(headButton);
+    headLayout->addStretch();
+
+    sliderLayout->addLayout(headLayout);
     sliderLayout->addStretch();
 
     setLayout(sliderLayout);
+
+    connect(headButton, &QPushButton::pressed, this, [this] { addSlider(); });
 }
 
-void CtrlSlideWidget::addSlider(CtrlSlideLayout* slider, QString name)
+CtrlSlideWidget::~CtrlSlideWidget()
 {
-    sliderList.append(new CtrlSlideLayout(this, name, 0, 100, 50));
+    for (int i = 0; i < sliderList.size(); i++) {
+        delete sliderList[i];
+    }
+}
+
+void CtrlSlideWidget::addSlider(QString name)
+{
+    CtrlSlideLayout* ctrlSlideLayout = new CtrlSlideLayout(name, 0, 100, 50);
+    sliderList.append(ctrlSlideLayout);
 
     sliderLayout->insertLayout(sliderCount, sliderList[sliderCount++]);
+    connect(ctrlSlideLayout->rightButton, &QPushButton::pressed, this, [ctrlSlideLayout, this] { setSlider(ctrlSlideLayout); });
 }
+
+void CtrlSlideWidget::setSlider(CtrlSlideLayout* slider)
+{
+    QMenu* menu = new QMenu(this);
+    menu->addAction("删除", this, [slider, this] { removeSlider(slider); });
+    menu->addAction("重命名", this, [slider, this] { setName(slider); });
+    menu->exec(QCursor::pos());
+}
+
+void CtrlSlideWidget::removeSlider(CtrlSlideLayout* slider)
+{
+    for (int i = 0; i < sliderList.size(); i++) {
+        if (sliderList[i] == slider) {
+            sliderList.removeAt(i);
+            sliderLayout->removeItem(slider);
+            delete slider;
+            sliderCount--;
+            break;
+        }
+    }
+}
+
+void CtrlSlideWidget::setName(CtrlSlideLayout* slider)
+{
+    bool ok;
+    QString text = QInputDialog::getText(
+        this,
+        " 输入名称",
+        "请输入名称：",
+        QLineEdit::Normal,
+        "slider",
+        &ok
+    );
+
+    if (ok) slider->label->setText(text);
+}
+

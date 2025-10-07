@@ -10,8 +10,14 @@ class CtrlSlideWidget : public QWidget
 
 public:
     CtrlSlideWidget(QWidget* parent = nullptr);
+    ~CtrlSlideWidget();
 
-    void addSlider(CtrlSlideLayout* slider, QString name = "Slider");
+    void addSlider(QString name = "Slider");
+
+private:
+    void setSlider(CtrlSlideLayout* slider);
+    void removeSlider(CtrlSlideLayout* slider);
+    void setName(CtrlSlideLayout* slider);
 
 private:
     QList<CtrlSlideLayout*> sliderList;
