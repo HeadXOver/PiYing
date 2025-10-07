@@ -12,13 +12,12 @@
 #include <QMessageBox>
 #include <QMouseEvent>
 #include <QStatusBar>
-#include <QLabel>
 #include <QList>
 #include <QSet>
-#include <QSlider>
-#include <QPushButton>
 #include <QMatrix4x4>
 #include <QSplitter>
+
+#include "ctrlSlideWidget.h"
 
 enum class ChTexToolState {
     None,

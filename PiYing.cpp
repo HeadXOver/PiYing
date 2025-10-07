@@ -7,29 +7,13 @@ PiYing::PiYing(QWidget* parent) : QMainWindow(parent) {
     ui.setupUi(this);
     setWindowTitle("皮影");
 
-    sliderWidget = new QWidget();
-    sliderLayout = new QVBoxLayout();
-
-    sliderCount = 1;
-
-    QHBoxLayout* row = new QHBoxLayout();
-
-    controlSlide slide(this, "main", "set", 0, 100, 50);
-
-    row->addWidget(slide.label);
-    row->addWidget(slide.slider);
-    row->addWidget(slide.rightButton);
-
-    sliderLayout->addLayout(row);
-    sliderWidget->setLayout(sliderLayout);
-
     float ratio = 16.0f / 9.0f;
 
     voidListWidget = new QListWidget();
-
     bgImageList = new QListWidget();
     chImageList = new QListWidget();
     timeLine = new QWidget(this);
+    sliderWidget = new CtrlSlideWidget(this);
 
     // OpenGL widget
     piYingGL = new PiYingGL(this);

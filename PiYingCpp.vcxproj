@@ -101,6 +101,8 @@
     <ClCompile Include="ChElementSelect.cpp" />
     <ClCompile Include="ChElementTool.cpp" />
     <ClCompile Include="Controls.cpp" />
+    <ClCompile Include="ctrlSlideLayout.cpp" />
+    <ClCompile Include="ctrlSlideWidget.cpp" />
     <ClCompile Include="events.cpp" />
     <ClCompile Include="piYingGL.cpp" />
     <ClCompile Include="piYingGLContainer.cpp" />
@@ -121,6 +123,8 @@
     <ClInclude Include="AddChTexPoly.h" />
     <ClInclude Include="ChElementLibreSelect.h" />
     <ClInclude Include="ChElementTool.h" />
+    <QtMoc Include="ctrlSlideLayout.h" />
+    <QtMoc Include="ctrlSlideWidget.h" />
     <ClInclude Include="CusInclude.h" />
     <ClInclude Include="CusFunc.h" />
     <ClInclude Include="AddTriangle.h" />
