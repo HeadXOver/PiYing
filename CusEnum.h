@@ -23,6 +23,7 @@ enum class ChTexToolState {
     None,
     AddTriangle,
     RectSelectVert,
+	LibreSelectVert,
 	AddPoly,
 };
 

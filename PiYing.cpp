@@ -22,7 +22,7 @@ PiYing::PiYing(QWidget* parent) : QMainWindow(parent) {
     splitTimelineOpenGL = new QSplitter(Qt::Vertical, this);
     splitListOpenGL = new QSplitter(Qt::Horizontal, this);
 
-    toolChTexList.append(ToolButton(":/PiYing/selectChVert_S.png", ":/PiYing/selectChVert.png", "selectChVert", ChTexToolState::RectSelectVert, this));
+    toolChTexList.append(ToolButton(":/PiYing/selectRectChVert_S.png", ":/PiYing/selectRectChVert.png", "selectRectChVert", ChTexToolState::RectSelectVert, this));
     toolChTexList.append(ToolButton(":/PiYing/addChVert_S.png", ":/PiYing/addChVert.png", "addChVert", ChTexToolState::AddTriangle, this));
     toolChTexList.append(ToolButton(":/PiYing/chAddPoly_S.png", ":/PiYing/chAddPoly.png", "chAddPoly", ChTexToolState::AddPoly, this));
 
@@ -207,9 +207,21 @@ void PiYing::onModeChanged(int mode)
 
 void PiYing::selectTool(ToolButton& toolButton)
 {
-    if (toolButton.isSelect) return;
-    for (ToolButton& item : toolChTexList)
-        item.unSelect();
+    if (toolButton.isSelect) {
+        if (toolButton.toolState == ChTexToolState::RectSelectVert) {
+            toolButton.selected = QIcon(":/PiYing/selectLibreChVert_S.png");
+            toolButton.unselected = QIcon(":/PiYing/selectLibreChVert.png");
+            toolButton.toolState = ChTexToolState::LibreSelectVert;
+        }
+        else if (toolButton.toolState == ChTexToolState::LibreSelectVert) {
+            toolButton.selected = QIcon(":/PiYing/selectRectChVert_S.png");
+            toolButton.unselected = QIcon(":/PiYing/selectRectChVert.png");
+            toolButton.toolState = ChTexToolState::RectSelectVert;
+        }
+        else return;
+    }
+    else for (ToolButton& item : toolChTexList) item.unSelect();
+
     toolButton.select();
     piYingGL->setChToolState(toolButton.toolState);
 }

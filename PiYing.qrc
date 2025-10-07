@@ -6,13 +6,15 @@
         <file>chEditershapes.frag</file>
         <file>chEditershapes.vert</file>
         <file>addChVert.png</file>
-        <file>selectChVert.png</file>
         <file>imageListStyle.qss</file>
-        <file>addChVert_S.png</file>
-        <file>selectChVert_S.png</file>
         <file>chAddPoly.png</file>
         <file>chAddPoly_S.png</file>
         <file>slideStyle.qss</file>
         <file>setIcon.png</file>
+        <file>selectLibreChVert.png</file>
+        <file>selectLibreChVert_S.png</file>
+        <file>selectRectChVert.png</file>
+        <file>selectRectChVert_S.png</file>
+        <file>addChVert_S.png</file>
     </qresource>
 </RCC>
