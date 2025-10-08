@@ -5,7 +5,7 @@
 class AddChTexPoly : public ChElementTool {
 
 public:
-	AddChTexPoly(QList<std::vector<unsigned int>>& ind, QList<std::vector<float>>& v, PiYingGL* gl) :ChElementTool(ind, v, gl) {}
+	AddChTexPoly(int current, PiYingGL* gl) :ChElementTool(current, gl) {}
 
 public:
 	virtual void escape() override;

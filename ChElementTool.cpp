@@ -1,7 +1,17 @@
 #include "ChElementTool.h"
 #include "piYing.h"
 
-ChElementTool::ChElementTool(QList<std::vector<unsigned int>>& ind, QList<std::vector<float>>& v, PiYingGL* pygl) :glIndex(ind), glVert(v), gl(pygl)
+ChElementTool::ChElementTool(int current, PiYingGL* pygl) :
+	glIndex(pygl->ref_characterTriangleIndices()[current]),
+	glVert(pygl->ref_characterVerts()[current]),
+	sVert(pygl->ref_characterDrawVerts()[current]),
+	gl(pygl)
 {
-	currentVector = gl->getChCurrentRow();
+}
+
+void ChElementTool::addPointToVert(const QPointF& p)
+{
+	glVert.push_back(p.x());
+	glVert.push_back(p.y());
+	sVert.push_back(p);
 }

@@ -7,7 +7,7 @@ class PiYingGL;
 class ChElementTool
 {
 public:
-	ChElementTool(QList<std::vector<unsigned int>>& ind, QList<std::vector<float>>& v, PiYingGL* pygl);
+	ChElementTool(int current, PiYingGL* pygl);
 
 public:
 	virtual void escape() = 0;
@@ -18,10 +18,11 @@ public:
 	virtual void releasePos(const QPointF& mouse) = 0;
 	virtual void draw(QPainter& painter) = 0;
 
-protected:
-	QList<std::vector<float>>& glVert;
-	QList<std::vector<unsigned int>>& glIndex;
+	void addPointToVert(const QPointF& p);
 
-	int currentVector;
+protected:
+	std::vector<float>& glVert;
+	std::vector<unsigned int>& glIndex;
+	QList<QPointF>& sVert;
 	PiYingGL* gl;
 };

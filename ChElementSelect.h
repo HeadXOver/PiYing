@@ -5,7 +5,7 @@
 class ChElementSelect : public ChElementTool
 {
 public:
-	ChElementSelect(QList<std::vector<unsigned int>>& ind, QList<std::vector<float>>& v, PiYingGL* gl) :ChElementTool(ind, v, gl) {}
+	ChElementSelect(int current, PiYingGL* gl) :ChElementTool(current, gl) {}
 
 public:
 	virtual void escape() override { if (index.size() > 0)index.removeLast(); }
@@ -22,7 +22,7 @@ protected:
 class ChElementRectSelect : public ChElementSelect
 {
 public:
-	ChElementRectSelect(QList<std::vector<unsigned int>>& ind, QList<std::vector<float>>& v, PiYingGL* gl) :ChElementSelect(ind, v, gl) {}
+	ChElementRectSelect(int current, PiYingGL* gl) :ChElementSelect(current, gl) {}
 
 public:
 	virtual void draw(QPainter& painter) override;

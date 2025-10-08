@@ -26,6 +26,9 @@ private:
 	void paintCharacterSkeleton();
 	void addGlobalAction(QMenu* menu, const QList<QAction*> action) { for (QAction* item : action)  menu->addAction(item); }
 
+	int getCurrentBgRow() const;
+	int getCurrentChRow() const;
+
 private slots:
 	void fullScreenBackGround();
 	void setViewToStandard();
@@ -69,8 +72,6 @@ public:
 	void chToolControl(const QPointF& mouse);
 	void drawChEditVert();
 
-	int getChCurrentRow() const;
-
 	bool addBackground(const QString& imageName, QImage& image);
 
 	QPointF getRaletiveToRect(const QPointF& point, const ImageTransform& transform) const		{ return (proj * transform.getMatrixInvert() * getViewMatrixInvert() * insProj).map(point); }
@@ -90,6 +91,10 @@ public:
 	MousePos getMousePosType(const QPointF& point) const;
 
 	Qt::CursorShape getCursorShape(const MousePos& pos);
+
+	QList<std::vector<float>>& ref_characterVerts() { return characterVerts; }
+	QList<QList<QPointF>>& ref_characterDrawVerts() { return characterVertsUV; }
+	QList<std::vector<unsigned int>>& ref_characterTriangleIndices () { return characterTriangleIndices; }
 
 public:
 	EditMode editMode = EditMode::Default;
@@ -113,9 +118,8 @@ private:
 	QList<ImageTexture> characterTextures;
 
 	QList<std::vector<float>> characterVerts;
+	QList<QList<QPointF>> characterVertsUV;
 	QList<std::vector<unsigned int>> characterTriangleIndices;
-
-	int currentSelectedBackGround = -1;
 
 	float lastViewRotate = 0.f;
 	float lastViewTransX = 0.f;
@@ -130,8 +134,6 @@ private:
 	QPointF lastMiddleButtonPos;
 
 	MousePos lastMousePosType = MousePos::OutSide;
-
-	QColor backGroundColor;
 
 	ChTexToolState chToolState;
 

@@ -17,6 +17,10 @@ public:
     PiYing(QWidget *parent = nullptr);
     ~PiYing();
 
+public:
+	int getCurrentBgRow() { return bgImageList->currentRow(); }
+	int getCurrentChRow() { return chImageList->currentRow(); }
+
 protected:
 	void keyPressEvent(QKeyEvent* event) override;
 

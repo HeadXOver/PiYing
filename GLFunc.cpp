@@ -53,7 +53,6 @@ void PiYingGL::initializeGL()
 
 	////////////////end initialize//////////////////////////
 
-	glClearColor(backGroundColor.redF(), backGroundColor.greenF(), backGroundColor.blueF(), backGroundColor.alphaF());
 	glClear(GL_COLOR_BUFFER_BIT);
 }
 

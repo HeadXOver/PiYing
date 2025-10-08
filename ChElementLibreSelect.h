@@ -5,7 +5,7 @@
 class ChElementLibreSelect : public ChElementSelect
 {
 public:
-	ChElementLibreSelect(QList<std::vector<unsigned int>>& ind, QList<std::vector<float>>& v, PiYingGL* gl) :ChElementSelect(ind, v, gl) {}
+	ChElementLibreSelect(int current, PiYingGL* gl) :ChElementSelect(current, gl) {}
 
 protected:
 	virtual void draw(QPainter& painter) override;
@@ -14,7 +14,7 @@ protected:
 	virtual void releasePos(const QPointF& mouse) override;
 
 private:
-	void addEnclosedPoints(const QPolygonF& poly, const std::vector<float>& points);
+	void addEnclosedPoints(const QPolygonF& poly, const QList<QPointF>& points);
 
 private:
 	QPolygonF polygon;

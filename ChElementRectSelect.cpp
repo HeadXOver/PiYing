@@ -4,9 +4,7 @@
 void ChElementRectSelect::draw(QPainter& painter)
 {
 	for (int i = 0; i < index.size(); i++) {
-		int ind = index[i];
-		ind += ind;
-		QPointF selectPoint = gl->mapViewProjMatrix(QPointF(glVert[currentVector][ind], glVert[currentVector][ind + 1]));
+		QPointF selectPoint = gl->mapViewProjMatrix(sVert[index[i]]);
 		painter.setPen(QPen(Qt::black, 8));
 		painter.drawPoint(selectPoint);
 		painter.setPen(QPen(Qt::red, 6));
@@ -24,9 +22,8 @@ void ChElementRectSelect::clickPos(const QPointF& mouse)
 {
 	lastPos = mouse;
 	isPress = true;
-	for (unsigned int i = 0; i < glVert[currentVector].size() / 2; i++) {
-		QPointF readyPoint(glVert[currentVector][i + i], glVert[currentVector][i + i + 1]);
-		if (QLineF(readyPoint, mouse).length() < 0.02f / gl->viewScale.value()) {
+	for (unsigned int i = 0; i < sVert.size(); i++) {
+		if (QLineF(sVert[i], mouse).length() < 0.02f / gl->viewScale.value()) {
 			if (!index.contains(i)) {
 				if (!KeyboardStateWin::isCtrlHeld()) {
 					index.clear();
@@ -55,7 +52,7 @@ void ChElementRectSelect::releasePos(const QPointF& mouse)
 	if (!isDraw) return;
 	isDraw = false;
 
-	std::vector<float>& glV = glVert[currentVector];
+	const std::vector<float>& glV = glVert;
 	index.clear();
 
 	for (unsigned int i = 0; i < glV.size(); i += 2) {

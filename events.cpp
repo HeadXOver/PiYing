@@ -1,4 +1,5 @@
 #include "piYingGL.h"
+#include "PiYing.h"
 
 void PiYingGL::mousePressEvent(QMouseEvent* event)
 {
@@ -7,17 +8,14 @@ void PiYingGL::mousePressEvent(QMouseEvent* event)
 		lastMousePos = mapToGL(mouse);
 
 		if (editMode == EditMode::BackGround) {
-			currentSelectedBackGround = -1;
 			lastMousePosType = MousePos::OutSide;
-			for (int i = backGrounds.size() - 1; i >= 0; i--) {
-				ImageTexture& item = backGrounds[i];
-				QPointF posV = getRaletiveToRect(lastMousePos, item.transform);
-				if (isInsideSquare(posV)) {
-					lastMousePosType = getMousePosType(posV);
-					lastImageTransform = item.transform;
-					currentSelectedBackGround = i;
-					break;
-				}
+			int cur = getCurrentBgRow();
+			if(cur < 0) return;
+			ImageTexture& item = backGrounds[cur];
+			QPointF posV = getRaletiveToRect(lastMousePos, item.transform);
+			if (isInsideSquare(posV)) {
+				lastMousePosType = getMousePosType(posV);
+				lastImageTransform = item.transform;
 			}
 		}
 		else if (editMode == EditMode::characterTexture && event->button() == Qt::LeftButton) {
@@ -44,8 +42,8 @@ void PiYingGL::mouseReleaseEvent(QMouseEvent* e)
 void PiYingGL::mouseMoveEvent(QMouseEvent* event) {
 	QPointF mouse = mapToGL(event->position());
 	if (event->buttons() == Qt::LeftButton) {
-		if (currentSelectedBackGround >= 0) {
-			ImageTexture& item = backGrounds[currentSelectedBackGround];
+		if (lastMousePosType != MousePos::OutSide) {
+			ImageTexture& item = backGrounds[parent->getCurrentBgRow()];
 			if (editMode == EditMode::BackGround) {
 				if (KeyboardStateWin::isAltHeld())
 					bgRotationControl(mouse, item);
@@ -73,12 +71,10 @@ void PiYingGL::mouseMoveEvent(QMouseEvent* event) {
 		}
 		currentUpdate();
 	}
-	else if (currentSelectedBackGround >= 0) {
-		ImageTexture& item = backGrounds[currentSelectedBackGround];
-		setCursor(getCursorShape(getMousePosType(getRaletiveToRect(mouse, item.transform))));
-	}
 	else {
-		setCursor(Qt::CursorShape::ArrowCursor);
+		int cur = parent->getCurrentBgRow();
+		if (cur >= 0) setCursor(getCursorShape(getMousePosType(getRaletiveToRect(mouse, backGrounds[cur].transform))));
+		else setCursor(Qt::CursorShape::ArrowCursor);
 	}
 }
 
@@ -99,7 +95,7 @@ void PiYingGL::contextMenuEvent(QContextMenuEvent* e)
 {
 	if (editMode == EditMode::characterTexture)  rightButtonMenuChTex->exec(e->globalPos());
 	else if (editMode == EditMode::BackGround) {
-		if (currentSelectedBackGround >= 0) rightButtonMenuBg_S->exec(e->globalPos());
+		if (lastMousePosType != MousePos::OutSide) rightButtonMenuBg_S->exec(e->globalPos());
 		else rightButtonMenuBg->exec(e->globalPos());
 	}
 	else rightButtonMenu->exec(e->globalPos());

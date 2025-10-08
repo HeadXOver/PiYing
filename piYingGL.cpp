@@ -59,7 +59,7 @@ void PiYingGL::appendBgList(QImage& image)
 
 	parent->bgImageList->addItem(item);
 
-	if (parent->bgImageList->currentRow() < 0) parent->bgImageList->setCurrentRow(0);
+	if (parent->getCurrentBgRow() < 0) parent->bgImageList->setCurrentRow(0);
 }
 
 void PiYingGL::addCharacter(const QString& imageName)
@@ -72,6 +72,7 @@ void PiYingGL::addCharacter(const QString& imageName)
 	characterTextures.append(img);
 	characterTriangleIndices.push_back(std::vector<unsigned int>());
 	characterVerts.push_back(std::vector<float>());
+	characterVertsUV.push_back(QList<QPointF>());
 
 	QIcon icon(QPixmap::fromImage(img).scaled(50, 50, Qt::KeepAspectRatio, Qt::SmoothTransformation));
 
@@ -80,7 +81,7 @@ void PiYingGL::addCharacter(const QString& imageName)
 
 	parent->chImageList->addItem(item);
 
-	if (parent->chImageList->currentRow() < 0) parent->chImageList->setCurrentRow(0);
+	if (getCurrentChRow() < 0) parent->chImageList->setCurrentRow(0);
 
 	update();
 }
@@ -88,7 +89,6 @@ void PiYingGL::addCharacter(const QString& imageName)
 void PiYingGL::setEditMode(EditMode mode)
 {
 	editMode = mode;
-	currentSelectedBackGround = -1;
 	update();
 }
 
@@ -99,20 +99,15 @@ void PiYingGL::updateChTexTool()
 		chElementTool = nullptr;
 	}
 
-	int currentVector = parent->chImageList->currentRow();
+	int currentVector = getCurrentChRow();
 	if (currentVector < 0) return;
 
 	if (chToolState == ChTexToolState::None) return;
-	else if (chToolState == ChTexToolState::AddTriangle) chElementTool = new AddTriangle(characterTriangleIndices, characterVerts, this);
-	else if (chToolState == ChTexToolState::RectSelectVert) chElementTool = new ChElementLibreSelect(characterTriangleIndices, characterVerts, this);
-	else if (chToolState == ChTexToolState::AddPoly) chElementTool = new AddChTexPoly(characterTriangleIndices, characterVerts, this);
+	else if (chToolState == ChTexToolState::AddTriangle) chElementTool = new AddTriangle(currentVector, this);
+	else if (chToolState == ChTexToolState::RectSelectVert) chElementTool = new ChElementLibreSelect(currentVector, this);
+	else if (chToolState == ChTexToolState::AddPoly) chElementTool = new AddChTexPoly(currentVector, this);
 
 	update();
-}
-
-int PiYingGL::getChCurrentRow() const
-{
-	return parent->chImageList->currentRow();
 }
 
 void PiYingGL::setChToolState(ChTexToolState state)
@@ -124,21 +119,21 @@ void PiYingGL::setChToolState(ChTexToolState state)
 		chElementTool = nullptr;
 	}
 
-	int currentVector = parent->chImageList->currentRow();
+	int currentVector = getCurrentChRow();
 	if (currentVector < 0) return;
 	
 	if (state == ChTexToolState::None) return;
-	else if (state == ChTexToolState::AddTriangle) chElementTool = new AddTriangle(characterTriangleIndices, characterVerts, this);
-	else if (state == ChTexToolState::RectSelectVert) chElementTool = new ChElementRectSelect(characterTriangleIndices, characterVerts, this);
-	else if (state == ChTexToolState::LibreSelectVert) chElementTool = new ChElementLibreSelect(characterTriangleIndices, characterVerts, this);
-	else if (state == ChTexToolState::AddPoly) chElementTool = new AddChTexPoly(characterTriangleIndices, characterVerts, this);
+	else if (state == ChTexToolState::AddTriangle) chElementTool = new AddTriangle(currentVector, this);
+	else if (state == ChTexToolState::RectSelectVert) chElementTool = new ChElementRectSelect(currentVector, this);
+	else if (state == ChTexToolState::LibreSelectVert) chElementTool = new ChElementLibreSelect(currentVector, this);
+	else if (state == ChTexToolState::AddPoly) chElementTool = new AddChTexPoly(currentVector, this);
 
 	update();
 }
 
 void PiYingGL::deleteChElement()
 {
-	int currentVector = parent->chImageList->currentRow();
+	int currentVector = getCurrentChRow();
 	if (currentVector < 0) return;
 	if (chElementTool) chElementTool->deleteElement();
 	update();
@@ -146,7 +141,7 @@ void PiYingGL::deleteChElement()
 
 void PiYingGL::enterChElement()
 {
-	int currentVector = parent->chImageList->currentRow();
+	int currentVector = getCurrentChRow();
 	if (currentVector < 0) return;
 	if (chElementTool) chElementTool->enter();
 	update();
@@ -160,11 +155,10 @@ void PiYingGL::escapeChVert()
 
 void PiYingGL::choseBackgroundColor()
 {
-	QColor color = QColorDialog::getColor(backGroundColor, this, "选择幕布底色");
+	QColor color = QColorDialog::getColor(Qt::black , this, "选择幕布底色");
 	if (!color.isValid()) return;
-	backGroundColor = color;
 	makeCurrent();
-	glClearColor(backGroundColor.redF(), backGroundColor.greenF(), backGroundColor.blueF(), backGroundColor.alphaF());
+	glClearColor(color.redF(), color.greenF(), color.blueF(), color.alphaF());
 	glClear(GL_COLOR_BUFFER_BIT);
 	doneCurrent();
 	update();
@@ -248,4 +242,14 @@ Qt::CursorShape PiYingGL::getCursorShape(const MousePos& pos)
 	if (pos == MousePos::Inside) return Qt::OpenHandCursor;
 	if (!KeyboardStateWin::isAltHeld()) return Qt::CursorShape::CrossCursor;
 	return Qt::OpenHandCursor;
+}
+
+int PiYingGL::getCurrentBgRow() const
+{
+	return parent->getCurrentBgRow();
+}
+
+int PiYingGL::getCurrentChRow() const
+{
+	return parent->getCurrentChRow();
 }

@@ -3,7 +3,7 @@
 
 void PiYingGL::drawChEditVert()
 {
-	int currentVector = parent->chImageList->currentRow();
+	int currentVector = getCurrentChRow();
 	if (currentVector < 0) return;
 
 	QPainter painter(this);
@@ -15,8 +15,7 @@ void PiYingGL::drawChEditVert()
 		int j = 0;
 		for (; j < 3; j++) {
 			int index = characterTriangleIndices[currentVector][i + j];
-			QPointF p(characterVerts[currentVector][index * 2], characterVerts[currentVector][index * 2 + 1]);
-			poly << glToMap(getViewProjMatrix().map(p));
+			poly << glToMap(getViewProjMatrix().map(characterVertsUV[currentVector][index]));
 		}
 		painter.setPen(QPen(Qt::black, 3));
 		painter.drawPolygon(poly);
@@ -51,7 +50,7 @@ void PiYingGL::paintBackgrounds()
 
 		bgShaderProgram.setUniformValue("texture1", 0);
 		bgShaderProgram.setUniformValue("trc", getBgShaderMatrix(it.transform));
-		if (i == currentSelectedBackGround)bgShaderProgram.setUniformValue("selected", true);
+		if (i == getCurrentBgRow())bgShaderProgram.setUniformValue("selected", true);
 		else bgShaderProgram.setUniformValue("selected", false);
 
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
@@ -77,7 +76,7 @@ void PiYingGL::paintCharacterTexture()
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-	int i = parent->chImageList->currentRow();
+	int i = getCurrentChRow();
 	if (i >= 0) {
 		characterTextures[i].tex->bind();
 		bgShaderProgram.setUniformValue("texture1", 0);
@@ -107,7 +106,7 @@ void PiYingGL::paintCharacterSkeleton()
 
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	int i = parent->chImageList->currentRow();
+	int i = getCurrentChRow();
 	if (i >= 0) {
 		glBufferData(GL_ARRAY_BUFFER, characterVerts[i].size() * sizeof(float), characterVerts[i].data(), GL_DYNAMIC_DRAW);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, characterTriangleIndices[i].size() * sizeof(unsigned int), characterTriangleIndices[i].data(), GL_DYNAMIC_DRAW);

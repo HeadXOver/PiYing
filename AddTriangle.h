@@ -5,7 +5,7 @@
 class AddTriangle : public ChElementTool {
 
 public:
-	AddTriangle(QList<std::vector<unsigned int>>& ind, QList<std::vector<float>>& v, PiYingGL* gl) :ChElementTool(ind, v, gl) {}
+	AddTriangle(int current, PiYingGL* gl) :ChElementTool(current, gl) {}
 
 public:
 	bool addIndex(unsigned int i);

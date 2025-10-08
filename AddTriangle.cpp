@@ -54,9 +54,8 @@ void AddTriangle::deleteElement()
 
 void AddTriangle::addChVert(const QPointF& point)
 {
-	glIndex[currentVector].push_back((unsigned int)glVert[currentVector].size() / 2);
-	glVert[currentVector].push_back(point.x());
-	glVert[currentVector].push_back(point.y());
+	glIndex.push_back((unsigned int)sVert.size());
+	addPointToVert(point);
 }
 
 void AddTriangle::clickPos(const QPointF& mouse)
@@ -64,9 +63,8 @@ void AddTriangle::clickPos(const QPointF& mouse)
 	if (checkPointRepeat(mouse))  return;
 
 	int indRepeat = -1;
-	for (unsigned int i = 0; i < glVert[currentVector].size() / 2; i++) {
-		QPointF readyPoint(glVert[currentVector][i + i], glVert[currentVector][i + i + 1]);
-		if (QLineF(readyPoint, mouse).length() < 0.02f / gl->viewScale.value()) {
+	for (unsigned int i = 0; i < sVert.size(); i++) {
+		if (QLineF(sVert[i], mouse).length() < 0.02f / gl->viewScale.value()) {
 			indRepeat = i;
 			break;
 		}
@@ -79,7 +77,7 @@ void AddTriangle::clickPos(const QPointF& mouse)
 	else if (numVert == 2) {
 		numInd = 0;
 		numVert = 0;
-		if (indRepeat >= 0) glIndex[currentVector].push_back(indRepeat);
+		if (indRepeat >= 0) glIndex.push_back(indRepeat);
 		else  addChVert(mouse);
 		addChVert(first);
 		addChVert(second);
@@ -87,8 +85,8 @@ void AddTriangle::clickPos(const QPointF& mouse)
 	else if (numInd == 2) {
 		if (indRepeat >= 0) {
 			if (indRepeat == firstIndex && indRepeat == secondIndex) return;
-			for (int j = 0; j < glIndex[currentVector].size(); j += 3) {
-				unsigned int x[3] = { glIndex[currentVector][j + 0], glIndex[currentVector][j + 1], glIndex[currentVector][j + 2] };
+			for (int j = 0; j < glIndex.size(); j += 3) {
+				unsigned int x[3] = { glIndex[j + 0], glIndex[j + 1], glIndex[j + 2] };
 				unsigned int y[3] = { (unsigned int)indRepeat, firstIndex, secondIndex };
 				std::sort(x, x + 3);
 				std::sort(y, y + 3);
@@ -98,30 +96,30 @@ void AddTriangle::clickPos(const QPointF& mouse)
 
 			numInd = 0;
 			numVert = 0;
-			glIndex[currentVector].push_back(indRepeat);
+			glIndex.push_back(indRepeat);
 		}
 		else {
 			numInd = 0;
 			numVert = 0;
 			addChVert(mouse);
 		}
-		glIndex[currentVector].push_back(firstIndex);
-		glIndex[currentVector].push_back(secondIndex);
+		glIndex.push_back(firstIndex);
+		glIndex.push_back(secondIndex);
 	}
 	else if (numInd == 1 && numVert == 1) {
 		if (indRepeat >= 0) {
 			if (firstIndex != indRepeat) {
 				numInd = 0;
 				numVert = 0;
-				glIndex[currentVector].push_back((unsigned int)indRepeat);
-				glIndex[currentVector].push_back(firstIndex);
+				glIndex.push_back((unsigned int)indRepeat);
+				glIndex.push_back(firstIndex);
 				addChVert(first);
 			}
 		}
 		else {
 			numInd = 0;
 			numVert = 0;
-			glIndex[currentVector].push_back(firstIndex);
+			glIndex.push_back(firstIndex);
 			addChVert(mouse);
 			addChVert(first);
 		}
@@ -133,8 +131,7 @@ void AddTriangle::draw(QPainter& painter)
 	if (numInd == 0 && numVert == 0) return;
 	std::vector<QPointF> toDraw;
 	if (numInd == 1 && numVert == 0) {
-		int index = firstIndex * 2;
-		toDraw.push_back(QPointF(glVert[currentVector][index], glVert[currentVector][index + 1]));
+		toDraw.push_back(sVert[firstIndex]);
 	}
 	else if (numInd == 0 && numVert == 1) toDraw.push_back(first);
 	else if (numVert == 2) {
@@ -142,17 +139,12 @@ void AddTriangle::draw(QPainter& painter)
 		toDraw.push_back(second);
 	}
 	else if (numInd == 2) {
-		int index = firstIndex * 2;
-		QPointF selectPoint(glVert[currentVector][index], glVert[currentVector][index + 1]);
-		index = secondIndex * 2;
-		QPointF selectPoint2(glVert[currentVector][index], glVert[currentVector][index + 1]);
-		toDraw.push_back(selectPoint);
-		toDraw.push_back(selectPoint2);
+		toDraw.push_back(sVert[firstIndex]);
+		toDraw.push_back(sVert[secondIndex]);
 	}
 	else if (numInd == 1 && numVert == 1) {
-		int index = firstIndex * 2;
 		toDraw.push_back(first);
-		toDraw.push_back(QPointF(glVert[currentVector][index], glVert[currentVector][index + 1]));
+		toDraw.push_back(sVert[firstIndex]);
 	}
 
 	for (QPointF& p : toDraw) {

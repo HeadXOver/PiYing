@@ -1,10 +1,12 @@
 ﻿#include "piYingGL.h"
+#include "PiYing.h"
 
 void PiYingGL::fullScreenBackGround()
 {
-	if (currentSelectedBackGround < 0) return;
-	backGrounds[currentSelectedBackGround].transform.reset();
-	backGrounds[currentSelectedBackGround].setScale(1 / viewScale.value());
+	int cur = getCurrentBgRow();
+	if (cur < 0) return;
+	backGrounds[cur].transform.reset();
+	backGrounds[cur].setScale(1 / viewScale.value());
 }
 
 void PiYingGL::setViewToStandard()
@@ -30,8 +32,9 @@ void PiYingGL::returnToStandard()
 
 void PiYingGL::returnBgTransform()
 {
-	if (currentSelectedBackGround >= 0) {
-		ImageTransform& transform = backGrounds[currentSelectedBackGround].transform;
+	int cur = getCurrentBgRow();
+	if (cur >= 0) {
+		ImageTransform& transform = backGrounds[cur].transform;
 		transform.trans.setToIdentity();
 		transform.rot.setToIdentity();
 		transform.scale.setToIdentity();
@@ -40,9 +43,10 @@ void PiYingGL::returnBgTransform()
 
 void PiYingGL::bgSetTransform()
 {
-	if (currentSelectedBackGround >= 0) {
+	int cur = getCurrentBgRow();
+	if (cur >= 0) {
 		float transX, transY, Rot, ScaleX, ScaleY;
-		ImageTexture& image = backGrounds[currentSelectedBackGround];
+		ImageTexture& image = backGrounds[cur];
 		ImageTransform& transform = image.transform;
 		float d[5] = { 
 			transform.trans(0, 3), 
@@ -62,8 +66,9 @@ void PiYingGL::bgSetTransform()
 
 void PiYingGL::againstBg()
 {
-	if (currentSelectedBackGround >= 0) {
-		ImageTransform& transform = backGrounds[currentSelectedBackGround].transform;
+	int cur = getCurrentBgRow();
+	if (cur >= 0) {
+		ImageTransform& transform = backGrounds[cur].transform;
 		QMatrix4x4 r;
 		r.rotate(-qAtan2(transform.rot(1, 0), transform.rot(0, 0)) * 180.f / 3.141593f, 0.0f, 0.0f ,1.0f);
 		QPointF toTrans = r.map(QPointF(- transform.trans(0, 3), -transform.trans(1, 3)));
@@ -85,8 +90,9 @@ void PiYingGL::deleteBg()
 	);
 
 	if (ret == QMessageBox::Yes) {
-		backGrounds.removeAt(currentSelectedBackGround);
-		currentSelectedBackGround = -1;
+		backGrounds.removeAt(getCurrentBgRow());
+		QListWidgetItem* item = parent->bgImageList->takeItem(getCurrentBgRow());
+		delete item;
 		update();
 	}
 }
@@ -103,7 +109,7 @@ void PiYingGL::deleteAllBg()
 
 	if (ret == QMessageBox::Yes) {
 		backGrounds.clear();
-		currentSelectedBackGround = -1;
+		parent->bgImageList->clear();
 		update();
 	}
 }

@@ -4,9 +4,10 @@
 
 void ChElementSelect::deleteElement()
 {
-    std::vector<unsigned int>& idx = glIndex[currentVector];
-    std::vector <float>& vert = glVert[currentVector];
-    const size_t nVert = vert.size() / 2;
+    std::vector<unsigned int>& idx = glIndex;
+    std::vector <float>& vert = glVert;
+    QList<QPointF>& s_Vert = sVert;
+    const size_t nVert = s_Vert.size();
     const size_t nTri = idx.size() / 3;
 
     std::vector<bool> killVert(nVert, false);
@@ -40,12 +41,19 @@ void ChElementSelect::deleteElement()
     for (unsigned old = 0; old < nVert; ++old) {
         if (!killVert[old]) {
             old2new[old] = newVertCount++;
-            vert[newVertCount * 2 - 2] = vert[old * 2];
-            vert[newVertCount * 2 - 1] = vert[old * 2 + 1];
+            vert[newVertCount + newVertCount - 2] = vert[old + old];
+            vert[newVertCount + newVertCount - 1] = vert[old + old + 1];
+            s_Vert[newVertCount - 1] = s_Vert[old];
         }
     }
-    if (newVertCount == 0) vert.clear();
-    else vert.resize(newVertCount * 2);
+    if (newVertCount == 0) {
+        vert.clear();
+        s_Vert.clear();
+    }
+    else {
+        vert.resize(newVertCount * 2);
+        s_Vert.resize(newVertCount);
+    }
 
     size_t outIdx = 0;
     for (size_t t = 0; t < nTri; ++t) {

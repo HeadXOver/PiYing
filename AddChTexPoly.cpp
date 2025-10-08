@@ -15,9 +15,8 @@ void AddChTexPoly::enter()
 
 	for (int i = 0; i < index.size(); i++) {
 		if (index[i] < 0) {
-			index[i] = (unsigned int)glVert[currentVector].size() / 2;
-			glVert[currentVector].push_back(points[i].x());
-			glVert[currentVector].push_back(points[i].y());
+			index[i] = (int)sVert.size();
+			addPointToVert(points[i]);
 		}
 	}
 
@@ -28,7 +27,7 @@ void AddChTexPoly::enter()
 	for (int i = 2; i < index.size(); i++) {
 		int v[3] = { last2point[0], last2point[1], isBack ? back : front };
 		for (int j = 0; j < 3; j++) {
-			glIndex[currentVector].push_back(index[v[j]]);
+			glIndex.push_back(index[v[j]]);
 		}
 		last2point[0] = v[1];
 		last2point[1] = v[2];
@@ -51,8 +50,8 @@ void AddChTexPoly::clickPos(const QPointF& mouse)
 {
 	if (checkPointRepeat(mouse))  return;
 
-	for (unsigned int i = 0; i < glVert[currentVector].size() / 2; i++) {
-		QPointF readyPoint(glVert[currentVector][i + i], glVert[currentVector][i + i + 1]);
+	for (unsigned int i = 0; i < sVert.size(); i++) {
+		QPointF& readyPoint = sVert[i];
 		if (QLineF(readyPoint, mouse).length() < 0.02f / gl->viewScale.value()) {
 			if (!index.contains(i)) {
 				index.append(i);
