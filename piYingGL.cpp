@@ -104,7 +104,8 @@ void PiYingGL::updateChTexTool()
 
 	if (chToolState == ChTexToolState::None) return;
 	else if (chToolState == ChTexToolState::AddTriangle) chElementTool = new AddTriangle(currentVector, this);
-	else if (chToolState == ChTexToolState::RectSelectVert) chElementTool = new ChElementLibreSelect(currentVector, this);
+	else if (chToolState == ChTexToolState::RectSelectVert) chElementTool = new ChElementRectSelect(currentVector, this);
+	else if (chToolState == ChTexToolState::LibreSelectVert) chElementTool = new ChElementLibreSelect(currentVector, this);
 	else if (chToolState == ChTexToolState::AddPoly) chElementTool = new AddChTexPoly(currentVector, this);
 
 	update();
@@ -133,18 +134,19 @@ void PiYingGL::setChToolState(ChTexToolState state)
 
 void PiYingGL::deleteChElement()
 {
-	int currentVector = getCurrentChRow();
-	if (currentVector < 0) return;
 	if (chElementTool) chElementTool->deleteElement();
 	update();
 }
 
 void PiYingGL::enterChElement()
 {
-	int currentVector = getCurrentChRow();
-	if (currentVector < 0) return;
 	if (chElementTool) chElementTool->enter();
 	update();
+}
+
+void PiYingGL::keyChElement(int key)
+{
+	QMessageBox::information(this, "f", "fe");
 }
 
 void PiYingGL::escapeChVert()

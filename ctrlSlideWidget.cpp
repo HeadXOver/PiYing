@@ -7,7 +7,7 @@
 #include <QMenu>
 #include <QInputDialog>
 
-CtrlSlideWidget::CtrlSlideWidget(QWidget* parent)
+CtrlSlideWidget::CtrlSlideWidget(QWidget* parent) : QWidget(parent)
 {
     sliderLayout = new QVBoxLayout(this);
 

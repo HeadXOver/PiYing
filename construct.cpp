@@ -22,11 +22,11 @@ PiYingGL::PiYingGL(PiYing* parent) : QOpenGLWidget(parent), parent(parent)
 	QAction* actionAddBackGround = new QAction("添加背景图", this);
 	QAction* actionAddCharacterTexture = new QAction("添加角色图", this);
 	QAction* actionFullScreenBackGround = new QAction("背景图全屏", this);
-	QAction* actionDeleteBg = new QAction("删除当前背景图");
-	QAction* actionDeleteAllBg = new QAction("删除所有背景图");
-	QAction* actionBgSetTransform = new QAction("设置变换...");
-	QAction* actionAgainstBg = new QAction("将摄像机对准图片");
-	QAction* actionReturnbgTransform = new QAction("还原变换");
+	QAction* actionDeleteBg = new QAction("删除当前背景图", this);
+	QAction* actionDeleteAllBg = new QAction("删除所有背景图", this);
+	QAction* actionBgSetTransform = new QAction("设置变换...", this);
+	QAction* actionAgainstBg = new QAction("将摄像机对准图片", this);
+	QAction* actionReturnbgTransform = new QAction("还原变换", this);
 
 	rightButtonMenu = new  QMenu(this);
 	rightButtonMenuChTex = new  QMenu(this);

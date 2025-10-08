@@ -1,7 +1,6 @@
 ﻿#include "ctrlSlideLayout.h"
 
-CtrlSlideLayout::CtrlSlideLayout(QString labelName, int min, int max, int defaultValue)
-{
+CtrlSlideLayout::CtrlSlideLayout(QString labelName, int min, int max, int defaultValue) {
     label = new QLabel(labelName);
     slider = new QSlider(Qt::Horizontal);
     slider->setRange(min, max);

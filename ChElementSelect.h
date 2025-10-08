@@ -14,7 +14,6 @@ public:
 
 protected:
 	QList<unsigned int> index;
-	QList<unsigned int> preIndex;
 	QPointF lastPos;
 	bool isPress = false;
 };

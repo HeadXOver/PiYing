@@ -59,6 +59,7 @@ public:
 	void setChToolState(ChTexToolState state);
 	void deleteChElement();
 	void enterChElement();
+	void keyChElement(int key);
 	void escapeChVert();
 	void choseBackgroundColor();
 	void changeRatio(float ratio);

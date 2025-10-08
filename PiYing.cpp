@@ -6,18 +6,19 @@
 PiYing::PiYing(QWidget* parent) : QMainWindow(parent) {
     ui.setupUi(this);
     setWindowTitle("皮影");
+    setFocusPolicy(Qt::StrongFocus);
 
     float ratio = 16.0f / 9.0f;
 
     voidListWidget = new QListWidget();
     bgImageList = new QListWidget();
     chImageList = new QListWidget();
+    sliderWidget = new CtrlSlideWidget();
     timeLine = new QWidget(this);
-    sliderWidget = new CtrlSlideWidget(this);
 
     // OpenGL widget
     piYingGL = new PiYingGL(this);
-    piYingGLContainer = new PiYingGLContainer(piYingGL, ratio);
+    piYingGLContainer = new PiYingGLContainer(piYingGL, ratio, this);
 
     splitTimelineOpenGL = new QSplitter(Qt::Vertical, this);
     splitListOpenGL = new QSplitter(Qt::Horizontal, this);
@@ -111,23 +112,37 @@ PiYing::PiYing(QWidget* parent) : QMainWindow(parent) {
 }
 
 PiYing::~PiYing()
-{}
+{
+    delete bgImageList;
+    delete chImageList;
+    delete sliderWidget;
+    delete voidListWidget;
+}
 
 void PiYing::keyPressEvent(QKeyEvent* event)
 {
     if (event->key() == Qt::Key_Escape) {
         if (piYingGL->editMode == EditMode::characterTexture) {
+            if (getCurrentChRow() < 0) return;
             piYingGL->escapeChVert();
         }
     }
     else if (event->key() == Qt::Key_Delete) {
         if (piYingGL->editMode == EditMode::characterTexture) {
+            if (getCurrentChRow() < 0) return;
             piYingGL->deleteChElement();
         }
     }
     else if (event->key() == Qt::Key_Enter || event->key() == Qt::Key_Return) {
         if (piYingGL->editMode == EditMode::characterTexture) {
+            if (getCurrentChRow() < 0) return;
             piYingGL->enterChElement();
+        }
+    }
+    else{
+        if (piYingGL->editMode == EditMode::characterTexture) {
+            if (getCurrentChRow() < 0) return;
+            piYingGL->keyChElement(event->key());
         }
     }
 }
@@ -174,18 +189,18 @@ void PiYing::onModeChanged(int mode)
 {
     ui.mainToolBar->clear();
     if (mode == 0) {
-        splitListOpenGL->widget(0)->setParent(this);
+        splitListOpenGL->widget(0)->setParent(nullptr);
         splitListOpenGL->insertWidget(0, voidListWidget);
 
         piYingGL->setEditMode(EditMode::Default);
     }
     else if(mode == 1){
-        splitListOpenGL->widget(0)->setParent(this);
+        splitListOpenGL->widget(0)->setParent(nullptr);
         splitListOpenGL->insertWidget(0, bgImageList);
         piYingGL->setEditMode(EditMode::BackGround);
     }
     else if (mode == 2) {
-        splitListOpenGL->widget(0)->setParent(this);
+        splitListOpenGL->widget(0)->setParent(nullptr);
         splitListOpenGL->insertWidget(0, chImageList);
         piYingGL->setEditMode(EditMode::characterTexture);
         for (ToolButton& item : toolChTexList) {
@@ -193,12 +208,12 @@ void PiYing::onModeChanged(int mode)
         }
     }
     else if (mode == 3) {
-        splitListOpenGL->widget(0)->setParent(this);
+        splitListOpenGL->widget(0)->setParent(nullptr);
         splitListOpenGL->insertWidget(0, chImageList);
         piYingGL->setEditMode(EditMode::characterSkeleton);
     }
     else if (mode == 4) {
-        splitListOpenGL->widget(0)->setParent(this);
+        splitListOpenGL->widget(0)->setParent(nullptr);
         splitListOpenGL->insertWidget(0, sliderWidget);
         piYingGL->setEditMode(EditMode::controlSlide);
         splitListOpenGL->setSizes({ width() / 5, width() * 4 / 5 });
