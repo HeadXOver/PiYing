@@ -28,6 +28,8 @@ enum class ChTexToolState {
 	AddPoly,
 };
 
+enum class QWER { Q, W, E, R };
+
 enum class MousePos {
 	Inside,
 	LeftTop,

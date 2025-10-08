@@ -76,10 +76,6 @@ void ChElementLibreSelect::releasePos(const QPointF& mouse)
 	}
 }
 
-void ChElementLibreSelect::keyPress(int key)
-{
-}
-
 void ChElementLibreSelect::addEnclosedPoints(const QPolygonF& poly, const QList<QPointF>& points)
 {
 	for (unsigned int i = 0; i < points.size(); i++) {

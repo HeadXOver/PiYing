@@ -146,7 +146,7 @@ void PiYingGL::enterChElement()
 
 void PiYingGL::keyChElement(int key)
 {
-	QMessageBox::information(this, "f", "fe");
+	if (chElementTool) chElementTool->keyPress(key);
 }
 
 void PiYingGL::escapeChVert()

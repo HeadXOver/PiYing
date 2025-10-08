@@ -2,6 +2,29 @@
 #include "KeyboardStateWin.h"
 #include "piYingGL.h"
 
+void ChElementSelect::keyPress(int key)
+{
+    if (key == Qt::Key_Q) {
+        if (qwer == QWER::Q) return;
+        qwer = QWER::Q;
+    }
+    else if (key == Qt::Key_W) {
+        if (qwer == QWER::W) return;
+        qwer = QWER::W;
+    }
+    else if (key == Qt::Key_E) {
+        if (qwer == QWER::E) return;
+        qwer = QWER::E;
+    }
+    else if (key == Qt::Key_R) {
+        if (qwer == QWER::R) return;
+        qwer = QWER::R;
+    }
+    else return;
+
+    gl->update();
+}
+
 void ChElementSelect::deleteElement()
 {
     std::vector<unsigned int>& idx = glIndex;
