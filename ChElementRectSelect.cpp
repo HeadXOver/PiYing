@@ -18,6 +18,10 @@ void ChElementRectSelect::draw(QPainter& painter)
 	}
 }
 
+void ChElementRectSelect::keyPress(int key)
+{
+}
+
 void ChElementRectSelect::clickPos(const QPointF& mouse)
 {
 	lastPos = mouse;

@@ -12,6 +12,7 @@ protected:
 	virtual void clickPos(const QPointF& mouse) override;
 	virtual void movePos(const QPointF& mouse) override;
 	virtual void releasePos(const QPointF& mouse) override;
+	virtual void keyPress(int key) override;
 
 private:
 	void addEnclosedPoints(const QPolygonF& poly, const QList<QPointF>& points);
