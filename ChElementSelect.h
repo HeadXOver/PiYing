@@ -13,7 +13,7 @@ public:
 	virtual void deleteElement() override;
 
 protected:
-	void drawHandle(QPainter painter);
+	void drawHandle(QPainter& painter);
 
 protected:
 	QList<unsigned int> index;

@@ -3,6 +3,8 @@
 
 void ChElementRectSelect::draw(QPainter& painter)
 {
+	drawHandle(painter);
+
 	for (int i = 0; i < index.size(); i++) {
 		QPointF selectPoint = gl->mapViewProjMatrix(sVert[index[i]]);
 		painter.setPen(QPen(Qt::black, 8));

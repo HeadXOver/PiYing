@@ -1,4 +1,4 @@
-#include "ChElementSelect.h"
+﻿#include "ChElementSelect.h"
 #include "KeyboardStateWin.h"
 #include "piYingGL.h"
 
@@ -69,10 +69,53 @@ void ChElementSelect::deleteElement()
     index.clear();
 }
 
-void ChElementSelect::drawHandle(QPainter painter)
+void ChElementSelect::drawHandle(QPainter& painter)
 {
+    if(index.size() == 0) return;
 
-    //QPointF selectPoint = gl->mapViewProjMatrix(lastPos);
-    //painter.setPen(QPen(Qt::yellow, 1));
-    //painter.drawRect(selectPoint.x(), selectPoint.y(), rect.x() - selectPoint.x(), rect.y() - selectPoint.y());
+    painter.setBrush(QColor(0, 0, 0, 0));
+
+    // 计算中心点
+    QPointF handleCenterPoint;
+    for (unsigned int i : index) handleCenterPoint += sVert[i];
+    
+    handleCenterPoint = gl->mapViewProjMatrix(handleCenterPoint / index.size());
+
+	// 绘制圆
+    painter.setPen(QPen(Qt::black, 4));
+	painter.drawEllipse(handleCenterPoint, 100, 100);
+    painter.setPen(QPen(Qt::yellow, 2));
+    painter.drawEllipse(handleCenterPoint, 100, 100);
+
+    // 绘制移动控制柄
+	painter.setPen(QPen(Qt::black, 6));
+    painter.drawLine(handleCenterPoint.x() - 50, handleCenterPoint.y(), handleCenterPoint.x() + 50, handleCenterPoint.y());
+    painter.drawLine(handleCenterPoint.x(), handleCenterPoint.y() - 50, handleCenterPoint.x(), handleCenterPoint.y() + 50);
+    painter.setPen(QPen(Qt::green, 4));
+    painter.drawLine(handleCenterPoint.x() - 50, handleCenterPoint.y(), handleCenterPoint.x() + 50, handleCenterPoint.y());
+    painter.setPen(QPen(Qt::red, 4));
+    painter.drawLine(handleCenterPoint.x(), handleCenterPoint.y() - 50, handleCenterPoint.x(), handleCenterPoint.y() + 50);
+
+    // 绘制中心点
+    painter.setPen(QPen(Qt::black, 16));
+    painter.drawPoint(handleCenterPoint);
+    painter.setPen(QPen(Qt::yellow, 12));
+    painter.drawPoint(handleCenterPoint);
+
+    // 绘制旋转控制柄
+    painter.setPen(QPen(Qt::black, 4));
+    painter.drawEllipse(handleCenterPoint + QPoint(0, -100), 6, 6);
+    painter.setPen(QPen(Qt::yellow, 2));
+    painter.drawEllipse(handleCenterPoint + QPoint(0, -100), 6, 6);
+
+	// 绘制缩放控制柄
+    painter.setPen(QPen(Qt::black, 4));
+    painter.drawRect(handleCenterPoint.x(), handleCenterPoint.y() + 120, 10, 10);
+    painter.drawRect(handleCenterPoint.x() + 120, handleCenterPoint.y(), 10, 10);
+    painter.drawRect(handleCenterPoint.x() + 100, handleCenterPoint.y() + 100, 10, 10);
+    painter.setPen(QPen(Qt::yellow, 2));
+    painter.drawRect(handleCenterPoint.x(), handleCenterPoint.y() + 120, 10, 10);
+    painter.drawRect(handleCenterPoint.x() + 120, handleCenterPoint.y(), 10, 10);
+    painter.drawRect(handleCenterPoint.x() + 100, handleCenterPoint.y() + 100, 10, 10);
+
 }

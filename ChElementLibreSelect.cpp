@@ -3,6 +3,8 @@
 
 void ChElementLibreSelect::draw(QPainter& painter)
 {
+	drawHandle(painter);
+
 	if (!polygon.isEmpty()) {
 		if (drawing) {
 			painter.setPen(QPen(Qt::yellow, 1));
