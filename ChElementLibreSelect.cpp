@@ -36,6 +36,11 @@ void ChElementLibreSelect::clickPos(const QPointF& mouse)
 	isPress = true;
 
 	polygon.clear();
+
+	changeEditMode();
+
+	if (editMode != ChElementEditMode::None) return;
+
 	polygon << mouse;
 
 	for (unsigned int i = 0; i < sVert.size(); i++) {

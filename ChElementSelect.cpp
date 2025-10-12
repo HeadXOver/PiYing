@@ -76,46 +76,103 @@ void ChElementSelect::drawHandle(QPainter& painter)
     painter.setBrush(QColor(0, 0, 0, 0));
 
     // 计算中心点
-    QPointF handleCenterPoint;
+    handleCenterPoint = QPointF();
     for (unsigned int i : index) handleCenterPoint += sVert[i];
     
     handleCenterPoint = gl->mapViewProjMatrix(handleCenterPoint / index.size());
 
 	// 绘制圆
     painter.setPen(QPen(Qt::black, 4));
-	painter.drawEllipse(handleCenterPoint, 100, 100);
+	painter.drawEllipse(handleCenterPoint, ROTATEHANDLE_RADIUS, ROTATEHANDLE_RADIUS);
     painter.setPen(QPen(Qt::yellow, 2));
-    painter.drawEllipse(handleCenterPoint, 100, 100);
+    painter.drawEllipse(handleCenterPoint, ROTATEHANDLE_RADIUS, ROTATEHANDLE_RADIUS);
 
     // 绘制移动控制柄
 	painter.setPen(QPen(Qt::black, 6));
-    painter.drawLine(handleCenterPoint.x() - 50, handleCenterPoint.y(), handleCenterPoint.x() + 50, handleCenterPoint.y());
-    painter.drawLine(handleCenterPoint.x(), handleCenterPoint.y() - 50, handleCenterPoint.x(), handleCenterPoint.y() + 50);
+    painter.drawLine(handleCenterPoint.x() - MOVEHANDLE_LENTH, handleCenterPoint.y(), handleCenterPoint.x() + MOVEHANDLE_LENTH, handleCenterPoint.y());
+    painter.drawLine(handleCenterPoint.x(), handleCenterPoint.y() - MOVEHANDLE_LENTH, handleCenterPoint.x(), handleCenterPoint.y() + MOVEHANDLE_LENTH);
     painter.setPen(QPen(Qt::green, 4));
-    painter.drawLine(handleCenterPoint.x() - 50, handleCenterPoint.y(), handleCenterPoint.x() + 50, handleCenterPoint.y());
+    painter.drawLine(handleCenterPoint.x() - MOVEHANDLE_LENTH, handleCenterPoint.y(), handleCenterPoint.x() + MOVEHANDLE_LENTH, handleCenterPoint.y());
     painter.setPen(QPen(Qt::red, 4));
-    painter.drawLine(handleCenterPoint.x(), handleCenterPoint.y() - 50, handleCenterPoint.x(), handleCenterPoint.y() + 50);
+    painter.drawLine(handleCenterPoint.x(), handleCenterPoint.y() - MOVEHANDLE_LENTH, handleCenterPoint.x(), handleCenterPoint.y() + MOVEHANDLE_LENTH);
 
     // 绘制中心点
-    painter.setPen(QPen(Qt::black, 16));
+    painter.setPen(QPen(Qt::black, 12));
     painter.drawPoint(handleCenterPoint);
-    painter.setPen(QPen(Qt::yellow, 12));
+    painter.setPen(QPen(Qt::yellow, HANDLE_ZONE));
     painter.drawPoint(handleCenterPoint);
-
-    // 绘制旋转控制柄
-    painter.setPen(QPen(Qt::black, 4));
-    painter.drawEllipse(handleCenterPoint + QPoint(0, -100), 6, 6);
-    painter.setPen(QPen(Qt::yellow, 2));
-    painter.drawEllipse(handleCenterPoint + QPoint(0, -100), 6, 6);
 
 	// 绘制缩放控制柄
-    painter.setPen(QPen(Qt::black, 4));
-    painter.drawRect(handleCenterPoint.x(), handleCenterPoint.y() + 120, 10, 10);
-    painter.drawRect(handleCenterPoint.x() + 120, handleCenterPoint.y(), 10, 10);
-    painter.drawRect(handleCenterPoint.x() + 100, handleCenterPoint.y() + 100, 10, 10);
-    painter.setPen(QPen(Qt::yellow, 2));
-    painter.drawRect(handleCenterPoint.x(), handleCenterPoint.y() + 120, 10, 10);
-    painter.drawRect(handleCenterPoint.x() + 120, handleCenterPoint.y(), 10, 10);
-    painter.drawRect(handleCenterPoint.x() + 100, handleCenterPoint.y() + 100, 10, 10);
+    painter.setPen(QPen(Qt::black, 12));
+    painter.drawPoint(handleCenterPoint.x(), handleCenterPoint.y() + SCALEHANDLE_DISTANCE);
+    painter.drawPoint(handleCenterPoint.x() + SCALEHANDLE_DISTANCE, handleCenterPoint.y());
+    painter.drawPoint(handleCenterPoint.x() + ROTATEHANDLE_RADIUS, handleCenterPoint.y() + ROTATEHANDLE_RADIUS);
+    painter.setPen(QPen(Qt::yellow, HANDLE_ZONE));
+    painter.drawPoint(handleCenterPoint.x(), handleCenterPoint.y() + SCALEHANDLE_DISTANCE);
+    painter.drawPoint(handleCenterPoint.x() + SCALEHANDLE_DISTANCE, handleCenterPoint.y());
+    painter.drawPoint(handleCenterPoint.x() + ROTATEHANDLE_RADIUS, handleCenterPoint.y() + ROTATEHANDLE_RADIUS);
 
+}
+
+void ChElementSelect::changeEditMode()
+{
+    if (index.size() == 0) {
+        editMode = ChElementEditMode::None;
+        return;
+    }
+
+    QPointF mouse = gl->mapViewProjMatrix(lastPos);
+
+	// 判断是否在中心点上
+    if (isInRect(mouse, handleCenterPoint, HANDLE_ZONE)) {
+        editMode = ChElementEditMode::Move;
+        QMessageBox::information(gl, "提示", "移动");
+        return;
+	}
+
+    // 判断是否在移动控制柄X上
+    if (isInRect(mouse, handleCenterPoint, MOVEHANDLE_LENTH * 2, HANDLE_ZONE)) {
+        editMode = ChElementEditMode::MoveX;
+        QMessageBox::information(gl, "提示", "移动X");
+        return;
+	}
+
+    // 判断是否在移动控制柄Y上
+    if (isInRect(mouse, handleCenterPoint, HANDLE_ZONE, MOVEHANDLE_LENTH * 2)) {
+        editMode = ChElementEditMode::MoveX;
+        QMessageBox::information(gl, "提示", "移动Y");
+        return;
+    }
+
+    // 判断是否在旋转控制柄上
+    QLineF line(handleCenterPoint, mouse);
+	qreal length = line.length();
+    if (length <= ROTATEHANDLE_RADIUS + HANDLE_ZONE && length >= ROTATEHANDLE_RADIUS - HANDLE_ZONE) {
+        editMode = ChElementEditMode::Rotate;
+		QMessageBox::information(gl, "提示", "旋转");
+        return;
+	}
+
+    // 判断是否在缩放控制柄上
+    if (isInRect(mouse, handleCenterPoint + QPoint(ROTATEHANDLE_RADIUS, ROTATEHANDLE_RADIUS), HANDLE_ZONE)) {
+        editMode = ChElementEditMode::Scale;
+        QMessageBox::information(gl, "提示", "缩放");
+        return;
+    }
+
+	// 判断是否在缩放控制柄X上
+    if (isInRect(mouse, handleCenterPoint + QPoint(SCALEHANDLE_DISTANCE, 0), HANDLE_ZONE)) {
+        editMode = ChElementEditMode::ScaleX;
+        QMessageBox::information(gl, "提示", "缩放X");
+        return;
+	}
+
+	// 判断是否在缩放控制柄Y上
+    if (isInRect(mouse, handleCenterPoint + QPoint(0, SCALEHANDLE_DISTANCE), HANDLE_ZONE)) {
+        editMode = ChElementEditMode::ScaleY;
+        QMessageBox::information(gl, "提示", "缩放Y");
+        return;
+	}
+
+	editMode = ChElementEditMode::None;
 }

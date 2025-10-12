@@ -19,6 +19,11 @@
 
 #include "ctrlSlideWidget.h"
 
+static const int MOVEHANDLE_LENTH = 50;
+static const int ROTATEHANDLE_RADIUS = 100;
+static const int SCALEHANDLE_DISTANCE = 120;
+static const int HANDLE_ZONE = 10;
+
 enum class ChTexToolState {
     None,
     AddTriangle,
@@ -47,4 +52,15 @@ enum class EditMode {
 	characterTexture,
 	characterSkeleton,
 	controlSlide,
+};
+
+enum class ChElementEditMode {
+	None,
+	Move,
+	MoveX,
+	MoveY,
+	Rotate,
+	Scale,
+	ScaleX,
+	ScaleY,
 };

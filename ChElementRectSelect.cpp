@@ -24,6 +24,11 @@ void ChElementRectSelect::clickPos(const QPointF& mouse)
 {
 	lastPos = mouse;
 	isPress = true;
+
+	changeEditMode();
+
+	if(editMode != ChElementEditMode::None) return;
+
 	for (unsigned int i = 0; i < sVert.size(); i++) {
 		if (QLineF(sVert[i], mouse).length() < 0.02f / gl->viewScale.value()) {
 			if (!index.contains(i)) {

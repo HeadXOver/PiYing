@@ -14,11 +14,14 @@ public:
 
 protected:
 	void drawHandle(QPainter& painter);
+	void changeEditMode();
 
 protected:
 	QList<unsigned int> index;
 	QPointF lastPos;
+	QPointF handleCenterPoint;
 	bool isPress = false;
+	ChElementEditMode editMode = ChElementEditMode::None;
 };
 
 class ChElementRectSelect : public ChElementSelect
