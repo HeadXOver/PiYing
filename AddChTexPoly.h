@@ -11,7 +11,6 @@ public:
 	virtual void escape() override;
 	virtual void enter() override;
 	virtual void deleteElement() override;
-	virtual void keyPress(int key) override {}
 	virtual void clickPos(const QPointF& mouse) override;
 	virtual void movePos(const QPointF& mouse) override {}
 	virtual void releasePos(const QPointF& mouse) override {}

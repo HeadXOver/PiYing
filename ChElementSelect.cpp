@@ -2,29 +2,6 @@
 #include "KeyboardStateWin.h"
 #include "piYingGL.h"
 
-void ChElementSelect::keyPress(int key)
-{
-    if (key == Qt::Key_Q) {
-        if (qwer == QWER::Q) return;
-        qwer = QWER::Q;
-    }
-    else if (key == Qt::Key_W) {
-        if (qwer == QWER::W) return;
-        qwer = QWER::W;
-    }
-    else if (key == Qt::Key_E) {
-        if (qwer == QWER::E) return;
-        qwer = QWER::E;
-    }
-    else if (key == Qt::Key_R) {
-        if (qwer == QWER::R) return;
-        qwer = QWER::R;
-    }
-    else return;
-
-    gl->update();
-}
-
 void ChElementSelect::deleteElement()
 {
     std::vector<unsigned int>& idx = glIndex;
@@ -90,4 +67,12 @@ void ChElementSelect::deleteElement()
     else idx.clear();
 
     index.clear();
+}
+
+void ChElementSelect::drawHandle(QPainter painter)
+{
+
+    //QPointF selectPoint = gl->mapViewProjMatrix(lastPos);
+    //painter.setPen(QPen(Qt::yellow, 1));
+    //painter.drawRect(selectPoint.x(), selectPoint.y(), rect.x() - selectPoint.x(), rect.y() - selectPoint.y());
 }

@@ -139,12 +139,6 @@ void PiYing::keyPressEvent(QKeyEvent* event)
             piYingGL->enterChElement();
         }
     }
-    else{
-        if (piYingGL->editMode == EditMode::characterTexture) {
-            if (getCurrentChRow() < 0) return;
-            piYingGL->keyChElement(event->key());
-        }
-    }
 }
 
 void PiYing::exportCurrentFrame(){

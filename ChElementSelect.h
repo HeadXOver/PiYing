@@ -10,14 +10,15 @@ public:
 public:
 	virtual void escape() override { if (index.size() > 0)index.removeLast(); }
 	virtual void enter() override {}
-	virtual void keyPress(int key) override;
 	virtual void deleteElement() override;
+
+protected:
+	void drawHandle(QPainter painter);
 
 protected:
 	QList<unsigned int> index;
 	QPointF lastPos;
 	bool isPress = false;
-	QWER qwer = QWER::Q;
 };
 
 class ChElementRectSelect : public ChElementSelect
@@ -25,7 +26,7 @@ class ChElementRectSelect : public ChElementSelect
 public:
 	ChElementRectSelect(int current, PiYingGL* gl) :ChElementSelect(current, gl) {}
 
-public:
+protected:
 	virtual void draw(QPainter& painter) override;
 	virtual void clickPos(const QPointF& mouse) override;
 	virtual void movePos(const QPointF& mouse) override;

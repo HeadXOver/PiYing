@@ -144,11 +144,6 @@ void PiYingGL::enterChElement()
 	update();
 }
 
-void PiYingGL::keyChElement(int key)
-{
-	if (chElementTool) chElementTool->keyPress(key);
-}
-
 void PiYingGL::escapeChVert()
 {
 	if (chElementTool) chElementTool->escape();

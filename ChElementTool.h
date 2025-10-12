@@ -13,7 +13,6 @@ public:
 	virtual void escape() = 0;
 	virtual void enter() = 0;
 	virtual void deleteElement() = 0;
-	virtual void keyPress(int key) = 0;
 	virtual void clickPos(const QPointF& mouse) = 0;
 	virtual void movePos(const QPointF& mouse) = 0;
 	virtual void releasePos(const QPointF& mouse) = 0;
