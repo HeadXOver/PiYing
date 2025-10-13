@@ -15,6 +15,7 @@ public:
 protected:
 	void drawHandle(QPainter& painter);
 	void changeEditMode();
+	void moveHandle(const QPointF& mouse);
 
 protected:
 	QList<unsigned int> index;

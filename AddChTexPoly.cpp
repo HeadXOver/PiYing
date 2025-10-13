@@ -46,8 +46,10 @@ void AddChTexPoly::deleteElement()
 	points.clear();
 }
 
-void AddChTexPoly::clickPos(const QPointF& mouse)
+void AddChTexPoly::clickPos(const QPointF& mouseOri)
 {
+	QPointF mouse = gl->getViewProjMatrixInvert().map(gl->mapToGL(mouseOri));
+
 	if (checkPointRepeat(mouse))  return;
 
 	for (unsigned int i = 0; i < sVert.size(); i++) {

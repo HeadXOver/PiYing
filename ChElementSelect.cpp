@@ -121,58 +121,41 @@ void ChElementSelect::changeEditMode()
         return;
     }
 
-    QPointF mouse = gl->mapViewProjMatrix(lastPos);
+    qreal length = QLineF(handleCenterPoint, lastPos).length();
 
-	// 判断是否在中心点上
-    if (isInRect(mouse, handleCenterPoint, HANDLE_ZONE)) {
-        editMode = ChElementEditMode::Move;
+    if (length <= ROTATEHANDLE_RADIUS + HANDLE_ZONE && length >= ROTATEHANDLE_RADIUS - HANDLE_ZONE)                 editMode = ChElementEditMode::Rotate;   // 判断是否在旋转控制柄上
+    else if (isInRect(lastPos, handleCenterPoint, HANDLE_ZONE))                                                       editMode = ChElementEditMode::Move;     // 判断是否在中心点上
+    else if (isInRect(lastPos, handleCenterPoint, MOVEHANDLE_LENTH * 2, HANDLE_ZONE))                                 editMode = ChElementEditMode::MoveX;    // 判断是否在移动控制柄X上
+    else if (isInRect(lastPos, handleCenterPoint, HANDLE_ZONE, MOVEHANDLE_LENTH * 2))                                 editMode = ChElementEditMode::MoveY;    // 判断是否在移动控制柄Y上
+    else if (isInRect(lastPos, handleCenterPoint + QPoint(ROTATEHANDLE_RADIUS, ROTATEHANDLE_RADIUS), HANDLE_ZONE))    editMode = ChElementEditMode::Scale;    // 判断是否在缩放控制柄上
+    else if (isInRect(lastPos, handleCenterPoint + QPoint(SCALEHANDLE_DISTANCE, 0), HANDLE_ZONE))                     editMode = ChElementEditMode::ScaleX;   // 判断是否在缩放控制柄X上
+    else if (isInRect(lastPos, handleCenterPoint + QPoint(0, SCALEHANDLE_DISTANCE), HANDLE_ZONE))                     editMode = ChElementEditMode::ScaleY;   // 判断是否在缩放控制柄Y上
+	else                                                                                                            editMode = ChElementEditMode::None;     // 不在任何控制柄上
+}
+
+void ChElementSelect::moveHandle(const QPointF& mouse)
+{
+    if (editMode == ChElementEditMode::None) return;
+
+    if (editMode == ChElementEditMode::Move) {
         QMessageBox::information(gl, "提示", "移动");
-        return;
-	}
-
-    // 判断是否在移动控制柄X上
-    if (isInRect(mouse, handleCenterPoint, MOVEHANDLE_LENTH * 2, HANDLE_ZONE)) {
-        editMode = ChElementEditMode::MoveX;
+    }
+    else if(editMode == ChElementEditMode::MoveX) {
         QMessageBox::information(gl, "提示", "移动X");
-        return;
-	}
-
-    // 判断是否在移动控制柄Y上
-    if (isInRect(mouse, handleCenterPoint, HANDLE_ZONE, MOVEHANDLE_LENTH * 2)) {
-        editMode = ChElementEditMode::MoveX;
+    }
+    else if (editMode == ChElementEditMode::MoveY) {
         QMessageBox::information(gl, "提示", "移动Y");
-        return;
     }
-
-    // 判断是否在旋转控制柄上
-    QLineF line(handleCenterPoint, mouse);
-	qreal length = line.length();
-    if (length <= ROTATEHANDLE_RADIUS + HANDLE_ZONE && length >= ROTATEHANDLE_RADIUS - HANDLE_ZONE) {
-        editMode = ChElementEditMode::Rotate;
-		QMessageBox::information(gl, "提示", "旋转");
-        return;
-	}
-
-    // 判断是否在缩放控制柄上
-    if (isInRect(mouse, handleCenterPoint + QPoint(ROTATEHANDLE_RADIUS, ROTATEHANDLE_RADIUS), HANDLE_ZONE)) {
-        editMode = ChElementEditMode::Scale;
+    else if (editMode == ChElementEditMode::Rotate) {
+        QMessageBox::information(gl, "提示", "旋转");
+    }
+    else if (editMode == ChElementEditMode::Scale) {
         QMessageBox::information(gl, "提示", "缩放");
-        return;
     }
-
-	// 判断是否在缩放控制柄X上
-    if (isInRect(mouse, handleCenterPoint + QPoint(SCALEHANDLE_DISTANCE, 0), HANDLE_ZONE)) {
-        editMode = ChElementEditMode::ScaleX;
+    else if (editMode == ChElementEditMode::ScaleX) {
         QMessageBox::information(gl, "提示", "缩放X");
-        return;
-	}
-
-	// 判断是否在缩放控制柄Y上
-    if (isInRect(mouse, handleCenterPoint + QPoint(0, SCALEHANDLE_DISTANCE), HANDLE_ZONE)) {
-        editMode = ChElementEditMode::ScaleY;
+    }
+    else if (editMode == ChElementEditMode::ScaleY) {
         QMessageBox::information(gl, "提示", "缩放Y");
-        return;
 	}
-
-	editMode = ChElementEditMode::None;
 }

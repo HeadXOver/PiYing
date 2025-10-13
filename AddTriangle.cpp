@@ -58,8 +58,10 @@ void AddTriangle::addChVert(const QPointF& point)
 	addPointToVert(point);
 }
 
-void AddTriangle::clickPos(const QPointF& mouse)
+void AddTriangle::clickPos(const QPointF& mouseOri)
 {
+	QPointF mouse = gl->getViewProjMatrixInvert().map(gl->mapToGL(mouseOri));
+
 	if (checkPointRepeat(mouse))  return;
 
 	int indRepeat = -1;

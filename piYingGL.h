@@ -69,7 +69,6 @@ public:
 	void bgTranslateControl(const QPointF& mouse, ImageTexture& image);
 	void bgScaleControl(const QPointF& mouse, ImageTexture& image);
 	void viewRotationControl(const QPointF& mouse);
-	void chToolControl(const QPointF& mouse);
 	void drawChEditVert();
 
 	bool addBackground(const QString& imageName, QImage& image);

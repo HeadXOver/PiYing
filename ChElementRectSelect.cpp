@@ -14,20 +14,21 @@ void ChElementRectSelect::draw(QPainter& painter)
 	}
 
 	if (isDraw) {
-		QPointF selectPoint = gl->mapViewProjMatrix(lastPos);
 		painter.setPen(QPen(Qt::yellow, 1));
-		painter.drawRect(selectPoint.x(), selectPoint.y(), rect.x() - selectPoint.x(), rect.y() - selectPoint.y());
+		painter.drawRect(lastPos.x(), lastPos.y(), rect.x() - lastPos.x(), rect.y() - lastPos.y());
 	}
 }
 
-void ChElementRectSelect::clickPos(const QPointF& mouse)
+void ChElementRectSelect::clickPos(const QPointF& mouseOri)
 {
-	lastPos = mouse;
+	lastPos = mouseOri;
 	isPress = true;
 
 	changeEditMode();
 
 	if(editMode != ChElementEditMode::None) return;
+
+	QPointF mouse = gl->getViewProjMatrixInvert().map(gl->mapToGL(mouseOri));
 
 	for (unsigned int i = 0; i < sVert.size(); i++) {
 		if (QLineF(sVert[i], mouse).length() < 0.02f / gl->viewScale.value()) {
@@ -48,9 +49,13 @@ void ChElementRectSelect::clickPos(const QPointF& mouse)
 
 void ChElementRectSelect::movePos(const QPointF& mouse)
 {
-
-	rect = gl->mapViewProjMatrix(mouse);
-	isDraw = true;
+	isDraw = false;
+	
+	if (editMode == ChElementEditMode::None) {
+		rect = mouse;
+		isDraw = true;
+	}
+	else moveHandle(mouse);
 }
 
 void ChElementRectSelect::releasePos(const QPointF& mouse)
@@ -59,24 +64,9 @@ void ChElementRectSelect::releasePos(const QPointF& mouse)
 	if (!isDraw) return;
 	isDraw = false;
 
-	const std::vector<float>& glV = glVert;
 	index.clear();
 
-	for (unsigned int i = 0; i < glV.size(); i += 2) {
-		float front = glV[i] - lastPos.x();
-		float back = glV[i] - mouse.x();
-
-		if ((front > 0 && back > 0) || (front < 0 && back < 0)) {
-			continue;
-		}
-
-		front = glV[i + 1] - lastPos.y();
-		back = glV[i + 1] - mouse.y();
-
-		if ((front > 0 && back > 0) || (front < 0 && back < 0)) {
-			continue;
-		}
-
-		index.append(i / 2);
-	}
+	for (unsigned int i = 0; i < sVert.size(); i++) 
+		if(QRectF(lastPos, mouse).contains(gl->mapViewProjMatrix(sVert[i])))
+			index.append(i);
 }

@@ -15,7 +15,8 @@ void ChElementLibreSelect::draw(QPainter& painter)
 			screenPoly.reserve(polygon.size());
 			std::transform(polygon.cbegin(), polygon.cend(),
 				std::back_inserter(screenPoly),
-				mapper);
+				mapper
+			);
 
 			painter.drawPolyline(screenPoly);
 			painter.drawLine(screenPoly.last(), screenPoly.first());
@@ -31,15 +32,18 @@ void ChElementLibreSelect::draw(QPainter& painter)
 	}
 }
 
-void ChElementLibreSelect::clickPos(const QPointF& mouse)
+void ChElementLibreSelect::clickPos(const QPointF& mouseOri)
 {
 	isPress = true;
+	lastPos = mouseOri;
 
 	polygon.clear();
 
 	changeEditMode();
 
 	if (editMode != ChElementEditMode::None) return;
+
+	QPointF mouse = gl->getViewProjMatrixInvert().map(gl->mapToGL(mouseOri));
 
 	polygon << mouse;
 
@@ -62,12 +66,17 @@ void ChElementLibreSelect::clickPos(const QPointF& mouse)
 
 void ChElementLibreSelect::movePos(const QPointF& mouse)
 {
-	if (isPress) {
-		if (polygon.isEmpty() || polygon.last() != mouse) {
-			polygon << mouse;
+	drawing = false;
+	if (editMode == ChElementEditMode::None) {
+		if (!isPress) return;
+
+		QPointF mapedMouse = gl->getViewProjMatrixInvert().map(gl->mapToGL(mouse));
+		if (polygon.isEmpty() || polygon.last() != mapedMouse) {
+			polygon << mapedMouse;
 		}
 		drawing = true;
 	}
+	else moveHandle(mouse);
 }
 
 void ChElementLibreSelect::releasePos(const QPointF& mouse)
