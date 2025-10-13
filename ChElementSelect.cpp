@@ -124,12 +124,12 @@ void ChElementSelect::changeEditMode()
     qreal length = QLineF(handleCenterPoint, lastPos).length();
 
     if (length <= ROTATEHANDLE_RADIUS + HANDLE_ZONE && length >= ROTATEHANDLE_RADIUS - HANDLE_ZONE)                 editMode = ChElementEditMode::Rotate;   // 判断是否在旋转控制柄上
-    else if (isInRect(lastPos, handleCenterPoint, HANDLE_ZONE))                                                       editMode = ChElementEditMode::Move;     // 判断是否在中心点上
-    else if (isInRect(lastPos, handleCenterPoint, MOVEHANDLE_LENTH * 2, HANDLE_ZONE))                                 editMode = ChElementEditMode::MoveX;    // 判断是否在移动控制柄X上
-    else if (isInRect(lastPos, handleCenterPoint, HANDLE_ZONE, MOVEHANDLE_LENTH * 2))                                 editMode = ChElementEditMode::MoveY;    // 判断是否在移动控制柄Y上
-    else if (isInRect(lastPos, handleCenterPoint + QPoint(ROTATEHANDLE_RADIUS, ROTATEHANDLE_RADIUS), HANDLE_ZONE))    editMode = ChElementEditMode::Scale;    // 判断是否在缩放控制柄上
-    else if (isInRect(lastPos, handleCenterPoint + QPoint(SCALEHANDLE_DISTANCE, 0), HANDLE_ZONE))                     editMode = ChElementEditMode::ScaleX;   // 判断是否在缩放控制柄X上
-    else if (isInRect(lastPos, handleCenterPoint + QPoint(0, SCALEHANDLE_DISTANCE), HANDLE_ZONE))                     editMode = ChElementEditMode::ScaleY;   // 判断是否在缩放控制柄Y上
+    else if (isInRect(lastPos, handleCenterPoint, HANDLE_ZONE))                                                     editMode = ChElementEditMode::Move;     // 判断是否在中心点上
+    else if (isInRect(lastPos, handleCenterPoint, MOVEHANDLE_LENTH * 2, HANDLE_ZONE))                               editMode = ChElementEditMode::MoveX;    // 判断是否在移动控制柄X上
+    else if (isInRect(lastPos, handleCenterPoint, HANDLE_ZONE, MOVEHANDLE_LENTH * 2))                               editMode = ChElementEditMode::MoveY;    // 判断是否在移动控制柄Y上
+    else if (isInRect(lastPos, handleCenterPoint + QPoint(ROTATEHANDLE_RADIUS, ROTATEHANDLE_RADIUS), HANDLE_ZONE))  editMode = ChElementEditMode::Scale;    // 判断是否在缩放控制柄上
+    else if (isInRect(lastPos, handleCenterPoint + QPoint(SCALEHANDLE_DISTANCE, 0), HANDLE_ZONE))                   editMode = ChElementEditMode::ScaleX;   // 判断是否在缩放控制柄X上
+    else if (isInRect(lastPos, handleCenterPoint + QPoint(0, SCALEHANDLE_DISTANCE), HANDLE_ZONE))                   editMode = ChElementEditMode::ScaleY;   // 判断是否在缩放控制柄Y上
 	else                                                                                                            editMode = ChElementEditMode::None;     // 不在任何控制柄上
 }
 
@@ -139,14 +139,24 @@ void ChElementSelect::moveHandle(const QPointF& mouse)
 
     if (editMode == ChElementEditMode::Move) {
         for (int i = 0;i < selectedPoints.size();i++) {
-            sVert[selectedPoints[i]] = selectedPoints.getVert(i) + gl->getViewProjMatrixInvert().map(gl->mapToGL(mouse)) - gl->getViewProjMatrixInvert().map(gl->mapToGL(lastPos));
+            sVert[selectedPoints[i]] = selectedPoints.getVert(i) 
+                + gl->getViewProjMatrixInvert().map(gl->mapToGL(mouse)) 
+                - gl->getViewProjMatrixInvert().map(gl->mapToGL(lastPos));
         }
     }
     else if(editMode == ChElementEditMode::MoveX) {
-        QMessageBox::information(gl, "提示", "移动X");
+        for (int i = 0; i < selectedPoints.size(); i++) {
+            sVert[selectedPoints[i]] = selectedPoints.getVert(i) 
+                + gl->getViewProjMatrixInvert().map(gl->mapToGL(QPointF(mouse.x(), 0.f)))
+                - gl->getViewProjMatrixInvert().map(gl->mapToGL(QPointF(lastPos.x(), 0.f)));
+        }
     }
     else if (editMode == ChElementEditMode::MoveY) {
-        QMessageBox::information(gl, "提示", "移动Y");
+        for (int i = 0; i < selectedPoints.size(); i++) {
+            sVert[selectedPoints[i]] = selectedPoints.getVert(i)
+                + gl->getViewProjMatrixInvert().map(gl->mapToGL(QPointF(0.f, mouse.y())))
+                - gl->getViewProjMatrixInvert().map(gl->mapToGL(QPointF(0.f, lastPos.y())));
+        }
     }
     else if (editMode == ChElementEditMode::Rotate) {
         QMessageBox::information(gl, "提示", "旋转");
