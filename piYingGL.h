@@ -84,6 +84,8 @@ public:
 	QMatrix4x4 getBgShaderMatrix(const ImageTransform& transform) const { return proj * getViewMatrix() * transform.getMatrix() * insProj; }
 	QMatrix4x4 getViewProjMatrixInvert() const { return proj * getViewMatrixInvert() * insProj; }
 	QMatrix4x4 getViewProjMatrix() const { return proj * getViewMatrix() * insProj; }
+	QMatrix4x4 getProj() const { return proj; }
+	QMatrix4x4 getInsProj() const {return insProj; }
 
 	bool isInsideSquare(const QPointF& point, float side = 2.0f) const { return (point.x() >= -side / 2.f && point.x() <= side / 2.f && point.y() >= -side / 2.f && point.y() <= side / 2.f); }
 

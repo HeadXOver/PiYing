@@ -22,6 +22,9 @@ protected:
 	SelectedPoints selectedPoints;
 	QPointF lastPos;
 	QPointF handleCenterPoint;
+	QPointF dHandleCenterPoint;
+	QPointF lastHandleCenterPoint;
+	QPointF lastDHandleCenterPoint;
 	bool isPress = false;
 	ChElementEditMode editMode = ChElementEditMode::None;
 };
