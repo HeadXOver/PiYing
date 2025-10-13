@@ -140,19 +140,19 @@ void ChElementSelect::moveHandle(const QPointF& mouse)
     if (editMode == ChElementEditMode::None) return;
 
     if (editMode == ChElementEditMode::Move) {
-        QPointF toMove = gl->getViewProjMatrixInvert().map(gl->mapToGL(mouse)) - gl->getViewProjMatrixInvert().map(gl->mapToGL(lastPos));
+        QPointF toMove = gl->GLViewProjMatrixInvert(mouse) - gl->GLViewProjMatrixInvert(lastPos);
         for (int i = 0;i < selectedPoints.size();i++) {
             sVert[selectedPoints[i]] = selectedPoints.getVert(i) + toMove;
         }
     }
     else if(editMode == ChElementEditMode::MoveX) {
-        QPointF toMove = gl->getViewProjMatrixInvert().map(gl->mapToGL(QPointF(mouse.x(), 0.f))) - gl->getViewProjMatrixInvert().map(gl->mapToGL(QPointF(lastPos.x(), 0.f)));
+        QPointF toMove = gl->GLViewProjMatrixInvert(mouse.x(), 0.f) - gl->GLViewProjMatrixInvert(lastPos.x(), 0.f);
         for (int i = 0; i < selectedPoints.size(); i++) {
             sVert[selectedPoints[i]] = selectedPoints.getVert(i) + toMove;
         }
     }
     else if (editMode == ChElementEditMode::MoveY) {
-        QPointF toMove = gl->getViewProjMatrixInvert().map(gl->mapToGL(QPointF(0.f, mouse.y()))) - gl->getViewProjMatrixInvert().map(gl->mapToGL(QPointF(0.f, lastPos.y())));
+        QPointF toMove = gl->GLViewProjMatrixInvert(0.f, mouse.y()) - gl->GLViewProjMatrixInvert(0.f, lastPos.y());
         for (int i = 0; i < selectedPoints.size(); i++) {
             sVert[selectedPoints[i]] = selectedPoints.getVert(i) + toMove;
         }
