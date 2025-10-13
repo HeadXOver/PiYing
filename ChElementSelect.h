@@ -16,6 +16,7 @@ protected:
 	void drawHandle(QPainter& painter);
 	void changeEditMode();
 	void moveHandle(const QPointF& mouse);
+	void affirmHandle();
 
 protected:
 	SelectedPoints selectedPoints;

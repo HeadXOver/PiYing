@@ -138,8 +138,8 @@ void ChElementSelect::moveHandle(const QPointF& mouse)
     if (editMode == ChElementEditMode::None) return;
 
     if (editMode == ChElementEditMode::Move) {
-        for (unsigned int i : selectedPoints.index()) {
-            sVert[i] = gl->getViewProjMatrixInvert().map(gl->mapToGL(mouse)) - gl->getViewProjMatrixInvert().map(gl->mapToGL(lastPos));
+        for (int i = 0;i < selectedPoints.size();i++) {
+            sVert[selectedPoints[i]] = selectedPoints.getVert(i) + gl->getViewProjMatrixInvert().map(gl->mapToGL(mouse)) - gl->getViewProjMatrixInvert().map(gl->mapToGL(lastPos));
         }
     }
     else if(editMode == ChElementEditMode::MoveX) {
@@ -160,4 +160,9 @@ void ChElementSelect::moveHandle(const QPointF& mouse)
     else if (editMode == ChElementEditMode::ScaleY) {
         QMessageBox::information(gl, "提示", "缩放Y");
 	}
+}
+
+void ChElementSelect::affirmHandle()
+{
+    selectedPoints.affirmVert();
 }

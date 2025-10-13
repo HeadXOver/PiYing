@@ -1,7 +1,6 @@
 #pragma once
 
 #include <QOpenGLTexture>
-#include <vector>
 #include <QIcon>
 #include <QAction>
 #include <QMenu>

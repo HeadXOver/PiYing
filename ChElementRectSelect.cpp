@@ -26,7 +26,10 @@ void ChElementRectSelect::clickPos(const QPointF& mouseOri)
 
 	changeEditMode();
 
-	if(editMode != ChElementEditMode::None) return;
+	if (editMode != ChElementEditMode::None) {
+		affirmHandle();
+		return;
+	}
 
 	QPointF mouse = gl->getViewProjMatrixInvert().map(gl->mapToGL(mouseOri));
 
@@ -61,6 +64,7 @@ void ChElementRectSelect::movePos(const QPointF& mouse)
 void ChElementRectSelect::releasePos(const QPointF& mouse)
 {
 	isPress = false;
+
 	if (!isDraw) return;
 	isDraw = false;
 

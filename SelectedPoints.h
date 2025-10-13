@@ -1,12 +1,13 @@
 #pragma once
 
 #include <QList>
+#include <vector>
 #include <QPoint>
 
 class SelectedPoints
 {
 public:
-	SelectedPoints(QList<QPointF>& sVert) : sVert(sVert) {}
+	SelectedPoints(QList<QPointF>& vert) : sVert(vert) {}
 
 	const QList<unsigned int>& index() const { return selectedIndex; }
 	const QList<QPointF>& vert() const { return lastVertPos; }
@@ -22,6 +23,7 @@ public:
 	void clear() { selectedIndex.clear(); lastVertPos.clear(); }
 	void append(unsigned int ind) { selectedIndex.append(ind); lastVertPos.append(sVert[ind]); }
 	void removeLast() { selectedIndex.removeLast(); lastVertPos.removeLast(); }
+	void affirmVert();
 
 private:
 	QList<unsigned int> selectedIndex;

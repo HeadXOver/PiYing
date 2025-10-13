@@ -41,7 +41,10 @@ void ChElementLibreSelect::clickPos(const QPointF& mouseOri)
 
 	changeEditMode();
 
-	if (editMode != ChElementEditMode::None) return;
+	if (editMode != ChElementEditMode::None) {
+		affirmHandle();
+		return;
+	}
 
 	QPointF mouse = gl->getViewProjMatrixInvert().map(gl->mapToGL(mouseOri));
 
