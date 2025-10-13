@@ -140,42 +140,53 @@ void ChElementSelect::moveHandle(const QPointF& mouse)
     if (editMode == ChElementEditMode::None) return;
 
     if (editMode == ChElementEditMode::Move) {
+        QPointF toMove = gl->getViewProjMatrixInvert().map(gl->mapToGL(mouse)) - gl->getViewProjMatrixInvert().map(gl->mapToGL(lastPos));
         for (int i = 0;i < selectedPoints.size();i++) {
-            sVert[selectedPoints[i]] = selectedPoints.getVert(i) 
-                + gl->getViewProjMatrixInvert().map(gl->mapToGL(mouse)) 
-                - gl->getViewProjMatrixInvert().map(gl->mapToGL(lastPos));
+            sVert[selectedPoints[i]] = selectedPoints.getVert(i) + toMove;
         }
     }
     else if(editMode == ChElementEditMode::MoveX) {
+        QPointF toMove = gl->getViewProjMatrixInvert().map(gl->mapToGL(QPointF(mouse.x(), 0.f))) - gl->getViewProjMatrixInvert().map(gl->mapToGL(QPointF(lastPos.x(), 0.f)));
         for (int i = 0; i < selectedPoints.size(); i++) {
-            sVert[selectedPoints[i]] = selectedPoints.getVert(i) 
-                + gl->getViewProjMatrixInvert().map(gl->mapToGL(QPointF(mouse.x(), 0.f)))
-                - gl->getViewProjMatrixInvert().map(gl->mapToGL(QPointF(lastPos.x(), 0.f)));
+            sVert[selectedPoints[i]] = selectedPoints.getVert(i) + toMove;
         }
     }
     else if (editMode == ChElementEditMode::MoveY) {
+        QPointF toMove = gl->getViewProjMatrixInvert().map(gl->mapToGL(QPointF(0.f, mouse.y()))) - gl->getViewProjMatrixInvert().map(gl->mapToGL(QPointF(0.f, lastPos.y())));
         for (int i = 0; i < selectedPoints.size(); i++) {
-            sVert[selectedPoints[i]] = selectedPoints.getVert(i)
-                + gl->getViewProjMatrixInvert().map(gl->mapToGL(QPointF(0.f, mouse.y())))
-                - gl->getViewProjMatrixInvert().map(gl->mapToGL(QPointF(0.f, lastPos.y())));
+            sVert[selectedPoints[i]] = selectedPoints.getVert(i) + toMove;
         }
     }
     else if (editMode == ChElementEditMode::Rotate) {
         float angle = angleBetweenPoint(lastPos - lastDHandleCenterPoint, mouse - lastDHandleCenterPoint);
+        QPointF toRot = gl->getInsProj().map(lastHandleCenterPoint);
         for (int i = 0; i < selectedPoints.size(); i++) {
-            sVert[selectedPoints[i]] = gl->getInsProj().map(lastHandleCenterPoint)
-                + getRotatedPoint(gl->getInsProj().map(selectedPoints.getVert(i) - lastHandleCenterPoint), angle);
+            sVert[selectedPoints[i]] = toRot + getRotatedPoint(gl->getInsProj().map(selectedPoints.getVert(i) - lastHandleCenterPoint), angle);
             sVert[selectedPoints[i]] = gl->getProj().map(sVert[selectedPoints[i]]);
         }
     }
     else if (editMode == ChElementEditMode::Scale) {
-
+        float scale = (mouse.x() + mouse.y() - dHandleCenterPoint.x() - dHandleCenterPoint.y()) / (ROTATEHANDLE_RADIUS + ROTATEHANDLE_RADIUS);
+        QPointF toScale = lastHandleCenterPoint * (scale - 1);
+        for (int i = 0; i < selectedPoints.size(); i++) {
+            sVert[selectedPoints[i]] = selectedPoints.getVert(i) * scale - toScale;
+        }
     }
     else if (editMode == ChElementEditMode::ScaleX) {
-        QMessageBox::information(gl, "提示", "缩放X");
+        float scale = (mouse.x() - lastDHandleCenterPoint.x()) / ROTATEHANDLE_RADIUS;
+        float scaleX = lastDHandleCenterPoint.x() * (1 - scale);
+        for (int i = 0; i < selectedPoints.size(); i++) {
+            QPointF mapOri = gl->mapViewProjMatrix(selectedPoints.getVert(i));
+            sVert[selectedPoints[i]] = gl->GLViewProjMatrixInvert(mapOri.x() * scale + scaleX, mapOri.y());
+        }
     }
     else if (editMode == ChElementEditMode::ScaleY) {
-        QMessageBox::information(gl, "提示", "缩放Y");
+        float scale = (mouse.y() - lastDHandleCenterPoint.y()) / ROTATEHANDLE_RADIUS;
+        float scaleY = lastDHandleCenterPoint.y() * (1 - scale);
+        for (int i = 0; i < selectedPoints.size(); i++) {
+            QPointF mapOri = gl->mapViewProjMatrix(selectedPoints.getVert(i));
+            sVert[selectedPoints[i]] = gl->GLViewProjMatrixInvert(mapOri.x(), mapOri.y() * scale + scaleY);
+        }
 	}
 }
 

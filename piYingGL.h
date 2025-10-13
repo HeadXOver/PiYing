@@ -76,8 +76,10 @@ public:
 	QPointF getRaletiveToRect(const QPointF& point, const ImageTransform& transform) const		{ return (proj * transform.getMatrixInvert() * getViewMatrixInvert() * insProj).map(point); }
 	QPointF getRaletiveToGlobal(const QPointF& point, const ImageTransform& transform) const	{ return getBgShaderMatrix(transform).map(point); }
 	QPointF mapToGL(const QPointF& point) { return QPointF((point.x() / float(width())) * 2.0f - 1.0f, 1.0f - (point.y() / float(height())) * 2.0f); }
+	QPointF mapToGL(float x, float y) { return QPointF((x / float(width())) * 2.0f - 1.0f, 1.0f - (y / float(height())) * 2.0f); }
 	QPointF glToMap(const QPointF& point) { return QPointF((point.x() + 1.0f) * width() / 2, (1.0f - point.y()) * height() / 2); }
 	QPointF mapViewProjMatrix(const QPointF& point) { return glToMap(getViewProjMatrix().map(point)); }
+	QPointF GLViewProjMatrixInvert(float x, float y) { return getViewProjMatrixInvert().map(mapToGL(x, y)); }
 
 	QMatrix4x4 getViewMatrixInvert() const;
 	QMatrix4x4 getViewMatrix() const;
