@@ -5,8 +5,8 @@ void ChElementRectSelect::draw(QPainter& painter)
 {
 	drawHandle(painter);
 
-	for (int i = 0; i < index.size(); i++) {
-		QPointF selectPoint = gl->mapViewProjMatrix(sVert[index[i]]);
+	for (int i = 0; i < selectedPoints.size(); i++) {
+		QPointF selectPoint = gl->mapViewProjMatrix(sVert[selectedPoints[i]]);
 		painter.setPen(QPen(Qt::black, 8));
 		painter.drawPoint(selectPoint);
 		painter.setPen(QPen(Qt::red, 6));
@@ -32,18 +32,18 @@ void ChElementRectSelect::clickPos(const QPointF& mouseOri)
 
 	for (unsigned int i = 0; i < sVert.size(); i++) {
 		if (QLineF(sVert[i], mouse).length() < 0.02f / gl->viewScale.value()) {
-			if (!index.contains(i)) {
+			if (!selectedPoints.contains(i)) {
 				if (!KeyboardStateWin::isCtrlHeld()) {
-					index.clear();
+					selectedPoints.clear();
 				}
-				index.append(i);
+				selectedPoints.append(i);
 			}
 			return;
 		}
 	}
 
 	if (!KeyboardStateWin::isCtrlHeld()) {
-		index.clear();
+		selectedPoints.clear();
 	}
 }
 
@@ -64,9 +64,10 @@ void ChElementRectSelect::releasePos(const QPointF& mouse)
 	if (!isDraw) return;
 	isDraw = false;
 
-	index.clear();
+	selectedPoints.clear();
 
 	for (unsigned int i = 0; i < sVert.size(); i++) 
-		if(QRectF(lastPos, mouse).contains(gl->mapViewProjMatrix(sVert[i])))
-			index.append(i);
+		if (QRectF(lastPos, mouse).contains(gl->mapViewProjMatrix(sVert[i]))) 
+			selectedPoints.append(i);
+		
 }

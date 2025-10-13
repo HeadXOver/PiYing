@@ -108,6 +108,7 @@
     <ClCompile Include="piYingGLContainer.cpp" />
     <ClCompile Include="RatioDialog.cpp" />
     <ClCompile Include="GLFunc.cpp" />
+    <ClCompile Include="SelectedPoints.cpp" />
     <ClCompile Include="slots.cpp" />
     <ClCompile Include="RaletiveTransform.cpp" />
     <ClCompile Include="draw.cpp" />
@@ -123,6 +124,7 @@
     <ClInclude Include="AddChTexPoly.h" />
     <ClInclude Include="ChElementLibreSelect.h" />
     <ClInclude Include="ChElementTool.h" />
+    <ClInclude Include="SelectedPoints.h" />
     <QtMoc Include="ctrlSlideLayout.h" />
     <QtMoc Include="ctrlSlideWidget.h" />
     <ClInclude Include="CusInclude.h" />

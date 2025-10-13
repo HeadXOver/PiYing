@@ -5,10 +5,10 @@
 class ChElementSelect : public ChElementTool
 {
 public:
-	ChElementSelect(int current, PiYingGL* gl) :ChElementTool(current, gl) {}
+	ChElementSelect(int current, PiYingGL* gl) : ChElementTool(current, gl), selectedPoints(sVert) {}
 
 public:
-	virtual void escape() override { if (index.size() > 0)index.removeLast(); }
+	virtual void escape() override { if (selectedPoints.size() > 0) selectedPoints.removeLast(); }
 	virtual void enter() override {}
 	virtual void deleteElement() override;
 
@@ -18,7 +18,7 @@ protected:
 	void moveHandle(const QPointF& mouse);
 
 protected:
-	QList<unsigned int> index;
+	SelectedPoints selectedPoints;
 	QPointF lastPos;
 	QPointF handleCenterPoint;
 	bool isPress = false;

@@ -12,7 +12,7 @@ void ChElementSelect::deleteElement()
 
     std::vector<bool> killVert(nVert, false);
     std::vector<bool> killTri(nTri, false);
-    for (unsigned v : index) killVert[v] = true;
+    for (unsigned v : selectedPoints.index()) killVert[v] = true;
 
     std::vector<unsigned> refCount(nVert, 0);
     for (size_t t = 0; t < nTri; ++t) {
@@ -66,20 +66,20 @@ void ChElementSelect::deleteElement()
     if (outIdx != 0) idx.resize(outIdx);
     else idx.clear();
 
-    index.clear();
+    selectedPoints.clear();
 }
 
 void ChElementSelect::drawHandle(QPainter& painter)
 {
-    if(index.size() == 0) return;
+    if(selectedPoints.size() == 0) return;
 
     painter.setBrush(QColor(0, 0, 0, 0));
 
     // 计算中心点
     handleCenterPoint = QPointF();
-    for (unsigned int i : index) handleCenterPoint += sVert[i];
+    for (unsigned int i : selectedPoints.index()) handleCenterPoint += sVert[i];
     
-    handleCenterPoint = gl->mapViewProjMatrix(handleCenterPoint / index.size());
+    handleCenterPoint = gl->mapViewProjMatrix(handleCenterPoint / selectedPoints.size());
 
 	// 绘制圆
     painter.setPen(QPen(Qt::black, 4));
@@ -116,7 +116,7 @@ void ChElementSelect::drawHandle(QPainter& painter)
 
 void ChElementSelect::changeEditMode()
 {
-    if (index.size() == 0) {
+    if (selectedPoints.size() == 0) {
         editMode = ChElementEditMode::None;
         return;
     }
@@ -138,7 +138,9 @@ void ChElementSelect::moveHandle(const QPointF& mouse)
     if (editMode == ChElementEditMode::None) return;
 
     if (editMode == ChElementEditMode::Move) {
-        QMessageBox::information(gl, "提示", "移动");
+        for (unsigned int i : selectedPoints.index()) {
+            sVert[i] = gl->getViewProjMatrixInvert().map(gl->mapToGL(mouse)) - gl->getViewProjMatrixInvert().map(gl->mapToGL(lastPos));
+        }
     }
     else if(editMode == ChElementEditMode::MoveX) {
         QMessageBox::information(gl, "提示", "移动X");

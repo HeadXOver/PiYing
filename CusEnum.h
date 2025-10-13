@@ -12,12 +12,12 @@
 #include <QMessageBox>
 #include <QMouseEvent>
 #include <QStatusBar>
-#include <QList>
 #include <QSet>
 #include <QMatrix4x4>
 #include <QSplitter>
 
 #include "ctrlSlideWidget.h"
+#include "SelectedPoints.h"
 
 static const int MOVEHANDLE_LENTH = 50;
 static const int ROTATEHANDLE_RADIUS = 100;
