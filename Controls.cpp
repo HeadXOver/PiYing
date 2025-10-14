@@ -1,5 +1,6 @@
 ﻿#include "piYingGL.h"
 #include "piYing.h"
+#include "CusFunc.h"
 
 void PiYingGL::bgRotationControl(const QPointF& mouse, ImageTexture& image)
 {

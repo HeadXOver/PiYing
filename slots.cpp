@@ -1,5 +1,8 @@
 ﻿#include "piYingGL.h"
 #include "PiYing.h"
+#include "CusFunc.h"
+
+#include <qmessagebox>
 
 void PiYingGL::fullScreenBackGround()
 {

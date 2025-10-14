@@ -3,11 +3,16 @@
 #include <QtWidgets/QMainWindow>
 #include <QToolBar>
 #include <QComboBox>
+#include <QListWidget>
+#include <qsplitter>
+
 #include "ui_PiYing.h"
 
 #include "cusMode.h"
 #include "piYingGL.h"
 #include "piYingGLContainer.h"
+
+class CtrlSlideWidget;
 
 class PiYing : public QMainWindow
 {

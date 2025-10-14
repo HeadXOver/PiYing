@@ -3,12 +3,38 @@
 #include <QOpenGLWidget.h>
 #include <qopenglfunctions_3_3_Core>
 #include <QOpenGLShaderProgram.h>
+#include <qlabel>
+#include <qmenu>
 
 #include "KeyboardStateWin.h"
 #include "ViewData.h"
 #include "AskTransformDialog.h"
 #include "ChElementSelect.h"
 #include "AddTriangle.h"
+#include "Element.h"
+#include "tool_button.h"
+#include "image_texture.h"
+
+enum class EditMode {
+	Default,
+	BackGround,
+	characterTexture,
+	characterSkeleton,
+	controlSlide,
+};
+
+enum class MousePos {
+	Inside,
+	LeftTop,
+	LeftBottom,
+	RightTop,
+	RightBottom,
+	LeftEdge,
+	RightEdge,
+	TopEdge,
+	BottomEdge,
+	OutSide
+};
 
 class PiYing;
 

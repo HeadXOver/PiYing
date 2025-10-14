@@ -1,7 +1,10 @@
-   #include "PiYing.h"
-#include <QMessageBox>
-
+#include "PiYing.h"
+#include "ctrlSlideWidget.h"
 #include "RatioDialog.h"
+
+#include <QMessageBox>
+#include <qkeyevent>
+#include <qfiledialog.h>
 
 PiYing::PiYing(QWidget* parent) : QMainWindow(parent) {
     ui.setupUi(this);
@@ -53,7 +56,7 @@ PiYing::PiYing(QWidget* parent) : QMainWindow(parent) {
     QAction* actionDefaultColor          = childMenuScreen->     addAction("底色...");
 
     for (ToolButton& item : toolChTexList) {
-        connect(item.action, &QAction::triggered, this, [this, &item]() {selectTool(item); });
+        connect(item.action(), &QAction::triggered, this, [this, &item]() {selectTool(item); });
     }
 
     connect(actionExportCurrentFrame,   SIGNAL(triggered()), this, SLOT(exportCurrentFrame()));
@@ -198,7 +201,7 @@ void PiYing::onModeChanged(int mode)
         splitListOpenGL->insertWidget(0, chImageList);
         piYingGL->setEditMode(EditMode::characterTexture);
         for (ToolButton& item : toolChTexList) {
-            ui.mainToolBar->addAction(item.action);
+            ui.mainToolBar->addAction(item.action());
         }
     }
     else if (mode == 3) {
@@ -216,21 +219,21 @@ void PiYing::onModeChanged(int mode)
 
 void PiYing::selectTool(ToolButton& toolButton)
 {
-    if (toolButton.isSelect) {
-        if (toolButton.toolState == ChTexToolState::RectSelectVert) {
-            toolButton.selected = QIcon(":/PiYing/selectLibreChVert_S.png");
-            toolButton.unselected = QIcon(":/PiYing/selectLibreChVert.png");
-            toolButton.toolState = ChTexToolState::LibreSelectVert;
+    if (toolButton.isSelect()) {
+        if (toolButton.toolState() == ChTexToolState::RectSelectVert) {
+            toolButton.set_selected(QIcon(":/PiYing/selectLibreChVert_S.png"));
+            toolButton.set_unselected(QIcon(":/PiYing/selectLibreChVert.png"));
+            toolButton.set_toolState(ChTexToolState::LibreSelectVert);
         }
-        else if (toolButton.toolState == ChTexToolState::LibreSelectVert) {
-            toolButton.selected = QIcon(":/PiYing/selectRectChVert_S.png");
-            toolButton.unselected = QIcon(":/PiYing/selectRectChVert.png");
-            toolButton.toolState = ChTexToolState::RectSelectVert;
+        else if (toolButton.toolState() == ChTexToolState::LibreSelectVert) {
+            toolButton.set_selected(QIcon(":/PiYing/selectRectChVert_S.png"));
+            toolButton.set_unselected(QIcon(":/PiYing/selectRectChVert.png"));
+            toolButton.set_toolState(ChTexToolState::RectSelectVert);
         }
         else return;
     }
     else for (ToolButton& item : toolChTexList) item.unSelect();
 
     toolButton.select();
-    piYingGL->setChToolState(toolButton.toolState);
+    piYingGL->setChToolState(toolButton.toolState());
 }

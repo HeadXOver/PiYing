@@ -1,6 +1,10 @@
 ﻿#include "ChElementSelect.h"
 #include "piYingGL.h"
 #include "SelectedPoints.h"
+#include "CusFunc.h"
+#include "handle_zone.h"
+
+#include <qpainter>
 
 ChElementSelect::ChElementSelect(int current, PiYingGL* gl) : ChElementTool(current, gl)
 {

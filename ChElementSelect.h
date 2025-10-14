@@ -4,6 +4,17 @@
 
 class SelectedPoints;
 
+enum class ChElementEditMode {
+	None,
+	Move,
+	MoveX,
+	MoveY,
+	Rotate,
+	Scale,
+	ScaleX,
+	ScaleY,
+};
+
 class ChElementSelect : public ChElementTool
 {
 public:
@@ -32,7 +43,7 @@ protected:
 	ChElementEditMode editMode = ChElementEditMode::None;
 };
 
-class ChElementRectSelect : public ChElementSelect
+class ChElementRectSelect final : public ChElementSelect
 {
 public:
 	ChElementRectSelect(int current, PiYingGL* gl) :ChElementSelect(current, gl) {}

@@ -1,6 +1,9 @@
 #include "AddTriangle.h"
 #include "piYingGL.h"
 
+#include <qpainter>
+#include <qpen>
+
 bool AddTriangle::addIndex(unsigned int i)
 {
 	if(numInd == 0) firstIndex = i;

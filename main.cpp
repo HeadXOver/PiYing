@@ -1,5 +1,7 @@
 #include "PiYing.h"
+
 #include <QtWidgets/QApplication>
+#include <qfile>
 
 int main(int argc, char *argv[])
 {

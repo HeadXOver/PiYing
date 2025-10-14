@@ -2,10 +2,13 @@
 
 #include "ChElementSelect.h"
 
-class ChElementLibreSelect : public ChElementSelect
+class QPolygonF;
+
+class ChElementLibreSelect final : public ChElementSelect
 {
 public:
-	ChElementLibreSelect(int current, PiYingGL* gl) :ChElementSelect(current, gl) {}
+	ChElementLibreSelect(int current, PiYingGL* gl);
+	~ChElementLibreSelect();
 
 protected:
 	virtual void draw(QPainter& painter) override;
@@ -14,10 +17,10 @@ protected:
 	virtual void releasePos(const QPointF& mouse) override;
 
 private:
-	void addEnclosedPoints(const QPolygonF& poly, const QList<QPointF>& points);
+	void addEnclosedPoints(const QPolygonF* const poly, const QList<QPointF>& points);
 
 private:
-	QPolygonF polygon;
+	QPolygonF* polygon;
 	bool drawing = false;
 };
 

@@ -1,6 +1,9 @@
 ﻿#include "piYingGL.h"
 #include "piYing.h"
 
+#include <qpainter>
+#include <qopengltexture>
+
 void PiYingGL::drawChEditVert()
 {
 	int currentVector = getCurrentChRow();

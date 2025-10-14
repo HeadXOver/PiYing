@@ -1,6 +1,8 @@
 #include "piYingGL.h"
 #include "PiYing.h"
 
+#include <qmouseevent>
+
 void PiYingGL::mousePressEvent(QMouseEvent* event)
 {
 	if (event->button() == Qt::LeftButton || event->button() == Qt::RightButton) {

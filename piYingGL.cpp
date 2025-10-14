@@ -3,8 +3,11 @@
 #include "AddTriangle.h"
 #include "AddChTexPoly.h"
 #include "ChElementLibreSelect.h"
+#include "CusFunc.h"
 
 #include <QColorDialog>
+#include <QMessageBox>
+#include <qfiledialog>
 
 PiYingGL::~PiYingGL()
 {

@@ -1,5 +1,7 @@
 #include "CusFunc.h"
 
+#include <qlistwidget>
+
 QMatrix4x4 getTrans(const QMatrix4x4& M) {
     QMatrix4x4 trans;
     trans.translate(M(0, 3), M(1, 3));

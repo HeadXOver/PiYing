@@ -104,6 +104,7 @@
     <ClCompile Include="ctrlSlideLayout.cpp" />
     <ClCompile Include="ctrlSlideWidget.cpp" />
     <ClCompile Include="events.cpp" />
+    <ClCompile Include="image_texture.cpp" />
     <ClCompile Include="piYingGL.cpp" />
     <ClCompile Include="piYingGLContainer.cpp" />
     <ClCompile Include="RatioDialog.cpp" />
@@ -114,6 +115,7 @@
     <ClCompile Include="draw.cpp" />
     <ClCompile Include="construct.cpp" />
     <ClCompile Include="CusFunc.cpp" />
+    <ClCompile Include="tool_button.cpp" />
     <QtRcc Include="PiYing.qrc" />
     <QtUic Include="PiYing.ui" />
     <QtMoc Include="PiYing.h" />
@@ -124,10 +126,11 @@
     <ClInclude Include="AddChTexPoly.h" />
     <ClInclude Include="ChElementLibreSelect.h" />
     <ClInclude Include="ChElementTool.h" />
+    <ClInclude Include="image_texture.h" />
     <ClInclude Include="SelectedPoints.h" />
+    <ClInclude Include="tool_button.h" />
     <QtMoc Include="ctrlSlideLayout.h" />
     <QtMoc Include="ctrlSlideWidget.h" />
-    <ClInclude Include="CusInclude.h" />
     <ClInclude Include="CusFunc.h" />
     <ClInclude Include="AddTriangle.h" />
     <ClInclude Include="ChElementSelect.h" />
@@ -135,7 +138,7 @@
     <ClInclude Include="cusMode.h" />
     <ClInclude Include="Element.h" />
     <ClInclude Include="KeyboardStateWin.h" />
-    <ClInclude Include="CusEnum.h" />
+    <ClInclude Include="handle_zone.h" />
     <QtMoc Include="ViewData.h" />
     <QtMoc Include="piYingGLContainer.h" />
     <QtMoc Include="RatioDialog.h" />

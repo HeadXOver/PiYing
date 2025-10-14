@@ -121,9 +121,15 @@
     <ClCompile Include="SelectedPoints.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="tool_button.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="image_texture.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CusEnum.h">
+    <ClInclude Include="handle_zone.h">
       <Filter>Header Files\CusStruct</Filter>
     </ClInclude>
     <ClInclude Include="cusMode.h">
@@ -134,9 +140,6 @@
     </ClInclude>
     <ClInclude Include="KeyboardStateWin.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CusInclude.h">
-      <Filter>Header Files\CusStruct</Filter>
     </ClInclude>
     <ClInclude Include="CusFunc.h">
       <Filter>Header Files\CusStruct</Filter>
@@ -157,6 +160,12 @@
       <Filter>Header Files\ChELementTool</Filter>
     </ClInclude>
     <ClInclude Include="SelectedPoints.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tool_button.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="image_texture.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

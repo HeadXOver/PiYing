@@ -1,8 +1,10 @@
 #pragma once
 
-#include "CusInclude.h"
+#include <QPointF>
+#include <qlist>
 
 class PiYingGL;
+class QPainter;
 
 class ChElementTool
 {

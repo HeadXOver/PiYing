@@ -2,6 +2,8 @@
 #include "piYingGL.h"
 #include "SelectedPoints.h"
 
+#include <qpainter>
+
 void ChElementRectSelect::draw(QPainter& painter)
 {
 	drawHandle(painter);
