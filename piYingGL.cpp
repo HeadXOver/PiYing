@@ -261,3 +261,8 @@ int PiYingGL::getCurrentChRow() const
 {
 	return parent->getCurrentChRow();
 }
+
+void PiYingGL::addGlobalAction(QMenu* menu, const QList<QAction*> action)
+{
+	for (QAction* item : action)  menu->addAction(item);
+}

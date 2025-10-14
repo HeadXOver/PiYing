@@ -1,17 +1,12 @@
 #pragma once
 
-#include <QOpenGLWidget.h>
+#include <QOpenGLWidget>
 #include <qopenglfunctions_3_3_Core>
 #include <QOpenGLShaderProgram.h>
-#include <qlabel>
-#include <qmenu>
 
 #include "enum_character_texture_tool_state.h"
-#include "ViewData.h"
-#include "AskTransformDialog.h"
-#include "ChElementSelect.h"
-#include "AddTriangle.h"
 #include "static_rect_vert.h"
+#include "ViewData.h"
 
 enum class EditMode {
 	Default,
@@ -37,6 +32,8 @@ enum class MousePos {
 class PiYing;
 class ImageTransform;
 class ImageTexture;
+class ChElementTool;
+class QMenu;
 
 class PiYingGL : public QOpenGLWidget, QOpenGLFunctions_3_3_Core
 {
@@ -50,7 +47,7 @@ private:
 	void paintBackgrounds();
 	void paintCharacterTexture();
 	void paintCharacterSkeleton();
-	void addGlobalAction(QMenu* menu, const QList<QAction*> action) { for (QAction* item : action)  menu->addAction(item); }
+	void addGlobalAction(QMenu* menu, const QList<QAction*> action);
 
 	int getCurrentBgRow() const;
 	int getCurrentChRow() const;

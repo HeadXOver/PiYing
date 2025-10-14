@@ -3,6 +3,7 @@
 #include "CusFunc.h"
 #include "image_transform.h"
 #include "image_texture.h"
+#include "AskTransformDialog.h"
 
 #include <qmessagebox>
 

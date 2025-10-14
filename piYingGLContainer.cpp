@@ -1,5 +1,7 @@
 ﻿#include "piYingGLContainer.h"
 
+#include <QVBoxLayout>
+
 PiYingGLContainer::PiYingGLContainer(QWidget* content, double ratio, QWidget* parent) : QWidget(parent), m_content(content), m_ratio(ratio)
 {
     QVBoxLayout* lay = new QVBoxLayout(this);

@@ -1,6 +1,7 @@
 ﻿#include "piYingGL.h"
 #include "piYing.h"
 #include "image_transform.h"
+#include <qlabel>
 
 PiYingGL::PiYingGL(PiYing* parent) : QOpenGLWidget(parent), parent(parent)
 {

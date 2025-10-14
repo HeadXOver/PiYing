@@ -6,6 +6,7 @@
 #include <QSpinBox>
 #include <QDialogButtonBox>
 #include <QLabel>
+#include <QButtonGroup>
 
 RatioDialog::RatioDialog(QWidget* parent) : QDialog(parent)
 {

@@ -3,6 +3,7 @@
 #include "image_transform.h"
 #include "image_texture.h"
 #include "KeyboardStateWin.h"
+#include "ChElementTool.h"
 
 #include <qmouseevent>
 

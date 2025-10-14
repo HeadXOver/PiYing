@@ -1,8 +1,7 @@
 #pragma once
 
 #include <QList>
-#include <vector>
-#include <QPoint>
+#include <QPointF>
 
 class SelectedPoints
 {

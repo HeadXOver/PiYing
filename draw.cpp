@@ -1,6 +1,7 @@
 ﻿#include "piYingGL.h"
 #include "piYing.h"
 #include "image_texture.h"
+#include "ChElementTool.h"
 
 #include <qpainter>
 #include <qopengltexture>

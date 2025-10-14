@@ -1,11 +1,11 @@
 ﻿#pragma once
 
 #include <QDialog>
-#include <QButtonGroup>
 
 QT_BEGIN_NAMESPACE
 class QSpinBox;
 class QDialogButtonBox;
+class QButtonGroup;
 QT_END_NAMESPACE
 
 struct Ratio {
