@@ -114,10 +114,8 @@ void PiYingGL::updateChTexTool()
 	if (currentVector < 0) return;
 
 	if (chToolState == CharacterTextureToolState::None) return;
-	else if (chToolState == CharacterTextureToolState::AddTriangle) chElementTool = new AddTriangle(currentVector, this);
-	else if (chToolState == CharacterTextureToolState::RectSelectVert) chElementTool = new ChElementRectSelect(currentVector, this);
-	else if (chToolState == CharacterTextureToolState::LibreSelectVert) chElementTool = new ChElementLibreSelect(currentVector, this);
-	else if (chToolState == CharacterTextureToolState::AddPoly) chElementTool = new AddChTexPoly(currentVector, this);
+
+	chElementTool = new ChElementTool(currentVector, this, chToolState);
 
 	update();
 }
@@ -135,10 +133,8 @@ void PiYingGL::setChToolState(CharacterTextureToolState state)
 	if (currentVector < 0) return;
 	
 	if (state == CharacterTextureToolState::None) return;
-	else if (state == CharacterTextureToolState::AddTriangle) chElementTool = new AddTriangle(currentVector, this);
-	else if (state == CharacterTextureToolState::RectSelectVert) chElementTool = new ChElementRectSelect(currentVector, this);
-	else if (state == CharacterTextureToolState::LibreSelectVert) chElementTool = new ChElementLibreSelect(currentVector, this);
-	else if (state == CharacterTextureToolState::AddPoly) chElementTool = new AddChTexPoly(currentVector, this);
+
+	chElementTool = new ChElementTool(currentVector, this, chToolState);
 
 	update();
 }

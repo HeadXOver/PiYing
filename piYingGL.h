@@ -32,8 +32,8 @@ enum class MousePos {
 class PiYing;
 class ImageTransform;
 class ImageTexture;
-class ChElementTool;
 class QMenu;
+class ChElementTool;
 
 class PiYingGL : public QOpenGLWidget, QOpenGLFunctions_3_3_Core
 {

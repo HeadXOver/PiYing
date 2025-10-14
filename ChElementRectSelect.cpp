@@ -4,53 +4,58 @@
 #include "KeyboardStateWin.h"
 
 #include <qpainter>
+#include "chElementRectSelect.h"
 
-void ChElementRectSelect::draw(QPainter& painter)
+ChElementRectSelect::ChElementRectSelect(int current, PiYingGL* gl) :chElementSelect(new ChElementSelect(current, gl))
 {
-	drawHandle(painter);
+}
 
-	for (int i = 0; i < selectedPoints->size(); i++) {
-		QPointF selectPoint = gl->mapViewProjMatrix(sVert[(*selectedPoints)[i]]);
-		painter.setPen(QPen(Qt::black, 8));
-		painter.drawPoint(selectPoint);
-		painter.setPen(QPen(Qt::red, 6));
-		painter.drawPoint(selectPoint);
+void ChElementRectSelect::draw(QPainter* painter)
+{
+	chElementSelect->drawHandle(painter);
+
+	for (int i = 0; i < chElementSelect->selectedPoints->size(); i++) {
+		QPointF selectPoint = chElementSelect->glVertReference->gl->mapViewProjMatrix(chElementSelect->glVertReference->sVert[(*chElementSelect->selectedPoints)[i]]);
+		painter->setPen(QPen(Qt::black, 8));
+		painter->drawPoint(selectPoint);
+		painter->setPen(QPen(Qt::red, 6));
+		painter->drawPoint(selectPoint);
 	}
 
 	if (isDraw) {
-		painter.setPen(QPen(Qt::yellow, 1));
-		painter.drawRect(lastPos.x(), lastPos.y(), rect.x() - lastPos.x(), rect.y() - lastPos.y());
+		painter->setPen(QPen(Qt::yellow, 1));
+		painter->drawRect(chElementSelect->lastPos.x(), chElementSelect->lastPos.y(), rect.x() - chElementSelect->lastPos.x(), rect.y() - chElementSelect->lastPos.y());
 	}
 }
 
 void ChElementRectSelect::clickPos(const QPointF& mouseOri)
 {
-	lastPos = mouseOri;
-	isPress = true;
+	chElementSelect->lastPos = mouseOri;
+	chElementSelect->isPress = true;
 
-	changeEditMode();
+	chElementSelect->changeEditMode();
 
-	if (editMode != ChElementEditMode::None) {
-		affirmHandle();
+	if (chElementSelect->editMode != ChElementEditMode::None) {
+		chElementSelect->affirmHandle();
 		return;
 	}
 
-	QPointF mouse = gl->getViewProjMatrixInvert().map(gl->mapToGL(mouseOri));
+	QPointF mouse = chElementSelect->glVertReference->gl->getViewProjMatrixInvert().map(chElementSelect->glVertReference->gl->mapToGL(mouseOri));
 
-	for (unsigned int i = 0; i < sVert.size(); i++) {
-		if (QLineF(sVert[i], mouse).length() < 0.02f / gl->viewScale.value()) {
-			if (!selectedPoints->contains(i)) {
+	for (unsigned int i = 0; i < chElementSelect->glVertReference->sVert.size(); i++) {
+		if (QLineF(chElementSelect->glVertReference->sVert[i], mouse).length() < 0.02f / chElementSelect->glVertReference->gl->viewScale.value()) {
+			if (!chElementSelect->selectedPoints->contains(i)) {
 				if (!KeyboardStateWin::isCtrlHeld()) {
-					selectedPoints->clear();
+					chElementSelect->selectedPoints->clear();
 				}
-				selectedPoints->append(i);
+				chElementSelect->selectedPoints->append(i);
 			}
 			return;
 		}
 	}
 
 	if (!KeyboardStateWin::isCtrlHeld()) {
-		selectedPoints->clear();
+		chElementSelect->selectedPoints->clear();
 	}
 }
 
@@ -58,24 +63,54 @@ void ChElementRectSelect::movePos(const QPointF& mouse)
 {
 	isDraw = false;
 	
-	if (editMode == ChElementEditMode::None) {
+	if (chElementSelect->editMode == ChElementEditMode::None) {
 		rect = mouse;
 		isDraw = true;
 	}
-	else moveHandle(mouse);
+	else chElementSelect->moveHandle(mouse);
 }
 
 void ChElementRectSelect::releasePos(const QPointF& mouse)
 {
-	isPress = false;
+	chElementSelect->isPress = false;
 
 	if (!isDraw) return;
 	isDraw = false;
 
-	selectedPoints->clear();
+	chElementSelect->selectedPoints->clear();
 
-	for (unsigned int i = 0; i < sVert.size(); i++) 
-		if (QRectF(lastPos, mouse).contains(gl->mapViewProjMatrix(sVert[i]))) 
-			selectedPoints->append(i);
+	for (unsigned int i = 0; i < chElementSelect->glVertReference->sVert.size(); i++)
+		if (QRectF(chElementSelect->lastPos, mouse).contains(chElementSelect->glVertReference->gl->mapViewProjMatrix(chElementSelect->glVertReference->sVert[i])))
+			chElementSelect->selectedPoints->append(i);
 		
+}
+
+void RectSelectClick::click(const QPointF& point)
+{
+	rectSelect->clickPos(point);
+}
+
+void RectSelectMove::mouseMove(const QPointF& point)
+{
+	rectSelect->movePos(point);
+}
+
+void RectSelectRelease::release(const QPointF& point)
+{
+	rectSelect->releasePos(point);
+}
+
+void RectSelectDelete::deleteElement()
+{
+	rectSelect->chElementSelect->deleteElement();
+}
+
+void RectSelectEscape::escape()
+{
+	rectSelect->chElementSelect->escape();
+}
+
+void RectSelectDraw::draw(QPainter* painter)
+{
+	rectSelect->draw(painter);
 }

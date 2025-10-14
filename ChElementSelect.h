@@ -1,8 +1,11 @@
 #pragma once
 
+#include <memory>
+
 #include "ChElementTool.h"
 
 class SelectedPoints;
+struct GlVertReference;
 
 enum class ChElementEditMode {
 	None,
@@ -15,24 +18,19 @@ enum class ChElementEditMode {
 	ScaleY,
 };
 
-class ChElementSelect : public ChElementTool
+struct ChElementSelect final
 {
-public:
 	ChElementSelect(int current, PiYingGL* gl);
 	virtual ~ChElementSelect();
 
-public:
-	virtual void escape() override;
-	virtual void enter() override {}
-	virtual void deleteElement() override;
-
-protected:
-	void drawHandle(QPainter& painter);
+	void escape();
+	void deleteElement();
+	void drawHandle(QPainter* painter);
 	void changeEditMode();
 	void moveHandle(const QPointF& mouse);
 	void affirmHandle();
 
-protected:
+	GlVertReference* glVertReference;
 	SelectedPoints* selectedPoints;
 	QPointF lastPos;
 	QPointF handleCenterPoint;
@@ -41,20 +39,4 @@ protected:
 	QPointF lastDHandleCenterPoint;
 	bool isPress = false;
 	ChElementEditMode editMode = ChElementEditMode::None;
-};
-
-class ChElementRectSelect final : public ChElementSelect
-{
-public:
-	ChElementRectSelect(int current, PiYingGL* gl) :ChElementSelect(current, gl) {}
-
-protected:
-	virtual void draw(QPainter& painter) override;
-	virtual void clickPos(const QPointF& mouse) override;
-	virtual void movePos(const QPointF& mouse) override;
-	virtual void releasePos(const QPointF& mouse) override;
-
-private:
-	QPointF rect;
-	bool isDraw = false;
 };

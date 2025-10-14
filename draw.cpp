@@ -29,7 +29,7 @@ void PiYingGL::drawChEditVert()
 		i += j;
 	}
 
-	if (chElementTool) chElementTool->draw(painter);
+	if (chElementTool) chElementTool->draw(&painter);
 
 	update();
 }

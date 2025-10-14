@@ -6,9 +6,9 @@
 
 #include <qpainter>
 
-ChElementSelect::ChElementSelect(int current, PiYingGL* gl) : ChElementTool(current, gl)
+ChElementSelect::ChElementSelect(int current, PiYingGL* gl) : glVertReference(new GlVertReference(current, gl))
 {
-    selectedPoints = new SelectedPoints(sVert);
+    selectedPoints = new SelectedPoints(glVertReference->sVert);
 }
 
 ChElementSelect::~ChElementSelect()
@@ -23,9 +23,9 @@ void ChElementSelect::escape()
 
 void ChElementSelect::deleteElement()
 {
-    std::vector<unsigned int>& idx = glIndex;
-    std::vector <float>& vert = glVert;
-    QList<QPointF>& s_Vert = sVert;
+    std::vector<unsigned int>& idx = glVertReference->glIndex;
+    std::vector <float>& vert = glVertReference->glVert;
+    QList<QPointF>& s_Vert = glVertReference->sVert;
     const size_t nVert = s_Vert.size();
     const size_t nTri = idx.size() / 3;
 
@@ -88,50 +88,50 @@ void ChElementSelect::deleteElement()
     selectedPoints->clear();
 }
 
-void ChElementSelect::drawHandle(QPainter& painter)
+void ChElementSelect::drawHandle(QPainter* painter)
 {
     if(selectedPoints->size() == 0) return;
 
-    painter.setBrush(QColor(0, 0, 0, 0));
+    painter->setBrush(QColor(0, 0, 0, 0));
 
     // 计算中心点
     handleCenterPoint = QPointF();
-    for (unsigned int i : selectedPoints->index()) handleCenterPoint += sVert[i];
+    for (unsigned int i : selectedPoints->index()) handleCenterPoint += glVertReference->sVert[i];
     
     handleCenterPoint /= selectedPoints->size();
 
-    dHandleCenterPoint = gl->mapViewProjMatrix(handleCenterPoint);
+    dHandleCenterPoint = glVertReference->gl->mapViewProjMatrix(handleCenterPoint);
 
 	// 绘制圆
-    painter.setPen(QPen(Qt::black, 4));
-	painter.drawEllipse(dHandleCenterPoint, ROTATEHANDLE_RADIUS, ROTATEHANDLE_RADIUS);
-    painter.setPen(QPen(Qt::yellow, 2));
-    painter.drawEllipse(dHandleCenterPoint, ROTATEHANDLE_RADIUS, ROTATEHANDLE_RADIUS);
+    painter->setPen(QPen(Qt::black, 4));
+	painter->drawEllipse(dHandleCenterPoint, ROTATEHANDLE_RADIUS, ROTATEHANDLE_RADIUS);
+    painter->setPen(QPen(Qt::yellow, 2));
+    painter->drawEllipse(dHandleCenterPoint, ROTATEHANDLE_RADIUS, ROTATEHANDLE_RADIUS);
 
     // 绘制移动控制柄
-	painter.setPen(QPen(Qt::black, 6));
-    painter.drawLine(dHandleCenterPoint.x() - MOVEHANDLE_LENTH, dHandleCenterPoint.y(), dHandleCenterPoint.x() + MOVEHANDLE_LENTH, dHandleCenterPoint.y());
-    painter.drawLine(dHandleCenterPoint.x(), dHandleCenterPoint.y() - MOVEHANDLE_LENTH, dHandleCenterPoint.x(), dHandleCenterPoint.y() + MOVEHANDLE_LENTH);
-    painter.setPen(QPen(Qt::green, 4));
-    painter.drawLine(dHandleCenterPoint.x() - MOVEHANDLE_LENTH, dHandleCenterPoint.y(), dHandleCenterPoint.x() + MOVEHANDLE_LENTH, dHandleCenterPoint.y());
-    painter.setPen(QPen(Qt::red, 4));
-    painter.drawLine(dHandleCenterPoint.x(), dHandleCenterPoint.y() - MOVEHANDLE_LENTH, dHandleCenterPoint.x(), dHandleCenterPoint.y() + MOVEHANDLE_LENTH);
+	painter->setPen(QPen(Qt::black, 6));
+    painter->drawLine(dHandleCenterPoint.x() - MOVEHANDLE_LENTH, dHandleCenterPoint.y(), dHandleCenterPoint.x() + MOVEHANDLE_LENTH, dHandleCenterPoint.y());
+    painter->drawLine(dHandleCenterPoint.x(), dHandleCenterPoint.y() - MOVEHANDLE_LENTH, dHandleCenterPoint.x(), dHandleCenterPoint.y() + MOVEHANDLE_LENTH);
+    painter->setPen(QPen(Qt::green, 4));
+    painter->drawLine(dHandleCenterPoint.x() - MOVEHANDLE_LENTH, dHandleCenterPoint.y(), dHandleCenterPoint.x() + MOVEHANDLE_LENTH, dHandleCenterPoint.y());
+    painter->setPen(QPen(Qt::red, 4));
+    painter->drawLine(dHandleCenterPoint.x(), dHandleCenterPoint.y() - MOVEHANDLE_LENTH, dHandleCenterPoint.x(), dHandleCenterPoint.y() + MOVEHANDLE_LENTH);
 
     // 绘制中心点
-    painter.setPen(QPen(Qt::black, 12));
-    painter.drawPoint(dHandleCenterPoint);
-    painter.setPen(QPen(Qt::yellow, HANDLE_ZONE));
-    painter.drawPoint(dHandleCenterPoint);
+    painter->setPen(QPen(Qt::black, 12));
+    painter->drawPoint(dHandleCenterPoint);
+    painter->setPen(QPen(Qt::yellow, HANDLE_ZONE));
+    painter->drawPoint(dHandleCenterPoint);
 
 	// 绘制缩放控制柄
-    painter.setPen(QPen(Qt::black, 12));
-    painter.drawPoint(dHandleCenterPoint.x(), dHandleCenterPoint.y() + SCALEHANDLE_DISTANCE);
-    painter.drawPoint(dHandleCenterPoint.x() + SCALEHANDLE_DISTANCE, dHandleCenterPoint.y());
-    painter.drawPoint(dHandleCenterPoint.x() + ROTATEHANDLE_RADIUS, dHandleCenterPoint.y() + ROTATEHANDLE_RADIUS);
-    painter.setPen(QPen(Qt::yellow, HANDLE_ZONE));
-    painter.drawPoint(dHandleCenterPoint.x(), dHandleCenterPoint.y() + SCALEHANDLE_DISTANCE);
-    painter.drawPoint(dHandleCenterPoint.x() + SCALEHANDLE_DISTANCE, dHandleCenterPoint.y());
-    painter.drawPoint(dHandleCenterPoint.x() + ROTATEHANDLE_RADIUS, dHandleCenterPoint.y() + ROTATEHANDLE_RADIUS);
+    painter->setPen(QPen(Qt::black, 12));
+    painter->drawPoint(dHandleCenterPoint.x(), dHandleCenterPoint.y() + SCALEHANDLE_DISTANCE);
+    painter->drawPoint(dHandleCenterPoint.x() + SCALEHANDLE_DISTANCE, dHandleCenterPoint.y());
+    painter->drawPoint(dHandleCenterPoint.x() + ROTATEHANDLE_RADIUS, dHandleCenterPoint.y() + ROTATEHANDLE_RADIUS);
+    painter->setPen(QPen(Qt::yellow, HANDLE_ZONE));
+    painter->drawPoint(dHandleCenterPoint.x(), dHandleCenterPoint.y() + SCALEHANDLE_DISTANCE);
+    painter->drawPoint(dHandleCenterPoint.x() + SCALEHANDLE_DISTANCE, dHandleCenterPoint.y());
+    painter->drawPoint(dHandleCenterPoint.x() + ROTATEHANDLE_RADIUS, dHandleCenterPoint.y() + ROTATEHANDLE_RADIUS);
 
 }
 
@@ -159,52 +159,52 @@ void ChElementSelect::moveHandle(const QPointF& mouse)
     if (editMode == ChElementEditMode::None) return;
 
     if (editMode == ChElementEditMode::Move) {
-        QPointF toMove = gl->GLViewProjMatrixInvert(mouse) - gl->GLViewProjMatrixInvert(lastPos);
+        QPointF toMove = glVertReference->gl->GLViewProjMatrixInvert(mouse) - glVertReference->gl->GLViewProjMatrixInvert(lastPos);
         for (int i = 0;i < selectedPoints->size();i++) {
-            sVert[(*selectedPoints)[i]] = selectedPoints->getVert(i) + toMove;
+            glVertReference->sVert[(*selectedPoints)[i]] = selectedPoints->getVert(i) + toMove;
         }
     }
     else if(editMode == ChElementEditMode::MoveX) {
-        QPointF toMove = gl->GLViewProjMatrixInvert(mouse.x(), 0.f) - gl->GLViewProjMatrixInvert(lastPos.x(), 0.f);
+        QPointF toMove = glVertReference->gl->GLViewProjMatrixInvert(mouse.x(), 0.f) - glVertReference->gl->GLViewProjMatrixInvert(lastPos.x(), 0.f);
         for (int i = 0; i < selectedPoints->size(); i++) {
-            sVert[(*selectedPoints)[i]] = selectedPoints->getVert(i) + toMove;
+            glVertReference->sVert[(*selectedPoints)[i]] = selectedPoints->getVert(i) + toMove;
         }
     }
     else if (editMode == ChElementEditMode::MoveY) {
-        QPointF toMove = gl->GLViewProjMatrixInvert(0.f, mouse.y()) - gl->GLViewProjMatrixInvert(0.f, lastPos.y());
+        QPointF toMove = glVertReference->gl->GLViewProjMatrixInvert(0.f, mouse.y()) - glVertReference->gl->GLViewProjMatrixInvert(0.f, lastPos.y());
         for (int i = 0; i < selectedPoints->size(); i++) {
-            sVert[(*selectedPoints)[i]] = selectedPoints->getVert(i) + toMove;
+            glVertReference->sVert[(*selectedPoints)[i]] = selectedPoints->getVert(i) + toMove;
         }
     }
     else if (editMode == ChElementEditMode::Rotate) {
         float angle = angleBetweenPoint(lastPos - lastDHandleCenterPoint, mouse - lastDHandleCenterPoint);
-        QPointF toRot = gl->getInsProj().map(lastHandleCenterPoint);
+        QPointF toRot = glVertReference->gl->getInsProj().map(lastHandleCenterPoint);
         for (int i = 0; i < selectedPoints->size(); i++) {
-            sVert[(*selectedPoints)[i]] = toRot + getRotatedPoint(gl->getInsProj().map(selectedPoints->getVert(i) - lastHandleCenterPoint), angle);
-            sVert[(*selectedPoints)[i]] = gl->getProj().map(sVert[(*selectedPoints)[i]]);
+            glVertReference->sVert[(*selectedPoints)[i]] = toRot + getRotatedPoint(glVertReference->gl->getInsProj().map(selectedPoints->getVert(i) - lastHandleCenterPoint), angle);
+            glVertReference->sVert[(*selectedPoints)[i]] = glVertReference->gl->getProj().map(glVertReference->sVert[(*selectedPoints)[i]]);
         }
     }
     else if (editMode == ChElementEditMode::Scale) {
         float scale = (mouse.x() + mouse.y() - dHandleCenterPoint.x() - dHandleCenterPoint.y()) / (ROTATEHANDLE_RADIUS + ROTATEHANDLE_RADIUS);
         QPointF toScale = lastHandleCenterPoint * (scale - 1);
         for (int i = 0; i < selectedPoints->size(); i++) {
-            sVert[(*selectedPoints)[i]] = selectedPoints->getVert(i) * scale - toScale;
+            glVertReference->sVert[(*selectedPoints)[i]] = selectedPoints->getVert(i) * scale - toScale;
         }
     }
     else if (editMode == ChElementEditMode::ScaleX) {
         float scale = (mouse.x() - lastDHandleCenterPoint.x()) / ROTATEHANDLE_RADIUS;
         float scaleX = lastDHandleCenterPoint.x() * (1 - scale);
         for (int i = 0; i < selectedPoints->size(); i++) {
-            QPointF mapOri = gl->mapViewProjMatrix(selectedPoints->getVert(i));
-            sVert[(*selectedPoints)[i]] = gl->GLViewProjMatrixInvert(mapOri.x() * scale + scaleX, mapOri.y());
+            QPointF mapOri = glVertReference->gl->mapViewProjMatrix(selectedPoints->getVert(i));
+            glVertReference->sVert[(*selectedPoints)[i]] = glVertReference->gl->GLViewProjMatrixInvert(mapOri.x() * scale + scaleX, mapOri.y());
         }
     }
     else if (editMode == ChElementEditMode::ScaleY) {
         float scale = (mouse.y() - lastDHandleCenterPoint.y()) / ROTATEHANDLE_RADIUS;
         float scaleY = lastDHandleCenterPoint.y() * (1 - scale);
         for (int i = 0; i < selectedPoints->size(); i++) {
-            QPointF mapOri = gl->mapViewProjMatrix(selectedPoints->getVert(i));
-            sVert[(*selectedPoints)[i]] = gl->GLViewProjMatrixInvert(mapOri.x(), mapOri.y() * scale + scaleY);
+            QPointF mapOri = glVertReference->gl->mapViewProjMatrix(selectedPoints->getVert(i));
+            glVertReference->sVert[(*selectedPoints)[i]] = glVertReference->gl->GLViewProjMatrixInvert(mapOri.x(), mapOri.y() * scale + scaleY);
         }
 	}
 }

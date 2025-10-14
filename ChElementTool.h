@@ -1,30 +1,35 @@
 #pragma once
 
 #include <QPointF>
-#include <qlist>
+
+#include "glVertReference.h"
+#include "ChElementToolBehavior.h"
+#include "enum_character_texture_tool_state.h"
 
 class PiYingGL;
 class QPainter;
 
-class ChElementTool
+class ChElementTool final
 {
 public:
-	ChElementTool(int current, PiYingGL* pygl);
+	ChElementTool(int current, PiYingGL* pygl, CharacterTextureToolState chToolState);
+	~ChElementTool();
 
-public:
-	virtual void escape() = 0;
-	virtual void enter() = 0;
-	virtual void deleteElement() = 0;
-	virtual void clickPos(const QPointF& mouse) = 0;
-	virtual void movePos(const QPointF& mouse) = 0;
-	virtual void releasePos(const QPointF& mouse) = 0;
-	virtual void draw(QPainter& painter) = 0;
+	void click(const QPointF& mouse);
+	void release(const QPointF& mouse);
+	void move(const QPointF& mouse);
+	void draw(QPainter* painter);
+	void escape();
+	void deleteElement();
+	void enter();
 
-	void addPointToVert(const QPointF& p);
+private:
 
-protected:
-	std::vector<float>& glVert;
-	std::vector<unsigned int>& glIndex;
-	QList<QPointF>& sVert;
-	PiYingGL* gl;
+	ClickBehavior* clickBehavior = nullptr;
+	MouseMoveBehavior* moveBehavior = nullptr;
+	ReleaseBehavior* releaseBehavior = nullptr;
+	EscapeBehavior* escapeBehavior = nullptr;
+	DeleteElementBehavior* deleteBehavior = nullptr;
+	EnterBehavior* enterBehavior = nullptr;
+	DrawBehavior* drawBehavior = nullptr;
 };

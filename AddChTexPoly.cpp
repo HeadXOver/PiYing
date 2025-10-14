@@ -1,14 +1,21 @@
 #include "AddChTexPoly.h"
 #include "piYingGL.h"
 
-AddChTexPoly::AddChTexPoly(int current, PiYingGL* gl) :ChElementTool(current, gl) {}
-
-void AddChTexPoly::escape()
+AddChTexPoly::AddChTexPoly(int current, PiYingGL* gl) :glVertReference(new GlVertReference(current, gl))
 {
-	if (index.size() == 0) return;
+}
 
-	index.removeLast();
-	points.removeLast();
+void AddPolyEscape::escape()
+{
+	if (addChTexPoly->index.size() == 0) return;
+
+	addChTexPoly->index.removeLast();
+	addChTexPoly->points.removeLast();
+}
+
+void AddPolyEnter::enter() 
+{
+	addChTexPoly->enter();
 }
 
 void AddChTexPoly::enter()
@@ -17,8 +24,8 @@ void AddChTexPoly::enter()
 
 	for (int i = 0; i < index.size(); i++) {
 		if (index[i] < 0) {
-			index[i] = (int)sVert.size();
-			addPointToVert(points[i]);
+			index[i] = (int)glVertReference->sVert.size();
+			glVertReference->addPointToVert(points[i]);
 		}
 	}
 
@@ -29,7 +36,7 @@ void AddChTexPoly::enter()
 	for (int i = 2; i < index.size(); i++) {
 		int v[3] = { last2point[0], last2point[1], isBack ? back : front };
 		for (int j = 0; j < 3; j++) {
-			glIndex.push_back(index[v[j]]);
+			glVertReference->glIndex.push_back(index[v[j]]);
 		}
 		last2point[0] = v[1];
 		last2point[1] = v[2];
@@ -42,21 +49,26 @@ void AddChTexPoly::enter()
 	points.clear();
 }
 
-void AddChTexPoly::deleteElement()
+void AddPolyDelete::deleteElement()
 {
-	index.clear();
-	points.clear();
+	addChTexPoly->index.clear();
+	addChTexPoly->points.clear();
 }
 
-void AddChTexPoly::clickPos(const QPointF& mouseOri)
+void AddPolyClick::click(const QPointF& mouse) 
 {
-	QPointF mouse = gl->getViewProjMatrixInvert().map(gl->mapToGL(mouseOri));
+	addChTexPoly->click(mouse);
+}
+
+void AddChTexPoly::click(const QPointF& mouseOri)
+{
+	QPointF mouse = glVertReference->gl->getViewProjMatrixInvert().map(glVertReference->gl->mapToGL(mouseOri));
 
 	if (checkPointRepeat(mouse))  return;
 
-	for (unsigned int i = 0; i < sVert.size(); i++) {
-		QPointF& readyPoint = sVert[i];
-		if (QLineF(readyPoint, mouse).length() < 0.02f / gl->viewScale.value()) {
+	for (unsigned int i = 0; i < glVertReference->sVert.size(); i++) {
+		QPointF& readyPoint = glVertReference->sVert[i];
+		if (QLineF(readyPoint, mouse).length() < 0.02f / glVertReference->gl->viewScale.value()) {
 			if (!index.contains(i)) {
 				index.append(i);
 				points.append(readyPoint);
@@ -69,14 +81,14 @@ void AddChTexPoly::clickPos(const QPointF& mouseOri)
 	points.append(mouse);
 }
 
-void AddChTexPoly::draw(QPainter& painter)
+void AddPolyDraw::draw(QPainter* painter)
 {
-	for (QPointF selectPoint : points) {
-		selectPoint = gl->mapViewProjMatrix(selectPoint);
-		painter.setPen(QPen(Qt::black, 8));
-		painter.drawPoint(selectPoint);
-		painter.setPen(QPen(Qt::red, 6));
-		painter.drawPoint(selectPoint);
+	for (QPointF selectPoint : addChTexPoly->points) {
+		selectPoint = addChTexPoly->glVertReference->gl->mapViewProjMatrix(selectPoint);
+		painter->setPen(QPen(Qt::black, 8));
+		painter->drawPoint(selectPoint);
+		painter->setPen(QPen(Qt::red, 6));
+		painter->drawPoint(selectPoint);
 	}
 }
 

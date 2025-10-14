@@ -1,26 +1,109 @@
 #pragma once
 
-#include "ChElementSelect.h"
+#include <qpointf>
+#include <memory>
 
+#include "ChElementToolBehavior.h"
+
+struct ChElementSelect;
+class QPainter;
 class QPolygonF;
+class PiYingGL;
 
-class ChElementLibreSelect final : public ChElementSelect
+struct ChElementLibreSelect final
 {
 public:
 	ChElementLibreSelect(int current, PiYingGL* gl);
 	~ChElementLibreSelect();
 
-protected:
-	virtual void draw(QPainter& painter) override;
-	virtual void clickPos(const QPointF& mouse) override;
-	virtual void movePos(const QPointF& mouse) override;
-	virtual void releasePos(const QPointF& mouse) override;
-
-private:
+	void draw(QPainter* painter);
+	void clickPos(const QPointF& mouse);
+	void movePos(const QPointF& mouse);
+	void releasePos(const QPointF& mouse);
 	void addEnclosedPoints(const QPolygonF* const poly, const QList<QPointF>& points);
 
-private:
+	ChElementSelect* chElementSelect;
 	QPolygonF* polygon;
 	bool drawing = false;
 };
+
+///////////////////////////////////////////////////
+
+class LibreSelectClick : public ClickBehavior
+{
+public:
+	LibreSelectClick(std::shared_ptr<ChElementLibreSelect> select) { libreSelect = select; }
+
+	virtual void click(const QPointF& point) override;
+
+private:
+	std::shared_ptr<ChElementLibreSelect> libreSelect;
+};
+
+///////////////////////////////////////////////////
+
+class LibreSelectMove : public MouseMoveBehavior
+{
+public:
+	LibreSelectMove(std::shared_ptr<ChElementLibreSelect> select) { libreSelect = select; }
+
+	virtual void mouseMove(const QPointF& point) override;
+
+private:
+	std::shared_ptr<ChElementLibreSelect> libreSelect;
+};
+
+///////////////////////////////////////////////////
+
+class LibreSelectRelease : public ReleaseBehavior
+{
+public:
+	LibreSelectRelease(std::shared_ptr<ChElementLibreSelect> select) { libreSelect = select; }
+
+	virtual void release(const QPointF& point) override;
+
+private:
+	std::shared_ptr<ChElementLibreSelect> libreSelect;
+};
+
+///////////////////////////////////////////////////
+
+class LibreSelectDelete : public DeleteElementBehavior
+{
+public:
+	LibreSelectDelete(std::shared_ptr<ChElementLibreSelect> select) { libreSelect = select; }
+
+
+	virtual void deleteElement() override;
+
+private:
+	std::shared_ptr<ChElementLibreSelect> libreSelect;
+};
+
+///////////////////////////////////////////////////
+
+class LibreSelectEscape : public EscapeBehavior
+{
+public:
+	LibreSelectEscape(std::shared_ptr<ChElementLibreSelect> select) { libreSelect = select; }
+
+
+	virtual void escape() override;
+
+private:
+	std::shared_ptr<ChElementLibreSelect> libreSelect;
+};
+
+///////////////////////////////////////////////////
+
+class LibreSelectDraw : public DrawBehavior
+{
+public:
+	LibreSelectDraw(std::shared_ptr<ChElementLibreSelect> select) { libreSelect = select; }
+	virtual void draw(QPainter* painter) override;
+
+private:
+	std::shared_ptr<ChElementLibreSelect> libreSelect;
+};
+
 

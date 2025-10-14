@@ -1,8 +1,13 @@
 #include "AddTriangle.h"
 #include "piYingGL.h"
+#include "glVertReference.h"
 
 #include <qpainter>
 #include <qpen>
+
+AddTriangle::AddTriangle(int current, PiYingGL* gl) :glVertReference(new GlVertReference(current, gl))
+{
+}
 
 bool AddTriangle::addIndex(unsigned int i)
 {
@@ -36,7 +41,7 @@ void AddTriangle::addVert(const QPointF& point)
 	numVert++;
 }
 
-void AddTriangle::escape()
+void AddTriangle::reduceOne()
 {
 	if (numVert == 0 && numInd == 0) return;
 	if (numVert == 0 && numInd == 1 || numVert == 1 && numInd == 0) {
@@ -49,40 +54,43 @@ void AddTriangle::escape()
 	else numVert--;
 }
 
-void AddTriangle::deleteElement()
+void AddTriangleDelete::deleteElement()
 {
-	numInd = 0;
-	numVert = 0;
+	addTriangle->numInd = 0;
+	addTriangle->numVert = 0;
 }
 
 void AddTriangle::addChVert(const QPointF& point)
 {
-	glIndex.push_back((unsigned int)sVert.size());
-	addPointToVert(point);
+	glVertReference->addChVert(point);
 }
 
-void AddTriangle::clickPos(const QPointF& mouseOri)
+void AddTriangleClick::click(const QPointF& mouse) {
+	addTriangle->click(mouse);
+}
+
+void AddTriangle::click(const QPointF& mouseOri)
 {
-	QPointF mouse = gl->getViewProjMatrixInvert().map(gl->mapToGL(mouseOri));
+	QPointF mouse = glVertReference->gl->getViewProjMatrixInvert().map(glVertReference->gl->mapToGL(mouseOri));
 
 	if (checkPointRepeat(mouse))  return;
 
 	int indRepeat = -1;
-	for (unsigned int i = 0; i < sVert.size(); i++) {
-		if (QLineF(sVert[i], mouse).length() < 0.02f / gl->viewScale.value()) {
+	for (unsigned int i = 0; i < glVertReference->sVert.size(); i++) {
+		if (QLineF(glVertReference->sVert[i], mouse).length() < 0.02f / glVertReference->gl->viewScale.value()) {
 			indRepeat = i;
 			break;
 		}
 	}
 
 	if (numInd + numVert <= 1) {
-		if (indRepeat < 0) addVert(mouse); 
+		if (indRepeat < 0) addVert(mouse);
 		else addIndex(indRepeat);
 	}
 	else if (numVert == 2) {
 		numInd = 0;
 		numVert = 0;
-		if (indRepeat >= 0) glIndex.push_back(indRepeat);
+		if (indRepeat >= 0) glVertReference->glIndex.push_back(indRepeat);
 		else  addChVert(mouse);
 		addChVert(first);
 		addChVert(second);
@@ -90,8 +98,8 @@ void AddTriangle::clickPos(const QPointF& mouseOri)
 	else if (numInd == 2) {
 		if (indRepeat >= 0) {
 			if (indRepeat == firstIndex && indRepeat == secondIndex) return;
-			for (int j = 0; j < glIndex.size(); j += 3) {
-				unsigned int x[3] = { glIndex[j + 0], glIndex[j + 1], glIndex[j + 2] };
+			for (int j = 0; j < glVertReference->glIndex.size(); j += 3) {
+				unsigned int x[3] = { glVertReference->glIndex[j + 0], glVertReference->glIndex[j + 1], glVertReference->glIndex[j + 2] };
 				unsigned int y[3] = { (unsigned int)indRepeat, firstIndex, secondIndex };
 				std::sort(x, x + 3);
 				std::sort(y, y + 3);
@@ -101,42 +109,46 @@ void AddTriangle::clickPos(const QPointF& mouseOri)
 
 			numInd = 0;
 			numVert = 0;
-			glIndex.push_back(indRepeat);
+			glVertReference->glIndex.push_back(indRepeat);
 		}
 		else {
 			numInd = 0;
 			numVert = 0;
 			addChVert(mouse);
 		}
-		glIndex.push_back(firstIndex);
-		glIndex.push_back(secondIndex);
+		glVertReference->glIndex.push_back(firstIndex);
+		glVertReference->glIndex.push_back(secondIndex);
 	}
 	else if (numInd == 1 && numVert == 1) {
 		if (indRepeat >= 0) {
 			if (firstIndex != indRepeat) {
 				numInd = 0;
 				numVert = 0;
-				glIndex.push_back((unsigned int)indRepeat);
-				glIndex.push_back(firstIndex);
+				glVertReference->glIndex.push_back((unsigned int)indRepeat);
+				glVertReference->glIndex.push_back(firstIndex);
 				addChVert(first);
 			}
 		}
 		else {
 			numInd = 0;
 			numVert = 0;
-			glIndex.push_back(firstIndex);
+			glVertReference->glIndex.push_back(firstIndex);
 			addChVert(mouse);
 			addChVert(first);
 		}
 	}
 }
 
-void AddTriangle::draw(QPainter& painter)
+void AddTriangleDraw::draw(QPainter* painter) {
+	addTriangle->draw(painter);
+}
+
+void AddTriangle::draw(QPainter* painter)
 {
 	if (numInd == 0 && numVert == 0) return;
 	std::vector<QPointF> toDraw;
 	if (numInd == 1 && numVert == 0) {
-		toDraw.push_back(sVert[firstIndex]);
+		toDraw.push_back(glVertReference->sVert[firstIndex]);
 	}
 	else if (numInd == 0 && numVert == 1) toDraw.push_back(first);
 	else if (numVert == 2) {
@@ -144,19 +156,24 @@ void AddTriangle::draw(QPainter& painter)
 		toDraw.push_back(second);
 	}
 	else if (numInd == 2) {
-		toDraw.push_back(sVert[firstIndex]);
-		toDraw.push_back(sVert[secondIndex]);
+		toDraw.push_back(glVertReference->sVert[firstIndex]);
+		toDraw.push_back(glVertReference->sVert[secondIndex]);
 	}
 	else if (numInd == 1 && numVert == 1) {
 		toDraw.push_back(first);
-		toDraw.push_back(sVert[firstIndex]);
+		toDraw.push_back(glVertReference->sVert[firstIndex]);
 	}
 
 	for (QPointF& p : toDraw) {
-		p = gl->mapViewProjMatrix(p);
-		painter.setPen(QPen(Qt::black, 8));
-		painter.drawPoint(p);
-		painter.setPen(QPen(Qt::red, 6));
-		painter.drawPoint(p);
+		p = glVertReference->gl->mapViewProjMatrix(p);
+		painter->setPen(QPen(Qt::black, 8));
+		painter->drawPoint(p);
+		painter->setPen(QPen(Qt::red, 6));
+		painter->drawPoint(p);
 	}
+}
+
+void AddTriangleEscape::escape()
+{
+	addTriangle->reduceOne();
 }

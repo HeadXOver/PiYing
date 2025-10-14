@@ -1,4 +1,5 @@
 #include "ChElementLibreSelect.h"
+#include "ChElementSelect.h"
 #include "piYingGL.h"
 #include "SelectedPoints.h"
 #include "KeyboardStateWin.h"
@@ -6,7 +7,8 @@
 #include <qpolygonf>
 #include <qpainter>
 
-ChElementLibreSelect::ChElementLibreSelect(int current, PiYingGL* gl) :ChElementSelect(current, gl) {
+ChElementLibreSelect::ChElementLibreSelect(int current, PiYingGL* gl) :chElementSelect(new ChElementSelect(current, gl))
+{
 	polygon = new QPolygonF();
 }
 
@@ -15,15 +17,15 @@ ChElementLibreSelect::~ChElementLibreSelect()
 	delete polygon;
 }
 
-void ChElementLibreSelect::draw(QPainter& painter)
+void ChElementLibreSelect::draw(QPainter* painter)
 {
-	drawHandle(painter);
+	chElementSelect->drawHandle(painter);
 
 	if (!polygon->isEmpty()) {
 		if (drawing) {
-			painter.setPen(QPen(Qt::yellow, 1));
+			painter->setPen(QPen(Qt::yellow, 1));
 
-			auto mapper = [this](const QPointF& p) { return gl->mapViewProjMatrix(p); };
+			auto mapper = [this](const QPointF& p) { return chElementSelect->glVertReference->gl->mapViewProjMatrix(p); };
 
 			QPolygonF screenPoly;
 			screenPoly.reserve(polygon->size());
@@ -32,66 +34,66 @@ void ChElementLibreSelect::draw(QPainter& painter)
 				mapper
 			);
 
-			painter.drawPolyline(screenPoly);
-			painter.drawLine(screenPoly.last(), screenPoly.first());
+			painter->drawPolyline(screenPoly);
+			painter->drawLine(screenPoly.last(), screenPoly.first());
 		}
 	}
 
-	for (int i = 0; i < selectedPoints->size(); i++) {
-		QPointF selectPoint = gl->mapViewProjMatrix(sVert[(*selectedPoints)[i]]);
-		painter.setPen(QPen(Qt::black, 8));
-		painter.drawPoint(selectPoint);
-		painter.setPen(QPen(Qt::red, 6));
-		painter.drawPoint(selectPoint);
+	for (int i = 0; i < chElementSelect->selectedPoints->size(); i++) {
+		QPointF selectPoint = chElementSelect->glVertReference->gl->mapViewProjMatrix(chElementSelect->glVertReference->sVert[(*chElementSelect->selectedPoints)[i]]);
+		painter->setPen(QPen(Qt::black, 8));
+		painter->drawPoint(selectPoint);
+		painter->setPen(QPen(Qt::red, 6));
+		painter->drawPoint(selectPoint);
 	}
 }
 
 void ChElementLibreSelect::clickPos(const QPointF& mouseOri)
 {
-	isPress = true;
-	lastPos = mouseOri;
+	chElementSelect->isPress = true;
+	chElementSelect->lastPos = mouseOri;
 
 	polygon->clear();
 
-	changeEditMode();
+	chElementSelect->changeEditMode();
 
-	if (editMode != ChElementEditMode::None) {
-		affirmHandle();
+	if (chElementSelect->editMode != ChElementEditMode::None) {
+		chElementSelect->affirmHandle();
 		return;
 	}
 
-	QPointF mouse = gl->getViewProjMatrixInvert().map(gl->mapToGL(mouseOri));
+	QPointF mouse = chElementSelect->glVertReference->gl->getViewProjMatrixInvert().map(chElementSelect->glVertReference->gl->mapToGL(mouseOri));
 
 	*polygon << mouse;
 
-	for (unsigned int i = 0; i < sVert.size(); i++) {
-		if (QLineF(sVert[i], mouse).length() < 0.02f / gl->viewScale.value()) {
-			if (!selectedPoints->contains(i)) {
+	for (unsigned int i = 0; i < chElementSelect->glVertReference->sVert.size(); i++) {
+		if (QLineF(chElementSelect->glVertReference->sVert[i], mouse).length() < 0.02f / chElementSelect->glVertReference->gl->viewScale.value()) {
+			if (!chElementSelect->selectedPoints->contains(i)) {
 				if (!KeyboardStateWin::isCtrlHeld()) {
-					selectedPoints->clear();
+					chElementSelect->selectedPoints->clear();
 				}
-				selectedPoints->append(i);
+				chElementSelect->selectedPoints->append(i);
 			}
 			return;
 		}
 	}
 
-	if (!KeyboardStateWin::isCtrlHeld()) selectedPoints->clear();
+	if (!KeyboardStateWin::isCtrlHeld()) chElementSelect->selectedPoints->clear();
 }
 
 void ChElementLibreSelect::movePos(const QPointF& mouse)
 {
 	drawing = false;
-	if (editMode == ChElementEditMode::None) {
-		if (!isPress) return;
+	if (chElementSelect->editMode == ChElementEditMode::None) {
+		if (!chElementSelect->isPress) return;
 
-		QPointF mapedMouse = gl->getViewProjMatrixInvert().map(gl->mapToGL(mouse));
+		QPointF mapedMouse = chElementSelect->glVertReference->gl->getViewProjMatrixInvert().map(chElementSelect->glVertReference->gl->mapToGL(mouse));
 		if (polygon->isEmpty() || polygon->last() != mapedMouse) {
 			*polygon << mapedMouse;
 		}
 		drawing = true;
 	}
-	else moveHandle(mouse);
+	else chElementSelect->moveHandle(mouse);
 }
 
 void ChElementLibreSelect::releasePos(const QPointF& mouse)
@@ -103,7 +105,7 @@ void ChElementLibreSelect::releasePos(const QPointF& mouse)
 			*polygon << polygon->first();
 		}
 
-		addEnclosedPoints(polygon, sVert);
+		addEnclosedPoints(polygon, chElementSelect->glVertReference->sVert);
 	}
 }
 
@@ -111,7 +113,37 @@ void ChElementLibreSelect::addEnclosedPoints(const QPolygonF* const poly, const 
 {
 	for (unsigned int i = 0; i < points.size(); i++) {
 		if (poly->containsPoint(points[i], Qt::OddEvenFill)) {
-			selectedPoints->append(i);
+			chElementSelect->selectedPoints->append(i);
 		}
 	}
+}
+
+void LibreSelectClick::click(const QPointF& point)
+{
+	libreSelect->clickPos(point);
+}
+
+void LibreSelectMove::mouseMove(const QPointF& point)
+{
+	libreSelect->movePos(point);
+}
+
+void LibreSelectRelease::release(const QPointF& point)
+{
+	libreSelect->releasePos(point);
+}
+
+void LibreSelectDelete::deleteElement()
+{
+	libreSelect->chElementSelect->deleteElement();
+}
+
+void LibreSelectEscape::escape()
+{
+	libreSelect->chElementSelect->escape();
+}
+
+void LibreSelectDraw::draw(QPainter* painter)
+{
+	libreSelect->draw(painter);
 }
