@@ -21,9 +21,6 @@
       <UniqueIdentifier>{639EADAA-A684-42e4-A9AD-28FC9BCB8F7C}</UniqueIdentifier>
       <Extensions>ts</Extensions>
     </Filter>
-    <Filter Include="Header Files\CusStruct">
-      <UniqueIdentifier>{097b854b-e278-4df0-b1b6-03b8dd42274d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Shader">
       <UniqueIdentifier>{a537cbf0-5617-423e-a107-08e2c3b012d5}</UniqueIdentifier>
     </Filter>
@@ -39,6 +36,36 @@
     <Filter Include="Source Files\ChELementTool">
       <UniqueIdentifier>{204b3297-ad6d-4a93-8cd4-e64b58993d2e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\controlSlide">
+      <UniqueIdentifier>{c0057a86-6107-48ca-ad48-031747d11860}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\staticConst">
+      <UniqueIdentifier>{097b854b-e278-4df0-b1b6-03b8dd42274d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\CustomQObject">
+      <UniqueIdentifier>{121a4bf5-966a-47ff-be36-b5fe218de77c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\PiYingWidget">
+      <UniqueIdentifier>{c1f76cac-578d-4b43-95f0-97d8a67646ba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\CustomTool">
+      <UniqueIdentifier>{81a6fd38-6b9e-4b38-a5ce-638a5efa5af7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\CustomElememt">
+      <UniqueIdentifier>{47bb7beb-949c-4dd2-b4a5-00bcbda67091}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\CustomQObject">
+      <UniqueIdentifier>{bce7286b-a62b-4632-8350-9f0ba6faf5ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\controlSlide">
+      <UniqueIdentifier>{424e17ba-20f1-4c6b-b386-474e4e29da49}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\CustomTool">
+      <UniqueIdentifier>{b6a97278-ec58-408e-b0b8-040eba828882}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\CustomElement">
+      <UniqueIdentifier>{c7897473-4aa2-4a1e-b9e9-6cd904a6eac6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <QtRcc Include="PiYing.qrc">
@@ -47,21 +74,12 @@
     <QtUic Include="PiYing.ui">
       <Filter>Form Files</Filter>
     </QtUic>
-    <QtMoc Include="PiYing.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
     <ClCompile Include="PiYing.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="RatioDialog.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="piYingGLContainer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="piYingGL.cpp">
@@ -82,9 +100,6 @@
     <ClCompile Include="RaletiveTransform.cpp">
       <Filter>Source Files\piYingGL</Filter>
     </ClCompile>
-    <ClCompile Include="AskTransformDialog.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="draw.cpp">
       <Filter>Source Files\piYingGL</Filter>
     </ClCompile>
@@ -96,9 +111,6 @@
     </ClCompile>
     <ClCompile Include="AddTriangle.cpp">
       <Filter>Source Files\ChELementTool</Filter>
-    </ClCompile>
-    <ClCompile Include="CusFunc.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="AddChTexPoly.cpp">
       <Filter>Source Files\ChELementTool</Filter>
@@ -113,36 +125,42 @@
       <Filter>Source Files\ChELementTool</Filter>
     </ClCompile>
     <ClCompile Include="ctrlSlideLayout.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\controlSlide</Filter>
     </ClCompile>
     <ClCompile Include="ctrlSlideWidget.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\controlSlide</Filter>
     </ClCompile>
-    <ClCompile Include="SelectedPoints.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="AskTransformDialog.cpp">
+      <Filter>Source Files\CustomQObject</Filter>
     </ClCompile>
-    <ClCompile Include="tool_button.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="CusFunc.cpp">
+      <Filter>Source Files\CustomTool</Filter>
     </ClCompile>
     <ClCompile Include="image_texture.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\CustomElement</Filter>
     </ClCompile>
     <ClCompile Include="image_transform.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\CustomElement</Filter>
+    </ClCompile>
+    <ClCompile Include="piYingGLContainer.cpp">
+      <Filter>Source Files\CustomQObject</Filter>
+    </ClCompile>
+    <ClCompile Include="tool_button.cpp">
+      <Filter>Source Files\CustomElement</Filter>
+    </ClCompile>
+    <ClCompile Include="SelectedPoints.cpp">
+      <Filter>Source Files\CustomElement</Filter>
+    </ClCompile>
+    <ClCompile Include="RatioDialog.cpp">
+      <Filter>Source Files\CustomQObject</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="static_handle_zone.h">
-      <Filter>Header Files\CusStruct</Filter>
+      <Filter>Header Files\staticConst</Filter>
     </ClInclude>
     <ClInclude Include="static_rect_vert.h">
-      <Filter>Header Files\CusStruct</Filter>
-    </ClInclude>
-    <ClInclude Include="KeyboardStateWin.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CusFunc.h">
-      <Filter>Header Files\CusStruct</Filter>
+      <Filter>Header Files\staticConst</Filter>
     </ClInclude>
     <ClInclude Include="ChElementTool.h">
       <Filter>Header Files\ChELementTool</Filter>
@@ -159,43 +177,52 @@
     <ClInclude Include="ChElementLibreSelect.h">
       <Filter>Header Files\ChELementTool</Filter>
     </ClInclude>
-    <ClInclude Include="SelectedPoints.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="enum_character_texture_tool_state.h">
+      <Filter>Header Files\staticConst</Filter>
     </ClInclude>
     <ClInclude Include="tool_button.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\CustomTool</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyboardStateWin.h">
+      <Filter>Header Files\CustomTool</Filter>
+    </ClInclude>
+    <ClInclude Include="CusFunc.h">
+      <Filter>Header Files\CustomTool</Filter>
+    </ClInclude>
+    <ClInclude Include="SelectedPoints.h">
+      <Filter>Header Files\CustomElememt</Filter>
     </ClInclude>
     <ClInclude Include="image_texture.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\CustomElememt</Filter>
     </ClInclude>
     <ClInclude Include="image_transform.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="enum_character_texture_tool_state.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\CustomElememt</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="piYingGL.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="RatioDialog.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="piYingGLContainer.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="ViewData.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="AskTransformDialog.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
     <QtMoc Include="ctrlSlideLayout.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\controlSlide</Filter>
     </QtMoc>
     <QtMoc Include="ctrlSlideWidget.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\controlSlide</Filter>
+    </QtMoc>
+    <QtMoc Include="RatioDialog.h">
+      <Filter>Header Files\CustomQObject</Filter>
+    </QtMoc>
+    <QtMoc Include="ViewData.h">
+      <Filter>Header Files\CustomQObject</Filter>
+    </QtMoc>
+    <QtMoc Include="piYingGLContainer.h">
+      <Filter>Header Files\CustomQObject</Filter>
+    </QtMoc>
+    <QtMoc Include="PiYing.h">
+      <Filter>Header Files\PiYingWidget</Filter>
+    </QtMoc>
+    <QtMoc Include="piYingGL.h">
+      <Filter>Header Files\PiYingWidget</Filter>
+    </QtMoc>
+    <QtMoc Include="AskTransformDialog.h">
+      <Filter>Header Files\CustomQObject</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>
