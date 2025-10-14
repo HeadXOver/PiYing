@@ -2,16 +2,16 @@
 
 #include <QList>
 #include <QPoint>
-#include <QPainter>
 #include <memory>
 
-#include "ChElementTool.h"
+#include "ChElementToolBehavior.h"
 
 class PiYingGL;
+struct GlVertReference;
 
 struct AddChTexPoly
 {
-	AddChTexPoly(int current, PiYingGL* gl);
+	AddChTexPoly(GlVertReference* glReference);
 
 	void click(const QPointF& mouse);
 	void enter();
@@ -24,6 +24,8 @@ struct AddChTexPoly
 	GlVertReference* glVertReference;
 };
 
+////////////////////////////////////////////////////////
+
 class AddPolyEscape : public EscapeBehavior
 {
 public:
@@ -34,6 +36,8 @@ public:
 private:
 	std::shared_ptr<AddChTexPoly> addChTexPoly;
 };
+
+////////////////////////////////////////////////////////
 
 class AddPolyDelete : public DeleteElementBehavior
 {
@@ -47,6 +51,8 @@ private:
 	std::shared_ptr<AddChTexPoly> addChTexPoly;
 };
 
+////////////////////////////////////////////////////////
+
 class AddPolyClick : public ClickBehavior
 {
 public:
@@ -56,6 +62,8 @@ public:
 private:
 	std::shared_ptr<AddChTexPoly> addChTexPoly;
 };
+
+////////////////////////////////////////////////////////
 
 class AddPolyDraw : public DrawBehavior
 {

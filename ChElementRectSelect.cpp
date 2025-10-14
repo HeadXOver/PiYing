@@ -1,12 +1,14 @@
 #include "ChElementSelect.h"
+
+#include "chElementRectSelect.h"
+#include "glVertReference.h"
 #include "piYingGL.h"
 #include "SelectedPoints.h"
 #include "KeyboardStateWin.h"
 
 #include <qpainter>
-#include "chElementRectSelect.h"
 
-ChElementRectSelect::ChElementRectSelect(int current, PiYingGL* gl) :chElementSelect(new ChElementSelect(current, gl))
+ChElementRectSelect::ChElementRectSelect(GlVertReference* glReference) :chElementSelect(new ChElementSelect(glReference))
 {
 }
 

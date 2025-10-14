@@ -1,15 +1,15 @@
 #pragma once
 
-#include "ChElementTool.h"
 #include "ChElementToolBehavior.h"
 
 #include <memory>
 
 struct GlVertReference;
+class PiYingGL;
 
 struct AddTriangle 
 {
-	AddTriangle(int current, PiYingGL* gl);
+	AddTriangle(GlVertReference* glVertReference);
 
 	bool addIndex(unsigned int i);
 	bool checkPointRepeat(const QPointF& point);
@@ -33,6 +33,8 @@ struct AddTriangle
 	int numInd = 0;
 };
 
+////////////////////////////////////////////////////////
+
 class AddTriangleEscape : public EscapeBehavior
 {
 public:
@@ -43,6 +45,8 @@ public:
 private:
 	std::shared_ptr<AddTriangle> addTriangle;
 };
+
+////////////////////////////////////////////////////////
 
 class AddTriangleDelete : public DeleteElementBehavior
 {
@@ -56,6 +60,8 @@ private:
 	std::shared_ptr<AddTriangle> addTriangle;
 };
 
+////////////////////////////////////////////////////////
+
 class AddTriangleClick : public ClickBehavior
 {
 public:
@@ -65,6 +71,8 @@ public:
 private:
 	std::shared_ptr<AddTriangle> addTriangle;
 };
+
+////////////////////////////////////////////////////////
 
 class AddTriangleDraw : public DrawBehavior
 {

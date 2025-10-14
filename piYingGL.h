@@ -2,7 +2,8 @@
 
 #include <QOpenGLWidget>
 #include <qopenglfunctions_3_3_Core>
-#include <QOpenGLShaderProgram.h>
+#include <qpoint>
+#include <qmatrix4x4>
 
 #include "enum_character_texture_tool_state.h"
 #include "static_rect_vert.h"
@@ -34,6 +35,7 @@ class ImageTransform;
 class ImageTexture;
 class QMenu;
 class ChElementTool;
+class QOpenGLShaderProgram;
 
 class PiYingGL : public QOpenGLWidget, QOpenGLFunctions_3_3_Core
 {
@@ -137,8 +139,8 @@ private:
 	unsigned int bgVAO = 0, bgVBO = 0, bgEBO = 0;
 	unsigned int chVAO = 0, chVBO = 0, chEBO = 0;
 
-	QOpenGLShaderProgram bgShaderProgram;
-	QOpenGLShaderProgram chShaderProgram;
+	QOpenGLShaderProgram* bgShaderProgram;
+	QOpenGLShaderProgram* chShaderProgram;
 
 	// imageTextures
 	QList<ImageTexture*> backGrounds;

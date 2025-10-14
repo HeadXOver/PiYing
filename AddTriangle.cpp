@@ -1,11 +1,12 @@
 #include "AddTriangle.h"
+
 #include "piYingGL.h"
 #include "glVertReference.h"
 
 #include <qpainter>
 #include <qpen>
 
-AddTriangle::AddTriangle(int current, PiYingGL* gl) :glVertReference(new GlVertReference(current, gl))
+AddTriangle::AddTriangle(GlVertReference* glReference) :glVertReference(glReference)
 {
 }
 

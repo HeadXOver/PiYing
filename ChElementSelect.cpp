@@ -1,4 +1,5 @@
 ﻿#include "ChElementSelect.h"
+#include "glVertReference.h"
 #include "piYingGL.h"
 #include "SelectedPoints.h"
 #include "CusFunc.h"
@@ -6,7 +7,7 @@
 
 #include <qpainter>
 
-ChElementSelect::ChElementSelect(int current, PiYingGL* gl) : glVertReference(new GlVertReference(current, gl))
+ChElementSelect::ChElementSelect(GlVertReference* glReference) : glVertReference(glReference)
 {
     selectedPoints = new SelectedPoints(glVertReference->sVert);
 }

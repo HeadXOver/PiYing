@@ -1,5 +1,9 @@
 ﻿#include "ctrlSlideLayout.h"
 
+#include <qlabel>
+#include <qslider>
+#include <qpushbutton>
+
 CtrlSlideLayout::CtrlSlideLayout(QString labelName, int min, int max, int defaultValue) {
     label = new QLabel(labelName);
     slider = new QSlider(Qt::Horizontal);

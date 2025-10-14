@@ -1,10 +1,6 @@
 #pragma once
 
 #include <QtWidgets/QMainWindow>
-#include <QToolBar>
-#include <QComboBox>
-#include <QListWidget>
-#include <qsplitter>
 
 #include "ui_PiYing.h"
 
@@ -12,6 +8,8 @@ class CtrlSlideWidget;
 class PiYingGL;
 class ToolButton;
 class PiYingGLContainer;
+class QListWidget;
+class QSplitter;
 
 class PiYing : public QMainWindow
 {
@@ -22,8 +20,8 @@ public:
     ~PiYing();
 
 public:
-	int getCurrentBgRow() { return bgImageList->currentRow(); }
-	int getCurrentChRow() { return chImageList->currentRow(); }
+	int getCurrentBgRow();
+	int getCurrentChRow();
 
 protected:
 	void keyPressEvent(QKeyEvent* event) override;

@@ -1,4 +1,6 @@
 #include "ChElementLibreSelect.h"
+
+#include "glVertReference.h"
 #include "ChElementSelect.h"
 #include "piYingGL.h"
 #include "SelectedPoints.h"
@@ -7,7 +9,7 @@
 #include <qpolygonf>
 #include <qpainter>
 
-ChElementLibreSelect::ChElementLibreSelect(int current, PiYingGL* gl) :chElementSelect(new ChElementSelect(current, gl))
+ChElementLibreSelect::ChElementLibreSelect(GlVertReference* glReference) :chElementSelect(new ChElementSelect(glReference))
 {
 	polygon = new QPolygonF();
 }

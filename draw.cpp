@@ -5,6 +5,7 @@
 
 #include <qpainter>
 #include <qopengltexture>
+#include <QOpenGLShaderProgram.h>
 
 void PiYingGL::drawChEditVert()
 {
@@ -39,7 +40,7 @@ void PiYingGL::paintBackgrounds()
 	glBindVertexArray(bgVAO);
 	glBindBuffer(GL_ARRAY_BUFFER, bgVBO);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, bgEBO);
-	bgShaderProgram.bind();
+	bgShaderProgram->bind();
 	glActiveTexture(GL_TEXTURE0);
 
 	// position attribute
@@ -53,10 +54,10 @@ void PiYingGL::paintBackgrounds()
 		ImageTexture* it = backGrounds[i];
 		it->texture()->bind();
 
-		bgShaderProgram.setUniformValue("texture1", 0);
-		bgShaderProgram.setUniformValue("trc", getBgShaderMatrix(it->transform()));
-		if (i == getCurrentBgRow())bgShaderProgram.setUniformValue("selected", true);
-		else bgShaderProgram.setUniformValue("selected", false);
+		bgShaderProgram->setUniformValue("texture1", 0);
+		bgShaderProgram->setUniformValue("trc", getBgShaderMatrix(it->transform()));
+		if (i == getCurrentBgRow())bgShaderProgram->setUniformValue("selected", true);
+		else bgShaderProgram->setUniformValue("selected", false);
 
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 	}
@@ -71,7 +72,7 @@ void PiYingGL::paintCharacterTexture()
 	glBindVertexArray(bgVAO);
 	glBindBuffer(GL_ARRAY_BUFFER, bgVBO);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, bgEBO);
-	bgShaderProgram.bind();
+	bgShaderProgram->bind();
 	glActiveTexture(GL_TEXTURE0);
 
 	// position attribute
@@ -84,9 +85,9 @@ void PiYingGL::paintCharacterTexture()
 	int i = getCurrentChRow();
 	if (i >= 0) {
 		characterTextures[i]->texture()->bind();
-		bgShaderProgram.setUniformValue("texture1", 0);
-		bgShaderProgram.setUniformValue("trc", getViewProjMatrix());
-		bgShaderProgram.setUniformValue("selected", false);
+		bgShaderProgram->setUniformValue("texture1", 0);
+		bgShaderProgram->setUniformValue("trc", getViewProjMatrix());
+		bgShaderProgram->setUniformValue("selected", false);
 
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 	}
@@ -103,7 +104,7 @@ void PiYingGL::paintCharacterSkeleton()
 	glBindVertexArray(chVAO);
 	glBindBuffer(GL_ARRAY_BUFFER, chVBO);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, chEBO);
-	chShaderProgram.bind();
+	chShaderProgram->bind();
 	glActiveTexture(GL_TEXTURE0);
 
 	// position attribute
@@ -117,8 +118,8 @@ void PiYingGL::paintCharacterSkeleton()
 		glBufferData(GL_ARRAY_BUFFER, characterVerts[i].size() * sizeof(float), characterVerts[i].data(), GL_DYNAMIC_DRAW);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, characterTriangleIndices[i].size() * sizeof(unsigned int), characterTriangleIndices[i].data(), GL_DYNAMIC_DRAW);
 		characterTextures[i]->texture()->bind();
-		chShaderProgram.setUniformValue("texture1", 0);
-		chShaderProgram.setUniformValue("trc", getViewProjMatrix());
+		chShaderProgram->setUniformValue("texture1", 0);
+		chShaderProgram->setUniformValue("trc", getViewProjMatrix());
 		glDrawElements(GL_TRIANGLES, (GLsizei)characterTriangleIndices[i].size(), GL_UNSIGNED_INT, 0);
 	}
 

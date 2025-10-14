@@ -8,6 +8,9 @@
 #include <QMessageBox>
 #include <qkeyevent>
 #include <qfiledialog.h>
+#include <qlistwidget>
+#include <QComboBox>
+#include <qsplitter>
 
 PiYing::PiYing(QWidget* parent) : QMainWindow(parent) {
     ui.setupUi(this);
@@ -125,6 +128,16 @@ PiYing::~PiYing()
     delete voidListWidget;
 
     for (ToolButton* item : toolChTexList) delete item;
+}
+
+int PiYing::getCurrentBgRow()
+{
+    return bgImageList->currentRow();
+}
+
+int PiYing::getCurrentChRow()
+{
+    return chImageList->currentRow();
 }
 
 void PiYing::keyPressEvent(QKeyEvent* event)

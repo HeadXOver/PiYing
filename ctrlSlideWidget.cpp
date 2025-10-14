@@ -2,11 +2,10 @@
 #include "ctrlSlideLayout.h"
 
 #include <QPushbutton>
-#include <QVBoxLayout>
-#include <QHBoxLayout>
-#include <QString>
+#include <QBoxLayout>
 #include <QMenu>
 #include <QInputDialog>
+#include <qlabel>
 
 CtrlSlideWidget::CtrlSlideWidget(QWidget* parent) : QWidget(parent)
 {

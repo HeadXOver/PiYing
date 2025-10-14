@@ -6,6 +6,7 @@
 #include "ChElementToolBehavior.h"
 
 struct ChElementSelect;
+struct GlVertReference;
 class QPainter;
 class QPolygonF;
 class PiYingGL;
@@ -13,7 +14,7 @@ class PiYingGL;
 struct ChElementLibreSelect final
 {
 public:
-	ChElementLibreSelect(int current, PiYingGL* gl);
+	ChElementLibreSelect(GlVertReference* glReference);
 	~ChElementLibreSelect();
 
 	void draw(QPainter* painter);

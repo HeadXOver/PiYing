@@ -1,10 +1,15 @@
 ﻿#include "piYingGL.h"
 #include "piYing.h"
 #include "image_transform.h"
+
 #include <qlabel>
+#include <QOpenGLShaderProgram.h>
 
 PiYingGL::PiYingGL(PiYing* parent) : QOpenGLWidget(parent), parent(parent)
 {
+	bgShaderProgram = new QOpenGLShaderProgram(this);
+	chShaderProgram = new QOpenGLShaderProgram(this);
+
 	lastImageTransform = new ImageTransform();
 
 	viewScale.setValue(1.0f);

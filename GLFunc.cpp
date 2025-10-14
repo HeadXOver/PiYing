@@ -1,5 +1,7 @@
 #include "piYingGL.h"
 
+#include <QOpenGLShaderProgram.h>
+
 void PiYingGL::initializeGL()
 {
 	initializeOpenGLFunctions();
@@ -19,9 +21,9 @@ void PiYingGL::initializeGL()
 	glBufferData(GL_ARRAY_BUFFER, sizeof(RECTANGLE_VERT), RECTANGLE_VERT, GL_STATIC_DRAW);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(RECTANGLE_INDECES), RECTANGLE_INDECES, GL_STATIC_DRAW);
 
-	bgShaderProgram.addShaderFromSourceFile(QOpenGLShader::Vertex, ":/PiYing/bgshapes.vert");
-	bgShaderProgram.addShaderFromSourceFile(QOpenGLShader::Fragment, ":/PiYing/bgshapes.frag");
-	bgShaderProgram.link();
+	bgShaderProgram->addShaderFromSourceFile(QOpenGLShader::Vertex, ":/PiYing/bgshapes.vert");
+	bgShaderProgram->addShaderFromSourceFile(QOpenGLShader::Fragment, ":/PiYing/bgshapes.frag");
+	bgShaderProgram->link();
 
 	/////////////////////////////////////////////
 
@@ -41,9 +43,9 @@ void PiYingGL::initializeGL()
 
 	/////////////////////////////////////////////
 
-	chShaderProgram.addShaderFromSourceFile(QOpenGLShader::Vertex, ":/PiYing/chEditershapes.vert");
-	chShaderProgram.addShaderFromSourceFile(QOpenGLShader::Fragment, ":/PiYing/chEditershapes.frag");
-	chShaderProgram.link();
+	chShaderProgram->addShaderFromSourceFile(QOpenGLShader::Vertex, ":/PiYing/chEditershapes.vert");
+	chShaderProgram->addShaderFromSourceFile(QOpenGLShader::Fragment, ":/PiYing/chEditershapes.frag");
+	chShaderProgram->link();
 
 	/////////////////////////////////////////////
 

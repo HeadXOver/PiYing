@@ -6,6 +6,7 @@
 #include "AskTransformDialog.h"
 
 #include <qmessagebox>
+#include <qlistwidget>
 
 void PiYingGL::fullScreenBackGround()
 {

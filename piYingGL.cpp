@@ -3,6 +3,7 @@
 #include "AddTriangle.h"
 #include "AddChTexPoly.h"
 #include "ChElementLibreSelect.h"
+#include "ChElementTool.h"
 #include "CusFunc.h"
 #include "piYingGLContainer.h"
 #include "KeyboardStateWin.h"
@@ -12,6 +13,8 @@
 #include <QColorDialog>
 #include <QMessageBox>
 #include <qfiledialog>
+#include <qlistwidget>
+#include <qopenglshaderprogram>
 
 PiYingGL::~PiYingGL()
 {
@@ -32,6 +35,8 @@ PiYingGL::~PiYingGL()
 	for (ImageTexture* bg : backGrounds) delete bg;
 
 	delete lastImageTransform;
+	delete bgShaderProgram;
+	delete chShaderProgram;
 }
 
 void PiYingGL::addBackground(const QString& imageName) {

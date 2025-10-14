@@ -1,6 +1,5 @@
 #pragma once
 
-#include <qstring>
 #include <qicon>
 
 #include "enum_character_texture_tool_state.h"

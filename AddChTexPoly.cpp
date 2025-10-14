@@ -1,7 +1,11 @@
 #include "AddChTexPoly.h"
+
+#include "glVertReference.h"
 #include "piYingGL.h"
 
-AddChTexPoly::AddChTexPoly(int current, PiYingGL* gl) :glVertReference(new GlVertReference(current, gl))
+#include <qpainter>
+
+AddChTexPoly::AddChTexPoly(GlVertReference* glReference) :glVertReference(glReference)
 {
 }
 

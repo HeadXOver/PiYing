@@ -1,13 +1,20 @@
 #pragma once
 
-#include <QPointF>
+#include <qpointf>
 
-#include "glVertReference.h"
-#include "ChElementToolBehavior.h"
 #include "enum_character_texture_tool_state.h"
 
 class PiYingGL;
 class QPainter;
+struct ClickBehavior;
+struct MouseMoveBehavior;
+struct ReleaseBehavior;
+struct EscapeBehavior;
+struct DeleteElementBehavior;
+struct EnterBehavior;
+struct DrawBehavior;
+
+struct GlVertReference;
 
 class ChElementTool final
 {
@@ -32,4 +39,6 @@ private:
 	DeleteElementBehavior* deleteBehavior = nullptr;
 	EnterBehavior* enterBehavior = nullptr;
 	DrawBehavior* drawBehavior = nullptr;
+
+	GlVertReference* glVertReference = nullptr;
 };

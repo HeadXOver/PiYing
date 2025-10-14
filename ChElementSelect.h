@@ -1,10 +1,10 @@
 #pragma once
 
-#include <memory>
-
-#include "ChElementTool.h"
+#include <qpointf>
 
 class SelectedPoints;
+class PiYingGL;
+class QPainter;
 struct GlVertReference;
 
 enum class ChElementEditMode {
@@ -20,7 +20,7 @@ enum class ChElementEditMode {
 
 struct ChElementSelect final
 {
-	ChElementSelect(int current, PiYingGL* gl);
+	ChElementSelect(GlVertReference* glReference);
 	virtual ~ChElementSelect();
 
 	void escape();

@@ -1,9 +1,8 @@
 #pragma once
 
 #include <QDialog>
-#include <QDoubleSpinBox>
-#include <QDialogButtonBox>
-#include <QFormLayout>
+
+class QDoubleSpinBox;
 
 class Ask3DoublesDialog : public QDialog
 {

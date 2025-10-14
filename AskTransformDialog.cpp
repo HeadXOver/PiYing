@@ -1,5 +1,9 @@
 #include "AskTransformDialog.h"
 
+#include <qdialogbuttonbox>
+#include <qdoublespinbox>
+#include <QFormLayout>
+
 Ask3DoublesDialog::Ask3DoublesDialog(const QString& title, const QString s[5], const float d[5], QWidget* parent) : QDialog(parent)
 {
     setWindowTitle(title);
