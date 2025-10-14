@@ -1,5 +1,8 @@
 #include "piYingGL.h"
 #include "PiYing.h"
+#include "image_transform.h"
+#include "image_texture.h"
+#include "KeyboardStateWin.h"
 
 #include <qmouseevent>
 
@@ -13,16 +16,15 @@ void PiYingGL::mousePressEvent(QMouseEvent* event)
 			lastMousePosType = MousePos::OutSide;
 			int cur = getCurrentBgRow();
 			if(cur < 0) return;
-			ImageTexture& item = backGrounds[cur];
-			QPointF posV = getRaletiveToRect(lastMousePos, item.transform);
+			ImageTexture* item = backGrounds[cur];
+			QPointF posV = getRaletiveToRect(lastMousePos, item->transform());
 			if (isInsideSquare(posV)) {
 				lastMousePosType = getMousePosType(posV);
-				lastImageTransform = item.transform;
+				*lastImageTransform = *(item->transform());
 			}
 		}
 		else if (editMode == EditMode::characterTexture && event->button() == Qt::LeftButton) {
 			if (chElementTool) chElementTool->clickPos(event->position());
-			//if (chElementTool) chElementTool->clickPos(getViewProjMatrixInvert().map(lastMousePos));
 		}
 
 		currentUpdate();
@@ -46,7 +48,7 @@ void PiYingGL::mouseMoveEvent(QMouseEvent* event) {
 	QPointF mouse = mapToGL(event->position());
 	if (event->buttons() == Qt::LeftButton) {
 		if (lastMousePosType != MousePos::OutSide) {
-			ImageTexture& item = backGrounds[parent->getCurrentBgRow()];
+			ImageTexture* item = backGrounds[parent->getCurrentBgRow()];
 			if (editMode == EditMode::BackGround) {
 				if (KeyboardStateWin::isAltHeld())
 					bgRotationControl(mouse, item);
@@ -60,7 +62,6 @@ void PiYingGL::mouseMoveEvent(QMouseEvent* event) {
 		}
 		else if (editMode == EditMode::characterTexture) {
 			if (chElementTool) {
-				//chElementTool->movePos(getViewProjMatrixInvert().map(mouse));
 				chElementTool->movePos(event->position());
 				currentUpdate();
 			}
@@ -77,7 +78,7 @@ void PiYingGL::mouseMoveEvent(QMouseEvent* event) {
 	}
 	else {
 		int cur = parent->getCurrentBgRow();
-		if (cur >= 0) setCursor(getCursorShape(getMousePosType(getRaletiveToRect(mouse, backGrounds[cur].transform))));
+		if (cur >= 0) setCursor(getCursorShape(getMousePosType(getRaletiveToRect(mouse, backGrounds[cur]->transform()))));
 		else setCursor(Qt::CursorShape::ArrowCursor);
 	}
 }

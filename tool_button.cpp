@@ -3,7 +3,7 @@
 #include <qwidget>
 #include <qaction>
 
-ToolButton::ToolButton(QString selectedFileName, QString unselectedFileName, QString actionName, ChTexToolState state, QWidget* parent) 
+ToolButton::ToolButton(QString selectedFileName, QString unselectedFileName, QString actionName, CharacterTextureToolState state, QWidget* parent) 
 {
     selected_ = QIcon(selectedFileName);
     unselected_ = QIcon(unselectedFileName);
@@ -33,7 +33,7 @@ void ToolButton::set_unselected(QIcon icon)
     unselected_ = icon;
 }
 
-void ToolButton::set_toolState(ChTexToolState state)
+void ToolButton::set_toolState(CharacterTextureToolState state)
 {
     toolState_ = state;
 }
@@ -43,7 +43,7 @@ QAction* ToolButton::action() const
     return action_;
 }
 
-ChTexToolState ToolButton::toolState() const
+CharacterTextureToolState ToolButton::toolState() const
 {
     return toolState_;
 }

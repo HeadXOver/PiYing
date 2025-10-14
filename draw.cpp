@@ -1,5 +1,6 @@
 ﻿#include "piYingGL.h"
 #include "piYing.h"
+#include "image_texture.h"
 
 #include <qpainter>
 #include <qopengltexture>
@@ -48,11 +49,11 @@ void PiYingGL::paintBackgrounds()
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	for (int i = 0; i < backGrounds.size(); i++) {
-		ImageTexture& it = backGrounds[i];
-		it.tex->bind();
+		ImageTexture* it = backGrounds[i];
+		it->texture()->bind();
 
 		bgShaderProgram.setUniformValue("texture1", 0);
-		bgShaderProgram.setUniformValue("trc", getBgShaderMatrix(it.transform));
+		bgShaderProgram.setUniformValue("trc", getBgShaderMatrix(it->transform()));
 		if (i == getCurrentBgRow())bgShaderProgram.setUniformValue("selected", true);
 		else bgShaderProgram.setUniformValue("selected", false);
 
@@ -81,9 +82,10 @@ void PiYingGL::paintCharacterTexture()
 
 	int i = getCurrentChRow();
 	if (i >= 0) {
-		characterTextures[i].tex->bind();
+		characterTextures[i]->texture()->bind();
 		bgShaderProgram.setUniformValue("texture1", 0);
 		bgShaderProgram.setUniformValue("trc", getViewProjMatrix());
+		bgShaderProgram.setUniformValue("selected", false);
 
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 	}
@@ -113,7 +115,7 @@ void PiYingGL::paintCharacterSkeleton()
 	if (i >= 0) {
 		glBufferData(GL_ARRAY_BUFFER, characterVerts[i].size() * sizeof(float), characterVerts[i].data(), GL_DYNAMIC_DRAW);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, characterTriangleIndices[i].size() * sizeof(unsigned int), characterTriangleIndices[i].data(), GL_DYNAMIC_DRAW);
-		characterTextures[i].tex->bind();
+		characterTextures[i]->texture()->bind();
 		chShaderProgram.setUniformValue("texture1", 0);
 		chShaderProgram.setUniformValue("trc", getViewProjMatrix());
 		glDrawElements(GL_TRIANGLES, (GLsizei)characterTriangleIndices[i].size(), GL_UNSIGNED_INT, 0);

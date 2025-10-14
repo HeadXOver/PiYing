@@ -127,6 +127,7 @@
     <ClInclude Include="AddChTexPoly.h" />
     <ClInclude Include="ChElementLibreSelect.h" />
     <ClInclude Include="ChElementTool.h" />
+    <ClInclude Include="enum_character_texture_tool_state.h" />
     <ClInclude Include="image_texture.h" />
     <ClInclude Include="image_transform.h" />
     <ClInclude Include="SelectedPoints.h" />

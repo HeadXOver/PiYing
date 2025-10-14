@@ -1,8 +1,11 @@
 ﻿#include "piYingGL.h"
 #include "piYing.h"
+#include "image_transform.h"
 
 PiYingGL::PiYingGL(PiYing* parent) : QOpenGLWidget(parent), parent(parent)
 {
+	lastImageTransform = new ImageTransform();
+
 	viewScale.setValue(1.0f);
 	
 	float ratio = 16.f / 9.f;

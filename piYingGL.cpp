@@ -4,6 +4,10 @@
 #include "AddChTexPoly.h"
 #include "ChElementLibreSelect.h"
 #include "CusFunc.h"
+#include "piYingGLContainer.h"
+#include "KeyboardStateWin.h"
+#include "image_transform.h"
+#include "image_texture.h"
 
 #include <QColorDialog>
 #include <QMessageBox>
@@ -24,6 +28,10 @@ PiYingGL::~PiYingGL()
 	doneCurrent();
 
 	if (chElementTool) delete chElementTool;
+	for (ImageTexture* ch : characterTextures) delete ch;
+	for (ImageTexture* bg : backGrounds) delete bg;
+
+	delete lastImageTransform;
 }
 
 void PiYingGL::addBackground(const QString& imageName) {
@@ -53,7 +61,7 @@ bool PiYingGL::addBackground(const QString& imageName, QImage& image)
 
 void PiYingGL::appendBgList(QImage& image)
 {
-	backGrounds.append(image);
+	backGrounds.append(new ImageTexture(image));
 
 	QIcon icon(QPixmap::fromImage(image).scaled(50, 50, Qt::KeepAspectRatio, Qt::SmoothTransformation));
 
@@ -72,7 +80,7 @@ void PiYingGL::addCharacter(const QString& imageName)
 		QMessageBox::warning(this, "Warning", "Failed to load image: " + imageName);
 		return;
 	}
-	characterTextures.append(img);
+	characterTextures.append(new ImageTexture(img));
 	characterTriangleIndices.push_back(std::vector<unsigned int>());
 	characterVerts.push_back(std::vector<float>());
 	characterVertsUV.push_back(QList<QPointF>());
@@ -105,16 +113,16 @@ void PiYingGL::updateChTexTool()
 	int currentVector = getCurrentChRow();
 	if (currentVector < 0) return;
 
-	if (chToolState == ChTexToolState::None) return;
-	else if (chToolState == ChTexToolState::AddTriangle) chElementTool = new AddTriangle(currentVector, this);
-	else if (chToolState == ChTexToolState::RectSelectVert) chElementTool = new ChElementRectSelect(currentVector, this);
-	else if (chToolState == ChTexToolState::LibreSelectVert) chElementTool = new ChElementLibreSelect(currentVector, this);
-	else if (chToolState == ChTexToolState::AddPoly) chElementTool = new AddChTexPoly(currentVector, this);
+	if (chToolState == CharacterTextureToolState::None) return;
+	else if (chToolState == CharacterTextureToolState::AddTriangle) chElementTool = new AddTriangle(currentVector, this);
+	else if (chToolState == CharacterTextureToolState::RectSelectVert) chElementTool = new ChElementRectSelect(currentVector, this);
+	else if (chToolState == CharacterTextureToolState::LibreSelectVert) chElementTool = new ChElementLibreSelect(currentVector, this);
+	else if (chToolState == CharacterTextureToolState::AddPoly) chElementTool = new AddChTexPoly(currentVector, this);
 
 	update();
 }
 
-void PiYingGL::setChToolState(ChTexToolState state)
+void PiYingGL::setChToolState(CharacterTextureToolState state)
 {
 	chToolState = state;
 
@@ -126,11 +134,11 @@ void PiYingGL::setChToolState(ChTexToolState state)
 	int currentVector = getCurrentChRow();
 	if (currentVector < 0) return;
 	
-	if (state == ChTexToolState::None) return;
-	else if (state == ChTexToolState::AddTriangle) chElementTool = new AddTriangle(currentVector, this);
-	else if (state == ChTexToolState::RectSelectVert) chElementTool = new ChElementRectSelect(currentVector, this);
-	else if (state == ChTexToolState::LibreSelectVert) chElementTool = new ChElementLibreSelect(currentVector, this);
-	else if (state == ChTexToolState::AddPoly) chElementTool = new AddChTexPoly(currentVector, this);
+	if (state == CharacterTextureToolState::None) return;
+	else if (state == CharacterTextureToolState::AddTriangle) chElementTool = new AddTriangle(currentVector, this);
+	else if (state == CharacterTextureToolState::RectSelectVert) chElementTool = new ChElementRectSelect(currentVector, this);
+	else if (state == CharacterTextureToolState::LibreSelectVert) chElementTool = new ChElementLibreSelect(currentVector, this);
+	else if (state == CharacterTextureToolState::AddPoly) chElementTool = new AddChTexPoly(currentVector, this);
 
 	update();
 }

@@ -3,21 +3,14 @@
 #include <qstring>
 #include <qicon>
 
+#include "enum_character_texture_tool_state.h"
+
 class QAction;
 class QWidget;
 
-enum class ChTexToolState {
-    None,
-    AddTriangle,
-    MoveVert,
-    RectSelectVert,
-    LibreSelectVert,
-    AddPoly,
-};
-
 class ToolButton {
 public:
-    ToolButton(QString selectedFileName, QString unselectedFileName, QString actionName, ChTexToolState state, QWidget* parent);
+    ToolButton(QString selectedFileName, QString unselectedFileName, QString actionName, CharacterTextureToolState state, QWidget* parent);
 
     void select();
     void unSelect();
@@ -25,17 +18,17 @@ public:
     void set_selected(QIcon icon);
     void set_unselected(QIcon icon);
 
-    void set_toolState(ChTexToolState state);
+    void set_toolState(CharacterTextureToolState state);
 
     QAction* action() const;
-    ChTexToolState toolState() const;
+    CharacterTextureToolState toolState() const;
     bool isSelect() const;
 
 private:
     QAction* action_;
     QIcon selected_;
     QIcon unselected_;
-    ChTexToolState toolState_;
+    CharacterTextureToolState toolState_;
     bool isSelect_ = false;
 };
 

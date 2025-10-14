@@ -8,10 +8,10 @@
 
 #include "ui_PiYing.h"
 
-#include "piYingGL.h"
-#include "piYingGLContainer.h"
-
 class CtrlSlideWidget;
+class PiYingGL;
+class ToolButton;
+class PiYingGLContainer;
 
 class PiYing : public QMainWindow
 {
@@ -34,7 +34,7 @@ private slots:
 	void onModeChanged(int mode);
 
 private:
-	void selectTool(ToolButton& toolButton);
+	void selectTool(ToolButton* toolButton);
 
 private:
     Ui::PiYingClass ui;
@@ -47,7 +47,7 @@ private:
 
 	QWidget* timeLine;
 
-	QList<ToolButton> toolChTexList;
+	QList<ToolButton*> toolChTexList;
 
 public:
 	PiYingGLContainer* piYingGLContainer = nullptr;

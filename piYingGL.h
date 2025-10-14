@@ -6,14 +6,12 @@
 #include <qlabel>
 #include <qmenu>
 
-#include "KeyboardStateWin.h"
+#include "enum_character_texture_tool_state.h"
 #include "ViewData.h"
 #include "AskTransformDialog.h"
 #include "ChElementSelect.h"
 #include "AddTriangle.h"
 #include "static_rect_vert.h"
-#include "tool_button.h"
-#include "image_texture.h"
 
 enum class EditMode {
 	Default,
@@ -37,6 +35,8 @@ enum class MousePos {
 };
 
 class PiYing;
+class ImageTransform;
+class ImageTexture;
 
 class PiYingGL : public QOpenGLWidget, QOpenGLFunctions_3_3_Core
 {
@@ -82,7 +82,7 @@ public:
 	void addCharacter(const QString& imageName);
 	void setEditMode(EditMode mode);
 	void updateChTexTool();
-	void setChToolState(ChTexToolState state);
+	void setChToolState(CharacterTextureToolState state);
 	void deleteChElement();
 	void enterChElement();
 	void escapeChVert();
@@ -91,30 +91,30 @@ public:
 	void importBackground();
 	void importChatacter();
 	void currentUpdate();
-	void bgRotationControl(const QPointF& mouse, ImageTexture& image);
-	void bgTranslateControl(const QPointF& mouse, ImageTexture& image);
-	void bgScaleControl(const QPointF& mouse, ImageTexture& image);
+	void bgRotationControl(const QPointF& mouse, ImageTexture* image);
+	void bgTranslateControl(const QPointF& mouse, ImageTexture* image);
+	void bgScaleControl(const QPointF& mouse, ImageTexture* image);
 	void viewRotationControl(const QPointF& mouse);
 	void drawChEditVert();
 
 	bool addBackground(const QString& imageName, QImage& image);
 
-	QPointF getRaletiveToRect(const QPointF& point, const ImageTransform& transform) const		{ return (proj * transform.getMatrixInvert() * getViewMatrixInvert() * insProj).map(point); }
-	QPointF getRaletiveToGlobal(const QPointF& point, const ImageTransform& transform) const	{ return getBgShaderMatrix(transform).map(point); }
-	QPointF mapToGL(const QPointF& point) { return QPointF((point.x() / float(width())) * 2.0f - 1.0f, 1.0f - (point.y() / float(height())) * 2.0f); }
-	QPointF mapToGL(float x, float y) { return QPointF((x / float(width())) * 2.0f - 1.0f, 1.0f - (y / float(height())) * 2.0f); }
-	QPointF glToMap(const QPointF& point) { return QPointF((point.x() + 1.0f) * width() / 2, (1.0f - point.y()) * height() / 2); }
-	QPointF mapViewProjMatrix(const QPointF& point) { return glToMap(getViewProjMatrix().map(point)); }
-	QPointF GLViewProjMatrixInvert(float x, float y) { return getViewProjMatrixInvert().map(mapToGL(x, y)); }
-	QPointF GLViewProjMatrixInvert(const QPointF& point) { return getViewProjMatrixInvert().map(mapToGL(point)); }
+	QPointF getRaletiveToRect(const QPointF& point, const ImageTransform* transform) const;
+	QPointF getRaletiveToGlobal(const QPointF& point, const ImageTransform* transform) const;
+	QPointF mapToGL(const QPointF& point);
+	QPointF mapToGL(float x, float y);
+	QPointF glToMap(const QPointF& point);
+	QPointF mapViewProjMatrix(const QPointF& point);
+	QPointF GLViewProjMatrixInvert(float x, float y);
+	QPointF GLViewProjMatrixInvert(const QPointF& point);
 
 	QMatrix4x4 getViewMatrixInvert() const;
 	QMatrix4x4 getViewMatrix() const;
-	QMatrix4x4 getBgShaderMatrix(const ImageTransform& transform) const { return proj * getViewMatrix() * transform.getMatrix() * insProj; }
-	QMatrix4x4 getViewProjMatrixInvert() const { return proj * getViewMatrixInvert() * insProj; }
-	QMatrix4x4 getViewProjMatrix() const { return proj * getViewMatrix() * insProj; }
-	QMatrix4x4 getProj() const { return proj; }
-	QMatrix4x4 getInsProj() const {return insProj; }
+	QMatrix4x4 getBgShaderMatrix(const ImageTransform* transform) const;
+	QMatrix4x4 getViewProjMatrixInvert() const;
+	QMatrix4x4 getViewProjMatrix() const;
+	QMatrix4x4 getProj() const;
+	QMatrix4x4 getInsProj() const;
 
 	bool isInsideSquare(const QPointF& point, float side = 2.0f) const { return (point.x() >= -side / 2.f && point.x() <= side / 2.f && point.y() >= -side / 2.f && point.y() <= side / 2.f); }
 
@@ -144,8 +144,8 @@ private:
 	QOpenGLShaderProgram chShaderProgram;
 
 	// imageTextures
-	QList<ImageTexture> backGrounds;
-	QList<ImageTexture> characterTextures;
+	QList<ImageTexture*> backGrounds;
+	QList<ImageTexture*> characterTextures;
 
 	QList<std::vector<float>> characterVerts;
 	QList<QList<QPointF>> characterVertsUV;
@@ -158,14 +158,14 @@ private:
 	QMatrix4x4 proj;
 	QMatrix4x4 insProj;
 
-	ImageTransform lastImageTransform;
+	ImageTransform* lastImageTransform;
 
 	QPointF lastMousePos;
 	QPointF lastMiddleButtonPos;
 
 	MousePos lastMousePosType = MousePos::OutSide;
 
-	ChTexToolState chToolState;
+	CharacterTextureToolState chToolState;
 
 	QMenu* rightButtonMenuChTex;
 	QMenu* rightButtonMenuBg_S;

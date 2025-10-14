@@ -1,6 +1,9 @@
 #include "PiYing.h"
 #include "ctrlSlideWidget.h"
 #include "RatioDialog.h"
+#include "piYingGL.h"
+#include "piYingGLContainer.h"
+#include "tool_button.h"
 
 #include <QMessageBox>
 #include <qkeyevent>
@@ -26,9 +29,9 @@ PiYing::PiYing(QWidget* parent) : QMainWindow(parent) {
     splitTimelineOpenGL = new QSplitter(Qt::Vertical, this);
     splitListOpenGL = new QSplitter(Qt::Horizontal, this);
 
-    toolChTexList.append(ToolButton(":/PiYing/selectRectChVert_S.png", ":/PiYing/selectRectChVert.png", "selectRectChVert", ChTexToolState::RectSelectVert, this));
-    toolChTexList.append(ToolButton(":/PiYing/addChVert_S.png", ":/PiYing/addChVert.png", "addChVert", ChTexToolState::AddTriangle, this));
-    toolChTexList.append(ToolButton(":/PiYing/chAddPoly_S.png", ":/PiYing/chAddPoly.png", "chAddPoly", ChTexToolState::AddPoly, this));
+    toolChTexList.append(new ToolButton(":/PiYing/selectRectChVert_S.png", ":/PiYing/selectRectChVert.png", "selectRectChVert", CharacterTextureToolState::RectSelectVert, this));
+    toolChTexList.append(new ToolButton(":/PiYing/addChVert_S.png", ":/PiYing/addChVert.png", "addChVert", CharacterTextureToolState::AddTriangle, this));
+    toolChTexList.append(new ToolButton(":/PiYing/chAddPoly_S.png", ":/PiYing/chAddPoly.png", "chAddPoly", CharacterTextureToolState::AddPoly, this));
 
     QComboBox* modeBox = new QComboBox(this);
 
@@ -55,8 +58,8 @@ PiYing::PiYing(QWidget* parent) : QMainWindow(parent) {
     QAction* actionScreenScale           = childMenuScreen->     addAction("比例...");
     QAction* actionDefaultColor          = childMenuScreen->     addAction("底色...");
 
-    for (ToolButton& item : toolChTexList) {
-        connect(item.action(), &QAction::triggered, this, [this, &item]() {selectTool(item); });
+    for (ToolButton* item : toolChTexList) {
+        connect(item->action(), &QAction::triggered, this, [this, item]() {selectTool(item); });
     }
 
     connect(actionExportCurrentFrame,   SIGNAL(triggered()), this, SLOT(exportCurrentFrame()));
@@ -120,6 +123,8 @@ PiYing::~PiYing()
     delete chImageList;
     delete sliderWidget;
     delete voidListWidget;
+
+    for (ToolButton* item : toolChTexList) delete item;
 }
 
 void PiYing::keyPressEvent(QKeyEvent* event)
@@ -200,8 +205,8 @@ void PiYing::onModeChanged(int mode)
         splitListOpenGL->widget(0)->setParent(nullptr);
         splitListOpenGL->insertWidget(0, chImageList);
         piYingGL->setEditMode(EditMode::characterTexture);
-        for (ToolButton& item : toolChTexList) {
-            ui.mainToolBar->addAction(item.action());
+        for (ToolButton* item : toolChTexList) {
+            ui.mainToolBar->addAction(item->action());
         }
     }
     else if (mode == 3) {
@@ -217,23 +222,23 @@ void PiYing::onModeChanged(int mode)
     }
 }
 
-void PiYing::selectTool(ToolButton& toolButton)
+void PiYing::selectTool(ToolButton* toolButton)
 {
-    if (toolButton.isSelect()) {
-        if (toolButton.toolState() == ChTexToolState::RectSelectVert) {
-            toolButton.set_selected(QIcon(":/PiYing/selectLibreChVert_S.png"));
-            toolButton.set_unselected(QIcon(":/PiYing/selectLibreChVert.png"));
-            toolButton.set_toolState(ChTexToolState::LibreSelectVert);
+    if (toolButton->isSelect()) {
+        if (toolButton->toolState() == CharacterTextureToolState::RectSelectVert) {
+            toolButton->set_selected(QIcon(":/PiYing/selectLibreChVert_S.png"));
+            toolButton->set_unselected(QIcon(":/PiYing/selectLibreChVert.png"));
+            toolButton->set_toolState(CharacterTextureToolState::LibreSelectVert);
         }
-        else if (toolButton.toolState() == ChTexToolState::LibreSelectVert) {
-            toolButton.set_selected(QIcon(":/PiYing/selectRectChVert_S.png"));
-            toolButton.set_unselected(QIcon(":/PiYing/selectRectChVert.png"));
-            toolButton.set_toolState(ChTexToolState::RectSelectVert);
+        else if (toolButton->toolState() == CharacterTextureToolState::LibreSelectVert) {
+            toolButton->set_selected(QIcon(":/PiYing/selectRectChVert_S.png"));
+            toolButton->set_unselected(QIcon(":/PiYing/selectRectChVert.png"));
+            toolButton->set_toolState(CharacterTextureToolState::RectSelectVert);
         }
         else return;
     }
-    else for (ToolButton& item : toolChTexList) item.unSelect();
+    else for (ToolButton* item : toolChTexList) item->unSelect();
 
-    toolButton.select();
-    piYingGL->setChToolState(toolButton.toolState());
+    toolButton->select();
+    piYingGL->setChToolState(toolButton->toolState());
 }

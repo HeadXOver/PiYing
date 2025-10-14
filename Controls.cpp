@@ -1,32 +1,35 @@
 ﻿#include "piYingGL.h"
 #include "piYing.h"
 #include "CusFunc.h"
+#include "image_transform.h"
+#include "KeyboardStateWin.h"
+#include "image_texture.h"
 
-void PiYingGL::bgRotationControl(const QPointF& mouse, ImageTexture& image)
+void PiYingGL::bgRotationControl(const QPointF& mouse, ImageTexture* image)
 {
 	setCursor(Qt::CursorShape::ClosedHandCursor);
 	QPointF center = getBgShaderMatrix(lastImageTransform).map(QPointF(0.f, 0.f));
 	QPointF vec1 = insProj.map(lastMousePos - center);
 	QPointF vec2 = insProj.map(mouse - center);
-	image.transform = lastImageTransform;
-	image.addRot(angleBetweenPointDegree(vec2, vec1));
+	image->copyTransformFrom(lastImageTransform);
+	image->addRot(angleBetweenPointDegree(vec2, vec1));
 }
 
-void PiYingGL::bgTranslateControl(const QPointF& mouse, ImageTexture& image)
+void PiYingGL::bgTranslateControl(const QPointF& mouse, ImageTexture* image)
 {
 	setCursor(Qt::ClosedHandCursor);
-	image.transform = lastImageTransform;
-	image.addTrans(getRotatedPoint(insProj.map(mouse - lastMousePos) / viewScale.value(), -viewRotate.value() * 3.1415926f / 180.f));
+	image->copyTransformFrom(lastImageTransform);
+	image->addTrans(getRotatedPoint(insProj.map(mouse - lastMousePos) / viewScale.value(), -viewRotate.value() * 3.1415926f / 180.f));
 }
 
-void PiYingGL::bgScaleControl(const QPointF& mouse, ImageTexture& image)
+void PiYingGL::bgScaleControl(const QPointF& mouse, ImageTexture* image)
 {
 	QPointF mouseRaletive = getRaletiveToRect(mouse, lastImageTransform);
 	QPointF LastMouseRaletive = getRaletiveToRect(lastMousePos, lastImageTransform);
 	QPointF pAspect(1.0f, 1.0f);
 	short PN[2] = { 1, 1 };
 
-	image.transform = lastImageTransform;
+	image->copyTransformFrom(lastImageTransform);
 
 	if (lastMousePosType == MousePos::BottomEdge || lastMousePosType == MousePos::LeftBottom || lastMousePosType == MousePos::RightBottom) {
 		pAspect.setY((1.0f - mouseRaletive.y()) / (1.0f - LastMouseRaletive.y()));
@@ -45,10 +48,10 @@ void PiYingGL::bgScaleControl(const QPointF& mouse, ImageTexture& image)
 	if (KeyboardStateWin::isShiftHeld()) {
 		pAspect.setY(pAspect.x());
 	}
-	image.addScale(pAspect);
+	image->addScale(pAspect);
 	pAspect.setX(PN[1] * (1.f - pAspect.x()));
 	pAspect.setY(PN[0] * (1.f - pAspect.y()));
-	image.addTrans((lastImageTransform.rot * lastImageTransform.scale * insProj).map(pAspect));
+	image->addTrans((lastImageTransform->rot * lastImageTransform->scale * insProj).map(pAspect));
 }
 
 void PiYingGL::viewRotationControl(const QPointF& mouse)

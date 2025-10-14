@@ -1,6 +1,7 @@
 #include "ChElementLibreSelect.h"
 #include "piYingGL.h"
 #include "SelectedPoints.h"
+#include "KeyboardStateWin.h"
 
 #include <qpolygonf>
 #include <qpainter>

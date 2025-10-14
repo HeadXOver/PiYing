@@ -1,5 +1,6 @@
 #include "ChElementTool.h"
 #include "piYing.h"
+#include "piYingGL.h"
 
 ChElementTool::ChElementTool(int current, PiYingGL* pygl) :
 	glIndex(pygl->ref_characterTriangleIndices()[current]),
