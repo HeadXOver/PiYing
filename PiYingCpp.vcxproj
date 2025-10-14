@@ -105,6 +105,7 @@
     <ClCompile Include="ctrlSlideWidget.cpp" />
     <ClCompile Include="events.cpp" />
     <ClCompile Include="image_texture.cpp" />
+    <ClCompile Include="image_transform.cpp" />
     <ClCompile Include="piYingGL.cpp" />
     <ClCompile Include="piYingGLContainer.cpp" />
     <ClCompile Include="RatioDialog.cpp" />
@@ -127,6 +128,7 @@
     <ClInclude Include="ChElementLibreSelect.h" />
     <ClInclude Include="ChElementTool.h" />
     <ClInclude Include="image_texture.h" />
+    <ClInclude Include="image_transform.h" />
     <ClInclude Include="SelectedPoints.h" />
     <ClInclude Include="tool_button.h" />
     <QtMoc Include="ctrlSlideLayout.h" />
@@ -135,10 +137,9 @@
     <ClInclude Include="AddTriangle.h" />
     <ClInclude Include="ChElementSelect.h" />
     <QtMoc Include="AskTransformDialog.h" />
-    <ClInclude Include="cusMode.h" />
-    <ClInclude Include="Element.h" />
+    <ClInclude Include="static_rect_vert.h" />
     <ClInclude Include="KeyboardStateWin.h" />
-    <ClInclude Include="handle_zone.h" />
+    <ClInclude Include="static_handle_zone.h" />
     <QtMoc Include="ViewData.h" />
     <QtMoc Include="piYingGLContainer.h" />
     <QtMoc Include="RatioDialog.h" />

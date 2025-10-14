@@ -2,7 +2,7 @@
 #include "piYingGL.h"
 #include "SelectedPoints.h"
 #include "CusFunc.h"
-#include "handle_zone.h"
+#include "static_handle_zone.h"
 
 #include <qpainter>
 

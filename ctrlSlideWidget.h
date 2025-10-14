@@ -2,7 +2,8 @@
 
 #include <QWidget>
 
-#include "ctrlSlideLayout.h"
+class CtrlSlideLayout;
+class QVBoxLayout;
 
 class CtrlSlideWidget : public QWidget
 {

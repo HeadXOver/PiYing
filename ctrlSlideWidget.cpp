@@ -1,4 +1,5 @@
 ﻿#include "ctrlSlideWidget.h"
+#include "ctrlSlideLayout.h"
 
 #include <QPushbutton>
 #include <QVBoxLayout>

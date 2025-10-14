@@ -8,7 +8,6 @@
 
 #include "ui_PiYing.h"
 
-#include "cusMode.h"
 #include "piYingGL.h"
 #include "piYingGLContainer.h"
 

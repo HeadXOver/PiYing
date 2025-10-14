@@ -127,15 +127,15 @@
     <ClCompile Include="image_texture.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="image_transform.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="handle_zone.h">
+    <ClInclude Include="static_handle_zone.h">
       <Filter>Header Files\CusStruct</Filter>
     </ClInclude>
-    <ClInclude Include="cusMode.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Element.h">
+    <ClInclude Include="static_rect_vert.h">
       <Filter>Header Files\CusStruct</Filter>
     </ClInclude>
     <ClInclude Include="KeyboardStateWin.h">
@@ -166,6 +166,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="image_texture.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="image_transform.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

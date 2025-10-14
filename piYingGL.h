@@ -11,7 +11,7 @@
 #include "AskTransformDialog.h"
 #include "ChElementSelect.h"
 #include "AddTriangle.h"
-#include "Element.h"
+#include "static_rect_vert.h"
 #include "tool_button.h"
 #include "image_texture.h"
 

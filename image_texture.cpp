@@ -83,3 +83,7 @@ QMatrix4x4 ImageTexture::getMatrixInvert() const
 {
     return transform.getMatrixInvert(); 
 }
+
+void ImageTexture::reset() {
+    transform.reset();
+}
