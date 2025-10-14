@@ -1,6 +1,21 @@
 ﻿#include "ChElementSelect.h"
-#include "KeyboardStateWin.h"
 #include "piYingGL.h"
+#include "SelectedPoints.h"
+
+ChElementSelect::ChElementSelect(int current, PiYingGL* gl) : ChElementTool(current, gl)
+{
+    selectedPoints = new SelectedPoints(sVert);
+}
+
+ChElementSelect::~ChElementSelect()
+{
+    delete selectedPoints;
+}
+
+void ChElementSelect::escape() 
+{ 
+    if (selectedPoints->size() > 0) selectedPoints->removeLast(); 
+}
 
 void ChElementSelect::deleteElement()
 {
@@ -12,7 +27,7 @@ void ChElementSelect::deleteElement()
 
     std::vector<bool> killVert(nVert, false);
     std::vector<bool> killTri(nTri, false);
-    for (unsigned v : selectedPoints.index()) killVert[v] = true;
+    for (unsigned v : selectedPoints->index()) killVert[v] = true;
 
     std::vector<unsigned> refCount(nVert, 0);
     for (size_t t = 0; t < nTri; ++t) {
@@ -66,20 +81,20 @@ void ChElementSelect::deleteElement()
     if (outIdx != 0) idx.resize(outIdx);
     else idx.clear();
 
-    selectedPoints.clear();
+    selectedPoints->clear();
 }
 
 void ChElementSelect::drawHandle(QPainter& painter)
 {
-    if(selectedPoints.size() == 0) return;
+    if(selectedPoints->size() == 0) return;
 
     painter.setBrush(QColor(0, 0, 0, 0));
 
     // 计算中心点
     handleCenterPoint = QPointF();
-    for (unsigned int i : selectedPoints.index()) handleCenterPoint += sVert[i];
+    for (unsigned int i : selectedPoints->index()) handleCenterPoint += sVert[i];
     
-    handleCenterPoint /= selectedPoints.size();
+    handleCenterPoint /= selectedPoints->size();
 
     dHandleCenterPoint = gl->mapViewProjMatrix(handleCenterPoint);
 
@@ -118,7 +133,7 @@ void ChElementSelect::drawHandle(QPainter& painter)
 
 void ChElementSelect::changeEditMode()
 {
-    if (selectedPoints.size() == 0) {
+    if (selectedPoints->size() == 0) {
         editMode = ChElementEditMode::None;
         return;
     }
@@ -141,58 +156,58 @@ void ChElementSelect::moveHandle(const QPointF& mouse)
 
     if (editMode == ChElementEditMode::Move) {
         QPointF toMove = gl->GLViewProjMatrixInvert(mouse) - gl->GLViewProjMatrixInvert(lastPos);
-        for (int i = 0;i < selectedPoints.size();i++) {
-            sVert[selectedPoints[i]] = selectedPoints.getVert(i) + toMove;
+        for (int i = 0;i < selectedPoints->size();i++) {
+            sVert[(*selectedPoints)[i]] = selectedPoints->getVert(i) + toMove;
         }
     }
     else if(editMode == ChElementEditMode::MoveX) {
         QPointF toMove = gl->GLViewProjMatrixInvert(mouse.x(), 0.f) - gl->GLViewProjMatrixInvert(lastPos.x(), 0.f);
-        for (int i = 0; i < selectedPoints.size(); i++) {
-            sVert[selectedPoints[i]] = selectedPoints.getVert(i) + toMove;
+        for (int i = 0; i < selectedPoints->size(); i++) {
+            sVert[(*selectedPoints)[i]] = selectedPoints->getVert(i) + toMove;
         }
     }
     else if (editMode == ChElementEditMode::MoveY) {
         QPointF toMove = gl->GLViewProjMatrixInvert(0.f, mouse.y()) - gl->GLViewProjMatrixInvert(0.f, lastPos.y());
-        for (int i = 0; i < selectedPoints.size(); i++) {
-            sVert[selectedPoints[i]] = selectedPoints.getVert(i) + toMove;
+        for (int i = 0; i < selectedPoints->size(); i++) {
+            sVert[(*selectedPoints)[i]] = selectedPoints->getVert(i) + toMove;
         }
     }
     else if (editMode == ChElementEditMode::Rotate) {
         float angle = angleBetweenPoint(lastPos - lastDHandleCenterPoint, mouse - lastDHandleCenterPoint);
         QPointF toRot = gl->getInsProj().map(lastHandleCenterPoint);
-        for (int i = 0; i < selectedPoints.size(); i++) {
-            sVert[selectedPoints[i]] = toRot + getRotatedPoint(gl->getInsProj().map(selectedPoints.getVert(i) - lastHandleCenterPoint), angle);
-            sVert[selectedPoints[i]] = gl->getProj().map(sVert[selectedPoints[i]]);
+        for (int i = 0; i < selectedPoints->size(); i++) {
+            sVert[(*selectedPoints)[i]] = toRot + getRotatedPoint(gl->getInsProj().map(selectedPoints->getVert(i) - lastHandleCenterPoint), angle);
+            sVert[(*selectedPoints)[i]] = gl->getProj().map(sVert[(*selectedPoints)[i]]);
         }
     }
     else if (editMode == ChElementEditMode::Scale) {
         float scale = (mouse.x() + mouse.y() - dHandleCenterPoint.x() - dHandleCenterPoint.y()) / (ROTATEHANDLE_RADIUS + ROTATEHANDLE_RADIUS);
         QPointF toScale = lastHandleCenterPoint * (scale - 1);
-        for (int i = 0; i < selectedPoints.size(); i++) {
-            sVert[selectedPoints[i]] = selectedPoints.getVert(i) * scale - toScale;
+        for (int i = 0; i < selectedPoints->size(); i++) {
+            sVert[(*selectedPoints)[i]] = selectedPoints->getVert(i) * scale - toScale;
         }
     }
     else if (editMode == ChElementEditMode::ScaleX) {
         float scale = (mouse.x() - lastDHandleCenterPoint.x()) / ROTATEHANDLE_RADIUS;
         float scaleX = lastDHandleCenterPoint.x() * (1 - scale);
-        for (int i = 0; i < selectedPoints.size(); i++) {
-            QPointF mapOri = gl->mapViewProjMatrix(selectedPoints.getVert(i));
-            sVert[selectedPoints[i]] = gl->GLViewProjMatrixInvert(mapOri.x() * scale + scaleX, mapOri.y());
+        for (int i = 0; i < selectedPoints->size(); i++) {
+            QPointF mapOri = gl->mapViewProjMatrix(selectedPoints->getVert(i));
+            sVert[(*selectedPoints)[i]] = gl->GLViewProjMatrixInvert(mapOri.x() * scale + scaleX, mapOri.y());
         }
     }
     else if (editMode == ChElementEditMode::ScaleY) {
         float scale = (mouse.y() - lastDHandleCenterPoint.y()) / ROTATEHANDLE_RADIUS;
         float scaleY = lastDHandleCenterPoint.y() * (1 - scale);
-        for (int i = 0; i < selectedPoints.size(); i++) {
-            QPointF mapOri = gl->mapViewProjMatrix(selectedPoints.getVert(i));
-            sVert[selectedPoints[i]] = gl->GLViewProjMatrixInvert(mapOri.x(), mapOri.y() * scale + scaleY);
+        for (int i = 0; i < selectedPoints->size(); i++) {
+            QPointF mapOri = gl->mapViewProjMatrix(selectedPoints->getVert(i));
+            sVert[(*selectedPoints)[i]] = gl->GLViewProjMatrixInvert(mapOri.x(), mapOri.y() * scale + scaleY);
         }
 	}
 }
 
 void ChElementSelect::affirmHandle()
 {
-    selectedPoints.affirmVert();
+    selectedPoints->affirmVert();
     lastHandleCenterPoint = handleCenterPoint;
     lastDHandleCenterPoint = dHandleCenterPoint;
 }

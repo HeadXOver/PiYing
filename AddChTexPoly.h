@@ -1,11 +1,17 @@
 #pragma once
 
+#include <QList>
+#include <QPoint>
+#include <QPainter>
+
 #include "ChElementTool.h"
+
+class PiYingGL;
 
 class AddChTexPoly : public ChElementTool {
 
 public:
-	AddChTexPoly(int current, PiYingGL* gl) :ChElementTool(current, gl) {}
+	AddChTexPoly(int current, PiYingGL* gl);
 
 public:
 	virtual void escape() override;

@@ -1,6 +1,8 @@
 #include "AddChTexPoly.h"
 #include "piYingGL.h"
 
+AddChTexPoly::AddChTexPoly(int current, PiYingGL* gl) :ChElementTool(current, gl) {}
+
 void AddChTexPoly::escape()
 {
 	if (index.size() == 0) return;

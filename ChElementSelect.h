@@ -2,13 +2,16 @@
 
 #include "ChElementTool.h"
 
+class SelectedPoints;
+
 class ChElementSelect : public ChElementTool
 {
 public:
-	ChElementSelect(int current, PiYingGL* gl) : ChElementTool(current, gl), selectedPoints(sVert) {}
+	ChElementSelect(int current, PiYingGL* gl);
+	virtual ~ChElementSelect();
 
 public:
-	virtual void escape() override { if (selectedPoints.size() > 0) selectedPoints.removeLast(); }
+	virtual void escape() override;
 	virtual void enter() override {}
 	virtual void deleteElement() override;
 
@@ -19,7 +22,7 @@ protected:
 	void affirmHandle();
 
 protected:
-	SelectedPoints selectedPoints;
+	SelectedPoints* selectedPoints;
 	QPointF lastPos;
 	QPointF handleCenterPoint;
 	QPointF dHandleCenterPoint;
