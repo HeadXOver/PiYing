@@ -178,6 +178,12 @@
     <ClCompile Include="point_vector.cpp">
       <Filter>Source Files\CusContainer</Filter>
     </ClCompile>
+    <ClCompile Include="float_vector_layer.cpp">
+      <Filter>Source Files\CusContainer</Filter>
+    </ClCompile>
+    <ClCompile Include="point_vector_layer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="static_handle_zone.h">
@@ -241,6 +247,12 @@
       <Filter>Header Files\CustomTool</Filter>
     </ClInclude>
     <ClInclude Include="point_vector.h">
+      <Filter>Header Files\CusContainer</Filter>
+    </ClInclude>
+    <ClInclude Include="float_vector_layer.h">
+      <Filter>Header Files\CusContainer</Filter>
+    </ClInclude>
+    <ClInclude Include="point_vector_layer.h">
       <Filter>Header Files\CusContainer</Filter>
     </ClInclude>
   </ItemGroup>

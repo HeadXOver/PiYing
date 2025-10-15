@@ -4,6 +4,7 @@
 #include "SelectedPoints.h"
 #include "static_handle_zone.h"
 #include "point_vector.h"
+#include "point_vector_layer.h"
 
 #include "cus_func_zone.h"
 #include "cus_func_point2d.h"
@@ -12,7 +13,7 @@
 
 ChElementSelect::ChElementSelect(GlVertReference* glReference) : glVertReference(glReference)
 {
-    selectedPoints = new SelectedPoints(glVertReference->uvVert);
+    selectedPoints = new SelectedPoints(false, *(glVertReference->pointLayer));
 }
 
 ChElementSelect::~ChElementSelect()
@@ -28,9 +29,8 @@ void ChElementSelect::escape()
 void ChElementSelect::deleteElement()
 {
     std::vector<unsigned int>& idx = glVertReference->glIndex;
-    PointVector& vert = glVertReference->glVert;
-    PointVector& s_Vert = glVertReference->uvVert;
-    const size_t nVert = s_Vert.size();
+    PointVectorLayer& pointLayer = *(glVertReference->pointLayer);
+    const size_t nVert = pointLayer.size();
     const size_t nTri = idx.size() / 3;
 
     std::vector<bool> killVert(nVert, false);
@@ -64,17 +64,14 @@ void ChElementSelect::deleteElement()
     for (unsigned old = 0; old < nVert; ++old) {
         if (!killVert[old]) {
             old2new[old] = newVertCount++;
-            vert.set_point(newVertCount - 1, vert[old]);
-            s_Vert.set_point(newVertCount - 1, s_Vert[old]);
+            pointLayer.copy_from_to(old, newVertCount - 1);
         }
     }
     if (newVertCount == 0) {
-        vert.clear();
-        s_Vert.clear();
+        pointLayer.clear();
     }
     else {
-        vert.resize(newVertCount);
-        s_Vert.resize(newVertCount);
+        pointLayer.resize(newVertCount);
     }
 
     size_t outIdx = 0;
@@ -99,7 +96,7 @@ void ChElementSelect::drawHandle(QPainter* painter)
 
     // 计算中心点
     handleCenterPoint = QPointF();
-    for (unsigned int i : selectedPoints->index()) handleCenterPoint += glVertReference->uvVert[i];
+    for (unsigned int i : selectedPoints->index()) handleCenterPoint += glVertReference->pointLayer->get_uv_point(i);
     
     handleCenterPoint /= selectedPoints->size();
 
@@ -161,38 +158,38 @@ void ChElementSelect::moveHandle(const QPointF& mouse)
 {
     if (editMode == ChElementEditMode::None) return;
 
-    PointVector& pointVector = glVertReference->uvVert;
+    PointVectorLayer& pointLayer = *(glVertReference->pointLayer);
     if (editMode == ChElementEditMode::Move) {
         QPointF toMove = glVertReference->gl->GLViewProjMatrixInvert(mouse) - glVertReference->gl->GLViewProjMatrixInvert(lastPos);
         for (int i = 0;i < selectedPoints->size();i++) {
-            pointVector.set_point((*selectedPoints)[i], selectedPoints->getVert(i) + toMove);
+            pointLayer.set_point(false, (*selectedPoints)[i], selectedPoints->getVert(i) + toMove);
         }
     }
     else if(editMode == ChElementEditMode::MoveX) {
         QPointF toMove = glVertReference->gl->GLViewProjMatrixInvert(mouse.x(), 0.f) - glVertReference->gl->GLViewProjMatrixInvert(lastPos.x(), 0.f);
         for (int i = 0; i < selectedPoints->size(); i++) {
-            pointVector.set_point((*selectedPoints)[i], selectedPoints->getVert(i) + toMove);
+            pointLayer.set_point(false, (*selectedPoints)[i], selectedPoints->getVert(i) + toMove);
         }
     }
     else if (editMode == ChElementEditMode::MoveY) {
         QPointF toMove = glVertReference->gl->GLViewProjMatrixInvert(0.f, mouse.y()) - glVertReference->gl->GLViewProjMatrixInvert(0.f, lastPos.y());
         for (int i = 0; i < selectedPoints->size(); i++) {
-            pointVector.set_point((*selectedPoints)[i], selectedPoints->getVert(i) + toMove);
+            pointLayer.set_point(false, (*selectedPoints)[i], selectedPoints->getVert(i) + toMove);
         }
     }
     else if (editMode == ChElementEditMode::Rotate) {
         float angle = angleBetweenPoint(lastPos - lastDHandleCenterPoint, mouse - lastDHandleCenterPoint);
         QPointF toRot = glVertReference->gl->getInsProj().map(lastHandleCenterPoint);
         for (int i = 0; i < selectedPoints->size(); i++) {
-            pointVector.set_point((*selectedPoints)[i], toRot + getRotatedPoint(glVertReference->gl->getInsProj().map(selectedPoints->getVert(i) - lastHandleCenterPoint), angle));
-            pointVector.set_point((*selectedPoints)[i], glVertReference->gl->getProj().map(glVertReference->uvVert[(*selectedPoints)[i]]));
+            pointLayer.set_point(false, (*selectedPoints)[i], toRot + getRotatedPoint(glVertReference->gl->getInsProj().map(selectedPoints->getVert(i) - lastHandleCenterPoint), angle));
+            pointLayer.set_point(false, (*selectedPoints)[i], glVertReference->gl->getProj().map(glVertReference->pointLayer->get_uv_point((*selectedPoints)[i])));
         }
     }
     else if (editMode == ChElementEditMode::Scale) {
         float scale = (mouse.x() + mouse.y() - dHandleCenterPoint.x() - dHandleCenterPoint.y()) / (ROTATEHANDLE_RADIUS + ROTATEHANDLE_RADIUS);
         QPointF toScale = lastHandleCenterPoint * (scale - 1);
         for (int i = 0; i < selectedPoints->size(); i++) {
-            pointVector.set_point((*selectedPoints)[i], selectedPoints->getVert(i) * scale - toScale);
+            pointLayer.set_point(false, (*selectedPoints)[i], selectedPoints->getVert(i) * scale - toScale);
         }
     }
     else if (editMode == ChElementEditMode::ScaleX) {
@@ -200,7 +197,7 @@ void ChElementSelect::moveHandle(const QPointF& mouse)
         float scaleX = lastDHandleCenterPoint.x() * (1 - scale);
         for (int i = 0; i < selectedPoints->size(); i++) {
             QPointF mapOri = glVertReference->gl->mapViewProjMatrix(selectedPoints->getVert(i));
-            pointVector.set_point((*selectedPoints)[i], glVertReference->gl->GLViewProjMatrixInvert(mapOri.x() * scale + scaleX, mapOri.y()));
+            pointLayer.set_point(false, (*selectedPoints)[i], glVertReference->gl->GLViewProjMatrixInvert(mapOri.x() * scale + scaleX, mapOri.y()));
         }
     }
     else if (editMode == ChElementEditMode::ScaleY) {
@@ -208,7 +205,7 @@ void ChElementSelect::moveHandle(const QPointF& mouse)
         float scaleY = lastDHandleCenterPoint.y() * (1 - scale);
         for (int i = 0; i < selectedPoints->size(); i++) {
             QPointF mapOri = glVertReference->gl->mapViewProjMatrix(selectedPoints->getVert(i));
-            pointVector.set_point((*selectedPoints)[i], glVertReference->gl->GLViewProjMatrixInvert(mapOri.x(), mapOri.y() * scale + scaleY));
+            pointLayer.set_point(false, (*selectedPoints)[i], glVertReference->gl->GLViewProjMatrixInvert(mapOri.x(), mapOri.y() * scale + scaleY));
         }
 	}
 }

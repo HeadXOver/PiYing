@@ -124,8 +124,6 @@ public:
 
 	QList<PointVector*>& ref_characterVerts() { return characterVerts; }
 	PointVector& ref_characterVerts(int index) { return *(characterVerts[index]); }
-	QList<PointVector*>& ref_characterUVVerts() { return characterVertsUV; }
-	PointVector& ref_characterUVVerts(int index) { return *(characterVertsUV[index]); }
 	QList<std::vector<unsigned int>>& ref_characterTriangleIndices () { return characterTriangleIndices; }
 
 public:
@@ -150,7 +148,6 @@ private:
 	QList<ImageTexture*> characterTextures;
 
 	QList<PointVector*> characterVerts;
-	QList<PointVector*> characterVertsUV;
 	QList<std::vector<unsigned int>> characterTriangleIndices;
 
 	float lastViewRotate = 0.f;
