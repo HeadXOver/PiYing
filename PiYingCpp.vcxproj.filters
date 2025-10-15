@@ -66,6 +66,12 @@
     <Filter Include="Source Files\CustomElement">
       <UniqueIdentifier>{c7897473-4aa2-4a1e-b9e9-6cd904a6eac6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\CusContainer">
+      <UniqueIdentifier>{71909617-4079-4e9b-81f7-14b22808c68b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\CusContainer">
+      <UniqueIdentifier>{9b1c9dab-4333-4668-a13b-7a2ab2ab5323}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <QtRcc Include="PiYing.qrc">
@@ -169,6 +175,9 @@
     <ClCompile Include="KeyboardStateWin.cpp">
       <Filter>Source Files\CustomTool</Filter>
     </ClCompile>
+    <ClCompile Include="point_vector.cpp">
+      <Filter>Source Files\CusContainer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="static_handle_zone.h">
@@ -230,6 +239,9 @@
     </ClInclude>
     <ClInclude Include="cus_func_point2d.h">
       <Filter>Header Files\CustomTool</Filter>
+    </ClInclude>
+    <ClInclude Include="point_vector.h">
+      <Filter>Header Files\CusContainer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

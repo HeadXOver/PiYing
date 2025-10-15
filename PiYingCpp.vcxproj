@@ -113,6 +113,7 @@
     <ClCompile Include="KeyboardStateWin.cpp" />
     <ClCompile Include="piYingGL.cpp" />
     <ClCompile Include="piYingGLContainer.cpp" />
+    <ClCompile Include="point_vector.cpp" />
     <ClCompile Include="RatioDialog.cpp" />
     <ClCompile Include="GLFunc.cpp" />
     <ClCompile Include="SelectedPoints.cpp" />
@@ -136,6 +137,7 @@
     <ClInclude Include="enum_character_texture_tool_state.h" />
     <ClInclude Include="image_texture.h" />
     <ClInclude Include="image_transform.h" />
+    <ClInclude Include="point_vector.h" />
     <ClInclude Include="SelectedPoints.h" />
     <ClInclude Include="tool_button.h" />
     <ClInclude Include="ChElementToolBehavior.h" />
