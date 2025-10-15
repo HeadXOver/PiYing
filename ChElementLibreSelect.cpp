@@ -8,6 +8,7 @@
 
 #include <qpolygonf>
 #include <qpainter>
+#include <qpointf>
 
 ChElementLibreSelect::ChElementLibreSelect(GlVertReference* glReference) :chElementSelect(new ChElementSelect(glReference))
 {

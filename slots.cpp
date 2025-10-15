@@ -1,6 +1,6 @@
 ﻿#include "piYingGL.h"
 #include "PiYing.h"
-#include "CusFunc.h"
+#include "cus_func_transform.h"
 #include "image_transform.h"
 #include "image_texture.h"
 #include "AskTransformDialog.h"
@@ -43,6 +43,8 @@ void PiYingGL::returnBgTransform()
 	if (cur >= 0) {
 		backGrounds[cur]->resetTransform();
 	}
+
+	update();
 }
 
 void PiYingGL::bgSetTransform()
@@ -52,12 +54,12 @@ void PiYingGL::bgSetTransform()
 		float transX, transY, Rot, ScaleX, ScaleY;
 		ImageTexture* image = backGrounds[cur];
 		ImageTransform* transform = image->transform();
-		float d[5] = { 
-			transform->trans(0, 3), 
-			transform->trans(1, 3),
-			qAtan2(transform->rot(1, 0), transform->rot(0, 0)) * 180.f / 3.141593f,
-			qSqrt(transform->scale(0,0) * transform->scale(0,0) + transform->scale(1,0) * transform->scale(1,0)),
-			qSqrt(transform->scale(0,1) * transform->scale(0,1) + transform->scale(1,1) * transform->scale(1,1))
+		float d[5] = {
+			transform->get_trans_x(),
+			transform->get_scale_y(),
+			transform->get_rot_degree(),
+			transform->get_scale_x(),
+			transform->get_scale_y()
 		};
 		QString s[5] = { QString("X位移"), QString("Y位移"), QString("旋转"), QString("X缩放"), QString("Y缩放") };
 		if (Ask3DoublesDialog("设置变换", s, d, this).getValues(transX, transY, Rot, ScaleX, ScaleY)) {
@@ -66,6 +68,8 @@ void PiYingGL::bgSetTransform()
 			image->setScale(ScaleX, ScaleY);
 		}
 	}
+
+	update();
 }
 
 void PiYingGL::againstBg()
@@ -74,13 +78,15 @@ void PiYingGL::againstBg()
 	if (cur >= 0) {
 		ImageTransform* transform = backGrounds[cur]->transform();
 		QMatrix4x4 r;
-		r.rotate(-qAtan2(transform->rot(1, 0), transform->rot(0, 0)) * 180.f / 3.141593f, 0.0f, 0.0f ,1.0f);
-		QPointF toTrans = r.map(QPointF(- transform->trans(0, 3), -transform->trans(1, 3)));
-		viewTransX.setValue(toTrans.x());
-		viewTransY.setValue(toTrans.y());
-		viewScale.setValue(qSqrt(transform->scale(0, 0) * transform->scale(0, 0) + transform->scale(1, 0) * transform->scale(1, 0)));
-		viewRotate.setValue(-qAtan2(transform->rot(1, 0), transform->rot(0, 0)) * 180.f / 3.141593f);
+		r.rotate(-transform->get_rot_degree(), 0.0f, 0.0f, 1.0f);
+		QPointF toTrans = r.map(QPointF(-transform->get_trans_x(), -transform->get_trans_y()));
+		viewTransX.setValue(toTrans.x() / transform->get_scale_x());
+		viewTransY.setValue(toTrans.y() / transform->get_scale_x());
+		viewScale.setValue(1 / transform->get_scale_x());
+		viewRotate.setValue(-transform->get_rot_degree());
 	}
+
+	update();
 }
 
 void PiYingGL::deleteBg()

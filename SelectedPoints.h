@@ -1,7 +1,7 @@
 #pragma once
 
-#include <QList>
-#include <QPointF>
+#include <qlist>
+#include <qpointf>
 
 class SelectedPoints
 {

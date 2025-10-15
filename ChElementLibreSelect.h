@@ -1,13 +1,14 @@
 #pragma once
 
-#include <qpointf>
 #include <memory>
+#include <QList>
 
 #include "ChElementToolBehavior.h"
 
 struct ChElementSelect;
 struct GlVertReference;
 class QPainter;
+class QPointF;
 class QPolygonF;
 class PiYingGL;
 

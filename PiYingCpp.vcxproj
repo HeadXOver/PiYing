@@ -103,10 +103,14 @@
     <ClCompile Include="Controls.cpp" />
     <ClCompile Include="ctrlSlideLayout.cpp" />
     <ClCompile Include="ctrlSlideWidget.cpp" />
+    <ClCompile Include="cus_func_point2d.cpp" />
+    <ClCompile Include="cus_func_string.cpp" />
+    <ClCompile Include="cus_func_zone.cpp" />
     <ClCompile Include="events.cpp" />
     <ClCompile Include="glVertReference.cpp" />
     <ClCompile Include="image_texture.cpp" />
     <ClCompile Include="image_transform.cpp" />
+    <ClCompile Include="KeyboardStateWin.cpp" />
     <ClCompile Include="piYingGL.cpp" />
     <ClCompile Include="piYingGLContainer.cpp" />
     <ClCompile Include="RatioDialog.cpp" />
@@ -116,7 +120,7 @@
     <ClCompile Include="RaletiveTransform.cpp" />
     <ClCompile Include="draw.cpp" />
     <ClCompile Include="construct.cpp" />
-    <ClCompile Include="CusFunc.cpp" />
+    <ClCompile Include="cus_func_transform.cpp" />
     <ClCompile Include="tool_button.cpp" />
     <QtRcc Include="PiYing.qrc" />
     <QtUic Include="PiYing.ui" />
@@ -136,9 +140,12 @@
     <ClInclude Include="tool_button.h" />
     <ClInclude Include="ChElementToolBehavior.h" />
     <ClInclude Include="glVertReference.h" />
+    <ClInclude Include="cus_func_zone.h" />
+    <ClInclude Include="cus_func_string.h" />
+    <ClInclude Include="cus_func_point2d.h" />
     <QtMoc Include="ctrlSlideLayout.h" />
     <QtMoc Include="ctrlSlideWidget.h" />
-    <ClInclude Include="CusFunc.h" />
+    <ClInclude Include="cus_func_transform.h" />
     <ClInclude Include="AddTriangle.h" />
     <ClInclude Include="ChElementSelect.h" />
     <QtMoc Include="AskTransformDialog.h" />

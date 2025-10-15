@@ -6,6 +6,7 @@
 #include "ChElementTool.h"
 
 #include <qmouseevent>
+#include <qmenu>
 
 void PiYingGL::mousePressEvent(QMouseEvent* event)
 {

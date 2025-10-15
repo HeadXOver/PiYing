@@ -1,8 +1,7 @@
 #pragma once
 
-#include <qpointf>
-
 class QPainter;
+class QPointF;
 
 struct ClickBehavior {
     virtual void click(const QPointF& mouse) = 0;

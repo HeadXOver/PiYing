@@ -1,6 +1,8 @@
 #include "glVertReference.h"
 #include "piYingGL.h"
 
+#include <QPointF>
+
 void GlVertReference::addPointToVert(const QPointF& p)
 {
 	glVert.push_back(p.x());

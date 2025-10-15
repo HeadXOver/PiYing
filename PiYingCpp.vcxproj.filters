@@ -133,7 +133,7 @@
     <ClCompile Include="AskTransformDialog.cpp">
       <Filter>Source Files\CustomQObject</Filter>
     </ClCompile>
-    <ClCompile Include="CusFunc.cpp">
+    <ClCompile Include="cus_func_transform.cpp">
       <Filter>Source Files\CustomTool</Filter>
     </ClCompile>
     <ClCompile Include="image_texture.cpp">
@@ -156,6 +156,18 @@
     </ClCompile>
     <ClCompile Include="glVertReference.cpp">
       <Filter>Source Files\ChELementTool</Filter>
+    </ClCompile>
+    <ClCompile Include="cus_func_point2d.cpp">
+      <Filter>Source Files\CustomTool</Filter>
+    </ClCompile>
+    <ClCompile Include="cus_func_string.cpp">
+      <Filter>Source Files\CustomTool</Filter>
+    </ClCompile>
+    <ClCompile Include="cus_func_zone.cpp">
+      <Filter>Source Files\CustomTool</Filter>
+    </ClCompile>
+    <ClCompile Include="KeyboardStateWin.cpp">
+      <Filter>Source Files\CustomTool</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -189,7 +201,7 @@
     <ClInclude Include="KeyboardStateWin.h">
       <Filter>Header Files\CustomTool</Filter>
     </ClInclude>
-    <ClInclude Include="CusFunc.h">
+    <ClInclude Include="cus_func_transform.h">
       <Filter>Header Files\CustomTool</Filter>
     </ClInclude>
     <ClInclude Include="SelectedPoints.h">
@@ -209,6 +221,15 @@
     </ClInclude>
     <ClInclude Include="ChElementRectSelect.h">
       <Filter>Header Files\ChELementTool</Filter>
+    </ClInclude>
+    <ClInclude Include="cus_func_zone.h">
+      <Filter>Header Files\CustomTool</Filter>
+    </ClInclude>
+    <ClInclude Include="cus_func_string.h">
+      <Filter>Header Files\CustomTool</Filter>
+    </ClInclude>
+    <ClInclude Include="cus_func_point2d.h">
+      <Filter>Header Files\CustomTool</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

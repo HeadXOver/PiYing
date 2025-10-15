@@ -4,10 +4,19 @@
 #include "glVertReference.h"
 
 #include <qpainter>
+#include <qpointf>
 #include <qpen>
 
 AddTriangle::AddTriangle(GlVertReference* glReference) :glVertReference(glReference)
 {
+	first = new QPointF();
+	second = new QPointF();
+}
+
+AddTriangle::~AddTriangle()
+{
+	delete first;
+	delete second;
 }
 
 bool AddTriangle::addIndex(unsigned int i)
@@ -26,17 +35,17 @@ bool AddTriangle::checkPointRepeat(const QPointF& point)
 {
 	if (numVert == 0) return false;
 	if (numVert == 1) {
-		if(first == point) return true;
+		if(*first == point) return true;
 		return false;
 	}
-	if (first == point || second == point) return true;
+	if (*first == point || *second == point) return true;
 	return false;
 }
 
 void AddTriangle::addVert(const QPointF& point)
 {
-	if (numVert == 0) first = point;
-	else if (numVert == 1) second = point;
+	if (numVert == 0) *first = point;
+	else if (numVert == 1) *second = point;
 	else return;
 	vertThenInd = false;
 	numVert++;
@@ -61,9 +70,9 @@ void AddTriangleDelete::deleteElement()
 	addTriangle->numVert = 0;
 }
 
-void AddTriangle::addChVert(const QPointF& point)
+void AddTriangle::addChVert(const QPointF* point)
 {
-	glVertReference->addChVert(point);
+	glVertReference->addChVert(*point);
 }
 
 void AddTriangleClick::click(const QPointF& mouse) {
@@ -92,7 +101,7 @@ void AddTriangle::click(const QPointF& mouseOri)
 		numInd = 0;
 		numVert = 0;
 		if (indRepeat >= 0) glVertReference->glIndex.push_back(indRepeat);
-		else  addChVert(mouse);
+		else  addChVert(&mouse);
 		addChVert(first);
 		addChVert(second);
 	}
@@ -115,7 +124,7 @@ void AddTriangle::click(const QPointF& mouseOri)
 		else {
 			numInd = 0;
 			numVert = 0;
-			addChVert(mouse);
+			addChVert(&mouse);
 		}
 		glVertReference->glIndex.push_back(firstIndex);
 		glVertReference->glIndex.push_back(secondIndex);
@@ -134,7 +143,7 @@ void AddTriangle::click(const QPointF& mouseOri)
 			numInd = 0;
 			numVert = 0;
 			glVertReference->glIndex.push_back(firstIndex);
-			addChVert(mouse);
+			addChVert(&mouse);
 			addChVert(first);
 		}
 	}
@@ -151,17 +160,17 @@ void AddTriangle::draw(QPainter* painter)
 	if (numInd == 1 && numVert == 0) {
 		toDraw.push_back(glVertReference->sVert[firstIndex]);
 	}
-	else if (numInd == 0 && numVert == 1) toDraw.push_back(first);
+	else if (numInd == 0 && numVert == 1) toDraw.push_back(*first);
 	else if (numVert == 2) {
-		toDraw.push_back(first);
-		toDraw.push_back(second);
+		toDraw.push_back(*first);
+		toDraw.push_back(*second);
 	}
 	else if (numInd == 2) {
 		toDraw.push_back(glVertReference->sVert[firstIndex]);
 		toDraw.push_back(glVertReference->sVert[secondIndex]);
 	}
 	else if (numInd == 1 && numVert == 1) {
-		toDraw.push_back(first);
+		toDraw.push_back(*first);
 		toDraw.push_back(glVertReference->sVert[firstIndex]);
 	}
 

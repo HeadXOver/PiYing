@@ -4,6 +4,8 @@
 
 #include <qlabel>
 #include <QOpenGLShaderProgram.h>
+#include <qmenu>
+#include <qstatusbar>
 
 PiYingGL::PiYingGL(PiYing* parent) : QOpenGLWidget(parent), parent(parent)
 {

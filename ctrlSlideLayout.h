@@ -6,7 +6,7 @@ class QLabel;
 class QSlider;
 class QPushButton;
 
-class CtrlSlideLayout : public QHBoxLayout
+class CtrlSlideLayout final : public QHBoxLayout
 {
     Q_OBJECT
 public:

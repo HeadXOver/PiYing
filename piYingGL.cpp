@@ -1,20 +1,28 @@
 ﻿#include "piYingGL.h"
+
 #include "piYing.h"
+
 #include "AddTriangle.h"
 #include "AddChTexPoly.h"
 #include "ChElementLibreSelect.h"
+
 #include "ChElementTool.h"
-#include "CusFunc.h"
+
 #include "piYingGLContainer.h"
+
 #include "KeyboardStateWin.h"
+
 #include "image_transform.h"
 #include "image_texture.h"
+
+#include "cus_func_string.h"
 
 #include <QColorDialog>
 #include <QMessageBox>
 #include <qfiledialog>
 #include <qlistwidget>
 #include <qopenglshaderprogram>
+#include <qmenu>
 
 PiYingGL::~PiYingGL()
 {

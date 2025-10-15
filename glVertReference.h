@@ -2,9 +2,9 @@
 
 #include <vector>
 #include <qlist>
-#include <QPointF>
 
 class PiYingGL;
+class QPointF;
 
 struct GlVertReference {
 	void addPointToVert(const QPointF& p);

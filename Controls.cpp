@@ -1,6 +1,6 @@
 ﻿#include "piYingGL.h"
 #include "piYing.h"
-#include "CusFunc.h"
+#include "cus_func_point2d.h"
 #include "image_transform.h"
 #include "KeyboardStateWin.h"
 #include "image_texture.h"
@@ -51,7 +51,7 @@ void PiYingGL::bgScaleControl(const QPointF& mouse, ImageTexture* image)
 	image->addScale(pAspect);
 	pAspect.setX(PN[1] * (1.f - pAspect.x()));
 	pAspect.setY(PN[0] * (1.f - pAspect.y()));
-	image->addTrans((lastImageTransform->rot * lastImageTransform->scale * insProj).map(pAspect));
+	image->addTrans((lastImageTransform->get_rot() * lastImageTransform->get_scale() * insProj).map(pAspect));
 }
 
 void PiYingGL::viewRotationControl(const QPointF& mouse)

@@ -1,29 +1,29 @@
 #pragma once
 
-#include <qpointf>
-#include <qmatrix4x4>
-
 class QOpenGLTexture;
 class ImageTransform;
+class QImage;
+class QPointF;
+class QMatrix4x4;
 
-class ImageTexture 
+class ImageTexture final
 {
 public:
     ImageTexture(QImage& image);
     ~ImageTexture();
 
     void setTrans(float x, float y);
-    void setTrans(QPointF point);
-    void setTrans(QMatrix4x4 point);
+    void setTrans(const QPointF& point);
+    void setTrans(const QMatrix4x4& point);
     void setRot(float r);
-    void setRot(QMatrix4x4 r);
+    void setRot(const QMatrix4x4& rot);
     void setScale(float x, float y);
-    void setScale(QPointF point);
+    void setScale(const QPointF& point);
     void setScale(float s);
-    void setScale(QMatrix4x4 scale);
+    void setScale(const QMatrix4x4& point);
 
-    void addTrans(QPointF point);
-    void addScale(QPointF point);
+    void addTrans(const QPointF& point);
+    void addScale(const QPointF& point);
     void addTrans(float x, float y);
     void addScale(float x, float y);
     void addScale(float s);

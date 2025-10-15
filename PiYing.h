@@ -2,14 +2,16 @@
 
 #include <QtWidgets/QMainWindow>
 
-#include "ui_PiYing.h"
-
 class CtrlSlideWidget;
 class PiYingGL;
 class ToolButton;
 class PiYingGLContainer;
 class QListWidget;
 class QSplitter;
+
+namespace Ui{
+	class PiYingClass;
+}
 
 class PiYing : public QMainWindow
 {
@@ -35,7 +37,7 @@ private:
 	void selectTool(ToolButton* toolButton);
 
 private:
-    Ui::PiYingClass ui;
+    Ui::PiYingClass* ui;
 
 	// OpenGL widget
     PiYingGL* piYingGL = nullptr;

@@ -7,9 +7,16 @@
 #include "KeyboardStateWin.h"
 
 #include <qpainter>
+#include <qpointf>
 
 ChElementRectSelect::ChElementRectSelect(GlVertReference* glReference) :chElementSelect(new ChElementSelect(glReference))
 {
+	rect = new QPointF();
+}
+
+ChElementRectSelect::~ChElementRectSelect()
+{
+	delete rect;
 }
 
 void ChElementRectSelect::draw(QPainter* painter)
@@ -26,7 +33,7 @@ void ChElementRectSelect::draw(QPainter* painter)
 
 	if (isDraw) {
 		painter->setPen(QPen(Qt::yellow, 1));
-		painter->drawRect(chElementSelect->lastPos.x(), chElementSelect->lastPos.y(), rect.x() - chElementSelect->lastPos.x(), rect.y() - chElementSelect->lastPos.y());
+		painter->drawRect(chElementSelect->lastPos.x(), chElementSelect->lastPos.y(), rect->x() - chElementSelect->lastPos.x(), rect->y() - chElementSelect->lastPos.y());
 	}
 }
 
@@ -66,7 +73,7 @@ void ChElementRectSelect::movePos(const QPointF& mouse)
 	isDraw = false;
 	
 	if (chElementSelect->editMode == ChElementEditMode::None) {
-		rect = mouse;
+		*rect = mouse;
 		isDraw = true;
 	}
 	else chElementSelect->moveHandle(mouse);

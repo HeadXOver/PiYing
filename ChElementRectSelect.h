@@ -1,17 +1,18 @@
 #pragma once
 
-#include <qpointf>
 #include <memory>
 
 #include "ChElementToolBehavior.h"
 
 struct ChElementSelect;
 class QPainter;
+class QPointF;
 class PiYingGL;
 
 struct ChElementRectSelect final
 {
 	ChElementRectSelect(GlVertReference* glReference);
+	~ChElementRectSelect();
 
 	void draw(QPainter* painter);
 	void clickPos(const QPointF& mouse);
@@ -19,7 +20,7 @@ struct ChElementRectSelect final
 	void releasePos(const QPointF& mouse);
 
 	ChElementSelect* chElementSelect;
-	QPointF rect;
+	QPointF* rect;
 	bool isDraw = false;
 };
 

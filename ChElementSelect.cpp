@@ -2,8 +2,10 @@
 #include "glVertReference.h"
 #include "piYingGL.h"
 #include "SelectedPoints.h"
-#include "CusFunc.h"
 #include "static_handle_zone.h"
+
+#include "cus_func_zone.h"
+#include "cus_func_point2d.h"
 
 #include <qpainter>
 

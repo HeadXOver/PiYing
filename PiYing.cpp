@@ -5,6 +5,8 @@
 #include "piYingGLContainer.h"
 #include "tool_button.h"
 
+#include "ui_PiYing.h"
+
 #include <QMessageBox>
 #include <qkeyevent>
 #include <qfiledialog.h>
@@ -12,8 +14,10 @@
 #include <QComboBox>
 #include <qsplitter>
 
-PiYing::PiYing(QWidget* parent) : QMainWindow(parent) {
-    ui.setupUi(this);
+PiYing::PiYing(QWidget* parent) : QMainWindow(parent) 
+{
+    ui = new Ui::PiYingClass();
+    ui->setupUi(this);
     setWindowTitle("皮影");
     setFocusPolicy(Qt::StrongFocus);
 
@@ -41,8 +45,8 @@ PiYing::PiYing(QWidget* parent) : QMainWindow(parent) {
     // menuBar
     QMenu* menuFile = new QMenu("文件(&F)", this);
     QMenu* menuEdit = new QMenu("编辑(&E)", this);
-    ui.menuBar->addMenu(menuFile);
-	ui.menuBar->addMenu(menuEdit);
+    ui->menuBar->addMenu(menuFile);
+	ui->menuBar->addMenu(menuEdit);
 
 	// child menu of menu File
     QMenu* childMenuImport = menuFile->addMenu("导入");
@@ -111,7 +115,7 @@ PiYing::PiYing(QWidget* parent) : QMainWindow(parent) {
     sliderWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
     modeBox->addItems({ "预览模式", "背景编辑", "角色纹理编辑", "角色骨骼编辑", "控制器"});
-    ui.statusBar->addWidget(modeBox);
+    ui->statusBar->addWidget(modeBox);
 
     connect(modeBox, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &PiYing::onModeChanged);
 
@@ -128,6 +132,8 @@ PiYing::~PiYing()
     delete voidListWidget;
 
     for (ToolButton* item : toolChTexList) delete item;
+
+    delete ui;
 }
 
 int PiYing::getCurrentBgRow()
@@ -202,7 +208,7 @@ void PiYing::askScreenScale(){
 
 void PiYing::onModeChanged(int mode)
 {
-    ui.mainToolBar->clear();
+    ui->mainToolBar->clear();
     if (mode == 0) {
         splitListOpenGL->widget(0)->setParent(nullptr);
         splitListOpenGL->insertWidget(0, voidListWidget);
@@ -219,7 +225,7 @@ void PiYing::onModeChanged(int mode)
         splitListOpenGL->insertWidget(0, chImageList);
         piYingGL->setEditMode(EditMode::characterTexture);
         for (ToolButton* item : toolChTexList) {
-            ui.mainToolBar->addAction(item->action());
+            ui->mainToolBar->addAction(item->action());
         }
     }
     else if (mode == 3) {

@@ -1,21 +1,22 @@
 #pragma once
 
-#include <qicon>
-
 #include "enum_character_texture_tool_state.h"
 
 class QAction;
 class QWidget;
+class QIcon;
+class QString;
 
 class ToolButton {
 public:
-    ToolButton(QString selectedFileName, QString unselectedFileName, QString actionName, CharacterTextureToolState state, QWidget* parent);
+    ToolButton(const QString& selectedFileName, const QString& unselectedFileName, const QString& actionName, CharacterTextureToolState state, QWidget* parent);
+    ~ToolButton();
 
     void select();
     void unSelect();
 
-    void set_selected(QIcon icon);
-    void set_unselected(QIcon icon);
+    void set_selected(const QIcon& icon);
+    void set_unselected(const QIcon& icon);
 
     void set_toolState(CharacterTextureToolState state);
 
@@ -25,8 +26,8 @@ public:
 
 private:
     QAction* action_;
-    QIcon selected_;
-    QIcon unselected_;
+    QIcon* selected_;
+    QIcon* unselected_;
     CharacterTextureToolState toolState_;
     bool isSelect_ = false;
 };

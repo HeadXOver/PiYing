@@ -1,11 +1,10 @@
 #pragma once
 
-#include <qpointf>
-
 #include "enum_character_texture_tool_state.h"
 
 class PiYingGL;
 class QPainter;
+class QPointF;
 struct ClickBehavior;
 struct MouseMoveBehavior;
 struct ReleaseBehavior;

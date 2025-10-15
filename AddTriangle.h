@@ -7,9 +7,10 @@
 struct GlVertReference;
 class PiYingGL;
 
-struct AddTriangle 
+struct AddTriangle final
 {
 	AddTriangle(GlVertReference* glVertReference);
+	~AddTriangle();
 
 	bool addIndex(unsigned int i);
 	bool checkPointRepeat(const QPointF& point);
@@ -17,12 +18,12 @@ struct AddTriangle
 	void reduceOne();
 	void click(const QPointF& mouse);
 	void draw(QPainter* painter);
-	void addChVert(const QPointF& point);
+	void addChVert(const QPointF* point);
 
 	GlVertReference* glVertReference;
 
-	QPointF first;
-	QPointF second;
+	QPointF* first;
+	QPointF* second;
 
 	unsigned int firstIndex = 0;
 	unsigned int secondIndex = 0;
