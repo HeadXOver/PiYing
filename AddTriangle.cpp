@@ -2,7 +2,7 @@
 
 #include "piYingGL.h"
 #include "glVertReference.h"
-#include "point_vector.h"
+#include "point_vector_layer.h"
 
 #include <qpainter>
 #include <qpointf>
@@ -87,9 +87,9 @@ void AddTriangle::click(const QPointF& mouseOri)
 	if (checkPointRepeat(mouse))  return;
 
 	int indRepeat = -1;
-	PointVector& pointVector = glVertReference->uvVert;
+	PointVectorLayer& pointVector = *(glVertReference->pointLayer);
 	for (unsigned int i = 0; i < pointVector.size(); i++) {
-		if (QLineF(pointVector[i], mouse).length() < 0.02f / glVertReference->gl->viewScale.value()) {
+		if (QLineF(pointVector.get_uv_point(i), mouse).length() < 0.02f / glVertReference->gl->viewScale.value()) {
 			indRepeat = i;
 			break;
 		}
@@ -159,9 +159,9 @@ void AddTriangle::draw(QPainter* painter)
 {
 	if (numInd == 0 && numVert == 0) return;
 	std::vector<QPointF> toDraw;
-	PointVector& pointVector = glVertReference->uvVert;
+	PointVectorLayer& pointVector = *(glVertReference->pointLayer);
 	if (numInd == 1 && numVert == 0) {
-		toDraw.push_back(pointVector[firstIndex]);
+		toDraw.push_back(pointVector.get_uv_point(firstIndex));
 	}
 	else if (numInd == 0 && numVert == 1) toDraw.push_back(*first);
 	else if (numVert == 2) {
@@ -169,12 +169,12 @@ void AddTriangle::draw(QPainter* painter)
 		toDraw.push_back(*second);
 	}
 	else if (numInd == 2) {
-		toDraw.push_back(pointVector[firstIndex]);
-		toDraw.push_back(pointVector[secondIndex]);
+		toDraw.push_back(pointVector.get_uv_point(firstIndex));
+		toDraw.push_back(pointVector.get_uv_point(secondIndex));
 	}
 	else if (numInd == 1 && numVert == 1) {
 		toDraw.push_back(*first);
-		toDraw.push_back(pointVector[firstIndex]);
+		toDraw.push_back(pointVector.get_uv_point(firstIndex));
 	}
 
 	for (QPointF& p : toDraw) {

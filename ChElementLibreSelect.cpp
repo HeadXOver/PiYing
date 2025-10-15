@@ -5,7 +5,7 @@
 #include "piYingGL.h"
 #include "SelectedPoints.h"
 #include "KeyboardStateWin.h"
-#include "point_vector.h"
+#include "point_vector_layer.h"
 
 #include <qpolygonf>
 #include <qpainter>
@@ -43,9 +43,9 @@ void ChElementLibreSelect::draw(QPainter* painter)
 		}
 	}
 
-	PointVector& pointVector = chElementSelect->glVertReference->uvVert;
+	PointVectorLayer* pointVector = chElementSelect->glVertReference->pointLayer;
 	for (int i = 0; i < chElementSelect->selectedPoints->size(); i++) {
-		QPointF selectPoint = chElementSelect->glVertReference->gl->mapViewProjMatrix(pointVector[(*chElementSelect->selectedPoints)[i]]);
+		QPointF selectPoint = chElementSelect->glVertReference->gl->mapViewProjMatrix(pointVector->get_uv_point((*chElementSelect->selectedPoints)[i]));
 		painter->setPen(QPen(Qt::black, 8));
 		painter->drawPoint(selectPoint);
 		painter->setPen(QPen(Qt::red, 6));
@@ -71,9 +71,9 @@ void ChElementLibreSelect::clickPos(const QPointF& mouseOri)
 
 	*polygon << mouse;
 
-	PointVector& pointVector = chElementSelect->glVertReference->uvVert;
-	for (unsigned int i = 0; i < pointVector.size(); i++) {
-		if (QLineF(pointVector[i], mouse).length() < 0.02f / chElementSelect->glVertReference->gl->viewScale.value()) {
+	PointVectorLayer* pointVector = chElementSelect->glVertReference->pointLayer;
+	for (unsigned int i = 0; i < pointVector->size(); i++) {
+		if (QLineF(pointVector->get_uv_point(i), mouse).length() < 0.02f / chElementSelect->glVertReference->gl->viewScale.value()) {
 			if (!chElementSelect->selectedPoints->contains(i)) {
 				if (!KeyboardStateWin::isCtrlHeld()) {
 					chElementSelect->selectedPoints->clear();
@@ -111,14 +111,14 @@ void ChElementLibreSelect::releasePos(const QPointF& mouse)
 			*polygon << polygon->first();
 		}
 
-		addEnclosedPoints(polygon, chElementSelect->glVertReference->uvVert);
+		addEnclosedPoints(polygon, chElementSelect->glVertReference->pointLayer);
 	}
 }
 
-void ChElementLibreSelect::addEnclosedPoints(const QPolygonF* const poly, const PointVector& points)
+void ChElementLibreSelect::addEnclosedPoints(const QPolygonF* const poly, const PointVectorLayer* points)
 {
-	for (unsigned int i = 0; i < points.size(); i++) {
-		if (poly->containsPoint(points[i], Qt::OddEvenFill)) {
+	for (unsigned int i = 0; i < points->size(); i++) {
+		if (poly->containsPoint(points->get_uv_point(i), Qt::OddEvenFill)) {
 			chElementSelect->selectedPoints->append(i);
 		}
 	}
