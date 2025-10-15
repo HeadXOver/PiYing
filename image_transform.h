@@ -8,6 +8,8 @@ public:
     ImageTransform();
     ~ImageTransform();
 
+    void operator=(const ImageTransform& other);
+
     QMatrix4x4 getMatrix() const;
     QMatrix4x4 getMatrixInvert() const;
 
@@ -21,8 +23,6 @@ public:
     void set_trans(const QMatrix4x4& m);
     void set_rot(const QMatrix4x4& m);
     void set_scale(const QMatrix4x4& m);
-    void copy_from(const ImageTransform& other);
-    void copy_from(const ImageTransform* other);
 
     QMatrix4x4 get_trans() const;
     QMatrix4x4 get_rot() const;

@@ -35,6 +35,11 @@ QPointF PiYingGL::GLViewProjMatrixInvert(const QPointF& point)
 	return getViewProjMatrixInvert().map(mapToGL(point)); 
 }
 
+QPointF PiYingGL::GLViewMatrixInvert(const QPointF& point)
+{
+	return getViewMatrixInvert().map(mapToGL(point));
+}
+
 QMatrix4x4 PiYingGL::getViewMatrixInvert() const {
 	QMatrix4x4 mViewTransform;
 	mViewTransform.rotate(-viewRotate.value(), 0.0f, 0.0f, 1.0f);

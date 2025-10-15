@@ -96,6 +96,7 @@
     <ClCompile Include="AddChTexPoly.cpp" />
     <ClCompile Include="AddTriangle.cpp" />
     <ClCompile Include="AskTransformDialog.cpp" />
+    <ClCompile Include="ask_round_poly_dialog.cpp" />
     <ClCompile Include="ChElementAddRound.cpp" />
     <ClCompile Include="ChElementLibreSelect.cpp" />
     <ClCompile Include="ChElementRectSelect.cpp" />
@@ -134,6 +135,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AddChTexPoly.h" />
+    <QtMoc Include="ask_round_poly_dialog.h" />
     <ClInclude Include="ChElementLibreSelect.h" />
     <ClInclude Include="ChElementRectSelect.h" />
     <ClInclude Include="ChElementTool.h" />

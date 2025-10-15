@@ -5,6 +5,7 @@
 #include "ChElementToolBehavior.h"
 
 struct ChElementSelect;
+struct GlVertReference;
 class QPainter;
 class QPointF;
 class PiYingGL;

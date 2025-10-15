@@ -17,11 +17,15 @@ struct ChElementAddRound final
 	void release(const QPointF& mouse);
 	void draw(QPainter& painter);
 
+	void addRoundPoly(const int edgeCount);
+
 	QPointF* center;
+	QPointF* current_cursor;
+		
+	bool isPress{ false };
 
-	bool isPress = false;
-
-	int radius = 0;
+	int radius{ 0 };
+	int init_angle{ 0 };
 
 	GlVertReference* glVertReference;
 };

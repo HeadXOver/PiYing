@@ -13,7 +13,40 @@ void GlVertReference::addPointToVert(const QPointF& p)
 void GlVertReference::addChVert(const QPointF& point) 
 {
 	glIndex.push_back((unsigned int)pointLayer->size());
-	addPointToVert(point);
+	pointLayer->push_back(point);
+}
+
+void GlVertReference::addTriangle(int index1, int index2, int index3)
+{
+	glIndex.push_back(index1);
+	glIndex.push_back(index2);
+	glIndex.push_back(index3);
+}
+
+void GlVertReference::addTriangle(int index1, int index2, const QPointF& point3)
+{
+	glIndex.push_back(index1);
+	glIndex.push_back(index2);
+	addChVert(point3);
+}
+
+void GlVertReference::addTriangle(int index1, const QPointF& point2, const QPointF& point3)
+{
+	glIndex.push_back(index1);
+	addChVert(point2);
+	addChVert(point3);
+}
+
+void GlVertReference::addTriangle(const QPointF& point1, const QPointF& point2, const QPointF& point3)
+{
+	addChVert(point1);
+	addChVert(point2);
+	addChVert(point3);
+}
+
+int GlVertReference::get_current_end() const
+{
+	return pointLayer->size();
 }
 
 GlVertReference::GlVertReference(int current, PiYingGL* pygl) :

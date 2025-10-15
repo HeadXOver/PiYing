@@ -107,6 +107,7 @@ public:
 	QPointF mapViewProjMatrix(const QPointF& point);
 	QPointF GLViewProjMatrixInvert(float x, float y);
 	QPointF GLViewProjMatrixInvert(const QPointF& point);
+	QPointF GLViewMatrixInvert(const QPointF& point);
 
 	QMatrix4x4 getViewMatrixInvert() const;
 	QMatrix4x4 getViewMatrix() const;

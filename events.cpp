@@ -22,7 +22,7 @@ void PiYingGL::mousePressEvent(QMouseEvent* event)
 			QPointF posV = getRaletiveToRect(lastMousePos, item->transform());
 			if (isInsideSquare(posV)) {
 				lastMousePosType = getMousePosType(posV);
-				lastImageTransform->copy_from(item->transform());
+				*lastImageTransform = *item->transform();
 			}
 		}
 		else if (editMode == EditMode::characterTexture && event->button() == Qt::LeftButton) {
