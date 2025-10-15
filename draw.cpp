@@ -3,7 +3,6 @@
 #include "image_texture.h"
 #include "ChElementTool.h"
 #include "point_vector.h"
-#include "point_vector_layer.h"
 
 #include <qpainter>
 #include <qopengltexture>
@@ -18,14 +17,13 @@ void PiYingGL::drawChEditVert()
 	painter.setRenderHint(QPainter::Antialiasing);
 	painter.setBrush(QColor(225, 0, 0, 20));
 
-	PointVectorLayer pointVectorLayer(*(characterVerts[currentVector]));
-
 	for (int i = 0; i < characterTriangleIndices[currentVector].size();) {
 		QPolygonF poly;
 		int j = 0;
 		for (; j < 3; j++) {
 			int index = characterTriangleIndices[currentVector][i + j];
-			poly << glToMap(getViewProjMatrix().map(pointVectorLayer.get_uv_point(index)));
+			PointVector& pointVector = *(characterVertsUV[currentVector]);
+			poly << glToMap(getViewProjMatrix().map(pointVector[index]));
 		}
 		painter.setPen(QPen(Qt::black, 3));
 		painter.drawPolygon(poly);
@@ -105,9 +103,6 @@ void PiYingGL::paintCharacterTexture()
 
 void PiYingGL::paintCharacterSkeleton()
 {
-	int i = getCurrentChRow();
-	if (i < 0) return;
-
 	glBindVertexArray(chVAO);
 	glBindBuffer(GL_ARRAY_BUFFER, chVBO);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, chEBO);
@@ -115,25 +110,20 @@ void PiYingGL::paintCharacterSkeleton()
 	glActiveTexture(GL_TEXTURE0);
 
 	// position attribute
-	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
-
-	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)(2 * sizeof(float)));
-	glEnableVertexAttribArray(1);
 
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-	////////////////////////////
-
-	glBufferData(GL_ARRAY_BUFFER, characterVerts[i]->float_size() * sizeof(float), characterVerts[i]->data(), GL_DYNAMIC_DRAW);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, characterTriangleIndices[i].size() * sizeof(unsigned int), characterTriangleIndices[i].data(), GL_DYNAMIC_DRAW);
-	characterTextures[i]->texture()->bind();
-	chShaderProgram->setUniformValue("texture1", 0);
-	chShaderProgram->setUniformValue("trc", getViewProjMatrix());
-	glDrawElements(GL_TRIANGLES, (GLsizei)characterTriangleIndices[i].size(), GL_UNSIGNED_INT, 0);
-
-	//////////////////////////////
+	int i = getCurrentChRow();
+	if (i >= 0) {
+		glBufferData(GL_ARRAY_BUFFER, characterVerts[i]->float_size() * sizeof(float), characterVerts[i]->data(), GL_DYNAMIC_DRAW);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, characterTriangleIndices[i].size() * sizeof(unsigned int), characterTriangleIndices[i].data(), GL_DYNAMIC_DRAW);
+		characterTextures[i]->texture()->bind();
+		chShaderProgram->setUniformValue("texture1", 0);
+		chShaderProgram->setUniformValue("trc", getViewProjMatrix());
+		glDrawElements(GL_TRIANGLES, (GLsizei)characterTriangleIndices[i].size(), GL_UNSIGNED_INT, 0);
+	}
 
 	glBindVertexArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);

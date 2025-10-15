@@ -4,8 +4,7 @@
 
 void PointVector::push_back(const QPointF& p)
 {
-	points.push_back(p.x()); 
-	points.push_back(p.y());
+	points.push_back(p.x()); points.push_back(p.y());
 }
 
 void PointVector::remove_last()

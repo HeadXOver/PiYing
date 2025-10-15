@@ -9,7 +9,6 @@
 
 #include <memory>
 #include <qpointf>
-#include "ChElementAddRound.h"
 
 ChElementTool::ChElementTool(int current, PiYingGL* pygl, CharacterTextureToolState chToolState) : glVertReference(new GlVertReference(current, pygl))
 {
@@ -66,10 +65,6 @@ void ChElementTool::click(const QPointF& mouse) {
 void ChElementTool::release(const QPointF& mouse)
 {
 	if (releaseBehavior) releaseBehavior->release(mouse);
-}
-
-ChElementAddRound::ChElementAddRound(GlVertReference* glReference) : glVertReference(glReference)
-{
 }
 
 void ChElementTool::move(const QPointF& mouse)

@@ -1,6 +1,6 @@
 #include "SelectedPoints.h"
 
-#include "point_vector_layer.h"
+#include "point_vector.h"
 
 const QPointF& SelectedPoints::getVert(int index) const
 {
@@ -9,8 +9,7 @@ const QPointF& SelectedPoints::getVert(int index) const
 
 void SelectedPoints::append(unsigned int ind)
 {
-	selectedIndex.append(ind);
-	lastVertPos.append(sVert[ind]);
+	selectedIndex.append(ind); lastVertPos.append(sVert[ind]);
 }
 
 void SelectedPoints::affirmVert()
