@@ -70,6 +70,20 @@ void ImageTransform::set_scale(const QMatrix4x4& m)
     *scale_ = m;
 }
 
+void ImageTransform::copy_from(const ImageTransform& other)
+{
+    *trans_ = other.get_trans();
+    *rot_ = other.get_rot();
+    *scale_ = other.get_scale();
+}
+
+void ImageTransform::copy_from(const ImageTransform* other)
+{
+    *trans_ = other->get_trans();
+    *rot_ = other->get_rot();
+    *scale_ = other->get_scale();
+}
+
 QMatrix4x4 ImageTransform::get_trans() const
 {
     return *trans_;

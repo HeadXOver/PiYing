@@ -120,9 +120,9 @@ void ImageTexture::resetTransform() {
     transform_->reset();
 }
 
-void ImageTexture::copyTransformFrom(ImageTransform* transform)
+void ImageTexture::copyTransformFrom(ImageTransform& transform)
 {
-    *transform_ = *transform;
+    transform_->copy_from(transform);
 }
 
 ImageTransform* ImageTexture::transform() const {

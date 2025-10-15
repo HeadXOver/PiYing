@@ -31,7 +31,7 @@ public:
 
     void resetTransform();
 
-    void copyTransformFrom(ImageTransform* transform);
+    void copyTransformFrom(ImageTransform& transform);
 
     ImageTransform* transform() const;
 

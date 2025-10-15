@@ -56,7 +56,7 @@ void PiYingGL::bgSetTransform()
 		ImageTransform* transform = image->transform();
 		float d[5] = {
 			transform->get_trans_x(),
-			transform->get_scale_y(),
+			transform->get_trans_y(),
 			transform->get_rot_degree(),
 			transform->get_scale_x(),
 			transform->get_scale_y()
