@@ -3,6 +3,7 @@
 #include "piYingGL.h"
 #include "SelectedPoints.h"
 #include "static_handle_zone.h"
+#include "point_vector.h"
 
 #include "cus_func_zone.h"
 #include "cus_func_point2d.h"
@@ -27,7 +28,7 @@ void ChElementSelect::escape()
 void ChElementSelect::deleteElement()
 {
     std::vector<unsigned int>& idx = glVertReference->glIndex;
-    std::vector <float>& vert = glVertReference->glVert;
+    PointVector& vert = *(glVertReference->glVert);
     QList<QPointF>& s_Vert = glVertReference->sVert;
     const size_t nVert = s_Vert.size();
     const size_t nTri = idx.size() / 3;
@@ -63,8 +64,7 @@ void ChElementSelect::deleteElement()
     for (unsigned old = 0; old < nVert; ++old) {
         if (!killVert[old]) {
             old2new[old] = newVertCount++;
-            vert[newVertCount + newVertCount - 2] = vert[old + old];
-            vert[newVertCount + newVertCount - 1] = vert[old + old + 1];
+            vert[newVertCount - 1] = vert[old];
             s_Vert[newVertCount - 1] = s_Vert[old];
         }
     }
@@ -73,7 +73,7 @@ void ChElementSelect::deleteElement()
         s_Vert.clear();
     }
     else {
-        vert.resize(newVertCount * 2);
+        vert.resize(newVertCount);
         s_Vert.resize(newVertCount);
     }
 

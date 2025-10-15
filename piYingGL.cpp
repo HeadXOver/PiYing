@@ -7,6 +7,7 @@
 #include "ChElementLibreSelect.h"
 
 #include "ChElementTool.h"
+#include "point_vector.h"
 
 #include "piYingGLContainer.h"
 
@@ -41,6 +42,7 @@ PiYingGL::~PiYingGL()
 	if (chElementTool) delete chElementTool;
 	for (ImageTexture* ch : characterTextures) delete ch;
 	for (ImageTexture* bg : backGrounds) delete bg;
+	for (PointVector* pv : characterVerts) delete pv;
 
 	delete lastImageTransform;
 	delete bgShaderProgram;
@@ -95,7 +97,7 @@ void PiYingGL::addCharacter(const QString& imageName)
 	}
 	characterTextures.append(new ImageTexture(img));
 	characterTriangleIndices.push_back(std::vector<unsigned int>());
-	characterVerts.push_back(std::vector<float>());
+	characterVerts.push_back(new PointVector());
 	characterVertsUV.push_back(QList<QPointF>());
 
 	QIcon icon(QPixmap::fromImage(img).scaled(50, 50, Qt::KeepAspectRatio, Qt::SmoothTransformation));

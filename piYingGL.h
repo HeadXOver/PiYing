@@ -36,6 +36,7 @@ class ImageTexture;
 class QMenu;
 class ChElementTool;
 class QOpenGLShaderProgram;
+class PointVector;
 
 class PiYingGL : public QOpenGLWidget, QOpenGLFunctions_3_3_Core
 {
@@ -121,7 +122,7 @@ public:
 
 	Qt::CursorShape getCursorShape(const MousePos& pos);
 
-	QList<std::vector<float>>& ref_characterVerts() { return characterVerts; }
+	QList<PointVector*>& ref_characterVerts() { return characterVerts; }
 	QList<QList<QPointF>>& ref_characterDrawVerts() { return characterVertsUV; }
 	QList<std::vector<unsigned int>>& ref_characterTriangleIndices () { return characterTriangleIndices; }
 
@@ -146,7 +147,7 @@ private:
 	QList<ImageTexture*> backGrounds;
 	QList<ImageTexture*> characterTextures;
 
-	QList<std::vector<float>> characterVerts;
+	QList<PointVector*> characterVerts;
 	QList<QList<QPointF>> characterVertsUV;
 	QList<std::vector<unsigned int>> characterTriangleIndices;
 

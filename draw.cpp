@@ -2,6 +2,7 @@
 #include "piYing.h"
 #include "image_texture.h"
 #include "ChElementTool.h"
+#include "point_vector.h"
 
 #include <qpainter>
 #include <qopengltexture>
@@ -115,7 +116,7 @@ void PiYingGL::paintCharacterSkeleton()
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	int i = getCurrentChRow();
 	if (i >= 0) {
-		glBufferData(GL_ARRAY_BUFFER, characterVerts[i].size() * sizeof(float), characterVerts[i].data(), GL_DYNAMIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, characterVerts[i]->float_size() * sizeof(float), characterVerts[i]->data(), GL_DYNAMIC_DRAW);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, characterTriangleIndices[i].size() * sizeof(unsigned int), characterTriangleIndices[i].data(), GL_DYNAMIC_DRAW);
 		characterTextures[i]->texture()->bind();
 		chShaderProgram->setUniformValue("texture1", 0);

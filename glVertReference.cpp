@@ -1,12 +1,12 @@
 #include "glVertReference.h"
 #include "piYingGL.h"
+#include "point_vector.h"
 
 #include <QPointF>
 
 void GlVertReference::addPointToVert(const QPointF& p)
 {
-	glVert.push_back(p.x());
-	glVert.push_back(p.y());
+	glVert->push_back(p);
 	sVert.push_back(p);
 }
 
