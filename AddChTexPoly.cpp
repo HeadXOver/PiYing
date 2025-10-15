@@ -2,6 +2,7 @@
 
 #include "glVertReference.h"
 #include "piYingGL.h"
+#include "point_vector.h"
 
 #include <qpainter>
 
@@ -28,7 +29,7 @@ void AddChTexPoly::enter()
 
 	for (int i = 0; i < index.size(); i++) {
 		if (index[i] < 0) {
-			index[i] = (int)glVertReference->sVert.size();
+			index[i] = (int)glVertReference->uvVert.size();
 			glVertReference->addPointToVert(points[i]);
 		}
 	}
@@ -70,8 +71,9 @@ void AddChTexPoly::click(const QPointF& mouseOri)
 
 	if (checkPointRepeat(mouse))  return;
 
-	for (unsigned int i = 0; i < glVertReference->sVert.size(); i++) {
-		QPointF& readyPoint = glVertReference->sVert[i];
+	for (unsigned int i = 0; i < glVertReference->uvVert.size(); i++) {
+		PointVector& pointVector = glVertReference->uvVert;
+		const QPointF& readyPoint = pointVector[i];
 		if (QLineF(readyPoint, mouse).length() < 0.02f / glVertReference->gl->viewScale.value()) {
 			if (!index.contains(i)) {
 				index.append(i);

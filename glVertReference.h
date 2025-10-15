@@ -12,8 +12,8 @@ struct GlVertReference {
 	void addChVert(const QPointF& point);
 
 	GlVertReference(int current, PiYingGL* piYingGL);
-	PointVector* glVert;
+	PointVector& glVert;
+	PointVector& uvVert;
 	std::vector<unsigned int>& glIndex;
-	QList<QPointF>& sVert;
 	PiYingGL* gl;
 };

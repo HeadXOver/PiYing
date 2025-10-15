@@ -11,6 +11,7 @@ class QPainter;
 class QPointF;
 class QPolygonF;
 class PiYingGL;
+class PointVector;
 
 struct ChElementLibreSelect final
 {
@@ -22,7 +23,7 @@ public:
 	void clickPos(const QPointF& mouse);
 	void movePos(const QPointF& mouse);
 	void releasePos(const QPointF& mouse);
-	void addEnclosedPoints(const QPolygonF* const poly, const QList<QPointF>& points);
+	void addEnclosedPoints(const QPolygonF* const poly, const PointVector& points);
 
 	ChElementSelect* chElementSelect;
 	QPolygonF* polygon;

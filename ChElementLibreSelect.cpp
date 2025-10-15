@@ -5,6 +5,7 @@
 #include "piYingGL.h"
 #include "SelectedPoints.h"
 #include "KeyboardStateWin.h"
+#include "point_vector.h"
 
 #include <qpolygonf>
 #include <qpainter>
@@ -42,8 +43,9 @@ void ChElementLibreSelect::draw(QPainter* painter)
 		}
 	}
 
+	PointVector& pointVector = chElementSelect->glVertReference->uvVert;
 	for (int i = 0; i < chElementSelect->selectedPoints->size(); i++) {
-		QPointF selectPoint = chElementSelect->glVertReference->gl->mapViewProjMatrix(chElementSelect->glVertReference->sVert[(*chElementSelect->selectedPoints)[i]]);
+		QPointF selectPoint = chElementSelect->glVertReference->gl->mapViewProjMatrix(pointVector[(*chElementSelect->selectedPoints)[i]]);
 		painter->setPen(QPen(Qt::black, 8));
 		painter->drawPoint(selectPoint);
 		painter->setPen(QPen(Qt::red, 6));
@@ -69,8 +71,9 @@ void ChElementLibreSelect::clickPos(const QPointF& mouseOri)
 
 	*polygon << mouse;
 
-	for (unsigned int i = 0; i < chElementSelect->glVertReference->sVert.size(); i++) {
-		if (QLineF(chElementSelect->glVertReference->sVert[i], mouse).length() < 0.02f / chElementSelect->glVertReference->gl->viewScale.value()) {
+	PointVector& pointVector = chElementSelect->glVertReference->uvVert;
+	for (unsigned int i = 0; i < pointVector.size(); i++) {
+		if (QLineF(pointVector[i], mouse).length() < 0.02f / chElementSelect->glVertReference->gl->viewScale.value()) {
 			if (!chElementSelect->selectedPoints->contains(i)) {
 				if (!KeyboardStateWin::isCtrlHeld()) {
 					chElementSelect->selectedPoints->clear();
@@ -108,11 +111,11 @@ void ChElementLibreSelect::releasePos(const QPointF& mouse)
 			*polygon << polygon->first();
 		}
 
-		addEnclosedPoints(polygon, chElementSelect->glVertReference->sVert);
+		addEnclosedPoints(polygon, chElementSelect->glVertReference->uvVert);
 	}
 }
 
-void ChElementLibreSelect::addEnclosedPoints(const QPolygonF* const poly, const QList<QPointF>& points)
+void ChElementLibreSelect::addEnclosedPoints(const QPolygonF* const poly, const PointVector& points)
 {
 	for (unsigned int i = 0; i < points.size(); i++) {
 		if (poly->containsPoint(points[i], Qt::OddEvenFill)) {
