@@ -5,15 +5,14 @@
 
 class PiYingGL;
 class QPointF;
-class PointVector;
+class PointVectorLayer;
 
 struct GlVertReference {
 	void addPointToVert(const QPointF& p);
 	void addChVert(const QPointF& point);
 
 	GlVertReference(int current, PiYingGL* piYingGL);
-	PointVector& glVert;
-	PointVector& uvVert;
+	PointVectorLayer* pointLayer;
 	std::vector<unsigned int>& glIndex;
 	PiYingGL* gl;
 };

@@ -107,6 +107,7 @@
     <ClCompile Include="cus_func_string.cpp" />
     <ClCompile Include="cus_func_zone.cpp" />
     <ClCompile Include="events.cpp" />
+    <ClCompile Include="float_vector_layer.cpp" />
     <ClCompile Include="glVertReference.cpp" />
     <ClCompile Include="image_texture.cpp" />
     <ClCompile Include="image_transform.cpp" />
@@ -114,6 +115,7 @@
     <ClCompile Include="piYingGL.cpp" />
     <ClCompile Include="piYingGLContainer.cpp" />
     <ClCompile Include="point_vector.cpp" />
+    <ClCompile Include="point_vector_layer.cpp" />
     <ClCompile Include="RatioDialog.cpp" />
     <ClCompile Include="GLFunc.cpp" />
     <ClCompile Include="SelectedPoints.cpp" />
@@ -135,9 +137,11 @@
     <ClInclude Include="ChElementRectSelect.h" />
     <ClInclude Include="ChElementTool.h" />
     <ClInclude Include="enum_character_texture_tool_state.h" />
+    <ClInclude Include="float_vector_layer.h" />
     <ClInclude Include="image_texture.h" />
     <ClInclude Include="image_transform.h" />
     <ClInclude Include="point_vector.h" />
+    <ClInclude Include="point_vector_layer.h" />
     <ClInclude Include="SelectedPoints.h" />
     <ClInclude Include="tool_button.h" />
     <ClInclude Include="ChElementToolBehavior.h" />
