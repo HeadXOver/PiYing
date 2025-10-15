@@ -7,5 +7,6 @@ enum class CharacterTextureToolState {
     RectSelectVert,
     LibreSelectVert,
     AddPoly,
+    AddRound,
 };
 

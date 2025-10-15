@@ -184,6 +184,9 @@
     <ClCompile Include="point_vector_layer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ChElementAddRound.cpp">
+      <Filter>Source Files\ChELementTool</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="static_handle_zone.h">
@@ -254,6 +257,9 @@
     </ClInclude>
     <ClInclude Include="point_vector_layer.h">
       <Filter>Header Files\CusContainer</Filter>
+    </ClInclude>
+    <ClInclude Include="ChElementAddRound.h">
+      <Filter>Header Files\ChELementTool</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

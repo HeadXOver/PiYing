@@ -40,7 +40,6 @@ class AddTriangleEscape : public EscapeBehavior
 {
 public:
 	AddTriangleEscape(std::shared_ptr<AddTriangle> add) { addTriangle = add; }
-
 	virtual void escape() override;
 
 private:
@@ -53,8 +52,6 @@ class AddTriangleDelete : public DeleteElementBehavior
 {
 public:
 	AddTriangleDelete(std::shared_ptr<AddTriangle> add) { addTriangle = add; }
-
-
 	virtual void deleteElement() override;
 
 private:

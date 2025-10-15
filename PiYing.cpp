@@ -39,6 +39,8 @@ PiYing::PiYing(QWidget* parent) : QMainWindow(parent)
     toolChTexList.append(new ToolButton(":/PiYing/selectRectChVert_S.png", ":/PiYing/selectRectChVert.png", "selectRectChVert", CharacterTextureToolState::RectSelectVert, this));
     toolChTexList.append(new ToolButton(":/PiYing/addChVert_S.png", ":/PiYing/addChVert.png", "addChVert", CharacterTextureToolState::AddTriangle, this));
     toolChTexList.append(new ToolButton(":/PiYing/chAddPoly_S.png", ":/PiYing/chAddPoly.png", "chAddPoly", CharacterTextureToolState::AddPoly, this));
+    toolChTexList.append(new ToolButton(":/PiYing/chAddRound_S.png", ":/PiYing/chAddRound.png", "chAddRound", CharacterTextureToolState::AddRound, this));
+
 
     QComboBox* modeBox = new QComboBox(this);
 

@@ -5,6 +5,7 @@
 #include "AddChTexPoly.h"
 #include "ChElementRectSelect.h"
 #include "ChElementLibreSelect.h"
+#include "ChElementAddRound.h"
 #include "glVertReference.h"
 
 #include <memory>
@@ -44,6 +45,13 @@ ChElementTool::ChElementTool(int current, PiYingGL* pygl, CharacterTextureToolSt
 		releaseBehavior = new LibreSelectRelease(libreSelect);
 		moveBehavior = new LibreSelectMove(libreSelect);
 		deleteBehavior = new LibreSelectDelete(libreSelect);
+	}
+	else if (chToolState == CharacterTextureToolState::AddRound) {
+		std::shared_ptr<ChElementAddRound> addRound = std::make_shared<ChElementAddRound>(glVertReference);
+		clickBehavior = new AddRoundClick(addRound);
+		moveBehavior = new AddRoundMove(addRound);
+		releaseBehavior = new AddRoundRelease(addRound);
+		drawBehavior = new AddRoundDraw(addRound);
 	}
 }
 

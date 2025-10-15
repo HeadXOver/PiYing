@@ -16,17 +16,7 @@
         <file>selectRectChVert.png</file>
         <file>selectRectChVert_S.png</file>
         <file>addChVert_S.png</file>
-        <file>moveChVert.png</file>
-        <file>moveChVert_S.png</file>
-        <file>moveChLibreVert.png</file>
-        <file>moveChLibreVert_S.png</file>
-        <file>rotateChLibreVert.png</file>
-        <file>rotateChLibreVert_S.png</file>
-        <file>rotateChVert.png</file>
-        <file>rotateChVert_S.png</file>
-        <file>scaleChLibreVert.png</file>
-        <file>scaleChLibreVert_S.png</file>
-        <file>scaleChVert.png</file>
-        <file>scaleChVert_S.png</file>
+        <file>chAddRound.png</file>
+        <file>chAddRound_S.png</file>
     </qresource>
 </RCC>
