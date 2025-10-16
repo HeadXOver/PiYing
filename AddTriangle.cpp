@@ -77,14 +77,14 @@ void AddTriangleClick::click(const QPointF& mouse) {
 
 void AddTriangle::click(const QPointF& mouseOri)
 {
-	QPointF mouse = glVertReference->gl->getViewProjMatrixInvert().map(glVertReference->gl->mapToGL(mouseOri));
+	QPointF mouse = glVertReference->gl.getViewProjMatrixInvert().map(glVertReference->gl.mapToGL(mouseOri));
 
 	if (checkPointRepeat(mouse))  return;
 
 	int indRepeat = -1;
 	PointVectorLayer& pointVector = *(glVertReference->pointLayer);
 	for (unsigned int i = 0; i < pointVector.size(); i++) {
-		if (QLineF(pointVector.get_uv_point(i), mouse).length() < 0.02f / glVertReference->gl->viewScale.value()) {
+		if (QLineF(pointVector.get_uv_point(i), mouse).length() < 0.02f / glVertReference->gl.viewScale.value()) {
 			indRepeat = i;
 			break;
 		}
@@ -170,7 +170,7 @@ void AddTriangle::draw(QPainter* painter)
 	}
 
 	for (QPointF& p : toDraw) {
-		p = glVertReference->gl->mapViewProjMatrix(p);
+		p = glVertReference->gl.mapViewProjMatrix(p);
 		painter->setPen(QPen(Qt::black, 8));
 		painter->drawPoint(p);
 		painter->setPen(QPen(Qt::red, 6));

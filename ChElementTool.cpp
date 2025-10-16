@@ -11,7 +11,7 @@
 #include <memory>
 #include <qpointf>
 
-ChElementTool::ChElementTool(int current, PiYingGL* pygl, CharacterTextureToolState chToolState) : glVertReference(new GlVertReference(current, pygl))
+ChElementTool::ChElementTool(int current, PiYingGL& pygl, CharacterTextureToolState chToolState) : glVertReference(new GlVertReference(current, pygl))
 {
 	if (chToolState == CharacterTextureToolState::AddTriangle) {
 		std::shared_ptr<AddTriangle> addTriangle = std::make_shared<AddTriangle>(glVertReference);

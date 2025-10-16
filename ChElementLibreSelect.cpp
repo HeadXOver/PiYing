@@ -29,7 +29,7 @@ void ChElementLibreSelect::draw(QPainter* painter)
 		if (drawing) {
 			painter->setPen(QPen(Qt::yellow, 1));
 
-			auto mapper = [this](const QPointF& p) { return chElementSelect->glVertReference->gl->mapViewProjMatrix(p); };
+			auto mapper = [this](const QPointF& p) { return chElementSelect->glVertReference->gl.mapViewProjMatrix(p); };
 
 			QPolygonF screenPoly;
 			screenPoly.reserve(polygon->size());
@@ -45,7 +45,7 @@ void ChElementLibreSelect::draw(QPainter* painter)
 
 	PointVectorLayer* pointVector = chElementSelect->glVertReference->pointLayer;
 	for (int i = 0; i < chElementSelect->selectedPoints->size(); i++) {
-		QPointF selectPoint = chElementSelect->glVertReference->gl->mapViewProjMatrix(pointVector->get_uv_point((*chElementSelect->selectedPoints)[i]));
+		QPointF selectPoint = chElementSelect->glVertReference->gl.mapViewProjMatrix(pointVector->get_uv_point((*chElementSelect->selectedPoints)[i]));
 		painter->setPen(QPen(Qt::black, 8));
 		painter->drawPoint(selectPoint);
 		painter->setPen(QPen(Qt::red, 6));
@@ -67,13 +67,13 @@ void ChElementLibreSelect::clickPos(const QPointF& mouseOri)
 		return;
 	}
 
-	QPointF mouse = chElementSelect->glVertReference->gl->getViewProjMatrixInvert().map(chElementSelect->glVertReference->gl->mapToGL(mouseOri));
+	QPointF mouse = chElementSelect->glVertReference->gl.getViewProjMatrixInvert().map(chElementSelect->glVertReference->gl.mapToGL(mouseOri));
 
 	*polygon << mouse;
 
 	PointVectorLayer* pointVector = chElementSelect->glVertReference->pointLayer;
 	for (unsigned int i = 0; i < pointVector->size(); i++) {
-		if (QLineF(pointVector->get_uv_point(i), mouse).length() < 0.02f / chElementSelect->glVertReference->gl->viewScale.value()) {
+		if (QLineF(pointVector->get_uv_point(i), mouse).length() < 0.02f / chElementSelect->glVertReference->gl.viewScale.value()) {
 			if (!chElementSelect->selectedPoints->contains(i)) {
 				if (!KeyboardStateWin::isCtrlHeld()) {
 					chElementSelect->selectedPoints->clear();
@@ -93,7 +93,7 @@ void ChElementLibreSelect::movePos(const QPointF& mouse)
 	if (chElementSelect->editMode == ChElementEditMode::None) {
 		if (!chElementSelect->isPress) return;
 
-		QPointF mapedMouse = chElementSelect->glVertReference->gl->getViewProjMatrixInvert().map(chElementSelect->glVertReference->gl->mapToGL(mouse));
+		QPointF mapedMouse = chElementSelect->glVertReference->gl.GLViewProjMatrixInvert(mouse);
 		if (polygon->isEmpty() || polygon->last() != mapedMouse) {
 			*polygon << mapedMouse;
 		}

@@ -8,7 +8,8 @@ class QPointF;
 class PointVectorLayer;
 
 struct GlVertReference {
-	GlVertReference(int current, PiYingGL* piYingGL);
+	GlVertReference(int current, PiYingGL& piYingGL);
+	~GlVertReference();
 
 	void addPointToVert(const QPointF& p);
 	void addTriangle(int index1, int index2, int index3);
@@ -20,7 +21,7 @@ struct GlVertReference {
 
 	PointVectorLayer* pointLayer;
 	std::vector<unsigned int>& glIndex;
-	PiYingGL* gl;
+	PiYingGL& gl;
 
 private:
 	void addChVert(const QPointF& point);

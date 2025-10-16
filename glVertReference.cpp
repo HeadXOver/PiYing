@@ -49,9 +49,14 @@ int GlVertReference::get_current_end() const
 	return (int)pointLayer->size();
 }
 
-GlVertReference::GlVertReference(int current, PiYingGL* pygl) :
-	glIndex(pygl->ref_characterTriangleIndices()[current]),
-	pointLayer(new PointVectorLayer(pygl->ref_characterVerts(current))),
+GlVertReference::GlVertReference(int current, PiYingGL& pygl) :
+	glIndex(pygl.ref_characterTriangleIndices()[current]),
+	pointLayer(new PointVectorLayer(pygl.ref_characterVerts(current))),
 	gl(pygl)
 {
+}
+
+GlVertReference::~GlVertReference()
+{
+	delete pointLayer;
 }

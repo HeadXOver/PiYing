@@ -129,7 +129,7 @@ void PiYingGL::updateChTexTool()
 
 	if (chToolState == CharacterTextureToolState::None) return;
 
-	chElementTool = new ChElementTool(currentVector, this, chToolState);
+	chElementTool = new ChElementTool(currentVector, *this, chToolState);
 
 	update();
 }
@@ -148,7 +148,7 @@ void PiYingGL::setChToolState(CharacterTextureToolState state)
 	
 	if (state == CharacterTextureToolState::None) return;
 
-	chElementTool = new ChElementTool(currentVector, this, chToolState);
+	chElementTool = new ChElementTool(currentVector, *this, chToolState);
 
 	update();
 }

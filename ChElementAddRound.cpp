@@ -31,7 +31,7 @@ void ChElementAddRound::release(const QPointF& mouse)
 
 	int init[3] {radius, 7, init_angle };
 	int outRadius, outEdgeCount, outAngle;
-	if (AskRoundPolyDialog(QString("设置多边形"), init, glVertReference->gl).getValues(outRadius, outEdgeCount, outAngle)) {
+	if (AskRoundPolyDialog(QString("设置多边形"), init, &glVertReference->gl).getValues(outRadius, outEdgeCount, outAngle)) {
 		radius = outRadius;
 		init_angle = outAngle;
 		addRoundPoly(outEdgeCount);
@@ -56,16 +56,16 @@ void ChElementAddRound::addRoundPoly(const int edgeCount)
 {
 	if (edgeCount < 3) return;
 
-	const QPointF glCenter = glVertReference->gl->GLViewProjMatrixInvert(*center);
-	const QPointF glCursor = glVertReference->gl->GLViewProjMatrixInvert(*current_cursor);
-	const float lenth = QLineF(QPointF(), glVertReference->gl->getInsProj().map(glCursor - glCenter)).length();
+	const QPointF glCenter = glVertReference->gl.GLViewProjMatrixInvert(*center);
+	const QPointF glCursor = glVertReference->gl.GLViewProjMatrixInvert(*current_cursor);
+	const float lenth = QLineF(QPointF(), glVertReference->gl.getInsProj().map(glCursor - glCenter)).length();
 	const double initAngle = init_angle * M_PI / 180.0;
 	const double deltaAngle = 2 * M_PI / edgeCount;
 	const int currentEnd = glVertReference->get_current_end();
 
 	glVertReference->addPointToVert(glCenter);
 	for (int i = 0; i < edgeCount; i++) {
-		glVertReference->addPointToVert(glCenter + lenth * glVertReference->gl->getProj().map(QPointF(cos(initAngle + i * deltaAngle), sin(initAngle + i * deltaAngle))));
+		glVertReference->addPointToVert(glCenter + lenth * glVertReference->gl.getProj().map(QPointF(cos(initAngle + i * deltaAngle), sin(initAngle + i * deltaAngle))));
 	}
 
 	for (int i = 0; i < edgeCount - 1; i++) {

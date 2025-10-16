@@ -18,7 +18,7 @@ struct GlVertReference;
 class ChElementTool final
 {
 public:
-	ChElementTool(int current, PiYingGL* pygl, CharacterTextureToolState chToolState);
+	ChElementTool(int current, PiYingGL& pygl, CharacterTextureToolState chToolState);
 	~ChElementTool();
 
 	void click(const QPointF& mouse);

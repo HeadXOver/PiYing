@@ -66,14 +66,14 @@ void AddPolyClick::click(const QPointF& mouse)
 
 void AddChTexPoly::click(const QPointF& mouseOri)
 {
-	QPointF mouse = glVertReference->gl->getViewProjMatrixInvert().map(glVertReference->gl->mapToGL(mouseOri));
+	QPointF mouse = glVertReference->gl.getViewProjMatrixInvert().map(glVertReference->gl.mapToGL(mouseOri));
 
 	if (checkPointRepeat(mouse))  return;
 
 	for (unsigned int i = 0; i < glVertReference->pointLayer->size(); i++) {
 		PointVectorLayer& pointVector = *(glVertReference->pointLayer);
 		const QPointF& readyPoint = pointVector.get_uv_point(i);
-		if (QLineF(readyPoint, mouse).length() < 0.02f / glVertReference->gl->viewScale.value()) {
+		if (QLineF(readyPoint, mouse).length() < 0.02f / glVertReference->gl.viewScale.value()) {
 			if (!index.contains(i)) {
 				index.append(i);
 				points.append(readyPoint);
@@ -89,7 +89,7 @@ void AddChTexPoly::click(const QPointF& mouseOri)
 void AddPolyDraw::draw(QPainter* painter)
 {
 	for (QPointF selectPoint : addChTexPoly->points) {
-		selectPoint = addChTexPoly->glVertReference->gl->mapViewProjMatrix(selectPoint);
+		selectPoint = addChTexPoly->glVertReference->gl.mapViewProjMatrix(selectPoint);
 		painter->setPen(QPen(Qt::black, 8));
 		painter->drawPoint(selectPoint);
 		painter->setPen(QPen(Qt::red, 6));
