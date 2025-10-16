@@ -43,7 +43,7 @@ class PiYingGL : public QOpenGLWidget, QOpenGLFunctions_3_3_Core
 	Q_OBJECT
 
 public:
-	explicit PiYingGL(PiYing* parent = nullptr);
+	explicit PiYingGL(PiYing& parent);
 	~PiYingGL();
 
 private:
@@ -136,7 +136,7 @@ public:
 	ViewData viewTransY;
 
 private:
-	PiYing* parent;
+	PiYing& ref_PiYing;
 
 	unsigned int bgVAO = 0, bgVBO = 0, bgEBO = 0;
 	unsigned int chVAO = 0, chVBO = 0, chEBO = 0;

@@ -102,7 +102,7 @@ void PiYingGL::deleteBg()
 	if (ret == QMessageBox::Yes) {
 		delete backGrounds[getCurrentBgRow()];
 		backGrounds.removeAt(getCurrentBgRow());
-		QListWidgetItem* item = parent->bgImageList->takeItem(getCurrentBgRow());
+		QListWidgetItem* item = ref_PiYing.bgImageList->takeItem(getCurrentBgRow());
 		delete item;
 		update();
 	}
@@ -123,7 +123,7 @@ void PiYingGL::deleteAllBg()
 			delete item;
 		}
 		backGrounds.clear();
-		parent->bgImageList->clear();
+		ref_PiYing.bgImageList->clear();
 		update();
 	}
 }

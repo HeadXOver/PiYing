@@ -7,7 +7,7 @@
 #include <qmenu>
 #include <qstatusbar>
 
-PiYingGL::PiYingGL(PiYing* parent) : QOpenGLWidget(parent), parent(parent)
+PiYingGL::PiYingGL(PiYing& parent) : QOpenGLWidget(&parent), ref_PiYing(parent)
 {
 	bgShaderProgram = new QOpenGLShaderProgram(this);
 	chShaderProgram = new QOpenGLShaderProgram(this);
@@ -83,14 +83,14 @@ PiYingGL::PiYingGL(PiYing* parent) : QOpenGLWidget(parent), parent(parent)
 	QLabel* labelViewTransY = new QLabel("0", this);
 	QLabel* labelViewRot = new QLabel("0", this);
 
-	parent->statusBar()->addPermanentWidget(new QLabel(tr("视图x"), this));
-	parent->statusBar()->addPermanentWidget(labelViewTransX);
-	parent->statusBar()->addPermanentWidget(new QLabel(tr("视图y"), this));
-	parent->statusBar()->addPermanentWidget(labelViewTransY);
-	parent->statusBar()->addPermanentWidget(new QLabel(tr("视图旋转"), this));
-	parent->statusBar()->addPermanentWidget(labelViewRot);
-	parent->statusBar()->addPermanentWidget(new QLabel(tr("视图缩放"), this));
-	parent->statusBar()->addPermanentWidget(labelViewScale);
+	parent.statusBar()->addPermanentWidget(new QLabel(tr("视图x"), this));
+	parent.statusBar()->addPermanentWidget(labelViewTransX);
+	parent.statusBar()->addPermanentWidget(new QLabel(tr("视图y"), this));
+	parent.statusBar()->addPermanentWidget(labelViewTransY);
+	parent.statusBar()->addPermanentWidget(new QLabel(tr("视图旋转"), this));
+	parent.statusBar()->addPermanentWidget(labelViewRot);
+	parent.statusBar()->addPermanentWidget(new QLabel(tr("视图缩放"), this));
+	parent.statusBar()->addPermanentWidget(labelViewScale);
 
 	connect(&viewScale, &ViewData::valueChanged, this, [labelViewScale](float v) {labelViewScale->setText(tr("%1  ").arg(v)); });
 	connect(&viewTransX, &ViewData::valueChanged, this, [labelViewTransX](float v) {labelViewTransX->setText(tr("%1  ").arg(v)); });

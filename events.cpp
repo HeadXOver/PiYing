@@ -50,7 +50,7 @@ void PiYingGL::mouseMoveEvent(QMouseEvent* event) {
 	QPointF mouse = mapToGL(event->position());
 	if (event->buttons() == Qt::LeftButton) {
 		if (lastMousePosType != MousePos::OutSide) {
-			ImageTexture* item = backGrounds[parent->getCurrentBgRow()];
+			ImageTexture* item = backGrounds[ref_PiYing.getCurrentBgRow()];
 			if (editMode == EditMode::BackGround) {
 				if (KeyboardStateWin::isAltHeld())
 					bgRotationControl(mouse, item);
@@ -79,7 +79,7 @@ void PiYingGL::mouseMoveEvent(QMouseEvent* event) {
 		currentUpdate();
 	}
 	else {
-		int cur = parent->getCurrentBgRow();
+		int cur = ref_PiYing.getCurrentBgRow();
 		if (cur >= 0) setCursor(getCursorShape(getMousePosType(getRaletiveToRect(mouse, backGrounds[cur]->transform()))));
 		else setCursor(Qt::CursorShape::ArrowCursor);
 	}

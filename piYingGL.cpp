@@ -80,12 +80,12 @@ void PiYingGL::appendBgList(QImage& image)
 
 	QIcon icon(QPixmap::fromImage(image).scaled(50, 50, Qt::KeepAspectRatio, Qt::SmoothTransformation));
 
-	QListWidgetItem* item = new QListWidgetItem(icon, getUniquebgName(parent->bgImageList));
+	QListWidgetItem* item = new QListWidgetItem(icon, getUniquebgName(ref_PiYing.bgImageList));
 	item->setTextAlignment(Qt::AlignCenter);
 
-	parent->bgImageList->addItem(item);
+	ref_PiYing.bgImageList->addItem(item);
 
-	if (parent->getCurrentBgRow() < 0) parent->bgImageList->setCurrentRow(0);
+	if (ref_PiYing.getCurrentBgRow() < 0) ref_PiYing.bgImageList->setCurrentRow(0);
 }
 
 void PiYingGL::addCharacter(const QString& imageName)
@@ -101,12 +101,12 @@ void PiYingGL::addCharacter(const QString& imageName)
 
 	QIcon icon(QPixmap::fromImage(img).scaled(50, 50, Qt::KeepAspectRatio, Qt::SmoothTransformation));
 
-	QListWidgetItem* item = new QListWidgetItem(icon, getUniquebgName(parent->chImageList));
+	QListWidgetItem* item = new QListWidgetItem(icon, getUniquebgName(ref_PiYing.chImageList));
 	item->setTextAlignment(Qt::AlignCenter);
 
-	parent->chImageList->addItem(item);
+	ref_PiYing.chImageList->addItem(item);
 
-	if (getCurrentChRow() < 0) parent->chImageList->setCurrentRow(0);
+	if (getCurrentChRow() < 0) ref_PiYing.chImageList->setCurrentRow(0);
 
 	update();
 }
@@ -217,8 +217,8 @@ void PiYingGL::importBackground()
 
 		if (ret == QMessageBox::Yes) {
 			float ratio = img.width() / (float)img.height();
-			parent->piYingGLContainer->setRatio(ratio);
-			parent->piYingGLContainer->update();
+			ref_PiYing.piYingGLContainer->setRatio(ratio);
+			ref_PiYing.piYingGLContainer->update();
 			changeRatio(ratio);
 		}
 
@@ -264,12 +264,12 @@ Qt::CursorShape PiYingGL::getCursorShape(const MousePos& pos)
 
 int PiYingGL::getCurrentBgRow() const
 {
-	return parent->getCurrentBgRow();
+	return ref_PiYing.getCurrentBgRow();
 }
 
 int PiYingGL::getCurrentChRow() const
 {
-	return parent->getCurrentChRow();
+	return ref_PiYing.getCurrentChRow();
 }
 
 void PiYingGL::addGlobalAction(QMenu* menu, const QList<QAction*> action)
