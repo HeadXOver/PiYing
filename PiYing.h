@@ -48,6 +48,7 @@ private:
 	QWidget* timeLine;
 
 	QList<ToolButton*> toolChTexList;
+	QList<ToolButton*> toolChSkelenList;
 
 public:
 	PiYingGLContainer* piYingGLContainer = nullptr;

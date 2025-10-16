@@ -9,7 +9,7 @@ class QString;
 
 class ToolButton {
 public:
-    ToolButton(const QString& selectedFileName, const QString& unselectedFileName, const QString& actionName, CharacterTextureToolState state, QWidget* parent);
+    ToolButton(const QString& selectedFileName, const QString& unselectedFileName, const QString& actionName, CharacterToolState state, QWidget* parent);
     ~ToolButton();
 
     void select();
@@ -18,17 +18,17 @@ public:
     void set_selected(const QIcon& icon);
     void set_unselected(const QIcon& icon);
 
-    void set_toolState(CharacterTextureToolState state);
+    void set_toolState(CharacterToolState state);
 
     QAction* action() const;
-    CharacterTextureToolState toolState() const;
+    CharacterToolState toolState() const;
     bool isSelect() const;
 
 private:
     QAction* action_;
     QIcon* selected_;
     QIcon* unselected_;
-    CharacterTextureToolState toolState_;
+    CharacterToolState toolState_;
     bool isSelect_ = false;
 };
 

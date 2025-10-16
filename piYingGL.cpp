@@ -127,14 +127,14 @@ void PiYingGL::updateChTexTool()
 	int currentVector = getCurrentChRow();
 	if (currentVector < 0) return;
 
-	if (chToolState == CharacterTextureToolState::None) return;
+	if (chToolState == CharacterToolState::None) return;
 
 	chElementTool = new ChElementTool(currentVector, *this, chToolState);
 
 	update();
 }
 
-void PiYingGL::setChToolState(CharacterTextureToolState state)
+void PiYingGL::setChToolState(CharacterToolState state)
 {
 	chToolState = state;
 
@@ -146,7 +146,7 @@ void PiYingGL::setChToolState(CharacterTextureToolState state)
 	int currentVector = getCurrentChRow();
 	if (currentVector < 0) return;
 	
-	if (state == CharacterTextureToolState::None) return;
+	if (state == CharacterToolState::None) return;
 
 	chElementTool = new ChElementTool(currentVector, *this, chToolState);
 

@@ -72,12 +72,6 @@
     <Filter Include="Header Files\PiYingContainer">
       <UniqueIdentifier>{71909617-4079-4e9b-81f7-14b22808c68b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\ChSkelenTool">
-      <UniqueIdentifier>{27aeacef-2d75-421b-a626-7caead8f42f3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\ChSkelenTool">
-      <UniqueIdentifier>{1f43ca36-65f9-4150-ba03-75df816c56ce}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <QtRcc Include="PiYing.qrc">
@@ -197,7 +191,7 @@
       <Filter>Source Files\PiYingContainer</Filter>
     </ClCompile>
     <ClCompile Include="ch_skelen_tool.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\ChELementTool</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -274,7 +268,7 @@
       <Filter>Header Files\ChELementTool</Filter>
     </ClInclude>
     <ClInclude Include="ch_skelen_tool.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\ChELementTool</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

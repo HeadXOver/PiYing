@@ -11,16 +11,16 @@
 #include <memory>
 #include <qpointf>
 
-ChElementTool::ChElementTool(int current, PiYingGL& pygl, CharacterTextureToolState chToolState) : glVertReference(new GlVertReference(current, pygl))
+ChElementTool::ChElementTool(int current, PiYingGL& pygl, CharacterToolState chToolState) : glVertReference(new GlVertReference(current, pygl))
 {
-	if (chToolState == CharacterTextureToolState::AddTriangle) {
+	if (chToolState == CharacterToolState::AddTriangle) {
 		std::shared_ptr<AddTriangle> addTriangle = std::make_shared<AddTriangle>(*glVertReference);
 		clickBehavior = new AddTriangleClick(addTriangle);
 		escapeBehavior = new AddTriangleEscape(addTriangle);
 		drawBehavior = new AddTriangleDraw(addTriangle);
 		deleteBehavior = new AddTriangleDelete(addTriangle);
 	}
-	else if (chToolState == CharacterTextureToolState::AddPoly) {
+	else if (chToolState == CharacterToolState::AddPoly) {
 		std::shared_ptr<AddChTexPoly> addPoly = std::make_shared<AddChTexPoly>(*glVertReference);
 		clickBehavior = new AddPolyClick(addPoly);
 		escapeBehavior = new AddPolyEscape(addPoly);
@@ -28,7 +28,7 @@ ChElementTool::ChElementTool(int current, PiYingGL& pygl, CharacterTextureToolSt
 		deleteBehavior = new AddPolyDelete(addPoly);
 		enterBehavior = new AddPolyEnter(addPoly);
 	}
-	else if (chToolState == CharacterTextureToolState::RectSelectVert) {
+	else if (chToolState == CharacterToolState::RectSelectVert) {
 		std::shared_ptr<ChElementRectSelect> rectSelect = std::make_shared<ChElementRectSelect>(*glVertReference);
 		clickBehavior = new RectSelectClick(rectSelect);
 		escapeBehavior = new RectSelectEscape(rectSelect);
@@ -37,7 +37,7 @@ ChElementTool::ChElementTool(int current, PiYingGL& pygl, CharacterTextureToolSt
 		moveBehavior = new RectSelectMove(rectSelect);
 		deleteBehavior = new RectSelectDelete(rectSelect);
 	}
-	else if (chToolState == CharacterTextureToolState::LibreSelectVert) {
+	else if (chToolState == CharacterToolState::LibreSelectVert) {
 		std::shared_ptr<ChElementLibreSelect> libreSelect = std::make_shared<ChElementLibreSelect>(*glVertReference);
 		clickBehavior = new LibreSelectClick(libreSelect);
 		escapeBehavior = new LibreSelectEscape(libreSelect);
@@ -46,7 +46,7 @@ ChElementTool::ChElementTool(int current, PiYingGL& pygl, CharacterTextureToolSt
 		moveBehavior = new LibreSelectMove(libreSelect);
 		deleteBehavior = new LibreSelectDelete(libreSelect);
 	}
-	else if (chToolState == CharacterTextureToolState::AddRound) {
+	else if (chToolState == CharacterToolState::AddRound) {
 		std::shared_ptr<ChElementAddRound> addRound = std::make_shared<ChElementAddRound>(*glVertReference);
 		clickBehavior = new AddRoundClick(addRound);
 		moveBehavior = new AddRoundMove(addRound);

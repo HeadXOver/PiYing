@@ -1,11 +1,13 @@
 #pragma once
 
-enum class CharacterTextureToolState {
+enum class CharacterToolState {
     None,
     AddTriangle,
     MoveVert,
     RectSelectVert,
+    RectSelectSkelenVert,
     LibreSelectVert,
+    LibreSelectSkelenVert,
     AddPoly,
     AddRound,
 };

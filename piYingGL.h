@@ -82,7 +82,7 @@ public:
 	void addCharacter(const QString& imageName);
 	void setEditMode(EditMode mode);
 	void updateChTexTool();
-	void setChToolState(CharacterTextureToolState state);
+	void setChToolState(CharacterToolState state);
 	void deleteChElement();
 	void enterChElement();
 	void escapeChVert();
@@ -165,7 +165,7 @@ private:
 
 	MousePos lastMousePosType = MousePos::OutSide;
 
-	CharacterTextureToolState chToolState;
+	CharacterToolState chToolState;
 
 	QMenu* rightButtonMenuChTex;
 	QMenu* rightButtonMenuBg_S;

@@ -4,7 +4,7 @@
 #include <qaction>
 #include <qicon>
 
-ToolButton::ToolButton(const QString& selectedFileName, const QString& unselectedFileName, const QString& actionName, CharacterTextureToolState state, QWidget* parent)
+ToolButton::ToolButton(const QString& selectedFileName, const QString& unselectedFileName, const QString& actionName, CharacterToolState state, QWidget* parent)
 {
     selected_ = new QIcon(selectedFileName);
     unselected_ = new QIcon(unselectedFileName);
@@ -40,7 +40,7 @@ void ToolButton::set_unselected(const QIcon& icon)
     *unselected_ = icon;
 }
 
-void ToolButton::set_toolState(CharacterTextureToolState state)
+void ToolButton::set_toolState(CharacterToolState state)
 {
     toolState_ = state;
 }
@@ -50,7 +50,7 @@ QAction* ToolButton::action() const
     return action_;
 }
 
-CharacterTextureToolState ToolButton::toolState() const
+CharacterToolState ToolButton::toolState() const
 {
     return toolState_;
 }
