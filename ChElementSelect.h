@@ -20,7 +20,7 @@ enum class ChElementEditMode {
 
 struct ChElementSelect final
 {
-	ChElementSelect(GlVertReference* glReference);
+	ChElementSelect(GlVertReference& glReference);
 	virtual ~ChElementSelect();
 
 	void escape();
@@ -30,7 +30,7 @@ struct ChElementSelect final
 	void moveHandle(const QPointF& mouse);
 	void affirmHandle();
 
-	GlVertReference* glVertReference;
+	GlVertReference& glVertReference;
 	SelectedPoints* selectedPoints;
 	QPointF lastPos;
 	QPointF handleCenterPoint;

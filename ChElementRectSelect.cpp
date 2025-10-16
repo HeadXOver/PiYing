@@ -10,7 +10,7 @@
 #include <qpainter>
 #include <qpointf>
 
-ChElementRectSelect::ChElementRectSelect(GlVertReference& glReference) :chElementSelect(new ChElementSelect(&glReference))
+ChElementRectSelect::ChElementRectSelect(GlVertReference& glReference) :chElementSelect(new ChElementSelect(glReference))
 {
 	rect = new QPointF();
 }
@@ -25,9 +25,9 @@ void ChElementRectSelect::draw(QPainter* painter)
 {
 	chElementSelect->drawHandle(painter);
 
-	PointVectorLayer& pointLayer = *(chElementSelect->glVertReference->pointLayer);
+	PointVectorLayer& pointLayer = *(chElementSelect->glVertReference.pointLayer);
 	for (int i = 0; i < chElementSelect->selectedPoints->size(); i++) {
-		QPointF selectPoint = chElementSelect->glVertReference->gl.mapViewProjMatrix(pointLayer.get_uv_point((*chElementSelect->selectedPoints)[i]));
+		QPointF selectPoint = chElementSelect->glVertReference.gl.mapViewProjMatrix(pointLayer.get_uv_point((*chElementSelect->selectedPoints)[i]));
 		painter->setPen(QPen(Qt::black, 8));
 		painter->drawPoint(selectPoint);
 		painter->setPen(QPen(Qt::red, 6));
@@ -52,11 +52,11 @@ void ChElementRectSelect::clickPos(const QPointF& mouseOri)
 		return;
 	}
 
-	QPointF mouse = chElementSelect->glVertReference->gl.GLViewProjMatrixInvert(mouseOri);
+	QPointF mouse = chElementSelect->glVertReference.gl.GLViewProjMatrixInvert(mouseOri);
 
-	PointVectorLayer& pointVector = *(chElementSelect->glVertReference->pointLayer);
+	PointVectorLayer& pointVector = *(chElementSelect->glVertReference.pointLayer);
 	for (unsigned int i = 0; i < pointVector.size(); i++) {
-		if (QLineF(pointVector.get_uv_point(i), mouse).length() < 0.02f / chElementSelect->glVertReference->gl.viewScale.value()) {
+		if (QLineF(pointVector.get_uv_point(i), mouse).length() < 0.02f / chElementSelect->glVertReference.gl.viewScale.value()) {
 			if (!chElementSelect->selectedPoints->contains(i)) {
 				if (!KeyboardStateWin::isCtrlHeld()) {
 					chElementSelect->selectedPoints->clear();
@@ -92,9 +92,9 @@ void ChElementRectSelect::releasePos(const QPointF& mouse)
 
 	chElementSelect->selectedPoints->clear();
 
-	PointVectorLayer& pointVector = *(chElementSelect->glVertReference->pointLayer);
+	PointVectorLayer& pointVector = *(chElementSelect->glVertReference.pointLayer);
 	for (unsigned int i = 0; i < pointVector.size(); i++)
-		if (QRectF(chElementSelect->lastPos, mouse).contains(chElementSelect->glVertReference->gl.mapViewProjMatrix(pointVector.get_uv_point(i))))
+		if (QRectF(chElementSelect->lastPos, mouse).contains(chElementSelect->glVertReference.gl.mapViewProjMatrix(pointVector.get_uv_point(i))))
 			chElementSelect->selectedPoints->append(i);
 		
 }
