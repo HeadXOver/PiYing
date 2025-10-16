@@ -15,6 +15,8 @@ void SelectedPoints::append(unsigned int ind)
 
 void SelectedPoints::affirmVert()
 {
+	lastVertPos.clear();
+	lastVertPos.reserve(selectedIndex.size());
 	for (int i = 0; i < selectedIndex.size(); i++) {
 		lastVertPos[i] = sVert[selectedIndex[i]];
 	}
