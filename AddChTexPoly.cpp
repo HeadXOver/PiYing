@@ -6,7 +6,7 @@
 
 #include <qpainter>
 
-AddChTexPoly::AddChTexPoly(GlVertReference* glReference) :glVertReference(glReference)
+AddChTexPoly::AddChTexPoly(GlVertReference& glReference) :glVertReference(glReference)
 {
 }
 
@@ -30,8 +30,8 @@ void AddChTexPoly::enter()
 
 	for (int i = 0; i < index.size(); i++) {
 		if (index[i] < 0) {
-			index[i] = glVertReference->get_current_end();
-			glVertReference->addPointToVert(points[i]);
+			index[i] = glVertReference.get_current_end();
+			glVertReference.addPointToVert(points[i]);
 		}
 	}
 
@@ -41,7 +41,7 @@ void AddChTexPoly::enter()
 	int n2 = 1;
 	int n3 = size - 1;
 	for (int i = 2; i < size; i++) {
-		glVertReference->addTriangle(index[n1], index[n2], index[n3]);
+		glVertReference.addTriangle(index[n1], index[n2], index[n3]);
 		n1 = n2;
 		n2 = n3;
 		n3 = i / 2 + 1;
@@ -66,14 +66,14 @@ void AddPolyClick::click(const QPointF& mouse)
 
 void AddChTexPoly::click(const QPointF& mouseOri)
 {
-	QPointF mouse = glVertReference->gl.getViewProjMatrixInvert().map(glVertReference->gl.mapToGL(mouseOri));
+	QPointF mouse = glVertReference.gl.getViewProjMatrixInvert().map(glVertReference.gl.mapToGL(mouseOri));
 
 	if (checkPointRepeat(mouse))  return;
 
-	for (unsigned int i = 0; i < glVertReference->pointLayer->size(); i++) {
-		PointVectorLayer& pointVector = *(glVertReference->pointLayer);
+	for (unsigned int i = 0; i < glVertReference.pointLayer->size(); i++) {
+		PointVectorLayer& pointVector = *(glVertReference.pointLayer);
 		const QPointF& readyPoint = pointVector.get_uv_point(i);
-		if (QLineF(readyPoint, mouse).length() < 0.02f / glVertReference->gl.viewScale.value()) {
+		if (QLineF(readyPoint, mouse).length() < 0.02f / glVertReference.gl.viewScale.value()) {
 			if (!index.contains(i)) {
 				index.append(i);
 				points.append(readyPoint);
@@ -89,7 +89,7 @@ void AddChTexPoly::click(const QPointF& mouseOri)
 void AddPolyDraw::draw(QPainter* painter)
 {
 	for (QPointF selectPoint : addChTexPoly->points) {
-		selectPoint = addChTexPoly->glVertReference->gl.mapViewProjMatrix(selectPoint);
+		selectPoint = addChTexPoly->glVertReference.gl.mapViewProjMatrix(selectPoint);
 		painter->setPen(QPen(Qt::black, 8));
 		painter->drawPoint(selectPoint);
 		painter->setPen(QPen(Qt::red, 6));

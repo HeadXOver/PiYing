@@ -11,7 +11,7 @@ struct GlVertReference;
 
 struct AddChTexPoly
 {
-	AddChTexPoly(GlVertReference* glReference);
+	AddChTexPoly(GlVertReference& glReference);
 
 	void click(const QPointF& mouse);
 	void enter();
@@ -21,7 +21,7 @@ struct AddChTexPoly
 	QList<QPointF> points;
 	QList<int> index;
 
-	GlVertReference* glVertReference;
+	GlVertReference& glVertReference;
 };
 
 ////////////////////////////////////////////////////////

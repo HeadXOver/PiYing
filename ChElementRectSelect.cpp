@@ -10,7 +10,7 @@
 #include <qpainter>
 #include <qpointf>
 
-ChElementRectSelect::ChElementRectSelect(GlVertReference* glReference) :chElementSelect(new ChElementSelect(glReference))
+ChElementRectSelect::ChElementRectSelect(GlVertReference& glReference) :chElementSelect(new ChElementSelect(&glReference))
 {
 	rect = new QPointF();
 }
@@ -18,6 +18,7 @@ ChElementRectSelect::ChElementRectSelect(GlVertReference* glReference) :chElemen
 ChElementRectSelect::~ChElementRectSelect()
 {
 	delete rect;
+	delete chElementSelect;
 }
 
 void ChElementRectSelect::draw(QPainter* painter)

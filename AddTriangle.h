@@ -9,7 +9,7 @@ class PiYingGL;
 
 struct AddTriangle final
 {
-	AddTriangle(GlVertReference* glVertReference);
+	AddTriangle(GlVertReference& glVertReference);
 	~AddTriangle();
 
 	bool addIndex(unsigned int i);
@@ -19,7 +19,7 @@ struct AddTriangle final
 	void click(const QPointF& mouse);
 	void draw(QPainter* painter);
 
-	GlVertReference* glVertReference;
+	GlVertReference& glVertReference;
 
 	QPointF* first;
 	QPointF* second;

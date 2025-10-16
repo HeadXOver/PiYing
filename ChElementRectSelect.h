@@ -12,7 +12,7 @@ class PiYingGL;
 
 struct ChElementRectSelect final
 {
-	ChElementRectSelect(GlVertReference* glReference);
+	ChElementRectSelect(GlVertReference& glReference);
 	~ChElementRectSelect();
 
 	void draw(QPainter* painter);

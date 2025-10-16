@@ -9,7 +9,7 @@ class PiYingGL;
 
 struct ChElementAddRound final 
 {
-	ChElementAddRound(GlVertReference* glVertReference);
+	ChElementAddRound(GlVertReference& glVertReference);
 	~ChElementAddRound();
 
 	void click(const QPointF& mouse);
@@ -27,7 +27,7 @@ struct ChElementAddRound final
 	int radius{ 0 };
 	int init_angle{ 0 };
 
-	GlVertReference* glVertReference;
+	GlVertReference& glVertReference;
 };
 
 ////////////////////////////////////////////////

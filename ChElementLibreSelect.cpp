@@ -11,7 +11,7 @@
 #include <qpainter>
 #include <qpointf>
 
-ChElementLibreSelect::ChElementLibreSelect(GlVertReference* glReference) :chElementSelect(new ChElementSelect(glReference))
+ChElementLibreSelect::ChElementLibreSelect(GlVertReference& glReference) :chElementSelect(new ChElementSelect(&glReference))
 {
 	polygon = new QPolygonF();
 }
@@ -19,6 +19,7 @@ ChElementLibreSelect::ChElementLibreSelect(GlVertReference* glReference) :chElem
 ChElementLibreSelect::~ChElementLibreSelect()
 {
 	delete polygon;
+	delete chElementSelect;
 }
 
 void ChElementLibreSelect::draw(QPainter* painter)

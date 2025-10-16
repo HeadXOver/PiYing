@@ -17,7 +17,7 @@ class PointVectorLayer;
 struct ChElementLibreSelect final
 {
 public:
-	ChElementLibreSelect(GlVertReference* glReference);
+	ChElementLibreSelect(GlVertReference& glReference);
 	~ChElementLibreSelect();
 
 	void draw(QPainter* painter);
