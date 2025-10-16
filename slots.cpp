@@ -61,8 +61,7 @@ void PiYingGL::bgSetTransform()
 			transform->get_scale_x(),
 			transform->get_scale_y()
 		};
-		QString s[5] = { QString("X位移"), QString("Y位移"), QString("旋转"), QString("X缩放"), QString("Y缩放") };
-		if (Ask3DoublesDialog("设置变换", s, d, this).getValues(transX, transY, Rot, ScaleX, ScaleY)) {
+		if (Ask3DoublesDialog("设置变换", d, this).getValues(transX, transY, Rot, ScaleX, ScaleY)) {
 			image->setTrans(transX, transY);
 			image->setRot(Rot);
 			image->setScale(ScaleX, ScaleY);

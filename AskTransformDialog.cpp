@@ -1,16 +1,17 @@
-#include "AskTransformDialog.h"
+﻿#include "AskTransformDialog.h"
 
 #include <qdialogbuttonbox>
 #include <qdoublespinbox>
 #include <QFormLayout>
 
-Ask3DoublesDialog::Ask3DoublesDialog(const QString& title, const QString s[5], const float d[5], QWidget* parent) : QDialog(parent)
+Ask3DoublesDialog::Ask3DoublesDialog(const QString& title, const float d[5], QWidget* parent) : QDialog(parent)
 {
     setWindowTitle(title);
     setModal(true);
 
     auto* lay = new QFormLayout(this);
 
+    const QString s[5] = { QString("X位移"), QString("Y位移"), QString("旋转"), QString("X缩放"), QString("Y缩放") };
     for (int i = 0; i < 5; ++i) {
         m_spin[i] = new QDoubleSpinBox(this);
         m_spin[i]->setRange(-9999999, 9999999);

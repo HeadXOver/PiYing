@@ -10,7 +10,6 @@ class Ask3DoublesDialog : public QDialog
 public:
     explicit Ask3DoublesDialog(
         const QString& title,
-        const QString s[5],
         const float d[5],
         QWidget* parent = nullptr);
 
