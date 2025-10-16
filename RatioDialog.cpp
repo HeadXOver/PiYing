@@ -24,7 +24,7 @@ void RatioDialog::buildUi()
         {"16:9", {16,9}}, {"4:3", {4,3}},
         {"1:1", {1,1}},   {tr("自定义"), {0,0}}
     };
-    auto* presetLay = new QHBoxLayout;
+    auto* presetLay = new QHBoxLayout(this);
     for (int i = 0; i < presets.size(); ++i) {
         auto* rb = new QRadioButton(presets[i].first);
         m_presetGroup->addButton(rb, i);
@@ -34,14 +34,14 @@ void RatioDialog::buildUi()
     lay->addLayout(presetLay);
 
     /* 2. 自定义输入 */
-    auto* customLay = new QHBoxLayout;
+    auto* customLay = new QHBoxLayout(this);
     customLay->addWidget(new QLabel(tr("自定义")));
-    m_customW = new QSpinBox;
-    m_customH = new QSpinBox;
+    m_customW = new QSpinBox(this);
+    m_customH = new QSpinBox(this);
     m_customW->setRange(1, 9999); m_customW->setValue(16);
     m_customH->setRange(1, 9999); m_customH->setValue(9);
     customLay->addWidget(m_customW);
-    customLay->addWidget(new QLabel(":"));
+    customLay->addWidget(new QLabel(":", this));
     customLay->addWidget(m_customH);
     customLay->addStretch();
     lay->addLayout(customLay);

@@ -102,6 +102,7 @@
     <ClCompile Include="ChElementRectSelect.cpp" />
     <ClCompile Include="ChElementSelect.cpp" />
     <ClCompile Include="ChElementTool.cpp" />
+    <ClCompile Include="ch_skelen_tool.cpp" />
     <ClCompile Include="Controls.cpp" />
     <ClCompile Include="ctrlSlideLayout.cpp" />
     <ClCompile Include="ctrlSlideWidget.cpp" />
@@ -139,6 +140,7 @@
     <ClInclude Include="ChElementLibreSelect.h" />
     <ClInclude Include="ChElementRectSelect.h" />
     <ClInclude Include="ChElementTool.h" />
+    <ClInclude Include="ch_skelen_tool.h" />
     <ClInclude Include="enum_character_texture_tool_state.h" />
     <ClInclude Include="float_vector_layer.h" />
     <ClInclude Include="image_texture.h" />

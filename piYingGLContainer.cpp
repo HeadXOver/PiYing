@@ -2,10 +2,10 @@
 
 #include <QVBoxLayout>
 
-PiYingGLContainer::PiYingGLContainer(QWidget* content, double ratio, QWidget* parent) : QWidget(parent), m_content(content), m_ratio(ratio)
+PiYingGLContainer::PiYingGLContainer(QWidget& content, double ratio, QWidget* parent) : QWidget(parent), m_content(content), m_ratio(ratio)
 {
     QVBoxLayout* lay = new QVBoxLayout(this);
-    lay->addWidget(content);
+    lay->addWidget(&content);
     lay->setContentsMargins(0, 0, 0, 0);
     setLayout(lay);
 }
@@ -26,7 +26,7 @@ void PiYingGLContainer::resizeEvent(QResizeEvent*)
     r.moveLeft(qMax(0, qMin(r.left(), width() - r.width())));
     r.moveTop(qMax(0, qMin(r.top(), height() - r.height())));
 
-    m_content->setGeometry(r);
+    m_content.setGeometry(r);
 }
 
 void PiYingGLContainer::setRatio(double r) {
