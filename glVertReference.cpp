@@ -46,7 +46,7 @@ void GlVertReference::addTriangle(const QPointF& point1, const QPointF& point2, 
 
 int GlVertReference::get_current_end() const
 {
-	return pointLayer->size();
+	return (int)pointLayer->size();
 }
 
 GlVertReference::GlVertReference(int current, PiYingGL* pygl) :

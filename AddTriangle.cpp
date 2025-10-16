@@ -71,11 +71,6 @@ void AddTriangleDelete::deleteElement()
 	addTriangle->numVert = 0;
 }
 
-void AddTriangle::addChVert(const QPointF* point)
-{
-	glVertReference->addChVert(*point);
-}
-
 void AddTriangleClick::click(const QPointF& mouse) {
 	addTriangle->click(mouse);
 }
@@ -102,14 +97,17 @@ void AddTriangle::click(const QPointF& mouseOri)
 	else if (numVert == 2) {
 		numInd = 0;
 		numVert = 0;
-		if (indRepeat >= 0) glVertReference->glIndex.push_back(indRepeat);
-		else  addChVert(&mouse);
-		addChVert(first);
-		addChVert(second);
+		if (indRepeat >= 0) {
+			glVertReference->addTriangle(indRepeat, *first, *second);
+		}
+		else {
+			glVertReference->addTriangle(*first, *second, mouse);
+		}
 	}
 	else if (numInd == 2) {
 		if (indRepeat >= 0) {
 			if (indRepeat == firstIndex && indRepeat == secondIndex) return;
+
 			for (int j = 0; j < glVertReference->glIndex.size(); j += 3) {
 				unsigned int x[3] = { glVertReference->glIndex[j + 0], glVertReference->glIndex[j + 1], glVertReference->glIndex[j + 2] };
 				unsigned int y[3] = { (unsigned int)indRepeat, firstIndex, secondIndex };
@@ -121,32 +119,26 @@ void AddTriangle::click(const QPointF& mouseOri)
 
 			numInd = 0;
 			numVert = 0;
-			glVertReference->glIndex.push_back(indRepeat);
+			glVertReference->addTriangle(indRepeat, firstIndex, secondIndex);
 		}
 		else {
 			numInd = 0;
 			numVert = 0;
-			addChVert(&mouse);
+			glVertReference->addTriangle(firstIndex, secondIndex, mouse);
 		}
-		glVertReference->glIndex.push_back(firstIndex);
-		glVertReference->glIndex.push_back(secondIndex);
 	}
 	else if (numInd == 1 && numVert == 1) {
 		if (indRepeat >= 0) {
 			if (firstIndex != indRepeat) {
 				numInd = 0;
 				numVert = 0;
-				glVertReference->glIndex.push_back((unsigned int)indRepeat);
-				glVertReference->glIndex.push_back(firstIndex);
-				addChVert(first);
+				glVertReference->addTriangle(indRepeat, firstIndex, *first);
 			}
 		}
 		else {
 			numInd = 0;
 			numVert = 0;
-			glVertReference->glIndex.push_back(firstIndex);
-			addChVert(&mouse);
-			addChVert(first);
+			glVertReference->addTriangle(firstIndex, *first, mouse);
 		}
 	}
 }

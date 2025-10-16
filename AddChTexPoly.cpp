@@ -25,33 +25,32 @@ void AddPolyEnter::enter()
 
 void AddChTexPoly::enter()
 {
-	if (index.size() < 3) return;
+	int size = index.size();
+	if (size < 3) return;
 
 	for (int i = 0; i < index.size(); i++) {
 		if (index[i] < 0) {
-			index[i] = (int)glVertReference->pointLayer->size();
+			index[i] = glVertReference->get_current_end();
 			glVertReference->addPointToVert(points[i]);
 		}
 	}
 
-	int last2point[2] = { 0,1 };
-	int front = 2;
-	int back = index.size() - 1;
-	bool isBack = true;
-	for (int i = 2; i < index.size(); i++) {
-		int v[3] = { last2point[0], last2point[1], isBack ? back : front };
-		for (int j = 0; j < 3; j++) {
-			glVertReference->glIndex.push_back(index[v[j]]);
+	points.clear();
+
+	int n1 = 0;
+	int n2 = 1;
+	int n3 = size - 1;
+	for (int i = 2; i < size; i++) {
+		glVertReference->addTriangle(index[n1], index[n2], index[n3]);
+		n1 = n2;
+		n2 = n3;
+		n3 = i / 2 + 1;
+		if (i % 2) {
+			n3 = size - n3;
 		}
-		last2point[0] = v[1];
-		last2point[1] = v[2];
-		if(isBack) back--;
-		else front++;
-		isBack = !isBack;
 	}
 
 	index.clear();
-	points.clear();
 }
 
 void AddPolyDelete::deleteElement()

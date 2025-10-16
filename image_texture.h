@@ -12,6 +12,9 @@ public:
     ImageTexture(QImage& image);
     ~ImageTexture();
 
+    void operator=(const ImageTransform& transform);
+    void operator=(const ImageTransform* transform);
+
     void setTrans(float x, float y);
     void setTrans(const QPointF& point);
     void setTrans(const QMatrix4x4& point);
@@ -30,8 +33,6 @@ public:
     void addRot(float r);
 
     void resetTransform();
-
-    void copyTransformFrom(ImageTransform& transform);
 
     ImageTransform* transform() const;
 

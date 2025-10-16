@@ -18,7 +18,6 @@ struct AddTriangle final
 	void reduceOne();
 	void click(const QPointF& mouse);
 	void draw(QPainter* painter);
-	void addChVert(const QPointF* point);
 
 	GlVertReference* glVertReference;
 
