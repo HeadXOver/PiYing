@@ -24,7 +24,7 @@ public:
 	void clear() { selectedIndex.clear(); lastVertPos.clear(); }
 	void append(unsigned int ind);
 	void removeLast() { selectedIndex.removeLast(); lastVertPos.removeLast(); }
-	void affirmVert();
+	void affirmVert(bool edit_skelen);
 
 private:
 	QList<unsigned int> selectedIndex;

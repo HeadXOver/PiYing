@@ -11,7 +11,7 @@
 
 #include <qpainter>
 
-ChElementSelect::ChElementSelect(GlVertReference& glReference) : glVertReference(glReference)
+ChElementSelect::ChElementSelect(GlVertReference& glReference) : glVertReference(glReference), edit_skelen(glReference.gl.editMode == EditMode::characterSkeleton)
 {
     selectedPoints = new SelectedPoints(false, *(glVertReference.pointLayer));
 }
@@ -95,8 +95,12 @@ void ChElementSelect::drawHandle(QPainter* painter)
     painter->setBrush(QColor(0, 0, 0, 0));
 
     // 计算中心点
+    PointVectorLayer& pointLayer = *(glVertReference.pointLayer);
     handleCenterPoint = QPointF();
-    for (unsigned int i : selectedPoints->index()) handleCenterPoint += glVertReference.pointLayer->get_uv_point(i);
+    for (unsigned int i : selectedPoints->index())
+        handleCenterPoint += edit_skelen ?
+        pointLayer[i]:
+        pointLayer.get_uv_point(i);
     
     handleCenterPoint /= selectedPoints->size();
 
@@ -162,34 +166,38 @@ void ChElementSelect::moveHandle(const QPointF& mouse)
     if (editMode == ChElementEditMode::Move) {
         QPointF toMove = glVertReference.gl.GLViewProjMatrixInvert(mouse) - glVertReference.gl.GLViewProjMatrixInvert(lastPos);
         for (int i = 0;i < selectedPoints->size();i++) {
-            pointLayer.set_point(false, (*selectedPoints)[i], selectedPoints->getVert(i) + toMove);
+            pointLayer.set_point(edit_skelen, (*selectedPoints)[i], selectedPoints->getVert(i) + toMove);
         }
     }
     else if(editMode == ChElementEditMode::MoveX) {
         QPointF toMove = glVertReference.gl.GLViewProjMatrixInvert(mouse.x(), 0.f) - glVertReference.gl.GLViewProjMatrixInvert(lastPos.x(), 0.f);
         for (int i = 0; i < selectedPoints->size(); i++) {
-            pointLayer.set_point(false, (*selectedPoints)[i], selectedPoints->getVert(i) + toMove);
+            pointLayer.set_point(edit_skelen, (*selectedPoints)[i], selectedPoints->getVert(i) + toMove);
         }
     }
     else if (editMode == ChElementEditMode::MoveY) {
         QPointF toMove = glVertReference.gl.GLViewProjMatrixInvert(0.f, mouse.y()) - glVertReference.gl.GLViewProjMatrixInvert(0.f, lastPos.y());
         for (int i = 0; i < selectedPoints->size(); i++) {
-            pointLayer.set_point(false, (*selectedPoints)[i], selectedPoints->getVert(i) + toMove);
+            pointLayer.set_point(edit_skelen, (*selectedPoints)[i], selectedPoints->getVert(i) + toMove);
         }
     }
     else if (editMode == ChElementEditMode::Rotate) {
         float angle = angleBetweenPoint(lastPos - lastDHandleCenterPoint, mouse - lastDHandleCenterPoint);
         QPointF toRot = glVertReference.gl.getInsProj().map(lastHandleCenterPoint);
         for (int i = 0; i < selectedPoints->size(); i++) {
-            pointLayer.set_point(false, (*selectedPoints)[i], toRot + getRotatedPoint(glVertReference.gl.getInsProj().map(selectedPoints->getVert(i) - lastHandleCenterPoint), angle));
-            pointLayer.set_point(false, (*selectedPoints)[i], glVertReference.gl.getProj().map(glVertReference.pointLayer->get_uv_point((*selectedPoints)[i])));
+            pointLayer.set_point(edit_skelen, (*selectedPoints)[i], toRot + getRotatedPoint(glVertReference.gl.getInsProj().map(selectedPoints->getVert(i) - lastHandleCenterPoint), angle));
+            pointLayer.set_point(edit_skelen, (*selectedPoints)[i], glVertReference.gl.getProj().map(
+                edit_skelen?
+                pointLayer[(*selectedPoints)[i]]:
+                pointLayer.get_uv_point((*selectedPoints)[i]))
+            );
         }
     }
     else if (editMode == ChElementEditMode::Scale) {
         float scale = (mouse.x() + mouse.y() - dHandleCenterPoint.x() - dHandleCenterPoint.y()) / (ROTATEHANDLE_RADIUS + ROTATEHANDLE_RADIUS);
         QPointF toScale = lastHandleCenterPoint * (scale - 1);
         for (int i = 0; i < selectedPoints->size(); i++) {
-            pointLayer.set_point(false, (*selectedPoints)[i], selectedPoints->getVert(i) * scale - toScale);
+            pointLayer.set_point(edit_skelen, (*selectedPoints)[i], selectedPoints->getVert(i) * scale - toScale);
         }
     }
     else if (editMode == ChElementEditMode::ScaleX) {
@@ -197,7 +205,7 @@ void ChElementSelect::moveHandle(const QPointF& mouse)
         float scaleX = lastDHandleCenterPoint.x() * (1 - scale);
         for (int i = 0; i < selectedPoints->size(); i++) {
             QPointF mapOri = glVertReference.gl.mapViewProjMatrix(selectedPoints->getVert(i));
-            pointLayer.set_point(false, (*selectedPoints)[i], glVertReference.gl.GLViewProjMatrixInvert(mapOri.x() * scale + scaleX, mapOri.y()));
+            pointLayer.set_point(edit_skelen, (*selectedPoints)[i], glVertReference.gl.GLViewProjMatrixInvert(mapOri.x() * scale + scaleX, mapOri.y()));
         }
     }
     else if (editMode == ChElementEditMode::ScaleY) {
@@ -205,14 +213,14 @@ void ChElementSelect::moveHandle(const QPointF& mouse)
         float scaleY = lastDHandleCenterPoint.y() * (1 - scale);
         for (int i = 0; i < selectedPoints->size(); i++) {
             QPointF mapOri = glVertReference.gl.mapViewProjMatrix(selectedPoints->getVert(i));
-            pointLayer.set_point(false, (*selectedPoints)[i], glVertReference.gl.GLViewProjMatrixInvert(mapOri.x(), mapOri.y() * scale + scaleY));
+            pointLayer.set_point(edit_skelen, (*selectedPoints)[i], glVertReference.gl.GLViewProjMatrixInvert(mapOri.x(), mapOri.y() * scale + scaleY));
         }
 	}
 }
 
 void ChElementSelect::affirmHandle()
 {
-    selectedPoints->affirmVert();
+    selectedPoints->affirmVert(edit_skelen);
     lastHandleCenterPoint = handleCenterPoint;
     lastDHandleCenterPoint = dHandleCenterPoint;
 }

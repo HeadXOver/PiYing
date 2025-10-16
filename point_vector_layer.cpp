@@ -23,9 +23,9 @@ void PointVectorLayer::push_back(const QPointF& point)
 	point_vector.push_back(point);
 }
 
-void PointVectorLayer::set_point(bool first, int index, const QPointF& point)
+void PointVectorLayer::set_point(bool edit_skelon, int index, const QPointF& point)
 {
-	int index_ = first ? index + index : index + index + 1;
+	int index_ = edit_skelon ? index + index : index + index + 1;
 	point_vector.set_point(index_, point);
 }
 

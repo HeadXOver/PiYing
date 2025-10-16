@@ -21,6 +21,7 @@ struct ChElementRectSelect final
 	void releasePos(const QPointF& mouse);
 
 	ChElementSelect* chElementSelect;
+	const bool edit_skelen{ false };
 	QPointF* rect;
 	bool isDraw = false;
 };

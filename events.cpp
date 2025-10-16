@@ -25,7 +25,8 @@ void PiYingGL::mousePressEvent(QMouseEvent* event)
 				*lastImageTransform = *item->transform();
 			}
 		}
-		else if (editMode == EditMode::characterTexture && event->button() == Qt::LeftButton) {
+		else if ((editMode == EditMode::characterTexture || editMode == EditMode::characterSkeleton)
+			&& event->button() == Qt::LeftButton) {
 			if (chElementTool) chElementTool->click(event->position());
 		}
 
@@ -62,7 +63,7 @@ void PiYingGL::mouseMoveEvent(QMouseEvent* event) {
 				currentUpdate();
 			}
 		}
-		else if (editMode == EditMode::characterTexture) {
+		else if (editMode == EditMode::characterTexture || editMode == EditMode::characterSkeleton) {
 			if (chElementTool) {
 				chElementTool->move(event->position());
 				currentUpdate();

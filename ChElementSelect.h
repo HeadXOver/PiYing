@@ -38,5 +38,6 @@ struct ChElementSelect final
 	QPointF lastHandleCenterPoint;
 	QPointF lastDHandleCenterPoint;
 	bool isPress = false;
+	bool edit_skelen{ false };
 	ChElementEditMode editMode = ChElementEditMode::None;
 };

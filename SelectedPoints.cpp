@@ -10,14 +10,15 @@ const QPointF& SelectedPoints::getVert(int index) const
 void SelectedPoints::append(unsigned int ind)
 {
 	selectedIndex.append(ind);
-	lastVertPos.append(sVert[ind]);
 }
 
-void SelectedPoints::affirmVert()
+void SelectedPoints::affirmVert(bool edit_skelen)
 {
 	lastVertPos.clear();
 	lastVertPos.reserve(selectedIndex.size());
 	for (int i = 0; i < selectedIndex.size(); i++) {
-		lastVertPos[i] = sVert[selectedIndex[i]];
+		lastVertPos[i] = edit_skelen?
+			sVert[selectedIndex[i]]:
+			sVert.get_uv_point(selectedIndex[i]);
 	}
 }

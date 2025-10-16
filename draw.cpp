@@ -35,8 +35,34 @@ void PiYingGL::drawChEditVert()
 	}
 
 	if (chElementTool) chElementTool->draw(&painter);
+}
 
-	update();
+void PiYingGL::drawChSkeleVert()
+{
+	int currentVector = getCurrentChRow();
+	if (currentVector < 0) return;
+
+	QPainter painter(this);
+	painter.setRenderHint(QPainter::Antialiasing);
+	painter.setBrush(QColor(225, 0, 0, 20));
+
+	PointVectorLayer pointVectorLayer(*(characterVerts[currentVector]));
+
+	for (int i = 0; i < characterTriangleIndices[currentVector].size();) {
+		QPolygonF poly;
+		int j = 0;
+		for (; j < 3; j++) {
+			int index = characterTriangleIndices[currentVector][i + j];
+			poly << glToMap(getViewProjMatrix().map(pointVectorLayer[index]));
+		}
+		painter.setPen(QPen(Qt::black, 3));
+		painter.drawPolygon(poly);
+		painter.setPen(QPen(Qt::green, 1));
+		painter.drawPolygon(poly);
+		i += j;
+	}
+
+	if (chElementTool) chElementTool->draw(&painter);
 }
 
 void PiYingGL::paintBackgrounds()
@@ -138,4 +164,6 @@ void PiYingGL::paintCharacterSkeleton()
 	glBindVertexArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+	drawChSkeleVert();
 }

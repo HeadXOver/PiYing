@@ -28,7 +28,7 @@ ChElementTool::ChElementTool(int current, PiYingGL& pygl, CharacterToolState chT
 		deleteBehavior = new AddPolyDelete(addPoly);
 		enterBehavior = new AddPolyEnter(addPoly);
 	}
-	else if (chToolState == CharacterToolState::RectSelectVert) {
+	else if (chToolState == CharacterToolState::RectSelectVert || chToolState == CharacterToolState::RectSelectSkelenVert) {
 		std::shared_ptr<ChElementRectSelect> rectSelect = std::make_shared<ChElementRectSelect>(*glVertReference);
 		clickBehavior = new RectSelectClick(rectSelect);
 		escapeBehavior = new RectSelectEscape(rectSelect);
@@ -37,7 +37,7 @@ ChElementTool::ChElementTool(int current, PiYingGL& pygl, CharacterToolState chT
 		moveBehavior = new RectSelectMove(rectSelect);
 		deleteBehavior = new RectSelectDelete(rectSelect);
 	}
-	else if (chToolState == CharacterToolState::LibreSelectVert) {
+	else if (chToolState == CharacterToolState::LibreSelectVert || chToolState == CharacterToolState::LibreSelectSkelenVert) {
 		std::shared_ptr<ChElementLibreSelect> libreSelect = std::make_shared<ChElementLibreSelect>(*glVertReference);
 		clickBehavior = new LibreSelectClick(libreSelect);
 		escapeBehavior = new LibreSelectEscape(libreSelect);
@@ -64,6 +64,7 @@ ChElementTool::~ChElementTool()
 	if (deleteBehavior) delete deleteBehavior;
 	if (enterBehavior) delete enterBehavior;
 	if (drawBehavior) delete drawBehavior;
+	if (glVertReference) delete glVertReference;
 }
 
 void ChElementTool::click(const QPointF& mouse) {

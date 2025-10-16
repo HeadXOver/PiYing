@@ -81,7 +81,7 @@ public:
 	void appendBgList(QImage& image);
 	void addCharacter(const QString& imageName);
 	void setEditMode(EditMode mode);
-	void updateChTexTool();
+	void updateChTool();
 	void setChToolState(CharacterToolState state);
 	void deleteChElement();
 	void enterChElement();
@@ -96,6 +96,7 @@ public:
 	void bgScaleControl(const QPointF& mouse, ImageTexture* image);
 	void viewRotationControl(const QPointF& mouse);
 	void drawChEditVert();
+	void drawChSkeleVert();
 
 	bool addBackground(const QString& imageName, QImage& image);
 
@@ -126,6 +127,8 @@ public:
 	QList<PointVector*>& ref_characterVerts() { return characterVerts; }
 	PointVector& ref_characterVerts(int index) { return *(characterVerts[index]); }
 	QList<std::vector<unsigned int>>& ref_characterTriangleIndices () { return characterTriangleIndices; }
+
+	CharacterToolState getChToolState() const { return chToolState; }
 
 public:
 	EditMode editMode = EditMode::Default;

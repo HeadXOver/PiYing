@@ -11,7 +11,7 @@
 #include <qpainter>
 #include <qpointf>
 
-ChElementLibreSelect::ChElementLibreSelect(GlVertReference& glReference) :chElementSelect(new ChElementSelect(glReference))
+ChElementLibreSelect::ChElementLibreSelect(GlVertReference& glReference) :chElementSelect(new ChElementSelect(glReference)), edit_skelen(glReference.gl.editMode == EditMode::characterSkeleton)
 {
 	polygon = new QPolygonF();
 }
@@ -44,9 +44,14 @@ void ChElementLibreSelect::draw(QPainter* painter)
 		}
 	}
 
-	PointVectorLayer* pointVector = chElementSelect->glVertReference.pointLayer;
-	for (int i = 0; i < chElementSelect->selectedPoints->size(); i++) {
-		QPointF selectPoint = chElementSelect->glVertReference.gl.mapViewProjMatrix(pointVector->get_uv_point((*chElementSelect->selectedPoints)[i]));
+	SelectedPoints& selectedPoints = *chElementSelect->selectedPoints;
+	PointVectorLayer& pointVector = *chElementSelect->glVertReference.pointLayer;
+	for (int i = 0; i < selectedPoints.size(); i++) {
+		QPointF selectPoint = chElementSelect->glVertReference.gl.mapViewProjMatrix(
+			edit_skelen ?
+			pointVector[selectedPoints[i]] :
+			pointVector.get_uv_point(selectedPoints[i])
+		);
 		painter->setPen(QPen(Qt::black, 8));
 		painter->drawPoint(selectPoint);
 		painter->setPen(QPen(Qt::red, 6));
@@ -72,14 +77,19 @@ void ChElementLibreSelect::clickPos(const QPointF& mouseOri)
 
 	*polygon << mouse;
 
-	PointVectorLayer* pointVector = chElementSelect->glVertReference.pointLayer;
-	for (unsigned int i = 0; i < pointVector->size(); i++) {
-		if (QLineF(pointVector->get_uv_point(i), mouse).length() < 0.02f / chElementSelect->glVertReference.gl.viewScale.value()) {
-			if (!chElementSelect->selectedPoints->contains(i)) {
+	SelectedPoints& selectedPoints = *chElementSelect->selectedPoints;
+	PointVectorLayer& pointVector = *chElementSelect->glVertReference.pointLayer;
+	QPointF existingPoint;
+	for (unsigned int i = 0; i < pointVector.size(); i++) {
+		existingPoint = edit_skelen ?
+			pointVector[i] :
+			pointVector.get_uv_point(i);
+		if (QLineF(existingPoint, mouse).length() < 0.02f / chElementSelect->glVertReference.gl.viewScale.value()) {
+			if (!selectedPoints.contains(i)) {
 				if (!KeyboardStateWin::isCtrlHeld()) {
-					chElementSelect->selectedPoints->clear();
+					selectedPoints.clear();
 				}
-				chElementSelect->selectedPoints->append(i);
+				selectedPoints.append(i);
 			}
 			return;
 		}
@@ -112,14 +122,18 @@ void ChElementLibreSelect::releasePos(const QPointF& mouse)
 			*polygon << polygon->first();
 		}
 
-		addEnclosedPoints(polygon, chElementSelect->glVertReference.pointLayer);
+		addEnclosedPoints(polygon, *chElementSelect->glVertReference.pointLayer);
 	}
 }
 
-void ChElementLibreSelect::addEnclosedPoints(const QPolygonF* const poly, const PointVectorLayer* points)
+void ChElementLibreSelect::addEnclosedPoints(const QPolygonF* const poly, const PointVectorLayer& points)
 {
-	for (unsigned int i = 0; i < points->size(); i++) {
-		if (poly->containsPoint(points->get_uv_point(i), Qt::OddEvenFill)) {
+	QPointF existingPoint;
+	for (unsigned int i = 0; i < points.size(); i++) {
+		existingPoint = edit_skelen ?
+			points[i] :
+			points.get_uv_point(i);
+		if (poly->containsPoint(existingPoint, Qt::OddEvenFill)) {
 			chElementSelect->selectedPoints->append(i);
 		}
 	}

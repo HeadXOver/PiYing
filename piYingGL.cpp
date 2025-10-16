@@ -114,10 +114,10 @@ void PiYingGL::addCharacter(const QString& imageName)
 void PiYingGL::setEditMode(EditMode mode)
 {
 	editMode = mode;
-	update();
+	updateChTool();
 }
 
-void PiYingGL::updateChTexTool()
+void PiYingGL::updateChTool()
 {
 	if (chElementTool) {
 		delete chElementTool;
@@ -128,6 +128,14 @@ void PiYingGL::updateChTexTool()
 	if (currentVector < 0) return;
 
 	if (chToolState == CharacterToolState::None) return;
+
+	if (editMode == EditMode::characterSkeleton) {
+		if (chToolState == CharacterToolState::RectSelectSkelenVert || chToolState == CharacterToolState::LibreSelectSkelenVert) {
+			chElementTool = new ChElementTool(currentVector, *this, chToolState);
+		}
+		update();
+		return;
+	}
 
 	chElementTool = new ChElementTool(currentVector, *this, chToolState);
 
