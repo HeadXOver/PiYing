@@ -1,10 +1,16 @@
 ﻿#include "ctrlSlideLayout.h"
+#include "ctrlSlideWidget.h"
+
+#include "piYingGL.h"
 
 #include <qlabel>
 #include <qslider>
 #include <qpushbutton>
+#include <qmessagebox>
+#include <qmenu>
 
-CtrlSlideLayout::CtrlSlideLayout(QString labelName, int min, int max, int defaultValue) {
+CtrlSlideLayout::CtrlSlideLayout(PiYingGL& gl, QString labelName, int min, int max, int defaultValue, int id) :piYingGL(gl), id_(id)
+{
     label = new QLabel(labelName);
     slider = new QSlider(Qt::Horizontal);
     slider->setRange(min, max);
@@ -18,6 +24,8 @@ CtrlSlideLayout::CtrlSlideLayout(QString labelName, int min, int max, int defaul
     addWidget(label);
     addWidget(slider);
     addWidget(rightButton);
+
+    connect(slider, &QSlider::valueChanged, this, [this](int value) { piYingGL.controlSlide(id_, value); });
 }
 
 CtrlSlideLayout::~CtrlSlideLayout()

@@ -10,7 +10,10 @@ QString getUniquebgName(const QListWidget* list) {
         s = QString::number(i);
         repeat = false;
         for (int j = 0; j < list->count(); ++j)
-            if (list->item(j)->text() == s) repeat = true;
+            if (list->item(j)->text() == s) {
+                repeat = true;
+                break;
+            }
         if (!repeat) return s;
     }
 }

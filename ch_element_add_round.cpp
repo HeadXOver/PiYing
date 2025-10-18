@@ -1,5 +1,5 @@
-﻿#include "ChElementAddRound.h"
-#include "glVertReference.h"
+﻿#include "ch_element_add_round.h"
+#include "gl_vert_reference.h"
 
 #include "ask_round_poly_dialog.h"
 #include "PiYingGL.h"
@@ -67,9 +67,9 @@ void ChElementAddRound::addRoundPoly(const int edgeCount)
 	const double deltaAngle = 2 * 3.1415926 / edgeCount;
 	const int currentEnd = glVertReference.get_current_end();
 
-	glVertReference.addPointToVert(glCenter);
+	glVertReference.add_point_to_vert(glCenter);
 	for (int i = 0; i < edgeCount; i++) {
-		glVertReference.addPointToVert(glCenter + lenth * glVertReference.gl.getProj().map(QPointF(cos(initAngle + i * deltaAngle), sin(initAngle + i * deltaAngle))));
+		glVertReference.add_point_to_vert(glCenter + lenth * glVertReference.gl.getProj().map(QPointF(cos(initAngle + i * deltaAngle), sin(initAngle + i * deltaAngle))));
 	}
 
 	for (int i = 0; i < edgeCount - 1; i++) {

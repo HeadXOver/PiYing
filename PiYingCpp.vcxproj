@@ -106,6 +106,7 @@
     <ClCompile Include="controls.cpp" />
     <ClCompile Include="ctrl_slide_layout.cpp" />
     <ClCompile Include="ctrl_slide_widget.cpp" />
+    <ClCompile Include="cus_func_get_unique_id.cpp" />
     <ClCompile Include="cus_func_point2d.cpp" />
     <ClCompile Include="cus_func_string.cpp" />
     <ClCompile Include="cus_func_zone.cpp" />
@@ -135,11 +136,12 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AddChTexPoly.h" />
+    <ClInclude Include="add_ch_tex_poly.h" />
+    <ClInclude Include="cus_func_get_unique_id.h" />
     <QtMoc Include="ask_round_poly_dialog.h" />
-    <ClInclude Include="ChElementLibreSelect.h" />
-    <ClInclude Include="ChElementRectSelect.h" />
-    <ClInclude Include="ChElementTool.h" />
+    <ClInclude Include="ch_element_libre_select.h" />
+    <ClInclude Include="ch_element_rect_select.h" />
+    <ClInclude Include="ch_element_tool.h" />
     <ClInclude Include="ch_skelen_tool.h" />
     <ClInclude Include="enum_character_texture_tool_state.h" />
     <ClInclude Include="float_vector_layer.h" />
@@ -149,17 +151,17 @@
     <ClInclude Include="point_vector_layer.h" />
     <ClInclude Include="SelectedPoints.h" />
     <ClInclude Include="tool_button.h" />
-    <ClInclude Include="ChElementToolBehavior.h" />
-    <ClInclude Include="glVertReference.h" />
+    <ClInclude Include="ch_element_tool_behavior.h" />
+    <ClInclude Include="gl_vert_reference.h" />
     <ClInclude Include="cus_func_zone.h" />
     <ClInclude Include="cus_func_string.h" />
     <ClInclude Include="cus_func_point2d.h" />
-    <ClInclude Include="ChElementAddRound.h" />
+    <ClInclude Include="ch_element_add_round.h" />
     <QtMoc Include="ctrlSlideLayout.h" />
     <QtMoc Include="ctrlSlideWidget.h" />
     <ClInclude Include="cus_func_transform.h" />
-    <ClInclude Include="AddTriangle.h" />
-    <ClInclude Include="ChElementSelect.h" />
+    <ClInclude Include="add_triangle.h" />
+    <ClInclude Include="ch_element_select.h" />
     <QtMoc Include="AskTransformDialog.h" />
     <ClInclude Include="static_rect_vert.h" />
     <ClInclude Include="KeyboardStateWin.h" />

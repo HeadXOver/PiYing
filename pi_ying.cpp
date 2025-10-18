@@ -26,12 +26,13 @@ PiYing::PiYing(QWidget* parent) : QMainWindow(parent)
     voidListWidget = new QListWidget();
     bgImageList = new QListWidget();
     chImageList = new QListWidget();
-    sliderWidget = new CtrlSlideWidget();
     timeLine = new QWidget(this);
 
     // OpenGL widget
     piYingGL = new PiYingGL(*this);
     piYingGLContainer = new PiYingGLContainer(*piYingGL, ratio, this);
+
+    sliderWidget = new CtrlSlideWidget(*piYingGL);
 
     splitTimelineOpenGL = new QSplitter(Qt::Vertical, this);
     splitListOpenGL = new QSplitter(Qt::Horizontal, this);
@@ -134,15 +135,25 @@ PiYing::PiYing(QWidget* parent) : QMainWindow(parent)
 
 PiYing::~PiYing()
 {
-    delete bgImageList;
-    delete chImageList;
-    delete sliderWidget;
-    delete voidListWidget;
-
     for (ToolButton* item : toolChTexList) delete item;
     for (ToolButton* item : toolChSkelenList) delete item;
 
     delete ui;
+
+    auto safeDelete = [](QObject* obj) 
+        {
+            if (obj && !obj->parent())
+                delete obj;
+        };
+    safeDelete(voidListWidget);
+    safeDelete(bgImageList);
+    safeDelete(chImageList);
+    safeDelete(sliderWidget);
+    safeDelete(timeLine);
+    safeDelete(piYingGL);
+    safeDelete(piYingGLContainer);
+    safeDelete(splitTimelineOpenGL);
+    safeDelete(splitListOpenGL);
 }
 
 int PiYing::getCurrentBgRow()

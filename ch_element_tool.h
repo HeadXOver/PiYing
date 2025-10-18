@@ -26,7 +26,7 @@ public:
 	void move(const QPointF& mouse);
 	void draw(QPainter* painter);
 	void escape();
-	void deleteElement();
+	void delete_element();
 	void enter();
 
 private:

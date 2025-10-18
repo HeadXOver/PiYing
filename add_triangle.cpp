@@ -1,7 +1,7 @@
-#include "AddTriangle.h"
+#include "add_triangle.h"
 
 #include "piYingGL.h"
-#include "glVertReference.h"
+#include "gl_vert_reference.h"
 #include "point_vector_layer.h"
 
 #include <qpainter>

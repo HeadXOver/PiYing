@@ -1,6 +1,6 @@
-#include "AddChTexPoly.h"
+#include "add_ch_tex_poly.h"
 
-#include "glVertReference.h"
+#include "gl_vert_reference.h"
 #include "piYingGL.h"
 #include "point_vector_layer.h"
 
@@ -31,7 +31,7 @@ void AddChTexPoly::enter()
 	for (int i = 0; i < index.size(); i++) {
 		if (index[i] < 0) {
 			index[i] = glVertReference.get_current_end();
-			glVertReference.addPointToVert(points[i]);
+			glVertReference.add_point_to_vert(points[i]);
 		}
 	}
 

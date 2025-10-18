@@ -1,13 +1,18 @@
 ﻿#include "ctrlSlideWidget.h"
 #include "ctrlSlideLayout.h"
 
+#include "cus_func_get_unique_id.h"
+
+#include "piYingGL.h"
+
 #include <QPushbutton>
 #include <QBoxLayout>
 #include <QMenu>
 #include <QInputDialog>
 #include <qlabel>
+#include <qslider>
 
-CtrlSlideWidget::CtrlSlideWidget(QWidget* parent) : QWidget(parent)
+CtrlSlideWidget::CtrlSlideWidget(PiYingGL& gl, QWidget* parent) : QWidget(parent), piYingGL(gl)
 {
     sliderLayout = new QVBoxLayout(this);
 
@@ -45,11 +50,11 @@ CtrlSlideWidget::~CtrlSlideWidget()
 
 void CtrlSlideWidget::addSlider(QString name)
 {
-    CtrlSlideLayout* ctrlSlideLayout = new CtrlSlideLayout(name, 0, 100, 50);
+    CtrlSlideLayout* ctrlSlideLayout = new CtrlSlideLayout(piYingGL, name, 0, 100, 50, get_unique_id(sliderList));
     sliderList.append(ctrlSlideLayout);
 
     sliderLayout->insertLayout(sliderCount, sliderList[sliderCount++]);
-    connect(ctrlSlideLayout->rightButton, &QPushButton::pressed, this, [ctrlSlideLayout, this] { setSlider(ctrlSlideLayout); });
+    connect(ctrlSlideLayout->rightButton,   &QPushButton::pressed, this, [ctrlSlideLayout, this] { setSlider(ctrlSlideLayout); });
 }
 
 void CtrlSlideWidget::setSlider(CtrlSlideLayout* slider)

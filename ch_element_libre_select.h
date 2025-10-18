@@ -1,9 +1,8 @@
 #pragma once
 
 #include <memory>
-#include <QList>
 
-#include "ChElementToolBehavior.h"
+#include "ch_element_tool_behavior.h"
 
 struct ChElementSelect;
 struct GlVertReference;

@@ -2,11 +2,11 @@
 
 #include "piYing.h"
 
-#include "AddTriangle.h"
-#include "AddChTexPoly.h"
-#include "ChElementLibreSelect.h"
+#include "add_triangle.h"
+#include "add_ch_tex_poly.h"
+#include "ch_element_libre_select.h"
 
-#include "ChElementTool.h"
+#include "ch_element_tool.h"
 #include "point_vector.h"
 
 #include "piYingGLContainer.h"
@@ -111,6 +111,11 @@ void PiYingGL::addCharacter(const QString& imageName)
 	update();
 }
 
+void PiYingGL::controlSlide(int id, int value)
+{
+	QMessageBox::warning(this, "f", QString::number(id) + ": " + QString::number(value));
+}
+
 void PiYingGL::setEditMode(EditMode mode)
 {
 	editMode = mode;
@@ -166,7 +171,7 @@ void PiYingGL::setChToolState(CharacterToolState state)
 
 void PiYingGL::deleteChElement()
 {
-	if (chElementTool) chElementTool->deleteElement();
+	if (chElementTool) chElementTool->delete_element();
 	update();
 }
 

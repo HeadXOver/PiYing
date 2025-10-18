@@ -1,7 +1,7 @@
-#include "ChElementSelect.h"
+#include "ch_element_select.h"
 
-#include "chElementRectSelect.h"
-#include "glVertReference.h"
+#include "ch_element_rect_select.h"
+#include "gl_vert_reference.h"
 #include "piYingGL.h"
 #include "SelectedPoints.h"
 #include "KeyboardStateWin.h"

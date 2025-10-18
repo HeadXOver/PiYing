@@ -1,12 +1,12 @@
-#include "ChElementTool.h"
+#include "ch_element_tool.h"
 #include "piYing.h"
 #include "piYingGL.h"
-#include "AddTriangle.h"
-#include "AddChTexPoly.h"
-#include "ChElementRectSelect.h"
-#include "ChElementLibreSelect.h"
-#include "ChElementAddRound.h"
-#include "glVertReference.h"
+#include "add_triangle.h"
+#include "add_ch_tex_poly.h"
+#include "ch_element_rect_select.h"
+#include "ch_element_libre_select.h"
+#include "ch_element_add_round.h"
+#include "gl_vert_reference.h"
 
 #include <memory>
 #include <qpointf>
@@ -91,7 +91,7 @@ void ChElementTool::escape()
 	if(escapeBehavior) escapeBehavior->escape();
 }
 
-void ChElementTool::deleteElement() 
+void ChElementTool::delete_element() 
 {
 	if (deleteBehavior) deleteBehavior->deleteElement();
 }

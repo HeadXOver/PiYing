@@ -4,7 +4,7 @@
 #include <QPoint>
 #include <memory>
 
-#include "ChElementToolBehavior.h"
+#include "ch_element_tool_behavior.h"
 
 class PiYingGL;
 struct GlVertReference;

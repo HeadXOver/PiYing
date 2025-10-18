@@ -80,6 +80,7 @@ public:
 	void addBackground(const QString& imageName);
 	void appendBgList(QImage& image);
 	void addCharacter(const QString& imageName);
+	void controlSlide(int id, int value);
 	void setEditMode(EditMode mode);
 	void updateChTool();
 	void setChToolState(CharacterToolState state);

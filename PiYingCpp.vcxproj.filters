@@ -193,6 +193,9 @@
     <ClCompile Include="ch_skelen_tool.cpp">
       <Filter>Source Files\ChELementTool</Filter>
     </ClCompile>
+    <ClCompile Include="cus_func_get_unique_id.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="static_handle_zone.h">
@@ -201,19 +204,19 @@
     <ClInclude Include="static_rect_vert.h">
       <Filter>Header Files\staticConst</Filter>
     </ClInclude>
-    <ClInclude Include="ChElementTool.h">
+    <ClInclude Include="ch_element_tool.h">
       <Filter>Header Files\ChELementTool</Filter>
     </ClInclude>
-    <ClInclude Include="AddTriangle.h">
+    <ClInclude Include="add_triangle.h">
       <Filter>Header Files\ChELementTool</Filter>
     </ClInclude>
-    <ClInclude Include="ChElementSelect.h">
+    <ClInclude Include="ch_element_select.h">
       <Filter>Header Files\ChELementTool</Filter>
     </ClInclude>
-    <ClInclude Include="AddChTexPoly.h">
+    <ClInclude Include="add_ch_tex_poly.h">
       <Filter>Header Files\ChELementTool</Filter>
     </ClInclude>
-    <ClInclude Include="ChElementLibreSelect.h">
+    <ClInclude Include="ch_element_libre_select.h">
       <Filter>Header Files\ChELementTool</Filter>
     </ClInclude>
     <ClInclude Include="enum_character_texture_tool_state.h">
@@ -237,13 +240,13 @@
     <ClInclude Include="image_transform.h">
       <Filter>Header Files\PiYingElememt</Filter>
     </ClInclude>
-    <ClInclude Include="ChElementToolBehavior.h">
+    <ClInclude Include="ch_element_tool_behavior.h">
       <Filter>Header Files\ChELementTool</Filter>
     </ClInclude>
-    <ClInclude Include="glVertReference.h">
+    <ClInclude Include="gl_vert_reference.h">
       <Filter>Header Files\ChELementTool</Filter>
     </ClInclude>
-    <ClInclude Include="ChElementRectSelect.h">
+    <ClInclude Include="ch_element_rect_select.h">
       <Filter>Header Files\ChELementTool</Filter>
     </ClInclude>
     <ClInclude Include="cus_func_zone.h">
@@ -264,11 +267,14 @@
     <ClInclude Include="point_vector_layer.h">
       <Filter>Header Files\PiYingContainer</Filter>
     </ClInclude>
-    <ClInclude Include="ChElementAddRound.h">
+    <ClInclude Include="ch_element_add_round.h">
       <Filter>Header Files\ChELementTool</Filter>
     </ClInclude>
     <ClInclude Include="ch_skelen_tool.h">
       <Filter>Header Files\ChELementTool</Filter>
+    </ClInclude>
+    <ClInclude Include="cus_func_get_unique_id.h">
+      <Filter>Header Files\PiYingTool</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

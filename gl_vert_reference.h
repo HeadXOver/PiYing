@@ -11,7 +11,7 @@ struct GlVertReference {
 	GlVertReference(int current, PiYingGL& piYingGL);
 	~GlVertReference();
 
-	void addPointToVert(const QPointF& p);
+	void add_point_to_vert(const QPointF& p);
 	void addTriangle(int index1, int index2, int index3);
 	void addTriangle(int index1, int index2, const QPointF& point3);
 	void addTriangle(int index1, const QPointF& point2, const QPointF& point3);
