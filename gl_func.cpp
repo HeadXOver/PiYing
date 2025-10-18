@@ -63,6 +63,7 @@ void PiYingGL::paintGL() {
 	if (editMode == EditMode::BackGround || editMode == EditMode::Default)	paintBackgrounds();
 	else if (editMode == EditMode::characterTexture)						paintCharacterTexture();
 	else if (editMode == EditMode::characterSkeleton)						paintCharacterSkeleton();
+	else if (editMode == EditMode::controlSlide)							paintCharacterSkeleton();
 }
 
 void PiYingGL::resizeGL(int w, int h) {

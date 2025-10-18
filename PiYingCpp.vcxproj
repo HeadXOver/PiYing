@@ -97,9 +97,9 @@
     <ClCompile Include="add_triangle.cpp" />
     <ClCompile Include="ask_transform_dialog.cpp" />
     <ClCompile Include="ask_round_poly_dialog.cpp" />
-    <ClCompile Include="ChElementAddRound.cpp" />
-    <ClCompile Include="ChElementLibreSelect.cpp" />
-    <ClCompile Include="ChElementRectSelect.cpp" />
+    <ClCompile Include="ch_element_add_round.cpp" />
+    <ClCompile Include="ch_element_libre_select.cpp" />
+    <ClCompile Include="ch_element_rect_select.cpp" />
     <ClCompile Include="ch_element_select.cpp" />
     <ClCompile Include="ch_element_tool.cpp" />
     <ClCompile Include="ch_skelen_tool.cpp" />
@@ -111,15 +111,15 @@
     <ClCompile Include="cus_func_zone.cpp" />
     <ClCompile Include="events.cpp" />
     <ClCompile Include="float_vector_layer.cpp" />
-    <ClCompile Include="glVertReference.cpp" />
+    <ClCompile Include="gl_vert_reference.cpp" />
     <ClCompile Include="image_texture.cpp" />
     <ClCompile Include="image_transform.cpp" />
-    <ClCompile Include="KeyboardStateWin.cpp" />
+    <ClCompile Include="keyboard_state_win.cpp" />
     <ClCompile Include="pi_ying_gl.cpp" />
-    <ClCompile Include="piYingGLContainer.cpp" />
+    <ClCompile Include="pi_ying_gl_container.cpp" />
     <ClCompile Include="point_vector.cpp" />
     <ClCompile Include="point_vector_layer.cpp" />
-    <ClCompile Include="RatioDialog.cpp" />
+    <ClCompile Include="ratio_dialog.cpp" />
     <ClCompile Include="gl_func.cpp" />
     <ClCompile Include="selected_points.cpp" />
     <ClCompile Include="slots.cpp" />
@@ -131,7 +131,7 @@
     <QtRcc Include="PiYing.qrc" />
     <QtUic Include="PiYing.ui" />
     <QtMoc Include="PiYing.h" />
-    <ClCompile Include="PiYing.cpp" />
+    <ClCompile Include="pi_ying.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
