@@ -61,7 +61,7 @@ void PiYingGL::bgSetTransform()
 			transform->get_scale_x(),
 			transform->get_scale_y()
 		};
-		if (Ask3DoublesDialog("设置变换", d, this).getValues(transX, transY, Rot, ScaleX, ScaleY)) {
+		if (AskBgTransformDialog("设置变换", d, this).getValues(transX, transY, Rot, ScaleX, ScaleY)) {
 			image->setTrans(transX, transY);
 			image->setRot(Rot);
 			image->setScale(ScaleX, ScaleY);

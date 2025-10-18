@@ -7,6 +7,10 @@
 #include <qpointf>
 #include <qpainter>
 
+namespace {
+	constexpr double angle_rad = 3.1415926 / 180.0;
+}
+
 void ChElementAddRound::click(const QPointF& mouse) 
 {
 	*center = mouse;
@@ -59,8 +63,8 @@ void ChElementAddRound::addRoundPoly(const int edgeCount)
 	const QPointF glCenter = glVertReference.gl.GLViewProjMatrixInvert(*center);
 	const QPointF glCursor = glVertReference.gl.GLViewProjMatrixInvert(*current_cursor);
 	const float lenth = QLineF(QPointF(), glVertReference.gl.getInsProj().map(glCursor - glCenter)).length();
-	const double initAngle = init_angle * M_PI / 180.0;
-	const double deltaAngle = 2 * M_PI / edgeCount;
+	const double initAngle = init_angle * angle_rad;
+	const double deltaAngle = 2 * 3.1415926 / edgeCount;
 	const int currentEnd = glVertReference.get_current_end();
 
 	glVertReference.addPointToVert(glCenter);

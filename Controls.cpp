@@ -5,6 +5,10 @@
 #include "KeyboardStateWin.h"
 #include "image_texture.h"
 
+namespace {
+	constexpr float angle_rad = 3.1415926f / 180.f;
+}
+
 void PiYingGL::bgRotationControl(const QPointF& mouse, ImageTexture* image)
 {
 	setCursor(Qt::CursorShape::ClosedHandCursor);
@@ -19,7 +23,7 @@ void PiYingGL::bgTranslateControl(const QPointF& mouse, ImageTexture* image)
 {
 	setCursor(Qt::ClosedHandCursor);
 	*image = lastImageTransform;
-	image->addTrans(getRotatedPoint(insProj.map(mouse - lastMousePos) / viewScale.value(), -viewRotate.value() * 3.1415926f / 180.f));
+	image->addTrans(getRotatedPoint(insProj.map(mouse - lastMousePos) / viewScale.value(), -viewRotate.value() * angle_rad));
 }
 
 void PiYingGL::bgScaleControl(const QPointF& mouse, ImageTexture* image)

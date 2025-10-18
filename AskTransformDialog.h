@@ -4,11 +4,11 @@
 
 class QDoubleSpinBox;
 
-class Ask3DoublesDialog : public QDialog
+class AskBgTransformDialog : public QDialog
 {
     Q_OBJECT
 public:
-    explicit Ask3DoublesDialog(
+    explicit AskBgTransformDialog(
         const QString& title,
         const float d[5],
         QWidget* parent = nullptr);

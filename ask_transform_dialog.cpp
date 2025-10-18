@@ -4,7 +4,7 @@
 #include <qdoublespinbox>
 #include <QFormLayout>
 
-Ask3DoublesDialog::Ask3DoublesDialog(const QString& title, const float d[5], QWidget* parent) : QDialog(parent)
+AskBgTransformDialog::AskBgTransformDialog(const QString& title, const float d[5], QWidget* parent) : QDialog(parent)
 {
     setWindowTitle(title);
     setModal(true);
@@ -27,7 +27,7 @@ Ask3DoublesDialog::Ask3DoublesDialog(const QString& title, const float d[5], QWi
     lay->addRow(bbox);
 }
 
-bool Ask3DoublesDialog::getValues(float& v1, float& v2, float& v3, float& v4, float& v5)
+bool AskBgTransformDialog::getValues(float& v1, float& v2, float& v3, float& v4, float& v5)
 {
     if (exec() != QDialog::Accepted) return false;
     v1 = (float)m_spin[0]->value();

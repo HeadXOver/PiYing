@@ -93,9 +93,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="AddChTexPoly.cpp" />
-    <ClCompile Include="AddTriangle.cpp" />
-    <ClCompile Include="AskTransformDialog.cpp" />
+    <ClCompile Include="add_ch_tex_poly.cpp" />
+    <ClCompile Include="add_triangle.cpp" />
+    <ClCompile Include="ask_transform_dialog.cpp" />
     <ClCompile Include="ask_round_poly_dialog.cpp" />
     <ClCompile Include="ChElementAddRound.cpp" />
     <ClCompile Include="ChElementLibreSelect.cpp" />
@@ -121,7 +121,7 @@
     <ClCompile Include="point_vector_layer.cpp" />
     <ClCompile Include="RatioDialog.cpp" />
     <ClCompile Include="gl_func.cpp" />
-    <ClCompile Include="SelectedPoints.cpp" />
+    <ClCompile Include="selected_points.cpp" />
     <ClCompile Include="slots.cpp" />
     <ClCompile Include="raletive_transform.cpp" />
     <ClCompile Include="draw.cpp" />
