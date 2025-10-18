@@ -88,22 +88,22 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="piYingGL.cpp">
+    <ClCompile Include="pi_ying_gl.cpp">
       <Filter>Source Files\piYingGL</Filter>
     </ClCompile>
     <ClCompile Include="events.cpp">
       <Filter>Source Files\piYingGL</Filter>
     </ClCompile>
-    <ClCompile Include="Controls.cpp">
+    <ClCompile Include="controls.cpp">
       <Filter>Source Files\piYingGL</Filter>
     </ClCompile>
-    <ClCompile Include="GLFunc.cpp">
+    <ClCompile Include="gl_func.cpp">
       <Filter>Source Files\piYingGL</Filter>
     </ClCompile>
     <ClCompile Include="slots.cpp">
       <Filter>Source Files\piYingGL</Filter>
     </ClCompile>
-    <ClCompile Include="RaletiveTransform.cpp">
+    <ClCompile Include="raletive_transform.cpp">
       <Filter>Source Files\piYingGL</Filter>
     </ClCompile>
     <ClCompile Include="draw.cpp">
@@ -121,19 +121,19 @@
     <ClCompile Include="AddChTexPoly.cpp">
       <Filter>Source Files\ChELementTool</Filter>
     </ClCompile>
-    <ClCompile Include="ChElementSelect.cpp">
+    <ClCompile Include="ch_element_select.cpp">
       <Filter>Source Files\ChELementTool</Filter>
     </ClCompile>
-    <ClCompile Include="ChElementTool.cpp">
+    <ClCompile Include="ch_element_tool.cpp">
       <Filter>Source Files\ChELementTool</Filter>
     </ClCompile>
     <ClCompile Include="ChElementLibreSelect.cpp">
       <Filter>Source Files\ChELementTool</Filter>
     </ClCompile>
-    <ClCompile Include="ctrlSlideLayout.cpp">
+    <ClCompile Include="ctrl_slide_layout.cpp">
       <Filter>Source Files\controlSlide</Filter>
     </ClCompile>
-    <ClCompile Include="ctrlSlideWidget.cpp">
+    <ClCompile Include="ctrl_slide_widget.cpp">
       <Filter>Source Files\controlSlide</Filter>
     </ClCompile>
     <ClCompile Include="AskTransformDialog.cpp">

@@ -218,6 +218,7 @@ void PiYing::askScreenScale(){
 void PiYing::onModeChanged(int mode)
 {
     ui->mainToolBar->clear();
+    piYingGL->setChToolState(CharacterToolState::None);
     if (mode == 0) {
         splitListOpenGL->widget(0)->setParent(nullptr);
         splitListOpenGL->insertWidget(0, voidListWidget);

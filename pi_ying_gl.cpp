@@ -127,7 +127,10 @@ void PiYingGL::updateChTool()
 	int currentVector = getCurrentChRow();
 	if (currentVector < 0) return;
 
-	if (chToolState == CharacterToolState::None) return;
+	if (chToolState == CharacterToolState::None) {
+		update();
+		return;
+	}
 
 	if (editMode == EditMode::characterSkeleton) {
 		if (chToolState == CharacterToolState::RectSelectSkelenVert || chToolState == CharacterToolState::LibreSelectSkelenVert) {
