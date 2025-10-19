@@ -1,9 +1,8 @@
 #pragma once
 
 enum class CharacterToolState {
-    None,
+    None = 0,
     AddTriangle,
-    MoveVert,
     RectSelectVert,
     RectSelectSkelenVert,
     LibreSelectVert,

@@ -42,48 +42,46 @@ void ChElementSelect::deleteElement()
         unsigned v0 = idx[t * 3], v1 = idx[t * 3 + 1], v2 = idx[t * 3 + 2];
         if (killVert[v0] || killVert[v1] || killVert[v2]) {
             killTri[t] = true;
+            continue;
         }
-        else {
-            refCount[v0]++;
-            refCount[v1]++;
-            refCount[v2]++;
-        }
+
+        refCount[v0]++;
+        refCount[v1]++;
+        refCount[v2]++;
     }
 
     for (size_t t = 0; t < nTri; ++t) {
-        unsigned v0 = idx[t * 3], v1 = idx[t * 3 + 1], v2 = idx[t * 3 + 2];
-        if (killTri[t] == true) {
-            if (!killVert[v1] && refCount[v1] == 0) killVert[v1] = true;
-            if (!killVert[v2] && refCount[v2] == 0) killVert[v2] = true;
-            if (!killVert[v0] && refCount[v0] == 0) killVert[v0] = true;
+        if (!killTri[t]) continue;
+
+        const size_t t3 = t * 3;
+
+        for (int i = 0; i < 3; ++i) {
+            const unsigned v = idx[t3 + i];
+            killVert[v] = (refCount[v] == 0);
         }
     }
 
     std::vector<unsigned> old2new(nVert, UINT_MAX);
     unsigned newVertCount = 0;
     for (unsigned old = 0; old < nVert; ++old) {
-        if (!killVert[old]) {
-            old2new[old] = newVertCount++;
-            pointLayer.copy_from_to(old, newVertCount - 1);
-        }
+        if (killVert[old]) continue;
+
+        pointLayer.copy_from_to(old, newVertCount);
+        old2new[old] = newVertCount++;
     }
-    if (newVertCount == 0) {
-        pointLayer.clear();
-    }
-    else {
-        pointLayer.resize(newVertCount);
-    }
+
+    pointLayer.resize(newVertCount);
 
     size_t outIdx = 0;
     for (size_t t = 0; t < nTri; ++t) {
         if (killTri[t]) continue;
-        unsigned v0 = idx[t * 3], v1 = idx[t * 3 + 1], v2 = idx[t * 3 + 2];
-        idx[outIdx++] = old2new[v0];
-        idx[outIdx++] = old2new[v1];
-        idx[outIdx++] = old2new[v2];
+
+        const size_t t3 = t * 3;
+
+        for (int i = 0; i < 3; ++i) idx[outIdx++] = old2new[idx[t3 + i]];
     }
-    if (outIdx != 0) idx.resize(outIdx);
-    else idx.clear();
+
+    idx.resize(outIdx);
 
     selectedPoints->clear();
 }
@@ -148,14 +146,14 @@ void ChElementSelect::changeEditMode()
 
     qreal length = QLineF(dHandleCenterPoint, lastPos).length();
 
-    if (length <= ROTATEHANDLE_RADIUS + HANDLE_ZONE && length >= ROTATEHANDLE_RADIUS - HANDLE_ZONE)                 editMode = ChElementEditMode::Rotate;   // 判断是否在旋转控制柄上
-    else if (isInRect(lastPos, dHandleCenterPoint, HANDLE_ZONE))                                                     editMode = ChElementEditMode::Move;     // 判断是否在中心点上
-    else if (isInRect(lastPos, dHandleCenterPoint, MOVEHANDLE_LENTH * 2, HANDLE_ZONE))                               editMode = ChElementEditMode::MoveX;    // 判断是否在移动控制柄X上
-    else if (isInRect(lastPos, dHandleCenterPoint, HANDLE_ZONE, MOVEHANDLE_LENTH * 2))                               editMode = ChElementEditMode::MoveY;    // 判断是否在移动控制柄Y上
-    else if (isInRect(lastPos, dHandleCenterPoint + QPoint(ROTATEHANDLE_RADIUS, ROTATEHANDLE_RADIUS), HANDLE_ZONE))  editMode = ChElementEditMode::Scale;    // 判断是否在缩放控制柄上
-    else if (isInRect(lastPos, dHandleCenterPoint + QPoint(SCALEHANDLE_DISTANCE, 0), HANDLE_ZONE))                   editMode = ChElementEditMode::ScaleX;   // 判断是否在缩放控制柄X上
-    else if (isInRect(lastPos, dHandleCenterPoint + QPoint(0, SCALEHANDLE_DISTANCE), HANDLE_ZONE))                   editMode = ChElementEditMode::ScaleY;   // 判断是否在缩放控制柄Y上
-	else                                                                                                            editMode = ChElementEditMode::None;     // 不在任何控制柄上
+    if (length <= ROTATEHANDLE_RADIUS + HANDLE_ZONE && length >= ROTATEHANDLE_RADIUS - HANDLE_ZONE)                     editMode = ChElementEditMode::Rotate;   // 判断是否在旋转控制柄上
+    else if (isInRect(lastPos, dHandleCenterPoint, HANDLE_ZONE))                                                        editMode = ChElementEditMode::Move;     // 判断是否在中心点上
+    else if (isInRect(lastPos, dHandleCenterPoint, MOVEHANDLE_LENTH * 2, HANDLE_ZONE))                                  editMode = ChElementEditMode::MoveX;    // 判断是否在移动控制柄X上
+    else if (isInRect(lastPos, dHandleCenterPoint, HANDLE_ZONE, MOVEHANDLE_LENTH * 2))                                  editMode = ChElementEditMode::MoveY;    // 判断是否在移动控制柄Y上
+    else if (isInRect(lastPos, dHandleCenterPoint + QPoint(ROTATEHANDLE_RADIUS, ROTATEHANDLE_RADIUS), HANDLE_ZONE))     editMode = ChElementEditMode::Scale;    // 判断是否在缩放控制柄上
+    else if (isInRect(lastPos, dHandleCenterPoint + QPoint(SCALEHANDLE_DISTANCE, 0), HANDLE_ZONE))                      editMode = ChElementEditMode::ScaleX;   // 判断是否在缩放控制柄X上
+    else if (isInRect(lastPos, dHandleCenterPoint + QPoint(0, SCALEHANDLE_DISTANCE), HANDLE_ZONE))                      editMode = ChElementEditMode::ScaleY;   // 判断是否在缩放控制柄Y上
+	else                                                                                                                editMode = ChElementEditMode::None;     // 不在任何控制柄上
 }
 
 void ChElementSelect::moveHandle(const QPointF& mouse)

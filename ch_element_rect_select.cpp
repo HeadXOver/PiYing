@@ -25,8 +25,9 @@ void ChElementRectSelect::draw(QPainter* painter)
 {
 	chElementSelect->drawHandle(painter);
 
-	PointVectorLayer& pointLayer = *(chElementSelect->glVertReference.pointLayer);
-	SelectedPoints& selectedPoints = *(chElementSelect->selectedPoints);
+	const PointVectorLayer& pointLayer = *(chElementSelect->glVertReference.pointLayer);
+	const SelectedPoints& selectedPoints = *(chElementSelect->selectedPoints);
+
 	QPointF selectPoint;
 	for (int i = 0; i < selectedPoints.size(); i++) {
 		if(edit_skelen)
@@ -57,26 +58,28 @@ void ChElementRectSelect::clickPos(const QPointF& mouseOri)
 		return;
 	}
 
-	QPointF mouse = chElementSelect->glVertReference.gl.GLViewProjMatrixInvert(mouseOri);
+	const QPointF mouse = chElementSelect->glVertReference.gl.GLViewProjMatrixInvert(mouseOri);
 
-	PointVectorLayer& pointVector = *(chElementSelect->glVertReference.pointLayer);
+	const PointVectorLayer& pointVector = *(chElementSelect->glVertReference.pointLayer);
 	QPointF existPoint;
 	for (unsigned int i = 0; i < pointVector.size(); i++) {
 		existPoint = edit_skelen ?
 			pointVector[i] :
 			pointVector(i);
 		if (QLineF(existPoint, mouse).length() < 0.02f / chElementSelect->glVertReference.gl.viewScale.value()) {
-			if (!chElementSelect->selectedPoints->contains(i)) {
-				if (!KeyboardStateWin::isCtrlHeld()) {
-					chElementSelect->selectedPoints->clear();
-				}
-				chElementSelect->selectedPoints->append(i);
+			if (chElementSelect->selectedPoints->contains(i)) return;
+
+			if (!KeyboardStateWin::isCtrlHeld()) {
+				chElementSelect->selectedPoints->clear();
 			}
+
+			chElementSelect->selectedPoints->append(i);
+
 			return;
 		}
 	}
 
-	if (!KeyboardStateWin::isCtrlHeld()) {
+	if (KeyboardStateWin::isCtrlHeld()) {
 		chElementSelect->selectedPoints->clear();
 	}
 }
@@ -84,12 +87,14 @@ void ChElementRectSelect::clickPos(const QPointF& mouseOri)
 void ChElementRectSelect::movePos(const QPointF& mouse)
 {
 	isDraw = false;
-	
-	if (chElementSelect->editMode == ChElementEditMode::None) {
-		*rect = mouse;
-		isDraw = true;
+
+	if (chElementSelect->editMode != ChElementEditMode::None) {
+		chElementSelect->moveHandle(mouse);
+		return;
 	}
-	else chElementSelect->moveHandle(mouse);
+
+	*rect = mouse;
+	isDraw = true;
 }
 
 void ChElementRectSelect::releasePos(const QPointF& mouse)
@@ -102,16 +107,13 @@ void ChElementRectSelect::releasePos(const QPointF& mouse)
 	chElementSelect->selectedPoints->clear();
 
 	PointVectorLayer& pointVector = *(chElementSelect->glVertReference.pointLayer);
-	for (unsigned int i = 0; i < pointVector.size(); i++)
-		if (QRectF(chElementSelect->lastPos, mouse).contains(
-			chElementSelect->glVertReference.gl.mapViewProjMatrix(
-				edit_skelen ?
-				pointVector[i] :
-				pointVector(i))
-			)
-		)
-			chElementSelect->selectedPoints->append(i);
-		
+	for (unsigned int i = 0; i < pointVector.size(); i++) {
+		if (QRectF(chElementSelect->lastPos, mouse).contains(chElementSelect->glVertReference.gl.mapViewProjMatrix(
+			edit_skelen ?
+			pointVector[i] :
+			pointVector(i))
+		)) chElementSelect->selectedPoints->append(i);
+	}
 }
 
 void RectSelectClick::click(const QPointF& point)

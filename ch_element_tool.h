@@ -29,6 +29,12 @@ public:
 	void delete_element();
 	void enter();
 
+	void construct_add_triangle();
+	void construct_add_poly();
+	void construct_add_round();
+	void construct_rect_select();
+	void construct_libre_select();
+
 private:
 
 	ClickBehavior* clickBehavior = nullptr;
