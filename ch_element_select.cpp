@@ -100,7 +100,7 @@ void ChElementSelect::drawHandle(QPainter* painter)
     for (unsigned int i : selectedPoints->index())
         handleCenterPoint += edit_skelen ?
         pointLayer[i]:
-        pointLayer.get_uv_point(i);
+        pointLayer(i);
     
     handleCenterPoint /= selectedPoints->size();
 
@@ -189,7 +189,7 @@ void ChElementSelect::moveHandle(const QPointF& mouse)
             pointLayer.set_point(edit_skelen, (*selectedPoints)[i], glVertReference.gl.getProj().map(
                 edit_skelen?
                 pointLayer[(*selectedPoints)[i]]:
-                pointLayer.get_uv_point((*selectedPoints)[i]))
+                pointLayer((*selectedPoints)[i]))
             );
         }
     }

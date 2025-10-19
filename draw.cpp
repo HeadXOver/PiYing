@@ -25,7 +25,7 @@ void PiYingGL::drawChEditVert()
 		int j = 0;
 		for (; j < 3; j++) {
 			int index = characterTriangleIndices[currentVector][i + j];
-			poly << glToMap(getViewProjMatrix().map(pointVectorLayer.get_uv_point(index)));
+			poly << glToMap(getViewProjMatrix().map(pointVectorLayer(index)));
 		}
 		painter.setPen(QPen(Qt::black, 3));
 		painter.drawPolygon(poly);

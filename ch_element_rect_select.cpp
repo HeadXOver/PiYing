@@ -32,7 +32,7 @@ void ChElementRectSelect::draw(QPainter* painter)
 		if(edit_skelen)
 			selectPoint = chElementSelect->glVertReference.gl.mapViewProjMatrix(pointLayer[selectedPoints[i]]);
 		else
-			selectPoint = chElementSelect->glVertReference.gl.mapViewProjMatrix(pointLayer.get_uv_point(selectedPoints[i]));
+			selectPoint = chElementSelect->glVertReference.gl.mapViewProjMatrix(pointLayer(selectedPoints[i]));
 		painter->setPen(QPen(Qt::black, 8));
 		painter->drawPoint(selectPoint);
 		painter->setPen(QPen(Qt::red, 6));
@@ -64,7 +64,7 @@ void ChElementRectSelect::clickPos(const QPointF& mouseOri)
 	for (unsigned int i = 0; i < pointVector.size(); i++) {
 		existPoint = edit_skelen ?
 			pointVector[i] :
-			pointVector.get_uv_point(i);
+			pointVector(i);
 		if (QLineF(existPoint, mouse).length() < 0.02f / chElementSelect->glVertReference.gl.viewScale.value()) {
 			if (!chElementSelect->selectedPoints->contains(i)) {
 				if (!KeyboardStateWin::isCtrlHeld()) {
@@ -107,7 +107,7 @@ void ChElementRectSelect::releasePos(const QPointF& mouse)
 			chElementSelect->glVertReference.gl.mapViewProjMatrix(
 				edit_skelen ?
 				pointVector[i] :
-				pointVector.get_uv_point(i))
+				pointVector(i))
 			)
 		)
 			chElementSelect->selectedPoints->append(i);

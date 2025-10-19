@@ -19,6 +19,6 @@ void SelectedPoints::affirmVert(bool edit_skelen)
 	for (int i = 0; i < selectedIndex.size(); i++) {
 		lastVertPos[i] = edit_skelen?
 			sVert[selectedIndex[i]]:
-			sVert.get_uv_point(selectedIndex[i]);
+			sVert(selectedIndex[i]);
 	}
 }

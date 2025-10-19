@@ -7,14 +7,14 @@ PointVectorLayer::PointVectorLayer(PointVector& pointVector) : point_vector(poin
 {
 }
 
-QPointF PointVectorLayer::get_uv_point(int index) const
-{
-	return point_vector[index + index + 1];
-}
-
 const QPointF& PointVectorLayer::operator[](int index) const 
 {
 	return point_vector[index + index];
+}
+
+const QPointF& PointVectorLayer::operator()(int index) const
+{
+	return point_vector[index + index + 1];
 }
 
 void PointVectorLayer::push_back(const QPointF& point) 

@@ -72,7 +72,7 @@ void AddChTexPoly::click(const QPointF& mouseOri)
 
 	for (unsigned int i = 0; i < glVertReference.pointLayer->size(); i++) {
 		PointVectorLayer& pointVector = *(glVertReference.pointLayer);
-		const QPointF& readyPoint = pointVector.get_uv_point(i);
+		const QPointF& readyPoint = pointVector(i);
 		if (QLineF(readyPoint, mouse).length() < 0.02f / glVertReference.gl.viewScale.value()) {
 			if (!index.contains(i)) {
 				index.append(i);

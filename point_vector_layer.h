@@ -9,7 +9,7 @@ public:
 	PointVectorLayer(PointVector& point_vector);
 
 	const QPointF& operator[](int index) const;
-	QPointF get_uv_point(int index) const;
+	const QPointF& operator()(int index) const;
 
 	void push_back(const QPointF& point);
 	void set_point(bool first, int index, const QPointF& point);
