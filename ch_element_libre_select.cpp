@@ -85,12 +85,14 @@ void ChElementLibreSelect::clickPos(const QPointF& mouseOri)
 			pointVector[i] :
 			pointVector(i);
 		if (QLineF(existingPoint, mouse).length() < 0.02f / chElementSelect->glVertReference.gl.viewScale.value()) {
-			if (!selectedPoints.contains(i)) {
-				if (!KeyboardStateWin::isCtrlHeld()) {
-					selectedPoints.clear();
-				}
-				selectedPoints.append(i);
+			if (selectedPoints.contains(i)) return;
+
+			if (!KeyboardStateWin::isCtrlHeld()) {
+				selectedPoints.clear();
 			}
+
+			selectedPoints.append(i);
+
 			return;
 		}
 	}
@@ -101,39 +103,39 @@ void ChElementLibreSelect::clickPos(const QPointF& mouseOri)
 void ChElementLibreSelect::movePos(const QPointF& mouse)
 {
 	drawing = false;
-	if (chElementSelect->editMode == ChElementEditMode::None) {
-		if (!chElementSelect->isPress) return;
 
-		QPointF mapedMouse = chElementSelect->glVertReference.gl.GLViewProjMatrixInvert(mouse);
-		if (polygon->isEmpty() || polygon->last() != mapedMouse) {
-			*polygon << mapedMouse;
-		}
-		drawing = true;
+	if (chElementSelect->editMode != ChElementEditMode::None) {
+		chElementSelect->moveHandle(mouse);
+		return;
 	}
-	else chElementSelect->moveHandle(mouse);
+
+	if (!chElementSelect->isPress) return;
+
+	drawing = true;
+
+	QPointF mapedMouse = chElementSelect->glVertReference.gl.GLViewProjMatrixInvert(mouse);
+	if (!polygon->isEmpty() && polygon->last() == mapedMouse) return;
+
+	*polygon << mapedMouse;
 }
 
 void ChElementLibreSelect::releasePos(const QPointF& mouse)
 {
-	if (drawing) {
-		drawing = false;
+	if (!drawing) return;
 
-		if (!polygon->isEmpty()) {
-			*polygon << polygon->first();
-		}
+	drawing = false;
 
-		addEnclosedPoints(polygon, *chElementSelect->glVertReference.pointLayer);
-	}
-}
+	if (polygon->isEmpty()) return;
 
-void ChElementLibreSelect::addEnclosedPoints(const QPolygonF* const poly, const PointVectorLayer& points)
-{
+	*polygon << polygon->first();
+
+	const PointVectorLayer& points = *chElementSelect->glVertReference.pointLayer;
 	QPointF existingPoint;
 	for (unsigned int i = 0; i < points.size(); i++) {
 		existingPoint = edit_skelen ?
 			points[i] :
 			points(i);
-		if (poly->containsPoint(existingPoint, Qt::OddEvenFill)) {
+		if (polygon->containsPoint(existingPoint, Qt::OddEvenFill)) {
 			chElementSelect->selectedPoints->append(i);
 		}
 	}

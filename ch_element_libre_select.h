@@ -23,7 +23,6 @@ public:
 	void clickPos(const QPointF& mouse);
 	void movePos(const QPointF& mouse);
 	void releasePos(const QPointF& mouse);
-	void addEnclosedPoints(const QPolygonF* const poly, const PointVectorLayer& points);
 
 	ChElementSelect* chElementSelect;
 	QPolygonF* polygon;
