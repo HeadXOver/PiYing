@@ -12,7 +12,7 @@ struct AddTriangle final
 	AddTriangle(GlVertReference& glVertReference);
 	~AddTriangle();
 
-	bool addIndex(unsigned int i);
+	bool addVert(unsigned int i);
 	bool checkPointRepeat(const QPointF& point);
 	void addVert(const QPointF& point);
 	void reduceOne();

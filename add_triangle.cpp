@@ -20,7 +20,7 @@ AddTriangle::~AddTriangle()
 	delete second;
 }
 
-bool AddTriangle::addIndex(unsigned int i)
+bool AddTriangle::addVert(unsigned int i)
 {
 	if(numInd == 0) firstIndex = i;
 	else if (numInd == 1) {
@@ -54,8 +54,9 @@ void AddTriangle::reduceOne()
 	if (numVert == 0 && numInd == 1 || numVert == 1 && numInd == 0) {
 		numInd = 0;
 		numVert = 0;
+		return;
 	}
-	else if (numInd == 2) numInd--;
+	if (numInd == 2) numInd--;
 	else if (numVert == 2) numVert--;
 	else if (vertThenInd) numInd--;
 	else numVert--;
@@ -88,54 +89,52 @@ void AddTriangle::click(const QPointF& mouseOri)
 
 	if (numInd + numVert <= 1) {
 		if (indRepeat < 0) addVert(mouse);
-		else addIndex(indRepeat);
+		else addVert(indRepeat);
+		return;
 	}
-	else if (numVert == 2) {
+	if (numVert == 2) {
 		numInd = 0;
 		numVert = 0;
-		if (indRepeat >= 0) {
-			glVertReference.addTriangle(indRepeat, *first, *second);
-		}
-		else {
-			glVertReference.addTriangle(*first, *second, mouse);
-		}
+		glVertReference.addTriangle(*first, *second, indRepeat >= 0 ? pointVector(indRepeat) : mouse);
+		return;
 	}
-	else if (numInd == 2) {
-		if (indRepeat >= 0) {
-			if (indRepeat == firstIndex && indRepeat == secondIndex) return;
-
-			for (int j = 0; j < glVertReference.glIndex.size(); j += 3) {
-				unsigned int x[3] = { glVertReference.glIndex[j + 0], glVertReference.glIndex[j + 1], glVertReference.glIndex[j + 2] };
-				unsigned int y[3] = { (unsigned int)indRepeat, firstIndex, secondIndex };
-				std::sort(x, x + 3);
-				std::sort(y, y + 3);
-				if (x[0] == y[0] && x[1] == y[1] && x[2] == y[2])
-					return;
-			}
-
-			numInd = 0;
-			numVert = 0;
-			glVertReference.addTriangle(indRepeat, firstIndex, secondIndex);
-		}
-		else {
+	if (numInd == 2) {
+		if (indRepeat < 0) {
 			numInd = 0;
 			numVert = 0;
 			glVertReference.addTriangle(firstIndex, secondIndex, mouse);
+			return;
 		}
+
+		if (indRepeat == firstIndex || indRepeat == secondIndex) return;
+
+		unsigned int y[3] = { (unsigned int)indRepeat, firstIndex, secondIndex };
+		std::sort(y, y + 3);
+
+		for (int j = 0; j < glVertReference.glIndex.size(); j += 3) {
+			unsigned int x[3] = { glVertReference.glIndex[j + 0], glVertReference.glIndex[j + 1], glVertReference.glIndex[j + 2] };
+			std::sort(x, x + 3);
+			if (x[0] == y[0] && x[1] == y[1] && x[2] == y[2]) return;
+		}
+
+		numInd = 0;
+		numVert = 0;
+		glVertReference.addTriangle(indRepeat, firstIndex, secondIndex);
+		return;
 	}
-	else if (numInd == 1 && numVert == 1) {
-		if (indRepeat >= 0) {
-			if (firstIndex != indRepeat) {
-				numInd = 0;
-				numVert = 0;
-				glVertReference.addTriangle(indRepeat, firstIndex, *first);
-			}
-		}
-		else {
+	if (numInd == 1 && numVert == 1) {
+		if (indRepeat < 0) {
 			numInd = 0;
 			numVert = 0;
 			glVertReference.addTriangle(firstIndex, *first, mouse);
+			return;
 		}
+
+		if (firstIndex == indRepeat) return;
+
+		numInd = 0;
+		numVert = 0;
+		glVertReference.addTriangle(indRepeat, firstIndex, *first);
 	}
 }
 
@@ -146,6 +145,7 @@ void AddTriangleDraw::draw(QPainter* painter) {
 void AddTriangle::draw(QPainter* painter)
 {
 	if (numInd == 0 && numVert == 0) return;
+
 	std::vector<QPointF> toDraw;
 	PointVectorLayer& pointVector = *(glVertReference.pointLayer);
 	if (numInd == 1 && numVert == 0) {

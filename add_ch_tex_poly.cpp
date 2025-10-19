@@ -99,7 +99,7 @@ void AddPolyDraw::draw(QPainter* painter)
 
 bool AddChTexPoly::checkPointRepeat(const QPointF& point)
 {
-	for (QPointF& readyPoint : points) {
+	for (const QPointF& readyPoint : points) {
 		if (readyPoint == point) return true;
 	}
 	return false;
