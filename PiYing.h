@@ -49,6 +49,7 @@ private:
 
 	QList<ToolButton*> toolChTexList;
 	QList<ToolButton*> toolChSkelenList;
+	QList<ToolButton*> toolControlSliderList;
 
 public:
 	PiYingGLContainer* piYingGLContainer = nullptr;

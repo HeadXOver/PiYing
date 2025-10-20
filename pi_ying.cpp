@@ -289,6 +289,9 @@ void PiYing::selectTool(ToolButton* toolButton)
             toolButton->set_selected(QIcon(":/PiYing/selectRectChVert_S.png"));
             toolButton->set_unselected(QIcon(":/PiYing/selectRectChVert.png"));
             toolButton->set_toolState(CharacterToolState::RectSelectSkelenVert);
+            toolButton->unSelect();
+            piYingGL->setChToolState(CharacterToolState::None);
+            return;
         }
         else return;
     }
