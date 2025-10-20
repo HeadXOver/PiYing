@@ -23,22 +23,7 @@ ChElementRectSelect::~ChElementRectSelect()
 
 void ChElementRectSelect::draw(QPainter* painter)
 {
-	chElementSelect->drawHandle(painter);
-
-	const PointVectorLayer& pointLayer = *(chElementSelect->glVertReference.pointLayer);
-	const SelectedPoints& selectedPoints = *(chElementSelect->selectedPoints);
-
-	QPointF selectPoint;
-	for (int i = 0; i < selectedPoints.size(); i++) {
-		if(edit_skelen)
-			selectPoint = chElementSelect->glVertReference.gl.mapViewProjMatrix(pointLayer[selectedPoints[i]]);
-		else
-			selectPoint = chElementSelect->glVertReference.gl.mapViewProjMatrix(pointLayer(selectedPoints[i]));
-		painter->setPen(QPen(Qt::black, 8));
-		painter->drawPoint(selectPoint);
-		painter->setPen(QPen(Qt::red, 6));
-		painter->drawPoint(selectPoint);
-	}
+	chElementSelect->draw_handle_and_selected(painter);
 
 	if (isDraw) {
 		painter->setPen(QPen(Qt::yellow, 1));
@@ -60,28 +45,7 @@ void ChElementRectSelect::clickPos(const QPointF& mouseOri)
 
 	const QPointF mouse = chElementSelect->glVertReference.gl.GLViewProjMatrixInvert(mouseOri);
 
-	const PointVectorLayer& pointVector = *(chElementSelect->glVertReference.pointLayer);
-	QPointF existPoint;
-	for (unsigned int i = 0; i < pointVector.size(); i++) {
-		existPoint = edit_skelen ?
-			pointVector[i] :
-			pointVector(i);
-		if (QLineF(existPoint, mouse).length() < 0.02f / chElementSelect->glVertReference.gl.viewScale.value()) {
-			if (chElementSelect->selectedPoints->contains(i)) return;
-
-			if (!KeyboardStateWin::isCtrlHeld()) {
-				chElementSelect->selectedPoints->clear();
-			}
-
-			chElementSelect->selectedPoints->append(i);
-
-			return;
-		}
-	}
-
-	if (!KeyboardStateWin::isCtrlHeld()) {
-		chElementSelect->selectedPoints->clear();
-	}
+	chElementSelect->click_select(mouse);
 }
 
 void ChElementRectSelect::movePos(const QPointF& mouse)
@@ -104,7 +68,7 @@ void ChElementRectSelect::releasePos(const QPointF& mouse)
 	if (!isDraw) return;
 	isDraw = false;
 
-	chElementSelect->selectedPoints->clear();
+	chElementSelect->selected_points->clear();
 
 	PointVectorLayer& pointVector = *(chElementSelect->glVertReference.pointLayer);
 	for (unsigned int i = 0; i < pointVector.size(); i++) {
@@ -112,7 +76,7 @@ void ChElementRectSelect::releasePos(const QPointF& mouse)
 			edit_skelen ?
 			pointVector[i] :
 			pointVector(i))
-		)) chElementSelect->selectedPoints->append(i);
+		)) chElementSelect->selected_points->append(i);
 	}
 }
 

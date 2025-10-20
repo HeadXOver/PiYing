@@ -196,17 +196,17 @@
     <ClCompile Include="ch_skelen_tool.cpp">
       <Filter>Source Files\ChELementTool</Filter>
     </ClCompile>
-    <ClCompile Include="cus_func_get_unique_id.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ch_add_vert_trace.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="change_mode.cpp">
       <Filter>Source Files\PiYing</Filter>
     </ClCompile>
     <ClCompile Include="select_tool.cpp">
       <Filter>Source Files\PiYing</Filter>
+    </ClCompile>
+    <ClCompile Include="cus_func_get_unique_id.cpp">
+      <Filter>Source Files\PiYingTool</Filter>
+    </ClCompile>
+    <ClCompile Include="ch_add_vert_trace.cpp">
+      <Filter>Source Files\ChELementTool</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -50,6 +50,7 @@ private:
 	void paintBackgrounds();
 	void paintCharacterTexture();
 	void paintCharacterSkeleton();
+	void paintCharacterControlSlide();
 	void addGlobalAction(QMenu* menu, const QList<QAction*> action);
 
 	int getCurrentBgRow() const;
@@ -98,6 +99,7 @@ public:
 	void viewRotationControl(const QPointF& mouse);
 	void drawChEditVert();
 	void drawChSkeleVert();
+	void drawChControlSlideVert();
 
 	bool addBackground(const QString& imageName, QImage& image);
 

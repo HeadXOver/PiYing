@@ -25,13 +25,14 @@ struct ChElementSelect final
 
 	void escape();
 	void deleteElement();
-	void drawHandle(QPainter* painter);
+	void draw_handle_and_selected(QPainter* painter);
 	void changeEditMode();
 	void moveHandle(const QPointF& mouse);
 	void affirmHandle();
+	void click_select(const QPointF& mouse);
 
 	GlVertReference& glVertReference;
-	SelectedPoints* selectedPoints;
+	SelectedPoints* selected_points;
 	QPointF lastPos;
 	QPointF handleCenterPoint;
 	QPointF dHandleCenterPoint;

@@ -24,7 +24,7 @@ ChElementLibreSelect::~ChElementLibreSelect()
 
 void ChElementLibreSelect::draw(QPainter* painter)
 {
-	chElementSelect->drawHandle(painter);
+	chElementSelect->draw_handle_and_selected(painter);
 
 	if (!polygon->isEmpty()) {
 		if (drawing) {
@@ -43,20 +43,6 @@ void ChElementLibreSelect::draw(QPainter* painter)
 			painter->drawLine(screenPoly.last(), screenPoly.first());
 		}
 	}
-
-	SelectedPoints& selectedPoints = *chElementSelect->selectedPoints;
-	PointVectorLayer& pointVector = *chElementSelect->glVertReference.pointLayer;
-	for (int i = 0; i < selectedPoints.size(); i++) {
-		QPointF selectPoint = chElementSelect->glVertReference.gl.mapViewProjMatrix(
-			edit_skelen ?
-			pointVector[selectedPoints[i]] :
-			pointVector(selectedPoints[i])
-		);
-		painter->setPen(QPen(Qt::black, 8));
-		painter->drawPoint(selectPoint);
-		painter->setPen(QPen(Qt::red, 6));
-		painter->drawPoint(selectPoint);
-	}
 }
 
 void ChElementLibreSelect::clickPos(const QPointF& mouseOri)
@@ -73,31 +59,11 @@ void ChElementLibreSelect::clickPos(const QPointF& mouseOri)
 		return;
 	}
 
-	QPointF mouse = chElementSelect->glVertReference.gl.getViewProjMatrixInvert().map(chElementSelect->glVertReference.gl.mapToGL(mouseOri));
+	const QPointF mouse = chElementSelect->glVertReference.gl.getViewProjMatrixInvert().map(chElementSelect->glVertReference.gl.mapToGL(mouseOri));
 
 	*polygon << mouse;
 
-	SelectedPoints& selectedPoints = *chElementSelect->selectedPoints;
-	PointVectorLayer& pointVector = *chElementSelect->glVertReference.pointLayer;
-	QPointF existingPoint;
-	for (unsigned int i = 0; i < pointVector.size(); i++) {
-		existingPoint = edit_skelen ?
-			pointVector[i] :
-			pointVector(i);
-		if (QLineF(existingPoint, mouse).length() < 0.02f / chElementSelect->glVertReference.gl.viewScale.value()) {
-			if (selectedPoints.contains(i)) return;
-
-			if (!KeyboardStateWin::isCtrlHeld()) {
-				selectedPoints.clear();
-			}
-
-			selectedPoints.append(i);
-
-			return;
-		}
-	}
-
-	if (!KeyboardStateWin::isCtrlHeld()) chElementSelect->selectedPoints->clear();
+	chElementSelect->click_select(mouse);
 }
 
 void ChElementLibreSelect::movePos(const QPointF& mouse)
@@ -136,7 +102,7 @@ void ChElementLibreSelect::releasePos(const QPointF& mouse)
 			points[i] :
 			points(i);
 		if (polygon->containsPoint(existingPoint, Qt::OddEvenFill)) {
-			chElementSelect->selectedPoints->append(i);
+			chElementSelect->selected_points->append(i);
 		}
 	}
 }

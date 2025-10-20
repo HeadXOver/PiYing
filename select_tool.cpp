@@ -53,6 +53,12 @@ void PiYing::select_tool_skelen(ToolButton* toolButton)
 
 void PiYing::select_tool_control_slider(ToolButton* toolButton)
 {
+    if (toolButton->isSelect()) {
+        toolButton->unSelect();
+        piYingGL->setChTool(CharacterToolState::None);
+        return;
+    }
+
     for (ToolButton* item : toolControlSliderList) item->unSelect();
 
     toolButton->select();

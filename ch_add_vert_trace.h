@@ -17,6 +17,8 @@ struct ChAddVertTrace final
 	void release(const QPointF& mouse);
 	void draw(QPainter& painter);
 
+	int current_index = -1;
+
 	GlVertReference& glVertReference;
 };
 

@@ -91,6 +91,48 @@ void PiYingGL::drawChSkeleVert()
 	if (chElementTool) chElementTool->draw(&painter);
 }
 
+void PiYingGL::drawChControlSlideVert()
+{
+	if (ch_tool_state_ != CharacterToolState::AddVertTrace) return;
+
+	const int currentVector = getCurrentChRow();
+	if (currentVector < 0) return;
+
+	QPainter painter(this);
+	painter.setRenderHint(QPainter::Antialiasing);
+	painter.setBrush(QColor(225, 0, 0, 20));
+
+	PointVectorLayer pointVectorLayer(*(characterVerts[currentVector]));
+
+	int index;
+	int j;
+	painter.setPen(QPen(Qt::black, 3));
+	for (int i = 0; i < characterTriangleIndices[currentVector].size();) {
+		QPolygonF poly;
+		j = 0;
+		for (; j < 3; j++) {
+			index = characterTriangleIndices[currentVector][i + j];
+			poly << glToMap(getViewProjMatrix().map(pointVectorLayer[index]));
+		}
+		painter.drawPolygon(poly);
+		i += j;
+	}
+
+	painter.setPen(QPen(Qt::green, 1));
+	for (int i = 0; i < characterTriangleIndices[currentVector].size();) {
+		QPolygonF poly;
+		j = 0;
+		for (; j < 3; j++) {
+			index = characterTriangleIndices[currentVector][i + j];
+			poly << glToMap(getViewProjMatrix().map(pointVectorLayer[index]));
+		}
+		painter.drawPolygon(poly);
+		i += j;
+	}
+
+	if (chElementTool) chElementTool->draw(&painter);
+}
+
 void PiYingGL::paintBackgrounds()
 {
 	glBindVertexArray(bgVAO);
@@ -192,4 +234,43 @@ void PiYingGL::paintCharacterSkeleton()
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
 	drawChSkeleVert();
+}
+
+void PiYingGL::paintCharacterControlSlide()
+{
+	int i = getCurrentChRow();
+	if (i < 0) return;
+
+	glBindVertexArray(chVAO);
+	glBindBuffer(GL_ARRAY_BUFFER, chVBO);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, chEBO);
+	chShaderProgram->bind();
+	glActiveTexture(GL_TEXTURE0);
+
+	// position attribute
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(0);
+
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)(2 * sizeof(float)));
+	glEnableVertexAttribArray(1);
+
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	////////////////////////////
+
+	glBufferData(GL_ARRAY_BUFFER, characterVerts[i]->float_size() * sizeof(float), characterVerts[i]->data(), GL_DYNAMIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, characterTriangleIndices[i].size() * sizeof(unsigned int), characterTriangleIndices[i].data(), GL_DYNAMIC_DRAW);
+	characterTextures[i]->texture()->bind();
+	chShaderProgram->setUniformValue("texture1", 0);
+	chShaderProgram->setUniformValue("trc", getViewProjMatrix());
+	glDrawElements(GL_TRIANGLES, (GLsizei)characterTriangleIndices[i].size(), GL_UNSIGNED_INT, 0);
+
+	//////////////////////////////
+
+	glBindVertexArray(0);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+	drawChControlSlideVert();
 }
