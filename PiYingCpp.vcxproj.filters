@@ -205,6 +205,9 @@
     <ClCompile Include="change_mode.cpp">
       <Filter>Source Files\PiYing</Filter>
     </ClCompile>
+    <ClCompile Include="select_tool.cpp">
+      <Filter>Source Files\PiYing</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="static_handle_zone.h">

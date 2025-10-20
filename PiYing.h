@@ -40,7 +40,9 @@ private slots:
 	void onModeChanged(int mode);
 
 private:
-	void selectTool(ToolButton* toolButton);
+	void select_tool_texture(ToolButton* toolButton);
+	void select_tool_skelen(ToolButton* toolButton);
+	void select_tool_control_slider(ToolButton* toolButton);
 
 private:
     Ui::PiYingClass* ui;

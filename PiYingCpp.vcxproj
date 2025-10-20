@@ -131,6 +131,7 @@
     <ClCompile Include="cus_func_transform.cpp" />
     <ClCompile Include="tool_button.cpp" />
     <ClCompile Include="change_mode.cpp" />
+    <ClCompile Include="select_tool.cpp" />
     <QtRcc Include="PiYing.qrc" />
     <QtUic Include="PiYing.ui" />
     <QtMoc Include="PiYing.h" />

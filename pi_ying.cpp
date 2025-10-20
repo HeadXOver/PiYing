@@ -73,15 +73,15 @@ PiYing::PiYing(QWidget* parent) : QMainWindow(parent)
     QAction* actionDefaultColor          = childMenuScreen->     addAction("底色...");
 
     for (ToolButton* item : toolChTexList) {
-        connect(item->action(), &QAction::triggered, this, [this, item]() {selectTool(item); });
+        connect(item->action(), &QAction::triggered, this, [this, item]() {select_tool_texture(item); });
     }
 
     for (ToolButton* item : toolChSkelenList) {
-        connect(item->action(), &QAction::triggered, this, [this, item]() {selectTool(item); });
+        connect(item->action(), &QAction::triggered, this, [this, item]() {select_tool_skelen(item); });
     }
 
     for (ToolButton* item : toolControlSliderList) {
-        connect(item->action(), &QAction::triggered, this, [this, item]() {selectTool(item); });
+        connect(item->action(), &QAction::triggered, this, [this, item]() {select_tool_control_slider(item); });
     }
 
     connect(actionExportCurrentFrame,   SIGNAL(triggered()), this, SLOT(exportCurrentFrame()));
@@ -231,42 +231,4 @@ void PiYing::askScreenScale(){
 		piYingGLContainer->update();
 		piYingGL->changeRatio(ratio);
     }
-}
-
-void PiYing::selectTool(ToolButton* toolButton)
-{
-    if (toolButton->isSelect()) {
-        if (toolButton->toolState() == CharacterToolState::RectSelectVert) {
-            toolButton->set_selected(QIcon(":/PiYing/selectLibreChVert_S.png"));
-            toolButton->set_unselected(QIcon(":/PiYing/selectLibreChVert.png"));
-            toolButton->set_toolState(CharacterToolState::LibreSelectVert);
-        }
-        else if (toolButton->toolState() == CharacterToolState::LibreSelectVert) {
-            toolButton->set_selected(QIcon(":/PiYing/selectRectChVert_S.png"));
-            toolButton->set_unselected(QIcon(":/PiYing/selectRectChVert.png"));
-            toolButton->set_toolState(CharacterToolState::RectSelectVert);
-        }
-        else  if (toolButton->toolState() == CharacterToolState::RectSelectSkelenVert) {
-            toolButton->set_selected(QIcon(":/PiYing/selectLibreChVert_S.png"));
-            toolButton->set_unselected(QIcon(":/PiYing/selectLibreChVert.png"));
-            toolButton->set_toolState(CharacterToolState::LibreSelectSkelenVert);
-        }
-        else if (toolButton->toolState() == CharacterToolState::LibreSelectSkelenVert) {
-            toolButton->set_selected(QIcon(":/PiYing/selectRectChVert_S.png"));
-            toolButton->set_unselected(QIcon(":/PiYing/selectRectChVert.png"));
-            toolButton->set_toolState(CharacterToolState::RectSelectSkelenVert);
-            toolButton->unSelect();
-            piYingGL->setChTool(CharacterToolState::None);
-            return;
-        }
-        else return;
-    }
-    else {
-        for (ToolButton* item : toolChTexList) item->unSelect();
-        for (ToolButton* item : toolChSkelenList) item->unSelect();
-        for (ToolButton* item : toolControlSliderList) item->unSelect();
-    }
-
-    toolButton->select();
-    piYingGL->setChTool(toolButton->toolState());
 }
