@@ -131,6 +131,7 @@ public:
 	QList<std::vector<unsigned int>>& ref_characterTriangleIndices () { return characterTriangleIndices; }
 
 	CharacterToolState ch_tool_state() const { return ch_tool_state_; }
+	ChElementTool* ch_element_tool() { return ch_element_tool_; }
 
 public:
 	EditMode editMode = EditMode::Default;
@@ -177,5 +178,5 @@ private:
 	QMenu* rightButtonMenuBg;
 	QMenu* rightButtonMenu;
 
-	ChElementTool* chElementTool;
+	ChElementTool* ch_element_tool_;
 };

@@ -58,7 +58,7 @@ void PiYing::change_edit_mode_character_texture()
         }
     }
 
-    piYingGL->setChTool(CharacterToolState::None);
+    if(!piYingGL->ch_element_tool()) piYingGL->setChTool(CharacterToolState::None);
 }
 
 void PiYing::change_edit_mode_character_skeleton()
@@ -78,7 +78,7 @@ void PiYing::change_edit_mode_character_skeleton()
         }
     }
 
-    piYingGL->setChTool(CharacterToolState::None);
+    if (!piYingGL->ch_element_tool()) piYingGL->setChTool(CharacterToolState::None);
 }
 
 void PiYing::change_edit_mode_character_constrol_slider()
@@ -99,7 +99,7 @@ void PiYing::change_edit_mode_character_constrol_slider()
         }
     }
 
-    piYingGL->setChTool(CharacterToolState::None);
+    if (!piYingGL->ch_element_tool()) piYingGL->setChTool(CharacterToolState::None);
 }
 
 void PiYing::onModeChanged(int mode)

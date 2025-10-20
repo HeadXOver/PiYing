@@ -39,7 +39,7 @@ PiYingGL::~PiYingGL()
 
 	doneCurrent();
 
-	if (chElementTool) delete chElementTool;
+	if (ch_element_tool_) delete ch_element_tool_;
 	for (ImageTexture* ch : characterTextures) delete ch;
 	for (ImageTexture* bg : backGrounds) delete bg;
 	for (PointVector* pv : characterVerts) delete pv;
@@ -124,9 +124,9 @@ void PiYingGL::setEditMode(EditMode mode)
 
 void PiYingGL::updateChTool()
 {
-	if (chElementTool) {
-		delete chElementTool;
-		chElementTool = nullptr;
+	if (ch_element_tool_) {
+		delete ch_element_tool_;
+		ch_element_tool_ = nullptr;
 	}
 
 	int currentVector = getCurrentChRow();
@@ -139,7 +139,17 @@ void PiYingGL::updateChTool()
 
 	if (editMode == EditMode::characterSkeleton) {
 		if (ch_tool_state_ == CharacterToolState::RectSelectSkelenVert || ch_tool_state_ == CharacterToolState::LibreSelectSkelenVert) {
-			chElementTool = new ChElementTool(currentVector, *this, ch_tool_state_);
+			ch_element_tool_ = new ChElementTool(currentVector, *this, ch_tool_state_);
+		}
+		else{
+			if (ch_tool_state_ == CharacterToolState::RectSelectVert) {
+				ch_tool_state_ = CharacterToolState::RectSelectSkelenVert;
+				ch_element_tool_ = new ChElementTool(currentVector, *this, CharacterToolState::RectSelectSkelenVert);
+			}
+			else if (ch_tool_state_ == CharacterToolState::LibreSelectVert) {
+				ch_tool_state_ = CharacterToolState::LibreSelectSkelenVert;
+				ch_element_tool_ = new ChElementTool(currentVector, *this, CharacterToolState::LibreSelectSkelenVert);
+			}
 		}
 		update();
 		return;
@@ -147,7 +157,7 @@ void PiYingGL::updateChTool()
 
 	if (editMode == EditMode::controlSlide) {
 		if (ch_tool_state_ == CharacterToolState::AddVertTrace) {
-			chElementTool = new ChElementTool(currentVector, *this, ch_tool_state_);
+			ch_element_tool_ = new ChElementTool(currentVector, *this, ch_tool_state_);
 		}
 		update();
 		return;
@@ -159,7 +169,17 @@ void PiYingGL::updateChTool()
 			|| ch_tool_state_ == CharacterToolState::AddPoly
 			|| ch_tool_state_ == CharacterToolState::AddRound
 			|| ch_tool_state_ == CharacterToolState::AddTriangle) {
-			chElementTool = new ChElementTool(currentVector, *this, ch_tool_state_);
+			ch_element_tool_ = new ChElementTool(currentVector, *this, ch_tool_state_);
+		}
+		else {
+			if (ch_tool_state_ == CharacterToolState::RectSelectSkelenVert) {
+				ch_tool_state_ = CharacterToolState::RectSelectVert;
+				ch_element_tool_ = new ChElementTool(currentVector, *this, CharacterToolState::RectSelectVert);
+			}
+			else if (ch_tool_state_ == CharacterToolState::LibreSelectSkelenVert) {
+				ch_tool_state_ = CharacterToolState::LibreSelectVert;
+				ch_element_tool_ = new ChElementTool(currentVector, *this, CharacterToolState::LibreSelectVert);
+			}
 		}
 		update();
 		return;
@@ -172,9 +192,9 @@ void PiYingGL::setChTool(CharacterToolState state)
 {
 	ch_tool_state_ = state;
 
-	if (chElementTool) {
-		delete chElementTool;
-		chElementTool = nullptr;
+	if (ch_element_tool_) {
+		delete ch_element_tool_;
+		ch_element_tool_ = nullptr;
 	}
 
 	const int currentVector = getCurrentChRow();
@@ -185,26 +205,26 @@ void PiYingGL::setChTool(CharacterToolState state)
 		return;
 	}
 
-	chElementTool = new ChElementTool(currentVector, *this, ch_tool_state_);
+	ch_element_tool_ = new ChElementTool(currentVector, *this, ch_tool_state_);
 
 	update();
 }
 
 void PiYingGL::deleteChElement()
 {
-	if (chElementTool) chElementTool->delete_element();
+	if (ch_element_tool_) ch_element_tool_->delete_element();
 	update();
 }
 
 void PiYingGL::enterChElement()
 {
-	if (chElementTool) chElementTool->enter();
+	if (ch_element_tool_) ch_element_tool_->enter();
 	update();
 }
 
 void PiYingGL::escapeChVert()
 {
-	if (chElementTool) chElementTool->escape();
+	if (ch_element_tool_) ch_element_tool_->escape();
 	update();
 }
 

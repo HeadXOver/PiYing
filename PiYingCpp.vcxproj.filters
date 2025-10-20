@@ -83,9 +83,6 @@
     <QtUic Include="PiYing.ui">
       <Filter>Form Files</Filter>
     </QtUic>
-    <ClCompile Include="pi_ying.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -207,6 +204,9 @@
     </ClCompile>
     <ClCompile Include="ch_add_vert_trace.cpp">
       <Filter>Source Files\ChELementTool</Filter>
+    </ClCompile>
+    <ClCompile Include="pi_ying.cpp">
+      <Filter>Source Files\PiYing</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

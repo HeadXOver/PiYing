@@ -43,7 +43,7 @@ void PiYingGL::drawChEditVert(int currentVector)
 		i += j;
 	}
 
-	if (chElementTool) chElementTool->draw(&painter);
+	if (ch_element_tool_) ch_element_tool_->draw(&painter);
 }
 
 void PiYingGL::drawChSkeleVert()
@@ -85,7 +85,7 @@ void PiYingGL::drawChSkeleVert()
 		i += j;
 	}
 
-	if (chElementTool) chElementTool->draw(&painter);
+	if (ch_element_tool_) ch_element_tool_->draw(&painter);
 }
 
 void PiYingGL::drawChControlSlideVert()
@@ -127,7 +127,7 @@ void PiYingGL::drawChControlSlideVert()
 		i += j;
 	}
 
-	if (chElementTool) chElementTool->draw(&painter);
+	if (ch_element_tool_) ch_element_tool_->draw(&painter);
 }
 
 void PiYingGL::paintBackgrounds()

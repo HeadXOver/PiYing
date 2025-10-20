@@ -30,7 +30,7 @@ void PiYingGL::mousePressEvent(QMouseEvent* event)
 
 		if ((editMode == EditMode::characterTexture || editMode == EditMode::characterSkeleton || editMode == EditMode::controlSlide)
 			&& event->button() == Qt::LeftButton) {
-			if (chElementTool) chElementTool->click(event->position());
+			if (ch_element_tool_) ch_element_tool_->click(event->position());
 			update();
 			return;
 		}
@@ -48,7 +48,7 @@ void PiYingGL::mousePressEvent(QMouseEvent* event)
 
 void PiYingGL::mouseReleaseEvent(QMouseEvent* e)
 {
-	if (e->button() == Qt::LeftButton && chElementTool) chElementTool->release(e->position());
+	if (e->button() == Qt::LeftButton && ch_element_tool_) ch_element_tool_->release(e->position());
 
 	update();
 }
@@ -70,8 +70,8 @@ void PiYingGL::mouseMoveEvent(QMouseEvent* event) {
 			}
 		}
 		else if (editMode == EditMode::characterTexture || editMode == EditMode::characterSkeleton) {
-			if (chElementTool) {
-				chElementTool->move(event->position());
+			if (ch_element_tool_) {
+				ch_element_tool_->move(event->position());
 				currentUpdate();
 			}
 		}
