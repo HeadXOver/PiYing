@@ -68,13 +68,13 @@ void CtrlSlideWidget::setSlider(CtrlSlideLayout* slider)
 void CtrlSlideWidget::removeSlider(CtrlSlideLayout* slider)
 {
     for (int i = 0; i < sliderList.size(); i++) {
-        if (sliderList[i] == slider) {
-            sliderList.removeAt(i);
-            sliderLayout->removeItem(slider);
-            delete slider;
-            sliderCount--;
-            break;
-        }
+        if (sliderList[i] != slider) continue;
+
+        sliderList.removeAt(i);
+        sliderLayout->removeItem(slider);
+        delete slider;
+        sliderCount--;
+        break;
     }
 }
 

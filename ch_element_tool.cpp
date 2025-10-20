@@ -11,20 +11,24 @@
 #include <memory>
 #include <qpointf>
 
-constexpr void(*construct[])(ChElementTool* chElementTool) = {
-	nullptr,
-	[](ChElementTool* chElementTool) {chElementTool->construct_add_triangle(); },
-	[](ChElementTool* chElementTool) {chElementTool->construct_rect_select(); },
-	[](ChElementTool* chElementTool) {chElementTool->construct_rect_select(); },
-	[](ChElementTool* chElementTool) {chElementTool->construct_libre_select(); },
-	[](ChElementTool* chElementTool) {chElementTool->construct_libre_select(); },
-	[](ChElementTool* chElementTool) {chElementTool->construct_add_poly(); },
-	[](ChElementTool* chElementTool) {chElementTool->construct_add_round(); }
-};
+namespace {
 
-using stuct_handler = void(*)(ChElementTool*);
-constexpr stuct_handler map_construct(CharacterToolState state) {
-	return construct[static_cast<int>(state)];
+	constexpr void(*construct[])(ChElementTool* chElementTool) = {
+		nullptr,
+		[](ChElementTool* chElementTool) {chElementTool->construct_add_triangle(); },
+		[](ChElementTool* chElementTool) {chElementTool->construct_rect_select(); },
+		[](ChElementTool* chElementTool) {chElementTool->construct_rect_select(); },
+		[](ChElementTool* chElementTool) {chElementTool->construct_libre_select(); },
+		[](ChElementTool* chElementTool) {chElementTool->construct_libre_select(); },
+		[](ChElementTool* chElementTool) {chElementTool->construct_add_poly(); },
+		[](ChElementTool* chElementTool) {chElementTool->construct_add_round(); }
+	};
+
+	using stuct_handler = void(*)(ChElementTool*);
+	constexpr stuct_handler map_construct(CharacterToolState state) {
+		return construct[static_cast<int>(state)];
+	}
+
 }
 
 void ChElementTool::construct_add_triangle()

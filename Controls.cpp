@@ -7,6 +7,20 @@
 
 namespace {
 	constexpr float angle_rad = 3.1415926f / 180.f;
+
+	constexpr short PN1(MousePos type) {
+		if (type == MousePos::TopEdge || type == MousePos::LeftTop || type == MousePos::RightTop) {
+			return -1;
+		}
+		return 1;
+	}
+
+	constexpr short PN2(MousePos type) {
+		if (type == MousePos::RightEdge || type == MousePos::RightBottom || type == MousePos::RightTop) {
+			return -1;
+		}
+		return 1;
+	}
 }
 
 void PiYingGL::bgRotationControl(const QPointF& mouse, ImageTexture* image)
@@ -28,10 +42,9 @@ void PiYingGL::bgTranslateControl(const QPointF& mouse, ImageTexture* image)
 
 void PiYingGL::bgScaleControl(const QPointF& mouse, ImageTexture* image)
 {
-	QPointF mouseRaletive = getRaletiveToRect(mouse, lastImageTransform);
-	QPointF LastMouseRaletive = getRaletiveToRect(lastMousePos, lastImageTransform);
+	const QPointF mouseRaletive = getRaletiveToRect(mouse, lastImageTransform);
+	const QPointF LastMouseRaletive = getRaletiveToRect(lastMousePos, lastImageTransform);
 	QPointF pAspect(1.0f, 1.0f);
-	short PN[2] = { 1, 1 };
 
 	*image = lastImageTransform;
 
@@ -40,21 +53,22 @@ void PiYingGL::bgScaleControl(const QPointF& mouse, ImageTexture* image)
 	}
 	else if (lastMousePosType == MousePos::TopEdge || lastMousePosType == MousePos::LeftTop || lastMousePosType == MousePos::RightTop) {
 		pAspect.setY((1.0f + mouseRaletive.y()) / (1.0f + LastMouseRaletive.y()));
-		PN[0] = -1;
 	}
+
 	if (lastMousePosType == MousePos::LeftEdge || lastMousePosType == MousePos::LeftTop || lastMousePosType == MousePos::LeftBottom) {
 		pAspect.setX((1.0f - mouseRaletive.x()) / (1.0f - LastMouseRaletive.x()));
 	}
 	else if (lastMousePosType == MousePos::RightEdge || lastMousePosType == MousePos::RightBottom || lastMousePosType == MousePos::RightTop) {
 		pAspect.setX((1.0f + mouseRaletive.x()) / (1.0f + LastMouseRaletive.x()));
-		PN[1] = -1;
 	}
+
 	if (KeyboardStateWin::isShiftHeld()) {
 		pAspect.setY(pAspect.x());
 	}
+
 	image->addScale(pAspect);
-	pAspect.setX(PN[1] * (1.f - pAspect.x()));
-	pAspect.setY(PN[0] * (1.f - pAspect.y()));
+	pAspect.setX(PN2(lastMousePosType) * (1.f - pAspect.x()));
+	pAspect.setY(PN1(lastMousePosType) * (1.f - pAspect.y()));
 	image->addTrans((lastImageTransform->get_rot() * lastImageTransform->get_scale() * insProj).map(pAspect));
 }
 

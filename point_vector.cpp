@@ -10,9 +10,8 @@ void PointVector::push_back(const QPointF& p)
 
 void PointVector::remove_last()
 {
-	if (!points.empty()) {
-		points.pop_back();
-	}
+	if (points.empty()) return;
+	points.pop_back();
 }
 
 void PointVector::set_point(int i, float x, float y)
@@ -29,11 +28,9 @@ void PointVector::set_point(int i, const QPointF& p)
 
 bool PointVector::contain(const QPointF& p) const
 {
-	
 	for (int i = 0; i < points.size(); i += 2) {
-		if (points[i] == p.x() && points[i + 1] == p.y()) {
-			return true;
-		}
+		if (points[i] != p.x() || points[i + 1] != p.y()) continue;
+		return true;
 	}
 	return false;
 }
