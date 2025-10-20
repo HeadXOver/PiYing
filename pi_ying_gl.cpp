@@ -159,7 +159,7 @@ void PiYingGL::setChToolState(CharacterToolState state)
 		chElementTool = nullptr;
 	}
 
-	int currentVector = getCurrentChRow();
+	const int currentVector = getCurrentChRow();
 	if (currentVector < 0) return;
 	
 	if (state == CharacterToolState::None) {

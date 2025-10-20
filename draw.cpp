@@ -20,16 +20,28 @@ void PiYingGL::drawChEditVert()
 
 	PointVectorLayer pointVectorLayer(*(characterVerts[currentVector]));
 
+	int index;
+	int j;
+	painter.setPen(QPen(Qt::black, 3));
 	for (int i = 0; i < characterTriangleIndices[currentVector].size();) {
 		QPolygonF poly;
-		int j = 0;
+		j = 0;
 		for (; j < 3; j++) {
-			int index = characterTriangleIndices[currentVector][i + j];
+			index = characterTriangleIndices[currentVector][i + j];
 			poly << glToMap(getViewProjMatrix().map(pointVectorLayer(index)));
 		}
-		painter.setPen(QPen(Qt::black, 3));
 		painter.drawPolygon(poly);
-		painter.setPen(QPen(Qt::green, 1));
+		i += j;
+	}
+
+	painter.setPen(QPen(Qt::green, 1));
+	for (int i = 0; i < characterTriangleIndices[currentVector].size();) {
+		QPolygonF poly;
+		j = 0;
+		for (; j < 3; j++) {
+			index = characterTriangleIndices[currentVector][i + j];
+			poly << glToMap(getViewProjMatrix().map(pointVectorLayer(index)));
+		}
 		painter.drawPolygon(poly);
 		i += j;
 	}
@@ -41,7 +53,7 @@ void PiYingGL::drawChSkeleVert()
 {
 	if (chToolState != CharacterToolState::LibreSelectSkelenVert && chToolState != CharacterToolState::RectSelectSkelenVert) return;
 
-	int currentVector = getCurrentChRow();
+	const int currentVector = getCurrentChRow();
 	if (currentVector < 0) return;
 
 	QPainter painter(this);
@@ -50,16 +62,28 @@ void PiYingGL::drawChSkeleVert()
 
 	PointVectorLayer pointVectorLayer(*(characterVerts[currentVector]));
 
+	int index;
+	int j;
+	painter.setPen(QPen(Qt::black, 3));
 	for (int i = 0; i < characterTriangleIndices[currentVector].size();) {
 		QPolygonF poly;
-		int j = 0;
+		j = 0;
 		for (; j < 3; j++) {
-			int index = characterTriangleIndices[currentVector][i + j];
+			index = characterTriangleIndices[currentVector][i + j];
 			poly << glToMap(getViewProjMatrix().map(pointVectorLayer[index]));
 		}
-		painter.setPen(QPen(Qt::black, 3));
 		painter.drawPolygon(poly);
-		painter.setPen(QPen(Qt::green, 1));
+		i += j;
+	}
+
+	painter.setPen(QPen(Qt::green, 1));
+	for (int i = 0; i < characterTriangleIndices[currentVector].size();) {
+		QPolygonF poly;
+		j = 0;
+		for (; j < 3; j++) {
+			index = characterTriangleIndices[currentVector][i + j];
+			poly << glToMap(getViewProjMatrix().map(pointVectorLayer[index]));
+		}
 		painter.drawPolygon(poly);
 		i += j;
 	}

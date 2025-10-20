@@ -79,7 +79,7 @@ void ChElementRectSelect::clickPos(const QPointF& mouseOri)
 		}
 	}
 
-	if (KeyboardStateWin::isCtrlHeld()) {
+	if (!KeyboardStateWin::isCtrlHeld()) {
 		chElementSelect->selectedPoints->clear();
 	}
 }
