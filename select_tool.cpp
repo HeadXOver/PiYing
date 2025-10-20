@@ -14,6 +14,9 @@ void PiYing::select_tool_texture(ToolButton* toolButton)
             toolButton->set_selected(QIcon(":/PiYing/selectRectChVert_S.png"));
             toolButton->set_unselected(QIcon(":/PiYing/selectRectChVert.png"));
             toolButton->set_toolState(CharacterToolState::RectSelectVert);
+            toolButton->unSelect();
+            piYingGL->setChTool(CharacterToolState::None);
+            return;
         }
         else return;
     }
@@ -27,25 +30,9 @@ void PiYing::select_tool_texture(ToolButton* toolButton)
 
 void PiYing::select_tool_skelen(ToolButton* toolButton)
 {
-    if (toolButton->isSelect()) {
-        if (toolButton->toolState() == CharacterToolState::RectSelectSkelenVert) {
-            toolButton->set_selected(QIcon(":/PiYing/selectLibreChVert_S.png"));
-            toolButton->set_unselected(QIcon(":/PiYing/selectLibreChVert.png"));
-            toolButton->set_toolState(CharacterToolState::LibreSelectSkelenVert);
-        }
-        else if (toolButton->toolState() == CharacterToolState::LibreSelectSkelenVert) {
-            toolButton->set_selected(QIcon(":/PiYing/selectRectChVert_S.png"));
-            toolButton->set_unselected(QIcon(":/PiYing/selectRectChVert.png"));
-            toolButton->set_toolState(CharacterToolState::RectSelectSkelenVert);
-            toolButton->unSelect();
-            piYingGL->setChTool(CharacterToolState::None);
-            return;
-        }
-        else return;
-    }
-    else {
-        for (ToolButton* item : toolChSkelenList) item->unSelect();
-    }
+    if (toolButton->isSelect()) return; 
+
+    for (ToolButton* item : toolChSkelenList) item->unSelect();
 
     toolButton->select();
     piYingGL->setChTool(toolButton->toolState());

@@ -37,14 +37,28 @@ PiYing::PiYing(QWidget* parent) : QMainWindow(parent)
     splitTimelineOpenGL = new QSplitter(Qt::Vertical, this);
     splitListOpenGL = new QSplitter(Qt::Horizontal, this);
 
-    toolChTexList.append(new ToolButton(":/PiYing/selectRectChVert_S.png", ":/PiYing/selectRectChVert.png", "selectRectChVert", CharacterToolState::RectSelectVert, this));
+    ToolButton* chRectSelectVert = new ToolButton(":/PiYing/selectRectChVert_S.png", ":/PiYing/selectRectChVert.png", "selectRectChVert", CharacterToolState::RectSelectVert, this);
+
+    toolChTexList.append(chRectSelectVert);
     toolChTexList.append(new ToolButton(":/PiYing/addChVert_S.png", ":/PiYing/addChVert.png", "addChVert", CharacterToolState::AddTriangle, this));
     toolChTexList.append(new ToolButton(":/PiYing/chAddPoly_S.png", ":/PiYing/chAddPoly.png", "chAddPoly", CharacterToolState::AddPoly, this));
     toolChTexList.append(new ToolButton(":/PiYing/chAddRound_S.png", ":/PiYing/chAddRound.png", "chAddRound", CharacterToolState::AddRound, this));
 
-    toolChSkelenList.append(new ToolButton(":/PiYing/selectRectChVert_S.png", ":/PiYing/selectRectChVert.png", "selectRectChVert", CharacterToolState::RectSelectSkelenVert, this));
+    for (ToolButton* item : toolChTexList) {
+        connect(item->action(), &QAction::triggered, this, [this, item]() {select_tool_texture(item); });
+    }
 
     toolControlSliderList.append(new ToolButton(":/PiYing/addVertTrace_S.png", ":/PiYing/addVertTrace.png", "addVertTrace", CharacterToolState::AddVertTrace, this));
+
+    for (ToolButton* item : toolControlSliderList) {
+        connect(item->action(), &QAction::triggered, this, [this, item]() {select_tool_control_slider(item); });
+    }
+
+    for (ToolButton* item : toolChSkelenList) {
+        connect(item->action(), &QAction::triggered, this, [this, item]() {select_tool_skelen(item); });
+    }
+
+    toolChSkelenList.append(chRectSelectVert);
 
 
     QComboBox* modeBox = new QComboBox(this);
@@ -71,18 +85,6 @@ PiYing::PiYing(QWidget* parent) : QMainWindow(parent)
 	// actions of menu Edit
     QAction* actionScreenScale           = childMenuScreen->     addAction("比例...");
     QAction* actionDefaultColor          = childMenuScreen->     addAction("底色...");
-
-    for (ToolButton* item : toolChTexList) {
-        connect(item->action(), &QAction::triggered, this, [this, item]() {select_tool_texture(item); });
-    }
-
-    for (ToolButton* item : toolChSkelenList) {
-        connect(item->action(), &QAction::triggered, this, [this, item]() {select_tool_skelen(item); });
-    }
-
-    for (ToolButton* item : toolControlSliderList) {
-        connect(item->action(), &QAction::triggered, this, [this, item]() {select_tool_control_slider(item); });
-    }
 
     connect(actionExportCurrentFrame,   SIGNAL(triggered()), this, SLOT(exportCurrentFrame()));
 	connect(actionScreenScale,          SIGNAL(triggered()), this, SLOT(askScreenScale()));

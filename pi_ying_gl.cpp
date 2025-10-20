@@ -138,18 +138,8 @@ void PiYingGL::updateChTool()
 	}
 
 	if (editMode == EditMode::characterSkeleton) {
-		if (ch_tool_state_ == CharacterToolState::RectSelectSkelenVert || ch_tool_state_ == CharacterToolState::LibreSelectSkelenVert) {
+		if (ch_tool_state_ == CharacterToolState::RectSelectVert || ch_tool_state_ == CharacterToolState::LibreSelectVert) {
 			ch_element_tool_ = new ChElementTool(currentVector, *this, ch_tool_state_);
-		}
-		else{
-			if (ch_tool_state_ == CharacterToolState::RectSelectVert) {
-				ch_tool_state_ = CharacterToolState::RectSelectSkelenVert;
-				ch_element_tool_ = new ChElementTool(currentVector, *this, CharacterToolState::RectSelectSkelenVert);
-			}
-			else if (ch_tool_state_ == CharacterToolState::LibreSelectVert) {
-				ch_tool_state_ = CharacterToolState::LibreSelectSkelenVert;
-				ch_element_tool_ = new ChElementTool(currentVector, *this, CharacterToolState::LibreSelectSkelenVert);
-			}
 		}
 		update();
 		return;
@@ -170,16 +160,6 @@ void PiYingGL::updateChTool()
 			|| ch_tool_state_ == CharacterToolState::AddRound
 			|| ch_tool_state_ == CharacterToolState::AddTriangle) {
 			ch_element_tool_ = new ChElementTool(currentVector, *this, ch_tool_state_);
-		}
-		else {
-			if (ch_tool_state_ == CharacterToolState::RectSelectSkelenVert) {
-				ch_tool_state_ = CharacterToolState::RectSelectVert;
-				ch_element_tool_ = new ChElementTool(currentVector, *this, CharacterToolState::RectSelectVert);
-			}
-			else if (ch_tool_state_ == CharacterToolState::LibreSelectSkelenVert) {
-				ch_tool_state_ = CharacterToolState::LibreSelectVert;
-				ch_element_tool_ = new ChElementTool(currentVector, *this, CharacterToolState::LibreSelectVert);
-			}
 		}
 		update();
 		return;

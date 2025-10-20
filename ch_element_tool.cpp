@@ -18,8 +18,6 @@ namespace {
 		nullptr,
 		[](ChElementTool* chElementTool) {chElementTool->construct_add_triangle(); },
 		[](ChElementTool* chElementTool) {chElementTool->construct_rect_select(); },
-		[](ChElementTool* chElementTool) {chElementTool->construct_rect_select(); },
-		[](ChElementTool* chElementTool) {chElementTool->construct_libre_select(); },
 		[](ChElementTool* chElementTool) {chElementTool->construct_libre_select(); },
 		[](ChElementTool* chElementTool) {chElementTool->construct_add_poly(); },
 		[](ChElementTool* chElementTool) {chElementTool->construct_add_round(); },
@@ -92,7 +90,7 @@ void ChElementTool::construct_add_vert_trace()
 	moveBehavior = new AddVertTraceMove(addVertTrace);
 }
 
-ChElementTool::ChElementTool(int current, PiYingGL& pygl, CharacterToolState chToolState, int editMode) : glVertReference(new GlVertReference(current, pygl))
+ChElementTool::ChElementTool(int current, PiYingGL& pygl, CharacterToolState chToolState) : glVertReference(new GlVertReference(current, pygl))
 {
 	if (chToolState == CharacterToolState::None) return;
 
