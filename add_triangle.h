@@ -35,7 +35,7 @@ struct AddTriangle final
 
 ////////////////////////////////////////////////////////
 
-class AddTriangleEscape : public EscapeBehavior
+class AddTriangleEscape final : public EscapeBehavior
 {
 public:
 	AddTriangleEscape(std::shared_ptr<AddTriangle> add) { addTriangle = add; }
@@ -47,7 +47,7 @@ private:
 
 ////////////////////////////////////////////////////////
 
-class AddTriangleDelete : public DeleteElementBehavior
+class AddTriangleDelete final : public DeleteElementBehavior
 {
 public:
 	AddTriangleDelete(std::shared_ptr<AddTriangle> add) { addTriangle = add; }
@@ -59,7 +59,7 @@ private:
 
 ////////////////////////////////////////////////////////
 
-class AddTriangleClick : public ClickBehavior
+class AddTriangleClick final : public ClickBehavior
 {
 public:
 	AddTriangleClick(std::shared_ptr<AddTriangle> add) { addTriangle = add; }
@@ -71,7 +71,7 @@ private:
 
 ////////////////////////////////////////////////////////
 
-class AddTriangleDraw : public DrawBehavior
+class AddTriangleDraw final : public DrawBehavior
 {
 public:
 	AddTriangleDraw(std::shared_ptr<AddTriangle> add) { addTriangle = add; }

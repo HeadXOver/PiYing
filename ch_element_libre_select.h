@@ -32,7 +32,7 @@ public:
 
 ///////////////////////////////////////////////////
 
-class LibreSelectClick : public ClickBehavior
+class LibreSelectClick final : public ClickBehavior
 {
 public:
 	LibreSelectClick(std::shared_ptr<ChElementLibreSelect> select) { libreSelect = select; }
@@ -45,7 +45,7 @@ private:
 
 ///////////////////////////////////////////////////
 
-class LibreSelectMove : public MouseMoveBehavior
+class LibreSelectMove final : public MouseMoveBehavior
 {
 public:
 	LibreSelectMove(std::shared_ptr<ChElementLibreSelect> select) { libreSelect = select; }
@@ -58,7 +58,7 @@ private:
 
 ///////////////////////////////////////////////////
 
-class LibreSelectRelease : public ReleaseBehavior
+class LibreSelectRelease final : public ReleaseBehavior
 {
 public:
 	LibreSelectRelease(std::shared_ptr<ChElementLibreSelect> select) { libreSelect = select; }
@@ -71,7 +71,7 @@ private:
 
 ///////////////////////////////////////////////////
 
-class LibreSelectDelete : public DeleteElementBehavior
+class LibreSelectDelete final : public DeleteElementBehavior
 {
 public:
 	LibreSelectDelete(std::shared_ptr<ChElementLibreSelect> select) { libreSelect = select; }
@@ -85,7 +85,7 @@ private:
 
 ///////////////////////////////////////////////////
 
-class LibreSelectEscape : public EscapeBehavior
+class LibreSelectEscape final : public EscapeBehavior
 {
 public:
 	LibreSelectEscape(std::shared_ptr<ChElementLibreSelect> select) { libreSelect = select; }
@@ -99,7 +99,7 @@ private:
 
 ///////////////////////////////////////////////////
 
-class LibreSelectDraw : public DrawBehavior
+class LibreSelectDraw final : public DrawBehavior
 {
 public:
 	LibreSelectDraw(std::shared_ptr<ChElementLibreSelect> select) { libreSelect = select; }

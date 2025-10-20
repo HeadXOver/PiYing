@@ -26,7 +26,7 @@ struct AddChTexPoly
 
 ////////////////////////////////////////////////////////
 
-class AddPolyEscape : public EscapeBehavior
+class AddPolyEscape final : public EscapeBehavior
 {
 public:
 	AddPolyEscape(std::shared_ptr<AddChTexPoly> add) { addChTexPoly = add; }
@@ -39,7 +39,7 @@ private:
 
 ////////////////////////////////////////////////////////
 
-class AddPolyDelete : public DeleteElementBehavior
+class AddPolyDelete final : public DeleteElementBehavior
 {
 public:
 	AddPolyDelete(std::shared_ptr<AddChTexPoly> add) { addChTexPoly = add; }
@@ -53,7 +53,7 @@ private:
 
 ////////////////////////////////////////////////////////
 
-class AddPolyClick : public ClickBehavior
+class AddPolyClick final : public ClickBehavior
 {
 public:
 	AddPolyClick(std::shared_ptr<AddChTexPoly> add) { addChTexPoly = add; }
@@ -65,7 +65,7 @@ private:
 
 ////////////////////////////////////////////////////////
 
-class AddPolyDraw : public DrawBehavior
+class AddPolyDraw final : public DrawBehavior
 {
 public:
 	AddPolyDraw(std::shared_ptr<AddChTexPoly> add) { addChTexPoly = add; }
@@ -75,7 +75,7 @@ private:
 	std::shared_ptr<AddChTexPoly> addChTexPoly;
 };
 
-class AddPolyEnter : public EnterBehavior
+class AddPolyEnter final : public EnterBehavior
 {
 public:
 	AddPolyEnter(std::shared_ptr<AddChTexPoly> add) { addChTexPoly = add; }

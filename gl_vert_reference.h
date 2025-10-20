@@ -7,7 +7,7 @@ class PiYingGL;
 class QPointF;
 class PointVectorLayer;
 
-struct GlVertReference {
+struct GlVertReference final {
 	GlVertReference(int current, PiYingGL& piYingGL);
 	~GlVertReference();
 
