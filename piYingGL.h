@@ -49,8 +49,7 @@ public:
 private:
 	void paintBackgrounds();
 	void paintCharacterTexture();
-	void paintCharacterSkeleton();
-	void paintCharacterControlSlide();
+	void paint_applied_texture();
 	void addGlobalAction(QMenu* menu, const QList<QAction*> action);
 
 	int getCurrentBgRow() const;
@@ -97,7 +96,7 @@ public:
 	void bgTranslateControl(const QPointF& mouse, ImageTexture* image);
 	void bgScaleControl(const QPointF& mouse, ImageTexture* image);
 	void viewRotationControl(const QPointF& mouse);
-	void drawChEditVert();
+	void drawChEditVert(int currentVector);
 	void drawChSkeleVert();
 	void drawChControlSlideVert();
 

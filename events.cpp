@@ -48,7 +48,7 @@ void PiYingGL::mousePressEvent(QMouseEvent* event)
 
 void PiYingGL::mouseReleaseEvent(QMouseEvent* e)
 {
-	if (chElementTool) chElementTool->release(e->position());
+	if (e->button() == Qt::LeftButton && chElementTool) chElementTool->release(e->position());
 
 	update();
 }
@@ -86,6 +86,8 @@ void PiYingGL::mouseMoveEvent(QMouseEvent* event) {
 		currentUpdate();
 	}
 	else {
+		if (editMode != EditMode::BackGround) return;
+
 		int cur = ref_PiYing.getCurrentBgRow();
 		if (cur >= 0) setCursor(getCursorShape(getMousePosType(getRaletiveToRect(mouse, backGrounds[cur]->transform()))));
 		else setCursor(Qt::CursorShape::ArrowCursor);

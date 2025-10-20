@@ -12,24 +12,24 @@ void PiYingGL::initializeGL()
 	glGenBuffers(1, &bgVBO);
 	glGenBuffers(1, &bgEBO);
 
+	/////////////////////////////////////////////
+
 	glBindVertexArray(bgVAO);
 	glBindBuffer(GL_ARRAY_BUFFER, bgVBO);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, bgEBO);
 
-	/////////////////////////////////////////////
-
 	glBufferData(GL_ARRAY_BUFFER, sizeof(RECTANGLE_VERT), RECTANGLE_VERT, GL_STATIC_DRAW);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(RECTANGLE_INDECES), RECTANGLE_INDECES, GL_STATIC_DRAW);
+
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(0);
 
 	bgShaderProgram->addShaderFromSourceFile(QOpenGLShader::Vertex, ":/PiYing/bgshapes.vert");
 	bgShaderProgram->addShaderFromSourceFile(QOpenGLShader::Fragment, ":/PiYing/bgshapes.frag");
 	bgShaderProgram->link();
+	bgShaderProgram->setUniformValue("texture1", 0);
 
 	/////////////////////////////////////////////
-
-	glBindVertexArray(0);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
 	////////////////initialize character editer///////////////////////
 
@@ -41,29 +41,43 @@ void PiYingGL::initializeGL()
 	glBindBuffer(GL_ARRAY_BUFFER, chVBO);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, chEBO);
 
+	// position attribute
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(0);
+
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)(2 * sizeof(float)));
+	glEnableVertexAttribArray(1);
+
+	glBindVertexArray(0);
+
 	/////////////////////////////////////////////
 
 	chShaderProgram->addShaderFromSourceFile(QOpenGLShader::Vertex, ":/PiYing/chEditershapes.vert");
 	chShaderProgram->addShaderFromSourceFile(QOpenGLShader::Fragment, ":/PiYing/chEditershapes.frag");
 	chShaderProgram->link();
+	chShaderProgram->setUniformValue("texture1", 0);
 
 	/////////////////////////////////////////////
 
-	glBindVertexArray(0);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+	// global setting
 
-	////////////////end initialize//////////////////////////
-
-	glClear(GL_COLOR_BUFFER_BIT);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glActiveTexture(GL_TEXTURE0);
 }
 
 void PiYingGL::paintGL() {
 	glClear(GL_COLOR_BUFFER_BIT);
 	if (editMode == EditMode::BackGround || editMode == EditMode::Default)	paintBackgrounds();
 	else if (editMode == EditMode::characterTexture)						paintCharacterTexture();
-	else if (editMode == EditMode::characterSkeleton)						paintCharacterSkeleton();
-	else if (editMode == EditMode::controlSlide)							paintCharacterControlSlide();
+	else if (editMode == EditMode::characterSkeleton) {
+		paint_applied_texture();
+		drawChSkeleVert();
+	}
+	else if (editMode == EditMode::controlSlide) {
+		paint_applied_texture();
+		drawChControlSlideVert();
+	}
 }
 
 void PiYingGL::resizeGL(int w, int h) {
