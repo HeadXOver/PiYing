@@ -6,16 +6,9 @@
 #include <qmatrix4x4>
 
 #include "enum_character_texture_tool_state.h"
+#include "enum_edit_mode.h"
 #include "static_rect_vert.h"
 #include "ViewData.h"
-
-enum class EditMode {
-	Default,
-	BackGround,
-	characterTexture,
-	characterSkeleton,
-	controlSlide,
-};
 
 enum class MousePos {
 	Inside,

@@ -92,7 +92,7 @@ void ChElementTool::construct_add_vert_trace()
 	moveBehavior = new AddVertTraceMove(addVertTrace);
 }
 
-ChElementTool::ChElementTool(int current, PiYingGL& pygl, CharacterToolState chToolState) : glVertReference(new GlVertReference(current, pygl))
+ChElementTool::ChElementTool(int current, PiYingGL& pygl, CharacterToolState chToolState, int editMode) : glVertReference(new GlVertReference(current, pygl))
 {
 	if (chToolState == CharacterToolState::None) return;
 

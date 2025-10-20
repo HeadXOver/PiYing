@@ -291,6 +291,9 @@
     <ClInclude Include="ch_add_vert_trace.h">
       <Filter>Header Files\ChELementTool</Filter>
     </ClInclude>
+    <ClInclude Include="enum_edit_mode.h">
+      <Filter>Header Files\staticConst</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="ctrlSlideLayout.h">

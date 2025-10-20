@@ -142,6 +142,7 @@
     <ClInclude Include="add_ch_tex_poly.h" />
     <ClInclude Include="cus_func_get_unique_id.h" />
     <ClInclude Include="ch_add_vert_trace.h" />
+    <ClInclude Include="enum_edit_mode.h" />
     <QtMoc Include="ask_round_poly_dialog.h" />
     <ClInclude Include="ch_element_libre_select.h" />
     <ClInclude Include="ch_element_rect_select.h" />
