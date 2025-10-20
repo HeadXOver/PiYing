@@ -44,6 +44,8 @@ PiYing::PiYing(QWidget* parent) : QMainWindow(parent)
 
     toolChSkelenList.append(new ToolButton(":/PiYing/selectRectChVert_S.png", ":/PiYing/selectRectChVert.png", "selectRectChVert", CharacterToolState::RectSelectSkelenVert, this));
 
+    toolControlSliderList.append(new ToolButton(":/PiYing/addVertTrace_S.png", ":/PiYing/addVertTrace.png", "addVertTrace", CharacterToolState::AddVertTrace, this));
+
 
     QComboBox* modeBox = new QComboBox(this);
 
@@ -75,6 +77,10 @@ PiYing::PiYing(QWidget* parent) : QMainWindow(parent)
     }
 
     for (ToolButton* item : toolChSkelenList) {
+        connect(item->action(), &QAction::triggered, this, [this, item]() {selectTool(item); });
+    }
+
+    for (ToolButton* item : toolControlSliderList) {
         connect(item->action(), &QAction::triggered, this, [this, item]() {selectTool(item); });
     }
 
@@ -137,6 +143,7 @@ PiYing::~PiYing()
 {
     for (ToolButton* item : toolChTexList) delete item;
     for (ToolButton* item : toolChSkelenList) delete item;
+    for (ToolButton* item : toolControlSliderList) delete item;
 
     delete ui;
 
@@ -226,47 +233,6 @@ void PiYing::askScreenScale(){
     }
 }
 
-void PiYing::onModeChanged(int mode)
-{
-    ui->mainToolBar->clear();
-    piYingGL->setChToolState(CharacterToolState::None);
-    if (mode == 0) {
-        splitListOpenGL->widget(0)->setParent(nullptr);
-        splitListOpenGL->insertWidget(0, voidListWidget);
-
-        piYingGL->setEditMode(EditMode::Default);
-    }
-    else if(mode == 1){
-        splitListOpenGL->widget(0)->setParent(nullptr);
-        splitListOpenGL->insertWidget(0, bgImageList);
-        piYingGL->setEditMode(EditMode::BackGround);
-    }
-    else if (mode == 2) {
-        splitListOpenGL->widget(0)->setParent(nullptr);
-        splitListOpenGL->insertWidget(0, chImageList);
-        piYingGL->setEditMode(EditMode::characterTexture);
-
-        for (ToolButton* item : toolChTexList) {
-            ui->mainToolBar->addAction(item->action());
-        }
-    }
-    else if (mode == 3) {
-        splitListOpenGL->widget(0)->setParent(nullptr);
-        splitListOpenGL->insertWidget(0, chImageList);
-        piYingGL->setEditMode(EditMode::characterSkeleton);
-
-        for (ToolButton* item : toolChSkelenList) {
-            ui->mainToolBar->addAction(item->action());
-        }
-    }
-    else if (mode == 4) {
-        splitListOpenGL->widget(0)->setParent(nullptr);
-        splitListOpenGL->insertWidget(0, sliderWidget);
-        piYingGL->setEditMode(EditMode::controlSlide);
-        splitListOpenGL->setSizes({ width() / 5, width() * 4 / 5 });
-    }
-}
-
 void PiYing::selectTool(ToolButton* toolButton)
 {
     if (toolButton->isSelect()) {
@@ -290,7 +256,7 @@ void PiYing::selectTool(ToolButton* toolButton)
             toolButton->set_unselected(QIcon(":/PiYing/selectRectChVert.png"));
             toolButton->set_toolState(CharacterToolState::RectSelectSkelenVert);
             toolButton->unSelect();
-            piYingGL->setChToolState(CharacterToolState::None);
+            piYingGL->setChTool(CharacterToolState::None);
             return;
         }
         else return;
@@ -298,8 +264,9 @@ void PiYing::selectTool(ToolButton* toolButton)
     else {
         for (ToolButton* item : toolChTexList) item->unSelect();
         for (ToolButton* item : toolChSkelenList) item->unSelect();
+        for (ToolButton* item : toolControlSliderList) item->unSelect();
     }
 
     toolButton->select();
-    piYingGL->setChToolState(toolButton->toolState());
+    piYingGL->setChTool(toolButton->toolState());
 }

@@ -6,6 +6,7 @@
 
 #include <qpointf>
 #include <qpainter>
+#include "ch_add_vert_trace.h"
 
 namespace {
 	constexpr double angle_rad = 3.1415926 / 180.0;

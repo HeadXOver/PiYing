@@ -83,7 +83,7 @@ public:
 	void controlSlide(int id, int value);
 	void setEditMode(EditMode mode);
 	void updateChTool();
-	void setChToolState(CharacterToolState state);
+	void setChTool(CharacterToolState state);
 	void deleteChElement();
 	void enterChElement();
 	void escapeChVert();
@@ -129,7 +129,7 @@ public:
 	PointVector& ref_characterVerts(int index) { return *(characterVerts[index]); }
 	QList<std::vector<unsigned int>>& ref_characterTriangleIndices () { return characterTriangleIndices; }
 
-	CharacterToolState getChToolState() const { return chToolState; }
+	CharacterToolState ch_tool_state() const { return ch_tool_state_; }
 
 public:
 	EditMode editMode = EditMode::Default;
@@ -169,7 +169,7 @@ private:
 
 	MousePos lastMousePosType = MousePos::OutSide;
 
-	CharacterToolState chToolState;
+	CharacterToolState ch_tool_state_;
 
 	QMenu* rightButtonMenuChTex;
 	QMenu* rightButtonMenuBg_S;

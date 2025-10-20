@@ -6,6 +6,7 @@
 #include "ch_element_rect_select.h"
 #include "ch_element_libre_select.h"
 #include "ch_element_add_round.h"
+#include "ch_add_vert_trace.h"
 #include "gl_vert_reference.h"
 
 #include <memory>
@@ -21,7 +22,8 @@ namespace {
 		[](ChElementTool* chElementTool) {chElementTool->construct_libre_select(); },
 		[](ChElementTool* chElementTool) {chElementTool->construct_libre_select(); },
 		[](ChElementTool* chElementTool) {chElementTool->construct_add_poly(); },
-		[](ChElementTool* chElementTool) {chElementTool->construct_add_round(); }
+		[](ChElementTool* chElementTool) {chElementTool->construct_add_round(); },
+		[](ChElementTool* chElementTool) {chElementTool->construct_add_vert_trace(); }
 	};
 
 	using stuct_handler = void(*)(ChElementTool*);
@@ -79,6 +81,15 @@ void ChElementTool::construct_libre_select()
 	releaseBehavior = new LibreSelectRelease(libreSelect);
 	moveBehavior = new LibreSelectMove(libreSelect);
 	deleteBehavior = new LibreSelectDelete(libreSelect);
+}
+
+void ChElementTool::construct_add_vert_trace()
+{
+	std::shared_ptr<ChAddVertTrace> addVertTrace = std::make_shared<ChAddVertTrace>(*glVertReference);
+	clickBehavior = new AddVertTraceClick(addVertTrace);
+	drawBehavior = new AddVertTraceDraw(addVertTrace);
+	releaseBehavior = new AddVertTraceRelease(addVertTrace);
+	moveBehavior = new AddVertTraceMove(addVertTrace);
 }
 
 ChElementTool::ChElementTool(int current, PiYingGL& pygl, CharacterToolState chToolState) : glVertReference(new GlVertReference(current, pygl))

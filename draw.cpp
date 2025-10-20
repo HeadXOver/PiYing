@@ -51,7 +51,7 @@ void PiYingGL::drawChEditVert()
 
 void PiYingGL::drawChSkeleVert()
 {
-	if (chToolState != CharacterToolState::LibreSelectSkelenVert && chToolState != CharacterToolState::RectSelectSkelenVert) return;
+	if (ch_tool_state_ != CharacterToolState::LibreSelectSkelenVert && ch_tool_state_ != CharacterToolState::RectSelectSkelenVert) return;
 
 	const int currentVector = getCurrentChRow();
 	if (currentVector < 0) return;

@@ -25,6 +25,12 @@ public:
 	int getCurrentBgRow();
 	int getCurrentChRow();
 
+	void change_edit_mode_overview();
+	void change_edit_mode_character_texture();
+	void change_edit_mode_character_skeleton();
+	void change_edit_mode_background();
+	void change_edit_mode_character_constrol_slider();
+
 protected:
 	void keyPressEvent(QKeyEvent* event) override;
 

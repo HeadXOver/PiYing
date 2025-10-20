@@ -18,5 +18,7 @@
         <file>addChVert_S.png</file>
         <file>chAddRound.png</file>
         <file>chAddRound_S.png</file>
+        <file>addVertTrace.png</file>
+        <file>addVertTrace_S.png</file>
     </qresource>
 </RCC>

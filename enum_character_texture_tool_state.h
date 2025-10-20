@@ -9,5 +9,6 @@ enum class CharacterToolState {
     LibreSelectSkelenVert,
     AddPoly,
     AddRound,
+    AddVertTrace,
 };
 

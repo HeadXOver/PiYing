@@ -10,33 +10,39 @@
 
 void PiYingGL::mousePressEvent(QMouseEvent* event)
 {
+	lastMousePos = mapToGL(event->position());
 	if (event->button() == Qt::LeftButton || event->button() == Qt::RightButton) {
-		QPointF mouse = event->position();
-		lastMousePos = mapToGL(mouse);
-
 		if (editMode == EditMode::BackGround) {
 			lastMousePosType = MousePos::OutSide;
 			int cur = getCurrentBgRow();
+
 			if(cur < 0) return;
+
 			ImageTexture* item = backGrounds[cur];
 			QPointF posV = getRaletiveToRect(lastMousePos, item->transform());
 			if (isInsideSquare(posV)) {
 				lastMousePosType = getMousePosType(posV);
 				*lastImageTransform = *item->transform();
 			}
-		}
-		else if ((editMode == EditMode::characterTexture || editMode == EditMode::characterSkeleton)
-			&& event->button() == Qt::LeftButton) {
-			if (chElementTool) chElementTool->click(event->position());
+			update();
+			return;
 		}
 
-		currentUpdate();
+		if ((editMode == EditMode::characterTexture || editMode == EditMode::characterSkeleton || editMode == EditMode::controlSlide)
+			&& event->button() == Qt::LeftButton) {
+			if (chElementTool) chElementTool->click(event->position());
+			update();
+			return;
+		}
+		return;
 	}
-	else if (event->button() == Qt::MiddleButton) {
+
+	if (event->button() == Qt::MiddleButton) {
 		lastMiddleButtonPos = mapToGL(event->position());
 		lastViewTransX = viewTransX.value();
 		lastViewTransY = viewTransY.value();
-		lastViewRotate = viewRotate.value();
+		lastViewRotate = viewRotate.value(); 
+		return;
 	}
 }
 

@@ -72,6 +72,9 @@
     <Filter Include="Header Files\PiYingContainer">
       <UniqueIdentifier>{71909617-4079-4e9b-81f7-14b22808c68b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\PiYing">
+      <UniqueIdentifier>{d3aed6d7-527c-4b62-853d-709bdd60c2b7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <QtRcc Include="PiYing.qrc">
@@ -196,6 +199,12 @@
     <ClCompile Include="cus_func_get_unique_id.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ch_add_vert_trace.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="change_mode.cpp">
+      <Filter>Source Files\PiYing</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="static_handle_zone.h">
@@ -275,6 +284,9 @@
     </ClInclude>
     <ClInclude Include="cus_func_get_unique_id.h">
       <Filter>Header Files\PiYingTool</Filter>
+    </ClInclude>
+    <ClInclude Include="ch_add_vert_trace.h">
+      <Filter>Header Files\ChELementTool</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

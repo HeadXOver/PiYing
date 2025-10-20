@@ -132,27 +132,45 @@ void PiYingGL::updateChTool()
 	int currentVector = getCurrentChRow();
 	if (currentVector < 0) return;
 
-	if (chToolState == CharacterToolState::None) {
+	if (ch_tool_state_ == CharacterToolState::None) {
 		update();
 		return;
 	}
 
 	if (editMode == EditMode::characterSkeleton) {
-		if (chToolState == CharacterToolState::RectSelectSkelenVert || chToolState == CharacterToolState::LibreSelectSkelenVert) {
-			chElementTool = new ChElementTool(currentVector, *this, chToolState);
+		if (ch_tool_state_ == CharacterToolState::RectSelectSkelenVert || ch_tool_state_ == CharacterToolState::LibreSelectSkelenVert) {
+			chElementTool = new ChElementTool(currentVector, *this, ch_tool_state_);
 		}
 		update();
 		return;
 	}
 
-	chElementTool = new ChElementTool(currentVector, *this, chToolState);
+	if (editMode == EditMode::controlSlide) {
+		if (ch_tool_state_ == CharacterToolState::AddVertTrace) {
+			chElementTool = new ChElementTool(currentVector, *this, ch_tool_state_);
+		}
+		update();
+		return;
+	}
+
+	if (editMode == EditMode::characterTexture) {
+		if (ch_tool_state_ == CharacterToolState::RectSelectVert 
+			|| ch_tool_state_ == CharacterToolState::LibreSelectVert
+			|| ch_tool_state_ == CharacterToolState::AddPoly
+			|| ch_tool_state_ == CharacterToolState::AddRound
+			|| ch_tool_state_ == CharacterToolState::AddTriangle) {
+			chElementTool = new ChElementTool(currentVector, *this, ch_tool_state_);
+		}
+		update();
+		return;
+	}
 
 	update();
 }
 
-void PiYingGL::setChToolState(CharacterToolState state)
+void PiYingGL::setChTool(CharacterToolState state)
 {
-	chToolState = state;
+	ch_tool_state_ = state;
 
 	if (chElementTool) {
 		delete chElementTool;
@@ -167,7 +185,7 @@ void PiYingGL::setChToolState(CharacterToolState state)
 		return;
 	}
 
-	chElementTool = new ChElementTool(currentVector, *this, chToolState);
+	chElementTool = new ChElementTool(currentVector, *this, ch_tool_state_);
 
 	update();
 }

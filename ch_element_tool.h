@@ -34,6 +34,7 @@ public:
 	void construct_add_round();
 	void construct_rect_select();
 	void construct_libre_select();
+	void construct_add_vert_trace();
 
 private:
 
