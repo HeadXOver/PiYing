@@ -90,8 +90,7 @@ public:
 	void bgScaleControl(const QPointF& mouse, ImageTexture* image);
 	void viewRotationControl(const QPointF& mouse);
 	void drawChEditVert(int currentVector);
-	void drawChSkeleVert();
-	void drawChControlSlideVert();
+	void draw_ch_applied_vert();
 
 	bool addBackground(const QString& imageName, QImage& image);
 

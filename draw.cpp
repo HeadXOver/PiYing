@@ -46,52 +46,8 @@ void PiYingGL::drawChEditVert(int currentVector)
 	if (ch_element_tool_) ch_element_tool_->draw(&painter);
 }
 
-void PiYingGL::drawChSkeleVert()
+void PiYingGL::draw_ch_applied_vert()
 {
-	if (ch_tool_state_ != CharacterToolState::LibreSelectVert && ch_tool_state_ != CharacterToolState::RectSelectVert) return;
-
-	const int currentVector = getCurrentChRow();
-	if (currentVector < 0) return;
-
-	QPainter painter(this);
-	painter.setRenderHint(QPainter::Antialiasing);
-	painter.setBrush(QColor(225, 0, 0, 20));
-
-	PointVectorLayer pointVectorLayer(*(characterVerts[currentVector]));
-
-	int index;
-	int j;
-	painter.setPen(QPen(Qt::black, 3));
-	for (int i = 0; i < characterTriangleIndices[currentVector].size();) {
-		QPolygonF poly;
-		j = 0;
-		for (; j < 3; j++) {
-			index = characterTriangleIndices[currentVector][i + j];
-			poly << glToMap(getViewProjMatrix().map(pointVectorLayer[index]));
-		}
-		painter.drawPolygon(poly);
-		i += j;
-	}
-
-	painter.setPen(QPen(Qt::green, 1));
-	for (int i = 0; i < characterTriangleIndices[currentVector].size();) {
-		QPolygonF poly;
-		j = 0;
-		for (; j < 3; j++) {
-			index = characterTriangleIndices[currentVector][i + j];
-			poly << glToMap(getViewProjMatrix().map(pointVectorLayer[index]));
-		}
-		painter.drawPolygon(poly);
-		i += j;
-	}
-
-	if (ch_element_tool_) ch_element_tool_->draw(&painter);
-}
-
-void PiYingGL::drawChControlSlideVert()
-{
-	if (ch_tool_state_ != CharacterToolState::AddVertTrace) return;
-
 	const int currentVector = getCurrentChRow();
 	if (currentVector < 0) return;
 
