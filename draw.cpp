@@ -135,14 +135,19 @@ void PiYingGL::paint_applied_texture()
 
 	chShaderProgram->bind();
 
-	glBindBuffer(GL_ARRAY_BUFFER, chVBO);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, chEBO);
-	glBufferData(GL_ARRAY_BUFFER, characterVerts[i]->float_size() * sizeof(float), characterVerts[i]->data(), GL_DYNAMIC_DRAW);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, characterTriangleIndices[i].size() * sizeof(unsigned int), characterTriangleIndices[i].data(), GL_DYNAMIC_DRAW);
+	update_ch_verts(i);
 
 	characterTextures[i]->texture()->bind();
 	chShaderProgram->setUniformValue("trc", getViewProjMatrix());
 	glDrawElements(GL_TRIANGLES, (GLsizei)characterTriangleIndices[i].size(), GL_UNSIGNED_INT, 0);
 
 	glBindVertexArray(0); ////////////////////////////////////////////////////
+}
+
+void PiYingGL::update_ch_verts(int current)
+{
+	glBindBuffer(GL_ARRAY_BUFFER, chVBO);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, chEBO);
+	glBufferData(GL_ARRAY_BUFFER, characterVerts[current]->float_size() * sizeof(float), characterVerts[current]->data(), GL_DYNAMIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, characterTriangleIndices[current].size() * sizeof(unsigned int), characterTriangleIndices[current].data(), GL_DYNAMIC_DRAW);
 }

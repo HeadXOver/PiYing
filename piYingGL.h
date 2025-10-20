@@ -91,6 +91,7 @@ public:
 	void viewRotationControl(const QPointF& mouse);
 	void drawChEditVert(int currentVector);
 	void draw_ch_applied_vert();
+	void update_ch_verts(int current);
 
 	bool addBackground(const QString& imageName, QImage& image);
 
