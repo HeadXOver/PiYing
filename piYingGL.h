@@ -175,5 +175,5 @@ private:
 
 	ChElementTool* ch_element_tool_;
 
-	CtrlSlideWidget& ctrlSlideWidget;
+	QList<CtrlSlideWidget*>& ctrlSlideWidget;
 };

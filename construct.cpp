@@ -7,7 +7,7 @@
 #include <qmenu>
 #include <qstatusbar>
 
-PiYingGL::PiYingGL(PiYing& parent) : QOpenGLWidget(&parent), ref_PiYing(parent), ctrlSlideWidget(*ref_PiYing.sliderWidget)
+PiYingGL::PiYingGL(PiYing& parent) : QOpenGLWidget(&parent), ref_PiYing(parent), ctrlSlideWidget(ref_PiYing.sliderWidget)
 {
 
 	bgShaderProgram = new QOpenGLShaderProgram(this);

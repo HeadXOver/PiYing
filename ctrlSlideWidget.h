@@ -23,6 +23,7 @@ private:
 
 private:
     QList<CtrlSlideLayout*> sliderList;
+
     QVBoxLayout* sliderLayout = nullptr;
     int sliderCount = 0;
     PiYingGL& piYingGL;

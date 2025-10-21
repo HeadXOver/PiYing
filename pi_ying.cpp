@@ -26,13 +26,11 @@ PiYing::PiYing(QWidget* parent) : QMainWindow(parent)
     voidListWidget = new QListWidget();
     bgImageList = new QListWidget();
     chImageList = new QListWidget();
-    timeLine = new QWidget(this);
+    main_slider = new QSlider(Qt::Horizontal, this);
 
     // OpenGL widget
     piYingGL = new PiYingGL(*this);
     piYingGLContainer = new PiYingGLContainer(*piYingGL, ratio, this);
-
-    sliderWidget = new CtrlSlideWidget(*piYingGL, "1");
 
     splitTimelineOpenGL = new QSplitter(Qt::Vertical, this);
     splitListOpenGL = new QSplitter(Qt::Horizontal, this);
@@ -99,7 +97,7 @@ PiYing::PiYing(QWidget* parent) : QMainWindow(parent)
     piYingGL->changeRatio(ratio);
 
     splitTimelineOpenGL->addWidget(piYingGLContainer);
-    splitTimelineOpenGL->addWidget(timeLine);
+    splitTimelineOpenGL->addWidget(main_slider);
     splitListOpenGL->addWidget(voidListWidget);
     splitListOpenGL->addWidget(splitTimelineOpenGL);
     splitTimelineOpenGL->setStretchFactor(0, 1);
@@ -120,16 +118,9 @@ PiYing::PiYing(QWidget* parent) : QMainWindow(parent)
         qss.close();
     }
 
-    qss.setFileName(":/PiYing/slideStyle.qss");
-    if (qss.open(QFile::ReadOnly)) {
-        sliderWidget->setStyleSheet(qss.readAll());
-        qss.close();
-    }
-
     piYingGL->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-    timeLine->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    main_slider->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     voidListWidget->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
-    sliderWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
     modeBox->addItems({ "预览模式", "背景编辑", "角色纹理编辑", "角色骨骼编辑", "控制器"});
     ui->statusBar->addWidget(modeBox);
@@ -157,12 +148,13 @@ PiYing::~PiYing()
     safeDelete(voidListWidget);
     safeDelete(bgImageList);
     safeDelete(chImageList);
-    safeDelete(sliderWidget);
-    safeDelete(timeLine);
+    safeDelete(main_slider);
     safeDelete(piYingGL);
     safeDelete(piYingGLContainer);
     safeDelete(splitTimelineOpenGL);
     safeDelete(splitListOpenGL);
+
+    for (CtrlSlideWidget* item : sliderWidget) safeDelete(item);
 }
 
 int PiYing::getCurrentBgRow()

@@ -10,6 +10,7 @@
 #include "point_vector.h"
 
 #include "piYingGLContainer.h"
+#include "ctrlSlideWidget.h"
 
 #include "KeyboardStateWin.h"
 
@@ -105,6 +106,18 @@ void PiYingGL::addCharacter(const QString& imageName)
 	item->setTextAlignment(Qt::AlignCenter);
 
 	ref_PiYing.chImageList->addItem(item);
+
+	CtrlSlideWidget* sliderWidget = new CtrlSlideWidget(*this, "1");
+
+	QFile qss(":/PiYing/slideStyle.qss");
+	if (qss.open(QFile::ReadOnly)) {
+		sliderWidget->setStyleSheet(qss.readAll());
+		qss.close();
+	}
+
+	sliderWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+
+	ref_PiYing.sliderWidget.append(sliderWidget);
 
 	if (getCurrentChRow() < 0) ref_PiYing.chImageList->setCurrentRow(0);
 

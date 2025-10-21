@@ -84,7 +84,10 @@ void PiYing::change_edit_mode_character_skeleton()
 void PiYing::change_edit_mode_character_constrol_slider()
 {
     splitListOpenGL->widget(0)->setParent(nullptr);
-    splitListOpenGL->insertWidget(0, sliderWidget);
+    if(getCurrentChRow() >= 0)
+        splitListOpenGL->insertWidget(0, sliderWidget[getCurrentChRow()]);
+    else
+        splitListOpenGL->insertWidget(0, voidListWidget);
     piYingGL->setEditMode(EditMode::controlSlide);
     splitListOpenGL->setSizes({ width() / 5, width() * 4 / 5 });
 

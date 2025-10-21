@@ -8,6 +8,7 @@ class ToolButton;
 class PiYingGLContainer;
 class QListWidget;
 class QSplitter;
+class QSlider;
 
 namespace Ui{
 	class PiYingClass;
@@ -53,7 +54,7 @@ private:
 	QSplitter* splitListOpenGL;
 	QSplitter* splitTimelineOpenGL;
 
-	QWidget* timeLine;
+	QSlider* main_slider;
 
 	QList<ToolButton*> toolChTexList;
 	QList<ToolButton*> toolChSkelenList;
@@ -66,6 +67,6 @@ public:
 	QListWidget* chImageList = nullptr;
 	QListWidget* voidListWidget;
 
-	CtrlSlideWidget* sliderWidget = nullptr;
+	QList<CtrlSlideWidget*> sliderWidget;
 };
 
