@@ -11,7 +11,7 @@ class CtrlSlideWidget : public QWidget
     Q_OBJECT
 
 public:
-    CtrlSlideWidget(PiYingGL& gl, QWidget* parent = nullptr);
+    CtrlSlideWidget(PiYingGL& gl, const QString& name, QWidget* parent = nullptr);
     ~CtrlSlideWidget();
 
     void addSlider(QString name = "Slider");

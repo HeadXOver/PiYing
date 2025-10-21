@@ -68,7 +68,7 @@ void PiYingGL::initializeGL()
 
 void PiYingGL::paintGL() {
 	glClear(GL_COLOR_BUFFER_BIT);
-	if (editMode == EditMode::BackGround || editMode == EditMode::Default)	paintBackgrounds();
+	if (editMode == EditMode::BackGround || editMode == EditMode::OverView)	paintBackgrounds();
 	else if (editMode == EditMode::characterTexture)						paintCharacterTexture();
 	else if (editMode == EditMode::characterSkeleton) {
 		paint_applied_texture();

@@ -30,6 +30,7 @@ class QMenu;
 class ChElementTool;
 class QOpenGLShaderProgram;
 class PointVector;
+class CtrlSlideWidget;
 
 class PiYingGL : public QOpenGLWidget, QOpenGLFunctions_3_3_Core
 {
@@ -91,7 +92,8 @@ public:
 	void viewRotationControl(const QPointF& mouse);
 	void drawChEditVert(int currentVector);
 	void draw_ch_applied_vert();
-	void update_ch_verts(int current);
+	void update_ch_verts();
+	void add_trace(int index, const QPolygonF* polygon);
 
 	bool addBackground(const QString& imageName, QImage& image);
 
@@ -127,7 +129,7 @@ public:
 	ChElementTool* ch_element_tool() { return ch_element_tool_; }
 
 public:
-	EditMode editMode = EditMode::Default;
+	EditMode editMode = EditMode::OverView;
 
 	ViewData viewScale;
 	ViewData viewRotate;
@@ -172,4 +174,6 @@ private:
 	QMenu* rightButtonMenu;
 
 	ChElementTool* ch_element_tool_;
+
+	CtrlSlideWidget& ctrlSlideWidget;
 };

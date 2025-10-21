@@ -12,7 +12,7 @@
 #include <qlabel>
 #include <qslider>
 
-CtrlSlideWidget::CtrlSlideWidget(PiYingGL& gl, QWidget* parent) : QWidget(parent), piYingGL(gl)
+CtrlSlideWidget::CtrlSlideWidget(PiYingGL& gl, const QString& name, QWidget* parent) : QWidget(parent), piYingGL(gl)
 {
     sliderLayout = new QVBoxLayout(this);
 
@@ -31,6 +31,7 @@ CtrlSlideWidget::CtrlSlideWidget(PiYingGL& gl, QWidget* parent) : QWidget(parent
     QHBoxLayout* headLayout = new QHBoxLayout(this);
 
     headLayout->addWidget(headButton);
+    headLayout->addWidget(new QLabel(name, this));
     headLayout->addStretch();
 
     sliderLayout->addLayout(headLayout);

@@ -30,7 +30,7 @@ void PiYing::change_edit_mode_overview()
     splitListOpenGL->widget(0)->setParent(nullptr);
     splitListOpenGL->insertWidget(0, voidListWidget);
     piYingGL->setChTool(CharacterToolState::None);
-    piYingGL->setEditMode(EditMode::Default);
+    piYingGL->setEditMode(EditMode::OverView);
 }
 
 void PiYing::change_edit_mode_background()

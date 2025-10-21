@@ -32,7 +32,7 @@ PiYing::PiYing(QWidget* parent) : QMainWindow(parent)
     piYingGL = new PiYingGL(*this);
     piYingGLContainer = new PiYingGLContainer(*piYingGL, ratio, this);
 
-    sliderWidget = new CtrlSlideWidget(*piYingGL);
+    sliderWidget = new CtrlSlideWidget(*piYingGL, "1");
 
     splitTimelineOpenGL = new QSplitter(Qt::Vertical, this);
     splitListOpenGL = new QSplitter(Qt::Horizontal, this);
@@ -92,7 +92,7 @@ PiYing::PiYing(QWidget* parent) : QMainWindow(parent)
     connect(actionExit,             &QAction::triggered,                this, [this]() {close(); });
     connect(actionImportBackGround, &QAction::triggered,                this, [this]() {piYingGL->importBackground(); });
     connect(actionImportCharacter,  &QAction::triggered,                this, [this]() {piYingGL->importChatacter(); });
-    connect(chImageList,            &QListWidget::currentItemChanged,   this, [this]() {piYingGL->updateChTool(); });
+    connect(chImageList,            &QListWidget::currentItemChanged,   this, [this]() {piYingGL->updateChTool(); piYingGL->update_ch_verts(); });
     connect(bgImageList,            &QListWidget::currentItemChanged,   this, [this]() {piYingGL->update(); });
 
     piYingGLContainer->setRatio(ratio);

@@ -135,8 +135,6 @@ void PiYingGL::paint_applied_texture()
 
 	chShaderProgram->bind();
 
-	update_ch_verts(i);
-
 	characterTextures[i]->texture()->bind();
 	chShaderProgram->setUniformValue("trc", getViewProjMatrix());
 	glDrawElements(GL_TRIANGLES, (GLsizei)characterTriangleIndices[i].size(), GL_UNSIGNED_INT, 0);
@@ -144,10 +142,17 @@ void PiYingGL::paint_applied_texture()
 	glBindVertexArray(0); ////////////////////////////////////////////////////
 }
 
-void PiYingGL::update_ch_verts(int current)
+void PiYingGL::update_ch_verts()
 {
+	int currentVector = getCurrentChRow();
+	if (currentVector < 0) return;
+
+	makeCurrent();
 	glBindBuffer(GL_ARRAY_BUFFER, chVBO);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, chEBO);
-	glBufferData(GL_ARRAY_BUFFER, characterVerts[current]->float_size() * sizeof(float), characterVerts[current]->data(), GL_DYNAMIC_DRAW);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, characterTriangleIndices[current].size() * sizeof(unsigned int), characterTriangleIndices[current].data(), GL_DYNAMIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, characterVerts[currentVector]->float_size() * sizeof(float), characterVerts[currentVector]->data(), GL_DYNAMIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, characterTriangleIndices[currentVector].size() * sizeof(unsigned int), characterTriangleIndices[currentVector].data(), GL_DYNAMIC_DRAW);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+	doneCurrent();
 }

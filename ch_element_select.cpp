@@ -231,6 +231,8 @@ void ChElementSelect::moveHandle(const QPointF& mouse)
             pointLayer.set_point(edit_skelen, (*selected_points)[i], glVertReference.gl.GLViewProjMatrixInvert(mapOri.x(), mapOri.y() * scale + scaleY));
         }
 	}
+
+    glVertReference.gl.update_ch_verts();
 }
 
 void ChElementSelect::affirmHandle()
@@ -243,12 +245,8 @@ void ChElementSelect::affirmHandle()
 void ChElementSelect::click_select(const QPointF& mouse)
 {
     const PointVectorLayer& pointVector = *(glVertReference.pointLayer);
-    QPointF existPoint;
     for (unsigned int i = 0; i < pointVector.size(); i++) {
-        existPoint = edit_skelen ?
-            pointVector[i] :
-            pointVector(i);
-        if (QLineF(existPoint, mouse).length() < 0.02f / glVertReference.gl.viewScale.value()) {
+        if (QLineF(edit_skelen ? pointVector[i] : pointVector(i), mouse).length() < 0.02f / glVertReference.gl.viewScale.value()) {
             if (selected_points->contains(i)) return;
 
             if (!KeyboardStateWin::isCtrlHeld()) selected_points->clear(); 

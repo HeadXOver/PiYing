@@ -69,10 +69,10 @@ void PiYingGL::mouseMoveEvent(QMouseEvent* event) {
 				currentUpdate();
 			}
 		}
-		else if (editMode == EditMode::characterTexture || editMode == EditMode::characterSkeleton) {
+		else if (editMode == EditMode::characterTexture || editMode == EditMode::characterSkeleton || editMode == EditMode::controlSlide) {
 			if (ch_element_tool_) {
 				ch_element_tool_->move(event->position());
-				currentUpdate();
+				update();
 			}
 		}
 	}

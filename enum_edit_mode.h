@@ -1,7 +1,7 @@
 #pragma once
 
 enum class EditMode {
-	Default,
+	OverView,
 	BackGround,
 	characterTexture,
 	characterSkeleton,

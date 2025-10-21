@@ -6,6 +6,7 @@
 
 struct GlVertReference;
 class PiYingGL;
+class QPolygonF;
 
 struct ChAddVertTrace final
 {
@@ -18,7 +19,8 @@ struct ChAddVertTrace final
 	void draw(QPainter& painter);
 
 	int current_index = -1;
-	bool pressed = false;
+	bool presse_on_vert = false;
+	QPolygonF* polygon;
 
 	GlVertReference& glVertReference;
 };

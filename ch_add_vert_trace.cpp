@@ -8,15 +8,16 @@
 
 ChAddVertTrace::ChAddVertTrace(GlVertReference& glReference):glVertReference(glReference)
 {
+	polygon = new QPolygonF();
 }
 
 ChAddVertTrace::~ChAddVertTrace()
 {
+	delete polygon;
 }
 
 void ChAddVertTrace::click(const QPointF& mouseOri)
 {
-	pressed = true;
 	const QPointF mouse = glVertReference.gl.GLViewProjMatrixInvert(mouseOri);
     const PointVectorLayer& pointVector = *(glVertReference.pointLayer);
     QPointF existPoint;
@@ -24,6 +25,8 @@ void ChAddVertTrace::click(const QPointF& mouseOri)
         existPoint = pointVector[i];
         if (QLineF(existPoint, mouse).length() < 0.02f / glVertReference.gl.viewScale.value()) {
             current_index = i;
+			presse_on_vert = true;
+			*polygon << existPoint;
 
             return;
         }
@@ -34,18 +37,31 @@ void ChAddVertTrace::click(const QPointF& mouseOri)
 
 void ChAddVertTrace::move(const QPointF& mouse) 
 {
+	if(!presse_on_vert) return;
 
+	QPointF mapedMouse = glVertReference.gl.GLViewProjMatrixInvert(mouse);
+	if (polygon->isEmpty() || polygon->last() != mapedMouse) *polygon << mapedMouse;
 }
 
 void ChAddVertTrace::release(const QPointF& mouse) 
 {
+	presse_on_vert = false;
+
+	if (polygon->size() < 3) {
+		current_index = -1;
+		polygon->clear();
+		return;
+	}
+
+	glVertReference.gl.add_trace(current_index, polygon);
+
 	current_index = -1;
-	pressed = false;
+	polygon->clear();
 }
 
 void ChAddVertTrace::draw(QPainter& painter)
 {
-	if(current_index < 0) return;
+	if (current_index < 0) return;
 
 	const PointVectorLayer& pointLayer = *(glVertReference.pointLayer);
 
@@ -54,6 +70,19 @@ void ChAddVertTrace::draw(QPainter& painter)
 	painter.drawPoint(selectPoint);
 	painter.setPen(QPen(Qt::red, 6));
 	painter.drawPoint(selectPoint);
+
+	if (polygon->isEmpty()) return;
+
+	painter.setPen(QPen(Qt::yellow, 1));
+
+	QPolygonF screenPoly;
+	screenPoly.reserve(polygon->size());
+	std::transform(polygon->cbegin(), polygon->cend(),
+		std::back_inserter(screenPoly),
+		[this](const QPointF& p) { return glVertReference.gl.mapViewProjMatrix(p); }
+	);
+
+	painter.drawPolyline(screenPoly);
 }
 
 void AddVertTraceClick::click(const QPointF& mouse)
