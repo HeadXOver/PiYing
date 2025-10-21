@@ -18,6 +18,7 @@ struct ChAddVertTrace final
 	void draw(QPainter& painter);
 
 	int current_index = -1;
+	bool pressed = false;
 
 	GlVertReference& glVertReference;
 };

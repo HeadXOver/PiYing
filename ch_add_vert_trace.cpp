@@ -16,6 +16,7 @@ ChAddVertTrace::~ChAddVertTrace()
 
 void ChAddVertTrace::click(const QPointF& mouseOri)
 {
+	pressed = true;
 	const QPointF mouse = glVertReference.gl.GLViewProjMatrixInvert(mouseOri);
     const PointVectorLayer& pointVector = *(glVertReference.pointLayer);
     QPointF existPoint;
@@ -39,6 +40,7 @@ void ChAddVertTrace::move(const QPointF& mouse)
 void ChAddVertTrace::release(const QPointF& mouse) 
 {
 	current_index = -1;
+	pressed = false;
 }
 
 void ChAddVertTrace::draw(QPainter& painter)
