@@ -20,3 +20,8 @@ bool SlideApplier::add_trace(int id, int index, const QPolygonF& polygon)
 
     return true;
 }
+
+const std::map<int, std::unique_ptr<CharacterTrace>>& SlideApplier::get_traces(int id)
+{
+    return slide_map[id];
+}

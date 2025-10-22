@@ -8,8 +8,10 @@ public:
     CharacterTrace(const QPolygonF& poly);
     ~CharacterTrace();
 
+    QPointF get_point(int value);
+
 private:
     QPolygonF trace;
-    int current_position;
+    int current_position = 0;
 };
 

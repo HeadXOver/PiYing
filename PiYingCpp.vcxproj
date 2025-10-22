@@ -134,6 +134,7 @@
     <ClCompile Include="change_mode.cpp" />
     <ClCompile Include="select_tool.cpp" />
     <ClCompile Include="add_trace.cpp" />
+    <ClCompile Include="control_slider.cpp" />
     <QtRcc Include="PiYing.qrc" />
     <QtUic Include="PiYing.ui" />
     <QtMoc Include="PiYing.h" />

@@ -134,10 +134,6 @@ PiYing::PiYing(QWidget* parent) : QMainWindow(parent)
 
 PiYing::~PiYing()
 {
-    for (ToolButton* item : toolChTexList) delete item;
-    for (ToolButton* item : toolChSkelenList) delete item;
-    for (ToolButton* item : toolControlSliderList) delete item;
-
     delete ui;
 
     auto safeDelete = [](QObject* obj) 

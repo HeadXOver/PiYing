@@ -20,5 +20,5 @@ void PiYingGL::add_trace(int index, const QPolygonF& polygon, const QPoint& mous
     if (!act) return;
 
     int id = tempMenu.actions().indexOf(act);
-    if(!slide_applier->add_trace(id, index, polygon)) QMessageBox::warning(this, "警告", "轨迹重复");
+    if(!slide_applier->add_trace(sliders->get_id(id), index, polygon)) QMessageBox::warning(this, "警告", "轨迹重复");
 }

@@ -101,11 +101,6 @@ void PiYingGL::addCharacter(const QString& imageName)
 	update();
 }
 
-void PiYingGL::controlSlide(int id, int value)
-{
-	QMessageBox::warning(this, "f", QString::number(id) + ": " + QString::number(value));
-}
-
 void PiYingGL::setEditMode(EditMode mode)
 {
 	editMode = mode;
