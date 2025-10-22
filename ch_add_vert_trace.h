@@ -66,7 +66,7 @@ class AddVertTraceDraw final : public DrawBehavior
 {
 public:
 	AddVertTraceDraw(std::shared_ptr<ChAddVertTrace> add) : addTrace(add) {}
-	virtual void draw(QPainter* painter) override;
+	virtual void draw(QPainter& painter) override;
 
 private:
 	std::shared_ptr<ChAddVertTrace> addTrace;

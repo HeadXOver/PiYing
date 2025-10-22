@@ -19,7 +19,7 @@ public:
 	ChElementLibreSelect(GlVertReference& glReference);
 	~ChElementLibreSelect();
 
-	void draw(QPainter* painter);
+	void draw(QPainter& painter);
 	void clickPos(const QPointF& mouse);
 	void movePos(const QPointF& mouse);
 	void releasePos(const QPointF& mouse);
@@ -103,7 +103,7 @@ class LibreSelectDraw final : public DrawBehavior
 {
 public:
 	LibreSelectDraw(std::shared_ptr<ChElementLibreSelect> select) { libreSelect = select; }
-	virtual void draw(QPainter* painter) override;
+	virtual void draw(QPainter& painter) override;
 
 private:
 	std::shared_ptr<ChElementLibreSelect> libreSelect;

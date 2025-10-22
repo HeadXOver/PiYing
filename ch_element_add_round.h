@@ -19,8 +19,8 @@ struct ChElementAddRound final
 
 	void addRoundPoly(const int edgeCount);
 
-	QPointF* center;
-	QPointF* current_cursor;
+	std::unique_ptr<QPointF> center;
+	std::unique_ptr<QPointF> current_cursor;
 		
 	bool isPress{ false };
 
@@ -72,7 +72,7 @@ class AddRoundDraw final : public DrawBehavior
 {
 public:
 	AddRoundDraw(std::shared_ptr<ChElementAddRound> add) : addRound(add) {}
-	virtual void draw(QPainter* painter) override;
+	virtual void draw(QPainter& painter) override;
 
 private:
 	std::shared_ptr<ChElementAddRound> addRound;

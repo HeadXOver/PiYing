@@ -22,13 +22,13 @@ ChElementLibreSelect::~ChElementLibreSelect()
 	delete chElementSelect;
 }
 
-void ChElementLibreSelect::draw(QPainter* painter)
+void ChElementLibreSelect::draw(QPainter& painter)
 {
 	chElementSelect->draw_handle_and_selected(painter);
 
 	if (!polygon->isEmpty()) {
 		if (drawing) {
-			painter->setPen(QPen(Qt::yellow, 1));
+			painter.setPen(QPen(Qt::yellow, 1));
 
 			auto mapper = [this](const QPointF& p) { return chElementSelect->glVertReference.gl.mapViewProjMatrix(p); };
 
@@ -39,8 +39,8 @@ void ChElementLibreSelect::draw(QPainter* painter)
 				mapper
 			);
 
-			painter->drawPolyline(screenPoly);
-			painter->drawLine(screenPoly.last(), screenPoly.first());
+			painter.drawPolyline(screenPoly);
+			painter.drawLine(screenPoly.last(), screenPoly.first());
 		}
 	}
 }
@@ -132,7 +132,7 @@ void LibreSelectEscape::escape()
 	libreSelect->chElementSelect->escape();
 }
 
-void LibreSelectDraw::draw(QPainter* painter)
+void LibreSelectDraw::draw(QPainter& painter)
 {
 	libreSelect->draw(painter);
 }

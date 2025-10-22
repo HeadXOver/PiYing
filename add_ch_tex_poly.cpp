@@ -86,14 +86,14 @@ void AddChTexPoly::click(const QPointF& mouseOri)
 	points.append(mouse);
 }
 
-void AddPolyDraw::draw(QPainter* painter)
+void AddPolyDraw::draw(QPainter& painter)
 {
 	for (QPointF selectPoint : addChTexPoly->points) {
 		selectPoint = addChTexPoly->glVertReference.gl.mapViewProjMatrix(selectPoint);
-		painter->setPen(QPen(Qt::black, 8));
-		painter->drawPoint(selectPoint);
-		painter->setPen(QPen(Qt::red, 6));
-		painter->drawPoint(selectPoint);
+		painter.setPen(QPen(Qt::black, 8));
+		painter.drawPoint(selectPoint);
+		painter.setPen(QPen(Qt::red, 6));
+		painter.drawPoint(selectPoint);
 	}
 }
 

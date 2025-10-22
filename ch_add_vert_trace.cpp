@@ -95,7 +95,7 @@ void AddVertTraceRelease::release(const QPointF& mouse)
 	addTrace->release(mouse);
 }
 
-void AddVertTraceDraw::draw(QPainter* painter)
+void AddVertTraceDraw::draw(QPainter& painter)
 {
-	addTrace->draw(*painter);
+	addTrace->draw(painter);
 }

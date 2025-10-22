@@ -82,14 +82,12 @@ void ChElementAddRound::addRoundPoly(const int edgeCount)
 
 ChElementAddRound::ChElementAddRound(GlVertReference& glReference) :glVertReference(glReference)
 {
-	center = new QPointF(0, 0);
-	current_cursor = new QPointF(0, 0);
+	center = std::make_unique<QPointF>();
+	current_cursor = std::make_unique<QPointF>();
 }
 
 ChElementAddRound::~ChElementAddRound()
 {
-	delete center;
-	delete current_cursor;
 }
 
 void AddRoundClick::click(const QPointF& mouse)
@@ -107,7 +105,7 @@ void AddRoundRelease::release(const QPointF& mouse)
 	addRound->release(mouse);
 }
 
-void AddRoundDraw::draw(QPainter* painter)
+void AddRoundDraw::draw(QPainter& painter)
 {
-	addRound->draw(*painter);
+	addRound->draw(painter);
 }

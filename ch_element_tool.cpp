@@ -123,7 +123,7 @@ void ChElementTool::move(const QPointF& mouse)
 	if (moveBehavior) moveBehavior->mouseMove(mouse);
 }
 
-void ChElementTool::draw(QPainter* painter)
+void ChElementTool::draw(QPainter& painter)
 {
 	if(drawBehavior) drawBehavior->draw(painter);
 }

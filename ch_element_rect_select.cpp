@@ -21,13 +21,13 @@ ChElementRectSelect::~ChElementRectSelect()
 	delete chElementSelect;
 }
 
-void ChElementRectSelect::draw(QPainter* painter)
+void ChElementRectSelect::draw(QPainter& painter)
 {
 	chElementSelect->draw_handle_and_selected(painter);
 
 	if (isDraw) {
-		painter->setPen(QPen(Qt::yellow, 1));
-		painter->drawRect(chElementSelect->lastPos.x(), chElementSelect->lastPos.y(), rect->x() - chElementSelect->lastPos.x(), rect->y() - chElementSelect->lastPos.y());
+		painter.setPen(QPen(Qt::yellow, 1));
+		painter.drawRect(chElementSelect->lastPos.x(), chElementSelect->lastPos.y(), rect->x() - chElementSelect->lastPos.x(), rect->y() - chElementSelect->lastPos.y());
 	}
 }
 
@@ -105,7 +105,7 @@ void RectSelectEscape::escape()
 	rectSelect->chElementSelect->escape();
 }
 
-void RectSelectDraw::draw(QPainter* painter)
+void RectSelectDraw::draw(QPainter& painter)
 {
 	rectSelect->draw(painter);
 }

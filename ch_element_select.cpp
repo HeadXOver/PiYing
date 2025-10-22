@@ -87,11 +87,11 @@ void ChElementSelect::deleteElement()
     selected_points->clear();
 }
 
-void ChElementSelect::draw_handle_and_selected(QPainter* painter)
+void ChElementSelect::draw_handle_and_selected(QPainter& painter)
 {
     if(selected_points->size() == 0) return;
 
-    painter->setBrush(QColor(0, 0, 0, 0));
+    painter.setBrush(QColor(0, 0, 0, 0));
 
     // 计算中心点
     PointVectorLayer& pointLayer = *(glVertReference.pointLayer);
@@ -106,35 +106,35 @@ void ChElementSelect::draw_handle_and_selected(QPainter* painter)
     dHandleCenterPoint = glVertReference.gl.mapViewProjMatrix(handleCenterPoint);
 
 	// 绘制圆
-    painter->setPen(QPen(Qt::black, 4));
-	painter->drawEllipse(dHandleCenterPoint, ROTATEHANDLE_RADIUS, ROTATEHANDLE_RADIUS);
-    painter->setPen(QPen(Qt::yellow, 2));
-    painter->drawEllipse(dHandleCenterPoint, ROTATEHANDLE_RADIUS, ROTATEHANDLE_RADIUS);
+    painter.setPen(QPen(Qt::black, 4));
+	painter.drawEllipse(dHandleCenterPoint, ROTATEHANDLE_RADIUS, ROTATEHANDLE_RADIUS);
+    painter.setPen(QPen(Qt::yellow, 2));
+    painter.drawEllipse(dHandleCenterPoint, ROTATEHANDLE_RADIUS, ROTATEHANDLE_RADIUS);
 
     // 绘制移动控制柄
-	painter->setPen(QPen(Qt::black, 6));
-    painter->drawLine(dHandleCenterPoint.x() - MOVEHANDLE_LENTH, dHandleCenterPoint.y(), dHandleCenterPoint.x() + MOVEHANDLE_LENTH, dHandleCenterPoint.y());
-    painter->drawLine(dHandleCenterPoint.x(), dHandleCenterPoint.y() - MOVEHANDLE_LENTH, dHandleCenterPoint.x(), dHandleCenterPoint.y() + MOVEHANDLE_LENTH);
-    painter->setPen(QPen(Qt::green, 4));
-    painter->drawLine(dHandleCenterPoint.x() - MOVEHANDLE_LENTH, dHandleCenterPoint.y(), dHandleCenterPoint.x() + MOVEHANDLE_LENTH, dHandleCenterPoint.y());
-    painter->setPen(QPen(Qt::red, 4));
-    painter->drawLine(dHandleCenterPoint.x(), dHandleCenterPoint.y() - MOVEHANDLE_LENTH, dHandleCenterPoint.x(), dHandleCenterPoint.y() + MOVEHANDLE_LENTH);
+	painter.setPen(QPen(Qt::black, 6));
+    painter.drawLine(dHandleCenterPoint.x() - MOVEHANDLE_LENTH, dHandleCenterPoint.y(), dHandleCenterPoint.x() + MOVEHANDLE_LENTH, dHandleCenterPoint.y());
+    painter.drawLine(dHandleCenterPoint.x(), dHandleCenterPoint.y() - MOVEHANDLE_LENTH, dHandleCenterPoint.x(), dHandleCenterPoint.y() + MOVEHANDLE_LENTH);
+    painter.setPen(QPen(Qt::green, 4));
+    painter.drawLine(dHandleCenterPoint.x() - MOVEHANDLE_LENTH, dHandleCenterPoint.y(), dHandleCenterPoint.x() + MOVEHANDLE_LENTH, dHandleCenterPoint.y());
+    painter.setPen(QPen(Qt::red, 4));
+    painter.drawLine(dHandleCenterPoint.x(), dHandleCenterPoint.y() - MOVEHANDLE_LENTH, dHandleCenterPoint.x(), dHandleCenterPoint.y() + MOVEHANDLE_LENTH);
 
     // 绘制中心点
-    painter->setPen(QPen(Qt::black, 12));
-    painter->drawPoint(dHandleCenterPoint);
-    painter->setPen(QPen(Qt::yellow, HANDLE_ZONE));
-    painter->drawPoint(dHandleCenterPoint);
+    painter.setPen(QPen(Qt::black, 12));
+    painter.drawPoint(dHandleCenterPoint);
+    painter.setPen(QPen(Qt::yellow, HANDLE_ZONE));
+    painter.drawPoint(dHandleCenterPoint);
 
 	// 绘制缩放控制柄
-    painter->setPen(QPen(Qt::black, 12));
-    painter->drawPoint(dHandleCenterPoint.x(), dHandleCenterPoint.y() + SCALEHANDLE_DISTANCE);
-    painter->drawPoint(dHandleCenterPoint.x() + SCALEHANDLE_DISTANCE, dHandleCenterPoint.y());
-    painter->drawPoint(dHandleCenterPoint.x() + ROTATEHANDLE_RADIUS, dHandleCenterPoint.y() + ROTATEHANDLE_RADIUS);
-    painter->setPen(QPen(Qt::yellow, HANDLE_ZONE));
-    painter->drawPoint(dHandleCenterPoint.x(), dHandleCenterPoint.y() + SCALEHANDLE_DISTANCE);
-    painter->drawPoint(dHandleCenterPoint.x() + SCALEHANDLE_DISTANCE, dHandleCenterPoint.y());
-    painter->drawPoint(dHandleCenterPoint.x() + ROTATEHANDLE_RADIUS, dHandleCenterPoint.y() + ROTATEHANDLE_RADIUS);
+    painter.setPen(QPen(Qt::black, 12));
+    painter.drawPoint(dHandleCenterPoint.x(), dHandleCenterPoint.y() + SCALEHANDLE_DISTANCE);
+    painter.drawPoint(dHandleCenterPoint.x() + SCALEHANDLE_DISTANCE, dHandleCenterPoint.y());
+    painter.drawPoint(dHandleCenterPoint.x() + ROTATEHANDLE_RADIUS, dHandleCenterPoint.y() + ROTATEHANDLE_RADIUS);
+    painter.setPen(QPen(Qt::yellow, HANDLE_ZONE));
+    painter.drawPoint(dHandleCenterPoint.x(), dHandleCenterPoint.y() + SCALEHANDLE_DISTANCE);
+    painter.drawPoint(dHandleCenterPoint.x() + SCALEHANDLE_DISTANCE, dHandleCenterPoint.y());
+    painter.drawPoint(dHandleCenterPoint.x() + ROTATEHANDLE_RADIUS, dHandleCenterPoint.y() + ROTATEHANDLE_RADIUS);
 
     // 绘制选中点
     const SelectedPoints& selectedPoints = *selected_points;
@@ -147,10 +147,10 @@ void ChElementSelect::draw_handle_and_selected(QPainter* painter)
             pointVector[selectedPoints[i]] :
             pointVector(selectedPoints[i])
         );
-        painter->setPen(QPen(Qt::black, 8));
-        painter->drawPoint(selectPoint);
-        painter->setPen(QPen(Qt::red, 6));
-        painter->drawPoint(selectPoint);
+        painter.setPen(QPen(Qt::black, 8));
+        painter.drawPoint(selectPoint);
+        painter.setPen(QPen(Qt::red, 6));
+        painter.drawPoint(selectPoint);
     }
 }
 

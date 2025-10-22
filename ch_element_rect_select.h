@@ -15,7 +15,7 @@ struct ChElementRectSelect final
 	ChElementRectSelect(GlVertReference& glReference);
 	~ChElementRectSelect();
 
-	void draw(QPainter* painter);
+	void draw(QPainter& painter);
 	void clickPos(const QPointF& mouse);
 	void movePos(const QPointF& mouse);
 	void releasePos(const QPointF& mouse);
@@ -97,7 +97,7 @@ class RectSelectDraw final : public DrawBehavior
 {
 public:
 	RectSelectDraw(std::shared_ptr<ChElementRectSelect> rect_select) { rectSelect = rect_select; }
-	virtual void draw(QPainter* painter) override;
+	virtual void draw(QPainter& painter) override;
 
 private:
 	std::shared_ptr<ChElementRectSelect> rectSelect;

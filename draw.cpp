@@ -43,7 +43,7 @@ void PiYingGL::drawChEditVert(int currentVector)
 		i += j;
 	}
 
-	if (ch_element_tool_) ch_element_tool_->draw(&painter);
+	if (ch_element_tool_) ch_element_tool_->draw(painter);
 }
 
 void PiYingGL::draw_ch_applied_vert()
@@ -83,7 +83,7 @@ void PiYingGL::draw_ch_applied_vert()
 		i += j;
 	}
 
-	if (ch_element_tool_) ch_element_tool_->draw(&painter);
+	if (ch_element_tool_) ch_element_tool_->draw(painter);
 }
 
 void PiYingGL::paintBackgrounds()
