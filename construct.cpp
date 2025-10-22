@@ -1,6 +1,7 @@
 ﻿#include "piYingGL.h"
 #include "piYing.h"
 #include "image_transform.h"
+#include "ch_element_tool.h"
 
 #include <qlabel>
 #include <QOpenGLShaderProgram.h>

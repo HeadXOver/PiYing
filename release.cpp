@@ -14,7 +14,6 @@ PiYingGL::~PiYingGL()
 
 	doneCurrent();
 
-	if (ch_element_tool_) delete ch_element_tool_;
 	for (ImageTexture* ch : characterTextures) delete ch;
 	for (ImageTexture* bg : backGrounds) delete bg;
 	for (PointVector* pv : characterVerts) delete pv;

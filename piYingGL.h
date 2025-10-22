@@ -117,6 +117,7 @@ public:
 	QMatrix4x4 getInsProj() const;
 
 	bool isInsideSquare(const QPointF& point, float side = 2.0f) const { return (point.x() >= -side / 2.f && point.x() <= side / 2.f && point.y() >= -side / 2.f && point.y() <= side / 2.f); }
+	bool have_ch_tool() const { return ch_element_tool_ != nullptr; }
 
 	MousePos getMousePosType(const QPointF& point) const;
 
@@ -127,7 +128,6 @@ public:
 	QList<std::vector<unsigned int>>& ref_characterTriangleIndices () { return characterTriangleIndices; }
 
 	CharacterToolState ch_tool_state() const { return ch_tool_state_; }
-	ChElementTool* ch_element_tool() { return ch_element_tool_; }
 
 public:
 	EditMode editMode = EditMode::OverView;
@@ -174,7 +174,7 @@ private:
 	QMenu* rightButtonMenuBg;
 	QMenu* rightButtonMenu;
 
-	ChElementTool* ch_element_tool_;
+	std::unique_ptr<ChElementTool> ch_element_tool_;
 
 	QList<CtrlSlideWidget*>& ctrlSlideWidget;
 };

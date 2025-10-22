@@ -41,7 +41,6 @@ PiYingGL::~PiYingGL()
 
 	doneCurrent();
 
-	if (ch_element_tool_) delete ch_element_tool_;
 	for (ImageTexture* ch : characterTextures) delete ch;
 	for (ImageTexture* bg : backGrounds) delete bg;
 	for (PointVector* pv : characterVerts) delete pv;
@@ -137,7 +136,6 @@ void PiYingGL::setEditMode(EditMode mode)
 void PiYingGL::updateChTool()
 {
 	if (ch_element_tool_) {
-		delete ch_element_tool_;
 		ch_element_tool_ = nullptr;
 	}
 
@@ -151,7 +149,7 @@ void PiYingGL::updateChTool()
 
 	if (editMode == EditMode::characterSkeleton) {
 		if (ch_tool_state_ == CharacterToolState::RectSelectVert || ch_tool_state_ == CharacterToolState::LibreSelectVert) {
-			ch_element_tool_ = new ChElementTool(currentVector, *this, ch_tool_state_);
+			ch_element_tool_ = std::make_unique<ChElementTool>(currentVector, *this, ch_tool_state_);
 		}
 		update();
 		return;
@@ -159,7 +157,7 @@ void PiYingGL::updateChTool()
 
 	if (editMode == EditMode::controlSlide) {
 		if (ch_tool_state_ == CharacterToolState::AddVertTrace) {
-			ch_element_tool_ = new ChElementTool(currentVector, *this, ch_tool_state_);
+			ch_element_tool_ = std::make_unique<ChElementTool>(currentVector, *this, ch_tool_state_);
 		}
 		update();
 		return;
@@ -171,7 +169,7 @@ void PiYingGL::updateChTool()
 			|| ch_tool_state_ == CharacterToolState::AddPoly
 			|| ch_tool_state_ == CharacterToolState::AddRound
 			|| ch_tool_state_ == CharacterToolState::AddTriangle) {
-			ch_element_tool_ = new ChElementTool(currentVector, *this, ch_tool_state_);
+			ch_element_tool_ = std::make_unique<ChElementTool>(currentVector, *this, ch_tool_state_);
 		}
 		update();
 		return;
@@ -185,7 +183,6 @@ void PiYingGL::setChTool(CharacterToolState state)
 	ch_tool_state_ = state;
 
 	if (ch_element_tool_) {
-		delete ch_element_tool_;
 		ch_element_tool_ = nullptr;
 	}
 
@@ -197,7 +194,7 @@ void PiYingGL::setChTool(CharacterToolState state)
 		return;
 	}
 
-	ch_element_tool_ = new ChElementTool(currentVector, *this, ch_tool_state_);
+	ch_element_tool_ = std::make_unique<ChElementTool>(currentVector, *this, ch_tool_state_);
 
 	update();
 }
