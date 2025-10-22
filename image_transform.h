@@ -1,5 +1,7 @@
 #pragma once
 
+#include <memory>
+
 class QMatrix4x4;
 
 class ImageTransform
@@ -20,21 +22,25 @@ public:
     float get_scale_y() const;
 
     void reset();
+    void set_trans(float x, float y);
     void set_trans(const QMatrix4x4& m);
+    void set_rot(float degree);
     void set_rot(const QMatrix4x4& m);
+    void set_scale(float x, float y);
+    void set_scale(float s);
     void set_scale(const QMatrix4x4& m);
 
-    QMatrix4x4 get_trans() const;
-    QMatrix4x4 get_rot() const;
-    QMatrix4x4 get_scale() const;
+    void add_trans(float x, float y);
+    void add_rot(float degree);
+    void add_scale(float x, float y);
 
-    QMatrix4x4* trans() const;
-    QMatrix4x4* rot() const;
-    QMatrix4x4* scale() const;
+    const QMatrix4x4& trans() const;
+    const QMatrix4x4& rot() const;
+    const QMatrix4x4& scale() const;
 
 private:
-    QMatrix4x4* trans_;
-    QMatrix4x4* rot_;
-    QMatrix4x4* scale_;
+    std::unique_ptr<QMatrix4x4> trans_;
+    std::unique_ptr<QMatrix4x4> rot_;
+    std::unique_ptr<QMatrix4x4> scale_;
 };
 

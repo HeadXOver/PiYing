@@ -6,16 +6,14 @@
 
 ToolButton::ToolButton(const QString& selectedFileName, const QString& unselectedFileName, const QString& actionName, CharacterToolState state, QWidget* parent)
 {
-    selected_ = new QIcon(selectedFileName);
-    unselected_ = new QIcon(unselectedFileName);
+    selected_ = std::make_unique<QIcon>(selectedFileName);
+    unselected_ = std::make_unique<QIcon>(unselectedFileName);
     action_ = new QAction(*unselected_, actionName, parent);
     toolState_ = state;
 }
 
 ToolButton::~ToolButton()
 {
-    delete selected_;
-    delete unselected_;
 }
 
 void ToolButton::select() 

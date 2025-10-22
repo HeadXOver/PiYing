@@ -69,7 +69,7 @@ void PiYingGL::bgScaleControl(const QPointF& mouse, ImageTexture* image)
 	image->addScale(pAspect);
 	pAspect.setX(PN2(lastMousePosType) * (1.f - pAspect.x()));
 	pAspect.setY(PN1(lastMousePosType) * (1.f - pAspect.y()));
-	image->addTrans((lastImageTransform->get_rot() * lastImageTransform->get_scale() * insProj).map(pAspect));
+	image->addTrans((lastImageTransform->rot() * lastImageTransform->scale() * insProj).map(pAspect));
 }
 
 void PiYingGL::viewRotationControl(const QPointF& mouse)

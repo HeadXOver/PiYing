@@ -2,6 +2,8 @@
 
 #include "enum_character_texture_tool_state.h"
 
+#include <memory>
+
 class QAction;
 class QWidget;
 class QIcon;
@@ -26,8 +28,8 @@ public:
 
 private:
     QAction* action_;
-    QIcon* selected_;
-    QIcon* unselected_;
+    std::unique_ptr<QIcon> selected_;
+    std::unique_ptr<QIcon> unselected_;
     CharacterToolState toolState_;
     bool isSelect_ = false;
 };

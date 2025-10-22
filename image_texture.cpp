@@ -22,14 +22,12 @@ ImageTexture::~ImageTexture()
 
 void ImageTexture::setTrans(float x, float y)
 {
-    transform_->trans()->setToIdentity();
-    transform_->trans()->translate(x, y);
+    transform_->set_trans(x, y);
 }
 
 void ImageTexture::setTrans(const QPointF& point)
 {
-    transform_->trans()->setToIdentity();
-    transform_->trans()->translate(point.x(), point.y());
+    transform_->set_trans(point.x(), point.y());
 }
 
 void ImageTexture::setTrans(const QMatrix4x4& point)
@@ -39,8 +37,7 @@ void ImageTexture::setTrans(const QMatrix4x4& point)
 
 void ImageTexture::setRot(float r)
 {
-    transform_->rot()->setToIdentity();
-    transform_->rot()->rotate(r, 0.f, 0.f, 1.0f);
+    transform_->set_rot(r);
 }
 
 void ImageTexture::setRot(const QMatrix4x4& point)
@@ -50,20 +47,17 @@ void ImageTexture::setRot(const QMatrix4x4& point)
 
 void ImageTexture::setScale(float x, float y)
 {
-    transform_->scale()->setToIdentity();
-    transform_->scale()->scale(x, y);
+    transform_->set_scale(x, y);
 }
 
 void ImageTexture::setScale(const QPointF& point)
 {
-    transform_->scale()->setToIdentity();
-    transform_->scale()->scale(point.x(), point.y());
+    transform_->set_scale(point.x(), point.y());
 }
 
 void ImageTexture::setScale(float s)
 {
-    transform_->scale()->setToIdentity();
-    transform_->scale()->scale(s);
+    transform_->set_scale(s);
 }
 
 void ImageTexture::setScale(const QMatrix4x4& point)
@@ -78,27 +72,27 @@ void ImageTexture::addTrans(const QPointF& point)
 
 void ImageTexture::addScale(const QPointF& point)
 {
-    transform_->scale()->scale(point.x(), point.y());
+    addScale(point.x(), point.y());
 }
 
 void ImageTexture::addTrans(float x, float y)
 {
-    transform_->trans()->translate(x, y);
+    transform_->add_trans(x, y);
 }
 
 void ImageTexture::addScale(float x, float y)
 {
-    transform_->scale()->scale(x, y);
+    transform_->add_scale(x, y);
 }
 
 void ImageTexture::addScale(float s)
 {
-    transform_->scale()->scale(s);
+    addScale(s, s);
 }
 
 void ImageTexture::addRot(float r)
 {
-    transform_->rot()->rotate(r, 0.0f, 0.0f, 1.0f);
+    transform_->add_rot(r);
 }
 QMatrix4x4 ImageTexture::getMatrix() const {
     return transform_->getMatrix();

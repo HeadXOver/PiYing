@@ -4,23 +4,20 @@
 
 ImageTransform::ImageTransform()
 {
-    trans_ = new QMatrix4x4();
-    rot_ = new QMatrix4x4();
-    scale_ = new QMatrix4x4();
+    trans_ = std::make_unique<QMatrix4x4>();
+    rot_ = std::make_unique<QMatrix4x4>();
+    scale_ = std::make_unique<QMatrix4x4>();
 }
 
 ImageTransform::~ImageTransform()
 {
-    delete trans_;
-    delete rot_;
-    delete scale_;
 }
 
 void ImageTransform::operator=(const ImageTransform& other)
 {
-    *trans_ = other.get_trans();
-    *rot_ = other.get_rot();
-    *scale_ = other.get_scale();
+    *trans_ = other.trans();
+    *rot_ = other.rot();
+    *scale_ = other.scale();
 }
 
 QMatrix4x4 ImageTransform::getMatrix() const {
@@ -62,9 +59,21 @@ void ImageTransform::reset() {
      scale_->setToIdentity();
 }
 
+void ImageTransform::set_trans(float x, float y)
+{
+    trans_->setToIdentity();
+    trans_->translate(x, y);
+}
+
 void ImageTransform::set_trans(const QMatrix4x4& m)
 {
     *trans_ = m;
+}
+
+void ImageTransform::set_rot(float degree)
+{
+    rot_->setToIdentity();
+    rot_->rotate(degree, 0, 0, 1);
 }
 
 void ImageTransform::set_rot(const QMatrix4x4& m)
@@ -72,37 +81,49 @@ void ImageTransform::set_rot(const QMatrix4x4& m)
     *rot_ = m;
 }
 
+void ImageTransform::set_scale(float x, float y)
+{
+    scale_->setToIdentity();
+    scale_->scale(x, y);
+}
+
+void ImageTransform::set_scale(float s)
+{
+    scale_->setToIdentity();
+    scale_->scale(s, s);
+}
+
 void ImageTransform::set_scale(const QMatrix4x4& m)
 {
     *scale_ = m;
 }
 
-QMatrix4x4 ImageTransform::get_trans() const
+void ImageTransform::add_trans(float x, float y)
+{
+    trans_->translate(x, y);
+}
+
+void ImageTransform::add_rot(float degree)
+{
+    rot_->rotate(degree, 0, 0, 1);
+}
+
+void ImageTransform::add_scale(float x, float y)
+{
+    scale_->scale(x, y);
+}
+
+const QMatrix4x4& ImageTransform::trans() const
 {
     return *trans_;
 }
 
-QMatrix4x4 ImageTransform::get_rot() const
+const QMatrix4x4& ImageTransform::rot() const
 {
     return *rot_;
 }
 
-QMatrix4x4 ImageTransform::get_scale() const
+const QMatrix4x4& ImageTransform::scale() const
 {
     return *scale_;
-}
-
-QMatrix4x4* ImageTransform::trans() const
-{
-    return trans_;
-}
-
-QMatrix4x4* ImageTransform::rot() const
-{
-    return rot_;
-}
-
-QMatrix4x4* ImageTransform::scale() const
-{
-    return scale_;
 }
