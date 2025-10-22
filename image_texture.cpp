@@ -8,9 +8,9 @@
 
 ImageTexture::ImageTexture(QImage& image)
 {
-    transform_ = new ImageTransform();
+    transform_ = std::make_unique<ImageTransform>();
 
-    texture_ = new QOpenGLTexture(image.flipped());
+    texture_ = std::make_unique<QOpenGLTexture>(image.flipped());
     texture_->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
     texture_->setMagnificationFilter(QOpenGLTexture::Linear);
     texture_->setWrapMode(QOpenGLTexture::Repeat);
@@ -18,8 +18,6 @@ ImageTexture::ImageTexture(QImage& image)
 
 ImageTexture::~ImageTexture()
 {
-    delete transform_;
-    delete texture_;
 }
 
 void ImageTexture::setTrans(float x, float y)
@@ -111,24 +109,19 @@ QMatrix4x4 ImageTexture::getMatrixInvert() const
     return transform_->getMatrixInvert();
 }
 
-QOpenGLTexture* ImageTexture::texture() const
-{
-    return texture_;
-}
-
 void ImageTexture::resetTransform() {
     transform_->reset();
+}
+
+void ImageTexture::bind()
+{
+    texture_->bind();
 }
 
 void ImageTexture::operator=(const ImageTransform& transform) {
     *transform_ = transform;
 }
 
-void ImageTexture::operator=(const ImageTransform* transform)
-{
-    *transform_ = *transform;
-}
-
-ImageTransform* ImageTexture::transform() const {
-    return transform_;
+const ImageTransform& ImageTexture::transform() const {
+    return *transform_;
 }

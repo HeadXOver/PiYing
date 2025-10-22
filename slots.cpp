@@ -53,13 +53,13 @@ void PiYingGL::bgSetTransform()
 	if (cur >= 0) {
 		float transX, transY, Rot, ScaleX, ScaleY;
 		ImageTexture* image = backGrounds[cur];
-		ImageTransform* transform = image->transform();
+		const ImageTransform& transform = image->transform();
 		float d[5] = {
-			transform->get_trans_x(),
-			transform->get_trans_y(),
-			transform->get_rot_degree(),
-			transform->get_scale_x(),
-			transform->get_scale_y()
+			transform.get_trans_x(),
+			transform.get_trans_y(),
+			transform.get_rot_degree(),
+			transform.get_scale_x(),
+			transform.get_scale_y()
 		};
 		if (AskBgTransformDialog("设置变换", d, this).getValues(transX, transY, Rot, ScaleX, ScaleY)) {
 			image->setTrans(transX, transY);
@@ -75,14 +75,14 @@ void PiYingGL::againstBg()
 {
 	int cur = getCurrentBgRow();
 	if (cur >= 0) {
-		ImageTransform* transform = backGrounds[cur]->transform();
+		const ImageTransform& transform = backGrounds[cur]->transform();
 		QMatrix4x4 r;
-		r.rotate(-transform->get_rot_degree(), 0.0f, 0.0f, 1.0f);
-		QPointF toTrans = r.map(QPointF(-transform->get_trans_x(), -transform->get_trans_y()));
-		viewTransX.setValue(toTrans.x() / transform->get_scale_x());
-		viewTransY.setValue(toTrans.y() / transform->get_scale_x());
-		viewScale.setValue(1 / transform->get_scale_x());
-		viewRotate.setValue(-transform->get_rot_degree());
+		r.rotate(-transform.get_rot_degree(), 0.0f, 0.0f, 1.0f);
+		QPointF toTrans = r.map(QPointF(-transform.get_trans_x(), -transform.get_trans_y()));
+		viewTransX.setValue(toTrans.x() / transform.get_scale_x());
+		viewTransY.setValue(toTrans.y() / transform.get_scale_x());
+		viewScale.setValue(1 / transform.get_scale_x());
+		viewRotate.setValue(-transform.get_rot_degree());
 	}
 
 	update();

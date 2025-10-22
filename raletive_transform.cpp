@@ -2,12 +2,12 @@
 
 #include "image_transform.h"
 
-QPointF PiYingGL::getRaletiveToRect(const QPointF& point, const ImageTransform* transform) const
+QPointF PiYingGL::getRaletiveToRect(const QPointF& point, const ImageTransform& transform) const
 {
-	return (proj * transform->getMatrixInvert() * getViewMatrixInvert() * insProj).map(point); 
+	return (proj * transform.getMatrixInvert() * getViewMatrixInvert() * insProj).map(point); 
 }
 
-QPointF PiYingGL::getRaletiveToGlobal(const QPointF& point, const ImageTransform* transform) const
+QPointF PiYingGL::getRaletiveToGlobal(const QPointF& point, const ImageTransform& transform) const
 { 
 	return getBgShaderMatrix(transform).map(point);
 }
@@ -61,9 +61,9 @@ QMatrix4x4 PiYingGL::getViewMatrix() const {
 	return mViewTransform;
 }
 
-QMatrix4x4 PiYingGL::getBgShaderMatrix(const ImageTransform* transform) const
+QMatrix4x4 PiYingGL::getBgShaderMatrix(const ImageTransform& transform) const
 { 
-	return proj * getViewMatrix() * transform->getMatrix() * insProj; 
+	return proj * getViewMatrix() * transform.getMatrix() * insProj; 
 }
 
 QMatrix4x4 PiYingGL::getViewProjMatrixInvert() const

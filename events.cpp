@@ -22,7 +22,7 @@ void PiYingGL::mousePressEvent(QMouseEvent* event)
 			QPointF posV = getRaletiveToRect(lastMousePos, item->transform());
 			if (isInsideSquare(posV)) {
 				lastMousePosType = getMousePosType(posV);
-				*lastImageTransform = *item->transform();
+				*lastImageTransform = item->transform();
 			}
 			update();
 			return;

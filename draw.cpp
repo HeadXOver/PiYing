@@ -94,7 +94,7 @@ void PiYingGL::paintBackgrounds()
 
 	for (int i = 0; i < backGrounds.size(); i++) {
 		ImageTexture* it = backGrounds[i];
-		it->texture()->bind();
+		it->bind();
 
 		bgShaderProgram->setUniformValue("trc", getBgShaderMatrix(it->transform()));
 		bgShaderProgram->setUniformValue("selected", i == getCurrentBgRow());
@@ -114,7 +114,7 @@ void PiYingGL::paintCharacterTexture()
 
 	bgShaderProgram->bind();
 
-	characterTextures[i]->texture()->bind();
+	characterTextures[i]->bind();
 
 	bgShaderProgram->setUniformValue("trc", getViewProjMatrix());
 	bgShaderProgram->setUniformValue("selected", false);
@@ -135,7 +135,7 @@ void PiYingGL::paint_applied_texture()
 
 	chShaderProgram->bind();
 
-	characterTextures[i]->texture()->bind();
+	characterTextures[i]->bind();
 	chShaderProgram->setUniformValue("trc", getViewProjMatrix());
 	glDrawElements(GL_TRIANGLES, (GLsizei)characterTriangleIndices[i].size(), GL_UNSIGNED_INT, 0);
 

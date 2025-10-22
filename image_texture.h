@@ -1,5 +1,7 @@
 #pragma once
 
+#include <memory>
+
 class QOpenGLTexture;
 class ImageTransform;
 class QImage;
@@ -13,7 +15,6 @@ public:
     ~ImageTexture();
 
     void operator=(const ImageTransform& transform);
-    void operator=(const ImageTransform* transform);
 
     void setTrans(float x, float y);
     void setTrans(const QPointF& point);
@@ -33,18 +34,17 @@ public:
     void addRot(float r);
 
     void resetTransform();
+    void bind();
 
-    ImageTransform* transform() const;
+    const ImageTransform& transform() const;
 
     QMatrix4x4 getMatrix() const;
     QMatrix4x4 getMatrixInvert() const;
 
-    QOpenGLTexture * texture() const;
-
 private:
 
-    QOpenGLTexture* texture_;
+    std::unique_ptr<QOpenGLTexture> texture_;
 
-    ImageTransform* transform_ = nullptr;
+    std::unique_ptr<ImageTransform> transform_;
 };
 
