@@ -18,7 +18,7 @@ void PiYingGL::fullScreenBackGround()
 
 void PiYingGL::setViewToStandard()
 {
-	for (ImageTexture* item : backGrounds) {
+	for (auto item : backGrounds) {
 		QMatrix4x4 combined = getViewMatrix() * item->getMatrix();
 		item->setTrans(getTrans(combined));
 		item->setRot(getRot(combined));

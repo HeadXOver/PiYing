@@ -47,8 +47,6 @@ PiYingGL::~PiYingGL()
 	for (PointVector* pv : characterVerts) delete pv;
 
 	delete lastImageTransform;
-	delete bgShaderProgram;
-	delete chShaderProgram;
 }
 
 void PiYingGL::addBackground(const QString& imageName) {

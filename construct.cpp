@@ -10,8 +10,8 @@
 PiYingGL::PiYingGL(PiYing& parent) : QOpenGLWidget(&parent), ref_PiYing(parent), ctrlSlideWidget(ref_PiYing.sliderWidget)
 {
 
-	bgShaderProgram = new QOpenGLShaderProgram(this);
-	chShaderProgram = new QOpenGLShaderProgram(this);
+	bgShaderProgram = std::make_unique<QOpenGLShaderProgram>(this);
+	chShaderProgram = std::make_unique<QOpenGLShaderProgram>(this);
 
 	lastImageTransform = new ImageTransform();
 
