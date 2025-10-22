@@ -6,31 +6,32 @@
 #include <qlabel>
 #include <qslider>
 #include <qpushbutton>
+#include <qhboxlayout>
 #include <qmessagebox>
 #include <qmenu>
 
-CtrlSlideLayout::CtrlSlideLayout(PiYingGL& gl, QString labelName, int min, int max, int defaultValue, int id) :piYingGL(gl), id_(id)
+CtrlSlideLayout::CtrlSlideLayout(PiYingGL& gl, QString labelName, int min, int max, int defaultValue, int id, QWidget* parent) :piYingGL(gl), id_(id), QWidget(parent)
 {
-    label = new QLabel(labelName);
-    slider = new QSlider(Qt::Horizontal);
+    layout = new QHBoxLayout(this);
+    label = new QLabel(labelName, this);
+    slider = new QSlider(Qt::Horizontal, this);
     slider->setRange(min, max);
     slider->setValue(defaultValue);
-    rightButton = new QPushButton();
+    rightButton = new QPushButton(this);
     QIcon icon(":/PiYing/setIcon.png");
     rightButton->setIcon(icon);
     rightButton->setIconSize(QSize(16, 16));
     rightButton->setFixedSize(QSize(16, 16));
 
-    addWidget(label);
-    addWidget(slider);
-    addWidget(rightButton);
+    layout->addWidget(label);
+    layout->addWidget(slider);
+    layout->addWidget(rightButton);
 
     connect(slider, &QSlider::valueChanged, this, [this](int value) { piYingGL.controlSlide(id_, value); });
+
+    setLayout(layout);
 }
 
 CtrlSlideLayout::~CtrlSlideLayout()
 {
-    delete label;
-    delete slider;
-    delete rightButton;
 }

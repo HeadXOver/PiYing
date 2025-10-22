@@ -36,9 +36,6 @@
     <Filter Include="Source Files\ChELementTool">
       <UniqueIdentifier>{204b3297-ad6d-4a93-8cd4-e64b58993d2e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\controlSlide">
-      <UniqueIdentifier>{c0057a86-6107-48ca-ad48-031747d11860}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\staticConst">
       <UniqueIdentifier>{097b854b-e278-4df0-b1b6-03b8dd42274d}</UniqueIdentifier>
     </Filter>
@@ -74,6 +71,9 @@
     </Filter>
     <Filter Include="Source Files\PiYing">
       <UniqueIdentifier>{d3aed6d7-527c-4b62-853d-709bdd60c2b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\PiYngQObject\controlSlide">
+      <UniqueIdentifier>{c0057a86-6107-48ca-ad48-031747d11860}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -176,9 +176,6 @@
       <Filter>Source Files\PiYingTool</Filter>
     </ClCompile>
     <ClCompile Include="point_vector.cpp">
-      <Filter>Source Files\PiYingContainer</Filter>
-    </ClCompile>
-    <ClCompile Include="float_vector_layer.cpp">
       <Filter>Source Files\PiYingContainer</Filter>
     </ClCompile>
     <ClCompile Include="ch_element_add_round.cpp">
@@ -285,9 +282,6 @@
     <ClInclude Include="point_vector.h">
       <Filter>Header Files\PiYingContainer</Filter>
     </ClInclude>
-    <ClInclude Include="float_vector_layer.h">
-      <Filter>Header Files\PiYingContainer</Filter>
-    </ClInclude>
     <ClInclude Include="point_vector_layer.h">
       <Filter>Header Files\PiYingContainer</Filter>
     </ClInclude>
@@ -318,10 +312,10 @@
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="ctrlSlideLayout.h">
-      <Filter>Header Files\controlSlide</Filter>
+      <Filter>Header Files\PiYngQObject\controlSlide</Filter>
     </QtMoc>
     <QtMoc Include="ctrlSlideWidget.h">
-      <Filter>Header Files\controlSlide</Filter>
+      <Filter>Header Files\PiYngQObject\controlSlide</Filter>
     </QtMoc>
     <QtMoc Include="RatioDialog.h">
       <Filter>Header Files\PiYngQObject</Filter>

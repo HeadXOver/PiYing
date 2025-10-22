@@ -51,10 +51,10 @@ CtrlSlideWidget::~CtrlSlideWidget()
 
 void CtrlSlideWidget::addSlider(QString name)
 {
-    CtrlSlideLayout* ctrlSlideLayout = new CtrlSlideLayout(piYingGL, name, 0, 100, 50, get_unique_id(sliderList));
+    CtrlSlideLayout* ctrlSlideLayout = new CtrlSlideLayout(piYingGL, name, 0, 100, 50, get_unique_id(sliderList), this);
     sliderList.append(ctrlSlideLayout);
 
-    sliderLayout->insertLayout(sliderCount, sliderList[sliderCount++]);
+    sliderLayout->insertWidget(sliderCount, sliderList[sliderCount++]);
     connect(ctrlSlideLayout->rightButton,   &QPushButton::pressed, this, [ctrlSlideLayout, this] { setSlider(ctrlSlideLayout); });
 }
 
@@ -72,7 +72,7 @@ void CtrlSlideWidget::removeSlider(CtrlSlideLayout* slider)
         if (sliderList[i] != slider) continue;
 
         sliderList.removeAt(i);
-        sliderLayout->removeItem(slider);
+        sliderLayout->removeWidget(slider);
         delete slider;
         sliderCount--;
         break;
