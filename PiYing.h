@@ -38,6 +38,7 @@ protected:
 
 private slots:
     void exportCurrentFrame();
+	void exportMainSlider();
 	void askScreenScale();
 	void onModeChanged(int mode);
 

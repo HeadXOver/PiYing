@@ -75,16 +75,18 @@ PiYing::PiYing(QWidget* parent) : QMainWindow(parent)
     QMenu* childMenuScreen = menuEdit->addMenu("幕布");
 
 	// actions of menu File
-    QAction* actionExit                  = menuFile->            addAction("退出");
-    QAction* actionImportBackGround      = childMenuImport->     addAction("背景图");
-    QAction* actionImportCharacter       = childMenuImport->     addAction("角色图");
-    QAction* actionExportCurrentFrame    = childMenuExport->     addAction("当前帧");
+    QAction* actionExit                 = menuFile->            addAction("退出");
+    QAction* actionImportBackGround     = childMenuImport->     addAction("背景图");
+    QAction* actionImportCharacter      = childMenuImport->     addAction("角色图");
+    QAction* actionExportCurrentFrame   = childMenuExport->     addAction("当前帧");
+    QAction* actionExportMainSlider     = childMenuExport->     addAction("主轴");
 
 	// actions of menu Edit
     QAction* actionScreenScale           = childMenuScreen->     addAction("比例...");
     QAction* actionDefaultColor          = childMenuScreen->     addAction("底色...");
 
     connect(actionExportCurrentFrame,   SIGNAL(triggered()), this, SLOT(exportCurrentFrame()));
+    connect(actionExportMainSlider,     SIGNAL(triggered()), this, SLOT(exportMainSlider()));
 	connect(actionScreenScale,          SIGNAL(triggered()), this, SLOT(askScreenScale()));
     connect(actionDefaultColor,     &QAction::triggered,                this, [this]() {piYingGL->choseBackgroundColor(); });
     connect(actionExit,             &QAction::triggered,                this, [this]() {close(); });
@@ -207,6 +209,11 @@ void PiYing::exportCurrentFrame(){
     QImage img = piYingGL->grabFramebuffer();
 
     if (!img.save(path, format, 95))  QMessageBox::warning(this, tr("Error"), tr("Failed to save"));
+}
+
+void PiYing::exportMainSlider()
+{
+    QMessageBox::information(this, "提示", "功能尚未实现");
 }
 
 void PiYing::askScreenScale(){
