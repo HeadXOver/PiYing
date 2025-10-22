@@ -130,6 +130,7 @@
     <ClCompile Include="draw.cpp" />
     <ClCompile Include="construct.cpp" />
     <ClCompile Include="cus_func_transform.cpp" />
+    <ClCompile Include="time_line_gl.cpp" />
     <ClCompile Include="tool_button.cpp" />
     <ClCompile Include="change_mode.cpp" />
     <ClCompile Include="select_tool.cpp" />
@@ -159,6 +160,7 @@
     <ClInclude Include="point_vector_layer.h" />
     <ClInclude Include="SelectedPoints.h" />
     <ClInclude Include="slide_applier.h" />
+    <QtMoc Include="time_line_gl.h" />
     <ClInclude Include="tool_button.h" />
     <ClInclude Include="ch_element_tool_behavior.h" />
     <ClInclude Include="gl_vert_reference.h" />

@@ -217,6 +217,9 @@
     <ClCompile Include="control_slider.cpp">
       <Filter>Source Files\piYingGL</Filter>
     </ClCompile>
+    <ClCompile Include="time_line_gl.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="static_handle_zone.h">
@@ -334,6 +337,9 @@
     </QtMoc>
     <QtMoc Include="ask_round_poly_dialog.h">
       <Filter>Header Files\PiYngQObject</Filter>
+    </QtMoc>
+    <QtMoc Include="time_line_gl.h">
+      <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>

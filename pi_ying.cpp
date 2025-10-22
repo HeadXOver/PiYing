@@ -4,6 +4,7 @@
 #include "piYingGL.h"
 #include "piYingGLContainer.h"
 #include "tool_button.h"
+#include "time_line_gl.h"
 
 #include "ui_PiYing.h"
 
@@ -26,11 +27,12 @@ PiYing::PiYing(QWidget* parent) : QMainWindow(parent)
     voidListWidget = new QListWidget();
     bgImageList = new QListWidget();
     chImageList = new QListWidget();
-    main_slider = new QSlider(Qt::Horizontal, this);
 
     // OpenGL widget
     piYingGL = new PiYingGL(*this);
     piYingGLContainer = new PiYingGLContainer(*piYingGL, ratio, this);
+
+    timeLineGL = new TimeLineGL(this);
 
     splitTimelineOpenGL = new QSplitter(Qt::Vertical, this);
     splitListOpenGL = new QSplitter(Qt::Horizontal, this);
@@ -99,11 +101,10 @@ PiYing::PiYing(QWidget* parent) : QMainWindow(parent)
     piYingGL->changeRatio(ratio);
 
     splitTimelineOpenGL->addWidget(piYingGLContainer);
-    splitTimelineOpenGL->addWidget(main_slider);
+    splitTimelineOpenGL->addWidget(timeLineGL);
     splitListOpenGL->addWidget(voidListWidget);
     splitListOpenGL->addWidget(splitTimelineOpenGL);
-    splitTimelineOpenGL->setStretchFactor(0, 1);
-    splitTimelineOpenGL->setStretchFactor(1, 2);
+    splitTimelineOpenGL->setSizes({ width() * 5 / 6, width() / 6 });
     splitListOpenGL->setStretchFactor(0, 1);
     splitListOpenGL->setStretchFactor(1, 3);
 
@@ -121,7 +122,7 @@ PiYing::PiYing(QWidget* parent) : QMainWindow(parent)
     }
 
     piYingGL->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-    main_slider->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    timeLineGL->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     voidListWidget->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
 
     modeBox->addItems({ "预览模式", "背景编辑", "角色纹理编辑", "角色骨骼编辑", "控制器"});
@@ -142,7 +143,6 @@ PiYing::~PiYing()
     safeDelete(voidListWidget);
     safeDelete(bgImageList);
     safeDelete(chImageList);
-    safeDelete(main_slider);
     safeDelete(piYingGL);
     safeDelete(piYingGLContainer);
     safeDelete(splitTimelineOpenGL);

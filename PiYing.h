@@ -5,6 +5,7 @@
 
 class CtrlSlideWidget;
 class PiYingGL;
+class TimeLineGL;
 class ToolButton;
 class PiYingGLContainer;
 class QListWidget;
@@ -52,11 +53,10 @@ private:
 
 	// OpenGL widget
     PiYingGL* piYingGL = nullptr;
+	TimeLineGL* timeLineGL = nullptr;
 
 	QSplitter* splitListOpenGL;
 	QSplitter* splitTimelineOpenGL;
-
-	QSlider* main_slider;
 
 	QList<ToolButton*> toolChTexList;
 	QList<ToolButton*> toolChSkelenList;
