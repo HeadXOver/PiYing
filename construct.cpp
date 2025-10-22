@@ -14,7 +14,7 @@ PiYingGL::PiYingGL(PiYing& parent) : QOpenGLWidget(&parent), ref_PiYing(parent),
 	bgShaderProgram = std::make_unique<QOpenGLShaderProgram>(this);
 	chShaderProgram = std::make_unique<QOpenGLShaderProgram>(this);
 
-	lastImageTransform = new ImageTransform();
+	lastImageTransform =std::make_unique<ImageTransform>();
 
 	viewScale.setValue(1.0f);
 	

@@ -160,7 +160,7 @@ private:
 	QMatrix4x4 proj;
 	QMatrix4x4 insProj;
 
-	ImageTransform* lastImageTransform;
+	std::unique_ptr<ImageTransform> lastImageTransform;
 
 	QPointF lastMousePos;
 	QPointF lastMiddleButtonPos;

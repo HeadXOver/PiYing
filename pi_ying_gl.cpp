@@ -44,8 +44,6 @@ PiYingGL::~PiYingGL()
 	for (ImageTexture* ch : characterTextures) delete ch;
 	for (ImageTexture* bg : backGrounds) delete bg;
 	for (PointVector* pv : characterVerts) delete pv;
-
-	delete lastImageTransform;
 }
 
 void PiYingGL::addBackground(const QString& imageName) {
