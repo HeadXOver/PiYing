@@ -3,7 +3,7 @@
 #include <map>
 #include <memory>
 
-class CharacterTraces;
+class CharacterTrace;
 
 class SlideApplier
 {
@@ -12,6 +12,6 @@ public:
     ~SlideApplier();
 
 private:
-    std::map<int, std::unique_ptr<CharacterTraces>> slide_map;
+    std::map<int, std::map<int, std::unique_ptr<CharacterTrace>>> slide_map;
 };
 

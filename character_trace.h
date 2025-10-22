@@ -10,7 +10,6 @@ public:
 
 private:
     QPolygonF* trace;
-    int index;
     int current_position;
 };
 

@@ -1,6 +1,6 @@
 #include "slide_applier.h"
 
-#include "character_traces.h"
+#include "character_trace.h"
 
 SlideApplier::SlideApplier()
 {

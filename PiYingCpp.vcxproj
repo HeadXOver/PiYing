@@ -98,7 +98,6 @@
     <ClCompile Include="ask_transform_dialog.cpp" />
     <ClCompile Include="ask_round_poly_dialog.cpp" />
     <ClCompile Include="character_trace.cpp" />
-    <ClCompile Include="character_traces.cpp" />
     <ClCompile Include="ch_add_vert_trace.cpp" />
     <ClCompile Include="ch_element_add_round.cpp" />
     <ClCompile Include="ch_element_libre_select.cpp" />
@@ -144,7 +143,6 @@
   <ItemGroup>
     <ClInclude Include="add_ch_tex_poly.h" />
     <ClInclude Include="character_trace.h" />
-    <ClInclude Include="character_traces.h" />
     <ClInclude Include="cus_func_get_unique_id.h" />
     <ClInclude Include="ch_add_vert_trace.h" />
     <ClInclude Include="enum_edit_mode.h" />
