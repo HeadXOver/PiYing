@@ -10,7 +10,6 @@ class PiYingGL;
 struct AddTriangle final
 {
 	AddTriangle(GlVertReference& glVertReference);
-	~AddTriangle();
 
 	bool addVert(unsigned int i);
 	bool checkPointRepeat(const QPointF& point);
@@ -21,8 +20,8 @@ struct AddTriangle final
 
 	GlVertReference& glVertReference;
 
-	QPointF* first;
-	QPointF* second;
+	std::unique_ptr<QPointF> first;
+	std::unique_ptr<QPointF> second;
 
 	unsigned int firstIndex = 0;
 	unsigned int secondIndex = 0;

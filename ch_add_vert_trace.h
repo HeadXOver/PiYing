@@ -11,7 +11,6 @@ class QPolygonF;
 struct ChAddVertTrace final
 {
 	ChAddVertTrace(GlVertReference& glVertReference);
-	~ChAddVertTrace();
 
 	void click(const QPointF& mouse);
 	void move(const QPointF& mouse);
@@ -20,7 +19,7 @@ struct ChAddVertTrace final
 
 	int current_index = -1;
 	bool presse_on_vert = false;
-	QPolygonF* polygon;
+	std::unique_ptr<QPolygonF> polygon;
 
 	GlVertReference& glVertReference;
 };

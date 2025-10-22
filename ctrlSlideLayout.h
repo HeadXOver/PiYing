@@ -22,3 +22,4 @@ public:
     PiYingGL& piYingGL;
     int id_;
 };
+;

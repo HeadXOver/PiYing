@@ -211,6 +211,15 @@
     <ClCompile Include="add_trace.cpp">
       <Filter>Source Files\piYingGL</Filter>
     </ClCompile>
+    <ClCompile Include="character_traces.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="character_trace.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="slide_applier.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="static_handle_zone.h">
@@ -296,6 +305,15 @@
     </ClInclude>
     <ClInclude Include="enum_edit_mode.h">
       <Filter>Header Files\staticConst</Filter>
+    </ClInclude>
+    <ClInclude Include="character_traces.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="character_trace.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="slide_applier.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

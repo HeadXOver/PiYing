@@ -93,7 +93,7 @@ public:
 	void drawChEditVert(int currentVector);
 	void draw_ch_applied_vert();
 	void update_ch_verts();
-	void add_trace(int index, const QPolygonF* polygon);
+	void add_trace(int index, const QPolygonF& polygon);
 
 	bool addBackground(const QString& imageName, QImage& image);
 

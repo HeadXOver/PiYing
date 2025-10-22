@@ -97,6 +97,8 @@
     <ClCompile Include="add_triangle.cpp" />
     <ClCompile Include="ask_transform_dialog.cpp" />
     <ClCompile Include="ask_round_poly_dialog.cpp" />
+    <ClCompile Include="character_trace.cpp" />
+    <ClCompile Include="character_traces.cpp" />
     <ClCompile Include="ch_add_vert_trace.cpp" />
     <ClCompile Include="ch_element_add_round.cpp" />
     <ClCompile Include="ch_element_libre_select.cpp" />
@@ -124,6 +126,7 @@
     <ClCompile Include="ratio_dialog.cpp" />
     <ClCompile Include="gl_func.cpp" />
     <ClCompile Include="selected_points.cpp" />
+    <ClCompile Include="slide_applier.cpp" />
     <ClCompile Include="slots.cpp" />
     <ClCompile Include="raletive_transform.cpp" />
     <ClCompile Include="draw.cpp" />
@@ -141,6 +144,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="add_ch_tex_poly.h" />
+    <ClInclude Include="character_trace.h" />
+    <ClInclude Include="character_traces.h" />
     <ClInclude Include="cus_func_get_unique_id.h" />
     <ClInclude Include="ch_add_vert_trace.h" />
     <ClInclude Include="enum_edit_mode.h" />
@@ -156,6 +161,7 @@
     <ClInclude Include="point_vector.h" />
     <ClInclude Include="point_vector_layer.h" />
     <ClInclude Include="SelectedPoints.h" />
+    <ClInclude Include="slide_applier.h" />
     <ClInclude Include="tool_button.h" />
     <ClInclude Include="ch_element_tool_behavior.h" />
     <ClInclude Include="gl_vert_reference.h" />
