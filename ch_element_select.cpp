@@ -17,6 +17,10 @@ ChElementSelect::ChElementSelect(GlVertReference& glReference) : glVertReference
     selected_points = std::make_unique<SelectedPoints>(false, *(glVertReference.pointLayer));
 }
 
+ChElementSelect::~ChElementSelect()
+{
+}
+
 void ChElementSelect::escape() 
 { 
     if (selected_points->size() > 0) selected_points->removeLast(); 

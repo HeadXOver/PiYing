@@ -22,6 +22,7 @@ enum class ChElementEditMode {
 struct ChElementSelect final
 {
 	ChElementSelect(GlVertReference& glReference);
+	~ChElementSelect();
 
 	void escape();
 	void deleteElement();

@@ -12,6 +12,7 @@ struct GlVertReference;
 struct AddChTexPoly
 {
 	AddChTexPoly(GlVertReference& glReference);
+	~AddChTexPoly();
 
 	void click(const QPointF& mouse);
 	void enter();

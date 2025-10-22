@@ -4,6 +4,7 @@
 #include <qopenglfunctions_3_3_Core>
 #include <qpoint>
 #include <qmatrix4x4>
+#include <memory>
 
 #include "enum_character_texture_tool_state.h"
 #include "enum_edit_mode.h"

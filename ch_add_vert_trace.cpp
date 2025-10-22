@@ -11,6 +11,10 @@ ChAddVertTrace::ChAddVertTrace(GlVertReference& glReference):glVertReference(glR
 	polygon = std::make_unique<QPolygonF>();
 }
 
+ChAddVertTrace::~ChAddVertTrace()
+{
+}
+
 void ChAddVertTrace::click(const QPointF& mouseOri)
 {
 	const QPointF mouse = glVertReference.gl.GLViewProjMatrixInvert(mouseOri);

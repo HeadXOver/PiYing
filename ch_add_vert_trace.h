@@ -11,6 +11,7 @@ class QPolygonF;
 struct ChAddVertTrace final
 {
 	ChAddVertTrace(GlVertReference& glVertReference);
+	~ChAddVertTrace();
 
 	void click(const QPointF& mouse);
 	void move(const QPointF& mouse);

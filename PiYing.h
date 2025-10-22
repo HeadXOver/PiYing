@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QtWidgets/QMainWindow>
+#include <memory>
 
 class CtrlSlideWidget;
 class PiYingGL;

@@ -2,6 +2,8 @@
 
 #include "enum_character_texture_tool_state.h"
 
+#include <memory>
+
 class PiYingGL;
 class QPainter;
 class QPointF;
@@ -38,13 +40,13 @@ public:
 
 private:
 
-	ClickBehavior* clickBehavior = nullptr;
-	MouseMoveBehavior* moveBehavior = nullptr;
-	ReleaseBehavior* releaseBehavior = nullptr;
-	EscapeBehavior* escapeBehavior = nullptr;
-	DeleteElementBehavior* deleteBehavior = nullptr;
-	EnterBehavior* enterBehavior = nullptr;
-	DrawBehavior* drawBehavior = nullptr;
+	std::unique_ptr<ClickBehavior> clickBehavior;
+	std::unique_ptr<MouseMoveBehavior> moveBehavior;
+	std::unique_ptr<ReleaseBehavior> releaseBehavior;
+	std::unique_ptr<EscapeBehavior> escapeBehavior;
+	std::unique_ptr<DeleteElementBehavior> deleteBehavior;
+	std::unique_ptr<EnterBehavior> enterBehavior;
+	std::unique_ptr<DrawBehavior> drawBehavior;
 
-	GlVertReference* glVertReference = nullptr;
+	std::unique_ptr<GlVertReference> glVertReference;
 };

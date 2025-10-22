@@ -55,12 +55,11 @@ int GlVertReference::get_current_end() const
 
 GlVertReference::GlVertReference(int current, PiYingGL& pygl) :
 	glIndex(pygl.ref_characterTriangleIndices()[current]),
-	pointLayer(new PointVectorLayer(pygl.ref_characterVerts(current))),
 	gl(pygl)
 {
+	pointLayer = std::make_unique<PointVectorLayer>(pygl.ref_characterVerts(current));
 }
 
 GlVertReference::~GlVertReference()
 {
-	delete pointLayer;
 }

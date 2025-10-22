@@ -17,6 +17,7 @@ struct ChElementLibreSelect final
 {
 public:
 	ChElementLibreSelect(GlVertReference& glReference);
+	~ChElementLibreSelect() = default;
 
 	void draw(QPainter& painter);
 	void clickPos(const QPointF& mouse);

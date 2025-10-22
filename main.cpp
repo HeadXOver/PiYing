@@ -2,6 +2,7 @@
 
 #include <QtWidgets/QApplication>
 #include <qfile>
+#include <memory>
 
 int main(int argc, char *argv[])
 {

@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <qlist>
+#include <memory>
 
 class PiYingGL;
 class QPointF;
@@ -19,7 +20,7 @@ struct GlVertReference final {
 
 	int get_current_end() const;
 
-	PointVectorLayer* pointLayer;
+	std::unique_ptr<PointVectorLayer> pointLayer;
 	std::vector<unsigned int>& glIndex;
 	PiYingGL& gl;
 

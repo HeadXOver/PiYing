@@ -36,64 +36,66 @@ namespace {
 void ChElementTool::construct_add_triangle()
 {
 	std::shared_ptr<AddTriangle> addTriangle = std::make_shared<AddTriangle>(*glVertReference);
-	clickBehavior = new AddTriangleClick(addTriangle);
-	escapeBehavior = new AddTriangleEscape(addTriangle);
-	drawBehavior = new AddTriangleDraw(addTriangle);
-	deleteBehavior = new AddTriangleDelete(addTriangle);
+	clickBehavior = std::make_unique<AddTriangleClick>(addTriangle);
+	escapeBehavior = std::make_unique<AddTriangleEscape>(addTriangle);
+	drawBehavior = std::make_unique<AddTriangleDraw>(addTriangle);
+	deleteBehavior = std::make_unique<AddTriangleDelete>(addTriangle);
 }
 
 void ChElementTool::construct_add_poly()
 {
 	std::shared_ptr<AddChTexPoly> addPoly = std::make_shared<AddChTexPoly>(*glVertReference);
-	clickBehavior = new AddPolyClick(addPoly);
-	escapeBehavior = new AddPolyEscape(addPoly);
-	drawBehavior = new AddPolyDraw(addPoly);
-	deleteBehavior = new AddPolyDelete(addPoly);
-	enterBehavior = new AddPolyEnter(addPoly);
+	clickBehavior = std::make_unique<AddPolyClick>(addPoly);
+	escapeBehavior = std::make_unique<AddPolyEscape>(addPoly);
+	drawBehavior = std::make_unique<AddPolyDraw>(addPoly);
+	deleteBehavior = std::make_unique<AddPolyDelete>(addPoly);
+	enterBehavior = std::make_unique<AddPolyEnter>(addPoly);
 }
 
 void ChElementTool::construct_add_round()
 {
 	std::shared_ptr<ChElementAddRound> addRound = std::make_shared<ChElementAddRound>(*glVertReference);
-	clickBehavior = new AddRoundClick(addRound);
-	moveBehavior = new AddRoundMove(addRound);
-	releaseBehavior = new AddRoundRelease(addRound);
-	drawBehavior = new AddRoundDraw(addRound);
+	clickBehavior = std::make_unique<AddRoundClick>(addRound);
+	moveBehavior = std::make_unique<AddRoundMove>(addRound);
+	releaseBehavior = std::make_unique<AddRoundRelease>(addRound);
+	drawBehavior = std::make_unique<AddRoundDraw>(addRound);
 }
 
 void ChElementTool::construct_rect_select()
 {
 	std::shared_ptr<ChElementRectSelect> rectSelect = std::make_shared<ChElementRectSelect>(*glVertReference);
-	clickBehavior = new RectSelectClick(rectSelect);
-	escapeBehavior = new RectSelectEscape(rectSelect);
-	drawBehavior = new RectSelectDraw(rectSelect);
-	releaseBehavior = new RectSelectRelease(rectSelect);
-	moveBehavior = new RectSelectMove(rectSelect);
-	deleteBehavior = new RectSelectDelete(rectSelect);
+	clickBehavior = std::make_unique<RectSelectClick>(rectSelect);
+	escapeBehavior = std::make_unique<RectSelectEscape>(rectSelect);
+	drawBehavior = std::make_unique<RectSelectDraw>(rectSelect);
+	releaseBehavior = std::make_unique<RectSelectRelease>(rectSelect);
+	moveBehavior = std::make_unique<RectSelectMove>(rectSelect);
+	deleteBehavior = std::make_unique<RectSelectDelete>(rectSelect);
 }
 
 void ChElementTool::construct_libre_select()
 {
 	std::shared_ptr<ChElementLibreSelect> libreSelect = std::make_shared<ChElementLibreSelect>(*glVertReference);
-	clickBehavior = new LibreSelectClick(libreSelect);
-	escapeBehavior = new LibreSelectEscape(libreSelect);
-	drawBehavior = new LibreSelectDraw(libreSelect);
-	releaseBehavior = new LibreSelectRelease(libreSelect);
-	moveBehavior = new LibreSelectMove(libreSelect);
-	deleteBehavior = new LibreSelectDelete(libreSelect);
+	clickBehavior = std::make_unique<LibreSelectClick>(libreSelect);
+	escapeBehavior = std::make_unique<LibreSelectEscape>(libreSelect);
+	drawBehavior = std::make_unique<LibreSelectDraw>(libreSelect);
+	releaseBehavior = std::make_unique<LibreSelectRelease>(libreSelect);
+	moveBehavior = std::make_unique<LibreSelectMove>(libreSelect);
+	deleteBehavior = std::make_unique<LibreSelectDelete>(libreSelect);
 }
 
 void ChElementTool::construct_add_vert_trace()
 {
 	std::shared_ptr<ChAddVertTrace> addVertTrace = std::make_shared<ChAddVertTrace>(*glVertReference);
-	clickBehavior = new AddVertTraceClick(addVertTrace);
-	drawBehavior = new AddVertTraceDraw(addVertTrace);
-	releaseBehavior = new AddVertTraceRelease(addVertTrace);
-	moveBehavior = new AddVertTraceMove(addVertTrace);
+	clickBehavior = std::make_unique<AddVertTraceClick>(addVertTrace);
+	drawBehavior = std::make_unique<AddVertTraceDraw>(addVertTrace);
+	releaseBehavior = std::make_unique<AddVertTraceRelease>(addVertTrace);
+	moveBehavior = std::make_unique<AddVertTraceMove>(addVertTrace);
 }
 
-ChElementTool::ChElementTool(int current, PiYingGL& pygl, CharacterToolState chToolState) : glVertReference(new GlVertReference(current, pygl))
+ChElementTool::ChElementTool(int current, PiYingGL& pygl, CharacterToolState chToolState)
 {
+	glVertReference = std::make_unique<GlVertReference>(current, pygl);
+
 	if (chToolState == CharacterToolState::None) return;
 
 	map_construct(chToolState)(this);
@@ -101,14 +103,6 @@ ChElementTool::ChElementTool(int current, PiYingGL& pygl, CharacterToolState chT
 
 ChElementTool::~ChElementTool()
 {
-	if (clickBehavior) delete clickBehavior;
-	if (moveBehavior) delete moveBehavior;
-	if (releaseBehavior) delete releaseBehavior;
-	if (escapeBehavior) delete escapeBehavior;
-	if (deleteBehavior) delete deleteBehavior;
-	if (enterBehavior) delete enterBehavior;
-	if (drawBehavior) delete drawBehavior;
-	if (glVertReference) delete glVertReference;
 }
 
 void ChElementTool::click(const QPointF& mouse) {

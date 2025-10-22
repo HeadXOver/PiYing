@@ -14,6 +14,10 @@ AddTriangle::AddTriangle(GlVertReference& glReference) :glVertReference(glRefere
 	second = std::make_unique<QPointF>();
 }
 
+AddTriangle::~AddTriangle()
+{
+}
+
 bool AddTriangle::addVert(unsigned int i)
 {
 	if(numInd == 0) firstIndex = i;

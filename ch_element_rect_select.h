@@ -13,6 +13,7 @@ class PiYingGL;
 struct ChElementRectSelect final
 {
 	ChElementRectSelect(GlVertReference& glReference);
+	~ChElementRectSelect() = default;
 
 	void draw(QPainter& painter);
 	void clickPos(const QPointF& mouse);

@@ -10,6 +10,10 @@ AddChTexPoly::AddChTexPoly(GlVertReference& glReference) :glVertReference(glRefe
 {
 }
 
+AddChTexPoly::~AddChTexPoly()
+{
+}
+
 void AddPolyEscape::escape()
 {
 	if (addChTexPoly->index.size() == 0) return;

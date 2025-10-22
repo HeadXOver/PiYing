@@ -7,6 +7,7 @@
 #include "ch_element_libre_select.h"
 
 #include "ch_element_tool.h"
+#include "gl_vert_reference.h"
 #include "point_vector.h"
 
 #include "piYingGLContainer.h"
