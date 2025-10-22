@@ -1,6 +1,7 @@
 ﻿#include "piYingGL.h"
 #include "PiYing.h"
 #include "ctrlSlideWidget.h"
+#include "slide_applier.h"
 
 #include <qmenu>
 #include <qmessagebox>
@@ -14,10 +15,10 @@ void PiYingGL::add_trace(int index, const QPolygonF& polygon, const QPoint& mous
 
     for (int i = 0; i < items.size(); ++i)
         tempMenu.addAction(QString("绑定到: %2").arg(items[i]));
-  
+
     QAction* act = tempMenu.exec(mouse);
-    if (act) {
-        int index = tempMenu.actions().indexOf(act);
-        QMessageBox::information(this, "Menu", QString("id: %1").arg(sliders->get_id(index)));
-    }
+    if (!act) return;
+
+    int id = tempMenu.actions().indexOf(act);
+    if(!slide_applier->add_trace(id, index, polygon)) QMessageBox::warning(this, "警告", "轨迹重复");
 }

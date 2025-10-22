@@ -2,12 +2,11 @@
 
 #include <qpolygonf>
 
-CharacterTrace::CharacterTrace()
+CharacterTrace::CharacterTrace(const QPolygonF& poly)
 {
-	trace = new QPolygonF();
+	trace = poly;
 }
 
 CharacterTrace::~CharacterTrace()
 {
-	delete trace;
 }
