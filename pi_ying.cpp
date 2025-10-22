@@ -138,11 +138,7 @@ PiYing::~PiYing()
 {
     delete ui;
 
-    auto safeDelete = [](QObject* obj) 
-        {
-            if (obj && !obj->parent())
-                delete obj;
-        };
+    auto safeDelete = [](QObject* obj) { if (obj && !obj->parent()) delete obj; };
     safeDelete(voidListWidget);
     safeDelete(bgImageList);
     safeDelete(chImageList);
@@ -216,16 +212,15 @@ void PiYing::exportMainSlider()
     QMessageBox::information(this, "提示", "功能尚未实现");
 }
 
-void PiYing::askScreenScale(){
+void PiYing::askScreenScale() {
     RatioDialog dlg(this);
-    if (dlg.exec() == QDialog::Accepted) {
-        Ratio r = dlg.ratio();
+    if (dlg.exec() != QDialog::Accepted) return;
+    Ratio r = dlg.ratio();
 
-        if (r.w == 0 || r.h == 0) return;
+    if (r.w == 0 || r.h == 0) return;
 
-		float ratio = float(r.w) / float(r.h);
-		piYingGLContainer->setRatio(ratio);
-		piYingGLContainer->update();
-		piYingGL->changeRatio(ratio);
-    }
+    float ratio = float(r.w) / float(r.h);
+    piYingGLContainer->setRatio(ratio);
+    piYingGLContainer->update();
+    piYingGL->changeRatio(ratio);
 }
