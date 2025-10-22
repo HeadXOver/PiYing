@@ -343,12 +343,6 @@
     </QtMoc>
   </ItemGroup>
   <ItemGroup>
-    <None Include="bgshapes.vert">
-      <Filter>Shader</Filter>
-    </None>
-    <None Include="bgshapes.frag">
-      <Filter>Shader</Filter>
-    </None>
     <None Include="readme.md" />
     <None Include="darkStyle.qss">
       <Filter>StyleSheets</Filter>
@@ -364,6 +358,18 @@
     </None>
     <None Include="slideStyle.qss">
       <Filter>StyleSheets</Filter>
+    </None>
+    <None Include="bgshapes.frag">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="bgshapes.vert">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="timeline_rect_shape.frag">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="timeline_rect_shape.vert">
+      <Filter>Shader</Filter>
     </None>
   </ItemGroup>
 </Project>

@@ -5,20 +5,29 @@
 
 #include <qmenu>
 #include <qmessagebox>
+#include <QCursor>
 
-void PiYingGL::add_trace(int index, const QPolygonF& polygon, const QPoint& mouse)
+void PiYingGL::add_trace(int index, const QPolygonF& polygon)
 {
     CtrlSlideWidget* sliders = ref_PiYing.sliderWidget[getCurrentChRow()];
     QList<QString> items = sliders->get_slider_names();
 
     QMenu tempMenu(this);
 
-    for (int i = 0; i < items.size(); ++i)
-        tempMenu.addAction(QString("绑定到: %2").arg(items[i]));
+    tempMenu.addAction(QString("新建控制器"));
 
-    QAction* act = tempMenu.exec(mouse);
+    for (int i = 0; i < items.size(); ++i)
+        tempMenu.addAction(QString("绑定到: %1").arg(items[i]));
+
+    QAction* act = tempMenu.exec(QCursor::pos());
     if (!act) return;
 
-    int id = tempMenu.actions().indexOf(act);
+    int id = tempMenu.actions().indexOf(act) - 1;
+
+    if (id == -1) {
+        sliders->addSlider();
+        id = items.size();
+    }
+
     if(!slide_applier->add_trace(sliders->get_id(id), index, polygon)) QMessageBox::warning(this, "警告", "轨迹重复");
 }

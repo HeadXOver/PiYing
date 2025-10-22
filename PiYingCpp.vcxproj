@@ -194,6 +194,8 @@
       </SubType>
     </None>
     <None Include="slideStyle.qss" />
+    <None Include="timeline_rect_shape.frag" />
+    <None Include="timeline_rect_shape.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

@@ -4,6 +4,8 @@
 #include <qopenglfunctions_3_3_Core>
 #include <memory>
 
+#include "static_rect_vert.h"
+
 class QOpenGLShaderProgram;
 
 class TimeLineGL : public QOpenGLWidget, QOpenGLFunctions_3_3_Core
@@ -19,6 +21,8 @@ protected:
 	void paintGL() override;
 
 private:
+	unsigned int VAO, VBO, EBO;
+
 	std::unique_ptr<QOpenGLShaderProgram> rect_shader_program;
 };
 
