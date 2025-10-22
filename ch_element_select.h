@@ -1,6 +1,7 @@
 #pragma once
 
 #include <qpointf>
+#include <memory>
 
 class SelectedPoints;
 class PiYingGL;
@@ -21,7 +22,6 @@ enum class ChElementEditMode {
 struct ChElementSelect final
 {
 	ChElementSelect(GlVertReference& glReference);
-	~ChElementSelect();
 
 	void escape();
 	void deleteElement();
@@ -32,7 +32,7 @@ struct ChElementSelect final
 	void click_select(const QPointF& mouse);
 
 	GlVertReference& glVertReference;
-	SelectedPoints* selected_points;
+	std::unique_ptr<SelectedPoints> selected_points;
 	QPointF lastPos;
 	QPointF handleCenterPoint;
 	QPointF dHandleCenterPoint;

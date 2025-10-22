@@ -17,15 +17,14 @@ struct ChElementLibreSelect final
 {
 public:
 	ChElementLibreSelect(GlVertReference& glReference);
-	~ChElementLibreSelect();
 
 	void draw(QPainter& painter);
 	void clickPos(const QPointF& mouse);
 	void movePos(const QPointF& mouse);
 	void releasePos(const QPointF& mouse);
 
-	ChElementSelect* chElementSelect;
-	QPolygonF* polygon;
+	std::unique_ptr<ChElementSelect> chElementSelect;
+	std::unique_ptr<QPolygonF> polygon;
 	bool drawing = false;
 	bool edit_skelen{ false };
 };

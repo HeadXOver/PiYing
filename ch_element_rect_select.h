@@ -13,16 +13,15 @@ class PiYingGL;
 struct ChElementRectSelect final
 {
 	ChElementRectSelect(GlVertReference& glReference);
-	~ChElementRectSelect();
 
 	void draw(QPainter& painter);
 	void clickPos(const QPointF& mouse);
 	void movePos(const QPointF& mouse);
 	void releasePos(const QPointF& mouse);
 
-	ChElementSelect* chElementSelect;
+	std::unique_ptr<ChElementSelect> chElementSelect;
 	const bool edit_skelen{ false };
-	QPointF* rect;
+	std::unique_ptr<QPointF> rect;
 	bool isDraw = false;
 };
 

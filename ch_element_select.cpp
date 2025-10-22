@@ -14,12 +14,7 @@
 
 ChElementSelect::ChElementSelect(GlVertReference& glReference) : glVertReference(glReference), edit_skelen(glReference.gl.editMode == EditMode::characterSkeleton)
 {
-    selected_points = new SelectedPoints(false, *(glVertReference.pointLayer));
-}
-
-ChElementSelect::~ChElementSelect()
-{
-    delete selected_points;
+    selected_points = std::make_unique<SelectedPoints>(false, *(glVertReference.pointLayer));
 }
 
 void ChElementSelect::escape() 

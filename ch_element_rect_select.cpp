@@ -10,15 +10,10 @@
 #include <qpainter>
 #include <qpointf>
 
-ChElementRectSelect::ChElementRectSelect(GlVertReference& glReference) :chElementSelect(new ChElementSelect(glReference)), edit_skelen(glReference.gl.editMode == EditMode::characterSkeleton)
+ChElementRectSelect::ChElementRectSelect(GlVertReference& glReference) :edit_skelen(glReference.gl.editMode == EditMode::characterSkeleton)
 {
-	rect = new QPointF();
-}
-
-ChElementRectSelect::~ChElementRectSelect()
-{
-	delete rect;
-	delete chElementSelect;
+	chElementSelect = std::make_unique<ChElementSelect>(glReference);
+	rect = std::make_unique<QPointF>();
 }
 
 void ChElementRectSelect::draw(QPainter& painter)

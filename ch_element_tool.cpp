@@ -3,11 +3,13 @@
 #include "piYingGL.h"
 #include "add_triangle.h"
 #include "add_ch_tex_poly.h"
+#include "ch_element_select.h"
 #include "ch_element_rect_select.h"
 #include "ch_element_libre_select.h"
 #include "ch_element_add_round.h"
 #include "ch_add_vert_trace.h"
 #include "gl_vert_reference.h"
+#include "SelectedPoints.h"
 
 #include <memory>
 #include <qpointf>

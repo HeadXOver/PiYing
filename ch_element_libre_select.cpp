@@ -11,15 +11,10 @@
 #include <qpainter>
 #include <qpointf>
 
-ChElementLibreSelect::ChElementLibreSelect(GlVertReference& glReference) :chElementSelect(new ChElementSelect(glReference)), edit_skelen(glReference.gl.editMode == EditMode::characterSkeleton)
+ChElementLibreSelect::ChElementLibreSelect(GlVertReference& glReference) :edit_skelen(glReference.gl.editMode == EditMode::characterSkeleton)
 {
-	polygon = new QPolygonF();
-}
-
-ChElementLibreSelect::~ChElementLibreSelect()
-{
-	delete polygon;
-	delete chElementSelect;
+	chElementSelect = std::make_unique<ChElementSelect>(glReference);
+	polygon = std::make_unique<QPolygonF>();
 }
 
 void ChElementLibreSelect::draw(QPainter& painter)
