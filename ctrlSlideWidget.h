@@ -16,10 +16,16 @@ public:
 
     void addSlider(QString name = "Slider");
 
+    QList<QString> get_slider_names();
+    
+    int get_id(int index) const;
+
 private:
     void setSlider(CtrlSlideLayout* slider);
     void removeSlider(CtrlSlideLayout* slider);
     void setName(CtrlSlideLayout* slider);
+
+    QString get_unique_name(const QString& str);
 
 private:
     QList<CtrlSlideLayout*> sliderList;

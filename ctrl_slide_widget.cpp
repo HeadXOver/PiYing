@@ -51,7 +51,7 @@ CtrlSlideWidget::~CtrlSlideWidget()
 
 void CtrlSlideWidget::addSlider(QString name)
 {
-    CtrlSlideLayout* ctrlSlideLayout = new CtrlSlideLayout(piYingGL, name, 0, 100, 50, get_unique_id(sliderList), this);
+    CtrlSlideLayout* ctrlSlideLayout = new CtrlSlideLayout(piYingGL, get_unique_name(name), 0, 100, 50, get_unique_id(sliderList), this);
     sliderList.append(ctrlSlideLayout);
 
     sliderLayout->insertWidget(sliderCount, sliderList[sliderCount++]);
@@ -91,6 +91,37 @@ void CtrlSlideWidget::setName(CtrlSlideLayout* slider)
         &ok
     );
 
-    if (ok) slider->label->setText(text);
+    if (ok) slider->label->setText(get_unique_name(text));
 }
 
+QString CtrlSlideWidget::get_unique_name(const QString& str)
+{
+    QString name;
+    for (int i = 0;; i++) {
+        if(i) name = str + QString::number(i);
+        else name = str;
+        bool isExist = false;
+        for (int j = 0; j < sliderList.size(); j++) {
+            if (sliderList[j]->label->text() == name) {
+                isExist = true;
+                break;
+            }
+        }
+        if (!isExist) break;
+    }
+    return name;
+}
+
+QList<QString> CtrlSlideWidget::get_slider_names()
+{
+    QList<QString> names;
+    for (int i = 0; i < sliderList.size(); i++) {
+        names.append(sliderList[i]->label->text());
+    }
+    return names;
+}
+
+int CtrlSlideWidget::get_id(int index) const 
+{
+    return sliderList[index]->id_;
+}

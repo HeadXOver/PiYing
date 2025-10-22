@@ -52,7 +52,7 @@ void ChAddVertTrace::release(const QPointF& mouse)
 		return;
 	}
 
-	glVertReference.gl.add_trace(current_index, *polygon);
+	glVertReference.gl.add_trace(current_index, *polygon, QPoint(mouse.x(), mouse.y()));
 
 	current_index = -1;
 	polygon->clear();
