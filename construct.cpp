@@ -2,6 +2,9 @@
 #include "piYing.h"
 #include "image_transform.h"
 #include "ch_element_tool.h"
+#include "slide_applier.h"
+#include "image_texture.h"
+#include "point_vector.h"
 
 #include <qlabel>
 #include <QOpenGLShaderProgram.h>
@@ -10,6 +13,7 @@
 
 PiYingGL::PiYingGL(PiYing& parent) : QOpenGLWidget(&parent), ref_PiYing(parent), ctrlSlideWidget(ref_PiYing.sliderWidget)
 {
+	slide_applier = std::make_unique<SlideApplier>();
 
 	bgShaderProgram = std::make_unique<QOpenGLShaderProgram>(this);
 	chShaderProgram = std::make_unique<QOpenGLShaderProgram>(this);
@@ -102,4 +106,23 @@ PiYingGL::PiYingGL(PiYing& parent) : QOpenGLWidget(&parent), ref_PiYing(parent),
 #pragma endregion
 
 	setMouseTracking(true);
+}
+
+PiYingGL::~PiYingGL()
+{
+	makeCurrent();
+
+	////////////////////////////////////////
+
+	glDeleteBuffers(1, &bgVBO);
+	glDeleteVertexArrays(1, &bgVAO);
+	glDeleteBuffers(1, &bgEBO);
+
+	////////////////////////////////////////
+
+	doneCurrent();
+
+	for (ImageTexture* ch : characterTextures) delete ch;
+	for (ImageTexture* bg : backGrounds) delete bg;
+	for (PointVector* pv : characterVerts) delete pv;
 }

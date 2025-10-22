@@ -42,9 +42,6 @@
     <Filter Include="Header Files\PiYingWidget">
       <UniqueIdentifier>{c1f76cac-578d-4b43-95f0-97d8a67646ba}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\controlSlide">
-      <UniqueIdentifier>{424e17ba-20f1-4c6b-b386-474e4e29da49}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\PiYingElement">
       <UniqueIdentifier>{c7897473-4aa2-4a1e-b9e9-6cd904a6eac6}</UniqueIdentifier>
     </Filter>
@@ -74,6 +71,9 @@
     </Filter>
     <Filter Include="Header Files\PiYngQObject\controlSlide">
       <UniqueIdentifier>{c0057a86-6107-48ca-ad48-031747d11860}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\PiYingQObject\controlSlide">
+      <UniqueIdentifier>{424e17ba-20f1-4c6b-b386-474e4e29da49}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -131,10 +131,10 @@
       <Filter>Source Files\ChELementTool</Filter>
     </ClCompile>
     <ClCompile Include="ctrl_slide_layout.cpp">
-      <Filter>Source Files\controlSlide</Filter>
+      <Filter>Source Files\PiYingQObject\controlSlide</Filter>
     </ClCompile>
     <ClCompile Include="ctrl_slide_widget.cpp">
-      <Filter>Source Files\controlSlide</Filter>
+      <Filter>Source Files\PiYingQObject\controlSlide</Filter>
     </ClCompile>
     <ClCompile Include="ask_transform_dialog.cpp">
       <Filter>Source Files\PiYingQObject</Filter>
@@ -208,14 +208,14 @@
     <ClCompile Include="add_trace.cpp">
       <Filter>Source Files\piYingGL</Filter>
     </ClCompile>
+    <ClCompile Include="slide_applier.cpp">
+      <Filter>Source Files\PiYingElement</Filter>
+    </ClCompile>
     <ClCompile Include="character_traces.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\PiYingElement</Filter>
     </ClCompile>
     <ClCompile Include="character_trace.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="slide_applier.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\PiYingElement</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -300,14 +300,14 @@
     <ClInclude Include="enum_edit_mode.h">
       <Filter>Header Files\staticConst</Filter>
     </ClInclude>
+    <ClInclude Include="slide_applier.h">
+      <Filter>Header Files\PiYingElememt</Filter>
+    </ClInclude>
     <ClInclude Include="character_traces.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\PiYingElememt</Filter>
     </ClInclude>
     <ClInclude Include="character_trace.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="slide_applier.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\PiYingElememt</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

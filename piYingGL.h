@@ -32,6 +32,7 @@ class ChElementTool;
 class QOpenGLShaderProgram;
 class PointVector;
 class CtrlSlideWidget;
+class SlideApplier;
 
 class PiYingGL : public QOpenGLWidget, QOpenGLFunctions_3_3_Core
 {
@@ -175,4 +176,6 @@ private:
 	std::unique_ptr<ChElementTool> ch_element_tool_;
 
 	QList<CtrlSlideWidget*>& ctrlSlideWidget;
+
+	std::unique_ptr<SlideApplier> slide_applier;
 };
