@@ -6,7 +6,7 @@
 #include <qimage>
 #include <qpointf>
 
-ImageTexture::ImageTexture(QImage& image)
+ImageTexture::ImageTexture(const QImage& image)
 {
     transform_ = std::make_unique<ImageTransform>();
 

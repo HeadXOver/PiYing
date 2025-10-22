@@ -11,7 +11,7 @@ class QMatrix4x4;
 class ImageTexture final
 {
 public:
-    ImageTexture(QImage& image);
+    ImageTexture(const QImage& image);
     ~ImageTexture();
 
     void operator=(const ImageTransform& transform);

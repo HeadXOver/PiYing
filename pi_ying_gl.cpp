@@ -71,7 +71,7 @@ bool PiYingGL::addBackground(const QString& imageName, QImage& image)
 	return true;
 }
 
-void PiYingGL::appendBgList(QImage& image)
+void PiYingGL::appendBgList(const QImage& image)
 {
 	backGrounds.append(new ImageTexture(image));
 
@@ -298,7 +298,7 @@ MousePos PiYingGL::getMousePosType(const QPointF& point) const
 	return MousePos::OutSide;
 }
 
-Qt::CursorShape PiYingGL::getCursorShape(const MousePos& pos)
+Qt::CursorShape PiYingGL::getCursorShape(const MousePos& pos) const
 {
 	if (pos == MousePos::OutSide) return Qt::ArrowCursor;
 	if (pos == MousePos::Inside) return Qt::OpenHandCursor;

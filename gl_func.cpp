@@ -81,15 +81,3 @@ void PiYingGL::paintGL() {
 		draw_ch_applied_vert();
 	}
 }
-
-void PiYingGL::resizeGL(int w, int h) {
-
-}
-
-void PiYingGL::currentUpdate()
-{
-	makeCurrent();
-	paintBackgrounds();
-	update();
-	doneCurrent();
-}

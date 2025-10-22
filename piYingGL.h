@@ -62,7 +62,6 @@ private slots:
 
 protected:
 	void initializeGL() override;
-	void resizeGL(int w, int h) override;
 	void paintGL() override;
 
 	void mousePressEvent(QMouseEvent* event) override;
@@ -73,7 +72,7 @@ protected:
 
 public:
 	void addBackground(const QString& imageName);
-	void appendBgList(QImage& image);
+	void appendBgList(const QImage& image);
 	void addCharacter(const QString& imageName);
 	void controlSlide(int id, int value);
 	void setEditMode(EditMode mode);
@@ -86,10 +85,9 @@ public:
 	void changeRatio(float ratio);
 	void importBackground();
 	void importChatacter();
-	void currentUpdate();
-	void bgRotationControl(const QPointF& mouse, ImageTexture* image);
-	void bgTranslateControl(const QPointF& mouse, ImageTexture* image);
-	void bgScaleControl(const QPointF& mouse, ImageTexture* image);
+	void bgRotationControl(const QPointF& mouse, ImageTexture& image);
+	void bgTranslateControl(const QPointF& mouse, ImageTexture& image);
+	void bgScaleControl(const QPointF& mouse, ImageTexture& image);
 	void viewRotationControl(const QPointF& mouse);
 	void drawChEditVert(int currentVector);
 	void draw_ch_applied_vert();
@@ -100,13 +98,13 @@ public:
 
 	QPointF getRaletiveToRect(const QPointF& point, const ImageTransform& transform) const;
 	QPointF getRaletiveToGlobal(const QPointF& point, const ImageTransform& transform) const;
-	QPointF mapToGL(const QPointF& point);
-	QPointF mapToGL(float x, float y);
-	QPointF glToMap(const QPointF& point);
-	QPointF mapViewProjMatrix(const QPointF& point);
-	QPointF GLViewProjMatrixInvert(float x, float y);
-	QPointF GLViewProjMatrixInvert(const QPointF& point);
-	QPointF GLViewMatrixInvert(const QPointF& point);
+	QPointF mapToGL(const QPointF& point) const;
+	QPointF mapToGL(float x, float y) const;
+	QPointF glToMap(const QPointF& point) const;
+	QPointF mapViewProjMatrix(const QPointF& point) const;
+	QPointF GLViewProjMatrixInvert(float x, float y) const;
+	QPointF GLViewProjMatrixInvert(const QPointF& point) const;
+	QPointF GLViewMatrixInvert(const QPointF& point) const;
 
 	QMatrix4x4 getViewMatrixInvert() const;
 	QMatrix4x4 getViewMatrix() const;
@@ -121,7 +119,7 @@ public:
 
 	MousePos getMousePosType(const QPointF& point) const;
 
-	Qt::CursorShape getCursorShape(const MousePos& pos);
+	Qt::CursorShape getCursorShape(const MousePos& pos) const;
 
 	QList<PointVector*>& ref_characterVerts() { return characterVerts; }
 	PointVector& ref_characterVerts(int index) { return *(characterVerts[index]); }

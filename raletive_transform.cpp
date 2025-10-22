@@ -12,35 +12,35 @@ QPointF PiYingGL::getRaletiveToGlobal(const QPointF& point, const ImageTransform
 	return getBgShaderMatrix(transform).map(point);
 }
 
-QPointF PiYingGL::mapToGL(const QPointF& point)
+QPointF PiYingGL::mapToGL(const QPointF& point) const
 { 
 	return QPointF((point.x() / float(width())) * 2.0f - 1.0f, 1.0f - (point.y() / float(height())) * 2.0f); 
 }
-QPointF PiYingGL::mapToGL(float x, float y)
+QPointF PiYingGL::mapToGL(float x, float y) const
 { 
 	return QPointF((x / float(width())) * 2.0f - 1.0f, 1.0f - (y / float(height())) * 2.0f); 
 }
 
-QPointF PiYingGL::glToMap(const QPointF& point)
+QPointF PiYingGL::glToMap(const QPointF& point) const
 { 
 	return QPointF((point.x() + 1.0f) * width() / 2, (1.0f - point.y()) * height() / 2); 
 }
 
-QPointF PiYingGL::mapViewProjMatrix(const QPointF& point)
+QPointF PiYingGL::mapViewProjMatrix(const QPointF& point) const
 { 
 	return glToMap(getViewProjMatrix().map(point)); 
 }
-QPointF PiYingGL::GLViewProjMatrixInvert(float x, float y)
+QPointF PiYingGL::GLViewProjMatrixInvert(float x, float y) const
 { 
 	return getViewProjMatrixInvert().map(mapToGL(x, y)); 
 }
 
-QPointF PiYingGL::GLViewProjMatrixInvert(const QPointF& point)
+QPointF PiYingGL::GLViewProjMatrixInvert(const QPointF& point) const
 { 
 	return getViewProjMatrixInvert().map(mapToGL(point)); 
 }
 
-QPointF PiYingGL::GLViewMatrixInvert(const QPointF& point)
+QPointF PiYingGL::GLViewMatrixInvert(const QPointF& point) const
 {
 	return getViewMatrixInvert().map(mapToGL(point));
 }

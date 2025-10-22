@@ -57,7 +57,7 @@ void PiYingGL::mouseMoveEvent(QMouseEvent* event) {
 	QPointF mouse = mapToGL(event->position());
 	if (event->buttons() == Qt::LeftButton) {
 		if (lastMousePosType != MousePos::OutSide) {
-			ImageTexture* item = backGrounds[ref_PiYing.getCurrentBgRow()];
+			ImageTexture& item = *backGrounds[ref_PiYing.getCurrentBgRow()];
 			if (editMode == EditMode::BackGround) {
 				if (KeyboardStateWin::isAltHeld())
 					bgRotationControl(mouse, item);
@@ -66,7 +66,7 @@ void PiYingGL::mouseMoveEvent(QMouseEvent* event) {
 				else
 					bgScaleControl(mouse, item);
 
-				currentUpdate();
+				update();
 			}
 		}
 		else if (editMode == EditMode::characterTexture || editMode == EditMode::characterSkeleton || editMode == EditMode::controlSlide) {
@@ -83,7 +83,7 @@ void PiYingGL::mouseMoveEvent(QMouseEvent* event) {
 			viewTransX.setValue(lastViewTransX + toTrans.x());
 			viewTransY.setValue(lastViewTransY + toTrans.y());
 		}
-		currentUpdate();
+		update();
 	}
 	else {
 		if (editMode != EditMode::BackGround) return;
@@ -103,7 +103,7 @@ void PiYingGL::wheelEvent(QWheelEvent* ev) {
 	viewTransX.setValue(viewTransX.value() * scaleFactor + toTrans.x());
 	viewTransY.setValue(viewTransY.value() * scaleFactor + toTrans.y());
 
-	currentUpdate();
+	update();
 	ev->accept();
 }
 
