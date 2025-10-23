@@ -5,6 +5,7 @@
 #include "piYingGLContainer.h"
 #include "tool_button.h"
 #include "time_line_gl.h"
+#include "slide_applier.h"
 
 #include "ui_PiYing.h"
 
@@ -17,6 +18,8 @@
 
 PiYing::PiYing(QWidget* parent) : QMainWindow(parent) 
 {
+    slide_applier = std::make_unique<SlideApplier>();
+
     ui = new Ui::PiYingClass();
     ui->setupUi(this);
     setWindowTitle("皮影");
@@ -29,7 +32,7 @@ PiYing::PiYing(QWidget* parent) : QMainWindow(parent)
     chImageList = new QListWidget();
 
     // OpenGL widget
-    piYingGL = new PiYingGL(*this);
+    piYingGL = new PiYingGL(*this, *slide_applier);
     piYingGLContainer = new PiYingGLContainer(*piYingGL, ratio, this);
 
     timeLineGL = new TimeLineGL(this);

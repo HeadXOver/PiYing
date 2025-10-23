@@ -39,7 +39,7 @@ class PiYingGL : public QOpenGLWidget, QOpenGLFunctions_3_3_Core
 	Q_OBJECT
 
 public:
-	explicit PiYingGL(PiYing& parent);
+	explicit PiYingGL(PiYing& parent, SlideApplier& slideApplier);
 	~PiYingGL();
 
 private:
@@ -177,5 +177,5 @@ private:
 
 	QList<CtrlSlideWidget*>& ctrlSlideWidget;
 
-	std::unique_ptr<SlideApplier> slide_applier;
+	SlideApplier& slide_applier;
 };

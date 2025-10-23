@@ -5,13 +5,14 @@
 class CtrlSlideLayout;
 class QVBoxLayout;
 class PiYingGL;
+class SlideApplier;
 
 class CtrlSlideWidget : public QWidget
 {
     Q_OBJECT
 
 public:
-    CtrlSlideWidget(PiYingGL& gl, const QString& name, QWidget* parent = nullptr);
+    CtrlSlideWidget(PiYingGL& gl, const QString& name, SlideApplier& slideApplier, QWidget* parent = nullptr);
     ~CtrlSlideWidget();
 
     void addSlider(QString name = "Slider");
@@ -29,6 +30,8 @@ private:
 
 private:
     QList<CtrlSlideLayout*> sliderList;
+
+    SlideApplier& slide_applier;
 
     QVBoxLayout* sliderLayout = nullptr;
     int sliderCount = 0;

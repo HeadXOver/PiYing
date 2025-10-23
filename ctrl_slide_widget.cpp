@@ -4,6 +4,7 @@
 #include "cus_func_get_unique_id.h"
 
 #include "piYingGL.h"
+#include "slide_applier.h"
 
 #include <QPushbutton>
 #include <QBoxLayout>
@@ -12,7 +13,10 @@
 #include <qlabel>
 #include <qslider>
 
-CtrlSlideWidget::CtrlSlideWidget(PiYingGL& gl, const QString& name, QWidget* parent) : QWidget(parent), piYingGL(gl)
+CtrlSlideWidget::CtrlSlideWidget(PiYingGL& gl, const QString& name, SlideApplier& slideApplier, QWidget* parent) :
+    QWidget(parent), 
+    piYingGL(gl),
+    slide_applier(slideApplier)
 {
     sliderLayout = new QVBoxLayout(this);
 
@@ -74,8 +78,9 @@ void CtrlSlideWidget::removeSlider(CtrlSlideLayout* slider)
         sliderList.removeAt(i);
         sliderLayout->removeWidget(slider);
         delete slider;
+
         sliderCount--;
-        break;
+        return;
     }
 }
 

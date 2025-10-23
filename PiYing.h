@@ -11,6 +11,7 @@ class PiYingGLContainer;
 class QListWidget;
 class QSplitter;
 class QSlider;
+class SlideApplier;
 
 namespace Ui{
 	class PiYingClass;
@@ -70,5 +71,7 @@ public:
 	QListWidget* voidListWidget;
 
 	QList<CtrlSlideWidget*> sliderWidget;
+
+	std::unique_ptr<SlideApplier> slide_applier;
 };
 

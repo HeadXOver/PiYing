@@ -84,7 +84,7 @@ void PiYingGL::addCharacter(const QString& imageName)
 
 	ref_PiYing.chImageList->addItem(item);
 
-	CtrlSlideWidget* sliderWidget = new CtrlSlideWidget(*this, "1");
+	CtrlSlideWidget* sliderWidget = new CtrlSlideWidget(*this, "1", slide_applier);
 
 	QFile qss(":/PiYing/slideStyle.qss");
 	if (qss.open(QFile::ReadOnly)) {
