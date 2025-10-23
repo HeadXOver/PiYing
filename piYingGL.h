@@ -33,13 +33,14 @@ class QOpenGLShaderProgram;
 class PointVector;
 class CtrlSlideWidget;
 class SlideApplier;
+class CharacterTrace;
 
 class PiYingGL : public QOpenGLWidget, QOpenGLFunctions_3_3_Core
 {
 	Q_OBJECT
 
 public:
-	explicit PiYingGL(PiYing& parent, SlideApplier& slideApplier);
+	explicit PiYingGL(PiYing& parent);
 	~PiYingGL();
 
 private:
@@ -75,7 +76,7 @@ public:
 	void addBackground(const QString& imageName);
 	void appendBgList(const QImage& image);
 	void addCharacter(const QString& imageName);
-	void controlSlide(int id, int value);
+	void controlSlide(const std::map<int, std::unique_ptr<CharacterTrace>>& traces, int value);
 	void setEditMode(EditMode mode);
 	void updateChTool();
 	void setChTool(CharacterToolState state);
@@ -176,6 +177,4 @@ private:
 	std::unique_ptr<ChElementTool> ch_element_tool_;
 
 	QList<CtrlSlideWidget*>& ctrlSlideWidget;
-
-	SlideApplier& slide_applier;
 };

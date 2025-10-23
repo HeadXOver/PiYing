@@ -11,11 +11,10 @@
 #include <qmenu>
 #include <qstatusbar>
 
-PiYingGL::PiYingGL(PiYing& parent, SlideApplier& slideApplier) : 
+PiYingGL::PiYingGL(PiYing& parent) : 
 	QOpenGLWidget(&parent), 
 	ref_PiYing(parent), 
-	ctrlSlideWidget(ref_PiYing.sliderWidget),
-	slide_applier(slideApplier)
+	ctrlSlideWidget(ref_PiYing.sliderWidget)
 {
 
 	bgShaderProgram = std::make_unique<QOpenGLShaderProgram>(this);

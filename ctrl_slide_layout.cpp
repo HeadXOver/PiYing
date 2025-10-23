@@ -1,5 +1,6 @@
 ﻿#include "ctrlSlideLayout.h"
 #include "ctrlSlideWidget.h"
+#include "slide_applier.h"
 
 #include "piYingGL.h"
 
@@ -10,7 +11,10 @@
 #include <qmessagebox>
 #include <qmenu>
 
-CtrlSlideLayout::CtrlSlideLayout(PiYingGL& gl, QString labelName, int min, int max, int defaultValue, int id, QWidget* parent) :piYingGL(gl), id_(id), QWidget(parent)
+CtrlSlideLayout::CtrlSlideLayout(PiYingGL& gl, SlideApplier& slideApplier, QString labelName, int min, int max, int defaultValue, int id, QWidget* parent) :
+    piYingGL(gl), 
+    id_(id), QWidget(parent),
+    slide_applier(slideApplier)
 {
     layout = new QHBoxLayout(this);
     label = new QLabel(labelName, this);
@@ -27,7 +31,11 @@ CtrlSlideLayout::CtrlSlideLayout(PiYingGL& gl, QString labelName, int min, int m
     layout->addWidget(slider);
     layout->addWidget(rightButton);
 
-    connect(slider, &QSlider::valueChanged, this, [this](int value) { piYingGL.controlSlide(id_, value); });
+    connect(slider, &QSlider::valueChanged, this, [this](int value)
+        {
+            piYingGL.controlSlide(slide_applier.get_traces(id_), value);
+        }
+    );
 
     setLayout(layout);
 }

@@ -13,11 +13,11 @@
 #include <qlabel>
 #include <qslider>
 
-CtrlSlideWidget::CtrlSlideWidget(PiYingGL& gl, const QString& name, SlideApplier& slideApplier, QWidget* parent) :
+CtrlSlideWidget::CtrlSlideWidget(PiYingGL& gl, const QString& name, QWidget* parent) :
     QWidget(parent), 
-    piYingGL(gl),
-    slide_applier(slideApplier)
+    piYingGL(gl)
 {
+    slide_applier = std::make_unique<SlideApplier>();
     sliderLayout = new QVBoxLayout(this);
 
     QPushButton* headButton = new QPushButton(this);
@@ -55,11 +55,16 @@ CtrlSlideWidget::~CtrlSlideWidget()
 
 void CtrlSlideWidget::addSlider(QString name)
 {
-    CtrlSlideLayout* ctrlSlideLayout = new CtrlSlideLayout(piYingGL, get_unique_name(name), 0, 100, 50, get_unique_id(sliderList), this);
+    CtrlSlideLayout* ctrlSlideLayout = new CtrlSlideLayout(piYingGL, *slide_applier, get_unique_name(name), 0, 100, 50, get_unique_id(sliderList), this);
     sliderList.append(ctrlSlideLayout);
 
     sliderLayout->insertWidget(sliderCount, sliderList[sliderCount++]);
     connect(ctrlSlideLayout->rightButton,   &QPushButton::pressed, this, [ctrlSlideLayout, this] { setSlider(ctrlSlideLayout); });
+}
+
+bool CtrlSlideWidget::add_trace(int id, int index, const QPolygonF& trace) 
+{
+    return slide_applier->add_trace(id, index, trace);
 }
 
 void CtrlSlideWidget::setSlider(CtrlSlideLayout* slider)
@@ -77,7 +82,7 @@ void CtrlSlideWidget::removeSlider(CtrlSlideLayout* slider)
 
         sliderList.removeAt(i);
         sliderLayout->removeWidget(slider);
-        slide_applier.remove_slider_by_id(slider->id_);
+        slide_applier->remove_slider_by_id(slider->id_);
         delete slider;
         sliderCount--;
         return;

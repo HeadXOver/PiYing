@@ -71,7 +71,5 @@ public:
 	QListWidget* voidListWidget;
 
 	QList<CtrlSlideWidget*> sliderWidget;
-
-	std::unique_ptr<SlideApplier> slide_applier;
 };
 

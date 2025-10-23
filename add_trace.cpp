@@ -29,5 +29,5 @@ void PiYingGL::add_trace(int index, const QPolygonF& polygon)
         id = items.size();
     }
 
-    if(!slide_applier.add_trace(sliders->get_id(id), index, polygon)) QMessageBox::warning(this, "警告", "轨迹重复");
+    if(!sliders->add_trace(sliders->get_id(id), index, polygon)) QMessageBox::warning(this, "警告", "轨迹重复");
 }
