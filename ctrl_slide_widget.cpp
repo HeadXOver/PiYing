@@ -77,8 +77,8 @@ void CtrlSlideWidget::removeSlider(CtrlSlideLayout* slider)
 
         sliderList.removeAt(i);
         sliderLayout->removeWidget(slider);
+        slide_applier.remove_slider_by_id(slider->id_);
         delete slider;
-
         sliderCount--;
         return;
     }

@@ -25,3 +25,8 @@ const std::map<int, std::unique_ptr<CharacterTrace>>& SlideApplier::get_traces(i
 {
     return slide_map[id];
 }
+
+void SlideApplier::remove_slider_by_id(int id)
+{
+    slide_map.erase(id);
+}
