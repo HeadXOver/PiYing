@@ -90,7 +90,7 @@ void PiYingGL::againstBg()
 
 void PiYingGL::deleteBg()
 {
-	int ret = QMessageBox::question(
+	const int ret = QMessageBox::question(
 		this,
 		tr("提示"),
 		tr("删除背景图？"),
@@ -102,14 +102,13 @@ void PiYingGL::deleteBg()
 
 	delete backGrounds[getCurrentBgRow()];
 	backGrounds.removeAt(getCurrentBgRow());
-	QListWidgetItem* item = ref_PiYing.bgImageList->takeItem(getCurrentBgRow());
-	delete item;
+	delete ref_PiYing.bgImageList->takeItem(getCurrentBgRow());
 	update();
 }
 
 void PiYingGL::deleteAllBg()
 {
-	int ret = QMessageBox::question(
+	const int ret = QMessageBox::question(
 		this,
 		tr("提示"),
 		tr("删除全部背景图？"),
@@ -122,6 +121,9 @@ void PiYingGL::deleteAllBg()
 			delete item;
 		}
 		backGrounds.clear();
+		for (int i = ref_PiYing.bgImageList->count() - 1; i >= 0; i--) {
+			delete ref_PiYing.bgImageList->takeItem(i);
+		}
 		ref_PiYing.bgImageList->clear();
 		update();
 	}
