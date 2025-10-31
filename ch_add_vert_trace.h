@@ -3,6 +3,7 @@
 #include "ch_element_tool_behavior.h"
 
 #include <memory>
+#include <qpolygon>
 
 struct GlVertReference;
 class PiYingGL;
@@ -20,7 +21,7 @@ struct ChAddVertTrace final
 
 	int current_index = -1;
 	bool presse_on_vert = false;
-	std::unique_ptr<QPolygonF> polygon;
+	QPolygonF polygon;
 
 	GlVertReference& glVertReference;
 };

@@ -8,7 +8,6 @@
 
 ChAddVertTrace::ChAddVertTrace(GlVertReference& glReference):glVertReference(glReference)
 {
-	polygon = std::make_unique<QPolygonF>();
 }
 
 ChAddVertTrace::~ChAddVertTrace()
@@ -25,7 +24,7 @@ void ChAddVertTrace::click(const QPointF& mouseOri)
         if (QLineF(existPoint, mouse).length() < 0.02f / glVertReference.gl.viewScale.value()) {
             current_index = i;
 			presse_on_vert = true;
-			*polygon << existPoint;
+			polygon << existPoint;
 
             return;
         }
@@ -39,23 +38,23 @@ void ChAddVertTrace::move(const QPointF& mouse)
 	if(!presse_on_vert) return;
 
 	QPointF mapedMouse = glVertReference.gl.GLViewProjMatrixInvert(mouse);
-	if (polygon->isEmpty() || polygon->last() != mapedMouse) *polygon << mapedMouse;
+	if (polygon.isEmpty() || polygon.last() != mapedMouse) polygon << mapedMouse;
 }
 
 void ChAddVertTrace::release(const QPointF& mouse) 
 {
 	presse_on_vert = false;
 
-	if (polygon->size() < 3) {
+	if (polygon.size() < 3) {
 		current_index = -1;
-		polygon->clear();
+		polygon.clear();
 		return;
 	}
 
-	glVertReference.gl.add_trace(current_index, *polygon);
+	glVertReference.gl.add_trace(current_index, polygon);
 
 	current_index = -1;
-	polygon->clear();
+	polygon.clear();
 }
 
 void ChAddVertTrace::draw(QPainter& painter)
@@ -70,13 +69,13 @@ void ChAddVertTrace::draw(QPainter& painter)
 	painter.setPen(QPen(Qt::red, 6));
 	painter.drawPoint(selectPoint);
 
-	if (polygon->isEmpty()) return;
+	if (polygon.isEmpty()) return;
 
 	painter.setPen(QPen(Qt::yellow, 1));
 
 	QPolygonF screenPoly;
-	screenPoly.reserve(polygon->size());
-	std::transform(polygon->cbegin(), polygon->cend(),
+	screenPoly.reserve(polygon.size());
+	std::transform(polygon.cbegin(), polygon.cend(),
 		std::back_inserter(screenPoly),
 		[this](const QPointF& p) { return glVertReference.gl.mapViewProjMatrix(p); }
 	);

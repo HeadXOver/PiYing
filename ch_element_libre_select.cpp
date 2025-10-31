@@ -13,23 +13,21 @@
 
 ChElementLibreSelect::ChElementLibreSelect(GlVertReference& glReference) :edit_skelen(glReference.gl.editMode == EditMode::characterSkeleton)
 {
-	chElementSelect = std::make_unique<ChElementSelect>(glReference);
-	polygon = std::make_unique<QPolygonF>();
 }
 
 void ChElementLibreSelect::draw(QPainter& painter)
 {
 	chElementSelect->draw_handle_and_selected(painter);
 
-	if (!polygon->isEmpty()) {
+	if (!polygon.isEmpty()) {
 		if (drawing) {
 			painter.setPen(QPen(Qt::yellow, 1));
 
 			auto mapper = [this](const QPointF& p) { return chElementSelect->glVertReference.gl.mapViewProjMatrix(p); };
 
 			QPolygonF screenPoly;
-			screenPoly.reserve(polygon->size());
-			std::transform(polygon->cbegin(), polygon->cend(),
+			screenPoly.reserve(polygon.size());
+			std::transform(polygon.cbegin(), polygon.cend(),
 				std::back_inserter(screenPoly),
 				mapper
 			);
@@ -45,7 +43,7 @@ void ChElementLibreSelect::clickPos(const QPointF& mouseOri)
 	chElementSelect->isPress = true;
 	chElementSelect->lastPos = mouseOri;
 
-	polygon->clear();
+	polygon.clear();
 
 	chElementSelect->changeEditMode();
 
@@ -56,7 +54,7 @@ void ChElementLibreSelect::clickPos(const QPointF& mouseOri)
 
 	const QPointF mouse = chElementSelect->glVertReference.gl.getViewProjMatrixInvert().map(chElementSelect->glVertReference.gl.mapToGL(mouseOri));
 
-	*polygon << mouse;
+	polygon << mouse;
 
 	chElementSelect->click_select(mouse);
 }
@@ -75,9 +73,9 @@ void ChElementLibreSelect::movePos(const QPointF& mouse)
 	drawing = true;
 
 	QPointF mapedMouse = chElementSelect->glVertReference.gl.GLViewProjMatrixInvert(mouse);
-	if (!polygon->isEmpty() && polygon->last() == mapedMouse) return;
+	if (!polygon.isEmpty() && polygon.last() == mapedMouse) return;
 
-	*polygon << mapedMouse;
+	polygon << mapedMouse;
 }
 
 void ChElementLibreSelect::releasePos(const QPointF& mouse)
@@ -86,9 +84,9 @@ void ChElementLibreSelect::releasePos(const QPointF& mouse)
 
 	drawing = false;
 
-	if (polygon->isEmpty()) return;
+	if (polygon.isEmpty()) return;
 
-	*polygon << polygon->first();
+	polygon << polygon.first();
 
 	const PointVectorLayer& points = *chElementSelect->glVertReference.pointLayer;
 	QPointF existingPoint;
@@ -96,7 +94,7 @@ void ChElementLibreSelect::releasePos(const QPointF& mouse)
 		existingPoint = edit_skelen ?
 			points[i] :
 			points(i);
-		if (polygon->containsPoint(existingPoint, Qt::OddEvenFill)) {
+		if (polygon.containsPoint(existingPoint, Qt::OddEvenFill)) {
 			chElementSelect->selected_points->append(i);
 		}
 	}

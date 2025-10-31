@@ -5,13 +5,10 @@
 #include "point_vector_layer.h"
 
 #include <qpainter>
-#include <qpointf>
 #include <qpen>
 
 AddTriangle::AddTriangle(GlVertReference& glReference) :glVertReference(glReference)
 {
-	first = std::make_unique<QPointF>();
-	second = std::make_unique<QPointF>();
 }
 
 AddTriangle::~AddTriangle()
@@ -33,14 +30,14 @@ bool AddTriangle::addVert(unsigned int i)
 bool AddTriangle::checkPointRepeat(const QPointF& point)
 {
 	if (numVert == 0) return false;
-	if (numVert == 1) return *first == point;
-	return *first == point || *second == point;
+	if (numVert == 1) return first == point;
+	return first == point ||second == point;
 }
 
 void AddTriangle::addVert(const QPointF& point)
 {
-	if (numVert == 0) *first = point;
-	else if (numVert == 1) *second = point;
+	if (numVert == 0) first = point;
+	else if (numVert == 1) second = point;
 	else return;
 	vertThenInd = false;
 	numVert++;
@@ -93,7 +90,7 @@ void AddTriangle::click(const QPointF& mouseOri)
 	if (numVert == 2) {
 		numInd = 0;
 		numVert = 0;
-		glVertReference.addTriangle(*first, *second, indRepeat >= 0 ? pointVector(indRepeat) : mouse);
+		glVertReference.addTriangle(first, second, indRepeat >= 0 ? pointVector(indRepeat) : mouse);
 		return;
 	}
 	if (numInd == 2) {
@@ -124,7 +121,7 @@ void AddTriangle::click(const QPointF& mouseOri)
 		if (indRepeat < 0) {
 			numInd = 0;
 			numVert = 0;
-			glVertReference.addTriangle(firstIndex, *first, mouse);
+			glVertReference.addTriangle(firstIndex, first, mouse);
 			return;
 		}
 
@@ -132,7 +129,7 @@ void AddTriangle::click(const QPointF& mouseOri)
 
 		numInd = 0;
 		numVert = 0;
-		glVertReference.addTriangle(indRepeat, firstIndex, *first);
+		glVertReference.addTriangle(indRepeat, firstIndex, first);
 	}
 }
 
@@ -149,17 +146,17 @@ void AddTriangle::draw(QPainter& painter)
 	if (numInd == 1 && numVert == 0) {
 		toDraw.push_back(pointVector(firstIndex));
 	}
-	else if (numInd == 0 && numVert == 1) toDraw.push_back(*first);
+	else if (numInd == 0 && numVert == 1) toDraw.push_back(first);
 	else if (numVert == 2) {
-		toDraw.push_back(*first);
-		toDraw.push_back(*second);
+		toDraw.push_back(first);
+		toDraw.push_back(second);
 	}
 	else if (numInd == 2) {
 		toDraw.push_back(pointVector(firstIndex));
 		toDraw.push_back(pointVector(secondIndex));
 	}
 	else if (numInd == 1 && numVert == 1) {
-		toDraw.push_back(*first);
+		toDraw.push_back(first);
 		toDraw.push_back(pointVector(firstIndex));
 	}
 

@@ -1,14 +1,13 @@
 #pragma once
 
 #include <memory>
+#include <qpolygonf>
 
 #include "ch_element_tool_behavior.h"
 
 struct ChElementSelect;
 struct GlVertReference;
 class QPainter;
-class QPointF;
-class QPolygonF;
 class PiYingGL;
 class PointVector;
 class PointVectorLayer;
@@ -25,7 +24,7 @@ public:
 	void releasePos(const QPointF& mouse);
 
 	std::unique_ptr<ChElementSelect> chElementSelect;
-	std::unique_ptr<QPolygonF> polygon;
+	QPolygonF polygon;
 	bool drawing = false;
 	bool edit_skelen{ false };
 };

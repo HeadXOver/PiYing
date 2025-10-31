@@ -3,6 +3,7 @@
 #include "ch_element_tool_behavior.h"
 
 #include <memory>
+#include <qpointf>
 
 struct GlVertReference;
 class PiYingGL;
@@ -21,8 +22,8 @@ struct AddTriangle final
 
 	GlVertReference& glVertReference;
 
-	std::unique_ptr<QPointF> first;
-	std::unique_ptr<QPointF> second;
+	QPointF first;
+	QPointF second;
 
 	unsigned int firstIndex = 0;
 	unsigned int secondIndex = 0;

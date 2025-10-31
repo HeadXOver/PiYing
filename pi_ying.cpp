@@ -16,9 +16,9 @@
 #include <QComboBox>
 #include <qsplitter>
 
-PiYing::PiYing(QWidget* parent) : QMainWindow(parent) 
+PiYing::PiYing(QWidget* parent) : QMainWindow(parent)
 {
-    ui = new Ui::PiYingClass();
+    ui = std::make_unique<Ui::PiYingClass>();
     ui->setupUi(this);
     setWindowTitle("皮影");
     setFocusPolicy(Qt::StrongFocus);
@@ -126,7 +126,15 @@ PiYing::PiYing(QWidget* parent) : QMainWindow(parent)
     timeLineGL->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     voidListWidget->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
 
-    modeBox->addItems({ "预览模式", "背景编辑", "角色纹理编辑", "角色骨骼编辑", "控制器"});
+    modeBox->addItems(
+        {
+            "预览模式",
+            "背景编辑",
+            "角色纹理编辑",
+            "角色骨骼编辑",
+            "控制器"
+        }
+    );
     ui->statusBar->addWidget(modeBox);
 
     connect(modeBox, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &PiYing::onModeChanged);
@@ -138,8 +146,6 @@ PiYing::PiYing(QWidget* parent) : QMainWindow(parent)
 
 PiYing::~PiYing()
 {
-    delete ui;
-
     auto safeDelete = [](QObject* obj) { if (obj && !obj->parent()) delete obj; };
     safeDelete(voidListWidget);
     safeDelete(bgImageList);

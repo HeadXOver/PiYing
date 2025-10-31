@@ -50,7 +50,7 @@ private:
 	void select_tool_control_slider(ToolButton* toolButton);
 
 private:
-    Ui::PiYingClass* ui;
+    std::unique_ptr<Ui::PiYingClass> ui;
 
 	// OpenGL widget
     PiYingGL* piYingGL = nullptr;

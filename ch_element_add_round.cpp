@@ -14,16 +14,16 @@ namespace {
 
 void ChElementAddRound::click(const QPointF& mouse) 
 {
-	*center = mouse;
-	*current_cursor = mouse;
+	center = mouse;
+	current_cursor = mouse;
 	isPress = true;
 	radius = 0;
 }
 
 void ChElementAddRound::move(const QPointF& mouse) 
 {
-	radius = QLineF(*center, mouse).length();
-	*current_cursor = mouse;
+	radius = QLineF(center, mouse).length();
+	current_cursor = mouse;
 }
 
 void ChElementAddRound::release(const QPointF& mouse) 
@@ -32,7 +32,7 @@ void ChElementAddRound::release(const QPointF& mouse)
 
 	if (radius < 6) return;
 
-	init_angle = QLineF(*center, mouse).angle();
+	init_angle = QLineF(center, mouse).angle();
 
 	int init[3] {radius, 7, init_angle };
 	int outRadius, outEdgeCount, outAngle;
@@ -50,19 +50,19 @@ void ChElementAddRound::draw(QPainter& painter)
 	if(radius < 6) return;
 
 	painter.setPen(QPen(Qt::black, 3));
-	painter.drawEllipse(*center, radius, radius);
-	painter.drawLine(*center, *current_cursor);
+	painter.drawEllipse(center, radius, radius);
+	painter.drawLine(center, current_cursor);
 	painter.setPen(QPen(Qt::yellow, 1));
-	painter.drawEllipse(*center, radius, radius);
-	painter.drawLine(*center, *current_cursor);
+	painter.drawEllipse(center, radius, radius);
+	painter.drawLine(center, current_cursor);
 }
 
 void ChElementAddRound::addRoundPoly(const int edgeCount)
 {
 	if (edgeCount < 3) return;
 
-	const QPointF glCenter = glVertReference.gl.GLViewProjMatrixInvert(*center);
-	const QPointF glCursor = glVertReference.gl.GLViewProjMatrixInvert(*current_cursor);
+	const QPointF glCenter = glVertReference.gl.GLViewProjMatrixInvert(center);
+	const QPointF glCursor = glVertReference.gl.GLViewProjMatrixInvert(current_cursor);
 	const float lenth = QLineF(QPointF(), glVertReference.gl.getInsProj().map(glCursor - glCenter)).length();
 	const double initAngle = init_angle * angle_rad;
 	const double deltaAngle = 2 * 3.1415926 / edgeCount;
@@ -82,8 +82,6 @@ void ChElementAddRound::addRoundPoly(const int edgeCount)
 
 ChElementAddRound::ChElementAddRound(GlVertReference& glReference) :glVertReference(glReference)
 {
-	center = std::make_unique<QPointF>();
-	current_cursor = std::make_unique<QPointF>();
 }
 
 ChElementAddRound::~ChElementAddRound()

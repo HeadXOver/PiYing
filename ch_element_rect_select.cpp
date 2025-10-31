@@ -13,7 +13,6 @@
 ChElementRectSelect::ChElementRectSelect(GlVertReference& glReference) :edit_skelen(glReference.gl.editMode == EditMode::characterSkeleton)
 {
 	chElementSelect = std::make_unique<ChElementSelect>(glReference);
-	rect = std::make_unique<QPointF>();
 }
 
 void ChElementRectSelect::draw(QPainter& painter)
@@ -22,7 +21,7 @@ void ChElementRectSelect::draw(QPainter& painter)
 
 	if (isDraw) {
 		painter.setPen(QPen(Qt::yellow, 1));
-		painter.drawRect(chElementSelect->lastPos.x(), chElementSelect->lastPos.y(), rect->x() - chElementSelect->lastPos.x(), rect->y() - chElementSelect->lastPos.y());
+		painter.drawRect(chElementSelect->lastPos.x(), chElementSelect->lastPos.y(), rect.x() - chElementSelect->lastPos.x(), rect.y() - chElementSelect->lastPos.y());
 	}
 }
 
@@ -52,7 +51,7 @@ void ChElementRectSelect::movePos(const QPointF& mouse)
 		return;
 	}
 
-	*rect = mouse;
+	rect = mouse;
 	isDraw = true;
 }
 

@@ -3,6 +3,7 @@
 #include "ch_element_tool_behavior.h"
 
 #include <memory>
+#include <qpointf>
 
 struct GlVertReference;
 class PiYingGL;
@@ -19,8 +20,8 @@ struct ChElementAddRound final
 
 	void addRoundPoly(const int edgeCount);
 
-	std::unique_ptr<QPointF> center;
-	std::unique_ptr<QPointF> current_cursor;
+	QPointF center;
+	QPointF current_cursor;
 		
 	bool isPress{ false };
 

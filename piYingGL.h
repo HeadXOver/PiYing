@@ -151,6 +151,7 @@ private:
 	QList<ImageTexture*> characterTextures;
 
 	QList<PointVector*> characterVerts;
+
 	QList<std::vector<unsigned int>> characterTriangleIndices;
 
 	float lastViewRotate = 0.f;

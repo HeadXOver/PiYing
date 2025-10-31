@@ -1,13 +1,13 @@
 #pragma once
 
 #include <memory>
+#include <qpointf>
 
 #include "ch_element_tool_behavior.h"
 
 struct ChElementSelect;
 struct GlVertReference;
 class QPainter;
-class QPointF;
 class PiYingGL;
 
 struct ChElementRectSelect final
@@ -22,7 +22,7 @@ struct ChElementRectSelect final
 
 	std::unique_ptr<ChElementSelect> chElementSelect;
 	const bool edit_skelen{ false };
-	std::unique_ptr<QPointF> rect;
+	QPointF rect;
 	bool isDraw = false;
 };
 
