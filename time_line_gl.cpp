@@ -1,10 +1,11 @@
 #include "time_line_gl.h"
 
 #include <QOpenGLShaderProgram>
+#include <qmessagebox>
 
 TimeLineGL::TimeLineGL(QWidget* parent) : QOpenGLWidget(parent)
 {
-	rect_shader_program = std::make_unique<QOpenGLShaderProgram>();
+	rect_shader_program = std::make_unique<QOpenGLShaderProgram>(this);
 }
 
 TimeLineGL::~TimeLineGL()
@@ -46,16 +47,27 @@ void TimeLineGL::initializeGL()
 
 	rect_shader_program->addShaderFromSourceFile(QOpenGLShader::Vertex, ":/PiYing/timeline_rect_shape.vert");
 	rect_shader_program->addShaderFromSourceFile(QOpenGLShader::Fragment, ":/PiYing/timeline_rect_shape.frag");
+
 	rect_shader_program->link();
-	rect_shader_program->setUniformValue("texture1", 0);
+	rect_shader_program->bind();
+
+	glBindVertexArray(0);
 
 	// global setting
 
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	glActiveTexture(GL_TEXTURE0);
 }
 
 void TimeLineGL::paintGL()
 {
+	glClear(GL_COLOR_BUFFER_BIT);
+	glBindVertexArray(VAO);///////////////////////////////////////////////////////
+
+	rect_shader_program->bind();
+	rect_shader_program->setUniformValue("selected", false);
+
+	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+
+	glBindVertexArray(0);////////////////////////////////////////////////////////////
 }
