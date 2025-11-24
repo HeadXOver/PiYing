@@ -66,6 +66,8 @@ void TimeLineGL::paintGL()
 
 	rect_shader_program->bind();
 	rect_shader_program->setUniformValue("selected", false);
+	QVector4D trans(0.3f, 0.6f, 0.4f, 0.2f);
+	rect_shader_program->setUniformValue("trans", trans);
 
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
