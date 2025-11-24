@@ -309,6 +309,9 @@
     <ClInclude Include="character_trace.h">
       <Filter>Header Files\PiYingElememt</Filter>
     </ClInclude>
+    <ClInclude Include="time_line.h">
+      <Filter>Header Files\PiYingElememt</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="ctrlSlideLayout.h">

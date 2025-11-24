@@ -148,6 +148,7 @@
     <ClInclude Include="cus_func_get_unique_id.h" />
     <ClInclude Include="ch_add_vert_trace.h" />
     <ClInclude Include="enum_edit_mode.h" />
+    <ClInclude Include="time_line.h" />
     <QtMoc Include="ask_round_poly_dialog.h" />
     <ClInclude Include="ch_element_libre_select.h" />
     <ClInclude Include="ch_element_rect_select.h" />
