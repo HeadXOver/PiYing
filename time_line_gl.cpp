@@ -3,12 +3,14 @@
 #include "time_line.h"
 #include "base_math.h"
 #include "scale_trans.h"
+#include "KeyboardStateWin.h"
 
 #include <QOpenGLShaderProgram>
 #include <qmessagebox>
 #include <qimage>
 #include <qopengltexture>
 #include <qmouseevent>
+#include <qpainter>
 
 TimeLineGL::TimeLineGL(QWidget* parent) : QOpenGLWidget(parent)
 {
@@ -102,6 +104,11 @@ void TimeLineGL::paintGL()
 	}
 
 	glBindVertexArray(0);////////////////////////////////////////////////////////////
+
+	QPainter painter(this);
+	QPen pen(Qt::yellow , 4);
+	painter.setPen(pen);
+	painter.drawLine(time_cursor, 0, time_cursor, height());
 }
 
 void TimeLineGL::wheelEvent(QWheelEvent* ev)
@@ -128,15 +135,27 @@ void TimeLineGL::mousePressEvent(QMouseEvent* event)
 		lastMiddleButtonPos = event->position();
 		*_last_scale_trans = *_scale_trans;
 	}
+	else if (event->buttons() == Qt::LeftButton) {
+		if (event->position().x() - time_cursor < 6) {
+			_draging_cursor = true;
+		}
+	}
 }
 
 void TimeLineGL::mouseReleaseEvent(QMouseEvent* e)
 {
+	_draging_cursor = false;
 }
 
 void TimeLineGL::mouseMoveEvent(QMouseEvent* event)
 {
-	if (event->buttons() == Qt::MiddleButton) {
+	if (event->buttons() == Qt::LeftButton) {
+		if (_draging_cursor || KeyboardStateWin::isCtrlHeld()){
+            time_cursor = event->position().x();
+		}
+		update();
+	}
+	else if (event->buttons() == Qt::MiddleButton) {
 		const float to_trans_x = _last_scale_trans->trans_x + (event->position().x() - lastMiddleButtonPos.x()) * 2.f / width();
 		_scale_trans->trans_x = cus::min(_scale_trans->scale_lenth - 1.f, to_trans_x);
 

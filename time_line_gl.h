@@ -37,6 +37,10 @@ private:
 
 	int _current_select{ -1 };
 
+	float time_cursor{ 0.f };
+
+	bool _draging_cursor{ false };
+
 	ScaleTrans* _scale_trans;
 	ScaleTrans* _last_scale_trans;
 
