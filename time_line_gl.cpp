@@ -1,5 +1,7 @@
 #include "time_line_gl.h"
 
+#include "time_line.h"
+
 #include <QOpenGLShaderProgram>
 #include <qmessagebox>
 #include <qimage>
@@ -8,11 +10,14 @@
 TimeLineGL::TimeLineGL(QWidget* parent) : QOpenGLWidget(parent)
 {
 	rect_shader_program = std::make_unique<QOpenGLShaderProgram>(this);
-
+	_timelines.push_back(new Timeline(3.f));
+	_timelines.push_back(new Timeline(5.f));
 }
 
 TimeLineGL::~TimeLineGL()
 {
+	for (Timeline* it : _timelines) delete it;
+
 	makeCurrent();
 
 	////////////////////////////////////////
@@ -71,11 +76,15 @@ void TimeLineGL::paintGL()
 
 	rect_shader_program->bind();
 	_texture->bind();
-	rect_shader_program->setUniformValue("selected", true);
-	QVector4D trans(0.3f, 0.3, 0.f, 0.f);
-	rect_shader_program->setUniformValue("trans", trans);
 
-	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+	for (int i = 0; i < _timelines.size(); i++) {
+		Timeline* timeline = _timelines[i];
+		rect_shader_program->setUniformValue("selected", i == _current_select);
+		rect_shader_program->setUniformValue("lenth", timeline->lenth());
+		rect_shader_program->setUniformValue("trans", timeline->get_transform(i));
+
+		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+	}
 
 	glBindVertexArray(0);////////////////////////////////////////////////////////////
 }
