@@ -137,8 +137,15 @@ void TimeLineGL::mouseReleaseEvent(QMouseEvent* e)
 void TimeLineGL::mouseMoveEvent(QMouseEvent* event)
 {
 	if (event->buttons() == Qt::MiddleButton) {
-		const float to_trans = _last_scale_trans->trans_x + (event->position().x() - lastMiddleButtonPos.x()) * 2.f / width();
-		_scale_trans->trans_x = cus::min(_scale_trans->scale_lenth - 1.f, to_trans);
+		const float to_trans_x = _last_scale_trans->trans_x + (event->position().x() - lastMiddleButtonPos.x()) * 2.f / width();
+		_scale_trans->trans_x = cus::min(_scale_trans->scale_lenth - 1.f, to_trans_x);
+
+		size_t timeline_size = _timelines.size();
+		if (timeline_size > 5) {
+			float to_trans_y = _last_scale_trans->trans_y - (event->position().y() - lastMiddleButtonPos.y()) * 2.f / height();
+			to_trans_y = cus::max(_scale_trans->scale_height - 1.f, to_trans_y);
+			_scale_trans->trans_y = cus::min(0.4f * timeline_size - 2.f, to_trans_y);
+		}
 		update();
 	}
 }
