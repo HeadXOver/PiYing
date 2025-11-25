@@ -2,6 +2,8 @@
 
 class QVector4D;
 
+struct ScaleTrans;
+
 class Timeline
 {
 public:
@@ -9,7 +11,7 @@ public:
 
 public:
 	float lenth() const;
-	QVector4D get_transform(int line) const;
+	QVector4D get_transform(int line, const ScaleTrans* scaleTrans) const;
 
 private:
 	float _lenth{ 0.f };

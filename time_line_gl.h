@@ -11,6 +11,8 @@ class QOpenGLShaderProgram;
 class QOpenGLTexture;
 class Timeline;
 
+struct ScaleTrans;
+
 class TimeLineGL : public QOpenGLWidget, QOpenGLFunctions_3_3_Core
 {
 	Q_OBJECT
@@ -19,16 +21,28 @@ public:
 	TimeLineGL(QWidget* parent);
 	~TimeLineGL();
 
+	float x_map_to_gl(const float x) const;
+
 protected:
 	void initializeGL() override;
 	void paintGL() override;
+
+	void wheelEvent(QWheelEvent* ev) override;
+	void mousePressEvent(QMouseEvent* event) override;
+	void mouseReleaseEvent(QMouseEvent* e) override;
+	void mouseMoveEvent(QMouseEvent* event) override;
 
 private:
 	unsigned int VAO = 0, VBO = 0, EBO = 0;
 
 	int _current_select{ -1 };
 
-	std::unique_ptr<QOpenGLShaderProgram> rect_shader_program;
+	ScaleTrans* _scale_trans;
+	ScaleTrans* _last_scale_trans;
+
+	QPointF lastMiddleButtonPos;
+
+	QOpenGLShaderProgram* _rect_shader_program;
 
 	std::unique_ptr<QOpenGLTexture> _texture;
 

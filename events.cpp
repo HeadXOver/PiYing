@@ -94,7 +94,8 @@ void PiYingGL::mouseMoveEvent(QMouseEvent* event) {
 	}
 }
 
-void PiYingGL::wheelEvent(QWheelEvent* ev) {
+void PiYingGL::wheelEvent(QWheelEvent* ev) 
+{
 	float scaleFactor = 1.0f + ev->angleDelta().y() / 1200.f;
 	if (scaleFactor < 0.1f) scaleFactor = 0.1f;
 

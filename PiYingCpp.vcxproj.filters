@@ -218,9 +218,12 @@
       <Filter>Source Files\piYingGL</Filter>
     </ClCompile>
     <ClCompile Include="time_line_gl.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\PiYingQObject</Filter>
     </ClCompile>
     <ClCompile Include="time_line.cpp">
+      <Filter>Source Files\PiYingElement</Filter>
+    </ClCompile>
+    <ClCompile Include="scale_trans.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -315,6 +318,12 @@
     <ClInclude Include="time_line.h">
       <Filter>Header Files\PiYingElememt</Filter>
     </ClInclude>
+    <ClInclude Include="base_math.h">
+      <Filter>Header Files\PiYingTool</Filter>
+    </ClInclude>
+    <ClInclude Include="scale_trans.h">
+      <Filter>Header Files\PiYingElememt</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="ctrlSlideLayout.h">
@@ -345,7 +354,7 @@
       <Filter>Header Files\PiYngQObject</Filter>
     </QtMoc>
     <QtMoc Include="time_line_gl.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\PiYngQObject</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>

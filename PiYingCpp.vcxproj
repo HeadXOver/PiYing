@@ -123,6 +123,7 @@
     <ClCompile Include="point_vector_layer.cpp" />
     <ClCompile Include="ratio_dialog.cpp" />
     <ClCompile Include="gl_func.cpp" />
+    <ClCompile Include="scale_trans.cpp" />
     <ClCompile Include="selected_points.cpp" />
     <ClCompile Include="slide_applier.cpp" />
     <ClCompile Include="slots.cpp" />
@@ -145,11 +146,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="add_ch_tex_poly.h" />
+    <ClInclude Include="base_math.h" />
     <ClInclude Include="character_trace.h" />
     <ClInclude Include="cus_func_get_unique_id.h" />
     <ClInclude Include="ch_add_vert_trace.h" />
     <ClInclude Include="enum_edit_mode.h" />
     <ClInclude Include="time_line.h" />
+    <ClInclude Include="scale_trans.h" />
     <QtMoc Include="ask_round_poly_dialog.h" />
     <ClInclude Include="ch_element_libre_select.h" />
     <ClInclude Include="ch_element_rect_select.h" />
