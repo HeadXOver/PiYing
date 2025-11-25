@@ -13,5 +13,6 @@ float Timeline::lenth() const
 
 QVector4D Timeline::get_transform(int line) const
 {
-	return QVector4D(QVector4D(0.3f * _lenth, 0.2f, -0.7f + 0.3f * _front, 0.8f - 0.4f * line));
+	float unit_lenth = 0.3f * _lenth;
+	return QVector4D(QVector4D(unit_lenth, 0.2f, unit_lenth - 1.f + 0.3f * _front, 0.8f - 0.4f * line));
 }

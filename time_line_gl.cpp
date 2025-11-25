@@ -11,7 +11,7 @@ TimeLineGL::TimeLineGL(QWidget* parent) : QOpenGLWidget(parent)
 {
 	rect_shader_program = std::make_unique<QOpenGLShaderProgram>(this);
 	_timelines.push_back(new Timeline(3.f));
-	_timelines.push_back(new Timeline(5.f));
+	_timelines.push_back(new Timeline(2.f));
 }
 
 TimeLineGL::~TimeLineGL()
