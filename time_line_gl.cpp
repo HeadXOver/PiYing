@@ -2,10 +2,13 @@
 
 #include <QOpenGLShaderProgram>
 #include <qmessagebox>
+#include <qimage>
+#include <qopengltexture>
 
 TimeLineGL::TimeLineGL(QWidget* parent) : QOpenGLWidget(parent)
 {
 	rect_shader_program = std::make_unique<QOpenGLShaderProgram>(this);
+
 }
 
 TimeLineGL::~TimeLineGL()
@@ -26,6 +29,9 @@ TimeLineGL::~TimeLineGL()
 void TimeLineGL::initializeGL()
 {
 	initializeOpenGLFunctions();
+	glClearColor(1.f, 1.f, 1.f, 1.f);
+	_texture = std::make_unique<QOpenGLTexture>(QImage(":/PiYing/timeline.png").flipped());
+	_texture->setWrapMode(QOpenGLTexture::Repeat);
 
 	//////////////initialize background///////////////////////
 
@@ -49,14 +55,13 @@ void TimeLineGL::initializeGL()
 	rect_shader_program->addShaderFromSourceFile(QOpenGLShader::Fragment, ":/PiYing/timeline_rect_shape.frag");
 
 	rect_shader_program->link();
-	rect_shader_program->bind();
+	rect_shader_program->setUniformValue("texture1", 0);
 
 	glBindVertexArray(0);
 
 	// global setting
 
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glActiveTexture(GL_TEXTURE0);
 }
 
 void TimeLineGL::paintGL()
@@ -65,8 +70,9 @@ void TimeLineGL::paintGL()
 	glBindVertexArray(VAO);///////////////////////////////////////////////////////
 
 	rect_shader_program->bind();
-	rect_shader_program->setUniformValue("selected", false);
-	QVector4D trans(0.3f, 0.6f, 0.4f, 0.2f);
+	_texture->bind();
+	rect_shader_program->setUniformValue("selected", true);
+	QVector4D trans(0.3f, 0.3, 0.f, 0.f);
 	rect_shader_program->setUniformValue("trans", trans);
 
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);

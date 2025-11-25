@@ -43,8 +43,8 @@ public:
 
 private:
 
-    std::unique_ptr<QOpenGLTexture> texture_;
+    std::unique_ptr<QOpenGLTexture> _texture;
 
-    std::unique_ptr<ImageTransform> transform_;
+    std::unique_ptr<ImageTransform> _transform;
 };
 

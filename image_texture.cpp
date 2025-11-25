@@ -8,12 +8,12 @@
 
 ImageTexture::ImageTexture(const QImage& image)
 {
-    transform_ = std::make_unique<ImageTransform>();
+    _transform = std::make_unique<ImageTransform>();
 
-    texture_ = std::make_unique<QOpenGLTexture>(image.flipped());
-    texture_->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
-    texture_->setMagnificationFilter(QOpenGLTexture::Linear);
-    texture_->setWrapMode(QOpenGLTexture::Repeat);
+    _texture = std::make_unique<QOpenGLTexture>(image.flipped());
+    _texture->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
+    _texture->setMagnificationFilter(QOpenGLTexture::Linear);
+    _texture->setWrapMode(QOpenGLTexture::Repeat);
 }
 
 ImageTexture::~ImageTexture()
@@ -22,47 +22,47 @@ ImageTexture::~ImageTexture()
 
 void ImageTexture::setTrans(float x, float y)
 {
-    transform_->set_trans(x, y);
+    _transform->set_trans(x, y);
 }
 
 void ImageTexture::setTrans(const QPointF& point)
 {
-    transform_->set_trans(point.x(), point.y());
+    _transform->set_trans(point.x(), point.y());
 }
 
 void ImageTexture::setTrans(const QMatrix4x4& point)
 {
-    transform_->set_trans(point);
+    _transform->set_trans(point);
 }
 
 void ImageTexture::setRot(float r)
 {
-    transform_->set_rot(r);
+    _transform->set_rot(r);
 }
 
 void ImageTexture::setRot(const QMatrix4x4& point)
 {
-    transform_->set_rot(point);
+    _transform->set_rot(point);
 }
 
 void ImageTexture::setScale(float x, float y)
 {
-    transform_->set_scale(x, y);
+    _transform->set_scale(x, y);
 }
 
 void ImageTexture::setScale(const QPointF& point)
 {
-    transform_->set_scale(point.x(), point.y());
+    _transform->set_scale(point.x(), point.y());
 }
 
 void ImageTexture::setScale(float s)
 {
-    transform_->set_scale(s);
+    _transform->set_scale(s);
 }
 
 void ImageTexture::setScale(const QMatrix4x4& point)
 {
-    transform_->set_scale(point);
+    _transform->set_scale(point);
 }
 
 void ImageTexture::addTrans(const QPointF& point)
@@ -77,12 +77,12 @@ void ImageTexture::addScale(const QPointF& point)
 
 void ImageTexture::addTrans(float x, float y)
 {
-    transform_->add_trans(x, y);
+    _transform->add_trans(x, y);
 }
 
 void ImageTexture::addScale(float x, float y)
 {
-    transform_->add_scale(x, y);
+    _transform->add_scale(x, y);
 }
 
 void ImageTexture::addScale(float s)
@@ -92,30 +92,30 @@ void ImageTexture::addScale(float s)
 
 void ImageTexture::addRot(float r)
 {
-    transform_->add_rot(r);
+    _transform->add_rot(r);
 }
 QMatrix4x4 ImageTexture::getMatrix() const {
-    return transform_->getMatrix();
+    return _transform->getMatrix();
 }
 
 QMatrix4x4 ImageTexture::getMatrixInvert() const
 {
-    return transform_->getMatrixInvert();
+    return _transform->getMatrixInvert();
 }
 
 void ImageTexture::resetTransform() {
-    transform_->reset();
+    _transform->reset();
 }
 
 void ImageTexture::bind()
 {
-    texture_->bind();
+    _texture->bind();
 }
 
 void ImageTexture::operator=(const ImageTransform& transform) {
-    *transform_ = transform;
+    *_transform = transform;
 }
 
 const ImageTransform& ImageTexture::transform() const {
-    return *transform_;
+    return *_transform;
 }

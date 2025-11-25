@@ -22,5 +22,6 @@
         <file>addVertTrace_S.png</file>
         <file>timeline_rect_shape.frag</file>
         <file>timeline_rect_shape.vert</file>
+        <file>timeline.png</file>
     </qresource>
 </RCC>
