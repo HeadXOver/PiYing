@@ -33,6 +33,9 @@ protected:
 	void mouseMoveEvent(QMouseEvent* event) override;
 
 private:
+	void move_time_cursor(float mouse_x);
+
+private:
 	unsigned int VAO = 0, VBO = 0, EBO = 0;
 
 	int _current_select{ -1 };

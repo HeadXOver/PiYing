@@ -108,7 +108,8 @@ void TimeLineGL::paintGL()
 	QPainter painter(this);
 	QPen pen(Qt::yellow , 4);
 	painter.setPen(pen);
-	painter.drawLine(time_cursor, 0, time_cursor, height());
+	const float timeCursorPosition = width() * _scale_trans->trans_x / 2.f + time_cursor;
+	painter.drawLine(timeCursorPosition, 0, timeCursorPosition, height());
 }
 
 void TimeLineGL::wheelEvent(QWheelEvent* ev)
@@ -124,6 +125,10 @@ void TimeLineGL::wheelEvent(QWheelEvent* ev)
 
 	_scale_trans->trans_x = cus::min(_scale_trans->scale_lenth - 1.f, _scale_trans->trans_x + to_trans_x);
 
+	const float xTimelineCursor = width() * _scale_trans->trans_x / 2.f + time_cursor;
+	const float diffTimelineCursor = xTimelineCursor - width() * (_scale_trans->trans_x + 1.f) / 2.f;
+	time_cursor -= diffTimelineCursor * (1.f - scaleFactor);
+
 	*_last_scale_trans = *_scale_trans;
 	update();
 	ev->accept();
@@ -136,7 +141,15 @@ void TimeLineGL::mousePressEvent(QMouseEvent* event)
 		*_last_scale_trans = *_scale_trans;
 	}
 	else if (event->buttons() == Qt::LeftButton) {
-		if (event->position().x() - time_cursor < 6) {
+		if (KeyboardStateWin::isCtrlHeld()) {
+			_draging_cursor = true;
+			move_time_cursor(event->position().x());
+			update();
+			return;
+		}
+		const float diff_map = event->position().x() - (width() * _scale_trans->trans_x / 2.f + time_cursor);
+		const float diff_gl = diff_map * 2.f / (float)width();
+		if (cus::abs(diff_gl) < 0.02f) {
 			_draging_cursor = true;
 		}
 	}
@@ -150,10 +163,10 @@ void TimeLineGL::mouseReleaseEvent(QMouseEvent* e)
 void TimeLineGL::mouseMoveEvent(QMouseEvent* event)
 {
 	if (event->buttons() == Qt::LeftButton) {
-		if (_draging_cursor || KeyboardStateWin::isCtrlHeld()){
-            time_cursor = event->position().x();
+		if (_draging_cursor || KeyboardStateWin::isCtrlHeld()) {
+			move_time_cursor(event->position().x());
+			update();
 		}
-		update();
 	}
 	else if (event->buttons() == Qt::MiddleButton) {
 		const float to_trans_x = _last_scale_trans->trans_x + (event->position().x() - lastMiddleButtonPos.x()) * 2.f / width();
@@ -167,4 +180,10 @@ void TimeLineGL::mouseMoveEvent(QMouseEvent* event)
 		}
 		update();
 	}
+}
+
+void TimeLineGL::move_time_cursor(float mouse_x)
+{
+	const float half_width = width() / 2.f;
+	time_cursor = cus::max(half_width * (1.f - _scale_trans->scale_lenth), mouse_x - _scale_trans->trans_x * half_width); ///< 确保非负
 }
