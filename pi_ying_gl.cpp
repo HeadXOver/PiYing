@@ -77,6 +77,7 @@ void PiYingGL::addCharacter(const QString& imageName)
 	characterTextures.append(new ImageTexture(img));
 	characterTriangleIndices.push_back(std::vector<unsigned int>());
 	characterVerts.push_back(new PointVector());
+	_character_vert_groups.push_back(new VertGroups());
 
 	QIcon icon(QPixmap::fromImage(img).scaled(50, 50, Qt::KeepAspectRatio, Qt::SmoothTransformation));
 

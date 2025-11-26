@@ -127,4 +127,5 @@ PiYingGL::~PiYingGL()
 	for (ImageTexture* ch : characterTextures) delete ch;
 	for (ImageTexture* bg : backGrounds) delete bg;
 	for (PointVector* pv : characterVerts) delete pv;
+	for (VertGroups* vg : _character_vert_groups) delete vg;
 }

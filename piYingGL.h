@@ -42,7 +42,7 @@ class PiYingGL : public QOpenGLWidget, QOpenGLFunctions_3_3_Core
 
 public:
 	explicit PiYingGL(PiYing& parent);
-	~PiYingGL();
+	virtual ~PiYingGL();
 
 private:
 	void paintBackgrounds();
