@@ -138,6 +138,8 @@
     <ClCompile Include="select_tool.cpp" />
     <ClCompile Include="add_trace.cpp" />
     <ClCompile Include="control_slider.cpp" />
+    <ClCompile Include="vert_group.cpp" />
+    <ClCompile Include="vert_groups.cpp" />
     <QtRcc Include="PiYing.qrc" />
     <QtUic Include="PiYing.ui" />
     <QtMoc Include="PiYing.h" />
@@ -153,6 +155,8 @@
     <ClInclude Include="enum_edit_mode.h" />
     <ClInclude Include="time_line.h" />
     <ClInclude Include="scale_trans.h" />
+    <ClInclude Include="vert_group.h" />
+    <ClInclude Include="vert_groups.h" />
     <QtMoc Include="ask_round_poly_dialog.h" />
     <ClInclude Include="ch_element_libre_select.h" />
     <ClInclude Include="ch_element_rect_select.h" />

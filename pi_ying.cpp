@@ -16,8 +16,19 @@
 #include <QComboBox>
 #include <qsplitter>
 
+QString PiYing::SLIDER_WIDGET_STYLE_SHEET;
+
 PiYing::PiYing(QWidget* parent) : QMainWindow(parent)
 {
+    QFile sliderStyle(":/PiYing/slideStyle.qss");
+    if (sliderStyle.open(QFile::ReadOnly)) {
+        SLIDER_WIDGET_STYLE_SHEET = sliderStyle.readAll();
+        sliderStyle.close();
+    }
+    else {
+        QMessageBox::warning(this, "Error", "Failed to load style sheet");
+    }
+
     ui = std::make_unique<Ui::PiYingClass>();
     ui->setupUi(this);
     setWindowTitle("皮影");

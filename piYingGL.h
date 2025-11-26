@@ -34,6 +34,7 @@ class PointVector;
 class CtrlSlideWidget;
 class SlideApplier;
 class CharacterTrace;
+class VertGroups;
 
 class PiYingGL : public QOpenGLWidget, QOpenGLFunctions_3_3_Core
 {
@@ -151,6 +152,8 @@ private:
 	QList<ImageTexture*> characterTextures;
 
 	QList<PointVector*> characterVerts;
+
+	QList<VertGroups*> _character_vert_groups;
 
 	QList<std::vector<unsigned int>> characterTriangleIndices;
 

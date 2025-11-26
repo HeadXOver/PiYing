@@ -9,6 +9,7 @@
 #include "ch_element_tool.h"
 #include "gl_vert_reference.h"
 #include "point_vector.h"
+#include "vert_groups.h"
 
 #include "piYingGLContainer.h"
 #include "ctrlSlideWidget.h"
@@ -86,11 +87,7 @@ void PiYingGL::addCharacter(const QString& imageName)
 
 	CtrlSlideWidget* sliderWidget = new CtrlSlideWidget(*this, "1");
 
-	QFile qss(":/PiYing/slideStyle.qss");
-	if (qss.open(QFile::ReadOnly)) {
-		sliderWidget->setStyleSheet(qss.readAll());
-		qss.close();
-	}
+	sliderWidget->setStyleSheet(PiYing::SLIDER_WIDGET_STYLE_SHEET);
 
 	sliderWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 

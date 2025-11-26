@@ -226,6 +226,12 @@
     <ClCompile Include="scale_trans.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="vert_groups.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="vert_group.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="static_handle_zone.h">
@@ -323,6 +329,12 @@
     </ClInclude>
     <ClInclude Include="scale_trans.h">
       <Filter>Header Files\PiYingElememt</Filter>
+    </ClInclude>
+    <ClInclude Include="vert_groups.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="vert_group.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

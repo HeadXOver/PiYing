@@ -64,6 +64,8 @@ private:
 	QList<ToolButton*> toolControlSliderList;
 
 public:
+	static QString SLIDER_WIDGET_STYLE_SHEET;
+
 	PiYingGLContainer* piYingGLContainer = nullptr;
 
 	QListWidget* bgImageList = nullptr;
