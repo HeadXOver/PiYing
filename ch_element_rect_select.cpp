@@ -9,6 +9,7 @@
 
 #include <qpainter>
 #include <qpointf>
+#include <qmessagebox>
 
 ChElementRectSelect::ChElementRectSelect(GlVertReference& glReference) :edit_skelen(glReference.gl.editMode == EditMode::characterSkeleton)
 {
@@ -102,4 +103,9 @@ void RectSelectEscape::escape()
 void RectSelectDraw::draw(QPainter& painter)
 {
 	rectSelect->draw(painter);
+}
+
+void RectSelectEnter::enter()
+{
+	QMessageBox::information(nullptr, "Enter", "done");
 }

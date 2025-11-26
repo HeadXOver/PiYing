@@ -103,4 +103,16 @@ private:
 	std::shared_ptr<ChElementRectSelect> rectSelect;
 };
 
+///////////////////////////////////////////////////
+
+class RectSelectEnter final : public EnterBehavior
+{
+public:
+	RectSelectEnter(std::shared_ptr<ChElementRectSelect> rect_select) { rectSelect = rect_select; }
+	virtual void enter() override;
+
+private:
+	std::shared_ptr<ChElementRectSelect> rectSelect;
+};
+
  

@@ -22,6 +22,8 @@ void PiYing::select_tool_texture(ToolButton* toolButton)
     }
     else {
         for (ToolButton* item : toolChTexList) item->unSelect();
+        for (ToolButton* item : toolControlSliderList) item->unSelect();
+        for (ToolButton* item : toolChSkelenList) item->unSelect();
     }
 
     toolButton->select();

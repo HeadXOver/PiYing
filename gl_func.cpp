@@ -80,4 +80,7 @@ void PiYingGL::paintGL() {
 		if (ch_tool_state_ != CharacterToolState::AddVertTrace) return;
 		draw_ch_applied_vert();
 	}
+	else return;
+
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
