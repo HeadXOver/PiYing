@@ -55,12 +55,13 @@ PiYing::PiYing(QWidget* parent) : QMainWindow(parent)
         connect(item->action(), &QAction::triggered, this, [this, item]() {select_tool_control_slider(item); });
     }
 
+    toolChSkelenList.append(new ToolButton(":/PiYing/icon_group_s.png", ":/PiYing/icon_group.png", "group", CharacterToolState::Group, this));
+
     for (ToolButton* item : toolChSkelenList) {
-        connect(item->action(), &QAction::triggered, this, [this, item]() {select_tool_skelen(item); });
+        connect(item->action(), &QAction::triggered, this, [this, item]() {select_tool_skelen(item); });    
     }
 
-    toolChSkelenList.append(chRectSelectVert);
-
+    toolChSkelenList.append(chRectSelectVert); ///< 在连接之后添加，因为chRectSelectVert在toolChSkelenList中
 
     QComboBox* modeBox = new QComboBox(this);
 
