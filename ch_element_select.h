@@ -25,6 +25,7 @@ struct ChElementSelect final
 	~ChElementSelect();
 
 	void escape();
+	void enter();
 	void deleteElement();
 	void draw_handle_and_selected(QPainter& painter);
 	void changeEditMode();

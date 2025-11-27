@@ -22,6 +22,7 @@ public:
 	void clickPos(const QPointF& mouse);
 	void movePos(const QPointF& mouse);
 	void releasePos(const QPointF& mouse);
+	void enter();
 
 	std::unique_ptr<ChElementSelect> chElementSelect;
 	QPolygonF polygon;
@@ -108,4 +109,15 @@ private:
 	std::shared_ptr<ChElementLibreSelect> libreSelect;
 };
 
+///////////////////////////////////////////////////
+
+class LibreSelectEnter final : public EnterBehavior
+{
+public:
+	LibreSelectEnter(std::shared_ptr<ChElementLibreSelect> select) { libreSelect = select; }
+	virtual void enter() override;
+
+private:
+	std::shared_ptr<ChElementLibreSelect> libreSelect;
+};
 

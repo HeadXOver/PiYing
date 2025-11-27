@@ -96,6 +96,7 @@ public:
 	void draw_ch_applied_vert();
 	void update_ch_verts();
 	void add_trace(int index, const QPolygonF& polygon);
+	void add_vert_group(int characterIndex, std::vector<unsigned int>& indices);
 
 	bool addBackground(const QString& imageName, QImage& image);
 

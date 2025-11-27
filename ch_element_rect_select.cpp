@@ -11,7 +11,8 @@
 #include <qpointf>
 #include <qmessagebox>
 
-ChElementRectSelect::ChElementRectSelect(GlVertReference& glReference) :edit_skelen(glReference.gl.editMode == EditMode::characterSkeleton)
+ChElementRectSelect::ChElementRectSelect(GlVertReference& glReference) :
+	edit_skelen(glReference.gl.editMode == EditMode::characterSkeleton)
 {
 	chElementSelect = std::make_unique<ChElementSelect>(glReference);
 }
@@ -75,6 +76,11 @@ void ChElementRectSelect::releasePos(const QPointF& mouse)
 	}
 }
 
+void ChElementRectSelect::enter()
+{
+	chElementSelect->enter();
+}
+
 void RectSelectClick::click(const QPointF& point)
 {
 	rectSelect->clickPos(point);
@@ -107,5 +113,5 @@ void RectSelectDraw::draw(QPainter& painter)
 
 void RectSelectEnter::enter()
 {
-	QMessageBox::information(nullptr, "Enter", "done");
+	rectSelect->enter();
 }

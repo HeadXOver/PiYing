@@ -82,6 +82,7 @@ void ChElementTool::construct_libre_select()
 	releaseBehavior = std::make_unique<LibreSelectRelease>(libreSelect);
 	moveBehavior = std::make_unique<LibreSelectMove>(libreSelect);
 	deleteBehavior = std::make_unique<LibreSelectDelete>(libreSelect);
+	enterBehavior = std::make_unique<LibreSelectEnter>(libreSelect);
 }
 
 void ChElementTool::construct_add_vert_trace()

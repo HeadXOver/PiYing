@@ -11,8 +11,15 @@
 #include <qpainter>
 #include <qpointf>
 
-ChElementLibreSelect::ChElementLibreSelect(GlVertReference& glReference) :edit_skelen(glReference.gl.editMode == EditMode::characterSkeleton)
+ChElementLibreSelect::ChElementLibreSelect(GlVertReference& glReference) :
+	edit_skelen(glReference.gl.editMode == EditMode::characterSkeleton)
 {
+	chElementSelect = std::make_unique<ChElementSelect>(glReference);
+}
+
+void ChElementLibreSelect::enter()
+{
+	chElementSelect->enter();
 }
 
 void ChElementLibreSelect::draw(QPainter& painter)
@@ -128,4 +135,9 @@ void LibreSelectEscape::escape()
 void LibreSelectDraw::draw(QPainter& painter)
 {
 	libreSelect->draw(painter);
+}
+
+void LibreSelectEnter::enter()
+{
+	libreSelect->enter();
 }

@@ -243,3 +243,8 @@ void PiYing::askScreenScale() {
     piYingGLContainer->update();
     piYingGL->changeRatio(ratio);
 }
+
+void PiYingGL::add_vert_group(int characterIndex, std::vector<unsigned int>& indices)
+{
+    QMessageBox::information(this, "提示", "功能尚未实现");
+}

@@ -19,6 +19,7 @@ struct ChElementRectSelect final
 	void clickPos(const QPointF& mouse);
 	void movePos(const QPointF& mouse);
 	void releasePos(const QPointF& mouse);
+	void enter();
 
 	std::unique_ptr<ChElementSelect> chElementSelect;
 	const bool edit_skelen{ false };
