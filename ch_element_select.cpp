@@ -28,8 +28,9 @@ void ChElementSelect::escape()
 
 void ChElementSelect::enter()
 {
-    std::vector<unsigned int> v{ 0 };
-    glVertReference.gl.add_vert_group(0, v);
+    if (selected_points->size() == 0) return;
+
+    glVertReference.gl.add_vert_group(0, selected_points->index());
 }
 
 void ChElementSelect::deleteElement()
