@@ -19,6 +19,7 @@ PiYingGL::PiYingGL(PiYing& parent) :
 
 	bgShaderProgram = std::make_unique<QOpenGLShaderProgram>(this);
 	chShaderProgram = std::make_unique<QOpenGLShaderProgram>(this);
+	_selected_vert_shader_program = std::make_unique<QOpenGLShaderProgram>(this);
 
 	lastImageTransform =std::make_unique<ImageTransform>();
 

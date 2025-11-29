@@ -398,5 +398,11 @@
     <None Include="timeline_rect_shape.vert">
       <Filter>Shader</Filter>
     </None>
+    <None Include="selected_vert.vert">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="selected_vert.frag">
+      <Filter>Shader</Filter>
+    </None>
   </ItemGroup>
 </Project>

@@ -16,6 +16,7 @@ public:
 	void copy_from_to(int from, int to);
 	void clear();
 	void resize(int size);
+	
 
 	size_t size() const;
 

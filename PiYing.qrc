@@ -25,5 +25,7 @@
         <file>timeline.png</file>
         <file>icon_group.png</file>
         <file>icon_group_s.png</file>
+        <file>selected_vert.frag</file>
+        <file>selected_vert.vert</file>
     </qresource>
 </RCC>

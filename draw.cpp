@@ -46,6 +46,20 @@ void PiYingGL::drawChEditVert(int currentVector)
 	if (ch_element_tool_) ch_element_tool_->draw(painter);
 }
 
+void PiYingGL::draw_selected_points()
+{
+	glBindVertexArray(svVAO);
+	glBindBuffer(GL_ARRAY_BUFFER, svVBO);
+	_selected_vert_shader_program->bind();
+
+	_selected_vert_shader_program->setUniformValue("trc", getViewProjMatrix());
+	_selected_vert_shader_program->setUniformValue("is_out", true);
+	glDrawArrays(GL_POINTS, 0, selected_points.size() / 2);
+	_selected_vert_shader_program->setUniformValue("is_out", false);
+	glDrawArrays(GL_POINTS, 0, selected_points.size() / 2);
+	glBindVertexArray(0);
+}
+
 void PiYingGL::draw_ch_applied_vert()
 {
 	const int currentVector = getCurrentChRow();
@@ -155,4 +169,10 @@ void PiYingGL::update_ch_verts()
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	doneCurrent();
+}
+
+void PiYingGL::update_selected_verts()
+{
+	glBindBuffer(GL_ARRAY_BUFFER, svVBO);
+	glBufferData(GL_ARRAY_BUFFER, selected_points.size() * sizeof(float), selected_points.data(), GL_DYNAMIC_DRAW);
 }

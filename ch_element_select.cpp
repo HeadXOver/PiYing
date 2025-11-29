@@ -143,21 +143,7 @@ void ChElementSelect::draw_handle_and_selected(QPainter& painter)
     painter.drawPoint(dHandleCenterPoint.x() + ROTATEHANDLE_RADIUS, dHandleCenterPoint.y() + ROTATEHANDLE_RADIUS);
 
     // 绘制选中点
-    const SelectedPoints& selectedPoints = *selected_points;
-    const PointVectorLayer& pointVector = *glVertReference.pointLayer;
-
-    QPointF selectPoint;
-    for (int i = 0; i < selectedPoints.size(); i++) {
-        selectPoint = glVertReference.gl.mapViewProjMatrix(
-            edit_skelen ?
-            pointVector[selectedPoints[i]] :
-            pointVector(selectedPoints[i])
-        );
-        painter.setPen(QPen(Qt::black, 8));
-        painter.drawPoint(selectPoint);
-        painter.setPen(QPen(Qt::red, 6));
-        painter.drawPoint(selectPoint);
-    }
+    glVertReference.gl.draw_selected_points();
 }
 
 void ChElementSelect::changeEditMode()
@@ -264,4 +250,27 @@ void ChElementSelect::click_select(const QPointF& mouse)
     }
 
     if (!KeyboardStateWin::isCtrlHeld()) selected_points->clear();
+}
+
+void ChElementSelect::uodate_to_draw()
+{
+    const SelectedPoints& selectedPoints = *selected_points;
+    const PointVectorLayer& pointVector = *glVertReference.pointLayer;
+
+    glVertReference.gl.selected_points.clear();
+    glVertReference.gl.selected_points.reserve(selectedPoints.size() * 2);
+
+    int index;
+    for (int i = 0; i < selectedPoints.size(); i++) {
+        index = selectedPoints[i];
+        const QPointF& selectPoint =
+            edit_skelen ?
+            pointVector[index] :
+            pointVector(index);
+
+        glVertReference.gl.selected_points.push_back(selectPoint.x());
+        glVertReference.gl.selected_points.push_back(selectPoint.y());
+    }
+
+    glVertReference.gl.update_selected_verts();
 }

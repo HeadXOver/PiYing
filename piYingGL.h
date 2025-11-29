@@ -93,8 +93,10 @@ public:
 	void bgScaleControl(const QPointF& mouse, ImageTexture& image);
 	void viewRotationControl(const QPointF& mouse);
 	void drawChEditVert(int currentVector);
+	void draw_selected_points();
 	void draw_ch_applied_vert();
 	void update_ch_verts();
+	void update_selected_verts();
 	void add_trace(int index, const QPolygonF& polygon);
 	void add_vert_group(int characterIndex, const QList<unsigned int>& indices);
 
@@ -139,14 +141,18 @@ public:
 	ViewData viewTransX;
 	ViewData viewTransY;
 
+	std::vector<float> selected_points;
+
 private:
 	PiYing& ref_PiYing;
 
 	unsigned int bgVAO = 0, bgVBO = 0, bgEBO = 0;
 	unsigned int chVAO = 0, chVBO = 0, chEBO = 0;
+	unsigned int svVAO = 0, svVBO = 0;
 
 	std::unique_ptr<QOpenGLShaderProgram> bgShaderProgram;
 	std::unique_ptr<QOpenGLShaderProgram> chShaderProgram;
+	std::unique_ptr<QOpenGLShaderProgram> _selected_vert_shader_program;
 
 	// imageTextures
 	QList<ImageTexture*> backGrounds;

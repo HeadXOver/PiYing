@@ -246,5 +246,5 @@ void PiYing::askScreenScale() {
 
 void PiYingGL::add_vert_group(int characterIndex, const QList<unsigned int>& indices)
 {
-    QMessageBox::information(this, "提示", "功能尚未实现");
+    QMessageBox::information(this, "提示", QString::number(indices.size()));
 }

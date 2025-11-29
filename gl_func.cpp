@@ -59,11 +59,31 @@ void PiYingGL::initializeGL()
 
 	/////////////////////////////////////////////
 
+	//////////////initialize selected points///////////////////////
+
+	glGenVertexArrays(1, &svVAO);
+	glGenBuffers(1, &svVBO);
+
+	glBindVertexArray(svVAO);
+	glBindBuffer(GL_ARRAY_BUFFER, svVBO);
+
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(0);
+
+	glBindVertexArray(0);
+
+	_selected_vert_shader_program->addShaderFromSourceFile(QOpenGLShader::Vertex, ":/PiYing/selected_vert.vert");
+	_selected_vert_shader_program->addShaderFromSourceFile(QOpenGLShader::Fragment, ":/PiYing/selected_vert.frag");
+	_selected_vert_shader_program->link();
+
+	/////////////////////////////////////////////
+
 	// global setting
 
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glActiveTexture(GL_TEXTURE0);
+	glEnable(GL_PROGRAM_POINT_SIZE);
 }
 
 void PiYingGL::paintGL() {
