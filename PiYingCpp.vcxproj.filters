@@ -404,5 +404,11 @@
     <None Include="selected_vert.frag">
       <Filter>Shader</Filter>
     </None>
+    <None Include="texture_tri.vert">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="texture_tri.frag">
+      <Filter>Shader</Filter>
+    </None>
   </ItemGroup>
 </Project>

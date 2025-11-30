@@ -148,11 +148,13 @@ private:
 
 	unsigned int bgVAO = 0, bgVBO = 0, bgEBO = 0;
 	unsigned int chVAO = 0, chVBO = 0, chEBO = 0;
+	unsigned int ttVAO = 0;
 	unsigned int svVAO = 0, svVBO = 0;
 
-	std::unique_ptr<QOpenGLShaderProgram> bgShaderProgram;
-	std::unique_ptr<QOpenGLShaderProgram> chShaderProgram;
-	std::unique_ptr<QOpenGLShaderProgram> _selected_vert_shader_program;
+	QOpenGLShaderProgram* bgShaderProgram;
+	QOpenGLShaderProgram* chShaderProgram;
+	QOpenGLShaderProgram* _selected_vert_shader_program;
+	QOpenGLShaderProgram* _texture_tri_shader_program;
 
 	// imageTextures
 	QList<ImageTexture*> backGrounds;

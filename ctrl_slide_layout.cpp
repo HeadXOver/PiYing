@@ -18,6 +18,7 @@ CtrlSlideLayout::CtrlSlideLayout(PiYingGL& gl, SlideApplier& slideApplier, QStri
 {
     layout = new QHBoxLayout(this);
     label = new QLabel(labelName, this);
+    label->setStyleSheet("QLabel { background-color : white; color : black; }");
     slider = new QSlider(Qt::Horizontal, this);
     slider->setRange(min, max);
     slider->setValue(defaultValue);

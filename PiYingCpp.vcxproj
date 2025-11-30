@@ -205,6 +205,8 @@
     <None Include="selected_vert.frag" />
     <None Include="selected_vert.vert" />
     <None Include="slideStyle.qss" />
+    <None Include="texture_tri.frag" />
+    <None Include="texture_tri.vert" />
     <None Include="timeline_rect_shape.frag" />
     <None Include="timeline_rect_shape.vert" />
   </ItemGroup>

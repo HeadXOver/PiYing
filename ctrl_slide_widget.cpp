@@ -55,7 +55,7 @@ CtrlSlideWidget::~CtrlSlideWidget()
 
 void CtrlSlideWidget::addSlider(QString name)
 {
-    CtrlSlideLayout* ctrlSlideLayout = new CtrlSlideLayout(piYingGL, *slide_applier, get_unique_name(name), 0, 100, 50, get_unique_id(sliderList), this);
+    CtrlSlideLayout* ctrlSlideLayout = new CtrlSlideLayout(piYingGL, *slide_applier, get_unique_name(name), 0, 100, 0, get_unique_id(sliderList), this);
     sliderList.append(ctrlSlideLayout);
 
     sliderLayout->insertWidget(sliderCount, sliderList[sliderCount++]);

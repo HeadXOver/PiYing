@@ -3,7 +3,9 @@ QMainWindow {
     border: 1px solid #464647;
 }
 
-/* === ²Ëµ¥À¸ === */
+QWidget { background: #ffffff;color: #464647; }
+
+/* === èœå•æ  === */
 QMenuBar {
     background: #ffffff;
     color: #000000;
@@ -21,7 +23,7 @@ QMenuBar::item:pressed {
     background: #007ACC;
 }
 
-/* === ÏÂÀ­²Ëµ¥ === */
+/* === ä¸‹æ‹‰èœå• === */
 QMenu {
     background: #c6dcff;
     color: #000000;
@@ -34,7 +36,7 @@ QMenu::item:selected {
     background: #094771;
 }
 
-/* === ¹¤¾ßÀ¸ === */
+/* === å·¥å…·æ  === */
 QToolBar {
     background: #ffffff;
     border: none;
@@ -47,16 +49,16 @@ QToolBar::handle {
     margin: 2px 1px;
 }
 
-/* === ×´Ì¬À¸ === */
+/* === çŠ¶æ€æ  === */
 QStatusBar {
-    background: #c6dcff;
+    background: #3C3C3C;
     color: white;
     border-top: 1px solid #464647;
 }
 
-/* === Í£¿¿´°¿Ú±êÌâÀ¸ === */
+/* === åœé çª—å£æ ‡é¢˜æ  === */
 QDockWidget {
-    color: #c6dcff;
+    color: #000000;
 }
 QDockWidget::title {
     background: #3C3C3C;
@@ -79,7 +81,7 @@ QScrollBar::handle:vertical:hover {
     background: #9A9A9A;
 }
 
-/* === ÆÕÍ¨°´Å¥ === */
+/* === æ™®é€šæŒ‰é’® === */
 QPushButton {
     background: #0E639C;
     color: black;

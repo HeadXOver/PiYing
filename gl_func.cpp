@@ -59,6 +59,33 @@ void PiYingGL::initializeGL()
 
 	/////////////////////////////////////////////
 
+	//////////////initialize texture triangles///////////////////////
+
+	glGenVertexArrays(1, &ttVAO);
+
+	glBindVertexArray(ttVAO);
+	glBindBuffer(GL_ARRAY_BUFFER, chVBO);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, chEBO);
+
+	// position attribute
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)(2 * sizeof(float)));
+	glEnableVertexAttribArray(0);
+
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(1);
+
+	glLineWidth(3.0f);
+
+	glBindVertexArray(0);
+
+	/////////////////////////////////////////////
+
+	_texture_tri_shader_program->addShaderFromSourceFile(QOpenGLShader::Vertex, ":/PiYing/texture_tri.vert");
+	_texture_tri_shader_program->addShaderFromSourceFile(QOpenGLShader::Fragment, ":/PiYing/texture_tri.frag");
+	_texture_tri_shader_program->link();
+
+	/////////////////////////////////////////////
+
 	//////////////initialize selected points///////////////////////
 
 	glGenVertexArrays(1, &svVAO);

@@ -224,6 +224,7 @@ void ChElementSelect::moveHandle(const QPointF& mouse)
         }
 	}
 
+    uodate_to_draw();
     glVertReference.gl.update_ch_verts();
 }
 
@@ -244,6 +245,7 @@ void ChElementSelect::click_select(const QPointF& mouse)
             if (!KeyboardStateWin::isCtrlHeld()) selected_points->clear(); 
 
             selected_points->append(i);
+            uodate_to_draw();
 
             return;
         }

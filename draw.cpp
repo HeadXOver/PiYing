@@ -15,34 +15,6 @@ void PiYingGL::drawChEditVert(int currentVector)
 	painter.setRenderHint(QPainter::Antialiasing);
 	painter.setBrush(QColor(225, 0, 0, 20));
 
-	PointVectorLayer pointVectorLayer(*(characterVerts[currentVector]));
-
-	int index;
-	int j;
-	painter.setPen(QPen(Qt::black, 3));
-	for (int i = 0; i < characterTriangleIndices[currentVector].size();) {
-		QPolygonF poly;
-		j = 0;
-		for (; j < 3; j++) {
-			index = characterTriangleIndices[currentVector][i + j];
-			poly << glToMap(getViewProjMatrix().map(pointVectorLayer(index)));
-		}
-		painter.drawPolygon(poly);
-		i += j;
-	}
-
-	painter.setPen(QPen(Qt::green, 1));
-	for (int i = 0; i < characterTriangleIndices[currentVector].size();) {
-		QPolygonF poly;
-		j = 0;
-		for (; j < 3; j++) {
-			index = characterTriangleIndices[currentVector][i + j];
-			poly << glToMap(getViewProjMatrix().map(pointVectorLayer(index)));
-		}
-		painter.drawPolygon(poly);
-		i += j;
-	}
-
 	if (ch_element_tool_) ch_element_tool_->draw(painter);
 }
 
@@ -54,9 +26,10 @@ void PiYingGL::draw_selected_points()
 
 	_selected_vert_shader_program->setUniformValue("trc", getViewProjMatrix());
 	_selected_vert_shader_program->setUniformValue("is_out", true);
-	glDrawArrays(GL_POINTS, 0, selected_points.size() / 2);
+	GLsizei n_points = (GLsizei)(selected_points.size() / 2);
+	glDrawArrays(GL_POINTS, 0, n_points);
 	_selected_vert_shader_program->setUniformValue("is_out", false);
-	glDrawArrays(GL_POINTS, 0, selected_points.size() / 2);
+	glDrawArrays(GL_POINTS, 0, n_points);
 	glBindVertexArray(0);
 }
 
@@ -69,33 +42,24 @@ void PiYingGL::draw_ch_applied_vert()
 	painter.setRenderHint(QPainter::Antialiasing);
 	painter.setBrush(QColor(225, 0, 0, 20));
 
-	PointVectorLayer pointVectorLayer(*(characterVerts[currentVector]));
+	int i = getCurrentChRow();
+	if (i < 0) return;
 
-	int index;
-	int j;
-	painter.setPen(QPen(Qt::black, 3));
-	for (int i = 0; i < characterTriangleIndices[currentVector].size();) {
-		QPolygonF poly;
-		j = 0;
-		for (; j < 3; j++) {
-			index = characterTriangleIndices[currentVector][i + j];
-			poly << glToMap(getViewProjMatrix().map(pointVectorLayer[index]));
-		}
-		painter.drawPolygon(poly);
-		i += j;
-	}
+	glBindVertexArray(ttVAO); ////////////////////////////////////////////////////
 
-	painter.setPen(QPen(Qt::green, 1));
-	for (int i = 0; i < characterTriangleIndices[currentVector].size();) {
-		QPolygonF poly;
-		j = 0;
-		for (; j < 3; j++) {
-			index = characterTriangleIndices[currentVector][i + j];
-			poly << glToMap(getViewProjMatrix().map(pointVectorLayer[index]));
-		}
-		painter.drawPolygon(poly);
-		i += j;
-	}
+	_texture_tri_shader_program->bind();
+
+	_texture_tri_shader_program->setUniformValue("is_skelen", true);
+	_texture_tri_shader_program->setUniformValue("trc", getViewProjMatrix());
+	_texture_tri_shader_program->setUniformValue("is_line", false);
+	glDrawElements(GL_TRIANGLES, (GLsizei)characterTriangleIndices[i].size(), GL_UNSIGNED_INT, 0);
+
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);   // 把填充改成“线框”
+	_texture_tri_shader_program->setUniformValue("is_line", true);
+	glDrawElements(GL_TRIANGLES, (GLsizei)characterTriangleIndices[i].size(), GL_UNSIGNED_INT, 0);
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
+	glBindVertexArray(0); ////////////////////////////////////////////////////
 
 	if (ch_element_tool_) ch_element_tool_->draw(painter);
 }
@@ -135,7 +99,21 @@ void PiYingGL::paintCharacterTexture()
 
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
-	glBindVertexArray(0);////////////////////////////////////////////////////////////
+	glBindVertexArray(ttVAO); ////////////////////////////////////////////////////
+
+	_texture_tri_shader_program->bind();
+
+	_texture_tri_shader_program->setUniformValue("is_skelen", false);
+	_texture_tri_shader_program->setUniformValue("trc", getViewProjMatrix());
+	_texture_tri_shader_program->setUniformValue("is_line", false);
+	glDrawElements(GL_TRIANGLES, (GLsizei)characterTriangleIndices[i].size(), GL_UNSIGNED_INT, 0);
+
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);   // 把填充改成“线框”
+	_texture_tri_shader_program->setUniformValue("is_line", true);
+	glDrawElements(GL_TRIANGLES, (GLsizei)characterTriangleIndices[i].size(), GL_UNSIGNED_INT, 0);
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
+	glBindVertexArray(0); ////////////////////////////////////////////////////
 	
 	drawChEditVert(i);
 }
@@ -153,7 +131,7 @@ void PiYingGL::paint_applied_texture()
 	chShaderProgram->setUniformValue("trc", getViewProjMatrix());
 	glDrawElements(GL_TRIANGLES, (GLsizei)characterTriangleIndices[i].size(), GL_UNSIGNED_INT, 0);
 
-	glBindVertexArray(0); ////////////////////////////////////////////////////
+	glBindVertexArray(0);
 }
 
 void PiYingGL::update_ch_verts()
@@ -173,6 +151,8 @@ void PiYingGL::update_ch_verts()
 
 void PiYingGL::update_selected_verts()
 {
+	makeCurrent();
 	glBindBuffer(GL_ARRAY_BUFFER, svVBO);
 	glBufferData(GL_ARRAY_BUFFER, selected_points.size() * sizeof(float), selected_points.data(), GL_DYNAMIC_DRAW);
+	doneCurrent();
 }
