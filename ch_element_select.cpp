@@ -30,7 +30,7 @@ void ChElementSelect::enter()
 {
     if (selected_points->size() <= 1) return;
 
-    glVertReference.gl.add_vert_group(0, selected_points->index());
+    glVertReference.gl.add_vert_group(selected_points->index());
 }
 
 void ChElementSelect::deleteElement()
@@ -98,15 +98,20 @@ void ChElementSelect::draw_handle_and_selected(QPainter& painter)
 {
     if(selected_points->size() == 0) return;
 
+    const int groupNum = glVertReference.gl.get_group_num();
+    std::vector<bool> drawGroup(groupNum, false);
+
     painter.setBrush(QColor(0, 0, 0, 0));
 
     // 计算中心点
     PointVectorLayer& pointLayer = *(glVertReference.pointLayer);
     handleCenterPoint = QPointF();
-    for (unsigned int i : selected_points->index())
-        handleCenterPoint += edit_skelen ?
-        pointLayer[i]:
-        pointLayer(i);
+    int groupIndex;
+    for (unsigned int i : selected_points->index()) {
+        groupIndex = glVertReference.pointLayer->get_group(i);
+        if (groupIndex >= 0) drawGroup[groupIndex] = true;
+        handleCenterPoint += edit_skelen ? pointLayer[i] : pointLayer(i);
+    }
     
     handleCenterPoint /= selected_points->size();
 
@@ -145,6 +150,10 @@ void ChElementSelect::draw_handle_and_selected(QPainter& painter)
 
     // 绘制选中点
     glVertReference.gl.draw_selected_points();
+
+    for (int i = 0; i < groupNum; i++) {
+        if (drawGroup[i]) glVertReference.gl.draw_group_rectangle(i);
+    }
 }
 
 void ChElementSelect::changeEditMode()

@@ -295,7 +295,22 @@ void PiYingGL::addGlobalAction(QMenu* menu, const QList<QAction*> action)
 	for (QAction* item : action)  menu->addAction(item);
 }
 
-void PiYingGL::add_vert_group(int characterIndex, const QList<unsigned int>& indices)
+void PiYingGL::add_vert_group(const QList<unsigned int>& indices)
 {
-	_character_vert_groups[characterIndex]->add_one_group(indices);
+	const int currentVector = getCurrentChRow();
+	if (currentVector < 0) return;
+
+	const int group_num = _character_vert_groups[currentVector]->group_num();
+	for (int i = 0; i < indices.size(); i++) {
+		characterVerts[currentVector]->set_hash_point_group(indices[i], group_num);
+	}
+	_character_vert_groups[currentVector]->add_one_group(indices);
+}
+
+int PiYingGL::get_group_num() const
+{
+	const int currentVector = getCurrentChRow();
+	if (currentVector < 0) return 0;
+
+	return _character_vert_groups[currentVector]->group_num();
 }

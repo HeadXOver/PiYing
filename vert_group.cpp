@@ -13,3 +13,13 @@ VertGroup::VertGroup(const QList<unsigned int>& indices)
 void VertGroup::add_group(const QList<unsigned int>& indices)
 {
 }
+
+unsigned int VertGroup::operator[](int index) const
+{
+	return verts[index];
+}
+
+int VertGroup::vert_size() const
+{
+	return verts.size();
+}

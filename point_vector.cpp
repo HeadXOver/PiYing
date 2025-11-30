@@ -49,6 +49,16 @@ void PointVector::set_point(int i, const QPointF& p)
 	points[i2 + 1] = p.y();
 }
 
+void PointVector::set_hash_point_group(int vert, int group)
+{
+	hash_point_group[vert] = group;
+}
+
+int PointVector::get_group(int i) const
+{
+	return hash_point_group[i];
+}
+
 bool PointVector::contain(const QPointF& p) const
 {
 	for (int i = 0; i < points.size(); i += 2) {

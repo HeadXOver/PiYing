@@ -4,6 +4,9 @@
 #include "ch_element_tool.h"
 #include "point_vector.h"
 #include "point_vector_layer.h"
+#include "vert_groups.h"
+#include "vert_group.h"
+#include "base_math.h"
 
 #include <qpainter>
 #include <qopengltexture>
@@ -64,7 +67,7 @@ void PiYingGL::draw_ch_applied_vert()
 	if (ch_element_tool_) ch_element_tool_->draw(painter);
 }
 
-void PiYingGL::draw_group_rectangle(float cx, float cy, float width, float height)
+void PiYingGL::draw_rectangle(float cx, float cy, float width, float height)
 {
 	glBindVertexArray(rtVAO); ////////////////////////////////////////////////////
 
@@ -77,7 +80,40 @@ void PiYingGL::draw_group_rectangle(float cx, float cy, float width, float heigh
 
 	glDrawArrays(GL_LINE_LOOP, 0, 4);
 
-	glBindVertexArray(0); ////////////////////////////////////////////////////
+	glBindVertexArray(0); ////////////////////////////////////////////////////////
+}
+
+void PiYingGL::draw_group_rectangle(int groupIndex)
+{
+	int currentRow = getCurrentChRow();
+	if (currentRow < 0) return;
+
+	VertGroups& groups = *_character_vert_groups[currentRow];
+	VertGroup& group = *groups[groupIndex];
+
+	int vertSize = group.vert_size();
+	if (vertSize <= 1) return;
+
+	PointVectorLayer layer(*characterVerts[currentRow]);
+
+	bool edit_skelon = editMode == EditMode::characterSkeleton;
+
+	QPointF pointInGroup = edit_skelon ? layer[group[0]] : layer(group[0]);
+
+	float top = pointInGroup.y();
+	float left = pointInGroup.x();
+	float bottom = pointInGroup.y();
+	float right = pointInGroup.x();
+
+	for (int i = 1; i < vertSize; i++) {
+		pointInGroup = edit_skelon ? layer[group[i]] : layer(group[i]);
+		top = cus::max(top, pointInGroup.y());
+		left = cus::min(left, pointInGroup.x());
+		bottom = cus::min(bottom, pointInGroup.y());
+		right = cus::max(right, pointInGroup.x());
+	}
+
+	draw_rectangle((left + right) / 2.f, (top + bottom) / 2.f, right - left, top - bottom);
 }
 
 void PiYingGL::paintBackgrounds()

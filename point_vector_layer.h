@@ -17,6 +17,7 @@ public:
 	void clear();
 	void resize(int size);
 	
+	int get_group(int i) const;
 
 	size_t size() const;
 

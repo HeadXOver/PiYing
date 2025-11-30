@@ -96,11 +96,14 @@ public:
 	void drawChEditVert(int currentVector);
 	void draw_selected_points();
 	void draw_ch_applied_vert();
-	void draw_group_rectangle(float cx, float cy, float width, float height);
+	void draw_rectangle(float cx, float cy, float width, float height);
+	void draw_group_rectangle(int groupIndex);
 	void update_ch_verts();
 	void update_selected_verts();
 	void add_trace(int index, const QPolygonF& polygon);
-	void add_vert_group(int characterIndex, const QList<unsigned int>& indices);
+	void add_vert_group(const QList<unsigned int>& indices);
+
+	int get_group_num() const;
 
 	bool addBackground(const QString& imageName, QImage& image);
 
