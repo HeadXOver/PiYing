@@ -243,8 +243,3 @@ void PiYing::askScreenScale() {
     piYingGLContainer->update();
     piYingGL->changeRatio(ratio);
 }
-
-void PiYingGL::add_vert_group(int characterIndex, const QList<unsigned int>& indices)
-{
-    QMessageBox::information(this, "提示", QString::number(indices.size()));
-}

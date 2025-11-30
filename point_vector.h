@@ -8,14 +8,14 @@ class PointVector
 {
 public:
 	size_t float_size() const { return points.size(); }
-	size_t size() const { return points.size() / 2; }
+	size_t size() const { return hash_point_group.size(); }
 
 	float* data() { return points.data(); }
 
-	void push_back(float x, float y) { points.push_back(x); points.push_back(y); }
+	void push_back(float x, float y);
 	void push_back(const QPointF& p);
-	void clear() { points.clear(); }
-	void resize(int size) { points.resize(size + size); }
+	void clear();
+	void resize(int size);
 	void remove_last();
 	void set_point(int i, float x, float y);
 	void set_point(int i, const QPointF& p);
@@ -26,5 +26,6 @@ public:
 
 private:
 	std::vector<float> points;
+	std::vector<int> hash_point_group;
 };
 

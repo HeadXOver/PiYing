@@ -96,6 +96,7 @@ public:
 	void drawChEditVert(int currentVector);
 	void draw_selected_points();
 	void draw_ch_applied_vert();
+	void draw_group_rectangle(float cx, float cy, float width, float height);
 	void update_ch_verts();
 	void update_selected_verts();
 	void add_trace(int index, const QPolygonF& polygon);
@@ -130,7 +131,7 @@ public:
 
 	QList<PointVector*>& ref_characterVerts() { return characterVerts; }
 	PointVector& ref_characterVerts(int index) { return *(characterVerts[index]); }
-	QList<std::vector<unsigned int>>& ref_characterTriangleIndices () { return characterTriangleIndices; }
+	QList<std::vector<unsigned int>>& ref_characterTriangleIndices() { return characterTriangleIndices; }
 
 	CharacterToolState ch_tool_state() const { return ch_tool_state_; }
 

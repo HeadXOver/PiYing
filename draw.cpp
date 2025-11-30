@@ -64,6 +64,22 @@ void PiYingGL::draw_ch_applied_vert()
 	if (ch_element_tool_) ch_element_tool_->draw(painter);
 }
 
+void PiYingGL::draw_group_rectangle(float cx, float cy, float width, float height)
+{
+	glBindVertexArray(rtVAO); ////////////////////////////////////////////////////
+
+	_rectangle_shader_program->bind();
+
+	QMatrix4x4 trc;
+	trc.translate(cx, cy);
+	trc.scale(width / 2.f, height / 2.f);
+	_rectangle_shader_program->setUniformValue("trc", getViewProjMatrix() * trc);
+
+	glDrawArrays(GL_LINE_LOOP, 0, 4);
+
+	glBindVertexArray(0); ////////////////////////////////////////////////////
+}
+
 void PiYingGL::paintBackgrounds()
 {
 	draw_view_rectangle();

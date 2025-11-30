@@ -173,7 +173,7 @@ void PiYingGL::setChTool(CharacterToolState state)
 
 void PiYingGL::deleteChElement()
 {
-	if (ch_element_tool_) ch_element_tool_->delete_element();
+if (ch_element_tool_) ch_element_tool_->delete_element();
 	update();
 }
 
@@ -293,4 +293,9 @@ int PiYingGL::getCurrentChRow() const
 void PiYingGL::addGlobalAction(QMenu* menu, const QList<QAction*> action)
 {
 	for (QAction* item : action)  menu->addAction(item);
+}
+
+void PiYingGL::add_vert_group(int characterIndex, const QList<unsigned int>& indices)
+{
+	_character_vert_groups[characterIndex]->add_one_group(indices);
 }

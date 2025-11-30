@@ -28,7 +28,7 @@ void ChElementSelect::escape()
 
 void ChElementSelect::enter()
 {
-    if (selected_points->size() == 0) return;
+    if (selected_points->size() <= 1) return;
 
     glVertReference.gl.add_vert_group(0, selected_points->index());
 }
@@ -91,6 +91,7 @@ void ChElementSelect::deleteElement()
     idx.resize(outIdx);
 
     selected_points->clear();
+    glVertReference.gl.update_ch_verts();
 }
 
 void ChElementSelect::draw_handle_and_selected(QPainter& painter)
@@ -224,7 +225,7 @@ void ChElementSelect::moveHandle(const QPointF& mouse)
         }
 	}
 
-    uodate_to_draw();
+    uodate_selected_to_draw();
     glVertReference.gl.update_ch_verts();
 }
 
@@ -245,7 +246,7 @@ void ChElementSelect::click_select(const QPointF& mouse)
             if (!KeyboardStateWin::isCtrlHeld()) selected_points->clear(); 
 
             selected_points->append(i);
-            uodate_to_draw();
+            uodate_selected_to_draw();
 
             return;
         }
@@ -254,7 +255,7 @@ void ChElementSelect::click_select(const QPointF& mouse)
     if (!KeyboardStateWin::isCtrlHeld()) selected_points->clear();
 }
 
-void ChElementSelect::uodate_to_draw()
+void ChElementSelect::uodate_selected_to_draw()
 {
     const SelectedPoints& selectedPoints = *selected_points;
     const PointVectorLayer& pointVector = *glVertReference.pointLayer;

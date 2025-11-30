@@ -5,6 +5,7 @@
 #include "slide_applier.h"
 #include "image_texture.h"
 #include "point_vector.h"
+#include "vert_groups.h"
 
 #include <qlabel>
 #include <QOpenGLShaderProgram.h>

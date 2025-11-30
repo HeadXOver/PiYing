@@ -75,7 +75,7 @@ void ChElementRectSelect::releasePos(const QPointF& mouse)
 		)) chElementSelect->selected_points->append(i);
 	}
 
-	chElementSelect->uodate_to_draw();
+	chElementSelect->uodate_selected_to_draw();
 }
 
 void ChElementRectSelect::enter()
