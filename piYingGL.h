@@ -48,6 +48,7 @@ private:
 	void paintBackgrounds();
 	void paintCharacterTexture();
 	void paint_applied_texture();
+	void draw_view_rectangle();
 	void addGlobalAction(QMenu* menu, const QList<QAction*> action);
 
 	int getCurrentBgRow() const;
@@ -150,11 +151,13 @@ private:
 	unsigned int chVAO = 0, chVBO = 0, chEBO = 0;
 	unsigned int ttVAO = 0;
 	unsigned int svVAO = 0, svVBO = 0;
+	unsigned int rtVAO = 0, rtVBO = 0;
 
 	QOpenGLShaderProgram* bgShaderProgram;
 	QOpenGLShaderProgram* chShaderProgram;
 	QOpenGLShaderProgram* _selected_vert_shader_program;
 	QOpenGLShaderProgram* _texture_tri_shader_program;
+	QOpenGLShaderProgram* _rectangle_shader_program;
 
 	// imageTextures
 	QList<ImageTexture*> backGrounds;

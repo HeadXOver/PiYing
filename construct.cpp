@@ -21,6 +21,7 @@ PiYingGL::PiYingGL(PiYing& parent) :
 	chShaderProgram = new QOpenGLShaderProgram(this);
 	_selected_vert_shader_program = new QOpenGLShaderProgram(this);
 	_texture_tri_shader_program = new QOpenGLShaderProgram(this);
+	_rectangle_shader_program = new QOpenGLShaderProgram(this);
 
 	lastImageTransform =std::make_unique<ImageTransform>();
 
@@ -118,9 +119,21 @@ PiYingGL::~PiYingGL()
 
 	////////////////////////////////////////
 
-	glDeleteBuffers(1, &bgVBO);
-	glDeleteVertexArrays(1, &bgVAO);
-	glDeleteBuffers(1, &bgEBO);
+	if (bgVAO) glDeleteVertexArrays(1, &bgVAO);
+	if (bgVBO) glDeleteBuffers(1, &bgVBO);
+	if (bgEBO) glDeleteBuffers(1, &bgEBO);
+
+	if (chVAO) glDeleteVertexArrays(1, &chVAO);
+	if (chVBO) glDeleteBuffers(1, &chVBO);
+	if (chEBO) glDeleteBuffers(1, &chEBO);
+
+	if (ttVAO) glDeleteVertexArrays(1, &ttVAO);
+
+	if (svVAO) glDeleteVertexArrays(1, &svVAO);
+	if (svVBO) glDeleteBuffers(1, &svVBO);
+
+	if (rtVAO) glDeleteVertexArrays(1, &rtVAO);
+	if (rtVBO) glDeleteBuffers(1, &rtVBO);
 
 	////////////////////////////////////////
 

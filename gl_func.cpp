@@ -6,6 +6,27 @@ void PiYingGL::initializeGL()
 {
 	initializeOpenGLFunctions();
 
+	//////////////initialize rectangle///////////////////////
+
+	glGenVertexArrays(1, &rtVAO);
+	glGenBuffers(1, &rtVBO);
+
+	/////////////////////////////////////////////
+
+	glBindVertexArray(rtVAO);
+	glBindBuffer(GL_ARRAY_BUFFER, rtVBO);
+
+	glBufferData(GL_ARRAY_BUFFER, sizeof(RECTANGLE_VERT), RECTANGLE_VERT, GL_STATIC_DRAW);
+
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(0);
+
+	/////////////////////////////////////////////
+
+	_rectangle_shader_program->addShaderFromSourceFile(QOpenGLShader::Vertex, ":/PiYing/rectangle.vert");
+	_rectangle_shader_program->addShaderFromSourceFile(QOpenGLShader::Fragment, ":/PiYing/rectangle.frag");
+	_rectangle_shader_program->link();
+
 	//////////////initialize background///////////////////////
 
 	glGenVertexArrays(1, &bgVAO);
@@ -24,12 +45,12 @@ void PiYingGL::initializeGL()
 	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
 
+	/////////////////////////////////////////////
+
 	bgShaderProgram->addShaderFromSourceFile(QOpenGLShader::Vertex, ":/PiYing/bgshapes.vert");
 	bgShaderProgram->addShaderFromSourceFile(QOpenGLShader::Fragment, ":/PiYing/bgshapes.frag");
 	bgShaderProgram->link();
 	bgShaderProgram->setUniformValue("texture1", 0);
-
-	/////////////////////////////////////////////
 
 	////////////////initialize character editer///////////////////////
 
@@ -56,8 +77,6 @@ void PiYingGL::initializeGL()
 	chShaderProgram->addShaderFromSourceFile(QOpenGLShader::Fragment, ":/PiYing/chEditershapes.frag");
 	chShaderProgram->link();
 	chShaderProgram->setUniformValue("texture1", 0);
-
-	/////////////////////////////////////////////
 
 	//////////////initialize texture triangles///////////////////////
 

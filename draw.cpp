@@ -66,6 +66,8 @@ void PiYingGL::draw_ch_applied_vert()
 
 void PiYingGL::paintBackgrounds()
 {
+	draw_view_rectangle();
+
 	glBindVertexArray(bgVAO);///////////////////////////////////////////////////////
 
 	bgShaderProgram->bind();
@@ -85,6 +87,8 @@ void PiYingGL::paintBackgrounds()
 
 void PiYingGL::paintCharacterTexture()
 {
+	draw_view_rectangle();
+
 	int i = getCurrentChRow();
 	if (i < 0) return;
 
@@ -120,6 +124,8 @@ void PiYingGL::paintCharacterTexture()
 
 void PiYingGL::paint_applied_texture()
 {
+	draw_view_rectangle();
+
 	int i = getCurrentChRow();
 	if (i < 0) return;
 
@@ -132,6 +138,19 @@ void PiYingGL::paint_applied_texture()
 	glDrawElements(GL_TRIANGLES, (GLsizei)characterTriangleIndices[i].size(), GL_UNSIGNED_INT, 0);
 
 	glBindVertexArray(0);
+}
+
+void PiYingGL::draw_view_rectangle()
+{
+	glBindVertexArray(rtVAO); ////////////////////////////////////////////////////
+
+	_rectangle_shader_program->bind();
+
+	_rectangle_shader_program->setUniformValue("trc", getViewProjMatrix());
+
+	glDrawArrays(GL_LINE_LOOP, 0, 4);
+
+	glBindVertexArray(0); ////////////////////////////////////////////////////
 }
 
 void PiYingGL::update_ch_verts()

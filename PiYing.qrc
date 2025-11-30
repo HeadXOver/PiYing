@@ -29,5 +29,7 @@
         <file>selected_vert.vert</file>
         <file>texture_tri.frag</file>
         <file>texture_tri.vert</file>
+        <file>rectangle.frag</file>
+        <file>rectangle.vert</file>
     </qresource>
 </RCC>
