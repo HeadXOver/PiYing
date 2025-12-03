@@ -74,7 +74,9 @@ void PiYingGL::addCharacter(const QString& imageName)
 		QMessageBox::warning(this, "Warning", "Failed to load image: " + imageName);
 		return;
 	}
+	makeCurrent();
 	characterTextures.append(new ImageTexture(img));
+	doneCurrent();
 	characterTriangleIndices.push_back(std::vector<unsigned int>());
 	characterVerts.push_back(new PointVector());
 	_character_vert_groups.push_back(new VertGroups());
@@ -87,9 +89,7 @@ void PiYingGL::addCharacter(const QString& imageName)
 	ref_PiYing.chImageList->addItem(item);
 
 	CtrlSlideWidget* sliderWidget = new CtrlSlideWidget(*this, "1");
-
 	sliderWidget->setStyleSheet(PiYing::SLIDER_WIDGET_STYLE_SHEET);
-
 	sliderWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
 	ref_PiYing.sliderWidget.append(sliderWidget);

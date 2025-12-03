@@ -13,7 +13,7 @@ ImageTexture::ImageTexture(const QImage& image)
     _texture = std::make_unique<QOpenGLTexture>(image.flipped());
     _texture->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
     _texture->setMagnificationFilter(QOpenGLTexture::Linear);
-    _texture->setWrapMode(QOpenGLTexture::Repeat);
+    _texture->setWrapMode(QOpenGLTexture::ClampToEdge);
 }
 
 ImageTexture::~ImageTexture()

@@ -113,7 +113,7 @@ void PiYingGL::draw_group_rectangle(int groupIndex)
 		right = cus::max(right, pointInGroup.x());
 	}
 
-	draw_rectangle((left + right) / 2.f, (top + bottom) / 2.f, right - left, top - bottom);
+	draw_rectangle((left + right) / 2.f, (top + bottom) / 2.f, right - left + 0.05f / viewScale.value(), top - bottom + 0.05f / viewScale.value());
 }
 
 void PiYingGL::paintBackgrounds()
