@@ -2,6 +2,8 @@
 #include "PiYingGL.h"
 #include "tool_button.h"
 #include "ctrlSlideWidget.h"
+#include "time_line_gl.h"
+#include "parts_viewer.h"
 
 #include "ui_PiYing.h"
 
@@ -29,6 +31,12 @@ void PiYing::change_edit_mode_overview()
 {
     splitListOpenGL->widget(0)->setParent(nullptr);
     splitListOpenGL->insertWidget(0, voidListWidget);
+
+    splitTimelineOpenGL->widget(1)->setParent(nullptr);
+    splitTimelineOpenGL->insertWidget(1, timeLineGL);
+
+    splitTimelineOpenGL->setSizes({ width() * 5 / 6, width() / 6 });
+
     piYingGL->setChTool(CharacterToolState::None);
     piYingGL->setEditMode(EditMode::OverView);
 }
@@ -37,6 +45,12 @@ void PiYing::change_edit_mode_background()
 {
     splitListOpenGL->widget(0)->setParent(nullptr);
     splitListOpenGL->insertWidget(0, bgImageList);
+
+    splitTimelineOpenGL->widget(1)->setParent(nullptr);
+    splitTimelineOpenGL->insertWidget(1, timeLineGL);
+
+    splitTimelineOpenGL->setSizes({ width() * 5 / 6, width() / 6 });
+
     piYingGL->setChTool(CharacterToolState::None);
     piYingGL->setEditMode(EditMode::BackGround);
 }
@@ -45,6 +59,10 @@ void PiYing::change_edit_mode_character_texture()
 {
     splitListOpenGL->widget(0)->setParent(nullptr);
     splitListOpenGL->insertWidget(0, chImageList);
+
+    splitTimelineOpenGL->widget(1)->setParent(nullptr);
+    splitTimelineOpenGL->insertWidget(1, partsViewer);
+
     piYingGL->setEditMode(EditMode::characterTexture);
 
     for (ToolButton* item : toolChTexList) {
@@ -65,6 +83,10 @@ void PiYing::change_edit_mode_character_skeleton()
 {
     splitListOpenGL->widget(0)->setParent(nullptr);
     splitListOpenGL->insertWidget(0, chImageList);
+
+    splitTimelineOpenGL->widget(1)->setParent(nullptr);
+    splitTimelineOpenGL->insertWidget(1, partsViewer);
+
     piYingGL->setEditMode(EditMode::characterSkeleton);
 
     for (ToolButton* item : toolChSkelenList) {
@@ -90,6 +112,9 @@ void PiYing::change_edit_mode_character_constrol_slider()
         splitListOpenGL->insertWidget(0, voidListWidget);
     piYingGL->setEditMode(EditMode::controlSlide);
     splitListOpenGL->setSizes({ width() / 5, width() * 4 / 5 });
+
+    splitTimelineOpenGL->widget(1)->setParent(nullptr);
+    splitTimelineOpenGL->insertWidget(1, partsViewer);
 
     for (ToolButton* item : toolControlSliderList) {
         ui->mainToolBar->addAction(item->action());

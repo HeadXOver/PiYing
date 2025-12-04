@@ -5,6 +5,7 @@
 #include "piYingGLContainer.h"
 #include "tool_button.h"
 #include "time_line_gl.h"
+#include "parts_viewer.h"
 #include "slide_applier.h"
 
 #include "ui_PiYing.h"
@@ -44,7 +45,8 @@ PiYing::PiYing(QWidget* parent) : QMainWindow(parent)
     piYingGL = new PiYingGL(*this);
     piYingGLContainer = new PiYingGLContainer(*piYingGL, ratio, this);
 
-    timeLineGL = new TimeLineGL(this);
+    timeLineGL = new TimelineGl(this);
+    partsViewer = new PartsViewerGl(this);
 
     splitTimelineOpenGL = new QSplitter(Qt::Vertical, this);
     splitListOpenGL = new QSplitter(Qt::Horizontal, this);
@@ -79,8 +81,11 @@ PiYing::PiYing(QWidget* parent) : QMainWindow(parent)
     // menuBar
     QMenu* menuFile = new QMenu("文件(&F)", this);
     QMenu* menuEdit = new QMenu("编辑(&E)", this);
+    QMenu* menuWindow = new QMenu("窗口(&W)", this);
+
     ui->menuBar->addMenu(menuFile);
 	ui->menuBar->addMenu(menuEdit);
+    ui->menuBar->addMenu(menuWindow);
 
 	// child menu of menu File
     QMenu* childMenuImport = menuFile->addMenu("导入");
@@ -88,6 +93,9 @@ PiYing::PiYing(QWidget* parent) : QMainWindow(parent)
 
 	// child menu of menu Edit
     QMenu* childMenuScreen = menuEdit->addMenu("幕布");
+
+    // actions of menu Window
+    QMenu* childMenuTool = menuWindow->addMenu("打开");
 
 	// actions of menu File
     QAction* actionExit                 = menuFile->            addAction("退出");
@@ -99,6 +107,9 @@ PiYing::PiYing(QWidget* parent) : QMainWindow(parent)
 	// actions of menu Edit
     QAction* actionScreenScale           = childMenuScreen->     addAction("比例...");
     QAction* actionDefaultColor          = childMenuScreen->     addAction("底色...");
+
+    // actions of menu Window
+    QAction* actionChTool = childMenuTool->addAction("零件库");
 
     connect(actionExportCurrentFrame,   SIGNAL(triggered()), this, SLOT(exportCurrentFrame()));
     connect(actionExportMainSlider,     SIGNAL(triggered()), this, SLOT(exportMainSlider()));
@@ -136,6 +147,7 @@ PiYing::PiYing(QWidget* parent) : QMainWindow(parent)
 
     piYingGL->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     timeLineGL->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    partsViewer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     voidListWidget->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
 
     modeBox->addItems(
@@ -166,6 +178,8 @@ PiYing::~PiYing()
     safeDelete(piYingGLContainer);
     safeDelete(splitTimelineOpenGL);
     safeDelete(splitListOpenGL);
+    safeDelete(timeLineGL);
+    safeDelete(partsViewer);
 
     for (CtrlSlideWidget* item : sliderWidget) safeDelete(item);
 }

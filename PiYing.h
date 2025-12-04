@@ -5,13 +5,14 @@
 
 class CtrlSlideWidget;
 class PiYingGL;
-class TimeLineGL;
+class TimelineGl;
 class ToolButton;
 class PiYingGLContainer;
 class QListWidget;
 class QSplitter;
 class QSlider;
 class SlideApplier;
+class PartsViewerGl;
 
 namespace Ui{
 	class PiYingClass;
@@ -54,7 +55,8 @@ private:
 
 	// OpenGL widget
     PiYingGL* piYingGL = nullptr;
-	TimeLineGL* timeLineGL = nullptr;
+	TimelineGl* timeLineGL = nullptr;
+	PartsViewerGl* partsViewer = nullptr;
 
 	QSplitter* splitListOpenGL;
 	QSplitter* splitTimelineOpenGL;

@@ -13,13 +13,13 @@ class Timeline;
 
 struct ScaleTrans;
 
-class TimeLineGL : public QOpenGLWidget, QOpenGLFunctions_3_3_Core
+class TimelineGl : public QOpenGLWidget, QOpenGLFunctions_3_3_Core
 {
 	Q_OBJECT
 
 public:
-	TimeLineGL(QWidget* parent);
-	~TimeLineGL();
+	TimelineGl(QWidget* parent);
+	~TimelineGl();
 
 	float x_map_to_gl(const float x) const;
 

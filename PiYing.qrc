@@ -31,5 +31,7 @@
         <file>texture_tri.vert</file>
         <file>rectangle.frag</file>
         <file>rectangle.vert</file>
+        <file>square_icon.frag</file>
+        <file>square_icon.vert</file>
     </qresource>
 </RCC>

@@ -232,6 +232,9 @@
     <ClCompile Include="vert_group.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="parts_viewer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="static_handle_zone.h">
@@ -366,7 +369,10 @@
       <Filter>Header Files\PiYngQObject</Filter>
     </QtMoc>
     <QtMoc Include="time_line_gl.h">
-      <Filter>Header Files\PiYngQObject</Filter>
+      <Filter>Header Files\PiYingWidget</Filter>
+    </QtMoc>
+    <QtMoc Include="parts_viewer.h">
+      <Filter>Header Files\PiYingWidget</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>
@@ -414,6 +420,12 @@
       <Filter>Shader</Filter>
     </None>
     <None Include="rectangle.frag">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="square_icon.vert">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="square_icon.frag">
       <Filter>Shader</Filter>
     </None>
   </ItemGroup>

@@ -11,23 +11,19 @@
 #include <qopengltexture>
 #include <qmouseevent>
 #include <qpainter>
+#include "parts_viewer.h"
 
-TimeLineGL::TimeLineGL(QWidget* parent) : QOpenGLWidget(parent)
+TimelineGl::TimelineGl(QWidget* parent) : QOpenGLWidget(parent)
 {
 	_rect_shader_program = new QOpenGLShaderProgram(this);
 
 	_scale_trans = new ScaleTrans();
 	_last_scale_trans = new ScaleTrans();
 
-	_timelines.push_back(new Timeline(3.f));
-	_timelines.push_back(new Timeline(2.f));
-	_timelines.push_back(new Timeline(5.f));
-	_timelines.push_back(new Timeline(2.2f));
-	_timelines.push_back(new Timeline(1.f));
-	_timelines.push_back(new Timeline(4.6f));
+	_timelines.push_back(new Timeline(2));
 }
 
-TimeLineGL::~TimeLineGL()
+TimelineGl::~TimelineGl()
 {
 	for (Timeline* it : _timelines) delete it;
 
@@ -44,12 +40,12 @@ TimeLineGL::~TimeLineGL()
 	doneCurrent();
 }
 
-float TimeLineGL::x_map_to_gl(const float x) const
+float TimelineGl::x_map_to_gl(const float x) const
 {
 	return x / width() * 2.f - 1.f;
 }
 
-void TimeLineGL::initializeGL()
+void TimelineGl::initializeGL()
 {
 	initializeOpenGLFunctions();
 	glClearColor(0.1f, 0.1f, 0.2f, 0.4f);
@@ -86,9 +82,10 @@ void TimeLineGL::initializeGL()
 	glActiveTexture(GL_TEXTURE0);
 }
 
-void TimeLineGL::paintGL()
+void TimelineGl::paintGL()
 {
 	glClear(GL_COLOR_BUFFER_BIT);
+
 	glBindVertexArray(VAO);///////////////////////////////////////////////////////
 
 	_rect_shader_program->bind();
@@ -112,7 +109,7 @@ void TimeLineGL::paintGL()
 	painter.drawLine(timeCursorPosition, 0, timeCursorPosition, height());
 }
 
-void TimeLineGL::wheelEvent(QWheelEvent* ev)
+void TimelineGl::wheelEvent(QWheelEvent* ev)
 {
 	float scaleFactor = 1.0f + ev->angleDelta().y() / 1200.f;
 	if (scaleFactor < 0.1f) scaleFactor = 0.1f;
@@ -134,7 +131,7 @@ void TimeLineGL::wheelEvent(QWheelEvent* ev)
 	ev->accept();
 }
 
-void TimeLineGL::mousePressEvent(QMouseEvent* event)
+void TimelineGl::mousePressEvent(QMouseEvent* event)
 {
 	if (event->buttons() == Qt::MiddleButton) {
 		lastMiddleButtonPos = event->position();
@@ -155,12 +152,12 @@ void TimeLineGL::mousePressEvent(QMouseEvent* event)
 	}
 }
 
-void TimeLineGL::mouseReleaseEvent(QMouseEvent* e)
+void TimelineGl::mouseReleaseEvent(QMouseEvent* e)
 {
 	_draging_cursor = false;
 }
 
-void TimeLineGL::mouseMoveEvent(QMouseEvent* event)
+void TimelineGl::mouseMoveEvent(QMouseEvent* event)
 {
 	if (event->buttons() == Qt::LeftButton) {
 		if (_draging_cursor || KeyboardStateWin::isCtrlHeld()) {
@@ -182,7 +179,7 @@ void TimeLineGL::mouseMoveEvent(QMouseEvent* event)
 	}
 }
 
-void TimeLineGL::move_time_cursor(float mouse_x)
+void TimelineGl::move_time_cursor(float mouse_x)
 {
 	const float half_width = width() / 2.f;
 	time_cursor = cus::max(half_width * (1.f - _scale_trans->scale_lenth), mouse_x - _scale_trans->trans_x * half_width); ///< 确保非负
