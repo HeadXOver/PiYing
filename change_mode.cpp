@@ -32,9 +32,6 @@ void PiYing::change_edit_mode_overview()
     splitListOpenGL->widget(0)->setParent(nullptr);
     splitListOpenGL->insertWidget(0, voidListWidget);
 
-    splitTimelineOpenGL->widget(1)->setParent(nullptr);
-    splitTimelineOpenGL->insertWidget(1, timeLineGL);
-
     splitTimelineOpenGL->setSizes({ width() * 5 / 6, width() / 6 });
 
     piYingGL->setChTool(CharacterToolState::None);
@@ -45,9 +42,6 @@ void PiYing::change_edit_mode_background()
 {
     splitListOpenGL->widget(0)->setParent(nullptr);
     splitListOpenGL->insertWidget(0, bgImageList);
-
-    splitTimelineOpenGL->widget(1)->setParent(nullptr);
-    splitTimelineOpenGL->insertWidget(1, timeLineGL);
 
     splitTimelineOpenGL->setSizes({ width() * 5 / 6, width() / 6 });
 
@@ -60,8 +54,7 @@ void PiYing::change_edit_mode_character_texture()
     splitListOpenGL->widget(0)->setParent(nullptr);
     splitListOpenGL->insertWidget(0, chImageList);
 
-    splitTimelineOpenGL->widget(1)->setParent(nullptr);
-    splitTimelineOpenGL->insertWidget(1, partsViewer);
+    splitTimelineOpenGL->setSizes({ width() * 3 / 4, width() / 4 });
 
     piYingGL->setEditMode(EditMode::characterTexture);
 
@@ -84,8 +77,7 @@ void PiYing::change_edit_mode_character_skeleton()
     splitListOpenGL->widget(0)->setParent(nullptr);
     splitListOpenGL->insertWidget(0, chImageList);
 
-    splitTimelineOpenGL->widget(1)->setParent(nullptr);
-    splitTimelineOpenGL->insertWidget(1, partsViewer);
+    splitTimelineOpenGL->setSizes({ width() * 3 / 4, width() / 4 });
 
     piYingGL->setEditMode(EditMode::characterSkeleton);
 
@@ -113,8 +105,7 @@ void PiYing::change_edit_mode_character_constrol_slider()
     piYingGL->setEditMode(EditMode::controlSlide);
     splitListOpenGL->setSizes({ width() / 5, width() * 4 / 5 });
 
-    splitTimelineOpenGL->widget(1)->setParent(nullptr);
-    splitTimelineOpenGL->insertWidget(1, partsViewer);
+    splitTimelineOpenGL->setSizes({ width() * 3 / 4, width() / 4 });
 
     for (ToolButton* item : toolControlSliderList) {
         ui->mainToolBar->addAction(item->action());

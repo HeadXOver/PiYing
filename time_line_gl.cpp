@@ -13,7 +13,7 @@
 #include <qpainter>
 #include "parts_viewer.h"
 
-TimelineGl::TimelineGl(QWidget* parent) : QOpenGLWidget(parent)
+TimelineGl::TimelineGl(QWidget* parent) : QOpenGLWidget()
 {
 	_rect_shader_program = new QOpenGLShaderProgram(this);
 
@@ -47,6 +47,8 @@ float TimelineGl::x_map_to_gl(const float x) const
 
 void TimelineGl::initializeGL()
 {
+	if (_texture) return;
+
 	initializeOpenGLFunctions();
 	glClearColor(0.1f, 0.1f, 0.2f, 0.4f);
 	_texture = std::make_unique<QOpenGLTexture>(QImage(":/PiYing/timeline.png").flipped());

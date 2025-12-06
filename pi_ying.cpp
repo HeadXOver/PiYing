@@ -46,7 +46,6 @@ PiYing::PiYing(QWidget* parent) : QMainWindow(parent)
     piYingGLContainer = new PiYingGLContainer(*piYingGL, ratio, this);
 
     timeLineGL = new TimelineGl(this);
-    partsViewer = new PartsViewerGl(this);
 
     splitTimelineOpenGL = new QSplitter(Qt::Vertical, this);
     splitListOpenGL = new QSplitter(Qt::Horizontal, this);
@@ -147,7 +146,6 @@ PiYing::PiYing(QWidget* parent) : QMainWindow(parent)
 
     piYingGL->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     timeLineGL->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-    partsViewer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     voidListWidget->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
 
     modeBox->addItems(
@@ -179,7 +177,6 @@ PiYing::~PiYing()
     safeDelete(splitTimelineOpenGL);
     safeDelete(splitListOpenGL);
     safeDelete(timeLineGL);
-    safeDelete(partsViewer);
 
     for (CtrlSlideWidget* item : sliderWidget) safeDelete(item);
 }

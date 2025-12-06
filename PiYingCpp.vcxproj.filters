@@ -232,7 +232,7 @@
     <ClCompile Include="vert_group.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="parts_viewer.cpp">
+    <ClCompile Include="part.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -339,6 +339,9 @@
     <ClInclude Include="vert_group.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="part.h">
+      <Filter>Header Files\PiYingElememt</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="ctrlSlideLayout.h">
@@ -369,9 +372,6 @@
       <Filter>Header Files\PiYngQObject</Filter>
     </QtMoc>
     <QtMoc Include="time_line_gl.h">
-      <Filter>Header Files\PiYingWidget</Filter>
-    </QtMoc>
-    <QtMoc Include="parts_viewer.h">
       <Filter>Header Files\PiYingWidget</Filter>
     </QtMoc>
   </ItemGroup>

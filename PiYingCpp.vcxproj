@@ -117,7 +117,7 @@
     <ClCompile Include="image_texture.cpp" />
     <ClCompile Include="image_transform.cpp" />
     <ClCompile Include="keyboard_state_win.cpp" />
-    <ClCompile Include="parts_viewer.cpp" />
+    <ClCompile Include="part.cpp" />
     <ClCompile Include="pi_ying_gl.cpp" />
     <ClCompile Include="pi_ying_gl_container.cpp" />
     <ClCompile Include="point_vector.cpp" />
@@ -154,7 +154,7 @@
     <ClInclude Include="cus_func_get_unique_id.h" />
     <ClInclude Include="ch_add_vert_trace.h" />
     <ClInclude Include="enum_edit_mode.h" />
-    <QtMoc Include="parts_viewer.h" />
+    <ClInclude Include="part.h" />
     <ClInclude Include="time_line.h" />
     <ClInclude Include="scale_trans.h" />
     <ClInclude Include="vert_group.h" />

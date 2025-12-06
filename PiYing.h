@@ -12,7 +12,6 @@ class QListWidget;
 class QSplitter;
 class QSlider;
 class SlideApplier;
-class PartsViewerGl;
 
 namespace Ui{
 	class PiYingClass;
@@ -56,7 +55,6 @@ private:
 	// OpenGL widget
     PiYingGL* piYingGL = nullptr;
 	TimelineGl* timeLineGL = nullptr;
-	PartsViewerGl* partsViewer = nullptr;
 
 	QSplitter* splitListOpenGL;
 	QSplitter* splitTimelineOpenGL;

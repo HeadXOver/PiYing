@@ -7,6 +7,9 @@ class QPointF;
 class PointVector
 {
 public:
+	PointVector() = default;
+	~PointVector() = default;
+
 	size_t float_size() const { return points.size(); }
 	size_t size() const { return hash_point_group.size(); }
 
