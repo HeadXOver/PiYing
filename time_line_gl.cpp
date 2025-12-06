@@ -11,11 +11,11 @@
 #include <qopengltexture>
 #include <qmouseevent>
 #include <qpainter>
-#include "parts_viewer.h"
 
 TimelineGl::TimelineGl(QWidget* parent) : QOpenGLWidget()
 {
 	_rect_shader_program = new QOpenGLShaderProgram(this);
+	_part_shader_program = new QOpenGLShaderProgram(this);
 
 	_scale_trans = new ScaleTrans();
 	_last_scale_trans = new ScaleTrans();
@@ -43,6 +43,16 @@ TimelineGl::~TimelineGl()
 float TimelineGl::x_map_to_gl(const float x) const
 {
 	return x / width() * 2.f - 1.f;
+}
+
+void TimelineGl::set_to_timeline()
+{
+	_ui_type = UiType::Timeline;
+}
+
+void TimelineGl::set_to_part()
+{
+	_ui_type = UiType::Part;
 }
 
 void TimelineGl::initializeGL()
@@ -77,6 +87,10 @@ void TimelineGl::initializeGL()
 	_rect_shader_program->link();
 	_rect_shader_program->setUniformValue("texture1", 0);
 
+	_part_shader_program->addShaderFromSourceFile(QOpenGLShader::Vertex, ":/PiYing/square_icon.vert");
+	_part_shader_program->addShaderFromSourceFile(QOpenGLShader::Fragment, ":/PiYing/square_icon.frag");
+	_part_shader_program->link();
+
 	glBindVertexArray(0);
 
 	// global setting
@@ -88,27 +102,9 @@ void TimelineGl::paintGL()
 {
 	glClear(GL_COLOR_BUFFER_BIT);
 
-	glBindVertexArray(VAO);///////////////////////////////////////////////////////
-
-	_rect_shader_program->bind();
-	_texture->bind();
-
-	for (int i = 0; i < _timelines.size(); i++) {
-		Timeline* timeline = _timelines[i];
-		_rect_shader_program->setUniformValue("selected", i == _current_select);
-		_rect_shader_program->setUniformValue("lenth", timeline->lenth());
-		_rect_shader_program->setUniformValue("trans", timeline->get_transform(i, _scale_trans));
-
-		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-	}
-
-	glBindVertexArray(0);////////////////////////////////////////////////////////////
-
-	QPainter painter(this);
-	QPen pen(Qt::yellow , 4);
-	painter.setPen(pen);
-	const float timeCursorPosition = width() * _scale_trans->trans_x / 2.f + time_cursor;
-	painter.drawLine(timeCursorPosition, 0, timeCursorPosition, height());
+	switch (_ui_type) {
+	case UiType::Timeline: paint_timeline(); break;
+	}	
 }
 
 void TimelineGl::wheelEvent(QWheelEvent* ev)
@@ -185,4 +181,33 @@ void TimelineGl::move_time_cursor(float mouse_x)
 {
 	const float half_width = width() / 2.f;
 	time_cursor = cus::max(half_width * (1.f - _scale_trans->scale_lenth), mouse_x - _scale_trans->trans_x * half_width); ///< 确保非负
+}
+
+void TimelineGl::paint_timeline()
+{
+	glBindVertexArray(VAO);///////////////////////////////////////////////////////
+
+	_rect_shader_program->bind();
+	_texture->bind();
+
+	for (int i = 0; i < _timelines.size(); i++) {
+		Timeline* timeline = _timelines[i];
+		_rect_shader_program->setUniformValue("selected", i == _current_select);
+		_rect_shader_program->setUniformValue("lenth", timeline->lenth());
+		_rect_shader_program->setUniformValue("trans", timeline->get_transform(i, _scale_trans));
+
+		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+	}
+
+	glBindVertexArray(0);////////////////////////////////////////////////////////////
+
+	QPainter painter(this);
+	QPen pen(Qt::yellow, 4);
+	painter.setPen(pen);
+	const float timeCursorPosition = width() * _scale_trans->trans_x / 2.f + time_cursor;
+	painter.drawLine(timeCursorPosition, 0, timeCursorPosition, height());
+}
+
+void TimelineGl::paint_parts()
+{
 }

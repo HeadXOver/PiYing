@@ -5,7 +5,6 @@
 #include "piYingGLContainer.h"
 #include "tool_button.h"
 #include "time_line_gl.h"
-#include "parts_viewer.h"
 #include "slide_applier.h"
 
 #include "ui_PiYing.h"

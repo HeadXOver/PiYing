@@ -3,7 +3,6 @@
 #include "tool_button.h"
 #include "ctrlSlideWidget.h"
 #include "time_line_gl.h"
-#include "parts_viewer.h"
 
 #include "ui_PiYing.h"
 
@@ -34,6 +33,8 @@ void PiYing::change_edit_mode_overview()
 
     splitTimelineOpenGL->setSizes({ width() * 5 / 6, width() / 6 });
 
+    timeLineGL->set_to_timeline();
+
     piYingGL->setChTool(CharacterToolState::None);
     piYingGL->setEditMode(EditMode::OverView);
 }
@@ -45,6 +46,8 @@ void PiYing::change_edit_mode_background()
 
     splitTimelineOpenGL->setSizes({ width() * 5 / 6, width() / 6 });
 
+    timeLineGL->set_to_timeline();
+
     piYingGL->setChTool(CharacterToolState::None);
     piYingGL->setEditMode(EditMode::BackGround);
 }
@@ -55,6 +58,8 @@ void PiYing::change_edit_mode_character_texture()
     splitListOpenGL->insertWidget(0, chImageList);
 
     splitTimelineOpenGL->setSizes({ width() * 3 / 4, width() / 4 });
+
+    timeLineGL->set_to_part();
 
     piYingGL->setEditMode(EditMode::characterTexture);
 
@@ -78,6 +83,8 @@ void PiYing::change_edit_mode_character_skeleton()
     splitListOpenGL->insertWidget(0, chImageList);
 
     splitTimelineOpenGL->setSizes({ width() * 3 / 4, width() / 4 });
+
+    timeLineGL->set_to_part();
 
     piYingGL->setEditMode(EditMode::characterSkeleton);
 
@@ -106,6 +113,8 @@ void PiYing::change_edit_mode_character_constrol_slider()
     splitListOpenGL->setSizes({ width() / 5, width() * 4 / 5 });
 
     splitTimelineOpenGL->setSizes({ width() * 3 / 4, width() / 4 });
+
+    timeLineGL->set_to_part();
 
     for (ToolButton* item : toolControlSliderList) {
         ui->mainToolBar->addAction(item->action());

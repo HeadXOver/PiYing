@@ -13,6 +13,12 @@ class Timeline;
 
 struct ScaleTrans;
 
+enum class UiType
+{
+	Part,
+	Timeline,
+};
+
 class TimelineGl : public QOpenGLWidget, QOpenGLFunctions_3_3_Core
 {
 	Q_OBJECT
@@ -22,6 +28,8 @@ public:
 	~TimelineGl();
 
 	float x_map_to_gl(const float x) const;
+	void set_to_timeline();
+	void set_to_part();
 
 protected:
 	void initializeGL() override;
@@ -34,6 +42,8 @@ protected:
 
 private:
 	void move_time_cursor(float mouse_x);
+	void paint_timeline();
+	void paint_parts();
 
 private:
 	unsigned int VAO = 0, VBO = 0, EBO = 0;
@@ -50,9 +60,12 @@ private:
 	QPointF lastMiddleButtonPos;
 
 	QOpenGLShaderProgram* _rect_shader_program;
+	QOpenGLShaderProgram* _part_shader_program;
 
 	std::unique_ptr<QOpenGLTexture> _texture;
 
 	std::vector<Timeline*> _timelines;
+
+	UiType _ui_type = UiType::Timeline;
 };
 
