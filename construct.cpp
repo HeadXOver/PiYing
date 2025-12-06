@@ -6,6 +6,7 @@
 #include "image_texture.h"
 #include "point_vector.h"
 #include "vert_groups.h"
+#include "part.h"
 
 #include <qlabel>
 #include <QOpenGLShaderProgram.h>
@@ -144,4 +145,5 @@ PiYingGL::~PiYingGL()
 	for (ImageTexture* bg : backGrounds) delete bg;
 	for (PointVector* pv : characterVerts) delete pv;
 	for (VertGroups* vg : _character_vert_groups) delete vg;
+	for (Part* pt : _parts) delete pt;
 }

@@ -295,7 +295,7 @@ void PiYingGL::addGlobalAction(QMenu* menu, const QList<QAction*> action)
 	for (QAction* item : action)  menu->addAction(item);
 }
 
-void PiYingGL::add_vert_group(const QList<unsigned int>& indices)
+void PiYingGL::add_part(const QList<unsigned int>& indices)
 {
 	const int currentVector = getCurrentChRow();
 	if (currentVector < 0) return;

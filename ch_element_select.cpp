@@ -30,7 +30,7 @@ void ChElementSelect::enter()
 {
     if (selected_points->size() <= 1) return;
 
-    glVertReference.gl.add_vert_group(selected_points->index());
+    glVertReference.gl.add_part(selected_points->index());
 }
 
 void ChElementSelect::deleteElement()

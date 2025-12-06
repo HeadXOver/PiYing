@@ -5,6 +5,7 @@
 #include <qpoint>
 #include <qmatrix4x4>
 #include <memory>
+#include <vector>
 
 #include "enum_character_texture_tool_state.h"
 #include "enum_edit_mode.h"
@@ -35,6 +36,7 @@ class CtrlSlideWidget;
 class SlideApplier;
 class CharacterTrace;
 class VertGroups;
+class Part;
 
 class PiYingGL : public QOpenGLWidget, QOpenGLFunctions_3_3_Core
 {
@@ -101,7 +103,7 @@ public:
 	void update_ch_verts();
 	void update_selected_verts();
 	void add_trace(int index, const QPolygonF& polygon);
-	void add_vert_group(const QList<unsigned int>& indices);
+	void add_part(const QList<unsigned int>& indices);
 
 	int get_group_num() const;
 
@@ -197,4 +199,6 @@ private:
 	std::unique_ptr<ChElementTool> ch_element_tool_;
 
 	QList<CtrlSlideWidget*>& ctrlSlideWidget;
+
+	std::vector<Part*> _parts;
 };
