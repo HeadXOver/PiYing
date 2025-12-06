@@ -10,6 +10,7 @@
 #include "gl_vert_reference.h"
 #include "point_vector.h"
 #include "vert_groups.h"
+#include "part.h"
 
 #include "piYingGLContainer.h"
 #include "ctrlSlideWidget.h"
@@ -300,11 +301,13 @@ void PiYingGL::add_part(const QList<unsigned int>& indices)
 	const int currentVector = getCurrentChRow();
 	if (currentVector < 0) return;
 
-	const int group_num = _character_vert_groups[currentVector]->group_num();
+	/*const int group_num = _character_vert_groups[currentVector]->group_num();
 	for (int i = 0; i < indices.size(); i++) {
 		characterVerts[currentVector]->set_hash_point_group(indices[i], group_num);
 	}
-	_character_vert_groups[currentVector]->add_one_group(indices);
+	_character_vert_groups[currentVector]->add_one_group(indices);*/
+
+	_parts.push_back(new Part(*characterTextures[currentVector]->texture(), *characterVerts[currentVector], indices, editMode == EditMode::characterTexture));
 }
 
 int PiYingGL::get_group_num() const

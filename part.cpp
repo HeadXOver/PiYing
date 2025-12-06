@@ -4,7 +4,7 @@
 
 #include <qopengltexture>
 
-Part::Part(QOpenGLTexture& texture, PointVector& pointVector, const std::vector<unsigned int>& indices, bool isTexture) : _texture(texture), r_verts(pointVector)
+Part::Part(const QOpenGLTexture& texture, const PointVector& verts, const QList<unsigned int>& indices, bool isTexture) : _texture(texture), r_verts(verts)
 {
 	_vert_texture = std::make_unique<PointVector>();
 }

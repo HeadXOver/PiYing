@@ -103,6 +103,11 @@ QMatrix4x4 ImageTexture::getMatrixInvert() const
     return _transform->getMatrixInvert();
 }
 
+QOpenGLTexture* ImageTexture::texture() const
+{
+    return _texture.get();
+}
+
 void ImageTexture::resetTransform() {
     _transform->reset();
 }

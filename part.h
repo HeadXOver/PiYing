@@ -1,6 +1,6 @@
 #pragma once
 
-#include <vector>
+#include <qlist>
 #include <memory>
 
 class QOpenGLTexture;
@@ -9,13 +9,13 @@ class PointVector;
 class Part final
 {
 public:
-	Part(QOpenGLTexture& texture, PointVector& verts, const std::vector<unsigned int>& indices, bool isTexture);
+	Part(const QOpenGLTexture& texture, const PointVector& verts, const QList<unsigned int>& indices, bool isTexture);
 
 private:
-	QOpenGLTexture& _texture;
+	const QOpenGLTexture& _texture;
 
-	std::vector<unsigned int> _indices;
+	QList<unsigned int> _indices;
 	std::unique_ptr<PointVector> _vert_texture;
 
-	PointVector& r_verts;
+	const PointVector& r_verts;
 };

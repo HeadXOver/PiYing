@@ -41,6 +41,8 @@ public:
     QMatrix4x4 getMatrix() const;
     QMatrix4x4 getMatrixInvert() const;
 
+    QOpenGLTexture* texture() const;
+
 private:
 
     std::unique_ptr<QOpenGLTexture> _texture;
