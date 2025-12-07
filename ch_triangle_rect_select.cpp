@@ -1,4 +1,4 @@
-#include "ch_element_rect_select.h"
+#include "ch_triangle_rect_select.h"
 
 #include "ch_element_select.h"
 #include "gl_vert_reference.h"
@@ -12,13 +12,13 @@
 #include <qpointf>
 #include <qmessagebox>
 
-ChElementRectSelect::ChElementRectSelect(GlVertReference& glReference) :
+ChTriangleRectSelect::ChTriangleRectSelect(GlVertReference& glReference) :
 	edit_skelen(glReference.gl.editMode == EditMode::characterSkeleton)
 {
 	chElementSelect = std::make_unique<ChElementSelect>(glReference);
 }
 
-void ChElementRectSelect::draw(QPainter& painter)
+void ChTriangleRectSelect::draw(QPainter& painter)
 {
 	chElementSelect->draw_handle_and_selected(painter);
 
@@ -28,7 +28,7 @@ void ChElementRectSelect::draw(QPainter& painter)
 	}
 }
 
-void ChElementRectSelect::clickPos(const QPointF& mouseOri)
+void ChTriangleRectSelect::clickPos(const QPointF& mouseOri)
 {
 	chElementSelect->lastPos = mouseOri;
 	chElementSelect->isPress = true;
@@ -45,7 +45,7 @@ void ChElementRectSelect::clickPos(const QPointF& mouseOri)
 	chElementSelect->click_select(mouse);
 }
 
-void ChElementRectSelect::movePos(const QPointF& mouse)
+void ChTriangleRectSelect::movePos(const QPointF& mouse)
 {
 	isDraw = false;
 
@@ -58,7 +58,7 @@ void ChElementRectSelect::movePos(const QPointF& mouse)
 	isDraw = true;
 }
 
-void ChElementRectSelect::releasePos(const QPointF& mouse)
+void ChTriangleRectSelect::releasePos(const QPointF& mouse)
 {
 	chElementSelect->isPress = false;
 
@@ -79,42 +79,42 @@ void ChElementRectSelect::releasePos(const QPointF& mouse)
 	chElementSelect->uodate_selected_to_draw();
 }
 
-void ChElementRectSelect::enter()
+void ChTriangleRectSelect::enter()
 {
 	chElementSelect->enter();
 }
 
-void RectSelectClick::click(const QPointF& point)
+void RectSelectTriangleClick::click(const QPointF& point)
 {
 	rectSelect->clickPos(point);
 }
 
-void RectSelectMove::mouseMove(const QPointF& point)
+void RectSelectTriangleMove::mouseMove(const QPointF& point)
 {
 	rectSelect->movePos(point);
 }
 
-void RectSelectRelease::release(const QPointF& point)
+void RectSelectTriangleRelease::release(const QPointF& point)
 {
 	rectSelect->releasePos(point);
 }
 
-void RectSelectDelete::deleteElement()
+void RectSelectTriangleDelete::deleteElement()
 {
 	rectSelect->chElementSelect->deleteElement();
 }
 
-void RectSelectEscape::escape()
+void RectSelectTriangleEscape::escape()
 {
 	rectSelect->chElementSelect->escape();
 }
 
-void RectSelectDraw::draw(QPainter& painter)
+void RectSelectTriangleDraw::draw(QPainter& painter)
 {
 	rectSelect->draw(painter);
 }
 
-void RectSelectEnter::enter()
+void RectSelectTriangleEnter::enter()
 {
 	rectSelect->enter();
 }

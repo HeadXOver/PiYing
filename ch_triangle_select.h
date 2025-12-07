@@ -1,5 +1,7 @@
 #pragma once
 
+#include "enum_select_handle_mode.h"
+
 #include <qpointf>
 #include <memory>
 
@@ -7,7 +9,6 @@ class SelectedPoints;
 class PiYingGL;
 class QPainter;
 struct GlVertReference;
-enum class ChElementEditMode;
 
 struct ChElementSelect final
 {
@@ -33,5 +34,5 @@ struct ChElementSelect final
 	QPointF lastDHandleCenterPoint;
 	bool isPress = false;
 	bool edit_skelen{ false };
-	ChElementEditMode editMode;
+	ChElementEditMode editMode = ChElementEditMode::None;
 };

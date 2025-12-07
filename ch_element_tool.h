@@ -37,6 +37,8 @@ public:
 	void construct_rect_select();
 	void construct_libre_select();
 	void construct_add_vert_trace();
+	void construct_rect_select_triangle();
+	void construct_libre_select_triangle();
 
 private:
 

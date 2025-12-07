@@ -6,6 +6,7 @@
 #include "ch_element_select.h"
 #include "ch_element_rect_select.h"
 #include "ch_element_libre_select.h"
+#include "ch_triangle_rect_select.h"
 #include "ch_element_add_round.h"
 #include "ch_add_vert_trace.h"
 #include "gl_vert_reference.h"
@@ -23,7 +24,9 @@ namespace {
 		[](ChElementTool* chElementTool) {chElementTool->construct_libre_select(); },
 		[](ChElementTool* chElementTool) {chElementTool->construct_add_poly(); },
 		[](ChElementTool* chElementTool) {chElementTool->construct_add_round(); },
-		[](ChElementTool* chElementTool) {chElementTool->construct_add_vert_trace(); }
+		[](ChElementTool* chElementTool) {chElementTool->construct_add_vert_trace(); },
+		[](ChElementTool* chElementTool) {chElementTool->construct_rect_select_triangle(); },
+		[](ChElementTool* chElementTool) {chElementTool->construct_libre_select_triangle(); }
 	};
 
 	using stuct_handler = void(*)(ChElementTool*);
@@ -92,6 +95,30 @@ void ChElementTool::construct_add_vert_trace()
 	drawBehavior = std::make_unique<AddVertTraceDraw>(addVertTrace);
 	releaseBehavior = std::make_unique<AddVertTraceRelease>(addVertTrace);
 	moveBehavior = std::make_unique<AddVertTraceMove>(addVertTrace);
+}
+
+void ChElementTool::construct_rect_select_triangle()
+{
+	std::shared_ptr<ChTriangleRectSelect> rectSelect = std::make_shared<ChTriangleRectSelect>(*glVertReference);
+	clickBehavior = std::make_unique<RectSelectTriangleClick>(rectSelect);
+	escapeBehavior = std::make_unique<RectSelectTriangleEscape>(rectSelect);
+	drawBehavior = std::make_unique<RectSelectTriangleDraw>(rectSelect);
+	releaseBehavior = std::make_unique<RectSelectTriangleRelease>(rectSelect);
+	moveBehavior = std::make_unique<RectSelectTriangleMove>(rectSelect);
+	deleteBehavior = std::make_unique<RectSelectTriangleDelete>(rectSelect);
+	enterBehavior = std::make_unique<RectSelectTriangleEnter>(rectSelect);
+}
+
+void ChElementTool::construct_libre_select_triangle()
+{
+	std::shared_ptr<ChElementLibreSelect> libreSelect = std::make_shared<ChElementLibreSelect>(*glVertReference);
+	clickBehavior = std::make_unique<LibreSelectClick>(libreSelect);
+	escapeBehavior = std::make_unique<LibreSelectEscape>(libreSelect);
+	drawBehavior = std::make_unique<LibreSelectDraw>(libreSelect);
+	releaseBehavior = std::make_unique<LibreSelectRelease>(libreSelect);
+	moveBehavior = std::make_unique<LibreSelectMove>(libreSelect);
+	deleteBehavior = std::make_unique<LibreSelectDelete>(libreSelect);
+	enterBehavior = std::make_unique<LibreSelectEnter>(libreSelect);
 }
 
 ChElementTool::ChElementTool(int current, PiYingGL& pygl, CharacterToolState chToolState)

@@ -105,6 +105,7 @@
     <ClCompile Include="ch_element_select.cpp" />
     <ClCompile Include="ch_element_tool.cpp" />
     <ClCompile Include="ch_skelen_tool.cpp" />
+    <ClCompile Include="ch_triangle_rect_select.cpp" />
     <ClCompile Include="controls.cpp" />
     <ClCompile Include="ctrl_slide_layout.cpp" />
     <ClCompile Include="ctrl_slide_widget.cpp" />
@@ -151,14 +152,17 @@
     <ClInclude Include="add_ch_tex_poly.h" />
     <ClInclude Include="base_math.h" />
     <ClInclude Include="character_trace.h" />
+    <ClInclude Include="ch_triangle_rect_select.h" />
     <ClInclude Include="cus_func_get_unique_id.h" />
     <ClInclude Include="ch_add_vert_trace.h" />
     <ClInclude Include="enum_edit_mode.h" />
+    <ClInclude Include="enum_select_handle_mode.h" />
     <ClInclude Include="part.h" />
     <ClInclude Include="time_line.h" />
     <ClInclude Include="scale_trans.h" />
     <ClInclude Include="vert_group.h" />
     <ClInclude Include="vert_groups.h" />
+    <ClInclude Include="ch_triangle_select.h" />
     <QtMoc Include="ask_round_poly_dialog.h" />
     <ClInclude Include="ch_element_libre_select.h" />
     <ClInclude Include="ch_element_rect_select.h" />
