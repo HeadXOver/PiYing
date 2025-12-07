@@ -5,33 +5,35 @@
 void PiYing::select_tool_texture(ToolButton* toolButton)
 {
     if (toolButton->isSelect()) {
-        if (toolButton->toolState() == CharacterToolState::RectSelectVert) {
+        switch (toolButton->toolState()) {
+        case CharacterToolState::RectSelectVert: {
             toolButton->set_selected(QIcon(":/PiYing/selectLibreChVert_S.png"));
             toolButton->set_unselected(QIcon(":/PiYing/selectLibreChVert.png"));
             toolButton->set_toolState(CharacterToolState::LibreSelectVert);
-        }
-        else if (toolButton->toolState() == CharacterToolState::LibreSelectVert) {
+        }break;
+        case CharacterToolState::LibreSelectVert: {
             toolButton->set_selected(QIcon(":/PiYing/selectRectChVert_S.png"));
             toolButton->set_unselected(QIcon(":/PiYing/selectRectChVert.png"));
             toolButton->set_toolState(CharacterToolState::RectSelectVert);
             toolButton->unSelect();
             piYingGL->setChTool(CharacterToolState::None);
             return;
-        }
-        else if (toolButton->toolState() == CharacterToolState::RectSelectTriangle) {
+        }break;
+        case CharacterToolState::RectSelectTriangle: {
             toolButton->set_selected(QIcon(":/PiYing/rect_triangle_select_S.png"));
             toolButton->set_unselected(QIcon(":/PiYing/rect_triangle_select.png"));
             toolButton->set_toolState(CharacterToolState::LibreSelectTriangle);
-        }
-        else if (toolButton->toolState() == CharacterToolState::LibreSelectTriangle) {
+        }break;
+        case CharacterToolState::LibreSelectTriangle: {
             toolButton->set_selected(QIcon(":/PiYing/libre_triangle_select_S.png"));
             toolButton->set_unselected(QIcon(":/PiYing/libre_triangle_select.png"));
             toolButton->set_toolState(CharacterToolState::RectSelectTriangle);
             toolButton->unSelect();
             piYingGL->setChTool(CharacterToolState::None);
             return;
+        }break;
+        default: return;
         }
-        else return;
     }
     else {
         for (ToolButton* item : toolChTexList) item->unSelect();
