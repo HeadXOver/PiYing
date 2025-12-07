@@ -31,7 +31,6 @@ void ChTriangleRectSelect::draw(QPainter& painter)
 void ChTriangleRectSelect::clickPos(const QPointF& mouseOri)
 {
 	chElementSelect->lastPos = mouseOri;
-	chElementSelect->isPress = true;
 
 	chElementSelect->changeEditMode();
 
@@ -60,8 +59,6 @@ void ChTriangleRectSelect::movePos(const QPointF& mouse)
 
 void ChTriangleRectSelect::releasePos(const QPointF& mouse)
 {
-	chElementSelect->isPress = false;
-
 	if (!isDraw) return;
 	isDraw = false;
 

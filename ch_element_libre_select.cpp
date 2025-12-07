@@ -48,7 +48,7 @@ void ChElementLibreSelect::draw(QPainter& painter)
 
 void ChElementLibreSelect::clickPos(const QPointF& mouseOri)
 {
-	chElementSelect->isPress = true;
+	isPress = true;
 	chElementSelect->lastPos = mouseOri;
 
 	polygon.clear();
@@ -76,7 +76,7 @@ void ChElementLibreSelect::movePos(const QPointF& mouse)
 		return;
 	}
 
-	if (!chElementSelect->isPress) return;
+	if (!isPress) return;
 
 	drawing = true;
 
@@ -88,6 +88,8 @@ void ChElementLibreSelect::movePos(const QPointF& mouse)
 
 void ChElementLibreSelect::releasePos(const QPointF& mouse)
 {
+	isPress = false;
+
 	if (!drawing) return;
 
 	drawing = false;

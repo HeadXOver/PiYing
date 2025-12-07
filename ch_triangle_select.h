@@ -27,12 +27,13 @@ struct ChElementSelect final
 
 	GlVertReference& glVertReference;
 	std::unique_ptr<SelectedPoints> selected_points;
+
 	QPointF lastPos;
 	QPointF handleCenterPoint;
 	QPointF dHandleCenterPoint;
 	QPointF lastHandleCenterPoint;
 	QPointF lastDHandleCenterPoint;
-	bool isPress = false;
+
 	bool edit_skelen{ false };
 	ChElementEditMode editMode = ChElementEditMode::None;
 };

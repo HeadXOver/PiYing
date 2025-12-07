@@ -27,7 +27,8 @@ public:
 	std::unique_ptr<ChElementSelect> chElementSelect;
 	QPolygonF polygon;
 	bool drawing = false;
-	bool edit_skelen{ false };
+	bool edit_skelen{ false }; 
+	bool isPress = false;
 };
 
 ///////////////////////////////////////////////////

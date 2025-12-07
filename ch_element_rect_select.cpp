@@ -31,7 +31,6 @@ void ChElementRectSelect::draw(QPainter& painter)
 void ChElementRectSelect::clickPos(const QPointF& mouseOri)
 {
 	chElementSelect->lastPos = mouseOri;
-	chElementSelect->isPress = true;
 
 	chElementSelect->changeEditMode();
 
@@ -60,8 +59,6 @@ void ChElementRectSelect::movePos(const QPointF& mouse)
 
 void ChElementRectSelect::releasePos(const QPointF& mouse)
 {
-	chElementSelect->isPress = false;
-
 	if (!isDraw) return;
 	isDraw = false;
 
