@@ -8,6 +8,7 @@ enum class CharacterToolState {
     AddPoly,
     AddRound,
     AddVertTrace,
-    Group,
+    RectSelectTriangle,
+    LibreSelectTriangle,
 };
 

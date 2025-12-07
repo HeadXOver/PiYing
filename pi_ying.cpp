@@ -66,8 +66,6 @@ PiYing::PiYing(QWidget* parent) : QMainWindow(parent)
         connect(item->action(), &QAction::triggered, this, [this, item]() {select_tool_control_slider(item); });
     }
 
-    toolChSkelenList.append(new ToolButton(":/PiYing/icon_group_s.png", ":/PiYing/icon_group.png", "group", CharacterToolState::Group, this));
-
     for (ToolButton* item : toolChSkelenList) {
         connect(item->action(), &QAction::triggered, this, [this, item]() {select_tool_skelen(item); });    
     }
@@ -192,23 +190,26 @@ int PiYing::getCurrentChRow()
 
 void PiYing::keyPressEvent(QKeyEvent* event)
 {
-    if (event->key() == Qt::Key_Escape) {
+    switch (event->key()) {
+    case Qt::Key_Escape: {
         if (piYingGL->editMode == EditMode::characterTexture) {
             if (getCurrentChRow() < 0) return;
             piYingGL->escapeChVert();
         }
-    }
-    else if (event->key() == Qt::Key_Delete) {
+    }break;
+    case Qt::Key_Delete: {
         if (piYingGL->editMode == EditMode::characterTexture) {
             if (getCurrentChRow() < 0) return;
             piYingGL->deleteChElement();
         }
-    }
-    else if (event->key() == Qt::Key_Enter || event->key() == Qt::Key_Return) {
+    }break;
+    case Qt::Key_Enter:
+    case Qt::Key_Return: {
         if (piYingGL->editMode == EditMode::characterTexture) {
             if (getCurrentChRow() < 0) return;
             piYingGL->enterChElement();
         }
+    }break;
     }
 }
 

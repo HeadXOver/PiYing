@@ -18,6 +18,19 @@ void PiYing::select_tool_texture(ToolButton* toolButton)
             piYingGL->setChTool(CharacterToolState::None);
             return;
         }
+        else if (toolButton->toolState() == CharacterToolState::RectSelectTriangle) {
+            toolButton->set_selected(QIcon(":/PiYing/rect_triangle_select_S.png"));
+            toolButton->set_unselected(QIcon(":/PiYing/rect_triangle_select.png"));
+            toolButton->set_toolState(CharacterToolState::LibreSelectTriangle);
+        }
+        else if (toolButton->toolState() == CharacterToolState::LibreSelectTriangle) {
+            toolButton->set_selected(QIcon(":/PiYing/libre_triangle_select_S.png"));
+            toolButton->set_unselected(QIcon(":/PiYing/libre_triangle_select.png"));
+            toolButton->set_toolState(CharacterToolState::RectSelectTriangle);
+            toolButton->unSelect();
+            piYingGL->setChTool(CharacterToolState::None);
+            return;
+        }
         else return;
     }
     else {
