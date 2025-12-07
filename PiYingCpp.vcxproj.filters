@@ -241,6 +241,9 @@
     <ClCompile Include="ch_triangle_select.cpp">
       <Filter>Source Files\ChELementTool</Filter>
     </ClCompile>
+    <ClCompile Include="selected_triangle.cpp">
+      <Filter>Source Files\PiYingElement</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="static_handle_zone.h">
@@ -356,6 +359,9 @@
     </ClInclude>
     <ClInclude Include="enum_select_handle_mode.h">
       <Filter>Header Files\staticConst</Filter>
+    </ClInclude>
+    <ClInclude Include="selected_triangle.h">
+      <Filter>Header Files\PiYingElememt</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

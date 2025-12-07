@@ -128,6 +128,7 @@
     <ClCompile Include="gl_func.cpp" />
     <ClCompile Include="scale_trans.cpp" />
     <ClCompile Include="selected_points.cpp" />
+    <ClCompile Include="selected_triangle.cpp" />
     <ClCompile Include="slide_applier.cpp" />
     <ClCompile Include="slots.cpp" />
     <ClCompile Include="raletive_transform.cpp" />
@@ -159,6 +160,7 @@
     <ClInclude Include="enum_edit_mode.h" />
     <ClInclude Include="enum_select_handle_mode.h" />
     <ClInclude Include="part.h" />
+    <ClInclude Include="selected_triangle.h" />
     <ClInclude Include="time_line.h" />
     <ClInclude Include="scale_trans.h" />
     <ClInclude Include="vert_group.h" />

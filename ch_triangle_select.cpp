@@ -2,7 +2,7 @@
 
 #include "gl_vert_reference.h"
 #include "piYingGL.h"
-#include "SelectedPoints.h"
+#include "selected_triangle.h"
 #include "static_handle_zone.h"
 #include "point_vector.h"
 #include "point_vector_layer.h"
@@ -17,7 +17,7 @@
 
 ChTriangleSelect::ChTriangleSelect(GlVertReference& glReference) : glVertReference(glReference), edit_skelen(glReference.gl.editMode == EditMode::characterSkeleton)
 {
-    selected_points = std::make_unique<SelectedPoints>(false, *(glVertReference.pointLayer));
+    selected_trangle = std::make_unique<SelectedTriangle>(false, *(glVertReference.pointLayer));
 }
 
 ChTriangleSelect::~ChTriangleSelect()
@@ -26,12 +26,12 @@ ChTriangleSelect::~ChTriangleSelect()
 
 void ChTriangleSelect::escape()
 {
-    if (selected_points->size() > 0) selected_points->removeLast();
+    if (selected_trangle->size() > 0) selected_trangle->removeLast();
 }
 
 void ChTriangleSelect::enter()
 {
-    if (selected_points->size() <= 1) return;
+    if (selected_trangle->size() <= 1) return;
 
     //glVertReference.gl.add_part(selected_points->index());
 }
@@ -45,7 +45,7 @@ void ChTriangleSelect::deleteElement()
 
     std::vector<bool> killVert(nVert, false);
     std::vector<bool> killTri(nTri, false);
-    for (unsigned v : selected_points->index()) killVert[v] = true;
+    for (unsigned v : selected_trangle->index()) killVert[v] = true;
 
     std::vector<unsigned> refCount(nVert, 0);
     for (size_t t = 0; t < nTri; ++t) {
@@ -93,13 +93,13 @@ void ChTriangleSelect::deleteElement()
 
     idx.resize(outIdx);
 
-    selected_points->clear();
+    selected_trangle->clear();
     glVertReference.gl.update_ch_verts();
 }
 
 void ChTriangleSelect::draw_handle_and_selected(QPainter& painter)
 {
-    if (selected_points->size() == 0) return;
+    if (selected_trangle->size() == 0) return;
 
     const int groupNum = glVertReference.gl.get_group_num();
     std::vector<bool> drawGroup(groupNum, false);
@@ -110,13 +110,13 @@ void ChTriangleSelect::draw_handle_and_selected(QPainter& painter)
     PointVectorLayer& pointLayer = *(glVertReference.pointLayer);
     handleCenterPoint = QPointF();
     int groupIndex;
-    for (unsigned int i : selected_points->index()) {
+    for (unsigned int i : selected_trangle->index()) {
         groupIndex = glVertReference.pointLayer->get_group(i);
         if (groupIndex >= 0) drawGroup[groupIndex] = true;
         handleCenterPoint += edit_skelen ? pointLayer[i] : pointLayer(i);
     }
 
-    handleCenterPoint /= selected_points->size();
+    handleCenterPoint /= selected_trangle->size();
 
     dHandleCenterPoint = glVertReference.gl.mapViewProjMatrix(handleCenterPoint);
 
@@ -161,7 +161,7 @@ void ChTriangleSelect::draw_handle_and_selected(QPainter& painter)
 
 void ChTriangleSelect::changeEditMode()
 {
-    if (selected_points->size() == 0) {
+    if (selected_trangle->size() == 0) {
         editMode = ChElementEditMode::None;
         return;
     }
@@ -187,55 +187,55 @@ void ChTriangleSelect::moveHandle(const QPointF& mouse)
     switch (editMode) {
     case ChElementEditMode::Move: {
         QPointF toMove = glVertReference.gl.GLViewProjMatrixInvert(mouse) - glVertReference.gl.GLViewProjMatrixInvert(lastPos);
-        for (int i = 0; i < selected_points->size(); i++) {
-            pointLayer.set_point(edit_skelen, (*selected_points)[i], selected_points->getVert(i) + toMove);
+        for (int i = 0; i < selected_trangle->size(); i++) {
+            pointLayer.set_point(edit_skelen, (*selected_trangle)[i], selected_trangle->getVert(i) + toMove);
         }
     }break;
     case ChElementEditMode::MoveX: {
         QPointF toMove = glVertReference.gl.GLViewProjMatrixInvert(mouse.x(), 0.f) - glVertReference.gl.GLViewProjMatrixInvert(lastPos.x(), 0.f);
-        for (int i = 0; i < selected_points->size(); i++) {
-            pointLayer.set_point(edit_skelen, (*selected_points)[i], selected_points->getVert(i) + toMove);
+        for (int i = 0; i < selected_trangle->size(); i++) {
+            pointLayer.set_point(edit_skelen, (*selected_trangle)[i], selected_trangle->getVert(i) + toMove);
         }
     }break;
     case ChElementEditMode::MoveY: {
         QPointF toMove = glVertReference.gl.GLViewProjMatrixInvert(0.f, mouse.y()) - glVertReference.gl.GLViewProjMatrixInvert(0.f, lastPos.y());
-        for (int i = 0; i < selected_points->size(); i++) {
-            pointLayer.set_point(edit_skelen, (*selected_points)[i], selected_points->getVert(i) + toMove);
+        for (int i = 0; i < selected_trangle->size(); i++) {
+            pointLayer.set_point(edit_skelen, (*selected_trangle)[i], selected_trangle->getVert(i) + toMove);
         }
     }break;
     case ChElementEditMode::Rotate: {
         float angle = angleBetweenPoint(lastPos - lastDHandleCenterPoint, mouse - lastDHandleCenterPoint);
         QPointF toRot = glVertReference.gl.getInsProj().map(lastHandleCenterPoint);
-        for (int i = 0; i < selected_points->size(); i++) {
-            pointLayer.set_point(edit_skelen, (*selected_points)[i], toRot + getRotatedPoint(glVertReference.gl.getInsProj().map(selected_points->getVert(i) - lastHandleCenterPoint), angle));
-            pointLayer.set_point(edit_skelen, (*selected_points)[i], glVertReference.gl.getProj().map(
+        for (int i = 0; i < selected_trangle->size(); i++) {
+            pointLayer.set_point(edit_skelen, (*selected_trangle)[i], toRot + getRotatedPoint(glVertReference.gl.getInsProj().map(selected_trangle->getVert(i) - lastHandleCenterPoint), angle));
+            pointLayer.set_point(edit_skelen, (*selected_trangle)[i], glVertReference.gl.getProj().map(
                 edit_skelen ?
-                pointLayer[(*selected_points)[i]] :
-                pointLayer((*selected_points)[i]))
+                pointLayer[(*selected_trangle)[i]] :
+                pointLayer((*selected_trangle)[i]))
             );
         }
     }break;
     case ChElementEditMode::Scale: {
         float scale = (mouse.x() + mouse.y() - dHandleCenterPoint.x() - dHandleCenterPoint.y()) / (ROTATEHANDLE_RADIUS + ROTATEHANDLE_RADIUS);
         QPointF toScale = lastHandleCenterPoint * (scale - 1);
-        for (int i = 0; i < selected_points->size(); i++) {
-            pointLayer.set_point(edit_skelen, (*selected_points)[i], selected_points->getVert(i) * scale - toScale);
+        for (int i = 0; i < selected_trangle->size(); i++) {
+            pointLayer.set_point(edit_skelen, (*selected_trangle)[i], selected_trangle->getVert(i) * scale - toScale);
         }
     }break;
     case ChElementEditMode::ScaleX: {
         float scale = (mouse.x() - lastDHandleCenterPoint.x()) / ROTATEHANDLE_RADIUS;
         float scaleX = lastDHandleCenterPoint.x() * (1 - scale);
-        for (int i = 0; i < selected_points->size(); i++) {
-            QPointF mapOri = glVertReference.gl.mapViewProjMatrix(selected_points->getVert(i));
-            pointLayer.set_point(edit_skelen, (*selected_points)[i], glVertReference.gl.GLViewProjMatrixInvert(mapOri.x() * scale + scaleX, mapOri.y()));
+        for (int i = 0; i < selected_trangle->size(); i++) {
+            QPointF mapOri = glVertReference.gl.mapViewProjMatrix(selected_trangle->getVert(i));
+            pointLayer.set_point(edit_skelen, (*selected_trangle)[i], glVertReference.gl.GLViewProjMatrixInvert(mapOri.x() * scale + scaleX, mapOri.y()));
         }
     }break;
     case ChElementEditMode::ScaleY: {
         float scale = (mouse.y() - lastDHandleCenterPoint.y()) / ROTATEHANDLE_RADIUS;
         float scaleY = lastDHandleCenterPoint.y() * (1 - scale);
-        for (int i = 0; i < selected_points->size(); i++) {
-            QPointF mapOri = glVertReference.gl.mapViewProjMatrix(selected_points->getVert(i));
-            pointLayer.set_point(edit_skelen, (*selected_points)[i], glVertReference.gl.GLViewProjMatrixInvert(mapOri.x(), mapOri.y() * scale + scaleY));
+        for (int i = 0; i < selected_trangle->size(); i++) {
+            QPointF mapOri = glVertReference.gl.mapViewProjMatrix(selected_trangle->getVert(i));
+            pointLayer.set_point(edit_skelen, (*selected_trangle)[i], glVertReference.gl.GLViewProjMatrixInvert(mapOri.x(), mapOri.y() * scale + scaleY));
         }
     }break;
     }
@@ -246,7 +246,7 @@ void ChTriangleSelect::moveHandle(const QPointF& mouse)
 
 void ChTriangleSelect::affirmHandle()
 {
-    selected_points->affirmVert(edit_skelen);
+    selected_trangle->affirmVert(edit_skelen);
     lastHandleCenterPoint = handleCenterPoint;
     lastDHandleCenterPoint = dHandleCenterPoint;
 }
@@ -256,23 +256,23 @@ void ChTriangleSelect::click_select(const QPointF& mouse)
     const PointVectorLayer& pointVector = *(glVertReference.pointLayer);
     for (unsigned int i = 0; i < pointVector.size(); i++) {
         if (QLineF(edit_skelen ? pointVector[i] : pointVector(i), mouse).length() < 0.02f / glVertReference.gl.viewScale.value()) {
-            if (selected_points->contains(i)) return;
+            if (selected_trangle->contains(i)) return;
 
-            if (!KeyboardStateWin::isCtrlHeld()) selected_points->clear();
+            if (!KeyboardStateWin::isCtrlHeld()) selected_trangle->clear();
 
-            selected_points->append(i);
+            selected_trangle->append(i);
             update_selected_to_draw();
 
             return;
         }
     }
 
-    if (!KeyboardStateWin::isCtrlHeld()) selected_points->clear();
+    if (!KeyboardStateWin::isCtrlHeld()) selected_trangle->clear();
 }
 
 void ChTriangleSelect::update_selected_to_draw()
 {
-    const SelectedPoints& selectedPoints = *selected_points;
+    const SelectedTriangle& selectedPoints = *selected_trangle;
     const PointVectorLayer& pointVector = *glVertReference.pointLayer;
 
     glVertReference.gl.selected_points.clear();

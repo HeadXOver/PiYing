@@ -3,7 +3,7 @@
 #include "ch_triangle_select.h"
 #include "gl_vert_reference.h"
 #include "piYingGL.h"
-#include "SelectedPoints.h"
+#include "selected_triangle.h"
 #include "KeyboardStateWin.h"
 #include "point_vector_layer.h"
 #include "enum_select_handle_mode.h"
@@ -62,7 +62,7 @@ void ChTriangleRectSelect::releasePos(const QPointF& mouse)
 	if (!isDraw) return;
 	isDraw = false;
 
-	chTriangleSelect->selected_points->clear();
+	chTriangleSelect->selected_trangle->clear();
 
 	PointVectorLayer& pointVector = *(chTriangleSelect->glVertReference.pointLayer);
 	for (unsigned int i = 0; i < pointVector.size(); i++) {
@@ -70,7 +70,7 @@ void ChTriangleRectSelect::releasePos(const QPointF& mouse)
 			edit_skelen ?
 			pointVector[i] :
 			pointVector(i))
-		)) chTriangleSelect->selected_points->append(i);
+		)) chTriangleSelect->selected_trangle->append(i);
 	}
 
 	chTriangleSelect->update_selected_to_draw();

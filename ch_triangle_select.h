@@ -5,7 +5,7 @@
 #include <qpointf>
 #include <memory>
 
-class SelectedPoints;
+class SelectedTriangle;
 class PiYingGL;
 class QPainter;
 struct GlVertReference;
@@ -26,7 +26,7 @@ struct ChTriangleSelect final
 	void update_selected_to_draw();
 
 	GlVertReference& glVertReference;
-	std::unique_ptr<SelectedPoints> selected_points;
+	std::unique_ptr<SelectedTriangle> selected_trangle;
 
 	QPointF lastPos;
 	QPointF handleCenterPoint;
