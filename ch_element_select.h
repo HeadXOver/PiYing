@@ -22,7 +22,7 @@ struct ChElementSelect final
 	void moveHandle(const QPointF& mouse);
 	void affirmHandle();
 	void click_select(const QPointF& mouse);
-	void uodate_selected_to_draw();
+	void update_selected_to_draw();
 
 	GlVertReference& glVertReference;
 	std::unique_ptr<SelectedPoints> selected_points;

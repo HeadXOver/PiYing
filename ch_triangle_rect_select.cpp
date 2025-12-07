@@ -1,6 +1,6 @@
 #include "ch_triangle_rect_select.h"
 
-#include "ch_element_select.h"
+#include "ch_triangle_select.h"
 #include "gl_vert_reference.h"
 #include "piYingGL.h"
 #include "SelectedPoints.h"
@@ -15,41 +15,41 @@
 ChTriangleRectSelect::ChTriangleRectSelect(GlVertReference& glReference) :
 	edit_skelen(glReference.gl.editMode == EditMode::characterSkeleton)
 {
-	chElementSelect = std::make_unique<ChElementSelect>(glReference);
+	chTriangleSelect = std::make_unique<ChTriangleSelect>(glReference);
 }
 
 void ChTriangleRectSelect::draw(QPainter& painter)
 {
-	chElementSelect->draw_handle_and_selected(painter);
+	chTriangleSelect->draw_handle_and_selected(painter);
 
 	if (isDraw) {
 		painter.setPen(QPen(Qt::yellow, 1));
-		painter.drawRect(chElementSelect->lastPos.x(), chElementSelect->lastPos.y(), rect.x() - chElementSelect->lastPos.x(), rect.y() - chElementSelect->lastPos.y());
+		painter.drawRect(chTriangleSelect->lastPos.x(), chTriangleSelect->lastPos.y(), rect.x() - chTriangleSelect->lastPos.x(), rect.y() - chTriangleSelect->lastPos.y());
 	}
 }
 
 void ChTriangleRectSelect::clickPos(const QPointF& mouseOri)
 {
-	chElementSelect->lastPos = mouseOri;
+	chTriangleSelect->lastPos = mouseOri;
 
-	chElementSelect->changeEditMode();
+	chTriangleSelect->changeEditMode();
 
-	if (chElementSelect->editMode != ChElementEditMode::None) {
-		chElementSelect->affirmHandle();
+	if (chTriangleSelect->editMode != ChElementEditMode::None) {
+		chTriangleSelect->affirmHandle();
 		return;
 	}
 
-	const QPointF mouse = chElementSelect->glVertReference.gl.GLViewProjMatrixInvert(mouseOri);
+	const QPointF mouse = chTriangleSelect->glVertReference.gl.GLViewProjMatrixInvert(mouseOri);
 
-	chElementSelect->click_select(mouse);
+	chTriangleSelect->click_select(mouse);
 }
 
 void ChTriangleRectSelect::movePos(const QPointF& mouse)
 {
 	isDraw = false;
 
-	if (chElementSelect->editMode != ChElementEditMode::None) {
-		chElementSelect->moveHandle(mouse);
+	if (chTriangleSelect->editMode != ChElementEditMode::None) {
+		chTriangleSelect->moveHandle(mouse);
 		return;
 	}
 
@@ -62,23 +62,23 @@ void ChTriangleRectSelect::releasePos(const QPointF& mouse)
 	if (!isDraw) return;
 	isDraw = false;
 
-	chElementSelect->selected_points->clear();
+	chTriangleSelect->selected_points->clear();
 
-	PointVectorLayer& pointVector = *(chElementSelect->glVertReference.pointLayer);
+	PointVectorLayer& pointVector = *(chTriangleSelect->glVertReference.pointLayer);
 	for (unsigned int i = 0; i < pointVector.size(); i++) {
-		if (QRectF(chElementSelect->lastPos, mouse).contains(chElementSelect->glVertReference.gl.mapViewProjMatrix(
+		if (QRectF(chTriangleSelect->lastPos, mouse).contains(chTriangleSelect->glVertReference.gl.mapViewProjMatrix(
 			edit_skelen ?
 			pointVector[i] :
 			pointVector(i))
-		)) chElementSelect->selected_points->append(i);
+		)) chTriangleSelect->selected_points->append(i);
 	}
 
-	chElementSelect->uodate_selected_to_draw();
+	chTriangleSelect->update_selected_to_draw();
 }
 
 void ChTriangleRectSelect::enter()
 {
-	chElementSelect->enter();
+	chTriangleSelect->enter();
 }
 
 void RectSelectTriangleClick::click(const QPointF& point)
@@ -98,12 +98,12 @@ void RectSelectTriangleRelease::release(const QPointF& point)
 
 void RectSelectTriangleDelete::deleteElement()
 {
-	rectSelect->chElementSelect->deleteElement();
+	rectSelect->chTriangleSelect->deleteElement();
 }
 
 void RectSelectTriangleEscape::escape()
 {
-	rectSelect->chElementSelect->escape();
+	rectSelect->chTriangleSelect->escape();
 }
 
 void RectSelectTriangleDraw::draw(QPainter& painter)

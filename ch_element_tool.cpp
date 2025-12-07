@@ -4,6 +4,7 @@
 #include "add_triangle.h"
 #include "add_ch_tex_poly.h"
 #include "ch_element_select.h"
+#include "ch_triangle_select.h"
 #include "ch_element_rect_select.h"
 #include "ch_element_libre_select.h"
 #include "ch_triangle_rect_select.h"

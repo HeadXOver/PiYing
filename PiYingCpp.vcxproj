@@ -106,6 +106,7 @@
     <ClCompile Include="ch_element_tool.cpp" />
     <ClCompile Include="ch_skelen_tool.cpp" />
     <ClCompile Include="ch_triangle_rect_select.cpp" />
+    <ClCompile Include="ch_triangle_select.cpp" />
     <ClCompile Include="controls.cpp" />
     <ClCompile Include="ctrl_slide_layout.cpp" />
     <ClCompile Include="ctrl_slide_widget.cpp" />

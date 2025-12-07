@@ -109,7 +109,7 @@ void ChElementLibreSelect::releasePos(const QPointF& mouse)
 		}
 	}
 
-	chElementSelect->uodate_selected_to_draw();
+	chElementSelect->update_selected_to_draw();
 }
 
 void LibreSelectClick::click(const QPointF& point)

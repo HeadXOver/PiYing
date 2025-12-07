@@ -1,4 +1,5 @@
-﻿#include "ch_element_select.h"
+#include "ch_triangle_select.h"
+
 #include "gl_vert_reference.h"
 #include "piYingGL.h"
 #include "SelectedPoints.h"
@@ -14,28 +15,28 @@
 #include <qpainter>
 #include "ch_triangle_select.h"
 
-ChElementSelect::ChElementSelect(GlVertReference& glReference) : glVertReference(glReference), edit_skelen(glReference.gl.editMode == EditMode::characterSkeleton)
+ChTriangleSelect::ChTriangleSelect(GlVertReference& glReference) : glVertReference(glReference), edit_skelen(glReference.gl.editMode == EditMode::characterSkeleton)
 {
     selected_points = std::make_unique<SelectedPoints>(false, *(glVertReference.pointLayer));
 }
 
-ChElementSelect::~ChElementSelect()
+ChTriangleSelect::~ChTriangleSelect()
 {
 }
 
-void ChElementSelect::escape() 
-{ 
-    if (selected_points->size() > 0) selected_points->removeLast(); 
+void ChTriangleSelect::escape()
+{
+    if (selected_points->size() > 0) selected_points->removeLast();
 }
 
-void ChElementSelect::enter()
+void ChTriangleSelect::enter()
 {
     if (selected_points->size() <= 1) return;
 
     //glVertReference.gl.add_part(selected_points->index());
 }
 
-void ChElementSelect::deleteElement()
+void ChTriangleSelect::deleteElement()
 {
     std::vector<unsigned int>& idx = glVertReference.glIndex;
     PointVectorLayer& pointLayer = *(glVertReference.pointLayer);
@@ -96,9 +97,9 @@ void ChElementSelect::deleteElement()
     glVertReference.gl.update_ch_verts();
 }
 
-void ChElementSelect::draw_handle_and_selected(QPainter& painter)
+void ChTriangleSelect::draw_handle_and_selected(QPainter& painter)
 {
-    if(selected_points->size() == 0) return;
+    if (selected_points->size() == 0) return;
 
     const int groupNum = glVertReference.gl.get_group_num();
     std::vector<bool> drawGroup(groupNum, false);
@@ -114,19 +115,19 @@ void ChElementSelect::draw_handle_and_selected(QPainter& painter)
         if (groupIndex >= 0) drawGroup[groupIndex] = true;
         handleCenterPoint += edit_skelen ? pointLayer[i] : pointLayer(i);
     }
-    
+
     handleCenterPoint /= selected_points->size();
 
     dHandleCenterPoint = glVertReference.gl.mapViewProjMatrix(handleCenterPoint);
 
-	// 绘制圆
+    // 绘制圆
     painter.setPen(QPen(Qt::black, 4));
-	painter.drawEllipse(dHandleCenterPoint, ROTATEHANDLE_RADIUS, ROTATEHANDLE_RADIUS);
+    painter.drawEllipse(dHandleCenterPoint, ROTATEHANDLE_RADIUS, ROTATEHANDLE_RADIUS);
     painter.setPen(QPen(Qt::yellow, 2));
     painter.drawEllipse(dHandleCenterPoint, ROTATEHANDLE_RADIUS, ROTATEHANDLE_RADIUS);
 
     // 绘制移动控制柄
-	painter.setPen(QPen(Qt::black, 6));
+    painter.setPen(QPen(Qt::black, 6));
     painter.drawLine(dHandleCenterPoint.x() - MOVEHANDLE_LENTH, dHandleCenterPoint.y(), dHandleCenterPoint.x() + MOVEHANDLE_LENTH, dHandleCenterPoint.y());
     painter.drawLine(dHandleCenterPoint.x(), dHandleCenterPoint.y() - MOVEHANDLE_LENTH, dHandleCenterPoint.x(), dHandleCenterPoint.y() + MOVEHANDLE_LENTH);
     painter.setPen(QPen(Qt::green, 4));
@@ -140,7 +141,7 @@ void ChElementSelect::draw_handle_and_selected(QPainter& painter)
     painter.setPen(QPen(Qt::yellow, HANDLE_ZONE));
     painter.drawPoint(dHandleCenterPoint);
 
-	// 绘制缩放控制柄
+    // 绘制缩放控制柄
     painter.setPen(QPen(Qt::black, 12));
     painter.drawPoint(dHandleCenterPoint.x(), dHandleCenterPoint.y() + SCALEHANDLE_DISTANCE);
     painter.drawPoint(dHandleCenterPoint.x() + SCALEHANDLE_DISTANCE, dHandleCenterPoint.y());
@@ -158,7 +159,7 @@ void ChElementSelect::draw_handle_and_selected(QPainter& painter)
     }
 }
 
-void ChElementSelect::changeEditMode()
+void ChTriangleSelect::changeEditMode()
 {
     if (selected_points->size() == 0) {
         editMode = ChElementEditMode::None;
@@ -174,10 +175,10 @@ void ChElementSelect::changeEditMode()
     else if (isInRect(lastPos, dHandleCenterPoint + QPoint(ROTATEHANDLE_RADIUS, ROTATEHANDLE_RADIUS), HANDLE_ZONE))     editMode = ChElementEditMode::Scale;    // 判断是否在缩放控制柄上
     else if (isInRect(lastPos, dHandleCenterPoint + QPoint(SCALEHANDLE_DISTANCE, 0), HANDLE_ZONE))                      editMode = ChElementEditMode::ScaleX;   // 判断是否在缩放控制柄X上
     else if (isInRect(lastPos, dHandleCenterPoint + QPoint(0, SCALEHANDLE_DISTANCE), HANDLE_ZONE))                      editMode = ChElementEditMode::ScaleY;   // 判断是否在缩放控制柄Y上
-	else                                                                                                                editMode = ChElementEditMode::None;     // 不在任何控制柄上
+    else                                                                                                                editMode = ChElementEditMode::None;     // 不在任何控制柄上
 }
 
-void ChElementSelect::moveHandle(const QPointF& mouse)
+void ChTriangleSelect::moveHandle(const QPointF& mouse)
 {
     if (editMode == ChElementEditMode::None) return;
 
@@ -243,21 +244,21 @@ void ChElementSelect::moveHandle(const QPointF& mouse)
     glVertReference.gl.update_ch_verts();
 }
 
-void ChElementSelect::affirmHandle()
+void ChTriangleSelect::affirmHandle()
 {
     selected_points->affirmVert(edit_skelen);
     lastHandleCenterPoint = handleCenterPoint;
     lastDHandleCenterPoint = dHandleCenterPoint;
 }
 
-void ChElementSelect::click_select(const QPointF& mouse)
+void ChTriangleSelect::click_select(const QPointF& mouse)
 {
     const PointVectorLayer& pointVector = *(glVertReference.pointLayer);
     for (unsigned int i = 0; i < pointVector.size(); i++) {
         if (QLineF(edit_skelen ? pointVector[i] : pointVector(i), mouse).length() < 0.02f / glVertReference.gl.viewScale.value()) {
             if (selected_points->contains(i)) return;
 
-            if (!KeyboardStateWin::isCtrlHeld()) selected_points->clear(); 
+            if (!KeyboardStateWin::isCtrlHeld()) selected_points->clear();
 
             selected_points->append(i);
             update_selected_to_draw();
@@ -269,7 +270,7 @@ void ChElementSelect::click_select(const QPointF& mouse)
     if (!KeyboardStateWin::isCtrlHeld()) selected_points->clear();
 }
 
-void ChElementSelect::update_selected_to_draw()
+void ChTriangleSelect::update_selected_to_draw()
 {
     const SelectedPoints& selectedPoints = *selected_points;
     const PointVectorLayer& pointVector = *glVertReference.pointLayer;

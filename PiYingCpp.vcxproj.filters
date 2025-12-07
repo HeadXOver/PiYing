@@ -238,6 +238,9 @@
     <ClCompile Include="ch_triangle_rect_select.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ch_triangle_select.cpp">
+      <Filter>Source Files\ChELementTool</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="static_handle_zone.h">

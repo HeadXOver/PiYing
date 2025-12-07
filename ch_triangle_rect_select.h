@@ -5,7 +5,7 @@
 
 #include "ch_element_tool_behavior.h"
 
-struct ChElementSelect;
+struct ChTriangleSelect;
 struct GlVertReference;
 class QPainter;
 class PiYingGL;
@@ -21,7 +21,7 @@ struct ChTriangleRectSelect final
 	void releasePos(const QPointF& mouse);
 	void enter();
 
-	std::unique_ptr<ChElementSelect> chElementSelect;
+	std::unique_ptr<ChTriangleSelect> chTriangleSelect;
 	const bool edit_skelen{ false };
 	QPointF rect;
 	bool isDraw = false;
