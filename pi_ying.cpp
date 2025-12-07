@@ -210,6 +210,12 @@ void PiYing::keyPressEvent(QKeyEvent* event)
             piYingGL->enterChElement();
         }
     }break;
+    case Qt::Key_1: {
+        QMessageBox::warning(this, "1", "1");
+    }break;
+    case Qt::Key_3: {
+        QMessageBox::warning(this, "3", "3");
+    }break;
     }
 }
 
