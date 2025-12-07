@@ -138,7 +138,7 @@ public:
 	PointVector& ref_characterVerts(int index) { return *(characterVerts[index]); }
 	QList<std::vector<unsigned int>>& ref_characterTriangleIndices() { return characterTriangleIndices; }
 
-	CharacterToolState ch_tool_state() const { return ch_tool_state_; }
+	CharacterToolState ch_tool_state() const { return _ch_tool_state; }
 
 public:
 	EditMode editMode = EditMode::OverView;
@@ -189,7 +189,7 @@ private:
 
 	MousePos lastMousePosType = MousePos::OutSide;
 
-	CharacterToolState ch_tool_state_;
+	CharacterToolState _ch_tool_state = CharacterToolState::None;
 
 	QMenu* rightButtonMenuChTex;
 	QMenu* rightButtonMenuBg_S;

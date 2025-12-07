@@ -3,6 +3,7 @@
 #include <QtWidgets/QMainWindow>
 #include <memory>
 
+enum class CharacterToolState;
 class CtrlSlideWidget;
 class PiYingGL;
 class TimelineGl;
@@ -48,6 +49,8 @@ private:
 	void select_tool_texture(ToolButton* toolButton);
 	void select_tool_skelen(ToolButton* toolButton);
 	void select_tool_control_slider(ToolButton* toolButton);
+	void adapt_select_tool_button(CharacterToolState state);
+	void all_button_unselect();
 
 private:
     std::unique_ptr<Ui::PiYingClass> ui;
@@ -62,6 +65,7 @@ private:
 	QList<ToolButton*> toolChTexList;
 	QList<ToolButton*> toolChSkelenList;
 	QList<ToolButton*> toolControlSliderList;
+	ToolButton* _select_button;
 
 public:
 	static QString SLIDER_WIDGET_STYLE_SHEET;

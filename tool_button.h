@@ -22,6 +22,8 @@ public:
 
     void set_toolState(CharacterToolState state);
 
+    void update();
+
     QAction* action() const;
     CharacterToolState toolState() const;
     bool isSelect() const;

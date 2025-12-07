@@ -43,6 +43,11 @@ void ToolButton::set_toolState(CharacterToolState state)
     toolState_ = state;
 }
 
+void ToolButton::update()
+{
+    action_->setIcon(isSelect_ ? *selected_ : *unselected_);
+}
+
 QAction* ToolButton::action() const
 {
     return action_;

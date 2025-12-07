@@ -138,12 +138,12 @@ void PiYingGL::paintGL() {
 	else if (editMode == EditMode::characterTexture)						paintCharacterTexture();
 	else if (editMode == EditMode::characterSkeleton) {
 		paint_applied_texture();
-		if (ch_tool_state_ != CharacterToolState::LibreSelectVert && ch_tool_state_ != CharacterToolState::RectSelectVert) return;
+		if (_ch_tool_state != CharacterToolState::LibreSelectVert && _ch_tool_state != CharacterToolState::RectSelectVert) return;
 		draw_ch_applied_vert();
 	}
 	else if (editMode == EditMode::controlSlide) {
 		paint_applied_texture();
-		if (ch_tool_state_ != CharacterToolState::AddVertTrace) return;
+		if (_ch_tool_state != CharacterToolState::AddVertTrace) return;
 		draw_ch_applied_vert();
 	}
 	else return;

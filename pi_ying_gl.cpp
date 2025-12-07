@@ -115,34 +115,34 @@ void PiYingGL::updateChTool()
 	int currentVector = getCurrentChRow();
 	if (currentVector < 0) return;
 
-	if (ch_tool_state_ == CharacterToolState::None) {
+	if (_ch_tool_state == CharacterToolState::None) {
 		update();
 		return;
 	}
 
 	if (editMode == EditMode::characterSkeleton) {
-		if (ch_tool_state_ == CharacterToolState::RectSelectVert || ch_tool_state_ == CharacterToolState::LibreSelectVert) {
-			ch_element_tool_ = std::make_unique<ChElementTool>(currentVector, *this, ch_tool_state_);
+		if (_ch_tool_state == CharacterToolState::RectSelectVert || _ch_tool_state == CharacterToolState::LibreSelectVert) {
+			ch_element_tool_ = std::make_unique<ChElementTool>(currentVector, *this, _ch_tool_state);
 		}
 		update();
 		return;
 	}
 
 	if (editMode == EditMode::controlSlide) {
-		if (ch_tool_state_ == CharacterToolState::AddVertTrace) {
-			ch_element_tool_ = std::make_unique<ChElementTool>(currentVector, *this, ch_tool_state_);
+		if (_ch_tool_state == CharacterToolState::AddVertTrace) {
+			ch_element_tool_ = std::make_unique<ChElementTool>(currentVector, *this, _ch_tool_state);
 		}
 		update();
 		return;
 	}
 
 	if (editMode == EditMode::characterTexture) {
-		if (ch_tool_state_ == CharacterToolState::RectSelectVert 
-			|| ch_tool_state_ == CharacterToolState::LibreSelectVert
-			|| ch_tool_state_ == CharacterToolState::AddPoly
-			|| ch_tool_state_ == CharacterToolState::AddRound
-			|| ch_tool_state_ == CharacterToolState::AddTriangle) {
-			ch_element_tool_ = std::make_unique<ChElementTool>(currentVector, *this, ch_tool_state_);
+		if (_ch_tool_state == CharacterToolState::RectSelectVert 
+			|| _ch_tool_state == CharacterToolState::LibreSelectVert
+			|| _ch_tool_state == CharacterToolState::AddPoly
+			|| _ch_tool_state == CharacterToolState::AddRound
+			|| _ch_tool_state == CharacterToolState::AddTriangle) {
+			ch_element_tool_ = std::make_unique<ChElementTool>(currentVector, *this, _ch_tool_state);
 		}
 		update();
 		return;
@@ -153,7 +153,7 @@ void PiYingGL::updateChTool()
 
 void PiYingGL::setChTool(CharacterToolState state)
 {
-	ch_tool_state_ = state;
+	_ch_tool_state = state;
 
 	if (ch_element_tool_) {
 		ch_element_tool_ = nullptr;
@@ -167,7 +167,7 @@ void PiYingGL::setChTool(CharacterToolState state)
 		return;
 	}
 
-	ch_element_tool_ = std::make_unique<ChElementTool>(currentVector, *this, ch_tool_state_);
+	ch_element_tool_ = std::make_unique<ChElementTool>(currentVector, *this, _ch_tool_state);
 
 	update();
 }

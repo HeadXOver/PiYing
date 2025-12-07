@@ -49,9 +49,9 @@ PiYing::PiYing(QWidget* parent) : QMainWindow(parent)
     splitTimelineOpenGL = new QSplitter(Qt::Vertical, this);
     splitListOpenGL = new QSplitter(Qt::Horizontal, this);
 
-    ToolButton* chRectSelectVert = new ToolButton(":/PiYing/selectRectChVert_S.png", ":/PiYing/selectRectChVert.png", "selectRectChVert", CharacterToolState::RectSelectVert, this);
+    _select_button = new ToolButton(":/PiYing/selectRectChVert_S.png", ":/PiYing/selectRectChVert.png", "selectRectChVert", CharacterToolState::RectSelectVert, this);
 
-    toolChTexList.append(chRectSelectVert);
+    toolChTexList.append(_select_button);
     toolChTexList.append(new ToolButton(":/PiYing/addChVert_S.png", ":/PiYing/addChVert.png", "addChVert", CharacterToolState::AddTriangle, this));
     toolChTexList.append(new ToolButton(":/PiYing/chAddPoly_S.png", ":/PiYing/chAddPoly.png", "chAddPoly", CharacterToolState::AddPoly, this));
     toolChTexList.append(new ToolButton(":/PiYing/chAddRound_S.png", ":/PiYing/chAddRound.png", "chAddRound", CharacterToolState::AddRound, this));
@@ -70,7 +70,7 @@ PiYing::PiYing(QWidget* parent) : QMainWindow(parent)
         connect(item->action(), &QAction::triggered, this, [this, item]() {select_tool_skelen(item); });    
     }
 
-    toolChSkelenList.append(chRectSelectVert); ///< 在连接之后添加，因为chRectSelectVert在toolChSkelenList中
+    toolChSkelenList.append(_select_button); ///< 在连接之后添加，因为chRectSelectVert在toolChSkelenList中
 
     QComboBox* modeBox = new QComboBox(this);
 
@@ -211,10 +211,58 @@ void PiYing::keyPressEvent(QKeyEvent* event)
         }
     }break;
     case Qt::Key_1: {
-        QMessageBox::warning(this, "1", "1");
+        switch (piYingGL->ch_tool_state()) {
+        case CharacterToolState::RectSelectTriangle: {
+            adapt_select_tool_button(CharacterToolState::RectSelectVert);
+            piYingGL->setChTool(CharacterToolState::RectSelectVert);
+        }break;
+        case CharacterToolState::LibreSelectTriangle: {
+            adapt_select_tool_button(CharacterToolState::LibreSelectVert);
+            piYingGL->setChTool(CharacterToolState::LibreSelectVert);
+        }break;
+        case CharacterToolState::LibreSelectVert:
+        case CharacterToolState::RectSelectVert: return;
+        default: {
+            all_button_unselect();
+
+            if (_select_button->toolState() == CharacterToolState::RectSelectTriangle) {
+                adapt_select_tool_button(CharacterToolState::RectSelectVert);
+            }
+            else if (_select_button->toolState() == CharacterToolState::LibreSelectTriangle) {
+                adapt_select_tool_button(CharacterToolState::LibreSelectVert);
+            }
+
+            _select_button->select();
+            piYingGL->setChTool(_select_button->toolState());
+        }
+        }
     }break;
     case Qt::Key_3: {
-        QMessageBox::warning(this, "3", "3");
+        switch (piYingGL->ch_tool_state()) {
+        case CharacterToolState::RectSelectVert: {
+            adapt_select_tool_button(CharacterToolState::RectSelectTriangle);
+            piYingGL->setChTool(CharacterToolState::RectSelectTriangle);
+        }break;
+        case CharacterToolState::LibreSelectVert: {
+            adapt_select_tool_button(CharacterToolState::LibreSelectTriangle);
+            piYingGL->setChTool(CharacterToolState::LibreSelectTriangle);
+        }break;
+        case CharacterToolState::LibreSelectTriangle:
+        case CharacterToolState::RectSelectTriangle: return;
+        default: {
+            all_button_unselect();
+
+            if (_select_button->toolState() == CharacterToolState::RectSelectVert) {
+                adapt_select_tool_button(CharacterToolState::RectSelectTriangle);
+            }
+            else if (_select_button->toolState() == CharacterToolState::LibreSelectVert) {
+                adapt_select_tool_button(CharacterToolState::LibreSelectTriangle);
+            }
+
+            _select_button->select();
+            piYingGL->setChTool(_select_button->toolState());
+        }
+        }
     }break;
     }
 }
