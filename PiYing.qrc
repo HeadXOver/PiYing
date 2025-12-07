@@ -33,5 +33,9 @@
         <file>rectangle.vert</file>
         <file>square_icon.frag</file>
         <file>square_icon.vert</file>
+        <file>libre_triangle_select.png</file>
+        <file>libre_triangle_select_S.png</file>
+        <file>rect_triangle_select.png</file>
+        <file>rect_triangle_select_S.png</file>
     </qresource>
 </RCC>

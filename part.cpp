@@ -14,11 +14,10 @@ Part::Part(
 ) :
 	_texture(texture), 
 	r_verts(verts),
-	r_triangleindices(triangleindices)
+	r_triangleindices(triangleindices),
+	_indices(indices)
 {
 	_vert_texture = std::make_unique<PointVector>();
-
-	_indices = indices;
 
 	if (isTexture) add_texture_part();
 	else add_moved_part();
@@ -26,6 +25,7 @@ Part::Part(
 
 void Part::add_texture_part()
 {
+
 }
 
 void Part::add_moved_part()
