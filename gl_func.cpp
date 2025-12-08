@@ -138,7 +138,11 @@ void PiYingGL::paintGL() {
 	else if (editMode == EditMode::characterTexture)						paintCharacterTexture();
 	else if (editMode == EditMode::characterSkeleton) {
 		paint_applied_texture();
-		if (_ch_tool_state != CharacterToolState::LibreSelectVert && _ch_tool_state != CharacterToolState::RectSelectVert) return;
+		if (_ch_tool_state != CharacterToolState::LibreSelectVert && 
+			_ch_tool_state != CharacterToolState::RectSelectVert &&
+			_ch_tool_state != CharacterToolState::RectSelectTriangle&&
+			_ch_tool_state != CharacterToolState::LibreSelectTriangle
+			) return;
 		draw_ch_applied_vert();
 	}
 	else if (editMode == EditMode::controlSlide) {

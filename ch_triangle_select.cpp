@@ -104,18 +104,12 @@ void ChTriangleSelect::draw_handle_and_selected(QPainter& painter)
 {
     if (selected_trangle->size() == 0) return;
 
-    const int groupNum = glVertReference.gl.get_group_num();
-    std::vector<bool> drawGroup(groupNum, false);
-
     painter.setBrush(QColor(0, 0, 0, 0));
 
     // 计算中心点
     PointVectorLayer& pointLayer = *(glVertReference.pointLayer);
     handleCenterPoint = QPointF();
-    int groupIndex;
     for (unsigned int i : selected_trangle->index()) {
-        groupIndex = glVertReference.pointLayer->get_group(i);
-        if (groupIndex >= 0) drawGroup[groupIndex] = true;
         handleCenterPoint += edit_skelen ? pointLayer[i] : pointLayer(i);
     }
 
@@ -156,10 +150,6 @@ void ChTriangleSelect::draw_handle_and_selected(QPainter& painter)
 
     // 绘制选中点
     glVertReference.gl.draw_selected_points();
-
-    for (int i = 0; i < groupNum; i++) {
-        if (drawGroup[i]) glVertReference.gl.draw_group_rectangle(i);
-    }
 }
 
 void ChTriangleSelect::changeEditMode()
