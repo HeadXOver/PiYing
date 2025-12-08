@@ -1,7 +1,6 @@
 ﻿#include "piYingGL.h"
 #include "piYing.h"
 #include "image_texture.h"
-#include "ch_element_tool.h"
 #include "point_vector.h"
 #include "point_vector_layer.h"
 #include "vert_groups.h"
@@ -11,11 +10,6 @@
 #include <qpainter>
 #include <qopengltexture>
 #include <QOpenGLShaderProgram.h>
-
-void PiYingGL::draw_tool()
-{
-	if (ch_element_tool_) ch_element_tool_->draw();
-}
 
 void PiYingGL::draw_selected_points()
 {

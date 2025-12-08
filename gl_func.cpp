@@ -1,4 +1,5 @@
 #include "piYingGL.h"
+#include "ch_element_tool.h"
 
 #include <QOpenGLShaderProgram.h>
 
@@ -144,13 +145,13 @@ void PiYingGL::paintGL() {
 			_ch_tool_state != CharacterToolState::LibreSelectTriangle
 			) return;
 		draw_triangle_frame(true);
-		draw_tool();
+		if (ch_element_tool_) ch_element_tool_->draw();
 	}
 	else if (editMode == EditMode::controlSlide) {
 		paint_applied_texture();
 		if (_ch_tool_state != CharacterToolState::AddVertTrace) return;
 		draw_triangle_frame(true);
-		draw_tool();
+		if (ch_element_tool_) ch_element_tool_->draw();
 	}
 	else return;
 

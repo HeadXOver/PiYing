@@ -95,7 +95,6 @@ public:
 	void bgTranslateControl(const QPointF& mouse, ImageTexture& image);
 	void bgScaleControl(const QPointF& mouse, ImageTexture& image);
 	void viewRotationControl(const QPointF& mouse);
-	void draw_tool();
 	void draw_selected_points();
 	void draw_triangle_frame(bool isSkelen);
 	void draw_rectangle(float cx, float cy, float width, float height);
