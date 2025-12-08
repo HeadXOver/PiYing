@@ -1,5 +1,6 @@
 ﻿#include "piYingGL.h"
 #include "piYing.h"
+#include "ch_element_tool.h"
 #include "image_texture.h"
 #include "point_vector.h"
 #include "point_vector_layer.h"
@@ -141,7 +142,7 @@ void PiYingGL::paintCharacterTexture()
 
 	draw_triangle_frame(false);
 	
-	draw_tool();
+	if (ch_element_tool_) ch_element_tool_->draw();
 }
 
 void PiYingGL::paint_applied_texture()
