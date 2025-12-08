@@ -12,7 +12,7 @@
 #include <qopengltexture>
 #include <QOpenGLShaderProgram.h>
 
-void PiYingGL::draw_selected_points()
+void PiYingGL::draw_selected_points(int nSelectedPoint)
 {
 	glBindVertexArray(svVAO);
 	glBindBuffer(GL_ARRAY_BUFFER, svVBO);
@@ -20,10 +20,23 @@ void PiYingGL::draw_selected_points()
 
 	_selected_vert_shader_program->setUniformValue("trc", getViewProjMatrix());
 	_selected_vert_shader_program->setUniformValue("is_out", true);
-	GLsizei n_points = (GLsizei)(selected_points.size() / 2);
-	glDrawArrays(GL_POINTS, 0, n_points);
+	glDrawArrays(GL_POINTS, 0, nSelectedPoint);
 	_selected_vert_shader_program->setUniformValue("is_out", false);
-	glDrawArrays(GL_POINTS, 0, n_points);
+	glDrawArrays(GL_POINTS, 0, nSelectedPoint);
+	glBindVertexArray(0);
+}
+
+void PiYingGL::draw_selected_triangle(int nSelectedPoint)
+{
+	glBindVertexArray(svVAO);
+	glBindBuffer(GL_ARRAY_BUFFER, svVBO);
+	_selected_vert_shader_program->bind();
+
+	_selected_vert_shader_program->setUniformValue("trc", getViewProjMatrix());
+	_selected_vert_shader_program->setUniformValue("is_out", true);
+	glDrawArrays(GL_POINTS, 0, nSelectedPoint);
+	_selected_vert_shader_program->setUniformValue("is_out", false);
+	glDrawArrays(GL_POINTS, 0, nSelectedPoint);
 	glBindVertexArray(0);
 }
 
@@ -34,11 +47,15 @@ void PiYingGL::draw_triangle_frame(bool isSkelen)
 
 	glBindVertexArray(ttVAO); ////////////////////////////////////////////////////
 
+	glBindBuffer(GL_ARRAY_BUFFER, chVBO);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, chEBO);
+
 	_texture_tri_shader_program->bind();
 
 	_texture_tri_shader_program->setUniformValue("is_skelen", isSkelen);
 	_texture_tri_shader_program->setUniformValue("trc", getViewProjMatrix());
 	_texture_tri_shader_program->setUniformValue("is_line", false);
+	_texture_tri_shader_program->setUniformValue("is_selected", false);
 	glDrawElements(GL_TRIANGLES, (GLsizei)characterTriangleIndices[currentVector].size(), GL_UNSIGNED_INT, 0);
 
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);   // 把填充改成“线框”
@@ -191,7 +208,7 @@ void PiYingGL::update_ch_verts()
 	doneCurrent();
 }
 
-void PiYingGL::update_selected_verts()
+void PiYingGL::update_selected_verts(const std::vector<float>& selected_points)
 {
 	makeCurrent();
 	glBindBuffer(GL_ARRAY_BUFFER, svVBO);

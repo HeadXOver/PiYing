@@ -104,7 +104,6 @@
     <ClCompile Include="ch_element_rect_select.cpp" />
     <ClCompile Include="ch_element_select.cpp" />
     <ClCompile Include="ch_element_tool.cpp" />
-    <ClCompile Include="ch_skelen_tool.cpp" />
     <ClCompile Include="ch_triangle_rect_select.cpp" />
     <ClCompile Include="ch_triangle_select.cpp" />
     <ClCompile Include="controls.cpp" />
@@ -171,7 +170,6 @@
     <ClInclude Include="ch_element_libre_select.h" />
     <ClInclude Include="ch_element_rect_select.h" />
     <ClInclude Include="ch_element_tool.h" />
-    <ClInclude Include="ch_skelen_tool.h" />
     <ClInclude Include="enum_character_texture_tool_state.h" />
     <ClInclude Include="image_texture.h" />
     <ClInclude Include="image_transform.h" />

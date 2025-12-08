@@ -190,9 +190,6 @@
     <ClCompile Include="point_vector_layer.cpp">
       <Filter>Source Files\PiYingContainer</Filter>
     </ClCompile>
-    <ClCompile Include="ch_skelen_tool.cpp">
-      <Filter>Source Files\ChELementTool</Filter>
-    </ClCompile>
     <ClCompile Include="change_mode.cpp">
       <Filter>Source Files\PiYing</Filter>
     </ClCompile>
@@ -316,9 +313,6 @@
       <Filter>Header Files\PiYingContainer</Filter>
     </ClInclude>
     <ClInclude Include="ch_element_add_round.h">
-      <Filter>Header Files\ChELementTool</Filter>
-    </ClInclude>
-    <ClInclude Include="ch_skelen_tool.h">
       <Filter>Header Files\ChELementTool</Filter>
     </ClInclude>
     <ClInclude Include="cus_func_get_unique_id.h">

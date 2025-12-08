@@ -157,7 +157,7 @@ void ChTriangleSelect::draw_handle_and_selected()
 #pragma endregion 
 
     // 绘制选中点
-    piYingGL->draw_selected_points();
+    piYingGL->draw_selected_triangle(selected_trangle->size());
 }
 
 void ChTriangleSelect::changeEditMode()
@@ -291,8 +291,8 @@ void ChTriangleSelect::update_selected_to_draw()
     const SelectedTriangle& selectedPoints = *selected_trangle;
     const PointVectorLayer& pointVector = *glVertReference.pointLayer;
 
-    piYingGL->selected_points.clear();
-    piYingGL->selected_points.reserve(selectedPoints.size() * 2);
+    std::vector<float> selectedPointsFloat;
+    selectedPointsFloat.reserve(selectedPoints.size() * 2);
 
     int index;
     for (int i = 0; i < selectedPoints.size(); i++) {
@@ -302,9 +302,13 @@ void ChTriangleSelect::update_selected_to_draw()
             pointVector[index] :
             pointVector(index);
 
-        piYingGL->selected_points.push_back(selectPoint.x());
-        piYingGL->selected_points.push_back(selectPoint.y());
+        selectedPointsFloat.push_back(selectPoint.x());
+        selectedPointsFloat.push_back(selectPoint.y());
     }
 
-    piYingGL->update_selected_verts();
+    piYingGL->update_selected_verts(selectedPointsFloat);
+}
+
+void ChTriangleSelect::update_selected_triangle_to_draw()
+{
 }

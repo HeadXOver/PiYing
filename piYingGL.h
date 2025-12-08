@@ -95,12 +95,13 @@ public:
 	void bgTranslateControl(const QPointF& mouse, ImageTexture& image);
 	void bgScaleControl(const QPointF& mouse, ImageTexture& image);
 	void viewRotationControl(const QPointF& mouse);
-	void draw_selected_points();
+	void draw_selected_points(int nSelectedPoint);
+	void draw_selected_triangle(int nSelectedPoint);
 	void draw_triangle_frame(bool isSkelen);
 	void draw_rectangle(float cx, float cy, float width, float height);
 	void draw_group_rectangle(int groupIndex);
 	void update_ch_verts();
-	void update_selected_verts();
+	void update_selected_verts(const std::vector<float>& selected_points);
 	void add_trace(int index, const QPolygonF& polygon);
 	void add_part(const QList<unsigned int>& indices);
 
@@ -146,8 +147,6 @@ public:
 	ViewData viewRotate;
 	ViewData viewTransX;
 	ViewData viewTransY;
-
-	std::vector<float> selected_points;
 
 private:
 	PiYing& ref_PiYing;

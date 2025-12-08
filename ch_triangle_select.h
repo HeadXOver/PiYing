@@ -24,6 +24,7 @@ struct ChTriangleSelect final
 	void affirmHandle();
 	void click_select(const QPointF& mouse);
 	void update_selected_to_draw();
+	void update_selected_triangle_to_draw();
 
 	GlVertReference& glVertReference;
 	std::unique_ptr<SelectedTriangle> selected_trangle;

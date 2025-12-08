@@ -104,26 +104,25 @@ void ChElementSelect::draw_handle_and_selected()
 {
     if(selected_points->size() == 0) return;
 
-    const int groupNum = piYingGL->get_group_num();
-    std::vector<bool> drawGroup(groupNum, false);
-
-    QPainter painter(piYingGL);
-    painter.setRenderHint(QPainter::Antialiasing);
-    painter.setBrush(QColor(0, 0, 0, 0));
-
     // 计算中心点
     PointVectorLayer& pointLayer = *(glVertReference.pointLayer);
     handleCenterPoint = QPointF();
     int groupIndex;
     for (unsigned int i : selected_points->index()) {
         groupIndex = glVertReference.pointLayer->get_group(i);
-        if (groupIndex >= 0) drawGroup[groupIndex] = true;
         handleCenterPoint += edit_skelen ? pointLayer[i] : pointLayer(i);
     }
     
     handleCenterPoint /= selected_points->size();
 
     dHandleCenterPoint = piYingGL->mapViewProjMatrix(handleCenterPoint);
+
+/// 以下区域代码，绘制控制柄，只与 dHandleCenterPoint 有关，所以折叠
+#pragma region [draw handle] 
+
+    QPainter painter(piYingGL);
+    painter.setRenderHint(QPainter::Antialiasing);
+    painter.setBrush(QColor(0, 0, 0, 0));
 
 	// 绘制圆
     painter.setPen(QPen(Qt::black, 4));
@@ -156,12 +155,10 @@ void ChElementSelect::draw_handle_and_selected()
     painter.drawPoint(dHandleCenterPoint.x() + SCALEHANDLE_DISTANCE, dHandleCenterPoint.y());
     painter.drawPoint(dHandleCenterPoint.x() + ROTATEHANDLE_RADIUS, dHandleCenterPoint.y() + ROTATEHANDLE_RADIUS);
 
-    // 绘制选中点
-    piYingGL->draw_selected_points();
+#pragma endregion 
 
-    for (int i = 0; i < groupNum; i++) {
-        if (drawGroup[i]) piYingGL->draw_group_rectangle(i);
-    }
+    // 绘制选中点
+    piYingGL->draw_selected_points(selected_points->size());
 }
 
 void ChElementSelect::changeEditMode()
@@ -281,8 +278,8 @@ void ChElementSelect::update_selected_to_draw()
     const SelectedPoints& selectedPoints = *selected_points;
     const PointVectorLayer& pointVector = *glVertReference.pointLayer;
 
-    piYingGL->selected_points.clear();
-    piYingGL->selected_points.reserve(selectedPoints.size() * 2);
+    std::vector<float> selectedPointsFloat;
+    selectedPointsFloat.reserve(selectedPoints.size() * 2);
 
     int index;
     for (int i = 0; i < selectedPoints.size(); i++) {
@@ -292,9 +289,9 @@ void ChElementSelect::update_selected_to_draw()
             pointVector[index] :
             pointVector(index);
 
-        piYingGL->selected_points.push_back(selectPoint.x());
-        piYingGL->selected_points.push_back(selectPoint.y());
+        selectedPointsFloat.push_back(selectPoint.x());
+        selectedPointsFloat.push_back(selectPoint.y());
     }
 
-    piYingGL->update_selected_verts();
+    piYingGL->update_selected_verts(selectedPointsFloat);
 }
