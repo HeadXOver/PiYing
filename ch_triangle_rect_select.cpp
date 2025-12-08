@@ -72,16 +72,21 @@ void ChTriangleRectSelect::releasePos(const QPointF& mouse)
 	PointVectorLayer& pointVector = *(chTriangleSelect->glVertReference.pointLayer);
 	const std::vector<unsigned int>& triangleIndices = chTriangleSelect->glVertReference.glIndex;
 
-	QRectF rect(
-		piYingGL->GLViewProjMatrixInvert(chTriangleSelect->lastPos), 
-		piYingGL->GLViewProjMatrixInvert(mouse)
-	);
+	QRectF rect(chTriangleSelect->lastPos, mouse);
+	QPointF eachTriangle[3];
+	const bool easySelect = mouse.x() > chTriangleSelect->lastPos.x();
 	for (unsigned int i = 0; i < triangleIndices.size(); i += 3) {
-		if (rect.contains(pointVector.get(triangleIndices[i], edit_skelen)) &&
-			rect.contains(pointVector.get(triangleIndices[i + 1], edit_skelen))&&
-			rect.contains(pointVector.get(triangleIndices[i + 2], edit_skelen))
+		for (int j = 0; j < 3; ++j) {
+			eachTriangle[j] = piYingGL->mapViewProjMatrix(pointVector.get(triangleIndices[i + j], edit_skelen));
+		}
+		if (rect.contains(eachTriangle[0]) &&
+			rect.contains(eachTriangle[1]) &&
+			rect.contains(eachTriangle[2])
 			) {
 			chTriangleSelect->selected_trangle->append(&triangleIndices[i]);
+		}
+		else if (easySelect) {
+			if(isRectIntersectTriangle(rect, eachTriangle)) chTriangleSelect->selected_trangle->append(&triangleIndices[i]);
 		}
 	}
 

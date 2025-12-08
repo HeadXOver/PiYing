@@ -51,10 +51,9 @@ void ChElementRectSelect::clickPos(const QPointF& mouseOri)
 
 void ChElementRectSelect::movePos(const QPointF& mouse)
 {
-	isDraw = false;
-
 	if (chElementSelect->editMode != ChElementEditMode::None) {
 		chElementSelect->moveHandle(mouse);
+		isDraw = false;
 		return;
 	}
 
@@ -69,13 +68,14 @@ void ChElementRectSelect::releasePos(const QPointF& mouse)
 
 	chElementSelect->selected_points->clear();
 
-	PointVectorLayer& pointVector = *(chElementSelect->glVertReference.pointLayer);
+	const QRectF rect(chElementSelect->lastPos, mouse);
+	const PointVectorLayer& pointVector = *(chElementSelect->glVertReference.pointLayer);
+	QPointF pos;
 	for (unsigned int i = 0; i < pointVector.size(); i++) {
-		if (QRectF(chElementSelect->lastPos, mouse).contains(piYingGL->mapViewProjMatrix(
-			edit_skelen ?
-			pointVector[i] :
-			pointVector(i))
-		)) chElementSelect->selected_points->append(i);
+		pos = piYingGL->mapViewProjMatrix(pointVector.get(i, edit_skelen));
+		if (rect.contains(pos)) {
+			chElementSelect->selected_points->append(i);
+		}
 	}
 
 	chElementSelect->update_selected_to_draw();

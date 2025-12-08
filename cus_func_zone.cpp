@@ -34,3 +34,24 @@ bool isPointInTriangle(const QPointF& point, const QPointF* const triangle)
     // 如果三个叉积同号（全正或全负），则点在三角形内（或在边上）
     return !(hasNeg && hasPos);
 }
+
+bool isRectIntersectTriangle(const QRectF& rect, const QPointF* const triangle)
+{
+    for (int i = 0; i < 3; ++i) {
+        if (rect.contains(triangle[i])) return true;
+    }
+
+    QPointF rectVertices[4] = { rect.topLeft(), rect.topRight(), rect.bottomLeft(), rect.bottomRight() };
+
+    for (int i = 0; i < 4; ++i) {
+        if (isPointInTriangle(rectVertices[i], triangle)) return true;
+    }
+
+    for (int i = 0; i < 3; ++i) {
+        for (int j = 0; j < 4; ++j) {
+            if (isCross(triangle[i], triangle[(i + 1) % 3], rectVertices[j], rectVertices[(j + 1) % 4])) return true;
+        }
+    }
+
+    return false;
+}
