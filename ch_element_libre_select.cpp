@@ -106,9 +106,7 @@ void ChElementLibreSelect::releasePos(const QPointF& mouse)
 	const PointVectorLayer& points = *chElementSelect->glVertReference.pointLayer;
 	QPointF existingPoint;
 	for (unsigned int i = 0; i < points.size(); i++) {
-		existingPoint = edit_skelen ?
-			points[i] :
-			points(i);
+		existingPoint = points.get(i, edit_skelen);
 		if (polygon.containsPoint(existingPoint, Qt::OddEvenFill)) {
 			chElementSelect->selected_points->append(i);
 		}

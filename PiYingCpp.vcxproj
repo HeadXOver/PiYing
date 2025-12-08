@@ -104,6 +104,7 @@
     <ClCompile Include="ch_element_rect_select.cpp" />
     <ClCompile Include="ch_element_select.cpp" />
     <ClCompile Include="ch_element_tool.cpp" />
+    <ClCompile Include="ch_triangle_libre_select.cpp" />
     <ClCompile Include="ch_triangle_rect_select.cpp" />
     <ClCompile Include="ch_triangle_select.cpp" />
     <ClCompile Include="controls.cpp" />
@@ -153,6 +154,7 @@
     <ClInclude Include="add_ch_tex_poly.h" />
     <ClInclude Include="base_math.h" />
     <ClInclude Include="character_trace.h" />
+    <ClInclude Include="ch_triangle_libre_select.h" />
     <ClInclude Include="ch_triangle_rect_select.h" />
     <ClInclude Include="cus_func_get_unique_id.h" />
     <ClInclude Include="ch_add_vert_trace.h" />

@@ -69,7 +69,7 @@ void ChTriangleRectSelect::releasePos(const QPointF& mouse)
 
 	chTriangleSelect->selected_trangle->clear();
 
-	PointVectorLayer& pointVector = *(chTriangleSelect->glVertReference.pointLayer);
+	const PointVectorLayer& pointVector = *(chTriangleSelect->glVertReference.pointLayer);
 	const std::vector<unsigned int>& triangleIndices = chTriangleSelect->glVertReference.glIndex;
 
 	QRectF rect(chTriangleSelect->lastPos, mouse);

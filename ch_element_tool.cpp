@@ -8,6 +8,7 @@
 #include "ch_element_rect_select.h"
 #include "ch_element_libre_select.h"
 #include "ch_triangle_rect_select.h"
+#include "ch_triangle_libre_select.h"
 #include "ch_element_add_round.h"
 #include "ch_add_vert_trace.h"
 #include "gl_vert_reference.h"
@@ -112,14 +113,14 @@ void ChElementTool::construct_rect_select_triangle()
 
 void ChElementTool::construct_libre_select_triangle()
 {
-	std::shared_ptr<ChElementLibreSelect> libreSelect = std::make_shared<ChElementLibreSelect>(*glVertReference);
-	clickBehavior = std::make_unique<LibreSelectClick>(libreSelect);
-	escapeBehavior = std::make_unique<LibreSelectEscape>(libreSelect);
-	drawBehavior = std::make_unique<LibreSelectDraw>(libreSelect);
-	releaseBehavior = std::make_unique<LibreSelectRelease>(libreSelect);
-	moveBehavior = std::make_unique<LibreSelectMove>(libreSelect);
-	deleteBehavior = std::make_unique<LibreSelectDelete>(libreSelect);
-	enterBehavior = std::make_unique<LibreSelectEnter>(libreSelect);
+	std::shared_ptr<ChTriangleLibreSelect> libreSelect = std::make_shared<ChTriangleLibreSelect>(*glVertReference);
+	clickBehavior = std::make_unique<LibreSelectTriangleClick>(libreSelect);
+	escapeBehavior = std::make_unique<LibreSelectTriangleEscape>(libreSelect);
+	drawBehavior = std::make_unique<LibreSelectTriangleDraw>(libreSelect);
+	releaseBehavior = std::make_unique<LibreSelectTriangleRelease>(libreSelect);
+	moveBehavior = std::make_unique<LibreSelectTriangleMove>(libreSelect);
+	deleteBehavior = std::make_unique<LibreSelectTriangleDelete>(libreSelect);
+	enterBehavior = std::make_unique<LibreSelectTriangleEnter>(libreSelect);
 }
 
 ChElementTool::ChElementTool(int current, PiYingGL& pygl, CharacterToolState chToolState)

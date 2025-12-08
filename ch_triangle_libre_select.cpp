@@ -1,0 +1,160 @@
+#include "ch_triangle_libre_select.h"
+
+#include "gl_vert_reference.h"
+#include "ch_triangle_select.h"
+#include "piYingGL.h"
+#include "global_objects.h"
+#include "selected_triangle.h"
+#include "KeyboardStateWin.h"
+#include "point_vector_layer.h"
+#include "enum_select_handle_mode.h"
+
+#include <qpolygonf>
+#include <qpainter>
+#include <qpointf>
+
+ChTriangleLibreSelect::ChTriangleLibreSelect(GlVertReference& glReference) :
+	edit_skelen(piYingGL->editMode == EditMode::characterSkeleton)
+{
+	chTriangleSelect = std::make_unique<ChTriangleSelect>(glReference);
+}
+
+void ChTriangleLibreSelect::enter()
+{
+	chTriangleSelect->enter();
+}
+
+void ChTriangleLibreSelect::draw()
+{
+	chTriangleSelect->draw_handle_and_selected();
+
+	QPainter painter(piYingGL);
+	painter.setRenderHint(QPainter::Antialiasing);
+	painter.setBrush(QColor(225, 0, 0, 20));
+
+	if (!polygon.isEmpty()) {
+		if (drawing) {
+			painter.setPen(QPen(Qt::yellow, 1));
+
+			auto mapper = [this](const QPointF& p) { return piYingGL->mapViewProjMatrix(p); };
+
+			QPolygonF screenPoly;
+			screenPoly.reserve(polygon.size());
+			std::transform(polygon.cbegin(), polygon.cend(),
+				std::back_inserter(screenPoly),
+				mapper
+			);
+
+			painter.drawPolyline(screenPoly);
+			painter.drawLine(screenPoly.last(), screenPoly.first());
+		}
+	}
+}
+
+void ChTriangleLibreSelect::clickPos(const QPointF& mouseOri)
+{
+	isPress = true;
+	chTriangleSelect->lastPos = mouseOri;
+
+	polygon.clear();
+
+	chTriangleSelect->changeEditMode();
+
+	if (chTriangleSelect->editMode != ChElementEditMode::None) {
+		chTriangleSelect->affirmHandle();
+		return;
+	}
+
+	const QPointF mouse = piYingGL->getViewProjMatrixInvert().map(piYingGL->mapToGL(mouseOri));
+
+	polygon << mouse;
+
+	chTriangleSelect->click_select(mouse);
+}
+
+void ChTriangleLibreSelect::movePos(const QPointF& mouse)
+{
+	drawing = false;
+
+	if (chTriangleSelect->editMode != ChElementEditMode::None) {
+		chTriangleSelect->moveHandle(mouse);
+		return;
+	}
+
+	if (!isPress) return;
+
+	drawing = true;
+
+	QPointF mapedMouse = piYingGL->GLViewProjMatrixInvert(mouse);
+	if (!polygon.isEmpty() && polygon.last() == mapedMouse) return;
+
+	polygon << mapedMouse;
+}
+
+void ChTriangleLibreSelect::releasePos(const QPointF& mouse)
+{
+	isPress = false;
+
+	if (!drawing) return;
+
+	drawing = false;
+
+	if (polygon.isEmpty()) return;
+
+	polygon << polygon.first();
+
+	chTriangleSelect->selected_trangle->clear();
+
+	const PointVectorLayer& pointVector = *chTriangleSelect->glVertReference.pointLayer;
+	const std::vector<unsigned int>& triangleIndices = chTriangleSelect->glVertReference.glIndex;
+
+	QPointF eachTriangle[3];
+	for (unsigned int i = 0; i < triangleIndices.size(); i += 3) {
+		for (int j = 0; j < 3; ++j) {
+			eachTriangle[j] = pointVector.get(triangleIndices[i + j], edit_skelen);
+		}
+		if (polygon.containsPoint(eachTriangle[0], Qt::OddEvenFill) &&
+			polygon.containsPoint(eachTriangle[1], Qt::OddEvenFill)&&
+			polygon.containsPoint(eachTriangle[2], Qt::OddEvenFill)
+			) {
+			chTriangleSelect->selected_trangle->append(&triangleIndices[i]);
+		}
+	}
+
+	chTriangleSelect->update_selected_to_draw();
+}
+
+void LibreSelectTriangleClick::click(const QPointF& point)
+{
+	libreSelect->clickPos(point);
+}
+
+void LibreSelectTriangleMove::mouseMove(const QPointF& point)
+{
+	libreSelect->movePos(point);
+}
+
+void LibreSelectTriangleRelease::release(const QPointF& point)
+{
+	libreSelect->releasePos(point);
+}
+
+void LibreSelectTriangleDelete::deleteElement()
+{
+	libreSelect->chTriangleSelect->deleteElement();
+}
+
+void LibreSelectTriangleEscape::escape()
+{
+	libreSelect->chTriangleSelect->escape();
+}
+
+void LibreSelectTriangleDraw::draw()
+{
+	libreSelect->draw();
+}
+
+void LibreSelectTriangleEnter::enter()
+{
+	libreSelect->enter();
+}
