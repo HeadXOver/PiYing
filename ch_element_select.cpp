@@ -14,7 +14,10 @@
 #include <qpainter>
 #include "ch_triangle_select.h"
 
-ChElementSelect::ChElementSelect(GlVertReference& glReference) : glVertReference(glReference), edit_skelen(glReference.gl.editMode == EditMode::characterSkeleton)
+ChElementSelect::ChElementSelect(GlVertReference& glReference) : 
+    glVertReference(glReference), 
+    edit_skelen(glReference.gl.editMode == EditMode::characterSkeleton),
+    editMode(ChElementEditMode::None)
 {
     selected_points = std::make_unique<SelectedPoints>(false, *(glVertReference.pointLayer));
 }
@@ -253,6 +256,7 @@ void ChElementSelect::affirmHandle()
 void ChElementSelect::click_select(const QPointF& mouse)
 {
     const PointVectorLayer& pointVector = *(glVertReference.pointLayer);
+
     for (unsigned int i = 0; i < pointVector.size(); i++) {
         if (QLineF(edit_skelen ? pointVector[i] : pointVector(i), mouse).length() < 0.02f / glVertReference.gl.viewScale.value()) {
             if (selected_points->contains(i)) return;

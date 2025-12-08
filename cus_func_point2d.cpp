@@ -17,3 +17,8 @@ QPointF getRotatedPoint(const QPointF& p, float angle) {
 QPointF getRotatedPoint(float x, float y, float angle) {
     return QPointF(x * cosf(angle) - y * sinf(angle), x * sinf(angle) + y * cosf(angle));
 }
+
+float crossProduct(const QPointF& a, const QPointF& b, const QPointF& c)
+{
+    return (b.x() - a.x()) * (c.y() - a.y()) - (b.y() - a.y()) * (c.x() - a.x());
+}

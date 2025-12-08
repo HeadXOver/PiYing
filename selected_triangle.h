@@ -21,10 +21,11 @@ public:
 	const QPointF& getVert(int index) const;
 
 	bool contains(unsigned int index) const { return selectedIndex.contains(index); }
+	bool contains(const unsigned int* triangle) const;
 	bool contains(const QPointF& vert) const { return lastVertPos.contains(vert); }
 
 	void clear() { selectedIndex.clear(); lastVertPos.clear(); }
-	void append(unsigned int ind);
+	void append(const unsigned int* ind);
 	void removeLast() { selectedIndex.removeLast(); lastVertPos.removeLast(); }
 	void affirmVert(bool edit_skelen);
 

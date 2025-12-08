@@ -15,7 +15,10 @@
 #include <qpainter>
 #include "ch_triangle_select.h"
 
-ChTriangleSelect::ChTriangleSelect(GlVertReference& glReference) : glVertReference(glReference), edit_skelen(glReference.gl.editMode == EditMode::characterSkeleton)
+ChTriangleSelect::ChTriangleSelect(GlVertReference& glReference) : 
+    glVertReference(glReference), 
+    edit_skelen(glReference.gl.editMode == EditMode::characterSkeleton),
+    editMode(ChElementEditMode::None)
 {
     selected_trangle = std::make_unique<SelectedTriangle>(false, *(glVertReference.pointLayer));
 }
@@ -254,13 +257,27 @@ void ChTriangleSelect::affirmHandle()
 void ChTriangleSelect::click_select(const QPointF& mouse)
 {
     const PointVectorLayer& pointVector = *(glVertReference.pointLayer);
-    for (unsigned int i = 0; i < pointVector.size(); i++) {
-        if (QLineF(edit_skelen ? pointVector[i] : pointVector(i), mouse).length() < 0.02f / glVertReference.gl.viewScale.value()) {
-            if (selected_trangle->contains(i)) return;
+    const std::vector<unsigned int>& triangleIndices = glVertReference.glIndex;
+
+    QPointF eachTriangle[3];
+    for (unsigned int i = 0; i < triangleIndices.size(); i += 3) {
+        if (edit_skelen) {
+            eachTriangle[0] = pointVector[triangleIndices[i]];
+            eachTriangle[1] = pointVector[triangleIndices[i + 1]];
+            eachTriangle[2] = pointVector[triangleIndices[i + 2]];
+        }
+        else {
+            eachTriangle[0] = pointVector(triangleIndices[i]);
+            eachTriangle[1] = pointVector(triangleIndices[i + 1]);
+            eachTriangle[2] = pointVector(triangleIndices[i + 2]);
+        }
+
+        if (isPointInTriangle(mouse, eachTriangle)) {
+            if (selected_trangle->contains(&triangleIndices[i])) return;
 
             if (!KeyboardStateWin::isCtrlHeld()) selected_trangle->clear();
 
-            selected_trangle->append(i);
+            selected_trangle->append(&triangleIndices[i]);
             update_selected_to_draw();
 
             return;

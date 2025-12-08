@@ -70,7 +70,7 @@ void ChTriangleRectSelect::releasePos(const QPointF& mouse)
 			edit_skelen ?
 			pointVector[i] :
 			pointVector(i))
-		)) chTriangleSelect->selected_trangle->append(i);
+		)) chTriangleSelect->selected_trangle->append(&i);
 	}
 
 	chTriangleSelect->update_selected_to_draw();
