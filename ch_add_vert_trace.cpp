@@ -57,13 +57,15 @@ void ChAddVertTrace::release(const QPointF& mouse)
 	polygon.clear();
 }
 
-void ChAddVertTrace::draw(QPainter& painter)
+void ChAddVertTrace::draw()
 {
 	if (current_index < 0) return;
 
 	const PointVectorLayer& pointLayer = *(glVertReference.pointLayer);
 
 	QPointF selectPoint = glVertReference.gl.mapViewProjMatrix(pointLayer[current_index]);
+
+	QPainter painter(&glVertReference.gl);
 	painter.setPen(QPen(Qt::black, 8));
 	painter.drawPoint(selectPoint);
 	painter.setPen(QPen(Qt::red, 6));
@@ -98,7 +100,7 @@ void AddVertTraceRelease::release(const QPointF& mouse)
 	addTrace->release(mouse);
 }
 
-void AddVertTraceDraw::draw(QPainter& painter)
+void AddVertTraceDraw::draw()
 {
-	addTrace->draw(painter);
+	addTrace->draw();
 }

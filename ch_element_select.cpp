@@ -99,13 +99,15 @@ void ChElementSelect::deleteElement()
     glVertReference.gl.update_ch_verts();
 }
 
-void ChElementSelect::draw_handle_and_selected(QPainter& painter)
+void ChElementSelect::draw_handle_and_selected()
 {
     if(selected_points->size() == 0) return;
 
     const int groupNum = glVertReference.gl.get_group_num();
     std::vector<bool> drawGroup(groupNum, false);
 
+    QPainter painter(&glVertReference.gl);
+    painter.setRenderHint(QPainter::Antialiasing);
     painter.setBrush(QColor(0, 0, 0, 0));
 
     // 计算中心点

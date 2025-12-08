@@ -18,7 +18,7 @@ struct AddTriangle final
 	void addVert(const QPointF& point);
 	void reduceOne();
 	void click(const QPointF& mouse);
-	void draw(QPainter& painter);
+	void draw();
 
 	GlVertReference& glVertReference;
 
@@ -76,7 +76,7 @@ class AddTriangleDraw final : public DrawBehavior
 {
 public:
 	AddTriangleDraw(std::shared_ptr<AddTriangle> add) { addTriangle = add; }
-	virtual void draw(QPainter& painter) override;
+	virtual void draw() override;
 
 private:
 	std::shared_ptr<AddTriangle> addTriangle;

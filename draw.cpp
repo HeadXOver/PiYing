@@ -14,11 +14,7 @@
 
 void PiYingGL::draw_tool()
 {
-	QPainter painter(this);
-	painter.setRenderHint(QPainter::Antialiasing);
-	painter.setBrush(QColor(225, 0, 0, 20));
-
-	if (ch_element_tool_) ch_element_tool_->draw(painter);
+	if (ch_element_tool_) ch_element_tool_->draw();
 }
 
 void PiYingGL::draw_selected_points()
@@ -36,7 +32,7 @@ void PiYingGL::draw_selected_points()
 	glBindVertexArray(0);
 }
 
-void PiYingGL::draw_triangle_frame()
+void PiYingGL::draw_triangle_frame(bool isSkelen)
 {
 	const int currentVector = getCurrentChRow();
 	if (currentVector < 0) return;
@@ -45,7 +41,7 @@ void PiYingGL::draw_triangle_frame()
 
 	_texture_tri_shader_program->bind();
 
-	_texture_tri_shader_program->setUniformValue("is_skelen", true);
+	_texture_tri_shader_program->setUniformValue("is_skelen", isSkelen);
 	_texture_tri_shader_program->setUniformValue("trc", getViewProjMatrix());
 	_texture_tri_shader_program->setUniformValue("is_line", false);
 	glDrawElements(GL_TRIANGLES, (GLsizei)characterTriangleIndices[currentVector].size(), GL_UNSIGNED_INT, 0);
@@ -149,7 +145,7 @@ void PiYingGL::paintCharacterTexture()
 
 	glBindVertexArray(0); ////////////////////////////////////////////////////
 
-	draw_triangle_frame();
+	draw_triangle_frame(false);
 	
 	draw_tool();
 }

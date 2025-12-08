@@ -43,11 +43,15 @@ void ChElementAddRound::release(const QPointF& mouse)
 	}
 }
 
-void ChElementAddRound::draw(QPainter& painter)
+void ChElementAddRound::draw()
 {
 	if(!isPress) return;
 
 	if(radius < 6) return;
+
+	QPainter painter(&glVertReference.gl);
+	painter.setRenderHint(QPainter::Antialiasing);
+	painter.setBrush(QColor(225, 0, 0, 20));
 
 	painter.setPen(QPen(Qt::black, 3));
 	painter.drawEllipse(center, radius, radius);
@@ -103,7 +107,7 @@ void AddRoundRelease::release(const QPointF& mouse)
 	addRound->release(mouse);
 }
 
-void AddRoundDraw::draw(QPainter& painter)
+void AddRoundDraw::draw()
 {
-	addRound->draw(painter);
+	addRound->draw();
 }

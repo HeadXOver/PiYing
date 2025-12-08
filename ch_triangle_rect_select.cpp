@@ -18,9 +18,13 @@ ChTriangleRectSelect::ChTriangleRectSelect(GlVertReference& glReference) :
 	chTriangleSelect = std::make_unique<ChTriangleSelect>(glReference);
 }
 
-void ChTriangleRectSelect::draw(QPainter& painter)
+void ChTriangleRectSelect::draw()
 {
-	chTriangleSelect->draw_handle_and_selected(painter);
+	chTriangleSelect->draw_handle_and_selected();
+
+	QPainter painter(&chTriangleSelect->glVertReference.gl);
+	painter.setRenderHint(QPainter::Antialiasing);
+	painter.setBrush(QColor(225, 0, 0, 20));
 
 	if (isDraw) {
 		painter.setPen(QPen(Qt::yellow, 1));
@@ -106,9 +110,9 @@ void RectSelectTriangleEscape::escape()
 	rectSelect->chTriangleSelect->escape();
 }
 
-void RectSelectTriangleDraw::draw(QPainter& painter)
+void RectSelectTriangleDraw::draw()
 {
-	rectSelect->draw(painter);
+	rectSelect->draw();
 }
 
 void RectSelectTriangleEnter::enter()

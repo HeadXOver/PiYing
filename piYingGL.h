@@ -97,7 +97,7 @@ public:
 	void viewRotationControl(const QPointF& mouse);
 	void draw_tool();
 	void draw_selected_points();
-	void draw_triangle_frame();
+	void draw_triangle_frame(bool isSkelen);
 	void draw_rectangle(float cx, float cy, float width, float height);
 	void draw_group_rectangle(int groupIndex);
 	void update_ch_verts();

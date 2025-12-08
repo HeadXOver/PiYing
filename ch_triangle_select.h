@@ -18,7 +18,7 @@ struct ChTriangleSelect final
 	void escape();
 	void enter();
 	void deleteElement();
-	void draw_handle_and_selected(QPainter& painter);
+	void draw_handle_and_selected();
 	void changeEditMode();
 	void moveHandle(const QPointF& mouse);
 	void affirmHandle();

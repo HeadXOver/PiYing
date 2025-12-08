@@ -15,7 +15,7 @@ struct ChTriangleRectSelect final
 	ChTriangleRectSelect(GlVertReference& glReference);
 	~ChTriangleRectSelect() = default;
 
-	void draw(QPainter& painter);
+	void draw();
 	void clickPos(const QPointF& mouse);
 	void movePos(const QPointF& mouse);
 	void releasePos(const QPointF& mouse);
@@ -98,7 +98,7 @@ class RectSelectTriangleDraw final : public DrawBehavior
 {
 public:
 	RectSelectTriangleDraw(std::shared_ptr<ChTriangleRectSelect> rect_select) { rectSelect = rect_select; }
-	virtual void draw(QPainter& painter) override;
+	virtual void draw() override;
 
 private:
 	std::shared_ptr<ChTriangleRectSelect> rectSelect;

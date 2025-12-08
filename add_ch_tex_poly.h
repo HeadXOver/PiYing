@@ -70,7 +70,7 @@ class AddPolyDraw final : public DrawBehavior
 {
 public:
 	AddPolyDraw(std::shared_ptr<AddChTexPoly> add) { addChTexPoly = add; }
-	virtual void draw(QPainter& painter) override;
+	virtual void draw() override;
 
 private:
 	std::shared_ptr<AddChTexPoly> addChTexPoly;

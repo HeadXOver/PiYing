@@ -149,9 +149,9 @@ void ChElementTool::move(const QPointF& mouse)
 	if (moveBehavior) moveBehavior->mouseMove(mouse);
 }
 
-void ChElementTool::draw(QPainter& painter)
+void ChElementTool::draw()
 {
-	if(drawBehavior) drawBehavior->draw(painter);
+	if(drawBehavior) drawBehavior->draw();
 }
 
 void ChElementTool::escape()

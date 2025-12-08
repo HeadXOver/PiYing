@@ -34,6 +34,6 @@ struct ReleaseBehavior {
 };
 
 struct DrawBehavior {
-    virtual void draw(QPainter& painter) = 0;
+    virtual void draw() = 0;
     virtual ~DrawBehavior() = default;
 };

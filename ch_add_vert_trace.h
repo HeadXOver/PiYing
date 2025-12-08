@@ -17,7 +17,7 @@ struct ChAddVertTrace final
 	void click(const QPointF& mouse);
 	void move(const QPointF& mouse);
 	void release(const QPointF& mouse);
-	void draw(QPainter& painter);
+	void draw();
 
 	int current_index = -1;
 	bool presse_on_vert = false;
@@ -68,7 +68,7 @@ class AddVertTraceDraw final : public DrawBehavior
 {
 public:
 	AddVertTraceDraw(std::shared_ptr<ChAddVertTrace> add) : addTrace(add) {}
-	virtual void draw(QPainter& painter) override;
+	virtual void draw() override;
 
 private:
 	std::shared_ptr<ChAddVertTrace> addTrace;

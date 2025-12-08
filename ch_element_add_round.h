@@ -16,7 +16,7 @@ struct ChElementAddRound final
 	void click(const QPointF& mouse);
 	void move(const QPointF& mouse);
 	void release(const QPointF& mouse);
-	void draw(QPainter& painter);
+	void draw();
 
 	void addRoundPoly(const int edgeCount);
 
@@ -73,7 +73,7 @@ class AddRoundDraw final : public DrawBehavior
 {
 public:
 	AddRoundDraw(std::shared_ptr<ChElementAddRound> add) : addRound(add) {}
-	virtual void draw(QPainter& painter) override;
+	virtual void draw() override;
 
 private:
 	std::shared_ptr<ChElementAddRound> addRound;

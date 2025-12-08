@@ -23,9 +23,13 @@ void ChElementLibreSelect::enter()
 	chElementSelect->enter();
 }
 
-void ChElementLibreSelect::draw(QPainter& painter)
+void ChElementLibreSelect::draw()
 {
-	chElementSelect->draw_handle_and_selected(painter);
+	chElementSelect->draw_handle_and_selected();
+
+	QPainter painter(&chElementSelect->glVertReference.gl);
+	painter.setRenderHint(QPainter::Antialiasing);
+	painter.setBrush(QColor(225, 0, 0, 20));
 
 	if (!polygon.isEmpty()) {
 		if (drawing) {
@@ -137,9 +141,9 @@ void LibreSelectEscape::escape()
 	libreSelect->chElementSelect->escape();
 }
 
-void LibreSelectDraw::draw(QPainter& painter)
+void LibreSelectDraw::draw()
 {
-	libreSelect->draw(painter);
+	libreSelect->draw();
 }
 
 void LibreSelectEnter::enter()

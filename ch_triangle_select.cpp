@@ -100,11 +100,9 @@ void ChTriangleSelect::deleteElement()
     glVertReference.gl.update_ch_verts();
 }
 
-void ChTriangleSelect::draw_handle_and_selected(QPainter& painter)
+void ChTriangleSelect::draw_handle_and_selected()
 {
     if (selected_trangle->size() == 0) return;
-
-    painter.setBrush(QColor(0, 0, 0, 0));
 
     // 计算中心点
     PointVectorLayer& pointLayer = *(glVertReference.pointLayer);
@@ -119,6 +117,10 @@ void ChTriangleSelect::draw_handle_and_selected(QPainter& painter)
 
 /// 以下区域代码，绘制控制柄，只与 dHandleCenterPoint 有关，所以折叠
 #pragma region [draw handle] 
+
+    QPainter painter(&glVertReference.gl);
+    painter.setRenderHint(QPainter::Antialiasing);
+    painter.setBrush(QColor(0, 0, 0, 0));
 
     // 绘制圆
     painter.setPen(QPen(Qt::black, 4));

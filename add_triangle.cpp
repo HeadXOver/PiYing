@@ -133,11 +133,11 @@ void AddTriangle::click(const QPointF& mouseOri)
 	}
 }
 
-void AddTriangleDraw::draw(QPainter& painter) {
-	addTriangle->draw(painter);
+void AddTriangleDraw::draw() {
+	addTriangle->draw();
 }
 
-void AddTriangle::draw(QPainter& painter)
+void AddTriangle::draw()
 {
 	if (numInd == 0 && numVert == 0) return;
 
@@ -159,6 +159,8 @@ void AddTriangle::draw(QPainter& painter)
 		toDraw.push_back(first);
 		toDraw.push_back(pointVector(firstIndex));
 	}
+
+	QPainter painter(&glVertReference.gl);
 
 	for (QPointF& p : toDraw) {
 		p = glVertReference.gl.mapViewProjMatrix(p);

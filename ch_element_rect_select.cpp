@@ -18,9 +18,13 @@ ChElementRectSelect::ChElementRectSelect(GlVertReference& glReference) :
 	chElementSelect = std::make_unique<ChElementSelect>(glReference);
 }
 
-void ChElementRectSelect::draw(QPainter& painter)
+void ChElementRectSelect::draw()
 {
-	chElementSelect->draw_handle_and_selected(painter);
+	chElementSelect->draw_handle_and_selected();
+
+	QPainter painter(&chElementSelect->glVertReference.gl);
+	painter.setRenderHint(QPainter::Antialiasing);
+	painter.setBrush(QColor(225, 0, 0, 20));
 
 	if (isDraw) {
 		painter.setPen(QPen(Qt::yellow, 1));
@@ -106,9 +110,9 @@ void RectSelectEscape::escape()
 	rectSelect->chElementSelect->escape();
 }
 
-void RectSelectDraw::draw(QPainter& painter)
+void RectSelectDraw::draw()
 {
-	rectSelect->draw(painter);
+	rectSelect->draw();
 }
 
 void RectSelectEnter::enter()
