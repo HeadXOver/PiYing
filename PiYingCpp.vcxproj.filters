@@ -75,6 +75,9 @@
     <Filter Include="Source Files\PiYingQObject\controlSlide">
       <UniqueIdentifier>{424e17ba-20f1-4c6b-b386-474e4e29da49}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\global">
+      <UniqueIdentifier>{9bdfed59-a7b9-40e7-bc83-5090b1d77a5f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <QtRcc Include="PiYing.qrc">
@@ -342,12 +345,6 @@
     <ClInclude Include="scale_trans.h">
       <Filter>Header Files\PiYingElememt</Filter>
     </ClInclude>
-    <ClInclude Include="vert_groups.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="vert_group.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="part.h">
       <Filter>Header Files\PiYingElememt</Filter>
     </ClInclude>
@@ -362,6 +359,15 @@
     </ClInclude>
     <ClInclude Include="selected_triangle.h">
       <Filter>Header Files\PiYingElememt</Filter>
+    </ClInclude>
+    <ClInclude Include="vert_groups.h">
+      <Filter>Header Files\PiYingElememt</Filter>
+    </ClInclude>
+    <ClInclude Include="vert_group.h">
+      <Filter>Header Files\PiYingElememt</Filter>
+    </ClInclude>
+    <ClInclude Include="global_objects.h">
+      <Filter>Header Files\global</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

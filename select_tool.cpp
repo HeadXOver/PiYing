@@ -1,5 +1,6 @@
 #include "PiYing.h"
 #include "PiYingGL.h"
+#include "global_objects.h"
 #include "tool_button.h"
 #include "ui_PiYing.h"
 

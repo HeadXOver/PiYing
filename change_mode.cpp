@@ -1,5 +1,6 @@
 #include "PiYing.h"
 #include "PiYingGL.h"
+#include "global_objects.h"
 #include "tool_button.h"
 #include "ctrlSlideWidget.h"
 #include "time_line_gl.h"
