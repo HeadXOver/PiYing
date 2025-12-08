@@ -276,18 +276,12 @@ void ChElementSelect::click_select(const QPointF& mouse)
 void ChElementSelect::update_selected_to_draw()
 {
     const SelectedPoints& selectedPoints = *selected_points;
-    const PointVectorLayer& pointVector = *glVertReference.pointLayer;
 
     std::vector<float> selectedPointsFloat;
     selectedPointsFloat.reserve(selectedPoints.size() * 2);
 
-    int index;
     for (int i = 0; i < selectedPoints.size(); i++) {
-        index = selectedPoints[i];
-        const QPointF& selectPoint =
-            edit_skelen ?
-            pointVector[index] :
-            pointVector(index);
+        const QPointF& selectPoint = glVertReference.pointLayer->get(selectedPoints[i], edit_skelen);
 
         selectedPointsFloat.push_back(selectPoint.x());
         selectedPointsFloat.push_back(selectPoint.y());

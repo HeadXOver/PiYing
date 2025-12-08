@@ -17,6 +17,11 @@ const QPointF PointVectorLayer::operator()(int index) const
 	return point_vector[index + index + 1];
 }
 
+const QPointF PointVectorLayer::get(int index, bool isSkelen) const
+{
+	return point_vector[index + index + (isSkelen ? 0 : 1)];
+}
+
 void PointVectorLayer::push_back(const QPointF& point) 
 {
 	point_vector.push_back(point);

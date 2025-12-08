@@ -289,18 +289,12 @@ void ChTriangleSelect::click_select(const QPointF& mouse)
 void ChTriangleSelect::update_selected_to_draw()
 {
     const SelectedTriangle& selectedPoints = *selected_trangle;
-    const PointVectorLayer& pointVector = *glVertReference.pointLayer;
 
     std::vector<float> selectedPointsFloat;
     selectedPointsFloat.reserve(selectedPoints.size() * 2);
 
-    int index;
     for (int i = 0; i < selectedPoints.size(); i++) {
-        index = selectedPoints[i];
-        const QPointF& selectPoint =
-            edit_skelen ?
-            pointVector[index] :
-            pointVector(index);
+        const QPointF& selectPoint = glVertReference.pointLayer->get(selectedPoints[i], edit_skelen);
 
         selectedPointsFloat.push_back(selectPoint.x());
         selectedPointsFloat.push_back(selectPoint.y());
