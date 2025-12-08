@@ -117,6 +117,9 @@ void ChTriangleSelect::draw_handle_and_selected(QPainter& painter)
 
     dHandleCenterPoint = glVertReference.gl.mapViewProjMatrix(handleCenterPoint);
 
+/// 以下区域代码，绘制控制柄，只与 dHandleCenterPoint 有关，所以折叠
+#pragma region [draw handle] 
+
     // 绘制圆
     painter.setPen(QPen(Qt::black, 4));
     painter.drawEllipse(dHandleCenterPoint, ROTATEHANDLE_RADIUS, ROTATEHANDLE_RADIUS);
@@ -148,6 +151,8 @@ void ChTriangleSelect::draw_handle_and_selected(QPainter& painter)
     painter.drawPoint(dHandleCenterPoint.x() + SCALEHANDLE_DISTANCE, dHandleCenterPoint.y());
     painter.drawPoint(dHandleCenterPoint.x() + ROTATEHANDLE_RADIUS, dHandleCenterPoint.y() + ROTATEHANDLE_RADIUS);
 
+#pragma endregion 
+
     // 绘制选中点
     glVertReference.gl.draw_selected_points();
 }
@@ -177,6 +182,7 @@ void ChTriangleSelect::moveHandle(const QPointF& mouse)
 
     PointVectorLayer& pointLayer = *(glVertReference.pointLayer);
 
+    /// 根据 editMode 进行变换
     switch (editMode) {
     case ChElementEditMode::Move: {
         QPointF toMove = glVertReference.gl.GLViewProjMatrixInvert(mouse) - glVertReference.gl.GLViewProjMatrixInvert(lastPos);

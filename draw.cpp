@@ -38,15 +38,19 @@ void PiYingGL::draw_selected_points()
 
 void PiYingGL::draw_ch_applied_vert()
 {
-	const int currentVector = getCurrentChRow();
-	if (currentVector < 0) return;
+	draw_triangle_frame();
 
 	QPainter painter(this);
 	painter.setRenderHint(QPainter::Antialiasing);
 	painter.setBrush(QColor(225, 0, 0, 20));
 
-	int i = getCurrentChRow();
-	if (i < 0) return;
+	if (ch_element_tool_) ch_element_tool_->draw(painter);
+}
+
+void PiYingGL::draw_triangle_frame()
+{
+	const int currentVector = getCurrentChRow();
+	if (currentVector < 0) return;
 
 	glBindVertexArray(ttVAO); ////////////////////////////////////////////////////
 
@@ -55,16 +59,14 @@ void PiYingGL::draw_ch_applied_vert()
 	_texture_tri_shader_program->setUniformValue("is_skelen", true);
 	_texture_tri_shader_program->setUniformValue("trc", getViewProjMatrix());
 	_texture_tri_shader_program->setUniformValue("is_line", false);
-	glDrawElements(GL_TRIANGLES, (GLsizei)characterTriangleIndices[i].size(), GL_UNSIGNED_INT, 0);
+	glDrawElements(GL_TRIANGLES, (GLsizei)characterTriangleIndices[currentVector].size(), GL_UNSIGNED_INT, 0);
 
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);   // 把填充改成“线框”
 	_texture_tri_shader_program->setUniformValue("is_line", true);
-	glDrawElements(GL_TRIANGLES, (GLsizei)characterTriangleIndices[i].size(), GL_UNSIGNED_INT, 0);
+	glDrawElements(GL_TRIANGLES, (GLsizei)characterTriangleIndices[currentVector].size(), GL_UNSIGNED_INT, 0);
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
 	glBindVertexArray(0); ////////////////////////////////////////////////////
-
-	if (ch_element_tool_) ch_element_tool_->draw(painter);
 }
 
 void PiYingGL::draw_rectangle(float cx, float cy, float width, float height)
@@ -139,6 +141,7 @@ void PiYingGL::paintBackgrounds()
 
 void PiYingGL::paintCharacterTexture()
 {
+	/// 绘制标准视图框
 	draw_view_rectangle();
 
 	int i = getCurrentChRow();
@@ -155,21 +158,9 @@ void PiYingGL::paintCharacterTexture()
 
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
-	glBindVertexArray(ttVAO); ////////////////////////////////////////////////////
-
-	_texture_tri_shader_program->bind();
-
-	_texture_tri_shader_program->setUniformValue("is_skelen", false);
-	_texture_tri_shader_program->setUniformValue("trc", getViewProjMatrix());
-	_texture_tri_shader_program->setUniformValue("is_line", false);
-	glDrawElements(GL_TRIANGLES, (GLsizei)characterTriangleIndices[i].size(), GL_UNSIGNED_INT, 0);
-
-	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);   // 把填充改成“线框”
-	_texture_tri_shader_program->setUniformValue("is_line", true);
-	glDrawElements(GL_TRIANGLES, (GLsizei)characterTriangleIndices[i].size(), GL_UNSIGNED_INT, 0);
-	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-
 	glBindVertexArray(0); ////////////////////////////////////////////////////
+
+	draw_triangle_frame();
 	
 	drawChEditVert(i);
 }

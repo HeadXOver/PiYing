@@ -16,6 +16,7 @@ public:
 	const QList<QPointF>& vert() const { return lastVertPos; }
 
 	int size() const { return selectedIndex.size(); }
+	int n_triangle() const { return selectedIndex.size() / 3; }
 
 	unsigned int operator[](int index) const { return selectedIndex[index]; }
 	const QPointF& getVert(int index) const;
