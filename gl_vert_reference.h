@@ -22,7 +22,6 @@ struct GlVertReference final {
 
 	std::unique_ptr<PointVectorLayer> pointLayer;
 	std::vector<unsigned int>& glIndex;
-	PiYingGL& gl;
 
 private:
 	void addChVert(const QPointF& point);

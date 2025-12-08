@@ -3,6 +3,7 @@
 #include "ch_triangle_select.h"
 #include "gl_vert_reference.h"
 #include "piYingGL.h"
+#include "global_objects.h"
 #include "selected_triangle.h"
 #include "KeyboardStateWin.h"
 #include "point_vector_layer.h"
@@ -13,7 +14,7 @@
 #include <qmessagebox>
 
 ChTriangleRectSelect::ChTriangleRectSelect(GlVertReference& glReference) :
-	edit_skelen(glReference.gl.editMode == EditMode::characterSkeleton)
+	edit_skelen(piYingGL->editMode == EditMode::characterSkeleton)
 {
 	chTriangleSelect = std::make_unique<ChTriangleSelect>(glReference);
 }
@@ -22,7 +23,7 @@ void ChTriangleRectSelect::draw()
 {
 	chTriangleSelect->draw_handle_and_selected();
 
-	QPainter painter(&chTriangleSelect->glVertReference.gl);
+	QPainter painter(piYingGL);
 	painter.setRenderHint(QPainter::Antialiasing);
 	painter.setBrush(QColor(225, 0, 0, 20));
 
@@ -43,7 +44,7 @@ void ChTriangleRectSelect::clickPos(const QPointF& mouseOri)
 		return;
 	}
 
-	const QPointF mouse = chTriangleSelect->glVertReference.gl.GLViewProjMatrixInvert(mouseOri);
+	const QPointF mouse = piYingGL->GLViewProjMatrixInvert(mouseOri);
 
 	chTriangleSelect->click_select(mouse);
 }
@@ -70,7 +71,7 @@ void ChTriangleRectSelect::releasePos(const QPointF& mouse)
 
 	PointVectorLayer& pointVector = *(chTriangleSelect->glVertReference.pointLayer);
 	for (unsigned int i = 0; i < pointVector.size(); i++) {
-		if (QRectF(chTriangleSelect->lastPos, mouse).contains(chTriangleSelect->glVertReference.gl.mapViewProjMatrix(
+		if (QRectF(chTriangleSelect->lastPos, mouse).contains(piYingGL->mapViewProjMatrix(
 			edit_skelen ?
 			pointVector[i] :
 			pointVector(i))

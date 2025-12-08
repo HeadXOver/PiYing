@@ -3,6 +3,7 @@
 #include "gl_vert_reference.h"
 #include "ch_element_select.h"
 #include "piYingGL.h"
+#include "global_objects.h"
 #include "SelectedPoints.h"
 #include "KeyboardStateWin.h"
 #include "point_vector_layer.h"
@@ -13,7 +14,7 @@
 #include <qpointf>
 
 ChElementLibreSelect::ChElementLibreSelect(GlVertReference& glReference) :
-	edit_skelen(glReference.gl.editMode == EditMode::characterSkeleton)
+	edit_skelen(piYingGL->editMode == EditMode::characterSkeleton)
 {
 	chElementSelect = std::make_unique<ChElementSelect>(glReference);
 }
@@ -27,7 +28,7 @@ void ChElementLibreSelect::draw()
 {
 	chElementSelect->draw_handle_and_selected();
 
-	QPainter painter(&chElementSelect->glVertReference.gl);
+	QPainter painter(piYingGL);
 	painter.setRenderHint(QPainter::Antialiasing);
 	painter.setBrush(QColor(225, 0, 0, 20));
 
@@ -35,7 +36,7 @@ void ChElementLibreSelect::draw()
 		if (drawing) {
 			painter.setPen(QPen(Qt::yellow, 1));
 
-			auto mapper = [this](const QPointF& p) { return chElementSelect->glVertReference.gl.mapViewProjMatrix(p); };
+			auto mapper = [this](const QPointF& p) { return piYingGL->mapViewProjMatrix(p); };
 
 			QPolygonF screenPoly;
 			screenPoly.reserve(polygon.size());
@@ -64,7 +65,7 @@ void ChElementLibreSelect::clickPos(const QPointF& mouseOri)
 		return;
 	}
 
-	const QPointF mouse = chElementSelect->glVertReference.gl.getViewProjMatrixInvert().map(chElementSelect->glVertReference.gl.mapToGL(mouseOri));
+	const QPointF mouse = piYingGL->getViewProjMatrixInvert().map(piYingGL->mapToGL(mouseOri));
 
 	polygon << mouse;
 
@@ -84,7 +85,7 @@ void ChElementLibreSelect::movePos(const QPointF& mouse)
 
 	drawing = true;
 
-	QPointF mapedMouse = chElementSelect->glVertReference.gl.GLViewProjMatrixInvert(mouse);
+	QPointF mapedMouse = piYingGL->GLViewProjMatrixInvert(mouse);
 	if (!polygon.isEmpty() && polygon.last() == mapedMouse) return;
 
 	polygon << mapedMouse;

@@ -2,6 +2,7 @@
 #include "gl_vert_reference.h"
 #include "point_vector_layer.h"
 #include "piYingGL.h"
+#include "global_objects.h"
 
 #include <qmessagebox>
 #include <qpainter>
@@ -16,12 +17,12 @@ ChAddVertTrace::~ChAddVertTrace()
 
 void ChAddVertTrace::click(const QPointF& mouseOri)
 {
-	const QPointF mouse = glVertReference.gl.GLViewProjMatrixInvert(mouseOri);
+	const QPointF mouse = piYingGL->GLViewProjMatrixInvert(mouseOri);
     const PointVectorLayer& pointVector = *(glVertReference.pointLayer);
     QPointF existPoint;
     for (unsigned int i = 0; i < pointVector.size(); i++) {
         existPoint = pointVector[i];
-        if (QLineF(existPoint, mouse).length() < 0.02f / glVertReference.gl.viewScale.value()) {
+        if (QLineF(existPoint, mouse).length() < 0.02f / piYingGL->viewScale.value()) {
             current_index = i;
 			presse_on_vert = true;
 			polygon << existPoint;
@@ -37,7 +38,7 @@ void ChAddVertTrace::move(const QPointF& mouse)
 {
 	if(!presse_on_vert) return;
 
-	QPointF mapedMouse = glVertReference.gl.GLViewProjMatrixInvert(mouse);
+	QPointF mapedMouse = piYingGL->GLViewProjMatrixInvert(mouse);
 	if (polygon.isEmpty() || polygon.last() != mapedMouse) polygon << mapedMouse;
 }
 
@@ -51,7 +52,7 @@ void ChAddVertTrace::release(const QPointF& mouse)
 		return;
 	}
 
-	glVertReference.gl.add_trace(current_index, polygon);
+	piYingGL->add_trace(current_index, polygon);
 
 	current_index = -1;
 	polygon.clear();
@@ -63,9 +64,9 @@ void ChAddVertTrace::draw()
 
 	const PointVectorLayer& pointLayer = *(glVertReference.pointLayer);
 
-	QPointF selectPoint = glVertReference.gl.mapViewProjMatrix(pointLayer[current_index]);
+	QPointF selectPoint = piYingGL->mapViewProjMatrix(pointLayer[current_index]);
 
-	QPainter painter(&glVertReference.gl);
+	QPainter painter(piYingGL);
 	painter.setPen(QPen(Qt::black, 8));
 	painter.drawPoint(selectPoint);
 	painter.setPen(QPen(Qt::red, 6));
@@ -79,7 +80,7 @@ void ChAddVertTrace::draw()
 	screenPoly.reserve(polygon.size());
 	std::transform(polygon.cbegin(), polygon.cend(),
 		std::back_inserter(screenPoly),
-		[this](const QPointF& p) { return glVertReference.gl.mapViewProjMatrix(p); }
+		[this](const QPointF& p) { return piYingGL->mapViewProjMatrix(p); }
 	);
 
 	painter.drawPolyline(screenPoly);
