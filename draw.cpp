@@ -12,7 +12,7 @@
 #include <qopengltexture>
 #include <QOpenGLShaderProgram.h>
 
-void PiYingGL::drawChEditVert(int currentVector)
+void PiYingGL::draw_tool()
 {
 	QPainter painter(this);
 	painter.setRenderHint(QPainter::Antialiasing);
@@ -34,17 +34,6 @@ void PiYingGL::draw_selected_points()
 	_selected_vert_shader_program->setUniformValue("is_out", false);
 	glDrawArrays(GL_POINTS, 0, n_points);
 	glBindVertexArray(0);
-}
-
-void PiYingGL::draw_ch_applied_vert()
-{
-	draw_triangle_frame();
-
-	QPainter painter(this);
-	painter.setRenderHint(QPainter::Antialiasing);
-	painter.setBrush(QColor(225, 0, 0, 20));
-
-	if (ch_element_tool_) ch_element_tool_->draw(painter);
 }
 
 void PiYingGL::draw_triangle_frame()
@@ -162,7 +151,7 @@ void PiYingGL::paintCharacterTexture()
 
 	draw_triangle_frame();
 	
-	drawChEditVert(i);
+	draw_tool();
 }
 
 void PiYingGL::paint_applied_texture()

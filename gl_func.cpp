@@ -143,12 +143,14 @@ void PiYingGL::paintGL() {
 			_ch_tool_state != CharacterToolState::RectSelectTriangle&&
 			_ch_tool_state != CharacterToolState::LibreSelectTriangle
 			) return;
-		draw_ch_applied_vert();
+		draw_triangle_frame();
+		draw_tool();
 	}
 	else if (editMode == EditMode::controlSlide) {
 		paint_applied_texture();
 		if (_ch_tool_state != CharacterToolState::AddVertTrace) return;
-		draw_ch_applied_vert();
+		draw_triangle_frame();
+		draw_tool();
 	}
 	else return;
 
