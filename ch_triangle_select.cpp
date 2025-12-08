@@ -30,7 +30,7 @@ ChTriangleSelect::~ChTriangleSelect()
 
 void ChTriangleSelect::escape()
 {
-    if (selected_trangle->size() > 0) selected_trangle->removeLast();
+    if (selected_trangle->n_triangle() > 0) selected_trangle->remove_last_triangle();
 }
 
 void ChTriangleSelect::enter()

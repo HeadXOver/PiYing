@@ -29,7 +29,7 @@ public:
 
 	void clear() { selectedIndex.clear(); lastVertPos.clear(); }
 	void append(const unsigned int* ind);
-	void removeLast() { selectedIndex.removeLast(); lastVertPos.removeLast(); }
+	void remove_last_triangle();
 	void affirmVert(bool edit_skelen);
 
 private:
