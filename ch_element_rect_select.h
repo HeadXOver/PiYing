@@ -19,7 +19,6 @@ struct ChElementRectSelect final
 	void clickPos(const QPointF& mouse);
 	void movePos(const QPointF& mouse);
 	void releasePos(const QPointF& mouse);
-	void enter();
 
 	std::unique_ptr<ChElementSelect> chElementSelect;
 	const bool edit_skelen{ false };
@@ -105,15 +104,5 @@ private:
 };
 
 ///////////////////////////////////////////////////
-
-class RectSelectEnter final : public EnterBehavior
-{
-public:
-	RectSelectEnter(std::shared_ptr<ChElementRectSelect> rect_select) { rectSelect = rect_select; }
-	virtual void enter() override;
-
-private:
-	std::shared_ptr<ChElementRectSelect> rectSelect;
-};
 
  

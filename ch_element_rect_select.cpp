@@ -81,11 +81,6 @@ void ChElementRectSelect::releasePos(const QPointF& mouse)
 	chElementSelect->update_selected_to_draw();
 }
 
-void ChElementRectSelect::enter()
-{
-	chElementSelect->enter();
-}
-
 void RectSelectClick::click(const QPointF& point)
 {
 	rectSelect->clickPos(point);
@@ -114,9 +109,4 @@ void RectSelectEscape::escape()
 void RectSelectDraw::draw()
 {
 	rectSelect->draw();
-}
-
-void RectSelectEnter::enter()
-{
-	rectSelect->enter();
 }

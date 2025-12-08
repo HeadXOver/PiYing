@@ -112,13 +112,3 @@ private:
 
 ///////////////////////////////////////////////////
 
-class LibreSelectEnter final : public EnterBehavior
-{
-public:
-	LibreSelectEnter(std::shared_ptr<ChElementLibreSelect> select) { libreSelect = select; }
-	virtual void enter() override;
-
-private:
-	std::shared_ptr<ChElementLibreSelect> libreSelect;
-};
-

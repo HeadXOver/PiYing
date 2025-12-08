@@ -19,11 +19,6 @@ ChElementLibreSelect::ChElementLibreSelect(GlVertReference& glReference) :
 	chElementSelect = std::make_unique<ChElementSelect>(glReference);
 }
 
-void ChElementLibreSelect::enter()
-{
-	chElementSelect->enter();
-}
-
 void ChElementLibreSelect::draw()
 {
 	chElementSelect->draw_handle_and_selected();
@@ -143,9 +138,4 @@ void LibreSelectEscape::escape()
 void LibreSelectDraw::draw()
 {
 	libreSelect->draw();
-}
-
-void LibreSelectEnter::enter()
-{
-	libreSelect->enter();
 }

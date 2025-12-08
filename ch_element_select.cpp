@@ -32,13 +32,6 @@ void ChElementSelect::escape()
     if (selected_points->size() > 0) selected_points->removeLast(); 
 }
 
-void ChElementSelect::enter()
-{
-    if (selected_points->size() <= 1) return;
-
-    //glVertReference.gl.add_part(selected_points->index());
-}
-
 void ChElementSelect::deleteElement()
 {
     std::vector<unsigned int>& idx = glVertReference.glIndex;

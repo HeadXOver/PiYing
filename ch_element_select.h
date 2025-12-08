@@ -15,7 +15,6 @@ struct ChElementSelect final
 	~ChElementSelect();
 
 	void escape();
-	void enter();
 	void deleteElement();
 	void draw_handle_and_selected();
 	void changeEditMode();
