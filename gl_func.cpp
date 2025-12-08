@@ -83,6 +83,8 @@ void PiYingGL::initializeGL()
 
 	glGenVertexArrays(1, &ttVAO);
 
+	glGenBuffers(1, &ttEBO);
+
 	glBindVertexArray(ttVAO);
 	glBindBuffer(GL_ARRAY_BUFFER, chVBO);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, chEBO);

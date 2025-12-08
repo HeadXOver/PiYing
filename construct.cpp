@@ -128,6 +128,7 @@ PiYingGL::~PiYingGL()
 	if (chVAO) glDeleteVertexArrays(1, &chVAO);
 	if (chVBO) glDeleteBuffers(1, &chVBO);
 	if (chEBO) glDeleteBuffers(1, &chEBO);
+	if (chEBO) glDeleteBuffers(1, &ttEBO);
 
 	if (ttVAO) glDeleteVertexArrays(1, &ttVAO);
 

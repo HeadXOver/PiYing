@@ -28,16 +28,25 @@ void PiYingGL::draw_selected_points(int nSelectedPoint)
 
 void PiYingGL::draw_selected_triangle(int nSelectedPoint)
 {
-	glBindVertexArray(svVAO);
-	glBindBuffer(GL_ARRAY_BUFFER, svVBO);
-	_selected_vert_shader_program->bind();
+	const int currentVector = getCurrentChRow();
+	if (currentVector < 0) return;
 
-	_selected_vert_shader_program->setUniformValue("trc", getViewProjMatrix());
-	_selected_vert_shader_program->setUniformValue("is_out", true);
-	glDrawArrays(GL_POINTS, 0, nSelectedPoint);
-	_selected_vert_shader_program->setUniformValue("is_out", false);
-	glDrawArrays(GL_POINTS, 0, nSelectedPoint);
-	glBindVertexArray(0);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	glBindVertexArray(ttVAO); ////////////////////////////////////////////////////
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ttEBO);
+
+	_texture_tri_shader_program->bind();
+
+	_texture_tri_shader_program->setUniformValue("is_skelen", editMode == EditMode::characterSkeleton);
+	_texture_tri_shader_program->setUniformValue("trc", getViewProjMatrix());
+	_texture_tri_shader_program->setUniformValue("is_line", false);
+	_texture_tri_shader_program->setUniformValue("is_selected", true);
+	glDrawElements(GL_TRIANGLES, nSelectedPoint * 3, GL_UNSIGNED_INT, 0);
+
+	glBindVertexArray(0); ////////////////////////////////////////////////////
 }
 
 void PiYingGL::draw_triangle_frame(bool isSkelen)
@@ -47,7 +56,6 @@ void PiYingGL::draw_triangle_frame(bool isSkelen)
 
 	glBindVertexArray(ttVAO); ////////////////////////////////////////////////////
 
-	glBindBuffer(GL_ARRAY_BUFFER, chVBO);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, chEBO);
 
 	_texture_tri_shader_program->bind();
@@ -213,5 +221,14 @@ void PiYingGL::update_selected_verts(const std::vector<float>& selected_points)
 	makeCurrent();
 	glBindBuffer(GL_ARRAY_BUFFER, svVBO);
 	glBufferData(GL_ARRAY_BUFFER, selected_points.size() * sizeof(float), selected_points.data(), GL_DYNAMIC_DRAW);
+	doneCurrent();
+}
+
+void PiYingGL::update_selected_triangle(const unsigned int* data, int size)
+{
+	makeCurrent();
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ttEBO);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, size * sizeof(unsigned int), data, GL_DYNAMIC_DRAW);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	doneCurrent();
 }

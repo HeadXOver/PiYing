@@ -49,7 +49,7 @@ void ChTriangleSelect::deleteElement()
 
     std::vector<bool> killVert(nVert, false);
     std::vector<bool> killTri(nTri, false);
-    for (unsigned v : selected_trangle->index()) killVert[v] = true;
+    for (unsigned v : selected_trangle->index_list()) killVert[v] = true;
 
     std::vector<unsigned> refCount(nVert, 0);
     for (size_t t = 0; t < nTri; ++t) {
@@ -108,7 +108,7 @@ void ChTriangleSelect::draw_handle_and_selected()
     // 计算中心点
     PointVectorLayer& pointLayer = *(glVertReference.pointLayer);
     handleCenterPoint = QPointF();
-    for (unsigned int i : selected_trangle->index()) {
+    for (unsigned int i : selected_trangle->index_list()) {
         handleCenterPoint += edit_skelen ? pointLayer[i] : pointLayer(i);
     }
 
@@ -157,7 +157,7 @@ void ChTriangleSelect::draw_handle_and_selected()
 #pragma endregion 
 
     // 绘制选中点
-    piYingGL->draw_selected_triangle(selected_trangle->size());
+    piYingGL->draw_selected_triangle(selected_trangle->n_triangle());
 }
 
 void ChTriangleSelect::changeEditMode()
@@ -288,21 +288,5 @@ void ChTriangleSelect::click_select(const QPointF& mouse)
 
 void ChTriangleSelect::update_selected_to_draw()
 {
-    const SelectedTriangle& selectedPoints = *selected_trangle;
-
-    std::vector<float> selectedPointsFloat;
-    selectedPointsFloat.reserve(selectedPoints.size() * 2);
-
-    for (int i = 0; i < selectedPoints.size(); i++) {
-        const QPointF& selectPoint = glVertReference.pointLayer->get(selectedPoints[i], edit_skelen);
-
-        selectedPointsFloat.push_back(selectPoint.x());
-        selectedPointsFloat.push_back(selectPoint.y());
-    }
-
-    piYingGL->update_selected_verts(selectedPointsFloat);
-}
-
-void ChTriangleSelect::update_selected_triangle_to_draw()
-{
+    piYingGL->update_selected_triangle(selected_trangle->index_data(), selected_trangle->size());
 }

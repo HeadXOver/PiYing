@@ -101,7 +101,8 @@ public:
 	void draw_rectangle(float cx, float cy, float width, float height);
 	void draw_group_rectangle(int groupIndex);
 	void update_ch_verts();
-	void update_selected_verts(const std::vector<float>& selected_points);
+	void update_selected_verts(const std::vector<float>& selectedPoints);
+	void update_selected_triangle(const unsigned int* data, int size);
 	void add_trace(int index, const QPolygonF& polygon);
 	void add_part(const QList<unsigned int>& indices);
 
@@ -153,7 +154,7 @@ private:
 
 	unsigned int bgVAO = 0, bgVBO = 0, bgEBO = 0;
 	unsigned int chVAO = 0, chVBO = 0, chEBO = 0;
-	unsigned int ttVAO = 0;
+	unsigned int ttVAO = 0, ttEBO;
 	unsigned int svVAO = 0, svVBO = 0;
 	unsigned int rtVAO = 0, rtVBO = 0;
 
