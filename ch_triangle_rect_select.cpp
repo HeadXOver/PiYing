@@ -8,6 +8,7 @@
 #include "KeyboardStateWin.h"
 #include "point_vector_layer.h"
 #include "enum_select_handle_mode.h"
+#include "cus_func_zone.h"
 
 #include <qpainter>
 #include <qpointf>
@@ -51,10 +52,9 @@ void ChTriangleRectSelect::clickPos(const QPointF& mouseOri)
 
 void ChTriangleRectSelect::movePos(const QPointF& mouse)
 {
-	isDraw = false;
-
 	if (chTriangleSelect->editMode != ChElementEditMode::None) {
 		chTriangleSelect->moveHandle(mouse);
+		isDraw = false;
 		return;
 	}
 
@@ -70,12 +70,19 @@ void ChTriangleRectSelect::releasePos(const QPointF& mouse)
 	chTriangleSelect->selected_trangle->clear();
 
 	PointVectorLayer& pointVector = *(chTriangleSelect->glVertReference.pointLayer);
-	for (unsigned int i = 0; i < pointVector.size(); i++) {
-		if (QRectF(chTriangleSelect->lastPos, mouse).contains(piYingGL->mapViewProjMatrix(
-			edit_skelen ?
-			pointVector[i] :
-			pointVector(i))
-		)) chTriangleSelect->selected_trangle->append(&i);
+	const std::vector<unsigned int>& triangleIndices = chTriangleSelect->glVertReference.glIndex;
+
+	QRectF rect(
+		piYingGL->GLViewProjMatrixInvert(chTriangleSelect->lastPos), 
+		piYingGL->GLViewProjMatrixInvert(mouse)
+	);
+	for (unsigned int i = 0; i < triangleIndices.size(); i += 3) {
+		if (rect.contains(pointVector.get(triangleIndices[i], edit_skelen)) &&
+			rect.contains(pointVector.get(triangleIndices[i + 1], edit_skelen))&&
+			rect.contains(pointVector.get(triangleIndices[i + 2], edit_skelen))
+			) {
+			chTriangleSelect->selected_trangle->append(&triangleIndices[i]);
+		}
 	}
 
 	chTriangleSelect->update_selected_to_draw();

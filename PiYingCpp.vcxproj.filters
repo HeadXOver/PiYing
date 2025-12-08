@@ -235,14 +235,14 @@
     <ClCompile Include="part.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ch_triangle_rect_select.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="ch_triangle_select.cpp">
       <Filter>Source Files\ChELementTool</Filter>
     </ClCompile>
     <ClCompile Include="selected_triangle.cpp">
       <Filter>Source Files\PiYingElement</Filter>
+    </ClCompile>
+    <ClCompile Include="ch_triangle_rect_select.cpp">
+      <Filter>Source Files\ChELementTool</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
