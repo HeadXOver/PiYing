@@ -98,11 +98,9 @@ void ChElementSelect::draw_handle_and_selected()
     if(selected_points->size() == 0) return;
 
     // 计算中心点
-    PointVectorLayer& pointLayer = *(glVertReference.pointLayer);
+    PointVectorLayer& pointLayer = *currentLayer;
     handleCenterPoint = QPointF();
-    int groupIndex;
     for (unsigned int i : selected_points->index()) {
-        groupIndex = glVertReference.pointLayer->get_group(i);
         handleCenterPoint += edit_skelen ? pointLayer[i] : pointLayer(i);
     }
     
@@ -177,7 +175,7 @@ void ChElementSelect::moveHandle(const QPointF& mouse)
 {
     if (editMode == ChElementEditMode::None) return;
 
-    PointVectorLayer& pointLayer = *(glVertReference.pointLayer);
+    PointVectorLayer& pointLayer = *currentLayer;
 
     switch (editMode) {
     case ChElementEditMode::Move: {
@@ -248,7 +246,7 @@ void ChElementSelect::affirmHandle()
 
 void ChElementSelect::click_select(const QPointF& mouse)
 {
-    const PointVectorLayer& pointVector = *(glVertReference.pointLayer);
+    const PointVectorLayer& pointVector = *currentLayer;
 
     for (unsigned int i = 0; i < pointVector.size(); i++) {
         if (QLineF(edit_skelen ? pointVector[i] : pointVector(i), mouse).length() < 0.02f / piYingGL->viewScale.value()) {
@@ -274,7 +272,7 @@ void ChElementSelect::update_selected_to_draw()
     selectedPointsFloat.reserve(selectedPoints.size() * 2);
 
     for (int i = 0; i < selectedPoints.size(); i++) {
-        const QPointF& selectPoint = glVertReference.pointLayer->get(selectedPoints[i], edit_skelen);
+        const QPointF& selectPoint = currentLayer->get(selectedPoints[i], edit_skelen);
 
         selectedPointsFloat.push_back(selectPoint.x());
         selectedPointsFloat.push_back(selectPoint.y());

@@ -22,7 +22,7 @@ ChTriangleSelect::ChTriangleSelect(GlVertReference& glReference) :
     edit_skelen(piYingGL->editMode == EditMode::characterSkeleton),
     editMode(ChElementEditMode::None)
 {
-    selected_trangle = std::make_unique<SelectedTriangle>(false, *(glVertReference.pointLayer));
+    selected_trangle = std::make_unique<SelectedTriangle>(false, *currentLayer);
 }
 
 ChTriangleSelect::~ChTriangleSelect()
@@ -44,7 +44,7 @@ void ChTriangleSelect::enter()
 void ChTriangleSelect::deleteElement()
 {
     std::vector<unsigned int>& idx = glVertReference.glIndex;
-    PointVectorLayer& pointLayer = *(glVertReference.pointLayer);
+    PointVectorLayer& pointLayer = *currentLayer;
     const size_t nVert = pointLayer.size();
     const size_t nTri = idx.size() / 3;
 
@@ -107,7 +107,7 @@ void ChTriangleSelect::draw_handle_and_selected()
     if (selected_trangle->size() == 0) return;
 
     // 计算中心点
-    PointVectorLayer& pointLayer = *(glVertReference.pointLayer);
+    PointVectorLayer& pointLayer = *currentLayer;
     handleCenterPoint = QPointF();
     for (unsigned int i : selected_trangle->index_list()) {
         handleCenterPoint += edit_skelen ? pointLayer[i] : pointLayer(i);
@@ -184,7 +184,7 @@ void ChTriangleSelect::moveHandle(const QPointF& mouse)
 {
     if (editMode == ChElementEditMode::None) return;
 
-    PointVectorLayer& pointLayer = *(glVertReference.pointLayer);
+    PointVectorLayer& pointLayer = *currentLayer;
 
     /// 根据 editMode 进行变换
     switch (editMode) {
@@ -256,7 +256,7 @@ void ChTriangleSelect::affirmHandle()
 
 void ChTriangleSelect::click_select(const QPointF& mouse)
 {
-    const PointVectorLayer& pointVector = *(glVertReference.pointLayer);
+    const PointVectorLayer& pointVector = *currentLayer;
     const std::vector<unsigned int>& triangleIndices = glVertReference.glIndex;
 
     QPointF eachTriangle[3];

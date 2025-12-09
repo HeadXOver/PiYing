@@ -8,13 +8,13 @@
 
 void GlVertReference::add_point_to_vert(const QPointF& p)
 {
-	pointLayer->push_back(p);
+	currentLayer->push_back(p);
 }
 
 void GlVertReference::addChVert(const QPointF& point) 
 {
-	glIndex.push_back((unsigned int)pointLayer->size());
-	pointLayer->push_back(point);
+	glIndex.push_back((unsigned int)currentLayer->size());
+	currentLayer->push_back(point);
 }
 
 void GlVertReference::addTriangle(int index1, int index2, int index3)
@@ -52,7 +52,6 @@ void GlVertReference::addTriangle(const QPointF& point1, const QPointF& point2, 
 GlVertReference::GlVertReference(int current, PiYingGL& pygl) :
 	glIndex(pygl.ref_characterTriangleIndices()[current])
 {
-	pointLayer = std::make_unique<PointVectorLayer>(pygl.ref_characterVerts(current));
 }
 
 GlVertReference::~GlVertReference()

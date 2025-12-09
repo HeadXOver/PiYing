@@ -107,7 +107,7 @@ void ChTriangleLibreSelect::releasePos(const QPointF& mouse)
 
 	if (!KeyboardStateWin::isCtrlHeld()) chTriangleSelect->selected_trangle->clear();
 
-	const PointVectorLayer& pointVector = *chTriangleSelect->glVertReference.pointLayer;
+	const PointVectorLayer& pointVector = *currentLayer;
 	const std::vector<unsigned int>& triangleIndices = chTriangleSelect->glVertReference.glIndex;
 
 	QPointF eachTriangle[3];
