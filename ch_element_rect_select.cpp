@@ -67,14 +67,14 @@ void ChElementRectSelect::releasePos(const QPointF& mouse)
 	if (!isDraw) return;
 	isDraw = false;
 
-	chElementSelect->selected_points->clear();
+	if(!KeyboardStateWin::isCtrlHeld()) chElementSelect->selected_points->clear();
 
 	const QRectF rect(chElementSelect->lastPos, mouse);
 	const PointVectorLayer& pointVector = *(chElementSelect->glVertReference.pointLayer);
 	QPointF pos;
 	for (unsigned int i = 0; i < pointVector.size(); i++) {
 		pos = piYingGL->mapViewProjMatrix(pointVector.get(i, edit_skelen));
-		if (rect.contains(pos)) {
+		if (rect.contains(pos) && !chElementSelect->selected_points->contains(i)) {
 			chElementSelect->selected_points->append(i);
 		}
 	}
