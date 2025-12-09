@@ -261,16 +261,7 @@ void ChTriangleSelect::click_select(const QPointF& mouse)
 
     QPointF eachTriangle[3];
     for (unsigned int i = 0; i < triangleIndices.size(); i += 3) {
-        if (edit_skelen) {
-            eachTriangle[0] = pointVector[triangleIndices[i]];
-            eachTriangle[1] = pointVector[triangleIndices[i + 1]];
-            eachTriangle[2] = pointVector[triangleIndices[i + 2]];
-        }
-        else {
-            eachTriangle[0] = pointVector(triangleIndices[i]);
-            eachTriangle[1] = pointVector(triangleIndices[i + 1]);
-            eachTriangle[2] = pointVector(triangleIndices[i + 2]);
-        }
+        for (int j = 0; j < 3; ++j) eachTriangle[j] = pointVector.get(triangleIndices[i + j], edit_skelen);
 
         if (isPointInTriangle(mouse, eachTriangle)) {
             if (selected_trangle->contains(&triangleIndices[i])) return;

@@ -43,12 +43,7 @@ void ChTriangleRectSelect::clickPos(const QPointF& mouseOri)
 
 	if (chTriangleSelect->editMode != ChElementEditMode::None) {
 		chTriangleSelect->affirmHandle();
-		return;
 	}
-
-	const QPointF mouse = piYingGL->GLViewProjMatrixInvert(mouseOri);
-
-	chTriangleSelect->click_select(mouse);
 }
 
 void ChTriangleRectSelect::movePos(const QPointF& mouse)
@@ -65,10 +60,15 @@ void ChTriangleRectSelect::movePos(const QPointF& mouse)
 
 void ChTriangleRectSelect::releasePos(const QPointF& mouse)
 {
-	if (!isDraw) return;
+	if (!isDraw) {
+		const QPointF glMouse = piYingGL->GLViewProjMatrixInvert(mouse);
+
+		chTriangleSelect->click_select(glMouse);
+		return;
+	}
 	isDraw = false;
 
-	chTriangleSelect->selected_trangle->clear();
+	if (!KeyboardStateWin::isCtrlHeld()) chTriangleSelect->selected_trangle->clear();
 
 	const PointVectorLayer& pointVector = *(chTriangleSelect->glVertReference.pointLayer);
 	const std::vector<unsigned int>& triangleIndices = chTriangleSelect->glVertReference.glIndex;
@@ -77,17 +77,17 @@ void ChTriangleRectSelect::releasePos(const QPointF& mouse)
 	QPointF eachTriangle[3];
 	const bool easySelect = mouse.x() > chTriangleSelect->lastPos.x();
 	for (unsigned int i = 0; i < triangleIndices.size(); i += 3) {
-		for (int j = 0; j < 3; ++j) {
-			eachTriangle[j] = piYingGL->mapViewProjMatrix(pointVector.get(triangleIndices[i + j], edit_skelen));
-		}
+		for (int j = 0; j < 3; ++j) eachTriangle[j] = piYingGL->mapViewProjMatrix(pointVector.get(triangleIndices[i + j], edit_skelen));
+
 		if (rect.contains(eachTriangle[0]) &&
 			rect.contains(eachTriangle[1]) &&
-			rect.contains(eachTriangle[2])
+			rect.contains(eachTriangle[2]) &&
+			!chTriangleSelect->selected_trangle->contains(&triangleIndices[i])
 			) {
 			chTriangleSelect->selected_trangle->append(&triangleIndices[i]);
 		}
-		else if (easySelect) {
-			if(isRectIntersectTriangle(rect, eachTriangle)) chTriangleSelect->selected_trangle->append(&triangleIndices[i]);
+		else if (easySelect && isRectIntersectTriangle(rect, eachTriangle)) {
+			if(!chTriangleSelect->selected_trangle->contains(&triangleIndices[i])) chTriangleSelect->selected_trangle->append(&triangleIndices[i]);
 		}
 	}
 

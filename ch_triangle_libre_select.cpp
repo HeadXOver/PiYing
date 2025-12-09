@@ -64,12 +64,9 @@ void ChTriangleLibreSelect::clickPos(const QPointF& mouseOri)
 		chTriangleSelect->affirmHandle();
 		return;
 	}
-
 	const QPointF mouse = piYingGL->getViewProjMatrixInvert().map(piYingGL->mapToGL(mouseOri));
 
 	polygon << mouse;
-
-	chTriangleSelect->click_select(mouse);
 }
 
 void ChTriangleLibreSelect::movePos(const QPointF& mouse)
@@ -95,7 +92,12 @@ void ChTriangleLibreSelect::releasePos(const QPointF& mouse)
 {
 	isPress = false;
 
-	if (!drawing) return;
+	if (!drawing) {
+		const QPointF glMouse = piYingGL->getViewProjMatrixInvert().map(piYingGL->mapToGL(mouse));
+
+		chTriangleSelect->click_select(glMouse);
+		return;
+	}
 
 	drawing = false;
 
@@ -103,19 +105,19 @@ void ChTriangleLibreSelect::releasePos(const QPointF& mouse)
 
 	polygon << polygon.first();
 
-	chTriangleSelect->selected_trangle->clear();
+	if (!KeyboardStateWin::isCtrlHeld()) chTriangleSelect->selected_trangle->clear();
 
 	const PointVectorLayer& pointVector = *chTriangleSelect->glVertReference.pointLayer;
 	const std::vector<unsigned int>& triangleIndices = chTriangleSelect->glVertReference.glIndex;
 
 	QPointF eachTriangle[3];
 	for (unsigned int i = 0; i < triangleIndices.size(); i += 3) {
-		for (int j = 0; j < 3; ++j) {
-			eachTriangle[j] = pointVector.get(triangleIndices[i + j], edit_skelen);
-		}
+		for (int j = 0; j < 3; ++j) eachTriangle[j] = pointVector.get(triangleIndices[i + j], edit_skelen);
+
 		if (polygon.containsPoint(eachTriangle[0], Qt::OddEvenFill) &&
-			polygon.containsPoint(eachTriangle[1], Qt::OddEvenFill)&&
-			polygon.containsPoint(eachTriangle[2], Qt::OddEvenFill)
+			polygon.containsPoint(eachTriangle[1], Qt::OddEvenFill) &&
+			polygon.containsPoint(eachTriangle[2], Qt::OddEvenFill) &&
+			!chTriangleSelect->selected_trangle->contains(&triangleIndices[i])
 			) {
 			chTriangleSelect->selected_trangle->append(&triangleIndices[i]);
 		}
