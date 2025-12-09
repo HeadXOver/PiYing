@@ -14,6 +14,10 @@
 #include <qpainter>
 #include <qpointf>
 
+namespace {
+	auto mapper = [](const QPointF& p) { return piYingGL->mapViewProjMatrix(p); };
+}
+
 ChElementLibreSelect::ChElementLibreSelect(GlVertReference& glReference) :
 	edit_skelen(piYingGL->editMode == EditMode::characterSkeleton)
 {
@@ -24,27 +28,22 @@ void ChElementLibreSelect::draw()
 {
 	chElementSelect->draw_handle_and_selected();
 
+	if (polygon.isEmpty() || !drawing) return;
+
 	QPainter painter(piYingGL);
 	painter.setRenderHint(QPainter::Antialiasing);
 	painter.setBrush(QColor(225, 0, 0, 20));
+	painter.setPen(QPen(Qt::yellow, 1));
 
-	if (!polygon.isEmpty()) {
-		if (drawing) {
-			painter.setPen(QPen(Qt::yellow, 1));
+	QPolygonF screenPoly;
+	screenPoly.reserve(polygon.size());
+	std::transform(polygon.cbegin(), polygon.cend(),
+		std::back_inserter(screenPoly),
+		mapper
+	);
 
-			auto mapper = [this](const QPointF& p) { return piYingGL->mapViewProjMatrix(p); };
-
-			QPolygonF screenPoly;
-			screenPoly.reserve(polygon.size());
-			std::transform(polygon.cbegin(), polygon.cend(),
-				std::back_inserter(screenPoly),
-				mapper
-			);
-
-			painter.drawPolyline(screenPoly);
-			painter.drawLine(screenPoly.last(), screenPoly.first());
-		}
-	}
+	painter.drawPolyline(screenPoly);
+	painter.drawLine(screenPoly.last(), screenPoly.first());
 }
 
 void ChElementLibreSelect::clickPos(const QPointF& mouseOri)

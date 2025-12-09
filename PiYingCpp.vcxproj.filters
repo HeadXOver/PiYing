@@ -245,7 +245,7 @@
       <Filter>Source Files\ChELementTool</Filter>
     </ClCompile>
     <ClCompile Include="ch_triangle_libre_select.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\ChELementTool</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
