@@ -11,7 +11,6 @@
 #include "ch_triangle_libre_select.h"
 #include "ch_element_add_round.h"
 #include "ch_add_vert_trace.h"
-#include "gl_vert_reference.h"
 #include "SelectedPoints.h"
 
 #include <memory>
@@ -40,7 +39,7 @@ namespace {
 
 void ChElementTool::construct_add_triangle()
 {
-	std::shared_ptr<AddTriangle> addTriangle = std::make_shared<AddTriangle>(*glVertReference);
+	std::shared_ptr<AddTriangle> addTriangle = std::make_shared<AddTriangle>();
 	clickBehavior = std::make_unique<AddTriangleClick>(addTriangle);
 	escapeBehavior = std::make_unique<AddTriangleEscape>(addTriangle);
 	drawBehavior = std::make_unique<AddTriangleDraw>(addTriangle);
@@ -49,7 +48,7 @@ void ChElementTool::construct_add_triangle()
 
 void ChElementTool::construct_add_poly()
 {
-	std::shared_ptr<AddChTexPoly> addPoly = std::make_shared<AddChTexPoly>(*glVertReference);
+	std::shared_ptr<AddChTexPoly> addPoly = std::make_shared<AddChTexPoly>();
 	clickBehavior = std::make_unique<AddPolyClick>(addPoly);
 	escapeBehavior = std::make_unique<AddPolyEscape>(addPoly);
 	drawBehavior = std::make_unique<AddPolyDraw>(addPoly);
@@ -59,7 +58,7 @@ void ChElementTool::construct_add_poly()
 
 void ChElementTool::construct_add_round()
 {
-	std::shared_ptr<ChElementAddRound> addRound = std::make_shared<ChElementAddRound>(*glVertReference);
+	std::shared_ptr<ChElementAddRound> addRound = std::make_shared<ChElementAddRound>();
 	clickBehavior = std::make_unique<AddRoundClick>(addRound);
 	moveBehavior = std::make_unique<AddRoundMove>(addRound);
 	releaseBehavior = std::make_unique<AddRoundRelease>(addRound);
@@ -68,7 +67,7 @@ void ChElementTool::construct_add_round()
 
 void ChElementTool::construct_rect_select()
 {
-	std::shared_ptr<ChElementRectSelect> rectSelect = std::make_shared<ChElementRectSelect>(*glVertReference);
+	std::shared_ptr<ChElementRectSelect> rectSelect = std::make_shared<ChElementRectSelect>();
 	clickBehavior = std::make_unique<RectSelectClick>(rectSelect);
 	escapeBehavior = std::make_unique<RectSelectEscape>(rectSelect);
 	drawBehavior = std::make_unique<RectSelectDraw>(rectSelect);
@@ -79,7 +78,7 @@ void ChElementTool::construct_rect_select()
 
 void ChElementTool::construct_libre_select()
 {
-	std::shared_ptr<ChElementLibreSelect> libreSelect = std::make_shared<ChElementLibreSelect>(*glVertReference);
+	std::shared_ptr<ChElementLibreSelect> libreSelect = std::make_shared<ChElementLibreSelect>();
 	clickBehavior = std::make_unique<LibreSelectClick>(libreSelect);
 	escapeBehavior = std::make_unique<LibreSelectEscape>(libreSelect);
 	drawBehavior = std::make_unique<LibreSelectDraw>(libreSelect);
@@ -90,7 +89,7 @@ void ChElementTool::construct_libre_select()
 
 void ChElementTool::construct_add_vert_trace()
 {
-	std::shared_ptr<ChAddVertTrace> addVertTrace = std::make_shared<ChAddVertTrace>(*glVertReference);
+	std::shared_ptr<ChAddVertTrace> addVertTrace = std::make_shared<ChAddVertTrace>();
 	clickBehavior = std::make_unique<AddVertTraceClick>(addVertTrace);
 	drawBehavior = std::make_unique<AddVertTraceDraw>(addVertTrace);
 	releaseBehavior = std::make_unique<AddVertTraceRelease>(addVertTrace);
@@ -99,7 +98,7 @@ void ChElementTool::construct_add_vert_trace()
 
 void ChElementTool::construct_rect_select_triangle()
 {
-	std::shared_ptr<ChTriangleRectSelect> rectSelect = std::make_shared<ChTriangleRectSelect>(*glVertReference);
+	std::shared_ptr<ChTriangleRectSelect> rectSelect = std::make_shared<ChTriangleRectSelect>();
 	clickBehavior = std::make_unique<RectSelectTriangleClick>(rectSelect);
 	escapeBehavior = std::make_unique<RectSelectTriangleEscape>(rectSelect);
 	drawBehavior = std::make_unique<RectSelectTriangleDraw>(rectSelect);
@@ -111,7 +110,7 @@ void ChElementTool::construct_rect_select_triangle()
 
 void ChElementTool::construct_libre_select_triangle()
 {
-	std::shared_ptr<ChTriangleLibreSelect> libreSelect = std::make_shared<ChTriangleLibreSelect>(*glVertReference);
+	std::shared_ptr<ChTriangleLibreSelect> libreSelect = std::make_shared<ChTriangleLibreSelect>();
 	clickBehavior = std::make_unique<LibreSelectTriangleClick>(libreSelect);
 	escapeBehavior = std::make_unique<LibreSelectTriangleEscape>(libreSelect);
 	drawBehavior = std::make_unique<LibreSelectTriangleDraw>(libreSelect);
@@ -123,8 +122,6 @@ void ChElementTool::construct_libre_select_triangle()
 
 ChElementTool::ChElementTool(int current, PiYingGL& pygl, CharacterToolState chToolState)
 {
-	glVertReference = std::make_unique<GlVertReference>(current, pygl);
-
 	if (chToolState == CharacterToolState::None) return;
 
 	map_construct(chToolState)(this);

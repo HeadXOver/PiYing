@@ -5,7 +5,6 @@
 #include <memory>
 
 class PiYingGL;
-class QPainter;
 class QPointF;
 struct ClickBehavior;
 struct MouseMoveBehavior;
@@ -14,8 +13,6 @@ struct EscapeBehavior;
 struct DeleteElementBehavior;
 struct EnterBehavior;
 struct DrawBehavior;
-
-struct GlVertReference;
 
 class ChElementTool final
 {
@@ -49,6 +46,4 @@ private:
 	std::unique_ptr<DeleteElementBehavior> deleteBehavior;
 	std::unique_ptr<EnterBehavior> enterBehavior;
 	std::unique_ptr<DrawBehavior> drawBehavior;
-
-	std::unique_ptr<GlVertReference> glVertReference;
 };

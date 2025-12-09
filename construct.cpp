@@ -5,6 +5,7 @@
 #include "slide_applier.h"
 #include "image_texture.h"
 #include "point_vector.h"
+#include "point_vector_layer.h"
 #include "vert_groups.h"
 #include "part.h"
 #include "enum_edit_mode.h"

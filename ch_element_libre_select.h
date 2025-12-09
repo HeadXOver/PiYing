@@ -6,16 +6,11 @@
 #include "ch_element_tool_behavior.h"
 
 struct ChElementSelect;
-struct GlVertReference;
-class QPainter;
-class PiYingGL;
-class PointVector;
-class PointVectorLayer;
 
 struct ChElementLibreSelect final
 {
 public:
-	ChElementLibreSelect(GlVertReference& glReference);
+	ChElementLibreSelect();
 	~ChElementLibreSelect() = default;
 
 	void draw();

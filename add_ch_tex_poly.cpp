@@ -1,13 +1,12 @@
 #include "add_ch_tex_poly.h"
 
-#include "gl_vert_reference.h"
 #include "piYingGL.h"
 #include "global_objects.h"
 #include "point_vector_layer.h"
 
 #include <qpainter>
 
-AddChTexPoly::AddChTexPoly(GlVertReference& glReference) :glVertReference(glReference)
+AddChTexPoly::AddChTexPoly()
 {
 }
 
@@ -36,7 +35,7 @@ void AddChTexPoly::enter()
 	for (int i = 0; i < index.size(); i++) {
 		if (index[i] < 0) {
 			index[i] = (int)currentLayer->size();
-			glVertReference.add_point_to_vert(points[i]);
+			piYingGL->add_point_to_vert(points[i]);
 		}
 	}
 
@@ -46,7 +45,7 @@ void AddChTexPoly::enter()
 	int n2 = 1;
 	int n3 = size - 1;
 	for (int i = 2; i < size; i++) {
-		glVertReference.addTriangle(index[n1], index[n2], index[n3]);
+		piYingGL->addTriangle(index[n1], index[n2], index[n3]);
 		n1 = n2;
 		n2 = n3;
 		n3 = i / 2 + 1;

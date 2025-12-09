@@ -1,5 +1,4 @@
 ﻿#include "ch_element_select.h"
-#include "gl_vert_reference.h"
 #include "piYingGL.h"
 #include "global_objects.h"
 #include "SelectedPoints.h"
@@ -16,8 +15,7 @@
 #include <qpainter>
 #include "ch_triangle_select.h"
 
-ChElementSelect::ChElementSelect(GlVertReference& glReference) : 
-    glVertReference(glReference), 
+ChElementSelect::ChElementSelect() : 
     edit_skelen(piYingGL->editMode == EditMode::characterSkeleton),
     editMode(ChElementEditMode::None)
 {
@@ -35,7 +33,7 @@ void ChElementSelect::escape()
 
 void ChElementSelect::deleteElement()
 {
-    std::vector<unsigned int>& idx = glVertReference.glIndex;
+    std::vector<unsigned int>& idx = *currentIndex;
     const size_t nVert = currentLayer->size();
     const size_t nTri = idx.size() / 3;
 

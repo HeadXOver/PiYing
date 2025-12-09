@@ -115,7 +115,7 @@
     <ClCompile Include="cus_func_string.cpp" />
     <ClCompile Include="cus_func_zone.cpp" />
     <ClCompile Include="events.cpp" />
-    <ClCompile Include="gl_vert_reference.cpp" />
+    <ClCompile Include="tool_func.cpp" />
     <ClCompile Include="image_texture.cpp" />
     <ClCompile Include="image_transform.cpp" />
     <ClCompile Include="keyboard_state_win.cpp" />
@@ -182,7 +182,6 @@
     <QtMoc Include="time_line_gl.h" />
     <ClInclude Include="tool_button.h" />
     <ClInclude Include="ch_element_tool_behavior.h" />
-    <ClInclude Include="gl_vert_reference.h" />
     <ClInclude Include="cus_func_zone.h" />
     <ClInclude Include="cus_func_string.h" />
     <ClInclude Include="cus_func_point2d.h" />

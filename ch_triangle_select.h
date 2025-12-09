@@ -6,13 +6,10 @@
 #include <memory>
 
 class SelectedTriangle;
-class PiYingGL;
-class QPainter;
-struct GlVertReference;
 
 struct ChTriangleSelect final
 {
-	ChTriangleSelect(GlVertReference& glReference);
+	ChTriangleSelect();
 	~ChTriangleSelect();
 
 	void escape();
@@ -25,7 +22,6 @@ struct ChTriangleSelect final
 	void click_select(const QPointF& mouse);
 	void update_selected_to_draw();
 
-	GlVertReference& glVertReference;
 	std::unique_ptr<SelectedTriangle> selected_trangle;
 
 	QPointF lastPos;

@@ -1,7 +1,6 @@
 #include "ch_element_rect_select.h"
 
 #include "ch_element_select.h"
-#include "gl_vert_reference.h"
 #include "piYingGL.h"
 #include "global_objects.h"
 #include "SelectedPoints.h"
@@ -14,10 +13,10 @@
 #include <qpointf>
 #include <qmessagebox>
 
-ChElementRectSelect::ChElementRectSelect(GlVertReference& glReference) :
+ChElementRectSelect::ChElementRectSelect() :
 	edit_skelen(piYingGL->editMode == EditMode::characterSkeleton)
 {
-	chElementSelect = std::make_unique<ChElementSelect>(glReference);
+	chElementSelect = std::make_unique<ChElementSelect>();
 }
 
 void ChElementRectSelect::draw()

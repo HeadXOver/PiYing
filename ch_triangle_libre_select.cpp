@@ -1,6 +1,5 @@
 #include "ch_triangle_libre_select.h"
 
-#include "gl_vert_reference.h"
 #include "ch_triangle_select.h"
 #include "piYingGL.h"
 #include "global_objects.h"
@@ -18,10 +17,10 @@ namespace {
 	auto mapper = [](const QPointF& p) { return piYingGL->mapViewProjMatrix(p); };
 }
 
-ChTriangleLibreSelect::ChTriangleLibreSelect(GlVertReference& glReference) :
+ChTriangleLibreSelect::ChTriangleLibreSelect() :
 	edit_skelen(piYingGL->editMode == EditMode::characterSkeleton)
 {
-	chTriangleSelect = std::make_unique<ChTriangleSelect>(glReference);
+	chTriangleSelect = std::make_unique<ChTriangleSelect>();
 }
 
 void ChTriangleLibreSelect::enter()
@@ -108,7 +107,7 @@ void ChTriangleLibreSelect::releasePos(const QPointF& mouse)
 	if (!KeyboardStateWin::isCtrlHeld()) chTriangleSelect->selected_trangle->clear();
 
 	const PointVectorLayer& pointVector = *currentLayer;
-	const std::vector<unsigned int>& triangleIndices = chTriangleSelect->glVertReference.glIndex;
+	const std::vector<unsigned int>& triangleIndices = *currentIndex;
 
 	QPointF eachTriangle[3];
 	for (unsigned int i = 0; i < triangleIndices.size(); i += 3) {

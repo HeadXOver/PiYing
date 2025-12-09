@@ -5,12 +5,9 @@
 #include <memory>
 #include <qpointf>
 
-struct GlVertReference;
-class PiYingGL;
-
 struct ChElementAddRound final 
 {
-	ChElementAddRound(GlVertReference& glVertReference);
+	ChElementAddRound();
 	~ChElementAddRound();
 
 	void click(const QPointF& mouse);
@@ -27,8 +24,6 @@ struct ChElementAddRound final
 
 	int radius{ 0 };
 	int init_angle{ 0 };
-
-	GlVertReference& glVertReference;
 };
 
 ////////////////////////////////////////////////

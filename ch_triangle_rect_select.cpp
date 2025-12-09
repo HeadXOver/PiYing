@@ -1,7 +1,6 @@
 #include "ch_triangle_rect_select.h"
 
 #include "ch_triangle_select.h"
-#include "gl_vert_reference.h"
 #include "piYingGL.h"
 #include "global_objects.h"
 #include "selected_triangle.h"
@@ -15,10 +14,10 @@
 #include <qpointf>
 #include <qmessagebox>
 
-ChTriangleRectSelect::ChTriangleRectSelect(GlVertReference& glReference) :
+ChTriangleRectSelect::ChTriangleRectSelect() :
 	edit_skelen(piYingGL->editMode == EditMode::characterSkeleton)
 {
-	chTriangleSelect = std::make_unique<ChTriangleSelect>(glReference);
+	chTriangleSelect = std::make_unique<ChTriangleSelect>();
 }
 
 void ChTriangleRectSelect::draw()
@@ -71,7 +70,7 @@ void ChTriangleRectSelect::releasePos(const QPointF& mouse)
 	if (!KeyboardStateWin::isCtrlHeld()) chTriangleSelect->selected_trangle->clear();
 
 	const PointVectorLayer& pointVector = *currentLayer;
-	const std::vector<unsigned int>& triangleIndices = chTriangleSelect->glVertReference.glIndex;
+	const std::vector<unsigned int>& triangleIndices = *currentIndex;
 
 	QRectF rect(chTriangleSelect->lastPos, mouse);
 	QPointF eachTriangle[3];

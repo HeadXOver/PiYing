@@ -52,6 +52,7 @@ private:
 	void paintCharacterTexture();
 	void paint_applied_texture();
 	void draw_view_rectangle();
+	void addChVert(const QPointF& point);
 	void addGlobalAction(QMenu* menu, const QList<QAction*> action);
 
 	int getCurrentBgRow() const;
@@ -106,6 +107,12 @@ public:
 	void update_selected_triangle(const unsigned int* data, int size);
 	void add_trace(int index, const QPolygonF& polygon);
 	void add_part(const QList<unsigned int>& indices);
+
+	void add_point_to_vert(const QPointF& p);
+	void addTriangle(int index1, int index2, int index3);
+	void addTriangle(int index1, int index2, const QPointF& point3);
+	void addTriangle(int index1, const QPointF& point2, const QPointF& point3);
+	void addTriangle(const QPointF& point1, const QPointF& point2, const QPointF& point3);
 
 	int get_group_num() const;
 

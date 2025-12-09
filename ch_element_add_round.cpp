@@ -1,5 +1,4 @@
 ﻿#include "ch_element_add_round.h"
-#include "gl_vert_reference.h"
 
 #include "ask_round_poly_dialog.h"
 #include "point_vector_layer.h"
@@ -74,19 +73,19 @@ void ChElementAddRound::addRoundPoly(const int edgeCount)
 	const double deltaAngle = 2 * 3.1415926 / edgeCount;
 	const int currentEnd = (int)currentLayer->size();
 
-	glVertReference.add_point_to_vert(glCenter);
+	piYingGL->add_point_to_vert(glCenter);
 	for (int i = 0; i < edgeCount; i++) {
-		glVertReference.add_point_to_vert(glCenter + lenth * piYingGL->getProj().map(QPointF(cos(initAngle + i * deltaAngle), sin(initAngle + i * deltaAngle))));
+		piYingGL->add_point_to_vert(glCenter + lenth * piYingGL->getProj().map(QPointF(cos(initAngle + i * deltaAngle), sin(initAngle + i * deltaAngle))));
 	}
 
 	for (int i = 0; i < edgeCount - 1; i++) {
-		glVertReference.addTriangle(currentEnd, currentEnd + i + 1, currentEnd + i + 2);
+		piYingGL->addTriangle(currentEnd, currentEnd + i + 1, currentEnd + i + 2);
 	}
 
-	glVertReference.addTriangle(currentEnd, currentEnd + edgeCount, currentEnd + 1);
+	piYingGL->addTriangle(currentEnd, currentEnd + edgeCount, currentEnd + 1);
 }
 
-ChElementAddRound::ChElementAddRound(GlVertReference& glReference) :glVertReference(glReference)
+ChElementAddRound::ChElementAddRound()
 {
 }
 

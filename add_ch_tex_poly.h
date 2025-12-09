@@ -6,12 +6,9 @@
 
 #include "ch_element_tool_behavior.h"
 
-class PiYingGL;
-struct GlVertReference;
-
 struct AddChTexPoly
 {
-	AddChTexPoly(GlVertReference& glReference);
+	AddChTexPoly();
 	~AddChTexPoly();
 
 	void click(const QPointF& mouse);
@@ -21,8 +18,6 @@ struct AddChTexPoly
 
 	QList<QPointF> points;
 	QList<int> index;
-
-	GlVertReference& glVertReference;
 };
 
 ////////////////////////////////////////////////////////

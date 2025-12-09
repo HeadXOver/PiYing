@@ -5,12 +5,9 @@
 #include <memory>
 #include <qpointf>
 
-struct GlVertReference;
-class PiYingGL;
-
 struct AddTriangle final
 {
-	AddTriangle(GlVertReference& glVertReference);
+	AddTriangle();
 	~AddTriangle();
 
 	bool addVert(unsigned int i);
@@ -19,8 +16,6 @@ struct AddTriangle final
 	void reduceOne();
 	void click(const QPointF& mouse);
 	void draw();
-
-	GlVertReference& glVertReference;
 
 	QPointF first;
 	QPointF second;

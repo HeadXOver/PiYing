@@ -1,6 +1,5 @@
 #include "ch_element_libre_select.h"
 
-#include "gl_vert_reference.h"
 #include "ch_element_select.h"
 #include "piYingGL.h"
 #include "global_objects.h"
@@ -18,10 +17,10 @@ namespace {
 	auto mapper = [](const QPointF& p) { return piYingGL->mapViewProjMatrix(p); };
 }
 
-ChElementLibreSelect::ChElementLibreSelect(GlVertReference& glReference) :
+ChElementLibreSelect::ChElementLibreSelect() :
 	edit_skelen(piYingGL->editMode == EditMode::characterSkeleton)
 {
-	chElementSelect = std::make_unique<ChElementSelect>(glReference);
+	chElementSelect = std::make_unique<ChElementSelect>();
 }
 
 void ChElementLibreSelect::draw()

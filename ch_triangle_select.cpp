@@ -1,6 +1,5 @@
 #include "ch_triangle_select.h"
 
-#include "gl_vert_reference.h"
 #include "piYingGL.h"
 #include "global_objects.h"
 #include "selected_triangle.h"
@@ -17,8 +16,7 @@
 #include <qpainter>
 #include "ch_triangle_select.h"
 
-ChTriangleSelect::ChTriangleSelect(GlVertReference& glReference) : 
-    glVertReference(glReference), 
+ChTriangleSelect::ChTriangleSelect() : 
     edit_skelen(piYingGL->editMode == EditMode::characterSkeleton),
     editMode(ChElementEditMode::None)
 {
@@ -43,7 +41,7 @@ void ChTriangleSelect::enter()
 
 void ChTriangleSelect::deleteElement()
 {
-    std::vector<unsigned int>& idx = glVertReference.glIndex;
+    std::vector<unsigned int>& idx = *currentIndex;
     PointVectorLayer& pointLayer = *currentLayer;
     const size_t nVert = pointLayer.size();
     const size_t nTri = idx.size() / 3;
@@ -257,7 +255,7 @@ void ChTriangleSelect::affirmHandle()
 void ChTriangleSelect::click_select(const QPointF& mouse)
 {
     const PointVectorLayer& pointVector = *currentLayer;
-    const std::vector<unsigned int>& triangleIndices = glVertReference.glIndex;
+    const std::vector<unsigned int>& triangleIndices = *currentIndex;
 
     QPointF eachTriangle[3];
     for (unsigned int i = 0; i < triangleIndices.size(); i += 3) {

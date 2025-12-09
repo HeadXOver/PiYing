@@ -1,5 +1,4 @@
 #include "ch_add_vert_trace.h"
-#include "gl_vert_reference.h"
 #include "point_vector_layer.h"
 #include "piYingGL.h"
 #include "global_objects.h"
@@ -7,7 +6,7 @@
 #include <qmessagebox>
 #include <qpainter>
 
-ChAddVertTrace::ChAddVertTrace(GlVertReference& glReference):glVertReference(glReference)
+ChAddVertTrace::ChAddVertTrace()
 {
 }
 

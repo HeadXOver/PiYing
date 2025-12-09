@@ -5,13 +5,9 @@
 #include <memory>
 #include <qpolygon>
 
-struct GlVertReference;
-class PiYingGL;
-class QPolygonF;
-
 struct ChAddVertTrace final
 {
-	ChAddVertTrace(GlVertReference& glVertReference);
+	ChAddVertTrace();
 	~ChAddVertTrace();
 
 	void click(const QPointF& mouse);
@@ -22,8 +18,6 @@ struct ChAddVertTrace final
 	int current_index = -1;
 	bool presse_on_vert = false;
 	QPolygonF polygon;
-
-	GlVertReference& glVertReference;
 };
 
 ////////////////////////////////////////////////

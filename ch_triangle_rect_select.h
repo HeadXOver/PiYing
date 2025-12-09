@@ -6,13 +6,10 @@
 #include "ch_element_tool_behavior.h"
 
 struct ChTriangleSelect;
-struct GlVertReference;
-class QPainter;
-class PiYingGL;
 
 struct ChTriangleRectSelect final
 {
-	ChTriangleRectSelect(GlVertReference& glReference);
+	ChTriangleRectSelect();
 	~ChTriangleRectSelect() = default;
 
 	void draw();

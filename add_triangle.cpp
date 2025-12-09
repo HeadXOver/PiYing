@@ -2,13 +2,12 @@
 
 #include "piYingGL.h"
 #include "global_objects.h"
-#include "gl_vert_reference.h"
 #include "point_vector_layer.h"
 
 #include <qpainter>
 #include <qpen>
 
-AddTriangle::AddTriangle(GlVertReference& glReference) :glVertReference(glReference)
+AddTriangle::AddTriangle()
 {
 }
 
@@ -91,14 +90,14 @@ void AddTriangle::click(const QPointF& mouseOri)
 	if (numVert == 2) {
 		numInd = 0;
 		numVert = 0;
-		glVertReference.addTriangle(first, second, indRepeat >= 0 ? pointVector(indRepeat) : mouse);
+		piYingGL->addTriangle(first, second, indRepeat >= 0 ? pointVector(indRepeat) : mouse);
 		return;
 	}
 	if (numInd == 2) {
 		if (indRepeat < 0) {
 			numInd = 0;
 			numVert = 0;
-			glVertReference.addTriangle(firstIndex, secondIndex, mouse);
+			piYingGL->addTriangle(firstIndex, secondIndex, mouse);
 			return;
 		}
 
@@ -107,22 +106,23 @@ void AddTriangle::click(const QPointF& mouseOri)
 		unsigned int y[3] = { (unsigned int)indRepeat, firstIndex, secondIndex };
 		std::sort(y, y + 3);
 
-		for (int j = 0; j < glVertReference.glIndex.size(); j += 3) {
-			unsigned int x[3] = { glVertReference.glIndex[j + 0], glVertReference.glIndex[j + 1], glVertReference.glIndex[j + 2] };
+		std::vector<unsigned int>& cIndex = *currentIndex;
+		for (int j = 0; j < cIndex.size(); j += 3) {
+			unsigned int x[3] = { cIndex[j + 0], cIndex[j + 1], cIndex[j + 2] };
 			std::sort(x, x + 3);
 			if (x[0] == y[0] && x[1] == y[1] && x[2] == y[2]) return;
 		}
 
 		numInd = 0;
 		numVert = 0;
-		glVertReference.addTriangle(indRepeat, firstIndex, secondIndex);
+		piYingGL->addTriangle(indRepeat, firstIndex, secondIndex);
 		return;
 	}
 	if (numInd == 1 && numVert == 1) {
 		if (indRepeat < 0) {
 			numInd = 0;
 			numVert = 0;
-			glVertReference.addTriangle(firstIndex, first, mouse);
+			piYingGL->addTriangle(firstIndex, first, mouse);
 			return;
 		}
 
@@ -130,7 +130,7 @@ void AddTriangle::click(const QPointF& mouseOri)
 
 		numInd = 0;
 		numVert = 0;
-		glVertReference.addTriangle(indRepeat, firstIndex, first);
+		piYingGL->addTriangle(indRepeat, firstIndex, first);
 	}
 }
 

@@ -6,13 +6,10 @@
 #include "ch_element_tool_behavior.h"
 
 struct ChElementSelect;
-struct GlVertReference;
-class QPainter;
-class PiYingGL;
 
 struct ChElementRectSelect final
 {
-	ChElementRectSelect(GlVertReference& glReference);
+	ChElementRectSelect();
 	~ChElementRectSelect() = default;
 
 	void draw();

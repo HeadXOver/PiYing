@@ -4,14 +4,11 @@
 #include <memory>
 
 class SelectedPoints;
-class PiYingGL;
-class QPainter;
-struct GlVertReference;
 enum class ChElementEditMode;
 
 struct ChElementSelect final
 {
-	ChElementSelect(GlVertReference& glReference);
+	ChElementSelect();
 	~ChElementSelect();
 
 	void escape();
@@ -23,7 +20,6 @@ struct ChElementSelect final
 	void click_select(const QPointF& mouse);
 	void update_selected_to_draw();
 
-	GlVertReference& glVertReference;
 	std::unique_ptr<SelectedPoints> selected_points;
 
 	QPointF lastPos;

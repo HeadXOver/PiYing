@@ -1,6 +1,5 @@
 #pragma once
 
-class QPainter;
 class QPointF;
 
 struct ClickBehavior {
