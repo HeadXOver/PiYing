@@ -35,7 +35,7 @@ void AddChTexPoly::enter()
 
 	for (int i = 0; i < index.size(); i++) {
 		if (index[i] < 0) {
-			index[i] = glVertReference.get_current_end();
+			index[i] = (int)currentLayer->size();
 			glVertReference.add_point_to_vert(points[i]);
 		}
 	}
@@ -75,9 +75,8 @@ void AddChTexPoly::click(const QPointF& mouseOri)
 
 	if (checkPointRepeat(mouse))  return;
 
-	for (unsigned int i = 0; i < glVertReference.pointLayer->size(); i++) {
-		PointVectorLayer& pointVector = *(glVertReference.pointLayer);
-		const QPointF& readyPoint = pointVector(i);
+	for (unsigned int i = 0; i < currentLayer->size(); i++) {
+		const QPointF& readyPoint = currentLayer->get(i, false);
 		if (QLineF(readyPoint, mouse).length() < 0.02f / piYingGL->viewScale.value()) {
 			if (!index.contains(i)) {
 				index.append(i);
@@ -95,7 +94,6 @@ void AddPolyDraw::draw()
 {
 	QPainter painter(piYingGL);
 	painter.setRenderHint(QPainter::Antialiasing);
-	painter.setBrush(QColor(225, 0, 0, 20));
 
 	for (QPointF selectPoint : addChTexPoly->points) {
 		selectPoint = piYingGL->mapViewProjMatrix(selectPoint);

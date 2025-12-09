@@ -367,7 +367,7 @@
       <Filter>Header Files\global</Filter>
     </ClInclude>
     <ClInclude Include="ch_triangle_libre_select.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\ChELementTool</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

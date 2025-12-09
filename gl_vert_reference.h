@@ -18,8 +18,6 @@ struct GlVertReference final {
 	void addTriangle(int index1, const QPointF& point2, const QPointF& point3);
 	void addTriangle(const QPointF& point1, const QPointF& point2, const QPointF& point3);
 
-	int get_current_end() const;
-
 	std::unique_ptr<PointVectorLayer> pointLayer;
 	std::vector<unsigned int>& glIndex;
 

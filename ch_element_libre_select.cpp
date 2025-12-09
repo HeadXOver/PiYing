@@ -100,7 +100,7 @@ void ChElementLibreSelect::releasePos(const QPointF& mouse)
 
 	if (!KeyboardStateWin::isCtrlHeld()) chElementSelect->selected_points->clear();
 
-	const PointVectorLayer& points = *chElementSelect->glVertReference.pointLayer;
+	const PointVectorLayer& points = *currentLayer;
 	QPointF existingPoint;
 	for (unsigned int i = 0; i < points.size(); i++) {
 		existingPoint = points.get(i, edit_skelen);

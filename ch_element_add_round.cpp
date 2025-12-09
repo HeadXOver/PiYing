@@ -2,6 +2,7 @@
 #include "gl_vert_reference.h"
 
 #include "ask_round_poly_dialog.h"
+#include "point_vector_layer.h"
 #include "PiYingGL.h"
 #include "global_objects.h"
 
@@ -71,7 +72,7 @@ void ChElementAddRound::addRoundPoly(const int edgeCount)
 	const float lenth = QLineF(QPointF(), piYingGL->getInsProj().map(glCursor - glCenter)).length();
 	const double initAngle = init_angle * angle_rad;
 	const double deltaAngle = 2 * 3.1415926 / edgeCount;
-	const int currentEnd = glVertReference.get_current_end();
+	const int currentEnd = (int)currentLayer->size();
 
 	glVertReference.add_point_to_vert(glCenter);
 	for (int i = 0; i < edgeCount; i++) {

@@ -70,7 +70,7 @@ void ChElementRectSelect::releasePos(const QPointF& mouse)
 	if(!KeyboardStateWin::isCtrlHeld()) chElementSelect->selected_points->clear();
 
 	const QRectF rect(chElementSelect->lastPos, mouse);
-	const PointVectorLayer& pointVector = *(chElementSelect->glVertReference.pointLayer);
+	const PointVectorLayer& pointVector = *currentLayer;
 	QPointF pos;
 	for (unsigned int i = 0; i < pointVector.size(); i++) {
 		pos = piYingGL->mapViewProjMatrix(pointVector.get(i, edit_skelen));

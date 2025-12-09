@@ -21,7 +21,7 @@ ChElementSelect::ChElementSelect(GlVertReference& glReference) :
     edit_skelen(piYingGL->editMode == EditMode::characterSkeleton),
     editMode(ChElementEditMode::None)
 {
-    selected_points = std::make_unique<SelectedPoints>(false, *(glVertReference.pointLayer));
+    selected_points = std::make_unique<SelectedPoints>(false, *currentLayer);
 }
 
 ChElementSelect::~ChElementSelect()
@@ -36,8 +36,7 @@ void ChElementSelect::escape()
 void ChElementSelect::deleteElement()
 {
     std::vector<unsigned int>& idx = glVertReference.glIndex;
-    PointVectorLayer& pointLayer = *(glVertReference.pointLayer);
-    const size_t nVert = pointLayer.size();
+    const size_t nVert = currentLayer->size();
     const size_t nTri = idx.size() / 3;
 
     std::vector<bool> killVert(nVert, false);
@@ -73,11 +72,11 @@ void ChElementSelect::deleteElement()
     for (unsigned old = 0; old < nVert; ++old) {
         if (killVert[old]) continue;
 
-        pointLayer.copy_from_to(old, newVertCount);
+        currentLayer->copy_from_to(old, newVertCount);
         old2new[old] = newVertCount++;
     }
 
-    pointLayer.resize(newVertCount);
+    currentLayer->resize(newVertCount);
 
     size_t outIdx = 0;
     for (size_t t = 0; t < nTri; ++t) {

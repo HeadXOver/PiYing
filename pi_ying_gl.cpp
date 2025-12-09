@@ -9,6 +9,7 @@
 #include "ch_element_tool.h"
 #include "gl_vert_reference.h"
 #include "point_vector.h"
+#include "point_vector_layer.h"
 #include "vert_groups.h"
 #include "part.h"
 
@@ -23,6 +24,8 @@
 #include "cus_func_string.h"
 
 #include "enum_edit_mode.h"
+
+#include "global_objects.h"
 
 #include <QColorDialog>
 #include <QMessageBox>
@@ -97,7 +100,10 @@ void PiYingGL::addCharacter(const QString& imageName)
 
 	ref_PiYing.sliderWidget.append(sliderWidget);
 
-	if (getCurrentChRow() < 0) ref_PiYing.chImageList->setCurrentRow(0);
+	if (getCurrentChRow() < 0) {
+		ref_PiYing.chImageList->setCurrentRow(0);
+		currentLayer = new PointVectorLayer(*characterVerts[0]);
+	}
 
 	update();
 }
@@ -114,8 +120,21 @@ void PiYingGL::updateChTool()
 		ch_element_tool_ = nullptr;
 	}
 
+	if (currentLayer) {
+		delete currentLayer;
+		currentLayer = nullptr;
+	}
+
+	if (currentIndex) {
+		delete currentIndex;
+		currentIndex = nullptr;
+	}
+
 	int currentVector = getCurrentChRow();
 	if (currentVector < 0) return;
+
+	currentLayer = new PointVectorLayer(*characterVerts[currentVector]);
+	currentIndex = &characterTriangleIndices[currentVector];
 
 	if (_ch_tool_state == CharacterToolState::None) {
 		update();

@@ -49,11 +49,6 @@ void GlVertReference::addTriangle(const QPointF& point1, const QPointF& point2, 
 	piYingGL->update_ch_verts();
 }
 
-int GlVertReference::get_current_end() const
-{
-	return (int)pointLayer->size();
-}
-
 GlVertReference::GlVertReference(int current, PiYingGL& pygl) :
 	glIndex(pygl.ref_characterTriangleIndices()[current])
 {

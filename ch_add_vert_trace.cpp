@@ -18,7 +18,7 @@ ChAddVertTrace::~ChAddVertTrace()
 void ChAddVertTrace::click(const QPointF& mouseOri)
 {
 	const QPointF mouse = piYingGL->GLViewProjMatrixInvert(mouseOri);
-    const PointVectorLayer& pointVector = *(glVertReference.pointLayer);
+    const PointVectorLayer& pointVector = *currentLayer;
     QPointF existPoint;
     for (unsigned int i = 0; i < pointVector.size(); i++) {
         existPoint = pointVector[i];
@@ -62,7 +62,7 @@ void ChAddVertTrace::draw()
 {
 	if (current_index < 0) return;
 
-	const PointVectorLayer& pointLayer = *(glVertReference.pointLayer);
+	const PointVectorLayer& pointLayer = *currentLayer;
 
 	QPointF selectPoint = piYingGL->mapViewProjMatrix(pointLayer[current_index]);
 
