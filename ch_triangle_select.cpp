@@ -10,6 +10,7 @@
 #include "KeyboardStateWin.h"
 
 #include "enum_select_handle_mode.h"
+#include "enum_edit_mode.h"
 #include "cus_func_zone.h"
 #include "cus_func_point2d.h"
 

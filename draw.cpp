@@ -7,6 +7,7 @@
 #include "vert_groups.h"
 #include "vert_group.h"
 #include "base_math.h"
+#include "enum_edit_mode.h"
 
 #include <qpainter>
 #include <qopengltexture>

@@ -22,6 +22,8 @@
 
 #include "cus_func_string.h"
 
+#include "enum_edit_mode.h"
+
 #include <QColorDialog>
 #include <QMessageBox>
 #include <qfiledialog>

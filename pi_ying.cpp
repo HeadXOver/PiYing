@@ -7,6 +7,7 @@
 #include "tool_button.h"
 #include "time_line_gl.h"
 #include "slide_applier.h"
+#include "enum_edit_mode.h"
 
 #include "ui_PiYing.h"
 

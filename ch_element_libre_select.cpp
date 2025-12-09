@@ -8,6 +8,7 @@
 #include "KeyboardStateWin.h"
 #include "point_vector_layer.h"
 #include "enum_select_handle_mode.h"
+#include "enum_edit_mode.h"
 
 #include <qpolygonf>
 #include <qpainter>

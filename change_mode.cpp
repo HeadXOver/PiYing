@@ -4,6 +4,7 @@
 #include "tool_button.h"
 #include "ctrlSlideWidget.h"
 #include "time_line_gl.h"
+#include "enum_edit_mode.h"
 
 #include "ui_PiYing.h"
 

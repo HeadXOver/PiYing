@@ -8,7 +8,6 @@
 #include <vector>
 
 #include "enum_character_texture_tool_state.h"
-#include "enum_edit_mode.h"
 #include "static_rect_vert.h"
 #include "ViewData.h"
 
@@ -24,6 +23,8 @@ enum class MousePos {
 	BottomEdge,
 	OutSide
 };
+
+enum class EditMode;
 
 class PiYing;
 class ImageTransform;
@@ -142,7 +143,7 @@ public:
 	CharacterToolState ch_tool_state() const { return _ch_tool_state; }
 
 public:
-	EditMode editMode = EditMode::OverView;
+	EditMode editMode;
 
 	ViewData viewScale;
 	ViewData viewRotate;

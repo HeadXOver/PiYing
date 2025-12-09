@@ -7,6 +7,7 @@
 #include "point_vector.h"
 #include "vert_groups.h"
 #include "part.h"
+#include "enum_edit_mode.h"
 
 #include <qlabel>
 #include <QOpenGLShaderProgram.h>
@@ -18,7 +19,7 @@ PiYingGL::PiYingGL(PiYing& parent) :
 	ref_PiYing(parent), 
 	ctrlSlideWidget(ref_PiYing.sliderWidget)
 {
-
+	editMode = EditMode::OverView;
 	bgShaderProgram = new QOpenGLShaderProgram(this);
 	chShaderProgram = new QOpenGLShaderProgram(this);
 	_selected_vert_shader_program = new QOpenGLShaderProgram(this);

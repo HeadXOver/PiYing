@@ -1,5 +1,6 @@
 #include "piYingGL.h"
 #include "ch_element_tool.h"
+#include "enum_edit_mode.h"
 
 #include <QOpenGLShaderProgram.h>
 
