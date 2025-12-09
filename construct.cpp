@@ -8,6 +8,7 @@
 #include "vert_groups.h"
 #include "part.h"
 #include "enum_edit_mode.h"
+#include "enum_character_texture_tool_state.h"
 
 #include <qlabel>
 #include <QOpenGLShaderProgram.h>
@@ -20,6 +21,8 @@ PiYingGL::PiYingGL(PiYing& parent) :
 	ctrlSlideWidget(ref_PiYing.sliderWidget)
 {
 	editMode = EditMode::OverView;
+	_ch_tool_state = CharacterToolState::None;
+
 	bgShaderProgram = new QOpenGLShaderProgram(this);
 	chShaderProgram = new QOpenGLShaderProgram(this);
 	_selected_vert_shader_program = new QOpenGLShaderProgram(this);

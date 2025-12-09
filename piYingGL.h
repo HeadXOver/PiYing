@@ -7,7 +7,6 @@
 #include <memory>
 #include <vector>
 
-#include "enum_character_texture_tool_state.h"
 #include "static_rect_vert.h"
 #include "ViewData.h"
 
@@ -25,6 +24,7 @@ enum class MousePos {
 };
 
 enum class EditMode;
+enum class CharacterToolState;
 
 class PiYing;
 class ImageTransform;
@@ -189,7 +189,7 @@ private:
 
 	MousePos lastMousePosType = MousePos::OutSide;
 
-	CharacterToolState _ch_tool_state = CharacterToolState::None;
+	CharacterToolState _ch_tool_state;
 
 	QMenu* rightButtonMenuChTex;
 	QMenu* rightButtonMenuBg_S;
