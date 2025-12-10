@@ -29,7 +29,7 @@ Part::Part(
 
 void Part::add_texture_part()
 {
-	QMessageBox::information(piYingGL, "tex", "tex");
+
 }
 
 void Part::add_moved_part()

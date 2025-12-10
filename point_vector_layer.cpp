@@ -53,8 +53,3 @@ void PointVectorLayer::clear()
 void PointVectorLayer::resize(int size) {
 	point_vector.resize(size * 2);
 }
-
-int PointVectorLayer::get_group(int i) const
-{
-	return point_vector.get_group(i);
-}

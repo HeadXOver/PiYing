@@ -18,8 +18,6 @@ public:
 	void copy_from_to(int from, int to);
 	void clear();
 	void resize(int size);
-	
-	int get_group(int i) const;
 
 	size_t size() const;
 
