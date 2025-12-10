@@ -5,6 +5,7 @@
 #include "scale_trans.h"
 #include "KeyboardStateWin.h"
 #include "part.h"
+#include "piYingGL.h"
 #include "global_objects.h"
 
 #include <QOpenGLShaderProgram>
@@ -134,22 +135,27 @@ void TimelineGl::paintGL()
 
 void TimelineGl::wheelEvent(QWheelEvent* ev)
 {
-	float scaleFactor = 1.0f + ev->angleDelta().y() / 1200.f;
-	if (scaleFactor < 0.1f) scaleFactor = 0.1f;
+	if (_ui_type == UiType::Timeline) {
+		float scaleFactor = 1.0f + ev->angleDelta().y() / 1200.f;
+		if (scaleFactor < 0.1f) scaleFactor = 0.1f;
 
-	_scale_trans->scale_lenth *= scaleFactor;
+		_scale_trans->scale_lenth *= scaleFactor;
 
-	const float gl_mouse_x = x_map_to_gl(ev->position().x());
-	const float diff_x = gl_mouse_x - _scale_trans->trans_x;
-	const float to_trans_x = diff_x * (1.f - scaleFactor);
+		const float gl_mouse_x = x_map_to_gl(ev->position().x());
+		const float diff_x = gl_mouse_x - _scale_trans->trans_x;
+		const float to_trans_x = diff_x * (1.f - scaleFactor);
 
-	_scale_trans->trans_x = cus::min(_scale_trans->scale_lenth - 1.f, _scale_trans->trans_x + to_trans_x);
+		_scale_trans->trans_x = cus::min(_scale_trans->scale_lenth - 1.f, _scale_trans->trans_x + to_trans_x);
 
-	const float xTimelineCursor = width() * _scale_trans->trans_x / 2.f + time_cursor;
-	const float diffTimelineCursor = xTimelineCursor - width() * (_scale_trans->trans_x + 1.f) / 2.f;
-	time_cursor -= diffTimelineCursor * (1.f - scaleFactor);
+		const float xTimelineCursor = width() * _scale_trans->trans_x / 2.f + time_cursor;
+		const float diffTimelineCursor = xTimelineCursor - width() * (_scale_trans->trans_x + 1.f) / 2.f;
+		time_cursor -= diffTimelineCursor * (1.f - scaleFactor);
 
-	*_last_scale_trans = *_scale_trans;
+		*_last_scale_trans = *_scale_trans;
+	}
+	else if (_ui_type == UiType::Part) {
+
+	}
 	update();
 	ev->accept();
 }
@@ -241,6 +247,9 @@ void TimelineGl::paint_parts()
 
 	_part_shader_program->bind();
 
+	float ratio = (width() * piYingGL->height()) / (float)(piYingGL->width() * height());
+	_part_shader_program->setUniformValue("ratio", ratio);
+
 	Part* part;
 	float x, y, scale;
 	for (int i = 0; i < parts.size(); i++) {
@@ -255,7 +264,7 @@ void TimelineGl::paint_parts()
 		glBufferData(GL_ARRAY_BUFFER, part->float_size() * sizeof(float), part->float_data(), GL_DYNAMIC_DRAW);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, part->index_size() * sizeof(unsigned int), part->index_data(), GL_DYNAMIC_DRAW);
 
-		scale = 0.4f / cus::max(part->width(), part->height());
+		scale = 0.38f / cus::max(part->width(), part->height());
 		_part_shader_program->setUniformValue("scale", scale);
 		_part_shader_program->setUniformValue("x", x - scale * part->x());
 		_part_shader_program->setUniformValue("y", y - scale * part->y());
