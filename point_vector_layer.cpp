@@ -28,6 +28,12 @@ void PointVectorLayer::push_back(const QPointF& point)
 	point_vector.push_back(point);
 }
 
+void PointVectorLayer::push_back(const QPointF& tex, const QPointF& ske)
+{
+	point_vector.push_back(ske);
+	point_vector.push_back(tex);
+}
+
 void PointVectorLayer::set_point(bool edit_skelon, int index, const QPointF& point)
 {
 	int index_ = edit_skelon ? index + index : index + index + 1;
@@ -42,7 +48,7 @@ void PointVectorLayer::copy_from_to(int from, int to)
 
 size_t PointVectorLayer::size() const 
 {
-	return point_vector.size() / 2;
+	return point_vector.size() / (size_t)2;
 }
 
 void PointVectorLayer::clear() 

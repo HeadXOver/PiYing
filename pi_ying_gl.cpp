@@ -316,7 +316,7 @@ void PiYingGL::add_part(const QList<unsigned int>& indices)
 	const int currentVector = getCurrentChRow();
 	if (currentVector < 0) return;
 
-	_parts.push_back(new Part(*characterTextures[currentVector]->texture(), *characterVerts[currentVector], characterTriangleIndices[currentVector], indices, editMode == EditMode::characterTexture));
+	_parts.push_back(new Part(*characterTextures[currentVector]->texture(), indices, editMode == EditMode::characterTexture));
 }
 
 int PiYingGL::get_group_num() const

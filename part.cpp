@@ -3,36 +3,40 @@
 #include "point_vector.h"
 #include "point_vector_layer.h"
 
-#include "piYingGL.h"
 #include "global_objects.h"
 
 #include <qopengltexture>
-#include <qmessagebox>
+#include <qpointf>
 
 Part::Part(
 	const QOpenGLTexture& texture, 
-	const PointVector& verts, 
-	const std::vector<unsigned int>& triangleindices, 
 	const QList<unsigned int>& indices, 
 	bool isTexture
 ) :
-	_texture(texture), 
-	r_verts(verts),
-	r_triangleindices(triangleindices),
-	_indices(indices)
+	_texture(texture)
 {
 	_vert_texture = std::make_unique<PointVector>();
+	PointVectorLayer layer(*_vert_texture);
 
-	if (isTexture) add_texture_part();
-	else add_moved_part();
-}
+	std::vector<int> hashIndex(currentLayer->size(), -1);
 
-void Part::add_texture_part()
-{
+	int eachIndex;
+	int currentIndex = 0;
 
-}
-
-void Part::add_moved_part()
-{
-	QMessageBox::information(piYingGL, "ske", "ske");
+	for (unsigned int i = 0; i < indices.size(); ++i) {
+		eachIndex = hashIndex[indices[i]];
+		if (eachIndex < 0) {
+			hashIndex[indices[i]] = currentIndex;
+			if (isTexture) {
+				layer.push_back((*currentLayer)(indices[i]));
+			}
+			else {
+				layer.push_back((*currentLayer)(indices[i]), (*currentLayer)[indices[i]]);
+			}
+			_indices.push_back(currentIndex++);
+		}
+		else {
+			_indices.push_back(eachIndex);
+		}
+	}
 }
