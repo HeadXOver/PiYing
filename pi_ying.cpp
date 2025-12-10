@@ -194,23 +194,17 @@ void PiYing::keyPressEvent(QKeyEvent* event)
 {
     switch (event->key()) {
     case Qt::Key_Escape: {
-        if (piYingGL->editMode == EditMode::characterTexture) {
-            if (getCurrentChRow() < 0) return;
-            piYingGL->escapeChVert();
-        }
+        if (getCurrentChRow() < 0) return;
+        piYingGL->escapeChVert();
     }break;
     case Qt::Key_Delete: {
-        if (piYingGL->editMode == EditMode::characterTexture) {
-            if (getCurrentChRow() < 0) return;
-            piYingGL->deleteChElement();
-        }
+        if (getCurrentChRow() < 0) return;
+        piYingGL->deleteChElement();
     }break;
     case Qt::Key_Enter:
     case Qt::Key_Return: {
-        if (piYingGL->editMode == EditMode::characterTexture) {
-            if (getCurrentChRow() < 0) return;
-            piYingGL->enterChElement();
-        }
+        if (getCurrentChRow() < 0) return;
+        piYingGL->enterChElement();
     }break;
     case Qt::Key_1: {
         switch (piYingGL->ch_tool_state()) {

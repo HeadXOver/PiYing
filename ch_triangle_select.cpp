@@ -34,9 +34,9 @@ void ChTriangleSelect::escape()
 
 void ChTriangleSelect::enter()
 {
-    if (selected_trangle->size() <= 1) return;
+    if (selected_trangle->n_triangle() <= 0) return;
 
-    //glVertReference.gl.add_part(selected_points->index());
+    piYingGL->add_part(selected_trangle->index_list());
 }
 
 void ChTriangleSelect::deleteElement()

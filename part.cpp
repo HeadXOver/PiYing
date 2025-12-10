@@ -3,7 +3,11 @@
 #include "point_vector.h"
 #include "point_vector_layer.h"
 
+#include "piYingGL.h"
+#include "global_objects.h"
+
 #include <qopengltexture>
+#include <qmessagebox>
 
 Part::Part(
 	const QOpenGLTexture& texture, 
@@ -25,9 +29,10 @@ Part::Part(
 
 void Part::add_texture_part()
 {
-
+	QMessageBox::information(piYingGL, "tex", "tex");
 }
 
 void Part::add_moved_part()
 {
+	QMessageBox::information(piYingGL, "ske", "ske");
 }
