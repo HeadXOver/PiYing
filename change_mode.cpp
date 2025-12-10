@@ -132,6 +132,11 @@ void PiYing::change_edit_mode_character_constrol_slider()
     if (!piYingGL->have_ch_tool()) piYingGL->setChTool(CharacterToolState::None);
 }
 
+void PiYing::update_timeline()
+{
+    timeLineGL->update();
+}
+
 void PiYing::onModeChanged(int mode)
 {
     ui->mainToolBar->clear();

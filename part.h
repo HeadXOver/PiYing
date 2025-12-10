@@ -10,13 +10,30 @@ class PointVector;
 class Part final
 {
 public:
-	Part(const QOpenGLTexture& texture, const QList<unsigned int>& indices, bool isTexture);
+	Part(QOpenGLTexture& texture, const QList<unsigned int>& indices, bool isTexture);
+
+	float* float_data() const;
+	const unsigned int* index_data() const;
+
+	size_t float_size() const;
+	size_t index_size() const;
+
+	void bind_texture();
+
+	float x() const;
+	float y() const;
+	float height() const;
+	float width() const;
 
 private:
+	float _x;
+	float _y;
+	float _height;
+	float _width;
 
 private:
-	const QOpenGLTexture& _texture;
+	QOpenGLTexture& _texture;
 
-	QList<unsigned int> _indices;
+	std::vector<unsigned int> _indices;
 	std::unique_ptr<PointVector> _vert_texture;
 };

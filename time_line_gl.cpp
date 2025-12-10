@@ -4,6 +4,8 @@
 #include "base_math.h"
 #include "scale_trans.h"
 #include "KeyboardStateWin.h"
+#include "part.h"
+#include "global_objects.h"
 
 #include <QOpenGLShaderProgram>
 #include <qmessagebox>
@@ -31,9 +33,13 @@ TimelineGl::~TimelineGl()
 
 	////////////////////////////////////////
 
-	glDeleteBuffers(1, &VBO);
-	glDeleteVertexArrays(1, &VAO);
-	glDeleteBuffers(1, &EBO);
+	glDeleteBuffers(1, &tVBO);
+	glDeleteVertexArrays(1, &tVAO);
+	glDeleteBuffers(1, &tEBO);
+
+	glDeleteBuffers(1, &pVBO);
+	glDeleteVertexArrays(1, &pVAO);
+	glDeleteBuffers(1, &pEBO);
 
 	////////////////////////////////////////
 
@@ -66,15 +72,15 @@ void TimelineGl::initializeGL()
 
 	//////////////initialize background///////////////////////
 
-	glGenVertexArrays(1, &VAO);
-	glGenBuffers(1, &VBO);
-	glGenBuffers(1, &EBO);
+	glGenVertexArrays(1, &tVAO);
+	glGenBuffers(1, &tVBO);
+	glGenBuffers(1, &tEBO);
 
 	/////////////////////////////////////////////
 
-	glBindVertexArray(VAO);
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+	glBindVertexArray(tVAO);
+	glBindBuffer(GL_ARRAY_BUFFER, tVBO);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, tEBO);
 
 	glBufferData(GL_ARRAY_BUFFER, sizeof(RECTANGLE_VERT), RECTANGLE_VERT, GL_STATIC_DRAW);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(RECTANGLE_INDECES), RECTANGLE_INDECES, GL_STATIC_DRAW);
@@ -87,9 +93,27 @@ void TimelineGl::initializeGL()
 	_rect_shader_program->link();
 	_rect_shader_program->setUniformValue("texture1", 0);
 
+	//////////////////////////////////////////////
+
+	glGenVertexArrays(1, &pVAO);
+	glGenBuffers(1, &pVBO);
+	glGenBuffers(1, &pEBO);
+
+	glBindVertexArray(pVAO); 
+	glBindBuffer(GL_ARRAY_BUFFER, pVBO);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, pEBO);
+
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(0);
+
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)(2 * sizeof(float)));
+	glEnableVertexAttribArray(1);
+
 	_part_shader_program->addShaderFromSourceFile(QOpenGLShader::Vertex, ":/PiYing/square_icon.vert");
 	_part_shader_program->addShaderFromSourceFile(QOpenGLShader::Fragment, ":/PiYing/square_icon.frag");
-	_part_shader_program->link();
+	if (!_part_shader_program->link()) QMessageBox::warning(this, "Error", "Part shader program link error");
+
+	_part_shader_program->setUniformValue("texture1", 0);
 
 	glBindVertexArray(0);
 
@@ -104,7 +128,8 @@ void TimelineGl::paintGL()
 
 	switch (_ui_type) {
 	case UiType::Timeline: paint_timeline(); break;
-	}	
+	case UiType::Part: paint_parts(); break;
+	}
 }
 
 void TimelineGl::wheelEvent(QWheelEvent* ev)
@@ -185,7 +210,7 @@ void TimelineGl::move_time_cursor(float mouse_x)
 
 void TimelineGl::paint_timeline()
 {
-	glBindVertexArray(VAO);///////////////////////////////////////////////////////
+	glBindVertexArray(tVAO);///////////////////////////////////////////////////////
 
 	_rect_shader_program->bind();
 	_texture->bind();
@@ -210,4 +235,34 @@ void TimelineGl::paint_timeline()
 
 void TimelineGl::paint_parts()
 {
+	if (parts.size() == 0) return;
+
+	glBindVertexArray(pVAO);///////////////////////////////////////////////////////
+
+	_part_shader_program->bind();
+
+	Part* part;
+	float x, y, scale;
+	for (int i = 0; i < parts.size(); i++) {
+		part = parts[i];
+
+		x = -0.8f + (i % 5) * 0.4f;
+		y = 0.8f - (i / 5) * 0.4f;
+
+		glBindBuffer(GL_ARRAY_BUFFER, pVBO);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, pEBO);
+
+		glBufferData(GL_ARRAY_BUFFER, part->float_size() * sizeof(float), part->float_data(), GL_DYNAMIC_DRAW);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, part->index_size() * sizeof(unsigned int), part->index_data(), GL_DYNAMIC_DRAW);
+
+		scale = 0.4f / cus::max(part->width(), part->height());
+		_part_shader_program->setUniformValue("scale", scale);
+		_part_shader_program->setUniformValue("x", x - scale * part->x());
+		_part_shader_program->setUniformValue("y", y - scale * part->y());
+
+		part->bind_texture();
+		glDrawElements(GL_TRIANGLES, (GLsizei)part->index_size(), GL_UNSIGNED_INT, 0);
+	}
+
+	glBindVertexArray(0);////////////////////////////////////////////////////////////
 }

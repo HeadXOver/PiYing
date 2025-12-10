@@ -36,6 +36,8 @@ public:
 	void change_edit_mode_background();
 	void change_edit_mode_character_constrol_slider();
 
+	void update_timeline();
+
 protected:
 	void keyPressEvent(QKeyEvent* event) override;
 

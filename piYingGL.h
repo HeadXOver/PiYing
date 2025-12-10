@@ -206,6 +206,4 @@ private:
 	std::unique_ptr<ChElementTool> ch_element_tool_;
 
 	QList<CtrlSlideWidget*>& ctrlSlideWidget;
-
-	std::vector<Part*> _parts;
 };

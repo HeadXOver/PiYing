@@ -10,6 +10,7 @@
 class QOpenGLShaderProgram;
 class QOpenGLTexture;
 class Timeline;
+class Part;
 
 struct ScaleTrans;
 
@@ -46,7 +47,8 @@ private:
 	void paint_parts();
 
 private:
-	unsigned int VAO = 0, VBO = 0, EBO = 0;
+	unsigned int tVAO = 0, tVBO = 0, tEBO = 0;
+	unsigned int pVAO = 0, pVBO = 0, pEBO = 0;
 
 	int _current_select{ -1 };
 
