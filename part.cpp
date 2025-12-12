@@ -5,6 +5,7 @@
 
 #include "base_math.h"
 
+#include "time_line_gl.h"
 #include "global_objects.h"
 
 #include <qopengltexture>
@@ -64,6 +65,9 @@ Part::Part(
 
 	_height = top - bottom;
 	_width = right - left;
+
+	timelineGl->generate_vbo(*_vert_texture, _vbo);
+	timelineGl->generate_ebo(_indices, _ebo);
 }
 
 float* Part::float_data() const
@@ -109,4 +113,14 @@ float Part::height() const
 float Part::width() const
 {
 	return _width;
+}
+
+unsigned int Part::vbo() const
+{
+	return _vbo;
+}
+
+unsigned int Part::ebo() const
+{
+	return _ebo;
 }

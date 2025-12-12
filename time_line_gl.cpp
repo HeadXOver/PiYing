@@ -6,6 +6,7 @@
 #include "KeyboardStateWin.h"
 #include "part.h"
 #include "piYingGL.h"
+#include "point_vector.h"
 #include "global_objects.h"
 
 #include <QOpenGLShaderProgram>
@@ -62,6 +63,30 @@ void TimelineGl::set_to_part()
 	_ui_type = UiType::Part;
 }
 
+void TimelineGl::generate_vbo(PointVector& pointVefctor, unsigned int& vbo)
+{
+	makeCurrent();
+
+	glGenBuffers(1, &vbo);
+	glBindBuffer(GL_ARRAY_BUFFER, vbo);
+	glBufferData(GL_ARRAY_BUFFER, pointVefctor.float_size() * sizeof(float), pointVefctor.data(), GL_STATIC_DRAW);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+	doneCurrent();
+}
+
+void TimelineGl::generate_ebo(std::vector<unsigned int>& indices, unsigned int& ebo)
+{
+	makeCurrent();
+
+	glGenBuffers(1, &ebo);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned int), indices.data(), GL_STATIC_DRAW);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+	doneCurrent();
+}
+
 void TimelineGl::initializeGL()
 {
 	if (_texture) return;
@@ -98,16 +123,10 @@ void TimelineGl::initializeGL()
 
 	glGenVertexArrays(1, &pVAO);
 	glGenBuffers(1, &pVBO);
-	glGenBuffers(1, &pEBO);
+	glGenBuffers(1, &pEBO); 
 
-	glBindVertexArray(pVAO); 
-	glBindBuffer(GL_ARRAY_BUFFER, pVBO);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, pEBO);
-
-	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
+	glBindVertexArray(pVAO);///////////////////////////////////////////////////////
 	glEnableVertexAttribArray(0);
-
-	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)(2 * sizeof(float)));
 	glEnableVertexAttribArray(1);
 
 	_part_shader_program->addShaderFromSourceFile(QOpenGLShader::Vertex, ":/PiYing/square_icon.vert");
@@ -116,6 +135,8 @@ void TimelineGl::initializeGL()
 
 	_part_shader_program->setUniformValue("texture1", 0);
 
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
 
 	// global setting
@@ -258,11 +279,11 @@ void TimelineGl::paint_parts()
 		x = -0.8f + (i % 5) * 0.4f;
 		y = 0.8f - (i / 5) * 0.4f;
 
-		glBindBuffer(GL_ARRAY_BUFFER, pVBO);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, pEBO);
+		glBindBuffer(GL_ARRAY_BUFFER, part->vbo());
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, part->ebo());
 
-		glBufferData(GL_ARRAY_BUFFER, part->float_size() * sizeof(float), part->float_data(), GL_DYNAMIC_DRAW);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, part->index_size() * sizeof(unsigned int), part->index_data(), GL_DYNAMIC_DRAW);
+		glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
+		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)(2 * sizeof(float)));
 
 		scale = 0.38f / cus::max(part->width(), part->height());
 		_part_shader_program->setUniformValue("scale", scale);

@@ -11,6 +11,7 @@ class QOpenGLShaderProgram;
 class QOpenGLTexture;
 class Timeline;
 class Part;
+class PointVector;
 
 struct ScaleTrans;
 
@@ -31,6 +32,9 @@ public:
 	float x_map_to_gl(const float x) const;
 	void set_to_timeline();
 	void set_to_part();
+
+	void generate_vbo(PointVector& pointVefctor, unsigned int& vbo);
+	void generate_ebo(std::vector<unsigned int>& indices, unsigned int& vbo);
 
 protected:
 	void initializeGL() override;

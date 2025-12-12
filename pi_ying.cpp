@@ -47,6 +47,7 @@ PiYing::PiYing(QWidget* parent) : QMainWindow(parent)
     piYingGLContainer = new PiYingGLContainer(*piYingGL, ratio, this);
 
     timeLineGL = new TimelineGl(this);
+    timelineGl = timeLineGL;
 
     splitTimelineOpenGL = new QSplitter(Qt::Vertical, this);
     splitListOpenGL = new QSplitter(Qt::Horizontal, this);

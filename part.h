@@ -25,11 +25,16 @@ public:
 	float height() const;
 	float width() const;
 
+	unsigned int vbo() const;
+	unsigned int ebo() const;
+
 private:
 	float _x;
 	float _y;
 	float _height;
 	float _width;
+
+	unsigned int _vbo, _ebo;
 
 private:
 	QOpenGLTexture& _texture;
