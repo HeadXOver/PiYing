@@ -68,6 +68,7 @@ Part::Part(
 
 	timelineGl->generate_vbo(*_vert_texture, _vbo);
 	timelineGl->generate_ebo(_indices, _ebo);
+	timelineGl->generate_vao(_vao, _vbo, _ebo);
 }
 
 float* Part::float_data() const
@@ -113,6 +114,11 @@ float Part::height() const
 float Part::width() const
 {
 	return _width;
+}
+
+unsigned int Part::vao() const
+{
+	return _vao;
 }
 
 unsigned int Part::vbo() const

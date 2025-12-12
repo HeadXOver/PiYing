@@ -25,6 +25,7 @@ public:
 	float height() const;
 	float width() const;
 
+	unsigned int vao() const;
 	unsigned int vbo() const;
 	unsigned int ebo() const;
 
@@ -34,7 +35,7 @@ private:
 	float _height;
 	float _width;
 
-	unsigned int _vbo, _ebo;
+	unsigned int _vao, _vbo, _ebo;
 
 private:
 	QOpenGLTexture& _texture;

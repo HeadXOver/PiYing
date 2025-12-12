@@ -39,10 +39,6 @@ TimelineGl::~TimelineGl()
 	glDeleteVertexArrays(1, &tVAO);
 	glDeleteBuffers(1, &tEBO);
 
-	glDeleteBuffers(1, &pVBO);
-	glDeleteVertexArrays(1, &pVAO);
-	glDeleteBuffers(1, &pEBO);
-
 	////////////////////////////////////////
 
 	doneCurrent();
@@ -87,6 +83,21 @@ void TimelineGl::generate_ebo(std::vector<unsigned int>& indices, unsigned int& 
 	doneCurrent();
 }
 
+void TimelineGl::generate_vao(unsigned int& vao, unsigned int vbo, unsigned int ebo)
+{
+	makeCurrent();
+	glGenVertexArrays(1, &vao);
+	glBindVertexArray(vao);
+	glBindBuffer(GL_ARRAY_BUFFER, vbo);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
+	glEnableVertexAttribArray(0);
+	glEnableVertexAttribArray(1);
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)(2 * sizeof(float)));
+	glBindVertexArray(0);
+	doneCurrent();
+}
+
 void TimelineGl::initializeGL()
 {
 	if (_texture) return;
@@ -119,25 +130,15 @@ void TimelineGl::initializeGL()
 	_rect_shader_program->link();
 	_rect_shader_program->setUniformValue("texture1", 0);
 
+	glBindVertexArray(0);
+
 	//////////////////////////////////////////////
-
-	glGenVertexArrays(1, &pVAO);
-	glGenBuffers(1, &pVBO);
-	glGenBuffers(1, &pEBO); 
-
-	glBindVertexArray(pVAO);///////////////////////////////////////////////////////
-	glEnableVertexAttribArray(0);
-	glEnableVertexAttribArray(1);
 
 	_part_shader_program->addShaderFromSourceFile(QOpenGLShader::Vertex, ":/PiYing/square_icon.vert");
 	_part_shader_program->addShaderFromSourceFile(QOpenGLShader::Fragment, ":/PiYing/square_icon.frag");
 	if (!_part_shader_program->link()) QMessageBox::warning(this, "Error", "Part shader program link error");
 
 	_part_shader_program->setUniformValue("texture1", 0);
-
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-	glBindVertexArray(0);
 
 	// global setting
 
@@ -264,8 +265,6 @@ void TimelineGl::paint_parts()
 {
 	if (parts.size() == 0) return;
 
-	glBindVertexArray(pVAO);///////////////////////////////////////////////////////
-
 	_part_shader_program->bind();
 
 	float ratio = (width() * piYingGL->height()) / (float)(piYingGL->width() * height());
@@ -279,11 +278,7 @@ void TimelineGl::paint_parts()
 		x = -0.8f + (i % 5) * 0.4f;
 		y = 0.8f - (i / 5) * 0.4f;
 
-		glBindBuffer(GL_ARRAY_BUFFER, part->vbo());
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, part->ebo());
-
-		glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
-		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)(2 * sizeof(float)));
+		glBindVertexArray(part->vao());
 
 		scale = 0.38f / cus::max(part->width(), part->height());
 		_part_shader_program->setUniformValue("scale", scale);

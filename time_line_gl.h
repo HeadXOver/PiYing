@@ -35,6 +35,7 @@ public:
 
 	void generate_vbo(PointVector& pointVefctor, unsigned int& vbo);
 	void generate_ebo(std::vector<unsigned int>& indices, unsigned int& vbo);
+	void generate_vao(unsigned int& vao, unsigned int vbo, unsigned int ebo);
 
 protected:
 	void initializeGL() override;
@@ -52,7 +53,6 @@ private:
 
 private:
 	unsigned int tVAO = 0, tVBO = 0, tEBO = 0;
-	unsigned int pVAO = 0, pVBO = 0, pEBO = 0;
 
 	int _current_select{ -1 };
 
