@@ -37,5 +37,7 @@
         <file>libre_triangle_select_S.png</file>
         <file>rect_triangle_select.png</file>
         <file>rect_triangle_select_S.png</file>
+        <file>part_select_rect.frag</file>
+        <file>part_select_rect.vert</file>
     </qresource>
 </RCC>

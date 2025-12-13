@@ -207,6 +207,8 @@
     <None Include="chEditershapes.vert" />
     <None Include="darkStyle.qss" />
     <None Include="imageListStyle.qss" />
+    <None Include="part_select_rect.frag" />
+    <None Include="part_select_rect.vert" />
     <None Include="readme.md">
       <SubType>
       </SubType>

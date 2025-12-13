@@ -226,15 +226,6 @@
     <ClCompile Include="scale_trans.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="vert_groups.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="vert_group.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="part.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="ch_triangle_select.cpp">
       <Filter>Source Files\ChELementTool</Filter>
     </ClCompile>
@@ -246,6 +237,15 @@
     </ClCompile>
     <ClCompile Include="ch_triangle_libre_select.cpp">
       <Filter>Source Files\ChELementTool</Filter>
+    </ClCompile>
+    <ClCompile Include="part.cpp">
+      <Filter>Source Files\PiYingElement</Filter>
+    </ClCompile>
+    <ClCompile Include="vert_group.cpp">
+      <Filter>Source Files\PiYingElement</Filter>
+    </ClCompile>
+    <ClCompile Include="vert_groups.cpp">
+      <Filter>Source Files\PiYingElement</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -450,6 +450,12 @@
       <Filter>Shader</Filter>
     </None>
     <None Include="square_icon.frag">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="part_select_rect.vert">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="part_select_rect.frag">
       <Filter>Shader</Filter>
     </None>
   </ItemGroup>

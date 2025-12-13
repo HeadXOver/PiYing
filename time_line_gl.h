@@ -66,6 +66,7 @@ private:
 	QPointF lastMiddleButtonPos;
 
 	QOpenGLShaderProgram* _rect_shader_program;
+	QOpenGLShaderProgram* _rect_select_program;
 	QOpenGLShaderProgram* _part_shader_program;
 
 	std::unique_ptr<QOpenGLTexture> _texture;

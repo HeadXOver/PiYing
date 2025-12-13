@@ -20,6 +20,7 @@ TimelineGl::TimelineGl(QWidget* parent) : QOpenGLWidget()
 {
 	_rect_shader_program = new QOpenGLShaderProgram(this);
 	_part_shader_program = new QOpenGLShaderProgram(this);
+	_rect_select_program = new QOpenGLShaderProgram(this);
 
 	_scale_trans = new ScaleTrans();
 	_last_scale_trans = new ScaleTrans();
@@ -129,6 +130,12 @@ void TimelineGl::initializeGL()
 	_rect_shader_program->addShaderFromSourceFile(QOpenGLShader::Fragment, ":/PiYing/timeline_rect_shape.frag");
 	_rect_shader_program->link();
 	_rect_shader_program->setUniformValue("texture1", 0);
+
+	//////////////////////////////////////////////
+
+	_rect_select_program->addShaderFromSourceFile(QOpenGLShader::Vertex, ":/PiYing/part_select_rect.vert");
+	_rect_select_program->addShaderFromSourceFile(QOpenGLShader::Fragment, ":/PiYing/part_select_rect.frag");
+	_rect_select_program->link();
 
 	glBindVertexArray(0);
 
@@ -265,13 +272,24 @@ void TimelineGl::paint_parts()
 {
 	if (parts.size() == 0) return;
 
-	_part_shader_program->bind();
+	float x, y, scale;
+	const float ratio = (width() * piYingGL->height()) / (float)(piYingGL->width() * height());
 
-	float ratio = (width() * piYingGL->height()) / (float)(piYingGL->width() * height());
+	_rect_select_program->bind();
+
+	glBindVertexArray(tVAO);///////////////////////////////////////////////////////
+
+	_rect_select_program->setUniformValue("trans", QVector2D(-0.8f, 0.8f));
+	_rect_select_program->setUniformValue("ratio", ratio);
+
+	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+
+	////////////////////////////////////////////////////////////
+
+	_part_shader_program->bind();
 	_part_shader_program->setUniformValue("ratio", ratio);
 
 	Part* part;
-	float x, y, scale;
 	for (int i = 0; i < parts.size(); i++) {
 		part = parts[i];
 
