@@ -177,8 +177,6 @@ PiYing::~PiYing()
     safeDelete(splitTimelineOpenGL);
     safeDelete(splitListOpenGL);
     safeDelete(timeLineGL);
-
-    for (CtrlSlideWidget* item : sliderWidget) safeDelete(item);
 }
 
 int PiYing::getCurrentBgRow()

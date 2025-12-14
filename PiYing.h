@@ -76,7 +76,5 @@ public:
 	QListWidget* bgImageList = nullptr;
 	QListWidget* chImageList = nullptr;
 	QListWidget* voidListWidget;
-
-	QList<CtrlSlideWidget*> sliderWidget;
 };
 

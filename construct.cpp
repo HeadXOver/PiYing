@@ -3,6 +3,7 @@
 #include "image_transform.h"
 #include "ch_element_tool.h"
 #include "slide_applier.h"
+#include "ctrlSlideWidget.h"
 #include "image_texture.h"
 #include "point_vector.h"
 #include "point_vector_layer.h"
@@ -19,8 +20,7 @@
 
 PiYingGL::PiYingGL(PiYing& parent) : 
 	QOpenGLWidget(&parent), 
-	ref_PiYing(parent), 
-	ctrlSlideWidget(ref_PiYing.sliderWidget)
+	ref_PiYing(parent)
 {
 	editMode = EditMode::OverView;
 	_ch_tool_state = CharacterToolState::None;
@@ -155,4 +155,8 @@ PiYingGL::~PiYingGL()
 	for (Part* pt : parts) delete pt;
 
 	if (currentLayer) delete currentLayer;
+
+	auto safeDelete = [](QObject* obj) { if (obj && !obj->parent()) delete obj; };
+
+	for (CtrlSlideWidget* item : ctrlSlideWidget) safeDelete(item);
 }
