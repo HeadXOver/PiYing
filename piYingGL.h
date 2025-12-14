@@ -51,6 +51,7 @@ private:
 	void paintBackgrounds();
 	void paintCharacterTexture();
 	void paint_applied_texture();
+	void paint_selected_part();
 	void draw_view_rectangle();
 	void addChVert(const QPointF& point);
 	void addGlobalAction(QMenu* menu, const QList<QAction*> action);
@@ -113,6 +114,10 @@ public:
 	void addTriangle(int index1, int index2, const QPointF& point3);
 	void addTriangle(int index1, const QPointF& point2, const QPointF& point3);
 	void addTriangle(const QPointF& point1, const QPointF& point2, const QPointF& point3);
+
+	void generate_vbo(PointVector& pointVefctor, unsigned int& vbo);
+	void generate_ebo(std::vector<unsigned int>& indices, unsigned int& vbo);
+	void generate_vao(unsigned int& vao, unsigned int vbo, unsigned int ebo);
 
 	int get_group_num() const;
 

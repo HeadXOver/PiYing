@@ -25,9 +25,13 @@ public:
 	float height() const;
 	float width() const;
 
-	unsigned int vao() const;
-	unsigned int vbo() const;
-	unsigned int ebo() const;
+	unsigned int vao_timeline() const;
+	unsigned int vbo_timeline() const;
+	unsigned int ebo_timeline() const;
+
+	unsigned int vao_piying() const;
+	unsigned int vbo_piying() const;
+	unsigned int ebo_piying() const;
 
 private:
 	float _x;
@@ -35,7 +39,8 @@ private:
 	float _height;
 	float _width;
 
-	unsigned int _vao, _vbo, _ebo;
+	unsigned int _vao_timeline, _vbo_timeline, _ebo_timeline;
+	unsigned int _vao_piying, _vbo_piying, _ebo_piying;
 
 private:
 	QOpenGLTexture& _texture;

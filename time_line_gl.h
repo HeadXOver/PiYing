@@ -50,6 +50,8 @@ public:
 	void generate_vao(unsigned int& vao, unsigned int vbo, unsigned int ebo);
 	void init_part_cursor();
 
+	Part* get_current_part() const;
+
 protected:
 	void initializeGL() override;
 	void resizeGL(int w, int h) override;

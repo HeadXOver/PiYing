@@ -1,6 +1,7 @@
 #include "piYingGL.h"
 #include "ch_element_tool.h"
 #include "enum_edit_mode.h"
+#include "point_vector.h"
 
 #include <QOpenGLShaderProgram.h>
 
@@ -151,12 +152,49 @@ void PiYingGL::paintGL() {
 		if (ch_element_tool_) ch_element_tool_->draw();
 	}
 	else if (editMode == EditMode::controlSlide) {
-		paint_applied_texture();
-		if (_ch_tool_state != CharacterToolState::AddVertTrace) return;
-		draw_triangle_frame(true);
+		paint_selected_part();
 		if (ch_element_tool_) ch_element_tool_->draw();
 	}
 	else return;
 
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+}
+
+void PiYingGL::generate_vbo(PointVector& pointVefctor, unsigned int& vbo)
+{
+	makeCurrent();
+
+	glGenBuffers(1, &vbo);
+	glBindBuffer(GL_ARRAY_BUFFER, vbo);
+	glBufferData(GL_ARRAY_BUFFER, pointVefctor.float_size() * sizeof(float), pointVefctor.data(), GL_STATIC_DRAW);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+	doneCurrent();
+}
+
+void PiYingGL::generate_ebo(std::vector<unsigned int>& indices, unsigned int& ebo)
+{
+	makeCurrent();
+
+	glGenBuffers(1, &ebo);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned int), indices.data(), GL_STATIC_DRAW);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+	doneCurrent();
+}
+
+void PiYingGL::generate_vao(unsigned int& vao, unsigned int vbo, unsigned int ebo)
+{
+	makeCurrent();
+	glGenVertexArrays(1, &vao);
+	glBindVertexArray(vao);
+	glBindBuffer(GL_ARRAY_BUFFER, vbo);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
+	glEnableVertexAttribArray(0);
+	glEnableVertexAttribArray(1);
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)(2 * sizeof(float)));
+	glBindVertexArray(0);
+	doneCurrent();
 }

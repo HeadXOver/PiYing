@@ -104,6 +104,15 @@ void TimelineGl::init_part_cursor()
 	if (parts.size() > 0 && _part_cursor._index < 0) _part_cursor.set_cursor(0);
 }
 
+Part* TimelineGl::get_current_part() const
+{
+	if(parts.size() == 0) return nullptr;
+
+	if (_part_cursor._index < 0) return nullptr;
+
+	return parts[_part_cursor._index];
+}
+
 void TimelineGl::initializeGL()
 {
 	if (_texture) return;
@@ -224,7 +233,9 @@ void TimelineGl::mousePressEvent(QMouseEvent* event)
 			const int x = event->pos().x() * 5 / width();
 			const int y = event->pos().y() * 5 / (height() * _ratio);
 
-			if (5 * y + x >= parts.size()) return;
+			const int index = 5 * y + x;
+			if (index >= parts.size() || index == _part_cursor._index) return;
+
 			_part_cursor.set_cursor(5 * y + x);
 
 			update();
@@ -317,7 +328,7 @@ void TimelineGl::paint_parts()
 		x = -0.8f + (i % 5) * 0.4f;
 		y = 0.8f - (i / 5) * 0.4f;
 
-		glBindVertexArray(part->vao());
+		glBindVertexArray(part->vao_timeline());
 
 		scale = 0.38f / cus::max(part->width(), part->height());
 		_part_shader_program->setUniformValue("scale", scale);
@@ -337,6 +348,8 @@ void PartCursor::set_cursor(int index)
 
 	x = -0.8f + (index % 5) * 0.4f;
 	y = 0.8f - (index / 5) * 0.4f * timelineGl->ratio();
+
+	piYingGL->update();
 }
 
 void PartCursor::update()

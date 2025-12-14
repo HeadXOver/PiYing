@@ -8,10 +8,14 @@
 #include "vert_group.h"
 #include "base_math.h"
 #include "enum_edit_mode.h"
+#include "time_line_gl.h"
+#include "part.h"
+#include "global_objects.h"
 
 #include <qpainter>
 #include <qopengltexture>
 #include <QOpenGLShaderProgram.h>
+#include <qmessagebox>
 
 void PiYingGL::draw_selected_points(int nSelectedPoint)
 {
@@ -185,6 +189,24 @@ void PiYingGL::paint_applied_texture()
 	characterTextures[i]->bind();
 	chShaderProgram->setUniformValue("trc", getViewProjMatrix());
 	glDrawElements(GL_TRIANGLES, (GLsizei)characterTriangleIndices[i].size(), GL_UNSIGNED_INT, 0);
+
+	glBindVertexArray(0);
+}
+
+void PiYingGL::paint_selected_part()
+{
+	if(parts.size() == 0) return;
+
+	Part* currentPart = timelineGl->get_current_part();
+	if (!currentPart) return;
+
+	chShaderProgram->bind();
+	chShaderProgram->setUniformValue("trc", getViewProjMatrix());
+
+	glBindVertexArray(currentPart->vao_piying());
+
+	currentPart->bind_texture();
+	glDrawElements(GL_TRIANGLES, (GLsizei)currentPart->index_size(), GL_UNSIGNED_INT, 0);
 
 	glBindVertexArray(0);
 }

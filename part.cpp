@@ -6,6 +6,7 @@
 #include "base_math.h"
 
 #include "time_line_gl.h"
+#include "piYingGL.h"
 #include "global_objects.h"
 
 #include <qopengltexture>
@@ -66,9 +67,13 @@ Part::Part(
 	_height = top - bottom;
 	_width = right - left;
 
-	timelineGl->generate_vbo(*_vert_texture, _vbo);
-	timelineGl->generate_ebo(_indices, _ebo);
-	timelineGl->generate_vao(_vao, _vbo, _ebo);
+	timelineGl->generate_vbo(*_vert_texture, _vbo_timeline);
+	timelineGl->generate_ebo(_indices, _ebo_timeline);
+	timelineGl->generate_vao(_vao_timeline, _vbo_timeline, _ebo_timeline);
+
+	piYingGL->generate_vbo(*_vert_texture, _vbo_piying);
+	piYingGL->generate_ebo(_indices, _ebo_piying);
+	piYingGL->generate_vao(_vao_piying, _vbo_piying, _ebo_piying);
 }
 
 float* Part::float_data() const
@@ -116,17 +121,32 @@ float Part::width() const
 	return _width;
 }
 
-unsigned int Part::vao() const
+unsigned int Part::vao_timeline() const
 {
-	return _vao;
+	return _vao_timeline;
 }
 
-unsigned int Part::vbo() const
+unsigned int Part::vbo_timeline() const
 {
-	return _vbo;
+	return _vbo_timeline;
 }
 
-unsigned int Part::ebo() const
+unsigned int Part::ebo_timeline() const
 {
-	return _ebo;
+	return _ebo_timeline;
+}
+
+unsigned int Part::vao_piying() const
+{
+	return _vao_piying;
+}
+
+unsigned int Part::vbo_piying() const
+{
+	return _vbo_piying;
+}
+
+unsigned int Part::ebo_piying() const
+{
+	return _ebo_piying;
 }
