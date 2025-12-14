@@ -154,7 +154,7 @@ PiYing::PiYing(QWidget* parent) : QMainWindow(parent)
             "背景编辑",
             "角色纹理编辑",
             "角色骨骼编辑",
-            "控制器"
+            "拼合台"
         }
     );
     ui->statusBar->addWidget(modeBox);
