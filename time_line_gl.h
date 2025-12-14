@@ -28,6 +28,7 @@ struct PartCursor
 	float y{ 0.f };
 
 	void set_cursor(int index);
+	void update();
 };
 
 class TimelineGl : public QOpenGLWidget, QOpenGLFunctions_3_3_Core

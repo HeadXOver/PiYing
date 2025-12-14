@@ -160,6 +160,7 @@ void TimelineGl::initializeGL()
 void TimelineGl::resizeGL(int w, int h)
 {
     _ratio = (width() * piYingGL->height()) / (float)(piYingGL->width() * height());
+	_part_cursor.update();
 }
 
 void TimelineGl::paintGL()
@@ -336,4 +337,9 @@ void PartCursor::set_cursor(int index)
 
 	x = -0.8f + (index % 5) * 0.4f;
 	y = 0.8f - (index / 5) * 0.4f * timelineGl->ratio();
+}
+
+void PartCursor::update()
+{
+	y = 0.8f - (_index / 5) * 0.4f * timelineGl->ratio();
 }
