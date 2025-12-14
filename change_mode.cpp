@@ -134,6 +134,7 @@ void PiYing::change_edit_mode_character_constrol_slider()
 
 void PiYing::update_timeline()
 {
+    timeLineGL->init_part_cursor();
     timeLineGL->update();
 }
 

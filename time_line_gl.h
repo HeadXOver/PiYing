@@ -21,6 +21,15 @@ enum class UiType
 	Timeline,
 };
 
+struct PartCursor
+{
+	int _index{ -1 };
+	float x{ 0.f };
+	float y{ 0.f };
+
+	void set_cursor(int index);
+};
+
 class TimelineGl : public QOpenGLWidget, QOpenGLFunctions_3_3_Core
 {
 	Q_OBJECT
@@ -30,15 +39,19 @@ public:
 	~TimelineGl();
 
 	float x_map_to_gl(const float x) const;
+	float ratio() const { return _ratio; }
+
 	void set_to_timeline();
 	void set_to_part();
 
 	void generate_vbo(PointVector& pointVefctor, unsigned int& vbo);
 	void generate_ebo(std::vector<unsigned int>& indices, unsigned int& vbo);
 	void generate_vao(unsigned int& vao, unsigned int vbo, unsigned int ebo);
+	void init_part_cursor();
 
 protected:
 	void initializeGL() override;
+	void resizeGL(int w, int h) override;
 	void paintGL() override;
 
 	void wheelEvent(QWheelEvent* ev) override;
@@ -57,6 +70,7 @@ private:
 	int _current_select{ -1 };
 
 	float time_cursor{ 0.f };
+	float _ratio;
 
 	bool _draging_cursor{ false };
 
@@ -73,6 +87,8 @@ private:
 
 	std::vector<Timeline*> _timelines;
 
-	UiType _ui_type = UiType::Timeline;
+	UiType _ui_type;
+
+	PartCursor _part_cursor;
 };
 

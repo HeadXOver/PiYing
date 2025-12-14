@@ -217,9 +217,6 @@
     <ClCompile Include="control_slider.cpp">
       <Filter>Source Files\piYingGL</Filter>
     </ClCompile>
-    <ClCompile Include="time_line_gl.cpp">
-      <Filter>Source Files\PiYingQObject</Filter>
-    </ClCompile>
     <ClCompile Include="time_line.cpp">
       <Filter>Source Files\PiYingElement</Filter>
     </ClCompile>
@@ -245,6 +242,9 @@
       <Filter>Source Files\PiYingElement</Filter>
     </ClCompile>
     <ClCompile Include="vert_groups.cpp">
+      <Filter>Source Files\PiYingElement</Filter>
+    </ClCompile>
+    <ClCompile Include="time_line_gl.cpp">
       <Filter>Source Files\PiYingElement</Filter>
     </ClCompile>
   </ItemGroup>
