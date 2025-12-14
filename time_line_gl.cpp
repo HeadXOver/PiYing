@@ -305,8 +305,6 @@ void TimelineGl::paint_parts()
 {
 	if (parts.size() == 0) return;
 
-	float x, y, scale;
-
 	_rect_select_program->bind();
 
 	glBindVertexArray(tVAO);///////////////////////////////////////////////////////
@@ -321,6 +319,7 @@ void TimelineGl::paint_parts()
 	_part_shader_program->bind();
 	_part_shader_program->setUniformValue("ratio", _ratio);
 
+	float x, y, scale;
 	Part* part;
 	for (int i = 0; i < parts.size(); i++) {
 		part = parts[i];

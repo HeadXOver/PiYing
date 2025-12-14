@@ -96,9 +96,24 @@ size_t Part::index_size() const
 	return _indices.size();
 }
 
+size_t Part::vertex_size() const
+{
+	return _vert_texture->size();
+}
+
+QPointF Part::get_vert(int index, bool isSkelen) const
+{
+	return (*_vert_texture)[index + index + (isSkelen ? 0 : 1)];
+}
+
 void Part::bind_texture()
 {
 	_texture.bind();
+}
+
+void Part::add_trace(int index, const QPolygonF& polygon)
+{
+
 }
 
 float Part::x() const

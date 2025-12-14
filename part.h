@@ -6,6 +6,8 @@
 
 class QOpenGLTexture;
 class PointVector;
+class QPointF;
+class QPolygonF;
 
 class Part final
 {
@@ -17,8 +19,12 @@ public:
 
 	size_t float_size() const;
 	size_t index_size() const;
+	size_t vertex_size() const;
+
+	QPointF get_vert(int index, bool isSkelen) const;
 
 	void bind_texture();
+	void add_trace(int index, const QPolygonF& polygon);
 
 	float x() const;
 	float y() const;
