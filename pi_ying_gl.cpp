@@ -97,7 +97,7 @@ void PiYingGL::addCharacter(const QString& imageName)
 	sliderWidget->setStyleSheet(PiYing::SLIDER_WIDGET_STYLE_SHEET);
 	sliderWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
-	ref_PiYing.sliderWidget.append(sliderWidget);
+	ctrlSlideWidget.append(sliderWidget);
 
 	if (getCurrentChRow() < 0) {
 		ref_PiYing.chImageList->setCurrentRow(0);

@@ -9,7 +9,7 @@
 
 void PiYingGL::add_trace(int index, const QPolygonF& polygon)
 {
-    CtrlSlideWidget* sliders = ref_PiYing.sliderWidget[getCurrentChRow()];
+    CtrlSlideWidget* sliders = ctrlSlideWidget[getCurrentChRow()];
     QList<QString> items = sliders->get_slider_names();
 
     QMenu tempMenu(this);

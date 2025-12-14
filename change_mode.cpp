@@ -3,6 +3,7 @@
 #include "global_objects.h"
 #include "tool_button.h"
 #include "ctrlSlideWidget.h"
+#include "part.h"
 #include "time_line_gl.h"
 #include "enum_edit_mode.h"
 
@@ -107,8 +108,9 @@ void PiYing::change_edit_mode_character_skeleton()
 void PiYing::change_edit_mode_character_constrol_slider()
 {
     splitListOpenGL->widget(0)->setParent(nullptr);
-    if(getCurrentChRow() >= 0)
-        splitListOpenGL->insertWidget(0, sliderWidget[getCurrentChRow()]);
+    Part* part = timelineGl->get_current_part();
+    if(part)
+        splitListOpenGL->insertWidget(0, part->slider_widget());
     else
         splitListOpenGL->insertWidget(0, voidListWidget);
     piYingGL->setEditMode(EditMode::controlSlide);

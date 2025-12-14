@@ -7,6 +7,7 @@ class QVBoxLayout;
 class PiYingGL;
 class SlideApplier;
 class QPolygonF;
+class QLabel;
 
 class CtrlSlideWidget : public QWidget
 {
@@ -24,6 +25,8 @@ public:
     
     int get_id(int index) const;
 
+    void set_widget_name(const QString& name);
+
 private:
     void setSlider(CtrlSlideLayout* slider);
     void removeSlider(CtrlSlideLayout* slider);
@@ -37,6 +40,8 @@ private:
     QVBoxLayout* sliderLayout = nullptr;
     int sliderCount = 0;
     PiYingGL& piYingGL;
+
+    QLabel* nameLabel = nullptr;
 
     std::unique_ptr<SlideApplier> slide_applier;
 };

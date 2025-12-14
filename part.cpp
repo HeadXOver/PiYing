@@ -5,8 +5,10 @@
 
 #include "base_math.h"
 
+#include "ctrlSlideWidget.h"
 #include "time_line_gl.h"
 #include "piYingGL.h"
+#include "PiYing.h"
 #include "global_objects.h"
 
 #include <qopengltexture>
@@ -19,6 +21,10 @@ Part::Part(
 ) :
 	_texture(texture)
 {
+	_sliderWidget = new CtrlSlideWidget(*piYingGL, "part");
+	_sliderWidget->setStyleSheet(PiYing::SLIDER_WIDGET_STYLE_SHEET);
+	_sliderWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+
 	_vert_texture = std::make_unique<PointVector>();
 	PointVectorLayer layer(*_vert_texture);
 
@@ -164,4 +170,9 @@ unsigned int Part::vbo_piying() const
 unsigned int Part::ebo_piying() const
 {
 	return _ebo_piying;
+}
+
+CtrlSlideWidget* Part::slider_widget() const
+{
+	return _sliderWidget;
 }

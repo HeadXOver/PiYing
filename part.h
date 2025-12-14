@@ -8,6 +8,7 @@ class QOpenGLTexture;
 class PointVector;
 class QPointF;
 class QPolygonF;
+class CtrlSlideWidget;
 
 class Part final
 {
@@ -39,6 +40,8 @@ public:
 	unsigned int vbo_piying() const;
 	unsigned int ebo_piying() const;
 
+	CtrlSlideWidget* slider_widget() const;
+
 private:
 	float _x;
 	float _y;
@@ -53,4 +56,6 @@ private:
 
 	std::vector<unsigned int> _indices;
 	std::unique_ptr<PointVector> _vert_texture;
+
+	CtrlSlideWidget* _sliderWidget;
 };

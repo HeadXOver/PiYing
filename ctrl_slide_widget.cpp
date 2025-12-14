@@ -33,9 +33,10 @@ CtrlSlideWidget::CtrlSlideWidget(PiYingGL& gl, const QString& name, QWidget* par
     );
 
     QHBoxLayout* headLayout = new QHBoxLayout(this);
+    nameLabel = new QLabel(name, this);
 
     headLayout->addWidget(headButton);
-    headLayout->addWidget(new QLabel(name, this));
+    headLayout->addWidget(nameLabel);
     headLayout->addStretch();
 
     sliderLayout->addLayout(headLayout);
@@ -134,4 +135,9 @@ QList<QString> CtrlSlideWidget::get_slider_names()
 int CtrlSlideWidget::get_id(int index) const 
 {
     return sliderList[index]->id_;
+}
+
+void CtrlSlideWidget::set_widget_name(const QString& name)
+{
+    nameLabel->setText(name);
 }
