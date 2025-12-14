@@ -205,9 +205,6 @@
     <ClCompile Include="pi_ying.cpp">
       <Filter>Source Files\PiYing</Filter>
     </ClCompile>
-    <ClCompile Include="add_trace.cpp">
-      <Filter>Source Files\piYingGL</Filter>
-    </ClCompile>
     <ClCompile Include="slide_applier.cpp">
       <Filter>Source Files\PiYingElement</Filter>
     </ClCompile>

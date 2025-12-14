@@ -13,6 +13,8 @@
 
 #include <qopengltexture>
 #include <qpointf>
+#include <qmessagebox>
+#include <qmenu>
 
 Part::Part(
 	QOpenGLTexture& texture,
@@ -119,7 +121,25 @@ void Part::bind_texture()
 
 void Part::add_trace(int index, const QPolygonF& polygon)
 {
+	QList<QString> items = _sliderWidget->get_slider_names();
 
+	QMenu tempMenu(piYingGL);
+	tempMenu.addAction(QString("新建控制器"));
+
+	for (int i = 0; i < items.size(); ++i)
+		tempMenu.addAction(QString("绑定到: %1").arg(items[i]));
+
+	QAction* act = tempMenu.exec(QCursor::pos());
+	if (!act) return;
+
+	int id = tempMenu.actions().indexOf(act) - 1;
+
+	if (id == -1) {
+		_sliderWidget->addSlider();
+		id = items.size();
+	}
+
+	if (!_sliderWidget->add_trace(_sliderWidget->get_id(id), index, polygon)) QMessageBox::warning(piYingGL, "警告", "轨迹重复");
 }
 
 float Part::x() const

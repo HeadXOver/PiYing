@@ -93,12 +93,6 @@ void PiYingGL::addCharacter(const QString& imageName)
 
 	ref_PiYing.chImageList->addItem(item);
 
-	CtrlSlideWidget* sliderWidget = new CtrlSlideWidget(*this, "1");
-	sliderWidget->setStyleSheet(PiYing::SLIDER_WIDGET_STYLE_SHEET);
-	sliderWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-
-	ctrlSlideWidget.append(sliderWidget);
-
 	if (getCurrentChRow() < 0) {
 		ref_PiYing.chImageList->setCurrentRow(0);
 		currentLayer = new PointVectorLayer(*characterVerts[0]);

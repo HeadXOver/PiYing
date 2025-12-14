@@ -140,7 +140,6 @@
     <ClCompile Include="tool_button.cpp" />
     <ClCompile Include="change_mode.cpp" />
     <ClCompile Include="select_tool.cpp" />
-    <ClCompile Include="add_trace.cpp" />
     <ClCompile Include="control_slider.cpp" />
     <ClCompile Include="vert_group.cpp" />
     <ClCompile Include="vert_groups.cpp" />

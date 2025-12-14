@@ -106,7 +106,6 @@ public:
 	void update_ch_verts();
 	void update_selected_verts(const std::vector<float>& selectedPoints);
 	void update_selected_triangle(const unsigned int* data, int size);
-	void add_trace(int index, const QPolygonF& polygon);
 	void add_part(const QList<unsigned int>& indices);
 
 	void add_point_to_vert(const QPointF& p);
@@ -209,6 +208,4 @@ private:
 	QMenu* rightButtonMenu;
 
 	std::unique_ptr<ChElementTool> ch_element_tool_;
-
-	QList<CtrlSlideWidget*> ctrlSlideWidget;
 };
