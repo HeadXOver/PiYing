@@ -130,6 +130,12 @@ void PiYingGL::initializeGL()
 	/////////////////////////////////////////////
 
 	// global setting
+	chShaderProgram->bind();
+	chShaderProgram->setUniformValue("trc", QMatrix4x4());
+	_selected_vert_shader_program->bind();
+	_selected_vert_shader_program->setUniformValue("trc", QMatrix4x4());
+	_texture_tri_shader_program->bind();
+	_texture_tri_shader_program->setUniformValue("trc", QMatrix4x4());
 
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);

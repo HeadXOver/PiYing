@@ -69,7 +69,7 @@ void PiYingGL::appendBgList(const QImage& image)
 
 	ref_PiYing.bgImageList->addItem(item);
 
-	if (ref_PiYing.getCurrentBgRow() < 0) ref_PiYing.bgImageList->setCurrentRow(0);
+	if (getCurrentBgRow() < 0) ref_PiYing.bgImageList->setCurrentRow(0);
 }
 
 void PiYingGL::addCharacter(const QString& imageName)
@@ -318,6 +318,5 @@ int PiYingGL::get_group_num() const
 {
 	const int currentVector = getCurrentChRow();
 	if (currentVector < 0) return 0;
-
-	return _character_vert_groups[currentVector]->group_num();
+ 	return _character_vert_groups[currentVector]->group_num();
 }
