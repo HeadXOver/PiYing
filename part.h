@@ -3,12 +3,14 @@
 #include <qlist>
 #include <vector>
 #include <memory>
+#include <map>
 
 class QOpenGLTexture;
 class PointVector;
 class QPointF;
 class QPolygonF;
 class CtrlSlideWidget;
+class CharacterTrace;
 
 class Part final
 {
@@ -26,6 +28,7 @@ public:
 
 	void bind_texture();
 	void add_trace(int index, const QPolygonF& polygon);
+	void apply_slide(const std::map<int, std::unique_ptr<CharacterTrace>>& traces, int value);
 
 	float x() const;
 	float y() const;

@@ -45,7 +45,8 @@ public:
 	void set_to_timeline();
 	void set_to_part();
 
-	void generate_vbo(PointVector& pointVefctor, unsigned int& vbo);
+	void generate_vbo(PointVector& pointVector, unsigned int& vbo);
+	void update_vbo(PointVector& pointVector, unsigned int vbo);
 	void generate_ebo(std::vector<unsigned int>& indices, unsigned int& vbo);
 	void generate_vao(unsigned int& vao, unsigned int vbo, unsigned int ebo);
 	void init_part_cursor();

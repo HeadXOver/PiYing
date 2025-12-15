@@ -12,6 +12,5 @@ public:
 
 private:
     QPolygonF trace;
-    int current_position = 0;
 };
 

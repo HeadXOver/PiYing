@@ -9,6 +9,7 @@
 #include "time_line_gl.h"
 #include "piYingGL.h"
 #include "PiYing.h"
+#include "character_trace.h"
 #include "global_objects.h"
 
 #include <qopengltexture>
@@ -140,6 +141,18 @@ void Part::add_trace(int index, const QPolygonF& polygon)
 	}
 
 	if (!_sliderWidget->add_trace(_sliderWidget->get_id(id), index, polygon)) QMessageBox::warning(piYingGL, "警告", "轨迹重复");
+}
+
+void Part::apply_slide(const std::map<int, std::unique_ptr<CharacterTrace>>& traces, int value)
+{
+	PointVectorLayer layer(*_vert_texture);
+
+	for (const auto& [key, val] : traces) {
+		layer.set_point(true, key, val->get_point(value));
+	}
+
+	timelineGl->update_vbo(*_vert_texture, _vbo_piying);
+	piYingGL->update();
 }
 
 float Part::x() const

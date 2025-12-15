@@ -23,7 +23,6 @@ public:
     QLabel* label;
     QSlider* slider;
     QPushButton* rightButton;
-    PiYingGL& piYingGL;
     SlideApplier& slide_applier;
     int id_;
 };

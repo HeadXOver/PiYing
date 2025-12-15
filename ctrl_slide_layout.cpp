@@ -2,7 +2,9 @@
 #include "ctrlSlideWidget.h"
 #include "slide_applier.h"
 
-#include "piYingGL.h"
+#include "time_line_gl.h"
+#include "part.h"
+#include "global_objects.h"
 
 #include <qlabel>
 #include <qslider>
@@ -12,7 +14,6 @@
 #include <qmenu>
 
 CtrlSlideLayout::CtrlSlideLayout(PiYingGL& gl, SlideApplier& slideApplier, QString labelName, int min, int max, int defaultValue, int id, QWidget* parent) :
-    piYingGL(gl), 
     id_(id), QWidget(parent),
     slide_applier(slideApplier)
 {
@@ -34,7 +35,8 @@ CtrlSlideLayout::CtrlSlideLayout(PiYingGL& gl, SlideApplier& slideApplier, QStri
 
     connect(slider, &QSlider::valueChanged, this, [this](int value)
         {
-            piYingGL.controlSlide(slide_applier.get_traces(id_), value);
+            Part* part = timelineGl->get_current_part();
+            if(part) part->apply_slide(slide_applier.get_traces(id_), value);
         }
     );
 

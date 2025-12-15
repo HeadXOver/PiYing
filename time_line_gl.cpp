@@ -60,15 +60,24 @@ void TimelineGl::set_to_part()
 	_ui_type = UiType::Part;
 }
 
-void TimelineGl::generate_vbo(PointVector& pointVefctor, unsigned int& vbo)
+void TimelineGl::generate_vbo(PointVector& pointVector, unsigned int& vbo)
 {
 	makeCurrent();
 
 	glGenBuffers(1, &vbo);
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
-	glBufferData(GL_ARRAY_BUFFER, pointVefctor.float_size() * sizeof(float), pointVefctor.data(), GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, pointVector.float_size() * sizeof(float), pointVector.data(), GL_STATIC_DRAW);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
+	doneCurrent();
+}
+
+void TimelineGl::update_vbo(PointVector& pointVector, unsigned int vbo)
+{
+	makeCurrent();
+	glBindBuffer(GL_ARRAY_BUFFER, vbo);
+	glBufferData(GL_ARRAY_BUFFER, pointVector.float_size() * sizeof(float), pointVector.data(), GL_STATIC_DRAW);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	doneCurrent();
 }
 
