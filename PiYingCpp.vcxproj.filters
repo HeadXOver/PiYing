@@ -244,6 +244,9 @@
     <ClCompile Include="time_line_gl.cpp">
       <Filter>Source Files\PiYingElement</Filter>
     </ClCompile>
+    <ClCompile Include="ViewData.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="static_handle_zone.h">

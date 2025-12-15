@@ -23,7 +23,6 @@ void PiYingGL::draw_selected_points(int nSelectedPoint)
 	glBindBuffer(GL_ARRAY_BUFFER, svVBO);
 	_selected_vert_shader_program->bind();
 
-	_selected_vert_shader_program->setUniformValue("trc", getViewProjMatrix());
 	_selected_vert_shader_program->setUniformValue("is_out", true);
 	glDrawArrays(GL_POINTS, 0, nSelectedPoint);
 	_selected_vert_shader_program->setUniformValue("is_out", false);
@@ -46,7 +45,6 @@ void PiYingGL::draw_selected_triangle(int nSelectedPoint)
 	_texture_tri_shader_program->bind();
 
 	_texture_tri_shader_program->setUniformValue("is_skelen", editMode == EditMode::characterSkeleton);
-	_texture_tri_shader_program->setUniformValue("trc", getViewProjMatrix());
 	_texture_tri_shader_program->setUniformValue("is_line", false);
 	_texture_tri_shader_program->setUniformValue("is_selected", true);
 	glDrawElements(GL_TRIANGLES, nSelectedPoint * 3, GL_UNSIGNED_INT, 0);
@@ -66,7 +64,6 @@ void PiYingGL::draw_triangle_frame(bool isSkelen)
 	_texture_tri_shader_program->bind();
 
 	_texture_tri_shader_program->setUniformValue("is_skelen", isSkelen);
-	_texture_tri_shader_program->setUniformValue("trc", getViewProjMatrix());
 	_texture_tri_shader_program->setUniformValue("is_line", false);
 	_texture_tri_shader_program->setUniformValue("is_selected", false);
 	glDrawElements(GL_TRIANGLES, (GLsizei)characterTriangleIndices[currentVector].size(), GL_UNSIGNED_INT, 0);
@@ -187,7 +184,6 @@ void PiYingGL::paint_applied_texture()
 	chShaderProgram->bind();
 
 	characterTextures[i]->bind();
-	chShaderProgram->setUniformValue("trc", getViewProjMatrix());
 	glDrawElements(GL_TRIANGLES, (GLsizei)characterTriangleIndices[i].size(), GL_UNSIGNED_INT, 0);
 
 	glBindVertexArray(0);
@@ -201,7 +197,6 @@ void PiYingGL::paint_selected_part()
 	if (!currentPart) return;
 
 	chShaderProgram->bind();
-	chShaderProgram->setUniformValue("trc", getViewProjMatrix());
 
 	glBindVertexArray(currentPart->vao_piying());
 
@@ -210,7 +205,6 @@ void PiYingGL::paint_selected_part()
 
 	_texture_tri_shader_program->bind();
 	_texture_tri_shader_program->setUniformValue("is_skelen", false);
-	_texture_tri_shader_program->setUniformValue("trc", getViewProjMatrix());
 	_texture_tri_shader_program->setUniformValue("is_selected", false);
 	_texture_tri_shader_program->setUniformValue("is_line", true);
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);   // 把填充改成“线框”
@@ -245,6 +239,15 @@ void PiYingGL::update_ch_verts()
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, characterTriangleIndices[currentVector].size() * sizeof(unsigned int), characterTriangleIndices[currentVector].data(), GL_DYNAMIC_DRAW);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+	doneCurrent();
+}
+
+void PiYingGL::update_trc()
+{
+	makeCurrent();
+	chShaderProgram->setUniformValue("trc", getViewProjMatrix());
+	_selected_vert_shader_program->setUniformValue("trc", getViewProjMatrix());
+	_texture_tri_shader_program->setUniformValue("trc", getViewProjMatrix());
 	doneCurrent();
 }
 

@@ -143,6 +143,7 @@
     <ClCompile Include="control_slider.cpp" />
     <ClCompile Include="vert_group.cpp" />
     <ClCompile Include="vert_groups.cpp" />
+    <ClCompile Include="ViewData.cpp" />
     <QtRcc Include="PiYing.qrc" />
     <QtUic Include="PiYing.ui" />
     <QtMoc Include="PiYing.h" />

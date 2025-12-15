@@ -9,8 +9,9 @@ class ViewData : public QObject
 
 public:
     explicit ViewData(QObject* parent = nullptr) : QObject(parent), m_value(0.f) {}
+    explicit ViewData(float value, QObject* parent = nullptr) : QObject(parent), m_value(value) {}
     inline float value() const { return m_value; }
-    void setValue(float v) { if (m_value != v) { m_value = v; emit valueChanged(v); } }
+    void setValue(float v);
 
 signals:
     void valueChanged(float newValue);

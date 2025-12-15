@@ -104,6 +104,7 @@ public:
 	void draw_rectangle(float cx, float cy, float width, float height);
 	void draw_group_rectangle(int groupIndex);
 	void update_ch_verts();
+	void update_trc();
 	void update_selected_verts(const std::vector<float>& selectedPoints);
 	void update_selected_triangle(const unsigned int* data, int size);
 	void add_part(const QList<unsigned int>& indices);

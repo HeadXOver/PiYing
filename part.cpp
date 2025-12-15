@@ -77,11 +77,11 @@ Part::Part(
 	_width = right - left;
 
 	timelineGl->generate_vbo(*_vert_texture, _vbo);
-	timelineGl->generate_ebo(_indices, _ebo_timeline);
-	timelineGl->generate_vao(_vao_timeline, _vbo, _ebo_timeline);
+	timelineGl->generate_ebo(_indices, _ebo);
+	timelineGl->generate_vao(_vao_timeline, _vbo, _ebo);
 
-	piYingGL->generate_ebo(_indices, _ebo_timeline);
-	piYingGL->generate_vao(_vao_piying, _vbo, _ebo_timeline);
+	piYingGL->generate_ebo(_indices, _ebo);
+	piYingGL->generate_vao(_vao_piying, _vbo, _ebo);
 }
 
 float* Part::float_data() const

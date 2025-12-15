@@ -46,8 +46,9 @@ private:
 	float _height;
 	float _width;
 
-	unsigned int _vao_timeline, _vbo, _ebo_timeline;
+	unsigned int _vao_timeline;
 	unsigned int _vao_piying;
+	unsigned int _vbo, _ebo;
 
 private:
 	QOpenGLTexture& _texture;

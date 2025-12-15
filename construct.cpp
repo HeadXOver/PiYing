@@ -19,7 +19,8 @@
 
 PiYingGL::PiYingGL(PiYing& parent) : 
 	QOpenGLWidget(&parent), 
-	ref_PiYing(parent)
+	ref_PiYing(parent),
+	viewScale(1.f)
 {
 	editMode = EditMode::OverView;
 	_ch_tool_state = CharacterToolState::None;
@@ -31,8 +32,6 @@ PiYingGL::PiYingGL(PiYing& parent) :
 	_rectangle_shader_program = new QOpenGLShaderProgram(this);
 
 	lastImageTransform =std::make_unique<ImageTransform>();
-
-	viewScale.setValue(1.0f);
 	
 	float ratio = 16.f / 9.f;
 	proj.ortho(-ratio, ratio, -1, 1, -1, 1);
