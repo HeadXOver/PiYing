@@ -8,5 +8,5 @@ uniform bool is_skelen;
 
 void main()
 {
-	gl_Position = trc * (is_skelen ? vec4(aPos_s.x, aPos_s.y, 0.f, 1.0f) : vec4(aPos.x, aPos.y, 0.f, 1.0f));
+	gl_Position = trc * (is_skelen ? vec4(aPos_s, 0.f, 1.0f) : vec4(aPos, 0.f, 1.0f));
 }

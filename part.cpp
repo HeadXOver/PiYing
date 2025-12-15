@@ -151,7 +151,9 @@ void Part::apply_slide(const std::map<int, std::unique_ptr<CharacterTrace>>& tra
 		layer.set_point(true, key, val->get_point(value));
 	}
 
-	timelineGl->update_vbo(*_vert_texture, _vbo_piying);
+	timelineGl->update_vbo(*_vert_texture, _vbo_timeline);
+	piYingGL->update_vbo(*_vert_texture, _vbo_piying);
+	timelineGl->update();
 	piYingGL->update();
 }
 
