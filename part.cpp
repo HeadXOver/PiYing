@@ -152,10 +152,12 @@ void Part::apply_slide(const std::map<int, std::unique_ptr<CharacterTrace>>& tra
 	}
 
 	timelineGl->update_vbo(*_vert_texture, _vbo_timeline);
-	piYingGL->update_vbo(*_vert_texture, _vbo_piying);
+	timelineGl->update_vbo(*_vert_texture, _vbo_piying);
 	timelineGl->update();
 	piYingGL->update();
 }
+
+#pragma region [get value]
 
 float Part::x() const
 {
@@ -211,3 +213,5 @@ CtrlSlideWidget* Part::slider_widget() const
 {
 	return _sliderWidget;
 }
+
+#pragma endregion

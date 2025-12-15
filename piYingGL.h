@@ -115,7 +115,6 @@ public:
 	void addTriangle(const QPointF& point1, const QPointF& point2, const QPointF& point3);
 
 	void generate_vbo(PointVector& pointVefctor, unsigned int& vbo);
-	void update_vbo(PointVector& pointVector, unsigned int vbo);
 	void generate_ebo(std::vector<unsigned int>& indices, unsigned int& vbo);
 	void generate_vao(unsigned int& vao, unsigned int vbo, unsigned int ebo);
 
