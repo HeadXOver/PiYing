@@ -36,11 +36,7 @@ public:
 	float width() const;
 
 	unsigned int vao_timeline() const;
-	unsigned int vbo_timeline() const;
-	unsigned int ebo_timeline() const;
-
 	unsigned int vao_piying() const;
-	unsigned int ebo_piying() const;
 
 	CtrlSlideWidget* slider_widget() const;
 
@@ -50,8 +46,8 @@ private:
 	float _height;
 	float _width;
 
-	unsigned int _vao_timeline, _vbo_timeline, _ebo_timeline;
-	unsigned int _vao_piying, _ebo_piying;
+	unsigned int _vao_timeline, _vbo, _ebo_timeline;
+	unsigned int _vao_piying;
 
 private:
 	QOpenGLTexture& _texture;

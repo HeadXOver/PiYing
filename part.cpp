@@ -76,12 +76,12 @@ Part::Part(
 	_height = top - bottom;
 	_width = right - left;
 
-	timelineGl->generate_vbo(*_vert_texture, _vbo_timeline);
+	timelineGl->generate_vbo(*_vert_texture, _vbo);
 	timelineGl->generate_ebo(_indices, _ebo_timeline);
-	timelineGl->generate_vao(_vao_timeline, _vbo_timeline, _ebo_timeline);
+	timelineGl->generate_vao(_vao_timeline, _vbo, _ebo_timeline);
 
-	piYingGL->generate_ebo(_indices, _ebo_piying);
-	piYingGL->generate_vao(_vao_piying, _vbo_timeline, _ebo_piying);
+	piYingGL->generate_ebo(_indices, _ebo_timeline);
+	piYingGL->generate_vao(_vao_piying, _vbo, _ebo_timeline);
 }
 
 float* Part::float_data() const
@@ -150,7 +150,7 @@ void Part::apply_slide(const std::map<int, std::unique_ptr<CharacterTrace>>& tra
 		layer.set_point(true, key, val->get_point(value));
 	}
 
-	timelineGl->update_vbo(*_vert_texture, _vbo_timeline);
+	timelineGl->update_vbo(*_vert_texture, _vbo);
 	timelineGl->update();
 	piYingGL->update();
 }
@@ -182,24 +182,9 @@ unsigned int Part::vao_timeline() const
 	return _vao_timeline;
 }
 
-unsigned int Part::vbo_timeline() const
-{
-	return _vbo_timeline;
-}
-
-unsigned int Part::ebo_timeline() const
-{
-	return _ebo_timeline;
-}
-
 unsigned int Part::vao_piying() const
 {
 	return _vao_piying;
-}
-
-unsigned int Part::ebo_piying() const
-{
-	return _ebo_piying;
 }
 
 CtrlSlideWidget* Part::slider_widget() const
