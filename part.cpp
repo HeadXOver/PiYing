@@ -155,6 +155,32 @@ void Part::apply_slide(const std::map<int, std::unique_ptr<CharacterTrace>>& tra
 	piYingGL->update();
 }
 
+void Part::update_scale()
+{
+	PointVectorLayer layer(*_vert_texture);
+
+	const QPointF& firstPoint = layer.get(0, true);
+	float top = firstPoint.y();
+	float bottom = firstPoint.y();
+	float left = firstPoint.x();
+	float right = firstPoint.x();
+
+	QPointF eachPoint;
+	for (unsigned int i = 1; i < layer.size(); ++i) {
+		eachPoint = layer.get(i, true);
+		top = cus::max(top, eachPoint.y());
+		bottom = cus::min(bottom, eachPoint.y());
+		left = cus::min(left, eachPoint.x());
+		right = cus::max(right, eachPoint.x());
+	}
+
+	_x = (left + right) / 2.f;
+	_y = (top + bottom) / 2.f;
+
+	_height = top - bottom;
+	_width = right - left;
+}
+
 #pragma region [get value]
 
 float Part::x() const

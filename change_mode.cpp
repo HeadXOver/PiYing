@@ -14,15 +14,15 @@
 
 namespace {
 
-    constexpr void(*change_edit_mode[])(PiYing* piYing) = {
-        [](PiYing* piYing) { piYing->change_edit_mode_overview(); },
-        [](PiYing* piYing) { piYing->change_edit_mode_background(); },
-        [](PiYing* piYing) { piYing->change_edit_mode_character_texture(); },
-        [](PiYing* piYing) { piYing->change_edit_mode_character_skeleton(); },
-        [](PiYing* piYing) { piYing->change_edit_mode_character_constrol_slider(); }
+    constexpr void(*change_edit_mode[])() = {
+        []() { piYing->change_edit_mode_overview(); },
+        []() { piYing->change_edit_mode_background(); },
+        []() { piYing->change_edit_mode_character_texture(); },
+        []() { piYing->change_edit_mode_character_skeleton(); },
+        []() { piYing->change_edit_mode_character_constrol_slider(); }
     };
 
-    using change_edit_handler = void(*)(PiYing*);
+    using change_edit_handler = void(*)();
     constexpr change_edit_handler map_change_edit(int state) {
         return change_edit_mode[state];
     }
@@ -140,8 +140,22 @@ void PiYing::update_timeline()
     timeLineGL->update();
 }
 
+void PiYing::update_part_slider()
+{
+    if (piYingGL->editMode != EditMode::controlSlide) return;
+
+    splitListOpenGL->widget(0)->setParent(nullptr);
+    Part* part = timelineGl->get_current_part();
+    if (part)
+        splitListOpenGL->insertWidget(0, part->slider_widget());
+    else
+        splitListOpenGL->insertWidget(0, voidListWidget);
+
+    splitListOpenGL->setSizes({ width() / 5, width() * 4 / 5 });
+}
+
 void PiYing::onModeChanged(int mode)
 {
     ui->mainToolBar->clear();
-    map_change_edit(mode)(this);
+    map_change_edit(mode)();
 }

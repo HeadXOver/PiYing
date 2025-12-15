@@ -6,6 +6,7 @@
 #include "KeyboardStateWin.h"
 #include "part.h"
 #include "piYingGL.h"
+#include "PiYing.h"
 #include "point_vector.h"
 #include "global_objects.h"
 
@@ -243,9 +244,11 @@ void TimelineGl::mousePressEvent(QMouseEvent* event)
 			const int y = event->pos().y() * 5 / (height() * _ratio);
 
 			const int index = 5 * y + x;
-			if (index >= parts.size() || index == _part_cursor._index) return;
+			if (index >= parts.size()) return;
 
-			_part_cursor.set_cursor(5 * y + x);
+			parts[index]->update_scale();
+
+			if (index != _part_cursor._index) _part_cursor.set_cursor(5 * y + x);
 
 			update();
 		}
@@ -357,6 +360,7 @@ void PartCursor::set_cursor(int index)
 	x = -0.8f + (index % 5) * 0.4f;
 	y = 0.8f - (index / 5) * 0.4f * timelineGl->ratio();
 
+	piYing->update_part_slider();
 	piYingGL->update();
 }
 

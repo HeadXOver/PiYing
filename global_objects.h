@@ -3,6 +3,7 @@
 #include <vector>
 
 class PiYingGL;
+class PiYing;
 class PointVectorLayer;
 class Part;
 class TimelineGl;
@@ -10,6 +11,7 @@ class TimelineGl;
 inline PointVectorLayer* currentLayer = nullptr;
 
 inline PiYingGL* piYingGL = nullptr;
+inline PiYing* piYing = nullptr;
 
 inline TimelineGl* timelineGl = nullptr;
 
