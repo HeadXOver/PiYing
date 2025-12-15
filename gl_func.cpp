@@ -160,18 +160,6 @@ void PiYingGL::paintGL() {
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
-void PiYingGL::generate_vbo(PointVector& pointVefctor, unsigned int& vbo)
-{
-	makeCurrent();
-
-	glGenBuffers(1, &vbo);
-	glBindBuffer(GL_ARRAY_BUFFER, vbo);
-	glBufferData(GL_ARRAY_BUFFER, pointVefctor.float_size() * sizeof(float), pointVefctor.data(), GL_STATIC_DRAW);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-	doneCurrent();
-}
-
 void PiYingGL::generate_ebo(std::vector<unsigned int>& indices, unsigned int& ebo)
 {
 	makeCurrent();
