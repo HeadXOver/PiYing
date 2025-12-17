@@ -81,6 +81,9 @@
     <Filter Include="Shader\frags">
       <UniqueIdentifier>{f932e95b-347d-42f0-8719-d90f9ac39180}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shader\verts">
+      <UniqueIdentifier>{e77eed75-a340-4ed0-becd-6e1feb1f3c81}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <QtRcc Include="PiYing.qrc">
@@ -410,38 +413,38 @@
     <None Include="darkStyle.qss">
       <Filter>StyleSheets</Filter>
     </None>
-    <None Include="chEditershapes.vert">
-      <Filter>Shader</Filter>
-    </None>
     <None Include="imageListStyle.qss">
       <Filter>StyleSheets</Filter>
     </None>
     <None Include="slideStyle.qss">
       <Filter>StyleSheets</Filter>
     </None>
-    <None Include="bgshapes.vert">
-      <Filter>Shader</Filter>
-    </None>
-    <None Include="timeline_rect_shape.vert">
-      <Filter>Shader</Filter>
-    </None>
-    <None Include="selected_vert.vert">
-      <Filter>Shader</Filter>
-    </None>
-    <None Include="texture_tri.vert">
-      <Filter>Shader</Filter>
-    </None>
-    <None Include="square_icon.vert">
-      <Filter>Shader</Filter>
-    </None>
-    <None Include="part_select_rect.vert">
-      <Filter>Shader</Filter>
-    </None>
     <None Include="color_shape.frag">
       <Filter>Shader\frags</Filter>
     </None>
     <None Include="texture_color_shape.frag">
       <Filter>Shader\frags</Filter>
+    </None>
+    <None Include="timeline_rect_shape.vert">
+      <Filter>Shader\verts</Filter>
+    </None>
+    <None Include="bgshapes.vert">
+      <Filter>Shader\verts</Filter>
+    </None>
+    <None Include="chEditershapes.vert">
+      <Filter>Shader\verts</Filter>
+    </None>
+    <None Include="part_select_rect.vert">
+      <Filter>Shader\verts</Filter>
+    </None>
+    <None Include="selected_vert.vert">
+      <Filter>Shader\verts</Filter>
+    </None>
+    <None Include="square_icon.vert">
+      <Filter>Shader\verts</Filter>
+    </None>
+    <None Include="texture_tri.vert">
+      <Filter>Shader\verts</Filter>
     </None>
   </ItemGroup>
 </Project>
