@@ -81,6 +81,9 @@
     <Filter Include="Shader\verts">
       <UniqueIdentifier>{e77eed75-a340-4ed0-becd-6e1feb1f3c81}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\timelineGL">
+      <UniqueIdentifier>{e6eca55c-88d9-4d5f-aaeb-72ec7f65bed2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <QtRcc Include="PiYing.qrc">
@@ -235,9 +238,6 @@
     <ClCompile Include="vert_groups.cpp">
       <Filter>Source Files\PiYingElement</Filter>
     </ClCompile>
-    <ClCompile Include="time_line_gl.cpp">
-      <Filter>Source Files\PiYingElement</Filter>
-    </ClCompile>
     <ClCompile Include="point_vector_layer.cpp">
       <Filter>Source Files\PiYingElement</Filter>
     </ClCompile>
@@ -249,6 +249,27 @@
     </ClCompile>
     <ClCompile Include="ViewData.cpp">
       <Filter>Source Files\PiYingElement</Filter>
+    </ClCompile>
+    <ClCompile Include="time_line_gl.cpp">
+      <Filter>Source Files\timelineGL</Filter>
+    </ClCompile>
+    <ClCompile Include="timeline_event.cpp">
+      <Filter>Source Files\timelineGL</Filter>
+    </ClCompile>
+    <ClCompile Include="timeline_gl_structure.cpp">
+      <Filter>Source Files\timelineGL</Filter>
+    </ClCompile>
+    <ClCompile Include="timeline_gl_get.cpp">
+      <Filter>Source Files\timelineGL</Filter>
+    </ClCompile>
+    <ClCompile Include="part_cursor.cpp">
+      <Filter>Source Files\timelineGL</Filter>
+    </ClCompile>
+    <ClCompile Include="timeline_glfunc.cpp">
+      <Filter>Source Files\timelineGL</Filter>
+    </ClCompile>
+    <ClCompile Include="timeline_gl_draw.cpp">
+      <Filter>Source Files\timelineGL</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

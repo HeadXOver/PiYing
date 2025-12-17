@@ -115,6 +115,12 @@
     <ClCompile Include="cus_func_string.cpp" />
     <ClCompile Include="cus_func_zone.cpp" />
     <ClCompile Include="events.cpp" />
+    <ClCompile Include="part_cursor.cpp" />
+    <ClCompile Include="timeline_event.cpp" />
+    <ClCompile Include="timeline_glfunc.cpp" />
+    <ClCompile Include="timeline_gl_draw.cpp" />
+    <ClCompile Include="timeline_gl_get.cpp" />
+    <ClCompile Include="timeline_gl_structure.cpp" />
     <ClCompile Include="tool_func.cpp" />
     <ClCompile Include="image_texture.cpp" />
     <ClCompile Include="image_transform.cpp" />
