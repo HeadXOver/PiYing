@@ -90,14 +90,15 @@ void TimelineGl::mouseReleaseEvent(QMouseEvent* event)
 		parts[index]->update_scale();
 
 		if (index != _part_cursor._index) {
+			merge_parts(_moving_select_part._index, index);
+
 			_part_cursor.set_cursor(index);
 
 			piYing->update_part_slider();
 			piYingGL->update();
 		}
-
-		update();
 	}
+	update();
 }
 
 void TimelineGl::mouseMoveEvent(QMouseEvent* event)

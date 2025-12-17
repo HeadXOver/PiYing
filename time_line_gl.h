@@ -67,6 +67,7 @@ private:
 	void move_time_cursor(float mouse_x);
 	void paint_timeline();
 	void paint_parts();
+	void merge_parts(int orin, int target);
 
 	int get_index_by_mouse(const QPoint& mouse) const;
 
