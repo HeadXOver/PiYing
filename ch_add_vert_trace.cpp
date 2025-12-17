@@ -20,7 +20,7 @@ void ChAddVertTrace::click(const QPointF& mouseOri)
 {
 	const QPointF mouse = piYingGL->GLViewProjMatrixInvert(mouseOri);
 
-	Part* part = timelineGl->get_current_part();
+	std::shared_ptr<Part> part = timelineGl->get_current_part();
 
     QPointF existPoint;
     for (unsigned int i = 0; i < part->vertex_size() / 2; i++) {

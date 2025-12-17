@@ -11,7 +11,7 @@ void TimelineGl::init_part_cursor()
 	_moving_select_part.set_cursor(0);
 }
 
-Part* TimelineGl::get_current_part() const
+std::shared_ptr<Part> TimelineGl::get_current_part() const
 {
 	if(parts.size() == 0) return nullptr;
 

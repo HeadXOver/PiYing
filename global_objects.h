@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include <memory>
 
 class PiYingGL;
 class PiYing;
@@ -17,4 +18,4 @@ inline TimelineGl* timelineGl = nullptr;
 
 inline std::vector<unsigned int>* currentIndex = nullptr;
 
-inline std::vector<Part*> parts;
+inline std::vector<std::shared_ptr<Part>> parts;

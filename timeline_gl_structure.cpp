@@ -5,9 +5,27 @@
 
 #include <QOpenGLShaderProgram>
 #include <qopengltexture>
+#include <qmenu>
 
 TimelineGl::TimelineGl(QWidget* parent) : QOpenGLWidget(), _ratio(1.f), _ui_type(UiType::Timeline)
 {
+	_merge_menu = new QMenu(this);
+
+	QAction* beside_new = new QAction("并列 新建", this);
+	QAction* beside_ref = new QAction("并列 引用", this);
+	QAction* layer_new = new QAction("父子 新建", this);
+	QAction* layer_ref = new QAction("父子 引用", this);
+
+	_merge_menu->addAction(beside_new);
+	_merge_menu->addAction(beside_ref);
+	_merge_menu->addAction(layer_new);
+	_merge_menu->addAction(layer_ref);
+
+	connect(beside_new, &QAction::triggered, this, [this] { part_beside_new(); });
+	connect(beside_ref, &QAction::triggered, this, [this] { part_beside_ref(); });
+	connect(layer_new, &QAction::triggered, this, [this] { part_layer_new(); });
+	connect(layer_ref, &QAction::triggered, this, [this] { part_layer_ref(); });
+
 	_rect_shader_program = new QOpenGLShaderProgram(this);
 	_part_shader_program = new QOpenGLShaderProgram(this);
 	_rect_select_program = new QOpenGLShaderProgram(this);

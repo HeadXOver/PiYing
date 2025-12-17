@@ -35,7 +35,7 @@ CtrlSlideLayout::CtrlSlideLayout(PiYingGL& gl, SlideApplier& slideApplier, QStri
 
     connect(slider, &QSlider::valueChanged, this, [this](int value)
         {
-            Part* part = timelineGl->get_current_part();
+            std::shared_ptr<Part> part = timelineGl->get_current_part();
             if(part) part->apply_slide(slide_applier.get_traces(id_), value);
         }
     );

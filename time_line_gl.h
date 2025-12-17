@@ -12,6 +12,7 @@ class QOpenGLTexture;
 class Timeline;
 class Part;
 class PointVector;
+class QMenu;
 
 struct ScaleTrans;
 
@@ -51,7 +52,7 @@ public:
 	void generate_vao(unsigned int& vao, unsigned int vbo, unsigned int ebo);
 	void init_part_cursor();
 
-	Part* get_current_part() const;
+	std::shared_ptr<Part> get_current_part() const;
 
 protected:
 	void initializeGL() override;
@@ -67,7 +68,12 @@ private:
 	void move_time_cursor(float mouse_x);
 	void paint_timeline();
 	void paint_parts();
-	void merge_parts(int orin, int target);
+	void ask_merge_parts();
+
+	void part_beside_new();
+	void part_beside_ref();
+	void part_layer_new();
+	void part_layer_ref();
 
 	int get_index_by_mouse(const QPoint& mouse) const;
 
@@ -99,5 +105,7 @@ private:
 
 	PartCursor _part_cursor;
 	PartCursor _moving_select_part;
+
+	QMenu* _merge_menu;
 };
 

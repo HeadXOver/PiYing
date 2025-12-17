@@ -90,7 +90,7 @@ void TimelineGl::mouseReleaseEvent(QMouseEvent* event)
 		parts[index]->update_scale();
 
 		if (index != _part_cursor._index) {
-			merge_parts(_part_cursor._index, index);
+			ask_merge_parts();
 
 			_part_cursor.set_cursor(index);
 

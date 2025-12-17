@@ -66,22 +66,19 @@ void TimelineGl::paint_parts()
 	_part_shader_program->bind();
 
 	float x, y, scale;
-	Part* part;
 	for (int i = 0; i < parts.size(); i++) {
-		part = parts[i];
-
 		x = -0.8f + (i % 5) * 0.4f;
 		y = +0.8f - (i / 5) * 0.4f;
 
-		glBindVertexArray(part->vao_timeline());
+		glBindVertexArray(parts[i]->vao_timeline());
 
-		scale = 0.38f / cus::max(part->width(), part->height());
+		scale = 0.38f / cus::max(parts[i]->width(), parts[i]->height());
 		_part_shader_program->setUniformValue("scale", scale);
-		_part_shader_program->setUniformValue("x", x - scale * part->x());
-		_part_shader_program->setUniformValue("y", y - scale * part->y());
+		_part_shader_program->setUniformValue("x", x - scale * parts[i]->x());
+		_part_shader_program->setUniformValue("y", y - scale * parts[i]->y());
 
-		part->bind_texture();
-		glDrawElements(GL_TRIANGLES, (GLsizei)part->index_size(), GL_UNSIGNED_INT, 0);
+		parts[i]->bind_texture();
+		glDrawElements(GL_TRIANGLES, (GLsizei)parts[i]->index_size(), GL_UNSIGNED_INT, 0);
 	}
 
 	glBindVertexArray(0);////////////////////////////////////////////////////////////
