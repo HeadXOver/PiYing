@@ -9,6 +9,7 @@
 #include "PiYing.h"
 #include "point_vector.h"
 #include "global_objects.h"
+#include "static_gl_const.h"
 
 #include <QOpenGLShaderProgram>
 #include <qmessagebox>
@@ -103,15 +104,17 @@ void TimelineGl::generate_vao(unsigned int& vao, unsigned int vbo, unsigned int 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
 	glEnableVertexAttribArray(0);
 	glEnableVertexAttribArray(1);
-	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
-	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)(2 * sizeof(float)));
+	constexpr GLsizei stride{ 4 * sizeof(float) };
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, stride, (void*)0);
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, stride, DEBU_FLOAT2);
 	glBindVertexArray(0);
 	doneCurrent();
 }
 
 void TimelineGl::init_part_cursor()
 {
-	if (parts.size() > 0 && _part_cursor._index < 0) _part_cursor.set_cursor(0);
+	_part_cursor.set_cursor(0);
+	_moving_select_part.set_cursor(0);
 }
 
 Part* TimelineGl::get_current_part() const
@@ -147,19 +150,20 @@ void TimelineGl::initializeGL()
 	glBufferData(GL_ARRAY_BUFFER, sizeof(RECTANGLE_VERT), RECTANGLE_VERT, GL_STATIC_DRAW);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(RECTANGLE_INDECES), RECTANGLE_INDECES, GL_STATIC_DRAW);
 
-	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, FLOAT2, (void*)0);
 	glEnableVertexAttribArray(0);
 
 	_rect_shader_program->addShaderFromSourceFile(QOpenGLShader::Vertex, ":/PiYing/timeline_rect_shape.vert");
 	_rect_shader_program->addShaderFromSourceFile(QOpenGLShader::Fragment, ":/PiYing/timeline_rect_shape.frag");
 	_rect_shader_program->link();
-	_rect_shader_program->setUniformValue("texture1", 0);
 
 	//////////////////////////////////////////////
 
 	_rect_select_program->addShaderFromSourceFile(QOpenGLShader::Vertex, ":/PiYing/part_select_rect.vert");
 	_rect_select_program->addShaderFromSourceFile(QOpenGLShader::Fragment, ":/PiYing/part_select_rect.frag");
 	_rect_select_program->link();
+	_rect_select_program->bind();
+	_rect_select_program->setUniformValue("moving", false);
 
 	glBindVertexArray(0);
 
@@ -169,8 +173,6 @@ void TimelineGl::initializeGL()
 	_part_shader_program->addShaderFromSourceFile(QOpenGLShader::Fragment, ":/PiYing/square_icon.frag");
 	if (!_part_shader_program->link()) QMessageBox::warning(this, "Error", "Part shader program link error");
 
-	_part_shader_program->setUniformValue("texture1", 0);
-
 	// global setting
 
 	glActiveTexture(GL_TEXTURE0);
@@ -179,7 +181,7 @@ void TimelineGl::initializeGL()
 void TimelineGl::resizeGL(int w, int h)
 {
     _ratio = (width() * piYingGL->height()) / (float)(piYingGL->width() * height());
-	_part_cursor.update();
+	_part_cursor.update_after_resize();
 }
 
 void TimelineGl::paintGL()
@@ -226,6 +228,8 @@ void TimelineGl::mousePressEvent(QMouseEvent* event)
 		*_last_scale_trans = *_scale_trans;
 	}
 	else if (event->buttons() == Qt::LeftButton) {
+		_pressing = true;
+
 		if (_ui_type == UiType::Timeline) {
 			if (KeyboardStateWin::isCtrlHeld()) {
 				_draging_cursor = true;
@@ -240,31 +244,58 @@ void TimelineGl::mousePressEvent(QMouseEvent* event)
 			}
 		}
 		else if (_ui_type == UiType::Part) {
-			const int x = event->pos().x() * 5 / width();
-			const int y = event->pos().y() * 5 / (height() * _ratio);
-
-			const int index = 5 * y + x;
-			if (index >= parts.size()) return;
+			const int index = get_index_by_mouse(event->pos());
+			if (index < 0) return;
 
 			parts[index]->update_scale();
 
-			if (index != _part_cursor._index) _part_cursor.set_cursor(5 * y + x);
+			if (index != _part_cursor._index) {
+				_part_cursor.set_cursor(index);
+				_moving_select_part.set_cursor(index);
+
+				piYing->update_part_slider();
+				piYingGL->update();
+			}
 
 			update();
 		}
 	}
 }
 
-void TimelineGl::mouseReleaseEvent(QMouseEvent* e)
+void TimelineGl::mouseReleaseEvent(QMouseEvent* event)
 {
+	_pressing = false;
 	_draging_cursor = false;
+
+	if (_ui_type == UiType::Part) {
+		const int index = get_index_by_mouse(event->pos());
+		if (index < 0) return;
+
+		parts[index]->update_scale();
+
+		if (index != _part_cursor._index) {
+			_part_cursor.set_cursor(index);
+
+			piYing->update_part_slider();
+			piYingGL->update();
+		}
+
+		update();
+	}
 }
 
 void TimelineGl::mouseMoveEvent(QMouseEvent* event)
 {
 	if (event->buttons() == Qt::LeftButton) {
-		if (_draging_cursor || KeyboardStateWin::isCtrlHeld()) {
-			move_time_cursor(event->position().x());
+		if (_ui_type == UiType::Timeline) {
+			if (_draging_cursor || KeyboardStateWin::isCtrlHeld()) {
+				move_time_cursor(event->position().x());
+				update();
+			}
+		}
+		else if (_pressing && _ui_type == UiType::Part) {
+			const int index = get_index_by_mouse(event->pos());
+			_moving_select_part.set_cursor(index);
 			update();
 		}
 	}
@@ -297,7 +328,7 @@ void TimelineGl::paint_timeline()
 
 	for (int i = 0; i < _timelines.size(); i++) {
 		Timeline* timeline = _timelines[i];
-		_rect_shader_program->setUniformValue("selected", i == _current_select);
+		_rect_shader_program->setUniformValue("selected", i == _current_select_timeline);
 		_rect_shader_program->setUniformValue("lenth", timeline->lenth());
 		_rect_shader_program->setUniformValue("trans", timeline->get_transform(i, _scale_trans));
 
@@ -321,8 +352,17 @@ void TimelineGl::paint_parts()
 
 	glBindVertexArray(tVAO);///////////////////////////////////////////////////////
 
-	_rect_select_program->setUniformValue("trans", QVector2D(_part_cursor.x, _part_cursor.y));
 	_rect_select_program->setUniformValue("ratio", _ratio);
+
+	if (_pressing) {
+		_rect_select_program->setUniformValue("trans", QVector2D(_moving_select_part.x, _moving_select_part.y));
+		_rect_select_program->setUniformValue("moving", true);
+
+		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+
+		_rect_select_program->setUniformValue("moving", false);
+	}
+	_rect_select_program->setUniformValue("trans", QVector2D(_part_cursor.x, _part_cursor.y));
 
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
@@ -337,7 +377,7 @@ void TimelineGl::paint_parts()
 		part = parts[i];
 
 		x = -0.8f + (i % 5) * 0.4f;
-		y = 0.8f - (i / 5) * 0.4f;
+		y = +0.8f - (i / 5) * 0.4f;
 
 		glBindVertexArray(part->vao_timeline());
 
@@ -353,18 +393,27 @@ void TimelineGl::paint_parts()
 	glBindVertexArray(0);////////////////////////////////////////////////////////////
 }
 
+int TimelineGl::get_index_by_mouse(const QPoint& mouse) const
+{
+	const int x = mouse.x() * 5 / width();
+	const int y = mouse.y() * 5 / (height() * _ratio);
+
+	const int index = 5 * y + x;
+
+	if(index >= parts.size() || index < 0) return -1;
+
+	return index;
+}
+
 void PartCursor::set_cursor(int index)
 {
 	_index = index;
 
 	x = -0.8f + (index % 5) * 0.4f;
 	y = 0.8f - (index / 5) * 0.4f * timelineGl->ratio();
-
-	piYing->update_part_slider();
-	piYingGL->update();
 }
 
-void PartCursor::update()
+void PartCursor::update_after_resize()
 {
 	y = 0.8f - (_index / 5) * 0.4f * timelineGl->ratio();
 }

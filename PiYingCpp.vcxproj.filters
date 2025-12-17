@@ -366,6 +366,9 @@
     <ClInclude Include="ch_triangle_libre_select.h">
       <Filter>Header Files\ChELementTool</Filter>
     </ClInclude>
+    <ClInclude Include="static_gl_const.h">
+      <Filter>Header Files\staticConst</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="ctrlSlideLayout.h">

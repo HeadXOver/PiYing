@@ -2,7 +2,9 @@
 
 out vec4 FragColor;
 
+uniform bool moving = false;
+
 void main()
 {
-    FragColor = vec4(0.6f, 0.3f, 0.3f, 1.0f);
+    FragColor = moving ? vec4(0.3f, 0.3f, 0.6f, 1.0f) : vec4(0.6f, 0.3f, 0.3f, 1.0f);
 }

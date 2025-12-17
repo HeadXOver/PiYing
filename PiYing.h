@@ -36,7 +36,6 @@ public:
 	void change_edit_mode_background();
 	void change_edit_mode_character_constrol_slider();
 
-	void update_timeline();
 	void update_part_slider();
 
 protected:

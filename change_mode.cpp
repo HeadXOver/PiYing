@@ -134,12 +134,6 @@ void PiYing::change_edit_mode_character_constrol_slider()
     if (!piYingGL->have_ch_tool()) piYingGL->setChTool(CharacterToolState::None);
 }
 
-void PiYing::update_timeline()
-{
-    timeLineGL->init_part_cursor();
-    timeLineGL->update();
-}
-
 void PiYing::update_part_slider()
 {
     if (piYingGL->editMode != EditMode::controlSlide) return;

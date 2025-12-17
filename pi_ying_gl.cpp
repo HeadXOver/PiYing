@@ -1,6 +1,7 @@
 ﻿#include "piYingGL.h"
 
 #include "piYing.h"
+#include "time_line_gl.h"
 
 #include "add_triangle.h"
 #include "add_ch_tex_poly.h"
@@ -311,7 +312,12 @@ void PiYingGL::add_part(const QList<unsigned int>& indices)
 	if (currentVector < 0) return;
 
 	parts.push_back(new Part(*characterTextures[currentVector]->texture(), indices, editMode == EditMode::characterTexture));
-	ref_PiYing.update_timeline();
+	if (parts.size() == 1) {
+		timelineGl->init_part_cursor();
+		piYing->update_part_slider();
+	}
+	piYingGL->update();
+	timelineGl->update();
 }
 
 int PiYingGL::get_group_num() const

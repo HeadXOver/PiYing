@@ -28,7 +28,7 @@ struct PartCursor
 	float y{ 0.f };
 
 	void set_cursor(int index);
-	void update();
+	void update_after_resize();
 };
 
 class TimelineGl : public QOpenGLWidget, QOpenGLFunctions_3_3_Core
@@ -68,15 +68,18 @@ private:
 	void paint_timeline();
 	void paint_parts();
 
+	int get_index_by_mouse(const QPoint& mouse) const;
+
 private:
 	unsigned int tVAO = 0, tVBO = 0, tEBO = 0;
 
-	int _current_select{ -1 };
+	int _current_select_timeline{ -1 };
 
 	float time_cursor{ 0.f };
 	float _ratio;
 
 	bool _draging_cursor{ false };
+	bool _pressing{ false };
 
 	ScaleTrans* _scale_trans;
 	ScaleTrans* _last_scale_trans;
@@ -94,5 +97,6 @@ private:
 	UiType _ui_type;
 
 	PartCursor _part_cursor;
+	PartCursor _moving_select_part;
 };
 
