@@ -131,14 +131,19 @@ void PiYingGL::paintBackgrounds()
 
 	glBindVertexArray(RECTANGLE_TEXTURE_VAO);///////////////////////////////////////////////////////
 
-	bgShaderProgram->bind();
+	_texture_color_shader_programme->bind();
 
 	for (int i = 0; i < backGrounds.size(); i++) {
 		ImageTexture* it = backGrounds[i];
 		it->bind();
 
-		bgShaderProgram->setUniformValue("trc", getBgShaderMatrix(it->transform()));
-		bgShaderProgram->setUniformValue("selected", i == getCurrentBgRow());
+		_texture_color_shader_programme->setUniformValue("trc", getBgShaderMatrix(it->transform()));
+		if (i == getCurrentBgRow()) {
+			_texture_color_shader_programme->setUniformValue("aColor", QVector4D(1.0f, 0.8f, 0.8f, 1.0f));
+			glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+			_texture_color_shader_programme->setUniformValue("aColor", QVector4D(1.0f, 1.0f, 1.0f, 1.0f));
+			continue;
+		}
 
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 	}
@@ -156,12 +161,11 @@ void PiYingGL::paintCharacterTexture()
 
 	glBindVertexArray(RECTANGLE_TEXTURE_VAO);////////////////////////////////////////////////////////
 
-	bgShaderProgram->bind();
+	_texture_color_shader_programme->bind();
 
 	characterTextures[i]->bind();
 
-	bgShaderProgram->setUniformValue("trc", getViewProjMatrix());
-	bgShaderProgram->setUniformValue("selected", false);
+	_texture_color_shader_programme->setUniformValue("trc", getViewProjMatrix());
 
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 

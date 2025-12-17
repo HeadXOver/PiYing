@@ -25,7 +25,7 @@ PiYingGL::PiYingGL(PiYing& parent) :
 	editMode = EditMode::OverView;
 	_ch_tool_state = CharacterToolState::None;
 
-	bgShaderProgram = new QOpenGLShaderProgram(this);
+	_texture_color_shader_programme = new QOpenGLShaderProgram(this);
 	chShaderProgram = new QOpenGLShaderProgram(this);
 	_selected_vert_shader_program = new QOpenGLShaderProgram(this);
 	_texture_tri_shader_program = new QOpenGLShaderProgram(this);

@@ -202,9 +202,7 @@
     <QtMoc Include="piYingGL.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="bgshapes.frag" />
     <None Include="bgshapes.vert" />
-    <None Include="chEditershapes.frag" />
     <None Include="chEditershapes.vert" />
     <None Include="darkStyle.qss" />
     <None Include="imageListStyle.qss" />

@@ -169,7 +169,7 @@ private:
 	unsigned int ttVAO = 0, ttEBO;
 	unsigned int svVAO = 0, svVBO = 0;
 
-	QOpenGLShaderProgram* bgShaderProgram;
+	QOpenGLShaderProgram* _texture_color_shader_programme;
 	QOpenGLShaderProgram* chShaderProgram;
 	QOpenGLShaderProgram* _selected_vert_shader_program;
 	QOpenGLShaderProgram* _texture_tri_shader_program;

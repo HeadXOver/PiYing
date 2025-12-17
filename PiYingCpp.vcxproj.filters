@@ -407,9 +407,6 @@
     <None Include="darkStyle.qss">
       <Filter>StyleSheets</Filter>
     </None>
-    <None Include="chEditershapes.frag">
-      <Filter>Shader</Filter>
-    </None>
     <None Include="chEditershapes.vert">
       <Filter>Shader</Filter>
     </None>
@@ -418,9 +415,6 @@
     </None>
     <None Include="slideStyle.qss">
       <Filter>StyleSheets</Filter>
-    </None>
-    <None Include="bgshapes.frag">
-      <Filter>Shader</Filter>
     </None>
     <None Include="bgshapes.vert">
       <Filter>Shader</Filter>
