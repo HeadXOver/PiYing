@@ -18,13 +18,11 @@
         <file>chAddRound_S.png</file>
         <file>addVertTrace.png</file>
         <file>addVertTrace_S.png</file>
-        <file>timeline_rect_shape.frag</file>
         <file>timeline_rect_shape.vert</file>
         <file>timeline.png</file>
         <file>icon_group.png</file>
         <file>icon_group_s.png</file>
         <file>selected_vert.vert</file>
-        <file>texture_tri.frag</file>
         <file>texture_tri.vert</file>
         <file>rectangle.vert</file>
         <file>square_icon.vert</file>

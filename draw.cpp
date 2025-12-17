@@ -48,8 +48,7 @@ void PiYingGL::draw_selected_triangle(int nSelectedPoint)
 	_texture_tri_shader_program->bind();
 
 	_texture_tri_shader_program->setUniformValue("is_skelen", editMode == EditMode::characterSkeleton);
-	_texture_tri_shader_program->setUniformValue("is_line", false);
-	_texture_tri_shader_program->setUniformValue("is_selected", true);
+	_texture_tri_shader_program->setUniformValue("aColor", QVector4D(0.0f, 0.0f, 1.0f, 0.15f));
 	glDrawElements(GL_TRIANGLES, nSelectedPoint * 3, GL_UNSIGNED_INT, 0);
 
 	glBindVertexArray(0); ////////////////////////////////////////////////////
@@ -67,13 +66,13 @@ void PiYingGL::draw_triangle_frame(bool isSkelen)
 	_texture_tri_shader_program->bind();
 
 	_texture_tri_shader_program->setUniformValue("is_skelen", isSkelen);
-	_texture_tri_shader_program->setUniformValue("is_line", false);
-	_texture_tri_shader_program->setUniformValue("is_selected", false);
+	_texture_tri_shader_program->setUniformValue("aColor", QVector4D(1.0f, 0.0f, 0.0f, 0.15f));
 	glDrawElements(GL_TRIANGLES, (GLsizei)characterTriangleIndices[currentVector].size(), GL_UNSIGNED_INT, 0);
 
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);   // 把填充改成“线框”
-	_texture_tri_shader_program->setUniformValue("is_line", true);
+	_texture_tri_shader_program->setUniformValue("aColor", QVector4D(0.0f, 1.0f, 0.0f, 0.8f));
 	glDrawElements(GL_TRIANGLES, (GLsizei)characterTriangleIndices[currentVector].size(), GL_UNSIGNED_INT, 0);
+	_texture_tri_shader_program->setUniformValue("aColor", QVector4D(1.0f, 0.0f, 0.0f, 0.15f));
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
 	glBindVertexArray(0); ////////////////////////////////////////////////////
@@ -212,8 +211,7 @@ void PiYingGL::paint_selected_part()
 
 	_texture_tri_shader_program->bind();
 	_texture_tri_shader_program->setUniformValue("is_skelen", false);
-	_texture_tri_shader_program->setUniformValue("is_selected", false);
-	_texture_tri_shader_program->setUniformValue("is_line", true);
+	_texture_tri_shader_program->setUniformValue("aColor", QVector4D(0.0f, 1.0f, 0.0f, 0.8f));
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);   // 把填充改成“线框”
 	glDrawElements(GL_TRIANGLES, (GLsizei)currentPart->index_size(), GL_UNSIGNED_INT, 0);
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);

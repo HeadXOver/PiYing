@@ -419,9 +419,6 @@
     <None Include="bgshapes.vert">
       <Filter>Shader</Filter>
     </None>
-    <None Include="timeline_rect_shape.frag">
-      <Filter>Shader</Filter>
-    </None>
     <None Include="timeline_rect_shape.vert">
       <Filter>Shader</Filter>
     </None>
@@ -431,16 +428,10 @@
     <None Include="texture_tri.vert">
       <Filter>Shader</Filter>
     </None>
-    <None Include="texture_tri.frag">
-      <Filter>Shader</Filter>
-    </None>
     <None Include="rectangle.vert">
       <Filter>Shader</Filter>
     </None>
     <None Include="square_icon.vert">
-      <Filter>Shader</Filter>
-    </None>
-    <None Include="square_icon.frag">
       <Filter>Shader</Filter>
     </None>
     <None Include="part_select_rect.vert">

@@ -154,8 +154,10 @@ void TimelineGl::initializeGL()
 	glEnableVertexAttribArray(0);
 
 	_rect_shader_program->addShaderFromSourceFile(QOpenGLShader::Vertex, ":/PiYing/timeline_rect_shape.vert");
-	_rect_shader_program->addShaderFromSourceFile(QOpenGLShader::Fragment, ":/PiYing/timeline_rect_shape.frag");
+	_rect_shader_program->addShaderFromSourceFile(QOpenGLShader::Fragment, ":/PiYing/texture_color_shape.frag");
 	_rect_shader_program->link();
+	_rect_shader_program->bind();
+	_rect_shader_program->setUniformValue("aColor", QVector4D(1.f, 1.f, 1.f, 1.f));
 
 	//////////////////////////////////////////////
 
@@ -336,9 +338,15 @@ void TimelineGl::paint_timeline()
 
 	for (int i = 0; i < _timelines.size(); i++) {
 		Timeline* timeline = _timelines[i];
-		_rect_shader_program->setUniformValue("selected", i == _current_select_timeline);
 		_rect_shader_program->setUniformValue("lenth", timeline->lenth());
 		_rect_shader_program->setUniformValue("trans", timeline->get_transform(i, _scale_trans));
+
+		if (i == _current_select_timeline) {
+			_rect_shader_program->setUniformValue("aColor", QVector4D(0.6f, 0.6f, 1.f, 1.0f));
+			glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+			_rect_shader_program->setUniformValue("aColor", QVector4D(1.f, 1.f, 1.f, 1.f));
+			continue;
+		}
 
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 	}

@@ -24,7 +24,7 @@ void PiYingGL::initializeGL()
 	chShaderProgram->link();
 
 	_texture_tri_shader_program->addShaderFromSourceFile(QOpenGLShader::Vertex, ":/PiYing/texture_tri.vert");
-	_texture_tri_shader_program->addShaderFromSourceFile(QOpenGLShader::Fragment, ":/PiYing/texture_tri.frag");
+	_texture_tri_shader_program->addShaderFromSourceFile(QOpenGLShader::Fragment, ":/PiYing/color_shape.frag");
 	_texture_tri_shader_program->link();
 
 	_selected_vert_shader_program->addShaderFromSourceFile(QOpenGLShader::Vertex, ":/PiYing/selected_vert.vert");
@@ -108,7 +108,7 @@ void PiYingGL::initializeGL()
 	_texture_tri_shader_program->bind();
 	_texture_tri_shader_program->setUniformValue("trc", QMatrix4x4());
 	_rectangle_shader_program->bind();
-	_rectangle_shader_program->setUniformValue("aColor", QVector4D(0.2f, 0.2f, 1.0f, 1.0f));
+	_rectangle_shader_program->setUniformValue("aColor", QVector4D(0.2f, 0.2f, 1.0f, 1.0f)); 
 
 
 	glEnable(GL_BLEND);
