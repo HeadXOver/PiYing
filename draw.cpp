@@ -20,13 +20,16 @@
 void PiYingGL::draw_selected_points(int nSelectedPoint)
 {
 	glBindVertexArray(svVAO);
-	glBindBuffer(GL_ARRAY_BUFFER, svVBO);
+
 	_selected_vert_shader_program->bind();
 
+	_selected_vert_shader_program->setUniformValue("aColor", QVector4D(0.f, 0.f, 0.f, 1.f));
 	_selected_vert_shader_program->setUniformValue("is_out", true);
 	glDrawArrays(GL_POINTS, 0, nSelectedPoint);
+	_selected_vert_shader_program->setUniformValue("aColor", QVector4D(1.f, 0.f, 0.f, 1.f));
 	_selected_vert_shader_program->setUniformValue("is_out", false);
 	glDrawArrays(GL_POINTS, 0, nSelectedPoint);
+
 	glBindVertexArray(0);
 }
 

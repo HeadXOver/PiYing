@@ -160,10 +160,10 @@ void TimelineGl::initializeGL()
 	//////////////////////////////////////////////
 
 	_rect_select_program->addShaderFromSourceFile(QOpenGLShader::Vertex, ":/PiYing/part_select_rect.vert");
-	_rect_select_program->addShaderFromSourceFile(QOpenGLShader::Fragment, ":/PiYing/part_select_rect.frag");
+	_rect_select_program->addShaderFromSourceFile(QOpenGLShader::Fragment, ":/PiYing/color_shape.frag");
 	_rect_select_program->link();
 	_rect_select_program->bind();
-	_rect_select_program->setUniformValue("moving", false);
+	_rect_select_program->setUniformValue("aColor", QVector4D(0.6f, 0.3f, 0.3f, 1.0f));
 
 	glBindVertexArray(0);
 
@@ -181,6 +181,11 @@ void TimelineGl::initializeGL()
 void TimelineGl::resizeGL(int w, int h)
 {
     _ratio = (width() * piYingGL->height()) / (float)(piYingGL->width() * height());
+	_rect_select_program->bind();
+	_rect_select_program->setUniformValue("ratio", _ratio);
+	_part_shader_program->bind();
+	_part_shader_program->setUniformValue("ratio", _ratio);
+
 	_part_cursor.update_after_resize();
 }
 
@@ -352,15 +357,13 @@ void TimelineGl::paint_parts()
 
 	glBindVertexArray(tVAO);///////////////////////////////////////////////////////
 
-	_rect_select_program->setUniformValue("ratio", _ratio);
-
 	if (_pressing) {
 		_rect_select_program->setUniformValue("trans", QVector2D(_moving_select_part.x, _moving_select_part.y));
-		_rect_select_program->setUniformValue("moving", true);
+		_rect_select_program->setUniformValue("aColor", QVector4D(0.3f, 0.3f, 0.6f, 1.0f));
 
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
-		_rect_select_program->setUniformValue("moving", false);
+		_rect_select_program->setUniformValue("aColor", QVector4D(0.6f, 0.3f, 0.3f, 1.0f));
 	}
 	_rect_select_program->setUniformValue("trans", QVector2D(_part_cursor.x, _part_cursor.y));
 
@@ -369,7 +372,6 @@ void TimelineGl::paint_parts()
 	////////////////////////////////////////////////////////////
 
 	_part_shader_program->bind();
-	_part_shader_program->setUniformValue("ratio", _ratio);
 
 	float x, y, scale;
 	Part* part;

@@ -12,7 +12,7 @@ void PiYingGL::initializeGL()
 
 	/// programmes
 	_rectangle_shader_program->addShaderFromSourceFile(QOpenGLShader::Vertex, ":/PiYing/rectangle.vert");
-	_rectangle_shader_program->addShaderFromSourceFile(QOpenGLShader::Fragment, ":/PiYing/rectangle.frag");
+	_rectangle_shader_program->addShaderFromSourceFile(QOpenGLShader::Fragment, ":/PiYing/color_shape.frag");
 	_rectangle_shader_program->link();
 
 	_texture_color_shader_programme->addShaderFromSourceFile(QOpenGLShader::Vertex, ":/PiYing/bgshapes.vert");
@@ -28,7 +28,7 @@ void PiYingGL::initializeGL()
 	_texture_tri_shader_program->link();
 
 	_selected_vert_shader_program->addShaderFromSourceFile(QOpenGLShader::Vertex, ":/PiYing/selected_vert.vert");
-	_selected_vert_shader_program->addShaderFromSourceFile(QOpenGLShader::Fragment, ":/PiYing/selected_vert.frag");
+	_selected_vert_shader_program->addShaderFromSourceFile(QOpenGLShader::Fragment, ":/PiYing/color_shape.frag");
 	_selected_vert_shader_program->link();
 
 	/// generate VAO
@@ -107,6 +107,9 @@ void PiYingGL::initializeGL()
 	_selected_vert_shader_program->setUniformValue("trc", QMatrix4x4());
 	_texture_tri_shader_program->bind();
 	_texture_tri_shader_program->setUniformValue("trc", QMatrix4x4());
+	_rectangle_shader_program->bind();
+	_rectangle_shader_program->setUniformValue("aColor", QVector4D(0.2f, 0.2f, 1.0f, 1.0f));
+
 
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);

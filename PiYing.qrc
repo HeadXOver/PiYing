@@ -23,11 +23,9 @@
         <file>timeline.png</file>
         <file>icon_group.png</file>
         <file>icon_group_s.png</file>
-        <file>selected_vert.frag</file>
         <file>selected_vert.vert</file>
         <file>texture_tri.frag</file>
         <file>texture_tri.vert</file>
-        <file>rectangle.frag</file>
         <file>rectangle.vert</file>
         <file>square_icon.frag</file>
         <file>square_icon.vert</file>
@@ -35,8 +33,8 @@
         <file>libre_triangle_select_S.png</file>
         <file>rect_triangle_select.png</file>
         <file>rect_triangle_select_S.png</file>
-        <file>part_select_rect.frag</file>
         <file>part_select_rect.vert</file>
         <file>texture_color_shape.frag</file>
+        <file>color_shape.frag</file>
     </qresource>
 </RCC>
