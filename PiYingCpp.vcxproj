@@ -212,7 +212,6 @@
       <SubType>
       </SubType>
     </None>
-    <None Include="rectangle.vert" />
     <None Include="selected_vert.vert" />
     <None Include="slideStyle.qss" />
     <None Include="square_icon.vert" />

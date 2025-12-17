@@ -11,7 +11,7 @@ void PiYingGL::initializeGL()
 	initializeOpenGLFunctions();
 
 	/// programmes
-	_rectangle_shader_program->addShaderFromSourceFile(QOpenGLShader::Vertex, ":/PiYing/rectangle.vert");
+	_rectangle_shader_program->addShaderFromSourceFile(QOpenGLShader::Vertex, ":/PiYing/bgshapes.vert");
 	_rectangle_shader_program->addShaderFromSourceFile(QOpenGLShader::Fragment, ":/PiYing/color_shape.frag");
 	_rectangle_shader_program->link();
 
