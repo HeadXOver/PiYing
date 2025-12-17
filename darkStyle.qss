@@ -1,9 +1,9 @@
 QMainWindow {
-    background: rgb(240, 240, 233);
+    background: rgba(255, 255, 255, 128);
     border: 1px solid #464647;
 }
 
-QWidget { background: #ffffff;color: #464647; }
+QWidget { background: rgba(255, 255, 255, 128);color: #464647; }
 
 /* === 菜单栏 === */
 QMenuBar {
@@ -51,8 +51,8 @@ QToolBar::handle {
 
 /* === 状态栏 === */
 QStatusBar {
-    background: #3C3C3C;
-    color: white;
+    background: rgba(190, 220, 223, 130);
+    color: black;
     border-top: 1px solid #464647;
 }
 

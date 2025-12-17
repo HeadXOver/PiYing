@@ -73,7 +73,7 @@ void PiYingGL::appendBgList(const QImage& image)
 	if (getCurrentBgRow() < 0) ref_PiYing.bgImageList->setCurrentRow(0);
 }
 
-void PiYingGL::addCharacter(const QString& imageName)
+void PiYingGL::add_character(const QString& imageName)
 {
 	QImage img;
 	if (!img.load(imageName)) {
@@ -97,6 +97,7 @@ void PiYingGL::addCharacter(const QString& imageName)
 	if (getCurrentChRow() < 0) {
 		ref_PiYing.chImageList->setCurrentRow(0);
 		currentLayer = new PointVectorLayer(*characterVerts[0]);
+		currentIndex = &characterTriangleIndices[0];
 	}
 
 	update();
@@ -169,8 +170,16 @@ void PiYingGL::setChTool(CharacterToolState state)
 		ch_element_tool_ = nullptr;
 	}
 
-	const int currentVector = getCurrentChRow();
+	if (currentLayer) {
+		delete currentLayer;
+		currentLayer = nullptr;
+	}
+
+	int currentVector = getCurrentChRow();
 	if (currentVector < 0) return;
+
+	currentLayer = new PointVectorLayer(*characterVerts[currentVector]);
+	currentIndex = &characterTriangleIndices[currentVector];
 	
 	if (state == CharacterToolState::None) {
 		update();
@@ -260,7 +269,7 @@ void PiYingGL::importChatacter()
 {
 	QStringList fileNames = QFileDialog::getOpenFileNames(this, "选择角色图", ".", "Images (*.png *.xpm *.jpg)");
 
-	for (const QString& fileName : fileNames) addCharacter(fileName);
+	for (const QString& fileName : fileNames) add_character(fileName);
 }
 
 MousePos PiYingGL::getMousePosType(const QPointF& point) const

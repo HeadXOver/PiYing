@@ -82,7 +82,7 @@ protected:
 public:
 	void addBackground(const QString& imageName);
 	void appendBgList(const QImage& image);
-	void addCharacter(const QString& imageName);
+	void add_character(const QString& imageName);
 	void controlSlide(const std::map<int, std::unique_ptr<CharacterTrace>>& traces, int value);
 	void setEditMode(EditMode mode);
 	void updateChTool();
@@ -166,7 +166,7 @@ private:
 
 	unsigned int RECTANGLE_TEXTURE_VAO = 0, RECTANGLE_TEXTURE_VBO = 0, RECTANGLE_TEXTURE_EBO = 0;
 	unsigned int chVAO = 0, chVBO = 0, chEBO = 0;
-	unsigned int ttVAO = 0, ttEBO;
+	unsigned int ttVAO = 0, ttEBO = 0;
 	unsigned int svVAO = 0, svVBO = 0;
 
 	QOpenGLShaderProgram* _texture_color_shader_programme;

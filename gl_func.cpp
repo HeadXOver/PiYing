@@ -94,7 +94,7 @@ void PiYingGL::initializeGL()
 	glBindVertexArray(svVAO);
 	glBindBuffer(GL_ARRAY_BUFFER, svVBO);
 
-	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, FLOAT2, (void*)0);
 	glEnableVertexAttribArray(0);
 
 	glBindVertexArray(0); ///< end initialize
@@ -111,6 +111,7 @@ void PiYingGL::initializeGL()
 	_rectangle_shader_program->setUniformValue("aColor", QVector4D(0.2f, 0.2f, 1.0f, 1.0f)); 
 
 
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glActiveTexture(GL_TEXTURE0);

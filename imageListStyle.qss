@@ -1,5 +1,5 @@
 QListWidget {
-	background-color: rgb(35, 8, 8); 
+	background-color: rgb(8, 8, 35); 
 }
 
 QListWidget::item {
