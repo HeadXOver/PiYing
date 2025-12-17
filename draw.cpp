@@ -78,7 +78,7 @@ void PiYingGL::draw_triangle_frame(bool isSkelen)
 
 void PiYingGL::draw_rectangle(float cx, float cy, float width, float height)
 {
-	glBindVertexArray(rtVAO); ////////////////////////////////////////////////////
+	glBindVertexArray(RECTANGLE_TEXTURE_VAO); ////////////////////////////////////////////////////
 
 	_rectangle_shader_program->bind();
 
@@ -129,7 +129,7 @@ void PiYingGL::paintBackgrounds()
 {
 	draw_view_rectangle();
 
-	glBindVertexArray(bgVAO);///////////////////////////////////////////////////////
+	glBindVertexArray(RECTANGLE_TEXTURE_VAO);///////////////////////////////////////////////////////
 
 	bgShaderProgram->bind();
 
@@ -154,7 +154,7 @@ void PiYingGL::paintCharacterTexture()
 	int i = getCurrentChRow();
 	if (i < 0) return;
 
-	glBindVertexArray(bgVAO);////////////////////////////////////////////////////////
+	glBindVertexArray(RECTANGLE_TEXTURE_VAO);////////////////////////////////////////////////////////
 
 	bgShaderProgram->bind();
 
@@ -216,7 +216,7 @@ void PiYingGL::paint_selected_part()
 
 void PiYingGL::draw_view_rectangle()
 {
-	glBindVertexArray(rtVAO); ////////////////////////////////////////////////////
+	glBindVertexArray(RECTANGLE_TEXTURE_VAO); ////////////////////////////////////////////////////
 
 	_rectangle_shader_program->bind();
 

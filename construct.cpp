@@ -125,8 +125,8 @@ PiYingGL::~PiYingGL()
 
 	////////////////////////////////////////
 
-	if (bgVAO) glDeleteVertexArrays(1, &bgVAO);
-	if (bgEBO) glDeleteBuffers(1, &bgEBO);
+	if (RECTANGLE_TEXTURE_VAO) glDeleteVertexArrays(1, &RECTANGLE_TEXTURE_VAO);
+	if (RECTANGLE_TEXTURE_EBO) glDeleteBuffers(1, &RECTANGLE_TEXTURE_EBO);
 
 	if (chVAO) glDeleteVertexArrays(1, &chVAO);
 	if (chVBO) glDeleteBuffers(1, &chVBO);
@@ -138,8 +138,7 @@ PiYingGL::~PiYingGL()
 	if (svVAO) glDeleteVertexArrays(1, &svVAO);
 	if (svVBO) glDeleteBuffers(1, &svVBO);
 
-	if (rtVAO) glDeleteVertexArrays(1, &rtVAO);
-	if (rtVBO) glDeleteBuffers(1, &rtVBO);
+	if (RECTANGLE_TEXTURE_VBO) glDeleteBuffers(1, &RECTANGLE_TEXTURE_VBO);
 
 	////////////////////////////////////////
 

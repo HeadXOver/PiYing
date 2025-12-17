@@ -10,108 +10,86 @@ void PiYingGL::initializeGL()
 {
 	initializeOpenGLFunctions();
 
-	//////////////initialize rectangle///////////////////////
-
-	glGenVertexArrays(1, &rtVAO);
-	glGenBuffers(1, &rtVBO);
-
-	/////////////////////////////////////////////
-
-	glBindVertexArray(rtVAO);
-	glBindBuffer(GL_ARRAY_BUFFER, rtVBO);
-
-	glBufferData(GL_ARRAY_BUFFER, sizeof(RECTANGLE_VERT), RECTANGLE_VERT, GL_STATIC_DRAW);
-
-	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
-	glEnableVertexAttribArray(0);
-
-	/////////////////////////////////////////////
-
+	/// programmes
 	_rectangle_shader_program->addShaderFromSourceFile(QOpenGLShader::Vertex, ":/PiYing/rectangle.vert");
 	_rectangle_shader_program->addShaderFromSourceFile(QOpenGLShader::Fragment, ":/PiYing/rectangle.frag");
 	_rectangle_shader_program->link();
 
-	//////////////initialize background///////////////////////
+	bgShaderProgram->addShaderFromSourceFile(QOpenGLShader::Vertex, ":/PiYing/bgshapes.vert");
+	bgShaderProgram->addShaderFromSourceFile(QOpenGLShader::Fragment, ":/PiYing/bgshapes.frag");
+	bgShaderProgram->link();
 
-	glGenVertexArrays(1, &bgVAO);
-	glBindBuffer(GL_ARRAY_BUFFER, rtVBO);
-	glGenBuffers(1, &bgEBO);
+	chShaderProgram->addShaderFromSourceFile(QOpenGLShader::Vertex, ":/PiYing/chEditershapes.vert");
+	chShaderProgram->addShaderFromSourceFile(QOpenGLShader::Fragment, ":/PiYing/chEditershapes.frag");
+	chShaderProgram->link();
 
-	/////////////////////////////////////////////
+	_texture_tri_shader_program->addShaderFromSourceFile(QOpenGLShader::Vertex, ":/PiYing/texture_tri.vert");
+	_texture_tri_shader_program->addShaderFromSourceFile(QOpenGLShader::Fragment, ":/PiYing/texture_tri.frag");
+	_texture_tri_shader_program->link();
 
-	glBindVertexArray(bgVAO);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, bgEBO);
+	_selected_vert_shader_program->addShaderFromSourceFile(QOpenGLShader::Vertex, ":/PiYing/selected_vert.vert");
+	_selected_vert_shader_program->addShaderFromSourceFile(QOpenGLShader::Fragment, ":/PiYing/selected_vert.frag");
+	_selected_vert_shader_program->link();
 
+	/// generate VAO
+	glGenVertexArrays(1, &RECTANGLE_TEXTURE_VAO);
+	glGenVertexArrays(1, &chVAO);
+	glGenVertexArrays(1, &ttVAO);
+	glGenVertexArrays(1, &svVAO);
+
+	/// generate VBO
+	glGenBuffers(1, &RECTANGLE_TEXTURE_VBO);
+	glGenBuffers(1, &chVBO);
+	glGenBuffers(1, &svVBO);
+
+	/// generate EBO
+	glGenBuffers(1, &RECTANGLE_TEXTURE_EBO);
+	glGenBuffers(1, &chEBO);
+	glGenBuffers(1, &ttEBO);
+
+	/// buffer data vbo
+	glBindBuffer(GL_ARRAY_BUFFER, RECTANGLE_TEXTURE_VBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(RECTANGLE_VERT), RECTANGLE_VERT, GL_STATIC_DRAW);
+
+	/// buffer data ebo
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, RECTANGLE_TEXTURE_EBO);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(RECTANGLE_INDECES), RECTANGLE_INDECES, GL_STATIC_DRAW);
+
+	//////////////initialize rect texture///////////////////////
+
+	glBindVertexArray(RECTANGLE_TEXTURE_VAO);
+
+	glBindBuffer(GL_ARRAY_BUFFER, RECTANGLE_TEXTURE_VBO);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, RECTANGLE_TEXTURE_EBO);
 
 	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, FLOAT2, (void*)0);
 	glEnableVertexAttribArray(0);
 
-	/////////////////////////////////////////////
-
-	bgShaderProgram->addShaderFromSourceFile(QOpenGLShader::Vertex, ":/PiYing/bgshapes.vert");
-	bgShaderProgram->addShaderFromSourceFile(QOpenGLShader::Fragment, ":/PiYing/bgshapes.frag");
-	bgShaderProgram->link();
-	bgShaderProgram->setUniformValue("texture1", 0);
-
 	////////////////initialize character editer///////////////////////
-
-	glGenVertexArrays(1, &chVAO);
-	glGenBuffers(1, &chVBO);
-	glGenBuffers(1, &chEBO);
 
 	glBindVertexArray(chVAO);
 	glBindBuffer(GL_ARRAY_BUFFER, chVBO);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, chEBO);
 
-	// position attribute
 	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, FLOAT4, (void*)0);
 	glEnableVertexAttribArray(0);
 
 	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, FLOAT4, DEBU_FLOAT2);
 	glEnableVertexAttribArray(1);
 
-	glBindVertexArray(0);
-
-	/////////////////////////////////////////////
-
-	chShaderProgram->addShaderFromSourceFile(QOpenGLShader::Vertex, ":/PiYing/chEditershapes.vert");
-	chShaderProgram->addShaderFromSourceFile(QOpenGLShader::Fragment, ":/PiYing/chEditershapes.frag");
-	chShaderProgram->link();
-
 	//////////////initialize texture triangles///////////////////////
-
-	glGenVertexArrays(1, &ttVAO);
-
-	glGenBuffers(1, &ttEBO);
 
 	glBindVertexArray(ttVAO);
 	glBindBuffer(GL_ARRAY_BUFFER, chVBO);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, chEBO);
 
-	// position attribute
-	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)(2 * sizeof(float)));
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, FLOAT4, DEBU_FLOAT2);
 	glEnableVertexAttribArray(0);
 
-	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, FLOAT4, (void*)0);
 	glEnableVertexAttribArray(1);
 
-	glLineWidth(3.0f);
-
-	glBindVertexArray(0);
-
-	/////////////////////////////////////////////
-
-	_texture_tri_shader_program->addShaderFromSourceFile(QOpenGLShader::Vertex, ":/PiYing/texture_tri.vert");
-	_texture_tri_shader_program->addShaderFromSourceFile(QOpenGLShader::Fragment, ":/PiYing/texture_tri.frag");
-	_texture_tri_shader_program->link();
-
-	/////////////////////////////////////////////
-
 	//////////////initialize selected points///////////////////////
-
-	glGenVertexArrays(1, &svVAO);
-	glGenBuffers(1, &svVBO);
 
 	glBindVertexArray(svVAO);
 	glBindBuffer(GL_ARRAY_BUFFER, svVBO);
@@ -119,15 +97,10 @@ void PiYingGL::initializeGL()
 	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
 
-	glBindVertexArray(0);
+	glBindVertexArray(0); ///< end initialize
 
-	_selected_vert_shader_program->addShaderFromSourceFile(QOpenGLShader::Vertex, ":/PiYing/selected_vert.vert");
-	_selected_vert_shader_program->addShaderFromSourceFile(QOpenGLShader::Fragment, ":/PiYing/selected_vert.frag");
-	_selected_vert_shader_program->link();
+	/////////////////////global setting////////////////////////
 
-	/////////////////////////////////////////////
-
-	// global setting
 	chShaderProgram->bind();
 	chShaderProgram->setUniformValue("trc", QMatrix4x4());
 	_selected_vert_shader_program->bind();
@@ -139,6 +112,7 @@ void PiYingGL::initializeGL()
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glActiveTexture(GL_TEXTURE0);
 	glEnable(GL_PROGRAM_POINT_SIZE);
+	glLineWidth(3.0f);
 	glDisable(GL_DEPTH_TEST);   // 不需要深度测试
 	glDisable(GL_CULL_FACE);    // 不需要背面剔除
 }

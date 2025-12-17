@@ -164,11 +164,10 @@ public:
 private:
 	PiYing& ref_PiYing;
 
-	unsigned int bgVAO = 0, bgEBO = 0;
+	unsigned int RECTANGLE_TEXTURE_VAO = 0, RECTANGLE_TEXTURE_VBO = 0, RECTANGLE_TEXTURE_EBO = 0;
 	unsigned int chVAO = 0, chVBO = 0, chEBO = 0;
 	unsigned int ttVAO = 0, ttEBO;
 	unsigned int svVAO = 0, svVBO = 0;
-	unsigned int rtVAO = 0, rtVBO = 0;
 
 	QOpenGLShaderProgram* bgShaderProgram;
 	QOpenGLShaderProgram* chShaderProgram;
