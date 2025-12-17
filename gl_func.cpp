@@ -141,6 +141,8 @@ void PiYingGL::initializeGL()
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glActiveTexture(GL_TEXTURE0);
 	glEnable(GL_PROGRAM_POINT_SIZE);
+	glDisable(GL_DEPTH_TEST);   // 不需要深度测试
+	glDisable(GL_CULL_FACE);    // 不需要背面剔除
 }
 
 void PiYingGL::paintGL() {
