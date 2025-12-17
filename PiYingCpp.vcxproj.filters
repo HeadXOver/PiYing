@@ -51,9 +51,6 @@
     <Filter Include="Source Files\PiYingTool">
       <UniqueIdentifier>{b6a97278-ec58-408e-b0b8-040eba828882}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\PiYingContainer">
-      <UniqueIdentifier>{9b1c9dab-4333-4668-a13b-7a2ab2ab5323}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\PiYingTool">
       <UniqueIdentifier>{81a6fd38-6b9e-4b38-a5ce-638a5efa5af7}</UniqueIdentifier>
     </Filter>
@@ -184,17 +181,11 @@
     <ClCompile Include="keyboard_state_win.cpp">
       <Filter>Source Files\PiYingTool</Filter>
     </ClCompile>
-    <ClCompile Include="point_vector.cpp">
-      <Filter>Source Files\PiYingContainer</Filter>
-    </ClCompile>
     <ClCompile Include="ch_element_add_round.cpp">
       <Filter>Source Files\ChELementTool</Filter>
     </ClCompile>
     <ClCompile Include="ask_round_poly_dialog.cpp">
       <Filter>Source Files\PiYingQObject</Filter>
-    </ClCompile>
-    <ClCompile Include="point_vector_layer.cpp">
-      <Filter>Source Files\PiYingContainer</Filter>
     </ClCompile>
     <ClCompile Include="change_mode.cpp">
       <Filter>Source Files\PiYing</Filter>
@@ -223,9 +214,6 @@
     <ClCompile Include="time_line.cpp">
       <Filter>Source Files\PiYingElement</Filter>
     </ClCompile>
-    <ClCompile Include="scale_trans.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="ch_triangle_select.cpp">
       <Filter>Source Files\ChELementTool</Filter>
     </ClCompile>
@@ -250,8 +238,17 @@
     <ClCompile Include="time_line_gl.cpp">
       <Filter>Source Files\PiYingElement</Filter>
     </ClCompile>
+    <ClCompile Include="point_vector_layer.cpp">
+      <Filter>Source Files\PiYingElement</Filter>
+    </ClCompile>
+    <ClCompile Include="point_vector.cpp">
+      <Filter>Source Files\PiYingElement</Filter>
+    </ClCompile>
+    <ClCompile Include="scale_trans.cpp">
+      <Filter>Source Files\PiYingElement</Filter>
+    </ClCompile>
     <ClCompile Include="ViewData.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\PiYingElement</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
