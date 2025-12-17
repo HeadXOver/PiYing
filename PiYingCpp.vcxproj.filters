@@ -461,5 +461,8 @@
     <None Include="part_select_rect.frag">
       <Filter>Shader</Filter>
     </None>
+    <None Include="texture_color_shape.frag">
+      <Filter>Shader</Filter>
+    </None>
   </ItemGroup>
 </Project>

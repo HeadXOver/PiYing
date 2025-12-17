@@ -221,6 +221,7 @@
     <None Include="slideStyle.qss" />
     <None Include="square_icon.frag" />
     <None Include="square_icon.vert" />
+    <None Include="texture_color_shape.frag" />
     <None Include="texture_tri.frag" />
     <None Include="texture_tri.vert" />
     <None Include="timeline_rect_shape.frag" />

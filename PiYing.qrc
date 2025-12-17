@@ -39,5 +39,6 @@
         <file>rect_triangle_select_S.png</file>
         <file>part_select_rect.frag</file>
         <file>part_select_rect.vert</file>
+        <file>texture_color_shape.frag</file>
     </qresource>
 </RCC>
