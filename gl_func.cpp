@@ -34,16 +34,14 @@ void PiYingGL::initializeGL()
 	//////////////initialize background///////////////////////
 
 	glGenVertexArrays(1, &bgVAO);
-	glGenBuffers(1, &bgVBO);
+	glBindBuffer(GL_ARRAY_BUFFER, rtVBO);
 	glGenBuffers(1, &bgEBO);
 
 	/////////////////////////////////////////////
 
 	glBindVertexArray(bgVAO);
-	glBindBuffer(GL_ARRAY_BUFFER, bgVBO);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, bgEBO);
 
-	glBufferData(GL_ARRAY_BUFFER, sizeof(RECTANGLE_VERT), RECTANGLE_VERT, GL_STATIC_DRAW);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(RECTANGLE_INDECES), RECTANGLE_INDECES, GL_STATIC_DRAW);
 
 	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, FLOAT2, (void*)0);

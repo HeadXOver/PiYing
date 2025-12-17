@@ -164,7 +164,7 @@ public:
 private:
 	PiYing& ref_PiYing;
 
-	unsigned int bgVAO = 0, bgVBO = 0, bgEBO = 0;
+	unsigned int bgVAO = 0, bgEBO = 0;
 	unsigned int chVAO = 0, chVBO = 0, chEBO = 0;
 	unsigned int ttVAO = 0, ttEBO;
 	unsigned int svVAO = 0, svVBO = 0;
