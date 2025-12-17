@@ -106,10 +106,10 @@ void PiYingGL::add_character(const QString& imageName)
 void PiYingGL::setEditMode(EditMode mode)
 {
 	editMode = mode;
-	updateChTool();
+	update_ch_tool();
 }
 
-void PiYingGL::updateChTool()
+void PiYingGL::update_ch_tool()
 {
 	if (ch_element_tool_) {
 		ch_element_tool_ = nullptr;
@@ -126,38 +126,7 @@ void PiYingGL::updateChTool()
 	currentLayer = new PointVectorLayer(*characterVerts[currentVector]);
 	currentIndex = &characterTriangleIndices[currentVector];
 
-	if (_ch_tool_state == CharacterToolState::None) {
-		update();
-		return;
-	}
-
-	if (editMode == EditMode::characterSkeleton) {
-		if (_ch_tool_state == CharacterToolState::RectSelectVert || _ch_tool_state == CharacterToolState::LibreSelectVert) {
-			ch_element_tool_ = std::make_unique<ChElementTool>(currentVector, *this, _ch_tool_state);
-		}
-		update();
-		return;
-	}
-
-	if (editMode == EditMode::controlSlide) {
-		if (_ch_tool_state == CharacterToolState::AddVertTrace) {
-			ch_element_tool_ = std::make_unique<ChElementTool>(currentVector, *this, _ch_tool_state);
-		}
-		update();
-		return;
-	}
-
-	if (editMode == EditMode::characterTexture) {
-		if (_ch_tool_state == CharacterToolState::RectSelectVert 
-			|| _ch_tool_state == CharacterToolState::LibreSelectVert
-			|| _ch_tool_state == CharacterToolState::AddPoly
-			|| _ch_tool_state == CharacterToolState::AddRound
-			|| _ch_tool_state == CharacterToolState::AddTriangle) {
-			ch_element_tool_ = std::make_unique<ChElementTool>(currentVector, *this, _ch_tool_state);
-		}
-		update();
-		return;
-	}
+	ch_element_tool_ = std::make_unique<ChElementTool>(_ch_tool_state);
 
 	update();
 }
@@ -166,29 +135,7 @@ void PiYingGL::setChTool(CharacterToolState state)
 {
 	_ch_tool_state = state;
 
-	if (ch_element_tool_) {
-		ch_element_tool_ = nullptr;
-	}
-
-	if (currentLayer) {
-		delete currentLayer;
-		currentLayer = nullptr;
-	}
-
-	int currentVector = getCurrentChRow();
-	if (currentVector < 0) return;
-
-	currentLayer = new PointVectorLayer(*characterVerts[currentVector]);
-	currentIndex = &characterTriangleIndices[currentVector];
-	
-	if (state == CharacterToolState::None) {
-		update();
-		return;
-	}
-
-	ch_element_tool_ = std::make_unique<ChElementTool>(currentVector, *this, _ch_tool_state);
-
-	update();
+	update_ch_tool();
 }
 
 void PiYingGL::deleteChElement()

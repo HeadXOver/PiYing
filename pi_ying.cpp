@@ -119,7 +119,7 @@ PiYing::PiYing(QWidget* parent) : QMainWindow(parent)
     connect(actionExit,             &QAction::triggered,                this, [this]() {close(); });
     connect(actionImportBackGround, &QAction::triggered,                this, [this]() {piYingGL->importBackground(); });
     connect(actionImportCharacter,  &QAction::triggered,                this, [this]() {piYingGL->importChatacter(); });
-    connect(chImageList,            &QListWidget::currentItemChanged,   this, [this]() {piYingGL->updateChTool(); piYingGL->update_ch_verts(); });
+    connect(chImageList,            &QListWidget::currentItemChanged,   this, [this]() {piYingGL->update_ch_tool(); piYingGL->update_ch_verts(); });
     connect(bgImageList,            &QListWidget::currentItemChanged,   this, [this]() {piYingGL->update(); });
 
     piYingGLContainer->setRatio(ratio);

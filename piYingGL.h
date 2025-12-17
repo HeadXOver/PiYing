@@ -85,7 +85,7 @@ public:
 	void add_character(const QString& imageName);
 	void controlSlide(const std::map<int, std::unique_ptr<CharacterTrace>>& traces, int value);
 	void setEditMode(EditMode mode);
-	void updateChTool();
+	void update_ch_tool();
 	void setChTool(CharacterToolState state);
 	void deleteChElement();
 	void enterChElement();

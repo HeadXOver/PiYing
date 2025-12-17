@@ -17,7 +17,7 @@ struct DrawBehavior;
 class ChElementTool final
 {
 public:
-	ChElementTool(int current, PiYingGL& pygl, CharacterToolState chToolState);
+	ChElementTool(CharacterToolState chToolState);
 	~ChElementTool();
 
 	void click(const QPointF& mouse);

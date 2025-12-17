@@ -120,7 +120,7 @@ void ChElementTool::construct_libre_select_triangle()
 	enterBehavior = std::make_unique<LibreSelectTriangleEnter>(libreSelect);
 }
 
-ChElementTool::ChElementTool(int current, PiYingGL& pygl, CharacterToolState chToolState)
+ChElementTool::ChElementTool(CharacterToolState chToolState)
 {
 	if (chToolState == CharacterToolState::None) return;
 
