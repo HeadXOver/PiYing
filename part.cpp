@@ -29,7 +29,7 @@ Part::Part(
 	_sliderWidget->setStyleSheet(PiYing::SLIDER_WIDGET_STYLE_SHEET);
 	_sliderWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
-	slide_applier = std::make_unique<SlideApplier>();
+	slide_applier = new SlideApplier();
 
 	_vert_texture = std::make_unique<PointVector>();
 	PointVectorLayer layer(*_vert_texture);
@@ -85,6 +85,11 @@ Part::Part(
 
 	piYingGL->generate_ebo(_indices, _ebo);
 	piYingGL->generate_vao(_vao_piying, _vbo, _ebo);
+}
+
+Part::~Part()
+{
+	delete slide_applier;
 }
 
 float* Part::float_data() const

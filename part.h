@@ -17,6 +17,7 @@ class Part final
 {
 public:
 	Part(QOpenGLTexture& texture, const QList<unsigned int>& indices, bool isTexture);
+	~Part();
 
 	float* float_data() const;
 	const unsigned int* index_data() const;
@@ -63,5 +64,7 @@ private:
 
 	CtrlSlideWidget* _sliderWidget;
 
-	std::unique_ptr<SlideApplier> slide_applier;
+	SlideApplier* slide_applier;
+
+	//QVBoxLayout* sliderLayout = nullptr;
 };
