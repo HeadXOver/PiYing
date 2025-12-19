@@ -35,7 +35,6 @@ class QOpenGLShaderProgram;
 class PointVector;
 class CtrlSlideWidget;
 class SlideApplier;
-class CharacterTrace;
 class VertGroups;
 class Part;
 
@@ -83,7 +82,6 @@ public:
 	void addBackground(const QString& imageName);
 	void appendBgList(const QImage& image);
 	void add_character(const QString& imageName);
-	void controlSlide(const std::map<int, std::unique_ptr<CharacterTrace>>& traces, int value);
 	void setEditMode(EditMode mode);
 	void update_ch_tool();
 	void setChTool(CharacterToolState state);

@@ -211,9 +211,6 @@
     <ClCompile Include="character_trace.cpp">
       <Filter>Source Files\PiYingElement</Filter>
     </ClCompile>
-    <ClCompile Include="control_slider.cpp">
-      <Filter>Source Files\piYingGL</Filter>
-    </ClCompile>
     <ClCompile Include="time_line.cpp">
       <Filter>Source Files\PiYingElement</Filter>
     </ClCompile>

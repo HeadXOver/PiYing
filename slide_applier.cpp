@@ -10,7 +10,7 @@ SlideApplier::~SlideApplier()
 {
 }
 
-bool SlideApplier::add_trace(int id, int index, const QPolygonF& polygon)
+bool SlideApplier::add_trace2(int id, int index, const QPolygonF& polygon)
 {
     std::map<int, std::unique_ptr<CharacterTrace>>& traces = slide_map[id];
 
@@ -29,4 +29,19 @@ const std::map<int, std::unique_ptr<CharacterTrace>>& SlideApplier::get_traces(i
 void SlideApplier::remove_slider_by_id(int id)
 {
     slide_map.erase(id);
+}
+
+bool SlideApplier::add_trace(int sliderId, int index, const QPolygonF& polygon)
+{
+    CharacterTrace& trace = *sliders[sliderId];
+
+    if (trace.have_point(index)) return false;
+    trace.add_point(index, polygon);
+
+    return true;
+}
+
+const std::map<unsigned int, QPolygonF>& SlideApplier::get_trace_map(int slide) const
+{
+    return sliders[slide]->get_traces();
 }

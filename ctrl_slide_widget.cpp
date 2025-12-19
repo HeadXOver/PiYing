@@ -63,7 +63,7 @@ void CtrlSlideWidget::addSlider(QString name)
 
 bool CtrlSlideWidget::add_trace(int id, int index, const QPolygonF& trace) 
 {
-    return timelineGl->get_current_part()->get_slide_applier().add_trace(id, index, trace);
+    return timelineGl->get_current_part()->get_slide_applier().add_trace2(id, index, trace);
 }
 
 void CtrlSlideWidget::setSlider(CtrlSlideLayout* slider)
