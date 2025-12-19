@@ -14,7 +14,7 @@ class CtrlSlideWidget : public QWidget
     Q_OBJECT
 
 public:
-    CtrlSlideWidget(PiYingGL& gl, const QString& name, QWidget* parent = nullptr);
+    CtrlSlideWidget();
     ~CtrlSlideWidget();
 
     void addSlider(QString name = "Slider");
@@ -37,6 +37,4 @@ private:
 
     QVBoxLayout* sliderLayout = nullptr;
     int sliderCount = 0;
-
-    std::unique_ptr<SlideApplier> slide_applier;
 };

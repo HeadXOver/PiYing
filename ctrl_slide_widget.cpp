@@ -4,7 +4,10 @@
 #include "cus_func_get_unique_id.h"
 
 #include "piYingGL.h"
+#include "part.h"
+#include "time_line_gl.h"
 #include "slide_applier.h"
+#include "global_objects.h"
 
 #include <QPushbutton>
 #include <QBoxLayout>
@@ -13,15 +16,14 @@
 #include <qlabel>
 #include <qslider>
 
-CtrlSlideWidget::CtrlSlideWidget(PiYingGL& gl, const QString& name, QWidget* parent) : QWidget(parent)
+CtrlSlideWidget::CtrlSlideWidget() : QWidget(piYingGL)
 {
-    slide_applier = std::make_unique<SlideApplier>();
     sliderLayout = new QVBoxLayout(this);
 
-    QPushButton* headButton = new QPushButton(this);
-    headButton->setText("添加");
+    QPushButton* addButton = new QPushButton(this);
+    addButton->setText("添加");
 
-    headButton->setStyleSheet(
+    addButton->setStyleSheet(
         "QPushButton {"
         "   background-color: white;"
         "   color: black;"
@@ -32,7 +34,7 @@ CtrlSlideWidget::CtrlSlideWidget(PiYingGL& gl, const QString& name, QWidget* par
 
     QHBoxLayout* headLayout = new QHBoxLayout(this);
 
-    headLayout->addWidget(headButton);
+    headLayout->addWidget(addButton);
     headLayout->addStretch();
 
     sliderLayout->addLayout(headLayout);
@@ -40,7 +42,7 @@ CtrlSlideWidget::CtrlSlideWidget(PiYingGL& gl, const QString& name, QWidget* par
 
     setLayout(sliderLayout);
 
-    connect(headButton, &QPushButton::pressed, this, [this] { addSlider(); });
+    connect(addButton, &QPushButton::pressed, this, [this] { addSlider(); });
 }
 
 CtrlSlideWidget::~CtrlSlideWidget()
@@ -52,7 +54,7 @@ CtrlSlideWidget::~CtrlSlideWidget()
 
 void CtrlSlideWidget::addSlider(QString name)
 {
-    CtrlSlideLayout* ctrlSlideLayout = new CtrlSlideLayout(*slide_applier, get_unique_name(name), 0, 100, 0, get_unique_id(sliderList), this);
+    CtrlSlideLayout* ctrlSlideLayout = new CtrlSlideLayout(timelineGl->get_current_part()->get_slide_applier(), get_unique_name(name), 0, 100, 0, get_unique_id(sliderList), this);
     sliderList.append(ctrlSlideLayout);
 
     sliderLayout->insertWidget(sliderCount, sliderList[sliderCount++]);
@@ -61,7 +63,7 @@ void CtrlSlideWidget::addSlider(QString name)
 
 bool CtrlSlideWidget::add_trace(int id, int index, const QPolygonF& trace) 
 {
-    return slide_applier->add_trace(id, index, trace);
+    return timelineGl->get_current_part()->get_slide_applier().add_trace(id, index, trace);
 }
 
 void CtrlSlideWidget::setSlider(CtrlSlideLayout* slider)
@@ -79,7 +81,7 @@ void CtrlSlideWidget::removeSlider(CtrlSlideLayout* slider)
 
         sliderList.removeAt(i);
         sliderLayout->removeWidget(slider);
-        slide_applier->remove_slider_by_id(slider->id_);
+        timelineGl->get_current_part()->get_slide_applier().remove_slider_by_id(slider->id_);
         delete slider;
         sliderCount--;
         return;

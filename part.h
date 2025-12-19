@@ -11,6 +11,7 @@ class QPointF;
 class QPolygonF;
 class CtrlSlideWidget;
 class CharacterTrace;
+class SlideApplier;
 
 class Part final
 {
@@ -25,6 +26,8 @@ public:
 	size_t vertex_size() const;
 
 	QPointF get_vert(int index, bool isSkelen) const;
+
+	SlideApplier& get_slide_applier();
 
 	void bind_texture();
 	void add_trace(int index, const QPolygonF& polygon);
@@ -59,4 +62,6 @@ private:
 	std::unique_ptr<PointVector> _vert_texture;
 
 	CtrlSlideWidget* _sliderWidget;
+
+	std::unique_ptr<SlideApplier> slide_applier;
 };

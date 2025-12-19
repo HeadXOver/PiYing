@@ -11,6 +11,7 @@
 #include "point_vector.h"
 #include "point_vector_layer.h"
 #include "vert_groups.h"
+#include "slide_applier.h"
 #include "part.h"
 
 #include "piYingGLContainer.h"

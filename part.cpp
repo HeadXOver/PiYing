@@ -9,6 +9,7 @@
 #include "time_line_gl.h"
 #include "piYingGL.h"
 #include "PiYing.h"
+#include "slide_applier.h"
 #include "character_trace.h"
 #include "global_objects.h"
 
@@ -24,9 +25,11 @@ Part::Part(
 ) :
 	_texture(texture)
 {
-	_sliderWidget = new CtrlSlideWidget(*piYingGL, "part");
+	_sliderWidget = new CtrlSlideWidget();
 	_sliderWidget->setStyleSheet(PiYing::SLIDER_WIDGET_STYLE_SHEET);
 	_sliderWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+
+	slide_applier = std::make_unique<SlideApplier>();
 
 	_vert_texture = std::make_unique<PointVector>();
 	PointVectorLayer layer(*_vert_texture);
@@ -112,6 +115,11 @@ size_t Part::vertex_size() const
 QPointF Part::get_vert(int index, bool isSkelen) const
 {
 	return (*_vert_texture)[index + index + (isSkelen ? 0 : 1)];
+}
+
+SlideApplier& Part::get_slide_applier()
+{
+	return *slide_applier;
 }
 
 void Part::bind_texture()
