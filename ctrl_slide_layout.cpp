@@ -13,7 +13,7 @@
 #include <qmessagebox>
 #include <qmenu>
 
-CtrlSlideLayout::CtrlSlideLayout(PiYingGL& gl, SlideApplier& slideApplier, QString labelName, int min, int max, int defaultValue, int id, QWidget* parent) :
+CtrlSlideLayout::CtrlSlideLayout(SlideApplier& slideApplier, QString labelName, int min, int max, int defaultValue, int id, QWidget* parent) :
     id_(id), QWidget(parent),
     slide_applier(slideApplier)
 {

@@ -181,6 +181,10 @@ void Part::update_scale()
 	_width = right - left;
 }
 
+void Part::same_texture_merge(const Part& other)
+{
+}
+
 #pragma region [get value]
 
 float Part::x() const

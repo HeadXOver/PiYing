@@ -13,9 +13,7 @@
 #include <qlabel>
 #include <qslider>
 
-CtrlSlideWidget::CtrlSlideWidget(PiYingGL& gl, const QString& name, QWidget* parent) :
-    QWidget(parent), 
-    piYingGL(gl)
+CtrlSlideWidget::CtrlSlideWidget(PiYingGL& gl, const QString& name, QWidget* parent) : QWidget(parent)
 {
     slide_applier = std::make_unique<SlideApplier>();
     sliderLayout = new QVBoxLayout(this);
@@ -33,10 +31,8 @@ CtrlSlideWidget::CtrlSlideWidget(PiYingGL& gl, const QString& name, QWidget* par
     );
 
     QHBoxLayout* headLayout = new QHBoxLayout(this);
-    nameLabel = new QLabel(name, this);
 
     headLayout->addWidget(headButton);
-    headLayout->addWidget(nameLabel);
     headLayout->addStretch();
 
     sliderLayout->addLayout(headLayout);
@@ -56,7 +52,7 @@ CtrlSlideWidget::~CtrlSlideWidget()
 
 void CtrlSlideWidget::addSlider(QString name)
 {
-    CtrlSlideLayout* ctrlSlideLayout = new CtrlSlideLayout(piYingGL, *slide_applier, get_unique_name(name), 0, 100, 0, get_unique_id(sliderList), this);
+    CtrlSlideLayout* ctrlSlideLayout = new CtrlSlideLayout(*slide_applier, get_unique_name(name), 0, 100, 0, get_unique_id(sliderList), this);
     sliderList.append(ctrlSlideLayout);
 
     sliderLayout->insertWidget(sliderCount, sliderList[sliderCount++]);
@@ -135,9 +131,4 @@ QList<QString> CtrlSlideWidget::get_slider_names()
 int CtrlSlideWidget::get_id(int index) const 
 {
     return sliderList[index]->id_;
-}
-
-void CtrlSlideWidget::set_widget_name(const QString& name)
-{
-    nameLabel->setText(name);
 }
