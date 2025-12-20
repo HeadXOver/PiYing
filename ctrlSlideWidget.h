@@ -27,7 +27,7 @@ private:
     void setSlider(unsigned int sliderIndex);
     void setName(unsigned int sliderIndex);
 
-    QString get_unique_name(const QString& str);
+    QString get_unique_name(const QString& str, int sliderIndex);
 
 private:
     QList<CtrlSlideLayout*> sliderList;

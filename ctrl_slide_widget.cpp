@@ -68,7 +68,7 @@ void CtrlSlideWidget::setName(unsigned int sliderIndex)
         &ok
     );
 
-    if (ok) sliderList[sliderIndex]->label->setText(get_unique_name(text));
+    if (ok) sliderList[sliderIndex]->label->setText(get_unique_name(text, sliderIndex));
 }
 
 void CtrlSlideWidget::delete_all_layout()
@@ -95,7 +95,7 @@ void CtrlSlideWidget::add_slider_by_part(std::shared_ptr<Part> part)
     }
 }
 
-QString CtrlSlideWidget::get_unique_name(const QString& str)
+QString CtrlSlideWidget::get_unique_name(const QString& str, int sliderIndex)
 {
     QString name;
     for (int i = 0;; i++) {
@@ -103,7 +103,7 @@ QString CtrlSlideWidget::get_unique_name(const QString& str)
         else name = str;
         bool isExist = false;
         for (int j = 0; j < sliderList.size(); j++) {
-            if (sliderList[j]->label->text() == name) {
+            if (j != sliderIndex && sliderList[j]->label->text() == name) {
                 isExist = true;
                 break;
             }

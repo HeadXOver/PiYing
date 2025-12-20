@@ -29,7 +29,7 @@ bool SlideApplier::add_trace_on_exist_slider(int sliderId, int index, const QPol
 
 void SlideApplier::add_new_slider(int index, const QPolygonF& polygon)
 {
-    sliders.push_back(std::make_unique<CharacterTrace>(index, polygon, "new slider"));
+    sliders.push_back(std::make_unique<CharacterTrace>(index, polygon, get_unique_name("new slider")));
     piYing->update_part_slider();
 }
 
@@ -65,10 +65,10 @@ int SlideApplier::get_slider_current_value(int sliderIndex) const
 
 QString SlideApplier::get_unique_name(const QString& str) const
 {
-    QString s;
+    QString s = str;
     bool repeat = false;
-    for (int i = 1;; i++) {
-        s = str + QString::number(i);
+    for (int i = 0;; i++) {
+        if(i != 0) s = str + QString::number(i);
         repeat = false;
         for (int j = 0; j < sliders.size(); ++j)
             if (sliders[j]->name() == s) {
@@ -83,10 +83,10 @@ QString SlideApplier::get_unique_name(const QString& str) const
 
 QString SlideApplier::get_unique_name_except(const QString& str, int exceptId) const
 {
-    QString s;
+    QString s = str;
     bool repeat = false;
-    for (int i = 1;; i++) {
-        s = str + QString::number(i);
+    for (int i = 0;; i++) {
+        if (i != 0) s = str + QString::number(i);
         repeat = false;
         for (int j = 0; j < sliders.size(); ++j)
             if (j != exceptId && sliders[j]->name() == s) {
