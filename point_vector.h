@@ -23,6 +23,7 @@ public:
 	void set_point(int i, float x, float y);
 	void set_point(int i, const QPointF& p);
 	void copy_to_vector(std::vector<float>& other);
+	void copy_from_vector(std::vector<float>& other);
 	
 	bool contain(const QPointF& p) const;
 

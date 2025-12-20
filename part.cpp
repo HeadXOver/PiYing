@@ -28,6 +28,8 @@ Part::Part(
 	slide_applier = new SlideApplier();
 
 	_vert_texture = std::make_unique<PointVector>();
+	_vert_texture_origin = std::make_unique<PointVector>();
+
 	PointVectorLayer layer(*_vert_texture);
 
 	std::vector<int> hashIndex(currentLayer->size(), -1);
@@ -80,9 +82,8 @@ Part::Part(
 
 	timelineGl->generate_vbo(*_vert_texture, _vbo);
 	timelineGl->generate_ebo(_indices, _ebo);
-	timelineGl->generate_vao(_vao_timeline, _vbo, _ebo);
 
-	piYingGL->generate_ebo(_indices, _ebo);
+	timelineGl->generate_vao(_vao_timeline, _vbo, _ebo);
 	piYingGL->generate_vao(_vao_piying, _vbo, _ebo);
 }
 
