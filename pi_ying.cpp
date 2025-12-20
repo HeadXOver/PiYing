@@ -38,6 +38,10 @@ PiYing::PiYing(QWidget* parent) : QMainWindow(parent)
     setWindowTitle("皮影");
     setFocusPolicy(Qt::StrongFocus);
 
+    sliderWidget = new CtrlSlideWidget();
+    sliderWidget->setStyleSheet(SLIDER_WIDGET_STYLE_SHEET);
+    sliderWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+
     float ratio = 16.0f / 9.0f;
 
     voidListWidget = new QListWidget();
@@ -179,6 +183,7 @@ PiYing::~PiYing()
     safeDelete(splitTimelineOpenGL);
     safeDelete(splitListOpenGL);
     safeDelete(timeLineGL);
+    safeDelete(sliderWidget);
 }
 
 int PiYing::getCurrentBgRow()

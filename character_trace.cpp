@@ -31,3 +31,8 @@ QPointF CharacterTrace::get_point(int value)
 	int t = value * (trace.size() - 1) / 100;
 	return trace[t];
 }
+
+const QString& CharacterTrace::name() const
+{
+	return _name;
+}

@@ -25,10 +25,6 @@ Part::Part(
 ) :
 	_texture(texture)
 {
-	_sliderWidget = new CtrlSlideWidget();
-	_sliderWidget->setStyleSheet(PiYing::SLIDER_WIDGET_STYLE_SHEET);
-	_sliderWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-
 	slide_applier = new SlideApplier();
 
 	_vert_texture = std::make_unique<PointVector>();
@@ -72,6 +68,9 @@ Part::Part(
 			_indices.push_back(eachIndex);
 		}
 	}
+
+	_indices_origin = _indices;
+	_vert_texture_origin->get_vector() = _vert_texture->get_vector();
 
 	_x = (left + right) / 2.f;
 	_y = (top + bottom) / 2.f;
@@ -134,25 +133,20 @@ void Part::bind_texture()
 
 void Part::add_trace(int index, const QPolygonF& polygon)
 {
-	QList<QString> items = _sliderWidget->get_slider_names();
-
 	QMenu tempMenu(piYingGL);
 	tempMenu.addAction(QString("新建控制器"));
 
-	for (int i = 0; i < items.size(); ++i)
-		tempMenu.addAction(QString("绑定到: %1").arg(items[i]));
+	const unsigned int n_sliders = slide_applier->n_sliders();
+	for (unsigned int i = 0; i < n_sliders; ++i)
+		tempMenu.addAction(QString("绑定到: %1").arg(slide_applier->get_slider_name(i)));
 
 	QAction* act = tempMenu.exec(QCursor::pos());
 	if (!act) return;
 
-	int id = tempMenu.actions().indexOf(act) - 1;
+	int actionIndex = tempMenu.actions().indexOf(act) - 1;
 
-	if (id == -1) {
-		_sliderWidget->addSlider();
-		id = items.size();
+	if (actionIndex == -1) {
 	}
-
-	if (!_sliderWidget->add_trace(_sliderWidget->get_id(id), index, polygon)) QMessageBox::warning(piYingGL, "警告", "轨迹重复");
 }
 
 void Part::apply_slide(const std::map<int, std::unique_ptr<CharacterTrace>>& traces, int value)
@@ -228,11 +222,6 @@ unsigned int Part::vao_timeline() const
 unsigned int Part::vao_piying() const
 {
 	return _vao_piying;
-}
-
-CtrlSlideWidget* Part::slider_widget() const
-{
-	return _sliderWidget;
 }
 
 #pragma endregion

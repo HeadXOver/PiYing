@@ -3,11 +3,12 @@
 #include <map>
 #include <memory>
 #include <vector>
+#include <qstring>
 
 class CharacterTrace;
 class QPolygonF;
 
-class SlideApplier
+class SlideApplier final
 {
 public:
     SlideApplier();
@@ -19,6 +20,10 @@ public:
 
     bool add_trace(int sliderId, int index, const QPolygonF& polygon);
     const std::map<unsigned int, QPolygonF>& get_trace_map(int slide) const;
+
+    unsigned int n_sliders() const;
+
+    const QString& get_slider_name(int id) const;
 
 private:
     std::vector<std::unique_ptr<CharacterTrace>> sliders;

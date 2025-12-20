@@ -44,8 +44,6 @@ public:
 	unsigned int vao_timeline() const;
 	unsigned int vao_piying() const;
 
-	CtrlSlideWidget* slider_widget() const;
-
 private:
 	float _x;
 	float _y;
@@ -59,12 +57,11 @@ private:
 private:
 	QOpenGLTexture& _texture;
 
+	std::vector<unsigned int> _indices_origin;
+	std::unique_ptr<PointVector> _vert_texture_origin;
+
 	std::vector<unsigned int> _indices;
 	std::unique_ptr<PointVector> _vert_texture;
 
-	CtrlSlideWidget* _sliderWidget;
-
 	SlideApplier* slide_applier;
-
-	//QVBoxLayout* sliderLayout = nullptr;
 };

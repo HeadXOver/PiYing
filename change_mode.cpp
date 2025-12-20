@@ -110,7 +110,7 @@ void PiYing::change_edit_mode_character_constrol_slider()
     splitListOpenGL->widget(0)->setParent(nullptr);
     std::shared_ptr<Part> part = timelineGl->get_current_part();
     if(part)
-        splitListOpenGL->insertWidget(0, part->slider_widget());
+        splitListOpenGL->insertWidget(0, sliderWidget);
     else
         splitListOpenGL->insertWidget(0, voidListWidget);
     piYingGL->setEditMode(EditMode::controlSlide);
@@ -141,7 +141,7 @@ void PiYing::update_part_slider()
     splitListOpenGL->widget(0)->setParent(nullptr);
     std::shared_ptr<Part> part = timelineGl->get_current_part();
     if (part)
-        splitListOpenGL->insertWidget(0, part->slider_widget());
+        splitListOpenGL->insertWidget(0, sliderWidget);
     else
         splitListOpenGL->insertWidget(0, voidListWidget);
 

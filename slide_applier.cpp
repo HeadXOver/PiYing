@@ -45,3 +45,13 @@ const std::map<unsigned int, QPolygonF>& SlideApplier::get_trace_map(int slide) 
 {
     return sliders[slide]->get_traces();
 }
+
+unsigned int SlideApplier::n_sliders() const
+{
+    return (unsigned int)sliders.size();
+}
+
+const QString& SlideApplier::get_slider_name(int id) const
+{
+    return sliders[id]->name();
+}

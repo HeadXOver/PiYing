@@ -5,14 +5,11 @@
 
 enum class CharacterToolState;
 class CtrlSlideWidget;
-class PiYingGL;
 class TimelineGl;
 class ToolButton;
 class PiYingGLContainer;
 class QListWidget;
 class QSplitter;
-class QSlider;
-class SlideApplier;
 
 namespace Ui{
 	class PiYingClass;
@@ -67,14 +64,16 @@ private:
 	QList<ToolButton*> toolChSkelenList;
 	QList<ToolButton*> toolControlSliderList;
 	ToolButton* _select_button;
+	QListWidget* voidListWidget;
+
+	CtrlSlideWidget* sliderWidget = nullptr;
 
 public:
 	static QString SLIDER_WIDGET_STYLE_SHEET;
 
-	PiYingGLContainer* piYingGLContainer = nullptr;
-
 	QListWidget* bgImageList = nullptr;
 	QListWidget* chImageList = nullptr;
-	QListWidget* voidListWidget;
+
+	PiYingGLContainer* piYingGLContainer = nullptr;
 };
 

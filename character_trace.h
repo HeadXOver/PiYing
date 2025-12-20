@@ -4,6 +4,8 @@
 #include <map>
 #include <qstring>
 
+class QSlider;
+
 class CharacterTrace
 {
 public:
@@ -18,9 +20,13 @@ public:
 
     QPointF get_point(int value);
 
+    const QString& name() const;
+
 private:
     std::map<unsigned int, QPolygonF> trace_by_index;
+    int current_slider_value{ 0 };
     QString _name;
+
     QPolygonF trace;
 };
 

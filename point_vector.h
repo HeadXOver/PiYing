@@ -22,8 +22,11 @@ public:
 	void remove_last();
 	void set_point(int i, float x, float y);
 	void set_point(int i, const QPointF& p);
+	void copy_to_vector(std::vector<float>& other);
 	
 	bool contain(const QPointF& p) const;
+
+	std::vector<float>& get_vector() { return points; }
 
 	const QPointF operator[](int i) const;
 

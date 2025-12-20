@@ -44,6 +44,11 @@ void PointVector::set_point(int i, const QPointF& p)
 	points[i2 + 1] = p.y();
 }
 
+void PointVector::copy_to_vector(std::vector<float>& other)
+{
+	other = points;
+}
+
 bool PointVector::contain(const QPointF& p) const
 {
 	for (int i = 0; i < points.size(); i += 2) {
