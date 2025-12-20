@@ -149,6 +149,9 @@ void Part::add_trace(int index, const QPolygonF& polygon)
 	if (actionIndex == -1) {
 		slide_applier->add_new_slider(index, polygon);
 	}
+	else {
+		slide_applier->add_trace_on_exist_slider(actionIndex, index, polygon);
+	}
 }
 
 void Part::apply_slide(const std::map<int, std::unique_ptr<CharacterTrace>>& traces, int value)

@@ -11,7 +11,8 @@ CharacterTrace::CharacterTrace(unsigned int index, const QPolygonF& poly, const 
 		std::back_inserter(screenPoly),
 		[origin](const QPointF& p) { return p - origin; }
 	);
-	trace_by_index[index] = poly;
+
+	trace_by_index[index] = screenPoly;
 }
 
 CharacterTrace::~CharacterTrace()
@@ -30,7 +31,15 @@ bool CharacterTrace::have_point(unsigned int index) const
 
 void CharacterTrace::add_point(unsigned int index, const QPolygonF& poly)
 {
-	trace_by_index[index] = poly;
+	QPointF origin = poly[0];
+	QPolygonF screenPoly;
+	screenPoly.reserve(poly.size());
+	std::transform(poly.cbegin(), poly.cend(),
+		std::back_inserter(screenPoly),
+		[origin](const QPointF& p) { return p - origin; }
+	);
+
+	trace_by_index[index] = screenPoly;
 }
 
 void CharacterTrace::set_current_value(int value)
