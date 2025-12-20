@@ -66,6 +66,7 @@ const QString& SlideApplier::get_slider_name(int id) const
 
 void SlideApplier::change_current_value(int sliderIndex, int value)
 {
+    sliders[sliderIndex]->set_current_value(value);
 }
 
 int SlideApplier::get_slider_current_value(int sliderIndex) const
