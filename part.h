@@ -32,7 +32,6 @@ public:
 
 	void bind_texture();
 	void add_trace(int index, const QPolygonF& polygon);
-	void apply_slide(const std::map<int, std::unique_ptr<CharacterTrace>>& traces, int value);
 	void update_scale();
 	void same_texture_merge(const Part& other);
 	void change_slider_value(int sliderIndex, int value);

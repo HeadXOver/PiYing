@@ -19,8 +19,6 @@ public:
     void add_point(unsigned int index, const QPolygonF& poly);
     void set_current_value(int value);
 
-    QPointF get_point(int value);
-
     const QString& name() const;
 
     int get_current_slider_value() const;

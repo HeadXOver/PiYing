@@ -154,19 +154,6 @@ void Part::add_trace(int index, const QPolygonF& polygon)
 	}
 }
 
-void Part::apply_slide(const std::map<int, std::unique_ptr<CharacterTrace>>& traces, int value)
-{
-	PointVectorLayer layer(*_vert_texture);
-
-	for (const auto& [key, val] : traces) {
-		layer.set_point(true, key, val->get_point(value));
-	}
-
-	timelineGl->update_vbo(*_vert_texture, _vbo);
-	timelineGl->update();
-	piYingGL->update();
-}
-
 void Part::update_scale()
 {
 	PointVectorLayer layer(*_vert_texture);
