@@ -134,7 +134,7 @@ void Part::bind_texture()
 
 void Part::add_trace(int index, const QPolygonF& polygon)
 {
-	QMenu tempMenu(piYingGL);
+	QMenu tempMenu;
 	tempMenu.addAction(QString("新建控制器"));
 
 	const unsigned int n_sliders = slide_applier->n_sliders();

@@ -57,7 +57,8 @@ void ChAddVertTrace::release(const QPointF& mouse)
 		return;
 	}
 
-	timelineGl->get_current_part()->add_trace(current_index, polygon);
+	std::shared_ptr<Part> part = timelineGl->get_current_part();
+	if (part) part->add_trace(current_index, polygon);
 
 	current_index = -1;
 	polygon.clear();
