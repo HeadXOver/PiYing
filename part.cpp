@@ -200,6 +200,12 @@ void Part::change_slider_value(int sliderIndex, int value)
 	piYingGL->update();
 }
 
+void Part::remove_slider(int sliderIndex)
+{
+	slide_applier->remove_slider(sliderIndex);
+	piYing->update_part_slider();
+}
+
 #pragma region [get value]
 
 float Part::x() const

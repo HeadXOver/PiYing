@@ -23,7 +23,5 @@ public:
     QLabel* label;
     QSlider* slider;
     QPushButton* rightButton;
-
-    int id_;
 };
 ;

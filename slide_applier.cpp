@@ -53,7 +53,48 @@ void SlideApplier::change_current_value(int sliderIndex, int value)
     sliders[sliderIndex]->set_current_value(value);
 }
 
+void SlideApplier::remove_slider(int sliderIndex)
+{
+    sliders.erase(sliders.begin() + sliderIndex);
+}
+
 int SlideApplier::get_slider_current_value(int sliderIndex) const
 {
     return sliders[sliderIndex]->get_current_slider_value();
+}
+
+QString SlideApplier::get_unique_name(const QString& str) const
+{
+    QString s;
+    bool repeat = false;
+    for (int i = 1;; i++) {
+        s = str + QString::number(i);
+        repeat = false;
+        for (int j = 0; j < sliders.size(); ++j)
+            if (sliders[j]->name() == s) {
+                repeat = true;
+                break;
+            }
+        if (!repeat) return s;
+    }
+
+    return QString();
+}
+
+QString SlideApplier::get_unique_name_except(const QString& str, int exceptId) const
+{
+    QString s;
+    bool repeat = false;
+    for (int i = 1;; i++) {
+        s = str + QString::number(i);
+        repeat = false;
+        for (int j = 0; j < sliders.size(); ++j)
+            if (j != exceptId && sliders[j]->name() == s) {
+                repeat = true;
+                break;
+            }
+        if (!repeat) return s;
+    }
+
+    return QString();
 }

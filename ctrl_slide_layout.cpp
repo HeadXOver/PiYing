@@ -13,8 +13,7 @@
 #include <qmessagebox>
 #include <qmenu>
 
-CtrlSlideLayout::CtrlSlideLayout(QString labelName, unsigned int id, int defaultValue, QWidget* parent) :
-    id_(id), QWidget(parent)
+CtrlSlideLayout::CtrlSlideLayout(QString labelName, unsigned int id, int defaultValue, QWidget* parent) : QWidget(parent)
 {
     layout = new QHBoxLayout(this);
 
@@ -34,10 +33,10 @@ CtrlSlideLayout::CtrlSlideLayout(QString labelName, unsigned int id, int default
     layout->addWidget(slider);
     layout->addWidget(rightButton);
 
-    connect(slider, &QSlider::valueChanged, this, [this](int value)
+    connect(slider, &QSlider::valueChanged, this, [id](int value)
         {
             std::shared_ptr<Part> part = timelineGl->get_current_part();
-            if(part) part->change_slider_value(id_, value);
+            if(part) part->change_slider_value(id, value);
         }
     );
 

@@ -24,7 +24,11 @@ public:
 
     const QString& get_slider_name(int id) const;
 
+    QString get_unique_name(const QString& str) const;
+    QString get_unique_name_except(const QString& str, int exceptId) const;
+
     void change_current_value(int sliderIndex, int value);
+    void remove_slider(int sliderIndex);
 
     int get_slider_current_value(int sliderIndex) const;
 

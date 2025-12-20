@@ -1,8 +1,6 @@
 ﻿#include "ctrlSlideWidget.h"
 #include "ctrlSlideLayout.h"
 
-#include "cus_func_get_unique_id.h"
-
 #include "piYingGL.h"
 #include "part.h"
 #include "time_line_gl.h"
@@ -41,8 +39,6 @@ CtrlSlideWidget::CtrlSlideWidget() : QWidget(piYingGL)
     sliderLayout->addStretch();
 
     setLayout(sliderLayout);
-
-    connect(addButton, &QPushButton::pressed, this, [this] { addSlider(); });
 }
 
 CtrlSlideWidget::~CtrlSlideWidget()
@@ -52,37 +48,15 @@ CtrlSlideWidget::~CtrlSlideWidget()
     }
 }
 
-void CtrlSlideWidget::addSlider(QString name)
-{
-    CtrlSlideLayout* ctrlSlideLayout = new CtrlSlideLayout(get_unique_name(name), get_unique_id(sliderList), 0, this);
-
-    sliderLayout->insertWidget(sliderList.size(), ctrlSlideLayout);
-    sliderList.push_back(ctrlSlideLayout);
-    connect(ctrlSlideLayout->rightButton,   &QPushButton::pressed, this, [ctrlSlideLayout, this] { setSlider(ctrlSlideLayout); });
-}
-
-void CtrlSlideWidget::setSlider(CtrlSlideLayout* slider)
+void CtrlSlideWidget::setSlider(unsigned int sliderIndex)
 {
     QMenu* menu = new QMenu(this);
-    menu->addAction("删除", this, [slider, this] { removeSlider(slider); });
-    menu->addAction("重命名", this, [slider, this] { setName(slider); });
+    menu->addAction("删除", this, [sliderIndex, this] { timelineGl->get_current_part()->remove_slider(sliderIndex); });
+    menu->addAction("重命名", this, [sliderIndex, this] { setName(sliderIndex); });
     menu->exec(QCursor::pos());
 }
 
-void CtrlSlideWidget::removeSlider(CtrlSlideLayout* slider)
-{
-    for (int i = 0; i < sliderList.size(); i++) {
-        if (sliderList[i] != slider) continue;
-
-        sliderList.removeAt(i);
-        sliderLayout->removeWidget(slider);
-        timelineGl->get_current_part()->get_slide_applier().remove_slider_by_id(slider->id_);
-        delete slider;
-        return;
-    }
-}
-
-void CtrlSlideWidget::setName(CtrlSlideLayout* slider)
+void CtrlSlideWidget::setName(unsigned int sliderIndex)
 {
     bool ok;
     QString text = QInputDialog::getText(
@@ -94,7 +68,7 @@ void CtrlSlideWidget::setName(CtrlSlideLayout* slider)
         &ok
     );
 
-    if (ok) slider->label->setText(get_unique_name(text));
+    if (ok) sliderList[sliderIndex]->label->setText(get_unique_name(text));
 }
 
 void CtrlSlideWidget::delete_all_layout()
@@ -117,7 +91,7 @@ void CtrlSlideWidget::add_slider_by_part(std::shared_ptr<Part> part)
         sliderList.push_back(ctrlSlideLayout);
 
         sliderLayout->insertWidget(i + 1, ctrlSlideLayout);
-        connect(ctrlSlideLayout->rightButton, &QPushButton::pressed, this, [ctrlSlideLayout, this] { setSlider(ctrlSlideLayout); });
+        connect(ctrlSlideLayout->rightButton, &QPushButton::pressed, this, [i, this] { setSlider(i); });
     }
 }
 
@@ -146,9 +120,4 @@ QList<QString> CtrlSlideWidget::get_slider_names()
         names.append(sliderList[i]->label->text());
     }
     return names;
-}
-
-int CtrlSlideWidget::get_id(int index) const 
-{
-    return sliderList[index]->id_;
 }

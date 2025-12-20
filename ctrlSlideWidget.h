@@ -18,18 +18,14 @@ public:
     CtrlSlideWidget();
     ~CtrlSlideWidget();
 
-    void addSlider(QString name = "Slider");
     void delete_all_layout();
     void add_slider_by_part(std::shared_ptr<Part> part);
 
     QList<QString> get_slider_names();
-    
-    int get_id(int index) const;
 
 private:
-    void setSlider(CtrlSlideLayout* slider);
-    void removeSlider(CtrlSlideLayout* slider);
-    void setName(CtrlSlideLayout* slider);
+    void setSlider(unsigned int sliderIndex);
+    void setName(unsigned int sliderIndex);
 
     QString get_unique_name(const QString& str);
 

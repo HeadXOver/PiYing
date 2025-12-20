@@ -110,7 +110,6 @@
     <ClCompile Include="controls.cpp" />
     <ClCompile Include="ctrl_slide_layout.cpp" />
     <ClCompile Include="ctrl_slide_widget.cpp" />
-    <ClCompile Include="cus_func_get_unique_id.cpp" />
     <ClCompile Include="cus_func_point2d.cpp" />
     <ClCompile Include="cus_func_string.cpp" />
     <ClCompile Include="cus_func_zone.cpp" />
@@ -162,7 +161,6 @@
     <ClInclude Include="character_trace.h" />
     <ClInclude Include="ch_triangle_libre_select.h" />
     <ClInclude Include="ch_triangle_rect_select.h" />
-    <ClInclude Include="cus_func_get_unique_id.h" />
     <ClInclude Include="ch_add_vert_trace.h" />
     <ClInclude Include="enum_edit_mode.h" />
     <ClInclude Include="enum_select_handle_mode.h" />

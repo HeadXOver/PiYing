@@ -35,6 +35,7 @@ public:
 	void update_scale();
 	void same_texture_merge(const Part& other);
 	void change_slider_value(int sliderIndex, int value);
+	void remove_slider(int sliderIndex);
 
 	float x() const;
 	float y() const;
