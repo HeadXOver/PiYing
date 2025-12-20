@@ -197,6 +197,17 @@ void Part::same_texture_merge(const Part& other)
 void Part::change_slider_value(int sliderIndex, int value)
 {
 	slide_applier->change_current_value(sliderIndex, value);
+	const std::map<unsigned int, QPolygonF>& tracesByPoint = slide_applier->get_trace_map(sliderIndex);
+	PointVectorLayer layer(*_vert_texture);
+	PointVectorLayer layer_origin(*_vert_texture_origin);
+
+	for (const auto& [key, val] : tracesByPoint) {
+		layer.set_point(true, key, val[value * (val.size() - 1) / 1000] + layer_origin.get(key, true));
+	}
+
+	timelineGl->update_vbo(*_vert_texture, _vbo);
+	timelineGl->update();
+	piYingGL->update();
 }
 
 #pragma region [get value]

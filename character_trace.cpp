@@ -2,13 +2,15 @@
 
 #include <qpolygonf>
 
-CharacterTrace::CharacterTrace(const QPolygonF& poly)
-{
-	trace = poly;
-}
-
 CharacterTrace::CharacterTrace(unsigned int index, const QPolygonF& poly, const QString& name) : _name(name)
 {
+	QPointF origin = poly[0];
+	QPolygonF screenPoly;
+	screenPoly.reserve(poly.size());
+	std::transform(poly.cbegin(), poly.cend(),
+		std::back_inserter(screenPoly),
+		[origin](const QPointF& p) { return p - origin; }
+	);
 	trace_by_index[index] = poly;
 }
 

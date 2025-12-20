@@ -17,14 +17,16 @@ CtrlSlideLayout::CtrlSlideLayout(QString labelName, unsigned int id, int default
     id_(id), QWidget(parent)
 {
     layout = new QHBoxLayout(this);
+
     label = new QLabel(labelName, this);
     label->setStyleSheet("QLabel { background-color : white; color : black; }");
+
     slider = new QSlider(Qt::Horizontal, this);
     slider->setRange(0, 1000);
     slider->setValue(defaultValue);
+
     rightButton = new QPushButton(this);
-    QIcon icon(":/PiYing/setIcon.png");
-    rightButton->setIcon(icon);
+    rightButton->setIcon(QIcon(":/PiYing/setIcon.png"));
     rightButton->setIconSize(QSize(16, 16));
     rightButton->setFixedSize(QSize(16, 16));
 

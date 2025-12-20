@@ -9,7 +9,6 @@ class QSlider;
 class CharacterTrace
 {
 public:
-    CharacterTrace(const QPolygonF& poly);
     CharacterTrace(unsigned int index, const QPolygonF& poly, const QString& name);
     ~CharacterTrace();
 
