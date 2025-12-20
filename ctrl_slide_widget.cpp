@@ -54,10 +54,10 @@ CtrlSlideWidget::~CtrlSlideWidget()
 
 void CtrlSlideWidget::addSlider(QString name)
 {
-    CtrlSlideLayout* ctrlSlideLayout = new CtrlSlideLayout(timelineGl->get_current_part()->get_slide_applier(), get_unique_name(name), 0, 100, 0, get_unique_id(sliderList), this);
-    sliderList.append(ctrlSlideLayout);
+    CtrlSlideLayout* ctrlSlideLayout = new CtrlSlideLayout(get_unique_name(name), get_unique_id(sliderList), 0, this);
 
-    sliderLayout->insertWidget(sliderCount, sliderList[sliderCount++]);
+    sliderLayout->insertWidget(sliderList.size(), ctrlSlideLayout);
+    sliderList.push_back(ctrlSlideLayout);
     connect(ctrlSlideLayout->rightButton,   &QPushButton::pressed, this, [ctrlSlideLayout, this] { setSlider(ctrlSlideLayout); });
 }
 
@@ -83,7 +83,6 @@ void CtrlSlideWidget::removeSlider(CtrlSlideLayout* slider)
         sliderLayout->removeWidget(slider);
         timelineGl->get_current_part()->get_slide_applier().remove_slider_by_id(slider->id_);
         delete slider;
-        sliderCount--;
         return;
     }
 }
@@ -101,6 +100,30 @@ void CtrlSlideWidget::setName(CtrlSlideLayout* slider)
     );
 
     if (ok) slider->label->setText(get_unique_name(text));
+}
+
+void CtrlSlideWidget::delete_all_layout()
+{
+    for (QWidget* slider : sliderList) {
+        sliderLayout->removeWidget(slider);  // 从布局中移除
+        delete slider;                       // 删除控件
+    }
+    sliderList.clear();
+}
+
+void CtrlSlideWidget::add_slider_by_part(std::shared_ptr<Part> part)
+{
+    SlideApplier& applier = part->get_slide_applier();
+
+    const unsigned int nApplier = applier.n_sliders();
+
+    for (unsigned int i = 0; i < nApplier; i++) {
+        CtrlSlideLayout* ctrlSlideLayout = new CtrlSlideLayout(applier.get_slider_name(i), i, applier.get_slider_current_value(i), this);
+        sliderList.push_back(ctrlSlideLayout);
+
+        sliderLayout->insertWidget(i + 1, ctrlSlideLayout);
+        connect(ctrlSlideLayout->rightButton, &QPushButton::pressed, this, [ctrlSlideLayout, this] { setSlider(ctrlSlideLayout); });
+    }
 }
 
 QString CtrlSlideWidget::get_unique_name(const QString& str)

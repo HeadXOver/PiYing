@@ -8,6 +8,7 @@ class PiYingGL;
 class SlideApplier;
 class QPolygonF;
 class QLabel;
+class Part;
 
 class CtrlSlideWidget : public QWidget
 {
@@ -18,6 +19,8 @@ public:
     ~CtrlSlideWidget();
 
     void addSlider(QString name = "Slider");
+    void delete_all_layout();
+    void add_slider_by_part(std::shared_ptr<Part> part);
 
     bool add_trace(int id, int index, const QPolygonF& trace);
 
@@ -36,5 +39,4 @@ private:
     QList<CtrlSlideLayout*> sliderList;
 
     QVBoxLayout* sliderLayout = nullptr;
-    int sliderCount = 0;
 };

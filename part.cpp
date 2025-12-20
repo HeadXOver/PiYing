@@ -147,6 +147,7 @@ void Part::add_trace(int index, const QPolygonF& polygon)
 	int actionIndex = tempMenu.actions().indexOf(act) - 1;
 
 	if (actionIndex == -1) {
+		slide_applier->add_new_slider(index, polygon);
 	}
 }
 
@@ -191,6 +192,11 @@ void Part::update_scale()
 
 void Part::same_texture_merge(const Part& other)
 {
+}
+
+void Part::change_slider_value(int sliderIndex, int value)
+{
+	slide_applier->change_current_value(sliderIndex, value);
 }
 
 #pragma region [get value]

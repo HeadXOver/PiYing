@@ -13,15 +13,14 @@
 #include <qmessagebox>
 #include <qmenu>
 
-CtrlSlideLayout::CtrlSlideLayout(SlideApplier& slideApplier, QString labelName, int min, int max, int defaultValue, int id, QWidget* parent) :
-    id_(id), QWidget(parent),
-    slide_applier(slideApplier)
+CtrlSlideLayout::CtrlSlideLayout(QString labelName, unsigned int id, int defaultValue, QWidget* parent) :
+    id_(id), QWidget(parent)
 {
     layout = new QHBoxLayout(this);
     label = new QLabel(labelName, this);
     label->setStyleSheet("QLabel { background-color : white; color : black; }");
     slider = new QSlider(Qt::Horizontal, this);
-    slider->setRange(min, max);
+    slider->setRange(0, 1000);
     slider->setValue(defaultValue);
     rightButton = new QPushButton(this);
     QIcon icon(":/PiYing/setIcon.png");
@@ -36,7 +35,7 @@ CtrlSlideLayout::CtrlSlideLayout(SlideApplier& slideApplier, QString labelName, 
     connect(slider, &QSlider::valueChanged, this, [this](int value)
         {
             std::shared_ptr<Part> part = timelineGl->get_current_part();
-            if(part) part->apply_slide(slide_applier.get_traces(id_), value);
+            if(part) part->change_slider_value(id_, value);
         }
     );
 

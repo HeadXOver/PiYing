@@ -15,7 +15,7 @@ class CtrlSlideLayout final : public QWidget
 {
     Q_OBJECT
 public:
-    explicit CtrlSlideLayout(SlideApplier& slideApplier, QString labelName, int min, int max, int defaultValue, int id, QWidget* parent);
+    explicit CtrlSlideLayout(QString labelName, unsigned int id, int defaultValue, QWidget* parent);
     ~CtrlSlideLayout();
 
 public:
@@ -23,7 +23,7 @@ public:
     QLabel* label;
     QSlider* slider;
     QPushButton* rightButton;
-    SlideApplier& slide_applier;
+
     int id_;
 };
 ;

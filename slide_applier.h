@@ -18,12 +18,17 @@ public:
     const std::map<int, std::unique_ptr<CharacterTrace>>& get_traces(int id);
     void remove_slider_by_id(int id);
 
-    bool add_trace(int sliderId, int index, const QPolygonF& polygon);
+    bool add_trace_on_exist_slider(int sliderId, int index, const QPolygonF& polygon);
+    void add_new_slider(int index, const QPolygonF& polygon);
     const std::map<unsigned int, QPolygonF>& get_trace_map(int slide) const;
 
     unsigned int n_sliders() const;
 
     const QString& get_slider_name(int id) const;
+
+    void change_current_value(int sliderIndex, int value);
+
+    int get_slider_current_value(int sliderIndex) const;
 
 private:
     std::vector<std::unique_ptr<CharacterTrace>> sliders;

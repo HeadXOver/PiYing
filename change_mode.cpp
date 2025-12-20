@@ -138,12 +138,20 @@ void PiYing::update_part_slider()
 {
     if (piYingGL->editMode != EditMode::controlSlide) return;
 
-    splitListOpenGL->widget(0)->setParent(nullptr);
     std::shared_ptr<Part> part = timelineGl->get_current_part();
-    if (part)
-        splitListOpenGL->insertWidget(0, sliderWidget);
-    else
+    if (part) {
+        if (splitListOpenGL->widget(0) == voidListWidget) {
+            splitListOpenGL->widget(0)->setParent(nullptr);
+            splitListOpenGL->insertWidget(0, sliderWidget);
+        }
+
+        sliderWidget->delete_all_layout();
+        sliderWidget->add_slider_by_part(part);
+    }
+    else if (splitListOpenGL->widget(0) != voidListWidget) {
+        splitListOpenGL->widget(0)->setParent(nullptr);
         splitListOpenGL->insertWidget(0, voidListWidget);
+    }
 
     splitListOpenGL->setSizes({ width() / 5, width() * 4 / 5 });
 }
