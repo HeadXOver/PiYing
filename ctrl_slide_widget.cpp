@@ -61,11 +61,6 @@ void CtrlSlideWidget::addSlider(QString name)
     connect(ctrlSlideLayout->rightButton,   &QPushButton::pressed, this, [ctrlSlideLayout, this] { setSlider(ctrlSlideLayout); });
 }
 
-bool CtrlSlideWidget::add_trace(int id, int index, const QPolygonF& trace) 
-{
-    return timelineGl->get_current_part()->get_slide_applier().add_trace2(id, index, trace);
-}
-
 void CtrlSlideWidget::setSlider(CtrlSlideLayout* slider)
 {
     QMenu* menu = new QMenu(this);

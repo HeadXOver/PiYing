@@ -22,8 +22,6 @@ public:
     void delete_all_layout();
     void add_slider_by_part(std::shared_ptr<Part> part);
 
-    bool add_trace(int id, int index, const QPolygonF& trace);
-
     QList<QString> get_slider_names();
     
     int get_id(int index) const;
