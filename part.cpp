@@ -150,7 +150,9 @@ void Part::add_trace(int index, const QPolygonF& polygon)
 		slide_applier->add_new_slider(index, polygon);
 	}
 	else {
-		slide_applier->add_trace_on_exist_slider(actionIndex, index, polygon);
+		if (!slide_applier->add_trace_on_exist_slider(actionIndex, index, polygon)) {
+			QMessageBox::warning(nullptr, "警告", "该控制器已存在该点");
+		}
 	}
 }
 
@@ -187,12 +189,23 @@ void Part::same_texture_merge(const Part& other)
 void Part::change_slider_value(int sliderIndex, int value)
 {
 	slide_applier->change_current_value(sliderIndex, value);
-	const std::map<unsigned int, QPolygonF>& tracesByPoint = slide_applier->get_trace_map(sliderIndex);
+
 	PointVectorLayer layer(*_vert_texture);
 	PointVectorLayer layer_origin(*_vert_texture_origin);
 
+	const std::map<unsigned int, QPolygonF>& tracesByPoint = slide_applier->get_trace_map(sliderIndex);
+
+	QPointF displacement;
 	for (const auto& [key, val] : tracesByPoint) {
-		layer.set_point(true, key, val[value * (val.size() - 1) / 1000] + layer_origin.get(key, true));
+		displacement = QPointF();
+		for (unsigned int i = 0; i < slide_applier->n_sliders(); ++i) {
+			const std::map<unsigned int, QPolygonF>& eachSlider = slide_applier->get_trace_map(i);
+			if (eachSlider.count(key)) {
+				const QPolygonF& eachTrace = eachSlider.at(key);
+				displacement += eachTrace[slide_applier->get_slider_current_value(i) * (eachTrace.size() - 1) / 1000];
+			}
+		}
+		layer.set_point(true, key, displacement + layer_origin.get(key, true)); 
 	}
 
 	timelineGl->update_vbo(*_vert_texture, _vbo);
