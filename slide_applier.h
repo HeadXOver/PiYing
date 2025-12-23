@@ -30,7 +30,7 @@ public:
 
     void change_current_value(int sliderIndex, int value);
     void remove_slider(int sliderIndex);
-    void eat_other_sliders(SlideApplier* other);
+    void eat_other_sliders(SlideApplier* other, unsigned int skew);
 
     int get_slider_current_value(int sliderIndex) const;
 

@@ -70,6 +70,17 @@ void CharacterTrace::set_name(const QString& name)
 	_name = name;
 }
 
+void CharacterTrace::add_skew(unsigned int skew)
+{
+	std::map<unsigned int, QPolygonF> newMap;
+
+	for (auto& [index, poly] : trace_by_index) {
+		newMap[index + skew] = poly;
+	}
+
+	trace_by_index = std::move(newMap);
+}
+
 const QString& CharacterTrace::name() const
 {
 	return _name;

@@ -213,7 +213,8 @@ bool Part::eat_another_part(Part& other)
 	}
 
 	/// 拼接顶点下标vector
-	unsigned int tempSize = (unsigned int)_vert_texture_origin->half_point_size();
+	const unsigned int tempSize = (unsigned int)_vert_texture_origin->half_point_size();
+	_indices.reserve(_indices.size() + other._indices.size());
 	for (int i = 0; i < other._indices.size(); ++i) {
 		_indices.push_back(other._indices[i] + tempSize);
 	}
@@ -223,7 +224,7 @@ bool Part::eat_another_part(Part& other)
 
 	update_scale();
 
-	slide_applier->eat_other_sliders(other.slide_applier);
+	slide_applier->eat_other_sliders(other.slide_applier, tempSize);
 
 	timelineGl->update_buffers(*_vert_texture, _indices, _vbo, _ebo);
 

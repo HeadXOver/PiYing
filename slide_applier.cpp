@@ -74,8 +74,10 @@ void SlideApplier::remove_slider(int sliderIndex)
     sliders.erase(sliders.begin() + sliderIndex);
 }
 
-void SlideApplier::eat_other_sliders(SlideApplier* other)
+void SlideApplier::eat_other_sliders(SlideApplier* other, unsigned int skew)
 {
+    unsigned int tempSize = other->sliders.size();
+
     // 把 other 拼接到 this 的末尾，使用移动语义
     sliders.insert(sliders.end(),
         std::make_move_iterator(other->sliders.begin()),
@@ -83,6 +85,10 @@ void SlideApplier::eat_other_sliders(SlideApplier* other)
 
     // 清空 other（所有元素已被移走，只剩空壳）
     other->sliders.clear();
+
+    for (unsigned int i = tempSize; i < sliders.size(); ++i) {
+        sliders[i]->add_skew(skew);
+    }
 }
 
 int SlideApplier::get_slider_current_value(int sliderIndex) const

@@ -21,6 +21,7 @@ public:
     void add_point(unsigned int index, const QPolygonF& poly);
     void set_current_value(int value);
     void set_name(const QString& name);
+    void add_skew(unsigned int skew);
 
     const QString& name() const;
 
