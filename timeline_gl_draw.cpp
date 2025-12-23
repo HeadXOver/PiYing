@@ -65,21 +65,26 @@ void TimelineGl::paint_parts()
 
 	_part_shader_program->bind();
 
-	float x, y, scale;
+	float x, y;
 	for (int i = 0; i < parts.size(); i++) {
 		x = -0.8f + (i % 5) * 0.4f;
 		y = +0.8f - (i / 5) * 0.4f;
 
-		glBindVertexArray(parts[i]->vao_timeline());
-
-		scale = 0.38f / cus::max(parts[i]->width(), parts[i]->height());
-		_part_shader_program->setUniformValue("scale", scale);
-		_part_shader_program->setUniformValue("x", x - scale * parts[i]->x());
-		_part_shader_program->setUniformValue("y", y - scale * parts[i]->y());
-
-		parts[i]->bind_texture();
-		glDrawElements(GL_TRIANGLES, (GLsizei)parts[i]->index_size(), GL_UNSIGNED_INT, 0);
+		draw_part_and_child(*parts[i], x, y);
 	}
 
 	glBindVertexArray(0);////////////////////////////////////////////////////////////
+}
+
+void TimelineGl::draw_part_and_child(Part& part, float x, float y)
+{
+	glBindVertexArray(part.vao_timeline());
+
+	const float scale = 0.38f / cus::max(part.width(), part.height());
+	_part_shader_program->setUniformValue("scale", scale);
+	_part_shader_program->setUniformValue("x", x - scale * part.x());
+	_part_shader_program->setUniformValue("y", y - scale * part.y());
+
+	part.bind_texture();
+	glDrawElements(GL_TRIANGLES, (GLsizei)part.index_size(), GL_UNSIGNED_INT, 0);
 }

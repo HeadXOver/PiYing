@@ -112,6 +112,10 @@ Part::Part(const Part& part1, const Part& part2) : _texture(part1._texture)
 	update_scale();
 }
 
+Part::Part(const Part& part) : _texture(part._texture)
+{
+}
+
 Part::~Part()
 {
 	delete slide_applier;
@@ -276,12 +280,22 @@ void Part::release_buffers()
 	piYingGL->release_buffers(_vao_piying);
 }
 
+void Part::add_child(std::shared_ptr<Part> child)
+{
+	_children.push_back(child);
+}
+
+void Part::add_copied_child(std::shared_ptr<Part> child)
+{
+	_children.push_back(std::make_shared<Part>(*child));
+}
+
 void Part::update_transform(const QMatrix4x4& parentWorld)
 {
 	localTransform = _joint->get_local_transform();
 	worldTransform = parentWorld * localTransform;
 
-	for (auto& child : children) {
+	for (auto& child : _children) {
 		if (child) child->update_transform(worldTransform);
 	}
 }

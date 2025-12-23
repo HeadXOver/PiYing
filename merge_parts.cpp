@@ -27,10 +27,12 @@ void TimelineGl::part_beside_ref()
 
 void TimelineGl::part_layer_new()
 {
-	QMessageBox::warning(this, "3", QString("%1, %2").arg(_part_cursor._index).arg(_moving_select_part._index));
+	parts[_moving_select_part._index]->add_copied_child(parts[_part_cursor._index]);
 }
 
 void TimelineGl::part_layer_ref()
 {
-	QMessageBox::warning(this, "4", QString("%1, %2").arg(_part_cursor._index).arg(_moving_select_part._index));
+	parts[_moving_select_part._index]->add_child(parts[_part_cursor._index]);
+
+	parts.erase(parts.begin() + _part_cursor._index);
 }

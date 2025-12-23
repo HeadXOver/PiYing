@@ -9,6 +9,9 @@ public:
     QMatrix4x4 get_local_transform() const;
 
 private:
+    float center_x{ 0 };
+    float center_y{ 0 };
+
     float trans_x{ 0 };
     float trans_y{ 0 };
 

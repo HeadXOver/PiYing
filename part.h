@@ -20,6 +20,7 @@ class Part final
 public:
 	Part(QOpenGLTexture& texture, const QList<unsigned int>& indices, bool isTexture);
 	Part(const Part& part1, const Part& part2);
+	Part(const Part& part);
 	~Part();
 
 	const float* float_data() const;
@@ -40,6 +41,8 @@ public:
 	void change_slider_value(int sliderIndex, int value);
 	void remove_slider(int sliderIndex);
 	void release_buffers();
+	void add_child(std::shared_ptr<Part> child);
+	void add_copied_child(std::shared_ptr<Part> child);
 
 	void update_transform(const QMatrix4x4& parentWorld = QMatrix4x4());
 
@@ -70,8 +73,8 @@ private:
 
 	SlideApplier* slide_applier;
 
-	std::vector<std::shared_ptr<Part>> children;
-	std::weak_ptr<Part> parent;
+	std::vector<std::shared_ptr<Part>> _children;
+	std::weak_ptr<Part> _parent;
 	
 	std::unique_ptr<Joint> _joint;
 

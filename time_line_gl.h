@@ -71,6 +71,7 @@ private:
 	void move_time_cursor(float mouse_x);
 	void paint_timeline();
 	void paint_parts();
+	void draw_part_and_child(Part& part, float x, float y);
 	void ask_merge_parts();
 
 	void part_beside_new();
