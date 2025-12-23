@@ -4,6 +4,7 @@
 #include <vector>
 #include <memory>
 #include <map>
+#include <qmatrix4x4>
 
 class QOpenGLTexture;
 class PointVector;
@@ -12,6 +13,7 @@ class QPolygonF;
 class CtrlSlideWidget;
 class CharacterTrace;
 class SlideApplier;
+class Joint;
 
 class Part final
 {
@@ -39,6 +41,8 @@ public:
 	void remove_slider(int sliderIndex);
 	void release_buffers();
 
+	void update_transform(const QMatrix4x4& parentWorld = QMatrix4x4());
+
 	float x() const;
 	float y() const;
 	float height() const;
@@ -65,4 +69,12 @@ private:
 	std::vector<unsigned int> _indices;
 
 	SlideApplier* slide_applier;
+
+	std::vector<std::shared_ptr<Part>> children;
+	std::weak_ptr<Part> parent;
+	
+	std::unique_ptr<Joint> _joint;
+
+	QMatrix4x4 localTransform;   // 相对于父节点
+	QMatrix4x4 worldTransform;   // 缓存的世界变换
 };

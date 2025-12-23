@@ -114,6 +114,7 @@
     <ClCompile Include="cus_func_string.cpp" />
     <ClCompile Include="cus_func_zone.cpp" />
     <ClCompile Include="events.cpp" />
+    <ClCompile Include="Joint.cpp" />
     <ClCompile Include="merge_parts.cpp" />
     <ClCompile Include="part_cursor.cpp" />
     <ClCompile Include="timeline_gl_event.cpp" />
@@ -165,6 +166,7 @@
     <ClInclude Include="enum_edit_mode.h" />
     <ClInclude Include="enum_select_handle_mode.h" />
     <ClInclude Include="global_objects.h" />
+    <ClInclude Include="Joint.h" />
     <ClInclude Include="part.h" />
     <ClInclude Include="selected_triangle.h" />
     <ClInclude Include="static_gl_const.h" />

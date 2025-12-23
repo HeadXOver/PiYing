@@ -6,6 +6,7 @@
 #include "base_math.h"
 
 #include "ctrlSlideWidget.h"
+#include "Joint.h"
 #include "time_line_gl.h"
 #include "piYingGL.h"
 #include "PiYing.h"
@@ -26,6 +27,7 @@ Part::Part(
 	_texture(texture)
 {
 	slide_applier = new SlideApplier();
+	_joint = std::make_unique<Joint>();
 
 	_vert_texture = std::make_unique<PointVector>();
 	_vert_texture_origin = std::make_unique<PointVector>();
@@ -115,6 +117,8 @@ Part::~Part()
 	delete slide_applier;
 }
 
+#pragma region [simple]
+
 const float* Part::float_data() const
 {
 	return _vert_texture->data();
@@ -154,6 +158,8 @@ void Part::bind_texture()
 {
 	_texture.bind();
 }
+
+#pragma endregion
 
 void Part::add_trace(int index, const QPolygonF& polygon)
 {
@@ -268,6 +274,16 @@ void Part::release_buffers()
 {
 	timelineGl->release_buffers(_vao_timeline, _vbo, _ebo);
 	piYingGL->release_buffers(_vao_piying);
+}
+
+void Part::update_transform(const QMatrix4x4& parentWorld)
+{
+	localTransform = _joint->get_local_transform();
+	worldTransform = parentWorld * localTransform;
+
+	for (auto& child : children) {
+		if (child) child->update_transform(worldTransform);
+	}
 }
 
 #pragma region [get value]
