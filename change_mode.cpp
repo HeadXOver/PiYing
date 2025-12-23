@@ -131,7 +131,7 @@ void PiYing::change_edit_mode_character_constrol_slider()
         }
     }
 
-    if (!piYingGL->have_ch_tool()) piYingGL->setChTool(CharacterToolState::None);
+    piYingGL->setChTool(CharacterToolState::None);
 }
 
 void PiYing::update_part_slider()

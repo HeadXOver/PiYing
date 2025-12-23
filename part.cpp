@@ -71,7 +71,6 @@ Part::Part(
 		}
 	}
 
-	_indices_origin = _indices;
 	_vert_texture_origin->get_vector() = _vert_texture->get_vector();
 
 	_x = (left + right) / 2.f;
@@ -87,12 +86,36 @@ Part::Part(
 	piYingGL->generate_vao(_vao_piying, _vbo, _ebo);
 }
 
+Part::Part(const Part& part1, const Part& part2) : _texture(part1._texture)
+{
+	_vert_texture_origin = std::make_unique<PointVector>(*part1._vert_texture_origin, *part2._vert_texture_origin);
+	_vert_texture = std::make_unique<PointVector>(*part1._vert_texture, *part2._vert_texture);
+
+	unsigned int tempSize = (unsigned int)part1._vert_texture->half_point_size();
+	_indices.reserve(part1._indices.size() + part2._indices.size());
+	_indices.insert(_indices.end(), part1._indices.begin(), part1._indices.end());
+
+	for (int i = 0; i < part2._indices.size(); ++i) {
+		_indices.push_back(tempSize + part2._indices[i]);
+	}
+
+	slide_applier = new SlideApplier(*part1.slide_applier, *part2.slide_applier, tempSize);
+
+	timelineGl->generate_vbo(*_vert_texture, _vbo);
+	timelineGl->generate_ebo(_indices, _ebo);
+
+	timelineGl->generate_vao(_vao_timeline, _vbo, _ebo);
+	piYingGL->generate_vao(_vao_piying, _vbo, _ebo);
+
+	update_scale();
+}
+
 Part::~Part()
 {
 	delete slide_applier;
 }
 
-float* Part::float_data() const
+const float* Part::float_data() const
 {
 	return _vert_texture->data();
 }
@@ -114,7 +137,7 @@ size_t Part::index_size() const
 
 size_t Part::vertex_size() const
 {
-	return _vert_texture->size();
+	return _vert_texture->point_size();
 }
 
 QPointF Part::get_vert(int index, bool isSkelen) const
@@ -182,8 +205,29 @@ void Part::update_scale()
 	_width = right - left;
 }
 
-void Part::same_texture_merge(const Part& other)
+bool Part::eat_another_part(Part& other)
 {
+	if (&_texture != &other._texture) {
+		QMessageBox::warning(piYingGL, "警告", "不能合并不同纹理的部位");
+		return false;
+	}
+
+	/// 拼接顶点下标vector
+	unsigned int tempSize = (unsigned int)_vert_texture_origin->half_point_size();
+	for (int i = 0; i < other._indices.size(); ++i) {
+		_indices.push_back(other._indices[i] + tempSize);
+	}
+
+	*_vert_texture_origin += *other._vert_texture_origin;	///< 拼接顶点坐标vector
+	*_vert_texture += *other._vert_texture;					///< 拼接顶点坐标vector
+
+	update_scale();
+
+	slide_applier->eat_other_sliders(other.slide_applier);
+
+	timelineGl->update_buffers(*_vert_texture, _indices, _vbo, _ebo);
+
+	return true;
 }
 
 void Part::change_slider_value(int sliderIndex, int value)
@@ -217,6 +261,12 @@ void Part::remove_slider(int sliderIndex)
 {
 	slide_applier->remove_slider(sliderIndex);
 	piYing->update_part_slider();
+}
+
+void Part::release_buffers()
+{
+	timelineGl->release_buffers(_vao_timeline, _vbo, _ebo);
+	piYingGL->release_buffers(_vao_piying);
 }
 
 #pragma region [get value]

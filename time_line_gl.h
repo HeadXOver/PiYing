@@ -46,11 +46,14 @@ public:
 	void set_to_timeline();
 	void set_to_part();
 
-	void generate_vbo(PointVector& pointVector, unsigned int& vbo);
-	void update_vbo(PointVector& pointVector, unsigned int vbo);
-	void generate_ebo(std::vector<unsigned int>& indices, unsigned int& vbo);
+	void generate_vbo(const PointVector& pointVector, unsigned int& vbo);
+	void update_vbo(const PointVector& pointVector, unsigned int vbo);
+	void update_ebo(const std::vector<unsigned int>& indices, unsigned int ebo);
+	void update_buffers(const PointVector& pointVector, const std::vector<unsigned int>& indices, unsigned int vbo, unsigned int ebo);
+	void generate_ebo(const std::vector<unsigned int>& indices, unsigned int& vbo);
 	void generate_vao(unsigned int& vao, unsigned int vbo, unsigned int ebo);
 	void init_part_cursor();
+	void release_buffers(unsigned int vao, unsigned int vbo, unsigned int ebo);
 
 	std::shared_ptr<Part> get_current_part() const;
 

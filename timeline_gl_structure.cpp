@@ -11,10 +11,10 @@ TimelineGl::TimelineGl(QWidget* parent) : QOpenGLWidget(), _ratio(1.f), _ui_type
 {
 	_merge_menu = new QMenu(this);
 
-	QAction* beside_new = new QAction("并列 新建", this);
-	QAction* beside_ref = new QAction("并列 引用", this);
+	QAction* beside_new = new QAction("合并 新建", this);
+	QAction* beside_ref = new QAction("合并 覆盖", this);
 	QAction* layer_new = new QAction("父子 新建", this);
-	QAction* layer_ref = new QAction("父子 引用", this);
+	QAction* layer_ref = new QAction("父子 覆盖", this);
 
 	_merge_menu->addAction(beside_new);
 	_merge_menu->addAction(beside_ref);

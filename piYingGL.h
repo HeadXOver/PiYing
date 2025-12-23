@@ -113,8 +113,8 @@ public:
 	void addTriangle(int index1, const QPointF& point2, const QPointF& point3);
 	void addTriangle(const QPointF& point1, const QPointF& point2, const QPointF& point3);
 
-	void generate_ebo(std::vector<unsigned int>& indices, unsigned int& ebo);
 	void generate_vao(unsigned int& vao, unsigned int vbo, unsigned int ebo);
+	void release_buffers(unsigned int vao);
 
 	int get_group_num() const;
 

@@ -8,6 +8,22 @@ SlideApplier::SlideApplier()
 {
 }
 
+SlideApplier::SlideApplier(const SlideApplier& applier1, const SlideApplier& applier2, unsigned int skew)
+{
+    sliders.reserve(applier1.sliders.size() + applier2.sliders.size());
+    
+    for (int i = 0; i < applier1.sliders.size(); ++i) {
+        sliders.push_back(std::make_unique<CharacterTrace>(*applier1.sliders[i]));
+    }
+
+    QString toName;
+    for (int i = 0; i < applier2.sliders.size(); ++i) {
+        toName = get_unique_name(applier2.sliders[i]->name());
+        sliders.push_back(std::make_unique<CharacterTrace>(*applier2.sliders[i], skew));
+        sliders.back()->set_name(toName);
+    }
+}
+
 SlideApplier::~SlideApplier()
 {
 }
@@ -56,6 +72,17 @@ void SlideApplier::change_current_value(int sliderIndex, int value)
 void SlideApplier::remove_slider(int sliderIndex)
 {
     sliders.erase(sliders.begin() + sliderIndex);
+}
+
+void SlideApplier::eat_other_sliders(SlideApplier* other)
+{
+    // 把 other 拼接到 this 的末尾，使用移动语义
+    sliders.insert(sliders.end(),
+        std::make_move_iterator(other->sliders.begin()),
+        std::make_move_iterator(other->sliders.end()));
+
+    // 清空 other（所有元素已被移走，只剩空壳）
+    other->sliders.clear();
 }
 
 int SlideApplier::get_slider_current_value(int sliderIndex) const

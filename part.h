@@ -17,9 +17,10 @@ class Part final
 {
 public:
 	Part(QOpenGLTexture& texture, const QList<unsigned int>& indices, bool isTexture);
+	Part(const Part& part1, const Part& part2);
 	~Part();
 
-	float* float_data() const;
+	const float* float_data() const;
 	const unsigned int* index_data() const;
 
 	size_t float_size() const;
@@ -33,9 +34,10 @@ public:
 	void bind_texture();
 	void add_trace(int index, const QPolygonF& polygon);
 	void update_scale();
-	void same_texture_merge(const Part& other);
+	bool eat_another_part(Part& other);
 	void change_slider_value(int sliderIndex, int value);
 	void remove_slider(int sliderIndex);
+	void release_buffers();
 
 	float x() const;
 	float y() const;
@@ -46,23 +48,21 @@ public:
 	unsigned int vao_piying() const;
 
 private:
-	float _x;
-	float _y;
-	float _height;
-	float _width;
+	float _x{ 0.f };
+	float _y{ 0.f };
+	float _height{ 2.f };
+	float _width{ 2.f };
 
 	unsigned int _vao_timeline;
 	unsigned int _vao_piying;
 	unsigned int _vbo, _ebo;
 
-private:
 	QOpenGLTexture& _texture;
 
-	std::vector<unsigned int> _indices_origin;
 	std::unique_ptr<PointVector> _vert_texture_origin;
+	std::unique_ptr<PointVector> _vert_texture;
 
 	std::vector<unsigned int> _indices;
-	std::unique_ptr<PointVector> _vert_texture;
 
 	SlideApplier* slide_applier;
 };

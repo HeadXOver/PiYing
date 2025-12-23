@@ -10,6 +10,8 @@ class CharacterTrace
 {
 public:
     CharacterTrace(unsigned int index, const QPolygonF& poly, const QString& name);
+    CharacterTrace(const CharacterTrace& other);
+    CharacterTrace(const CharacterTrace& other, unsigned int skew);
     ~CharacterTrace();
 
     std::map<unsigned int, QPolygonF>& get_traces();
@@ -18,6 +20,7 @@ public:
 
     void add_point(unsigned int index, const QPolygonF& poly);
     void set_current_value(int value);
+    void set_name(const QString& name);
 
     const QString& name() const;
 

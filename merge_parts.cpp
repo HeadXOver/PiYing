@@ -1,5 +1,8 @@
 #include "time_line_gl.h"
 
+#include "part.h"
+#include "global_objects.h"
+
 #include <qmenu>
 #include <qmessagebox>
 
@@ -10,12 +13,16 @@ void TimelineGl::ask_merge_parts()
 
 void TimelineGl::part_beside_new()
 {
-	QMessageBox::warning(this, "1", QString("%1, %2").arg(_part_cursor._index).arg(_moving_select_part._index));
+	parts.push_back(std::make_shared<Part>(*parts[_part_cursor._index], *parts[_moving_select_part._index]));
 }
 
 void TimelineGl::part_beside_ref()
 {
-	QMessageBox::warning(this, "2", QString("%1, %2").arg(_part_cursor._index).arg(_moving_select_part._index));
+	if (!parts[_moving_select_part._index]->eat_another_part(*parts[_part_cursor._index])) return;
+
+	parts[_part_cursor._index]->release_buffers();
+
+	parts.erase(parts.begin() + _part_cursor._index);
 }
 
 void TimelineGl::part_layer_new()

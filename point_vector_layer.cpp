@@ -48,7 +48,7 @@ void PointVectorLayer::copy_from_to(int from, int to)
 
 size_t PointVectorLayer::size() const 
 {
-	return point_vector.size() / (size_t)2;
+	return point_vector.point_size() / (size_t)2;
 }
 
 void PointVectorLayer::clear() 

@@ -2,6 +2,14 @@
 
 #include <qpointf>
 
+PointVector::PointVector(const PointVector& vector1, const PointVector& vector2)
+{
+	points.reserve(vector1.points.size() + vector2.points.size());
+
+	points.insert(points.end(), vector1.points.begin(), vector1.points.end());
+	points.insert(points.end(), vector2.points.begin(), vector2.points.end());
+}
+
 void PointVector::push_back(float x, float y)
 {
 	points.push_back(x); 
@@ -52,6 +60,11 @@ void PointVector::copy_to_vector(std::vector<float>& other)
 void PointVector::copy_from_vector(std::vector<float>& other)
 {
 	points = other;
+}
+
+void PointVector::operator+=(const PointVector& other) 
+{
+	points.insert(points.end(), other.points.begin(), other.points.end());
 }
 
 bool PointVector::contain(const QPointF& p) const

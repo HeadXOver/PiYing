@@ -12,6 +12,7 @@ class SlideApplier final
 {
 public:
     SlideApplier();
+    SlideApplier(const SlideApplier& applier1, const SlideApplier& applier2, unsigned int skew);
     ~SlideApplier();
 
     void remove_slider_by_id(int id);
@@ -29,6 +30,7 @@ public:
 
     void change_current_value(int sliderIndex, int value);
     void remove_slider(int sliderIndex);
+    void eat_other_sliders(SlideApplier* other);
 
     int get_slider_current_value(int sliderIndex) const;
 

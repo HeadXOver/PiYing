@@ -3,6 +3,7 @@
 #include "global_objects.h"
 #include "point_vector.h"
 #include "point_vector_layer.h"
+#include "static_gl_const.h"
 
 void PiYingGL::add_point_to_vert(const QPointF& p)
 {
@@ -45,4 +46,26 @@ void PiYingGL::addTriangle(const QPointF& point1, const QPointF& point2, const Q
 	addChVert(point2);
 	addChVert(point3);
 	update_ch_verts();
+}
+
+void PiYingGL::generate_vao(unsigned int& vao, unsigned int vbo, unsigned int ebo)
+{
+	makeCurrent();
+	glGenVertexArrays(1, &vao);
+	glBindVertexArray(vao);
+	glBindBuffer(GL_ARRAY_BUFFER, vbo);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
+	glEnableVertexAttribArray(0);
+	glEnableVertexAttribArray(1);
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, FLOAT4, (void*)0);
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, FLOAT4, DEBU_FLOAT2);
+	glBindVertexArray(0);
+	doneCurrent();
+}
+
+void PiYingGL::release_buffers(unsigned int vao)
+{
+	makeCurrent();
+	glDeleteVertexArrays(1, &vao);
+	doneCurrent();
 }

@@ -8,12 +8,14 @@ class PointVector
 {
 public:
 	PointVector() = default;
+	PointVector(const PointVector& vector1, const PointVector& vector2);
 	~PointVector() = default;
 
 	size_t float_size() const { return points.size(); }
-	size_t size() const { return points.size() / (size_t)2; }
+	size_t point_size() const { return points.size() / (size_t)2; }
+	size_t half_point_size() const { return points.size() / (size_t)4; }
 
-	float* data() { return points.data(); }
+	const float* data() const { return points.data(); }
 
 	void push_back(float x, float y);
 	void push_back(const QPointF& p);
@@ -30,6 +32,8 @@ public:
 	std::vector<float>& get_vector() { return points; }
 
 	const QPointF operator[](int i) const;
+
+	void operator+=(const PointVector& other);
 
 private:
 	std::vector<float> points;
