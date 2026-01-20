@@ -83,7 +83,7 @@ void TimelineGl::mouseReleaseEvent(QMouseEvent* event)
 	_pressing = false;
 	_draging_cursor = false;
 
-	if (_ui_type == UiType::Part) {
+	if (_ui_type == UiType::Part && event->buttons() == Qt::LeftButton) {
 		const int index = get_index_by_mouse(event->pos());
 		if (index < 0) return;
 
@@ -98,6 +98,7 @@ void TimelineGl::mouseReleaseEvent(QMouseEvent* event)
 			piYingGL->update();
 		}
 	}
+
 	update();
 }
 

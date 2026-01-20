@@ -76,7 +76,7 @@ void SlideApplier::remove_slider(int sliderIndex)
 
 void SlideApplier::eat_other_sliders(SlideApplier* other, unsigned int skew)
 {
-    unsigned int tempSize = (unsigned int)other->sliders.size();
+    const unsigned int tempSize = (unsigned int)other->sliders.size();
 
     // 把 other 拼接到 this 的末尾，使用移动语义
     sliders.insert(sliders.end(),

@@ -20,8 +20,10 @@ void TimelineGl::part_beside_ref()
 {
 	if (!parts[_moving_select_part._index]->eat_another_part(*parts[_part_cursor._index])) return;
 
+	/// 释放图形资源
 	parts[_part_cursor._index]->release_buffers();
 
+	/// 释放内存
 	parts.erase(parts.begin() + _part_cursor._index);
 }
 

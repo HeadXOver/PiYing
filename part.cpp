@@ -93,7 +93,7 @@ Part::Part(const Part& part1, const Part& part2) : _texture(part1._texture)
 	_vert_texture_origin = std::make_unique<PointVector>(*part1._vert_texture_origin, *part2._vert_texture_origin);
 	_vert_texture = std::make_unique<PointVector>(*part1._vert_texture, *part2._vert_texture);
 
-	unsigned int tempSize = (unsigned int)part1._vert_texture->half_point_size();
+	const unsigned int tempSize = (unsigned int)part1._vert_texture->half_point_size();
 	_indices.reserve(part1._indices.size() + part2._indices.size());
 	_indices.insert(_indices.end(), part1._indices.begin(), part1._indices.end());
 
