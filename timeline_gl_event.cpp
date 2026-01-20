@@ -39,11 +39,11 @@ void TimelineGl::wheelEvent(QWheelEvent* ev)
 
 void TimelineGl::mousePressEvent(QMouseEvent* event)
 {
-	if (event->buttons() == Qt::MiddleButton) {
+	if (event->button() == Qt::MiddleButton) {
 		lastMiddleButtonPos = event->position();
 		*_last_scale_trans = *_scale_trans;
 	}
-	else if (event->buttons() == Qt::LeftButton) {
+	else if (event->button() == Qt::LeftButton) {
 		_pressing = true;
 
 		if (_ui_type == UiType::Timeline) {
@@ -83,7 +83,7 @@ void TimelineGl::mouseReleaseEvent(QMouseEvent* event)
 	_pressing = false;
 	_draging_cursor = false;
 
-	if (_ui_type == UiType::Part && event->buttons() == Qt::LeftButton) {
+	if (_ui_type == UiType::Part && event->button() == Qt::LeftButton) {
 		const int index = get_index_by_mouse(event->pos());
 		if (index < 0) return;
 

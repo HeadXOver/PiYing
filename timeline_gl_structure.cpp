@@ -11,20 +11,17 @@ TimelineGl::TimelineGl(QWidget* parent) : QOpenGLWidget(), _ratio(1.f), _ui_type
 {
 	_merge_menu = new QMenu(this);
 
-	QAction* beside_new = new QAction("合并 新建", this);
-	QAction* beside_ref = new QAction("合并 覆盖", this);
-	QAction* layer_new = new QAction("父子 新建", this);
-	QAction* layer_ref = new QAction("父子 覆盖", this);
+	QAction* beside_action = new QAction("合并", this);
+	QAction* layer_action = new QAction("父子", this);
+	QAction* exchange_action = new QAction("交换顺序", this);
 
-	_merge_menu->addAction(beside_new);
-	_merge_menu->addAction(beside_ref);
-	_merge_menu->addAction(layer_new);
-	_merge_menu->addAction(layer_ref);
+	_merge_menu->addAction(beside_action);
+	_merge_menu->addAction(layer_action);
+	_merge_menu->addAction(exchange_action);
 
-	connect(beside_new, &QAction::triggered, this, [this] { part_beside_new(); });
-	connect(beside_ref, &QAction::triggered, this, [this] { part_beside_ref(); });
-	connect(layer_new, &QAction::triggered, this, [this] { part_layer_new(); });
-	connect(layer_ref, &QAction::triggered, this, [this] { part_layer_ref(); });
+	connect(beside_action, &QAction::triggered, this, [this] { part_beside_merge(); });
+	connect(layer_action, &QAction::triggered, this, [this] { part_layer_merge(); });
+	connect(exchange_action, &QAction::triggered, this, [this] { part_exchange(); });
 
 	_rect_shader_program = new QOpenGLShaderProgram(this);
 	_part_shader_program = new QOpenGLShaderProgram(this);

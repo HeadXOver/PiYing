@@ -46,3 +46,8 @@ int TimelineGl::get_index_by_mouse(const QPoint& mouse) const
 
 	return index;
 }
+
+void TimelineGl::part_exchange()
+{
+	std::swap(parts[_part_cursor._index], parts[_moving_select_part._index]);
+}

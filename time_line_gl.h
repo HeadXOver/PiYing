@@ -74,10 +74,9 @@ private:
 	void draw_part_and_child(Part& part, float x, float y);
 	void ask_merge_parts();
 
-	void part_beside_new();
-	void part_beside_ref();
-	void part_layer_new();
-	void part_layer_ref();
+	void part_beside_merge();
+	void part_layer_merge();
+	void part_exchange();
 
 	int get_index_by_mouse(const QPoint& mouse) const;
 
