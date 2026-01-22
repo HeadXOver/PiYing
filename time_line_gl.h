@@ -83,7 +83,7 @@ private:
 
 private:
 	unsigned int tVAO = 0, tVBO = 0, tEBO = 0;
-	unsigned int sVAO = 0, sVBO = 0, sEBO = 0;
+	unsigned int sVAO = 0, sVBO = 0;
 
 	int _current_select_timeline{ -1 };
 	int _insert_part_index{ -1 };

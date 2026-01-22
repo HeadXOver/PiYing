@@ -28,7 +28,6 @@ void TimelineGl::initializeGL()
 
 	glGenVertexArrays(1, &sVAO);
 	glGenBuffers(1, &sVBO);
-	glGenBuffers(1, &sEBO);
 
 	/////////////////////////////////////////////
 
@@ -55,10 +54,9 @@ void TimelineGl::initializeGL()
 
 	glBindVertexArray(sVAO);
 	glBindBuffer(GL_ARRAY_BUFFER, sVBO);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, sEBO);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, tEBO);
 
 	glBufferData(GL_ARRAY_BUFFER, sizeof(scrollbar_vert), scrollbar_vert, GL_STATIC_DRAW);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(RECTANGLE_INDECES), RECTANGLE_INDECES, GL_STATIC_DRAW);
 
 	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, FLOAT2, (void*)0);
 	glEnableVertexAttribArray(0);
@@ -95,7 +93,7 @@ void TimelineGl::initializeGL()
 	_simple_shader_program->addShaderFromSourceFile(QOpenGLShader::Fragment, ":/PiYing/color_shape.frag");
 	_simple_shader_program->link();
 	_simple_shader_program->bind();
-	_simple_shader_program->setUniformValue("aColor", QVector4D(0.6f, 0.2f, 0.1f, 1.f));
+	_simple_shader_program->setUniformValue("aColor", QVector4D(0.3f, 0.7f, 0.7f, 1.f));
 
 	// global setting
 

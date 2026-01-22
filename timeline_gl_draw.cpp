@@ -50,13 +50,19 @@ void TimelineGl::paint_parts()
 	glBindVertexArray(tVAO);///////////////////////////////////////////////////////
 
 	if (_pressing) {
-		_rect_select_program->setUniformValue("trans", QVector2D(_moving_select_part.x, _moving_select_part.y));
-		_rect_select_program->setUniformValue("aColor", QVector4D(0.3f, 0.3f, 0.6f, 1.0f));
+		if (_insert_part_index < 0) {
+			_rect_select_program->setUniformValue("trans", QVector2D(_moving_select_part.x, _moving_select_part.y));
+			_rect_select_program->setUniformValue("aColor", QVector4D(0.3f, 0.3f, 0.6f, 1.0f));
 
-		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+			glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
-		_rect_select_program->setUniformValue("aColor", QVector4D(0.6f, 0.3f, 0.3f, 1.0f));
+			_rect_select_program->setUniformValue("aColor", QVector4D(0.6f, 0.3f, 0.3f, 1.0f));
+		}
+		else {
+
+		}
 	}
+
 	_rect_select_program->setUniformValue("trans", QVector2D(_part_cursor.x, _part_cursor.y));
 
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
@@ -72,6 +78,12 @@ void TimelineGl::paint_parts()
 
 		draw_part_and_child(*parts[i], x, y);
 	}
+
+	glBindVertexArray(sVAO);////////////////////////////////////////////////////////////
+
+	_simple_shader_program->bind();
+
+	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
 	glBindVertexArray(0);////////////////////////////////////////////////////////////
 }
