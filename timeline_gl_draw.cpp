@@ -14,18 +14,18 @@ void TimelineGl::paint_timeline()
 {
 	glBindVertexArray(tVAO);///////////////////////////////////////////////////////
 
-	_rect_shader_program->bind();
+	_timeline_shader_program->bind();
 	_texture->bind();
 
 	for (int i = 0; i < _timelines.size(); i++) {
 		Timeline* timeline = _timelines[i];
-		_rect_shader_program->setUniformValue("lenth", timeline->lenth());
-		_rect_shader_program->setUniformValue("trans", timeline->get_transform(i, _scale_trans));
+		_timeline_shader_program->setUniformValue("lenth", timeline->lenth());
+		_timeline_shader_program->setUniformValue("trans", timeline->get_transform(i, _scale_trans));
 
 		if (i == _current_select_timeline) {
-			_rect_shader_program->setUniformValue("aColor", QVector4D(0.6f, 0.6f, 1.f, 1.0f));
+			_timeline_shader_program->setUniformValue("aColor", QVector4D(0.6f, 0.6f, 1.f, 1.0f));
 			glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-			_rect_shader_program->setUniformValue("aColor", QVector4D(1.f, 1.f, 1.f, 1.f));
+			_timeline_shader_program->setUniformValue("aColor", QVector4D(1.f, 1.f, 1.f, 1.f));
 			continue;
 		}
 

@@ -464,5 +464,8 @@
     <None Include="texture_tri.vert">
       <Filter>Shader\verts</Filter>
     </None>
+    <None Include="simple_triangle.vert">
+      <Filter>Shader\verts</Filter>
+    </None>
   </ItemGroup>
 </Project>

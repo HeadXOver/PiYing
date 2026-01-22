@@ -219,6 +219,7 @@
       </SubType>
     </None>
     <None Include="selected_vert.vert" />
+    <None Include="simple_triangle.vert" />
     <None Include="slideStyle.qss" />
     <None Include="square_icon.vert" />
     <None Include="texture_color_shape.frag" />

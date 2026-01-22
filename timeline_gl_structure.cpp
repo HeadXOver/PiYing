@@ -23,7 +23,8 @@ TimelineGl::TimelineGl(QWidget* parent) : QOpenGLWidget(), _ratio(1.f), _ui_type
 	connect(layer_action, &QAction::triggered, this, [this] { part_layer_merge(); });
 	connect(exchange_action, &QAction::triggered, this, [this] { part_exchange(); });
 
-	_rect_shader_program = new QOpenGLShaderProgram(this);
+	_timeline_shader_program = new QOpenGLShaderProgram(this);
+	_simple_shader_program = new QOpenGLShaderProgram(this);
 	_part_shader_program = new QOpenGLShaderProgram(this);
 	_rect_select_program = new QOpenGLShaderProgram(this);
 

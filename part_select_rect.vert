@@ -8,5 +8,6 @@ uniform float ratio;
 void main()
 {
     vec2 pos = vec2(aPos.x, (aPos.y - 1.f) * ratio + 1.f) * 0.2f;
+    pos = vec2(pos.x * 0.98 - 0.02, pos.y * 0.98); // 留出滑块和上栏的空间
     gl_Position = vec4(pos + trans, 0.0f, 1.0f);
 }

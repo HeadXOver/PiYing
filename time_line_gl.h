@@ -62,6 +62,7 @@ protected:
 	void resizeGL(int w, int h) override;
 	void paintGL() override;
 
+protected: /// event
 	void wheelEvent(QWheelEvent* ev) override;
 	void mousePressEvent(QMouseEvent* event) override;
 	void mouseReleaseEvent(QMouseEvent* e) override;
@@ -82,8 +83,10 @@ private:
 
 private:
 	unsigned int tVAO = 0, tVBO = 0, tEBO = 0;
+	unsigned int sVAO = 0, sVBO = 0, sEBO = 0;
 
 	int _current_select_timeline{ -1 };
+	int _insert_part_index{ -1 };
 
 	float time_cursor{ 0.f };
 	float _ratio;
@@ -96,7 +99,8 @@ private:
 
 	QPointF lastMiddleButtonPos;
 
-	QOpenGLShaderProgram* _rect_shader_program;
+	QOpenGLShaderProgram* _timeline_shader_program;
+	QOpenGLShaderProgram* _simple_shader_program;
 	QOpenGLShaderProgram* _rect_select_program;
 	QOpenGLShaderProgram* _part_shader_program;
 

@@ -1,10 +1,10 @@
 ﻿#pragma once
 
 inline constexpr float RECTANGLE_VERT[8] = {
-     1.0,  1.0,
-     1.0, -1.0,
-    -1.0, -1.0,
-    -1.0,  1.0
+     1.0f,  1.0f,
+     1.0f, -1.0f,
+    -1.0f, -1.0f,
+    -1.0f,  1.0f
 };
 
 inline constexpr unsigned int RECTANGLE_INDECES[6] = {

@@ -18,11 +18,17 @@ void TimelineGl::initializeGL()
 	_texture = std::make_unique<QOpenGLTexture>(QImage(":/PiYing/timeline.png").flipped());
 	_texture->setWrapMode(QOpenGLTexture::Repeat);
 
-	//////////////initialize background///////////////////////
+	//////////////initialize timeline rectangle///////////////////////
 
 	glGenVertexArrays(1, &tVAO);
 	glGenBuffers(1, &tVBO);
 	glGenBuffers(1, &tEBO);
+
+	//////////////initialize simple rectangle///////////////////////
+
+	glGenVertexArrays(1, &sVAO);
+	glGenBuffers(1, &sVBO);
+	glGenBuffers(1, &sEBO);
 
 	/////////////////////////////////////////////
 
@@ -36,11 +42,36 @@ void TimelineGl::initializeGL()
 	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, FLOAT2, (void*)0);
 	glEnableVertexAttribArray(0);
 
-	_rect_shader_program->addShaderFromSourceFile(QOpenGLShader::Vertex, ":/PiYing/timeline_rect_shape.vert");
-	_rect_shader_program->addShaderFromSourceFile(QOpenGLShader::Fragment, ":/PiYing/texture_color_shape.frag");
-	_rect_shader_program->link();
-	_rect_shader_program->bind();
-	_rect_shader_program->setUniformValue("aColor", QVector4D(1.f, 1.f, 1.f, 1.f));
+	glBindVertexArray(0);
+
+	/////////////////////////////////////////////
+
+	const float scrollbar_vert[] = {
+		1.0f,  1.0f,
+		1.0f, -1.0f,
+		0.98f, -1.0f,
+		0.98f,  1.0f
+	};
+
+	glBindVertexArray(sVAO);
+	glBindBuffer(GL_ARRAY_BUFFER, sVBO);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, sEBO);
+
+	glBufferData(GL_ARRAY_BUFFER, sizeof(scrollbar_vert), scrollbar_vert, GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(RECTANGLE_INDECES), RECTANGLE_INDECES, GL_STATIC_DRAW);
+
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, FLOAT2, (void*)0);
+	glEnableVertexAttribArray(0);
+
+	glBindVertexArray(0);
+
+	//////////////////////////////////////////////
+
+	_timeline_shader_program->addShaderFromSourceFile(QOpenGLShader::Vertex, ":/PiYing/timeline_rect_shape.vert");
+	_timeline_shader_program->addShaderFromSourceFile(QOpenGLShader::Fragment, ":/PiYing/texture_color_shape.frag");
+	_timeline_shader_program->link();
+	_timeline_shader_program->bind();
+	_timeline_shader_program->setUniformValue("aColor", QVector4D(1.f, 1.f, 1.f, 1.f));
 
 	//////////////////////////////////////////////
 
@@ -50,8 +81,6 @@ void TimelineGl::initializeGL()
 	_rect_select_program->bind();
 	_rect_select_program->setUniformValue("aColor", QVector4D(0.6f, 0.3f, 0.3f, 1.0f));
 
-	glBindVertexArray(0);
-
 	//////////////////////////////////////////////
 
 	_part_shader_program->addShaderFromSourceFile(QOpenGLShader::Vertex, ":/PiYing/square_icon.vert");
@@ -60,6 +89,13 @@ void TimelineGl::initializeGL()
 	_part_shader_program->bind();
 	_rect_select_program->setUniformValue("aColor", QVector4D(1.f, 1.f, 1.f, 1.f));
 
+	//////////////////////////////////////////////
+
+	_simple_shader_program->addShaderFromSourceFile(QOpenGLShader::Vertex, ":/PiYing/simple_triangle.vert");
+	_simple_shader_program->addShaderFromSourceFile(QOpenGLShader::Fragment, ":/PiYing/color_shape.frag");
+	_simple_shader_program->link();
+	_simple_shader_program->bind();
+	_simple_shader_program->setUniformValue("aColor", QVector4D(0.6f, 0.2f, 0.1f, 1.f));
 
 	// global setting
 

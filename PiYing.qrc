@@ -32,5 +32,6 @@
         <file>part_select_rect.vert</file>
         <file>texture_color_shape.frag</file>
         <file>color_shape.frag</file>
+        <file>simple_triangle.vert</file>
     </qresource>
 </RCC>
