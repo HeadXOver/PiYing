@@ -16,21 +16,26 @@ class QMenu;
 
 struct ScaleTrans;
 
-enum class UiType
-{
-	Part,
-	Timeline,
-};
+namespace spTimelineGL {
 
-struct PartCursor
-{
-	int _index{ -1 };
-	float x{ 0.f };
-	float y{ 0.f };
+	constexpr float scroll_width = 0.02f;
 
-	void set_cursor(int index);
-	void update_after_resize();
-};
+	enum class UiType
+	{
+		Part,
+		Timeline,
+	};
+
+	struct PartCursor
+	{
+		int _index{ -1 };
+		float x{ 0.f };
+		float y{ 0.f };
+
+		void set_cursor(int index);
+		void update_after_resize();
+	};
+}
 
 class TimelineGl : public QOpenGLWidget, QOpenGLFunctions_3_3_Core
 {
@@ -57,7 +62,7 @@ public:
 
 	std::shared_ptr<Part> get_current_part() const;
 
-protected:
+protected: // gl function
 	void initializeGL() override;
 	void resizeGL(int w, int h) override;
 	void paintGL() override;
@@ -73,17 +78,21 @@ private:
 	void paint_timeline();
 	void paint_parts();
 	void draw_part_and_child(Part& part, float x, float y);
+	void draw_insert_cursor();
 	void ask_merge_parts();
+	void insert_from_to(int from, int to);
 
 	void part_beside_merge();
 	void part_layer_merge();
 	void part_exchange();
 
 	int get_index_by_mouse(const QPoint& mouse) const;
+	int get_index_by_mouse(const QPoint& mouse, int& o_dragType) const;
 
 private:
-	unsigned int tVAO = 0, tVBO = 0, tEBO = 0;
+	unsigned int tlVAO = 0, tlVBO = 0, rectEBO = 0;
 	unsigned int sVAO = 0, sVBO = 0;
+	unsigned int tVAO = 0, tVBO = 0;
 
 	int _current_select_timeline{ -1 };
 	int _insert_part_index{ -1 };
@@ -92,6 +101,7 @@ private:
 	float _ratio;
 
 	bool _draging_cursor{ false };
+	bool _draging_part{ false };
 	bool _pressing{ false };
 
 	ScaleTrans* _scale_trans;
@@ -101,6 +111,7 @@ private:
 
 	QOpenGLShaderProgram* _timeline_shader_program;
 	QOpenGLShaderProgram* _simple_shader_program;
+	QOpenGLShaderProgram* _simple_with_trans_shader_program;
 	QOpenGLShaderProgram* _rect_select_program;
 	QOpenGLShaderProgram* _part_shader_program;
 
@@ -108,10 +119,10 @@ private:
 
 	std::vector<Timeline*> _timelines;
 
-	UiType _ui_type;
+	spTimelineGL::UiType _ui_type;
 
-	PartCursor _part_cursor;
-	PartCursor _moving_select_part;
+	spTimelineGL::PartCursor _part_cursor;
+	spTimelineGL::PartCursor _moving_select_part;
 
 	QMenu* _merge_menu;
 };

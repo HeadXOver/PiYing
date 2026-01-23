@@ -5,6 +5,8 @@
 #include "part.h"
 #include "global_objects.h"
 
+#include <qmessagebox>
+
 void TimelineGl::init_part_cursor()
 {
 	_part_cursor.set_cursor(0);
@@ -37,8 +39,11 @@ void TimelineGl::move_time_cursor(float mouse_x)
 
 int TimelineGl::get_index_by_mouse(const QPoint& mouse) const
 {
-	const int x = mouse.x() * 5 / width();
+	constexpr float partLaySpace = 1.f - spTimelineGL::scroll_width;
+	const float fx = mouse.x() * 5 / (width() * partLaySpace);
 	const int y = mouse.y() * 5 / (height() * _ratio);
+
+	const float x = floor(fx);
 
 	const int index = 5 * y + x;
 
@@ -47,7 +52,70 @@ int TimelineGl::get_index_by_mouse(const QPoint& mouse) const
 	return index;
 }
 
-void TimelineGl::part_exchange()
+int TimelineGl::get_index_by_mouse(const QPoint& mouse, int& o_dragType) const
 {
-	std::swap(parts[_part_cursor._index], parts[_moving_select_part._index]);
+	constexpr float partLaySpace = 1.f - spTimelineGL::scroll_width;
+	const float fx = mouse.x() * 5 / (width() * partLaySpace);
+	const int y = mouse.y() * 5 / (height() * _ratio);
+
+	const float x = floor(fx);
+	const float r = fx - x;
+
+	const int index = 5 * y + x;
+
+	if (index < 0) {
+		o_dragType = -1;
+		return -1;
+	}
+
+	if (index >= parts.size()) {
+		o_dragType = (int)parts.size();
+		return -1;
+	}
+
+	if (r < 0.1f) {
+		o_dragType = index;
+	}
+	else if (r > 0.9f) {
+		o_dragType = index + 1;
+	}
+	else {
+		o_dragType = -1;
+	}
+
+	return index;
+}
+
+void TimelineGl::insert_from_to(int from, int to)
+{
+	if (from < 0 || to < 0 || from >= parts.size() || to > parts.size()) return;
+
+	if (from == to || from + 1 == to) return;
+
+	if (to + 1 == from) {
+		std::swap(parts[from], parts[to]);
+		_part_cursor.set_cursor(to);
+		return;
+	}
+
+	if (from + 2 == to) {
+		std::swap(parts[from], parts[from + 1]);
+		_part_cursor.set_cursor(from + 1);
+		return;
+	}
+
+	/// 交换
+	auto tmp = std::move(parts[from]);
+
+	if (from < to) {
+		--to;
+		std::move(parts.begin() + from + 1, parts.begin() + to + 1, parts.begin() + from);     // 左移 [i+1..j]
+		parts[to] = std::move(tmp);        // 放入目标
+	}
+	else {
+		std::move_backward(parts.begin() + to, parts.begin() + from, parts.begin() + from + 1); // 右移 [j..i-1]
+		parts[to] = std::move(tmp);        // 放入目标
+	}
+
+	_part_cursor.set_cursor(to);
 }

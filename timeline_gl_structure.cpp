@@ -7,7 +7,7 @@
 #include <qopengltexture>
 #include <qmenu>
 
-TimelineGl::TimelineGl(QWidget* parent) : QOpenGLWidget(), _ratio(1.f), _ui_type(UiType::Timeline)
+TimelineGl::TimelineGl(QWidget* parent) : QOpenGLWidget(), _ratio(1.f), _ui_type(spTimelineGL::UiType::Timeline)
 {
 	_merge_menu = new QMenu(this);
 
@@ -25,6 +25,7 @@ TimelineGl::TimelineGl(QWidget* parent) : QOpenGLWidget(), _ratio(1.f), _ui_type
 
 	_timeline_shader_program = new QOpenGLShaderProgram(this);
 	_simple_shader_program = new QOpenGLShaderProgram(this);
+	_simple_with_trans_shader_program = new QOpenGLShaderProgram(this);
 	_part_shader_program = new QOpenGLShaderProgram(this);
 	_rect_select_program = new QOpenGLShaderProgram(this);
 
@@ -42,9 +43,9 @@ TimelineGl::~TimelineGl()
 
 	////////////////////////////////////////
 
-	glDeleteBuffers(1, &tVBO);
-	glDeleteVertexArrays(1, &tVAO);
-	glDeleteBuffers(1, &tEBO);
+	glDeleteBuffers(1, &tlVBO);
+	glDeleteVertexArrays(1, &tlVAO);
+	glDeleteBuffers(1, &rectEBO);
 
 	////////////////////////////////////////
 

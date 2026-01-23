@@ -271,6 +271,9 @@
     <ClCompile Include="Joint.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="timeline_slots.cpp">
+      <Filter>Source Files\timelineGL</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="static_handle_zone.h">
@@ -465,6 +468,9 @@
       <Filter>Shader\verts</Filter>
     </None>
     <None Include="simple_triangle.vert">
+      <Filter>Shader\verts</Filter>
+    </None>
+    <None Include="vert_with_trans.vert">
       <Filter>Shader\verts</Filter>
     </None>
   </ItemGroup>

@@ -2,7 +2,7 @@
 
 #include "global_objects.h"
 
-void PartCursor::set_cursor(int index)
+void spTimelineGL::PartCursor::set_cursor(int index)
 {
 	_index = index;
 
@@ -10,7 +10,7 @@ void PartCursor::set_cursor(int index)
 	y = 0.8f - (index / 5) * 0.4f * timelineGl->ratio();
 }
 
-void PartCursor::update_after_resize()
+void spTimelineGL::PartCursor::update_after_resize()
 {
 	y = 0.8f - (_index / 5) * 0.4f * timelineGl->ratio();
 }

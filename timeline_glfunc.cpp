@@ -20,20 +20,25 @@ void TimelineGl::initializeGL()
 
 	//////////////initialize timeline rectangle///////////////////////
 
-	glGenVertexArrays(1, &tVAO);
-	glGenBuffers(1, &tVBO);
-	glGenBuffers(1, &tEBO);
+	glGenVertexArrays(1, &tlVAO);
+	glGenBuffers(1, &tlVBO);
+	glGenBuffers(1, &rectEBO);
 
 	//////////////initialize simple rectangle///////////////////////
 
 	glGenVertexArrays(1, &sVAO);
 	glGenBuffers(1, &sVBO);
 
+	//////////////initialize simple with trans rectangle///////////////////////
+
+	glGenVertexArrays(1, &tVAO);
+	glGenBuffers(1, &tVBO);
+
 	/////////////////////////////////////////////
 
-	glBindVertexArray(tVAO);
-	glBindBuffer(GL_ARRAY_BUFFER, tVBO);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, tEBO);
+	glBindVertexArray(tlVAO);
+	glBindBuffer(GL_ARRAY_BUFFER, tlVBO);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, rectEBO);
 
 	glBufferData(GL_ARRAY_BUFFER, sizeof(RECTANGLE_VERT), RECTANGLE_VERT, GL_STATIC_DRAW);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(RECTANGLE_INDECES), RECTANGLE_INDECES, GL_STATIC_DRAW);
@@ -45,16 +50,36 @@ void TimelineGl::initializeGL()
 
 	/////////////////////////////////////////////
 
-	const float scrollbar_vert[] = {
+	constexpr float insert_bar_vert[] = {
+		0.005f, 0.2f,
+		0.005f, -0.2f,
+		-0.005f, -0.2f,
+		-0.005f, 0.2f
+	};
+
+	glBindVertexArray(tVAO);
+	glBindBuffer(GL_ARRAY_BUFFER, tVBO);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, rectEBO);
+
+	glBufferData(GL_ARRAY_BUFFER, sizeof(insert_bar_vert), insert_bar_vert, GL_STATIC_DRAW);
+
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, FLOAT2, (void*)0);
+	glEnableVertexAttribArray(0);
+
+	glBindVertexArray(0);
+
+	/////////////////////////////////////////////
+
+	constexpr float scrollbar_vert[] = {
 		1.0f,  1.0f,
 		1.0f, -1.0f,
-		0.98f, -1.0f,
-		0.98f,  1.0f
+		1.0f - spTimelineGL::scroll_width, -1.0f,
+		1.0f - spTimelineGL::scroll_width, 1.0f
 	};
 
 	glBindVertexArray(sVAO);
 	glBindBuffer(GL_ARRAY_BUFFER, sVBO);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, tEBO);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, rectEBO);
 
 	glBufferData(GL_ARRAY_BUFFER, sizeof(scrollbar_vert), scrollbar_vert, GL_STATIC_DRAW);
 
@@ -95,6 +120,14 @@ void TimelineGl::initializeGL()
 	_simple_shader_program->bind();
 	_simple_shader_program->setUniformValue("aColor", QVector4D(0.3f, 0.7f, 0.7f, 1.f));
 
+	//////////////////////////////////////////////
+
+	_simple_with_trans_shader_program->addShaderFromSourceFile(QOpenGLShader::Vertex, ":/PiYing/vert_with_trans.vert");
+	_simple_with_trans_shader_program->addShaderFromSourceFile(QOpenGLShader::Fragment, ":/PiYing/color_shape.frag");
+	_simple_with_trans_shader_program->link();
+	_simple_with_trans_shader_program->bind();
+	_simple_with_trans_shader_program->setUniformValue("aColor", QVector4D(0.7f, 0.7f, 0.3f, 1.f));
+
 	// global setting
 
 	glActiveTexture(GL_TEXTURE0);
@@ -116,8 +149,8 @@ void TimelineGl::paintGL()
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	switch (_ui_type) {
-	case UiType::Timeline: paint_timeline(); break;
-	case UiType::Part: paint_parts(); break;
+	case spTimelineGL::UiType::Timeline: paint_timeline(); break;
+	case spTimelineGL::UiType::Part: paint_parts(); break;
 	}
 }
 

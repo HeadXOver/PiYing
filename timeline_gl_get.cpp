@@ -2,12 +2,12 @@
 
 void TimelineGl::set_to_timeline()
 {
-	_ui_type = UiType::Timeline;
+	_ui_type = spTimelineGL::UiType::Timeline;
 }
 
 void TimelineGl::set_to_part()
 {
-	_ui_type = UiType::Part;
+	_ui_type = spTimelineGL::UiType::Part;
 }
 
 float TimelineGl::x_map_to_gl(const float x) const

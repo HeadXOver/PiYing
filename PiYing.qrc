@@ -33,5 +33,6 @@
         <file>texture_color_shape.frag</file>
         <file>color_shape.frag</file>
         <file>simple_triangle.vert</file>
+        <file>vert_with_trans.vert</file>
     </qresource>
 </RCC>

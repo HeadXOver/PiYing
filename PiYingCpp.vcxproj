@@ -122,6 +122,7 @@
     <ClCompile Include="timeline_gl_draw.cpp" />
     <ClCompile Include="timeline_gl_get.cpp" />
     <ClCompile Include="timeline_gl_structure.cpp" />
+    <ClCompile Include="timeline_slots.cpp" />
     <ClCompile Include="tool_func.cpp" />
     <ClCompile Include="image_texture.cpp" />
     <ClCompile Include="image_transform.cpp" />
@@ -225,6 +226,7 @@
     <None Include="texture_color_shape.frag" />
     <None Include="texture_tri.vert" />
     <None Include="timeline_rect_shape.vert" />
+    <None Include="vert_with_trans.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

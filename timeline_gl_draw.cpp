@@ -12,7 +12,7 @@
 
 void TimelineGl::paint_timeline()
 {
-	glBindVertexArray(tVAO);///////////////////////////////////////////////////////
+	glBindVertexArray(tlVAO);///////////////////////////////////////////////////////
 
 	_timeline_shader_program->bind();
 	_texture->bind();
@@ -47,20 +47,15 @@ void TimelineGl::paint_parts()
 
 	_rect_select_program->bind();
 
-	glBindVertexArray(tVAO);///////////////////////////////////////////////////////
+	glBindVertexArray(tlVAO);///////////////////////////////////////////////////////
 
-	if (_pressing) {
-		if (_insert_part_index < 0) {
-			_rect_select_program->setUniformValue("trans", QVector2D(_moving_select_part.x, _moving_select_part.y));
-			_rect_select_program->setUniformValue("aColor", QVector4D(0.3f, 0.3f, 0.6f, 1.0f));
+	if (_pressing && _insert_part_index < 0) {
+		_rect_select_program->setUniformValue("trans", QVector2D(_moving_select_part.x, _moving_select_part.y));
+		_rect_select_program->setUniformValue("aColor", QVector4D(0.3f, 0.3f, 0.6f, 1.0f));
 
-			glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
-			_rect_select_program->setUniformValue("aColor", QVector4D(0.6f, 0.3f, 0.3f, 1.0f));
-		}
-		else {
-
-		}
+		_rect_select_program->setUniformValue("aColor", QVector4D(0.6f, 0.3f, 0.3f, 1.0f));
 	}
 
 	_rect_select_program->setUniformValue("trans", QVector2D(_part_cursor.x, _part_cursor.y));
@@ -69,6 +64,7 @@ void TimelineGl::paint_parts()
 
 	////////////////////////////////////////////////////////////
 
+	/// 绘制每个部件
 	_part_shader_program->bind();
 
 	float x, y;
@@ -79,24 +75,52 @@ void TimelineGl::paint_parts()
 		draw_part_and_child(*parts[i], x, y);
 	}
 
-	glBindVertexArray(sVAO);////////////////////////////////////////////////////////////
+	glBindVertexArray(sVAO); // 绘制滑动条 /////////////////////////////////////////////
 
 	_simple_shader_program->bind();
 
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
 	glBindVertexArray(0);////////////////////////////////////////////////////////////
+
+	draw_insert_cursor();
 }
 
 void TimelineGl::draw_part_and_child(Part& part, float x, float y)
 {
 	glBindVertexArray(part.vao_timeline());
 
-	const float scale = 0.38f / cus::max(part.width(), part.height());
+	const float scale = 0.35f / cus::max(part.width() * (1.f + spTimelineGL::scroll_width), part.height());
 	_part_shader_program->setUniformValue("scale", scale);
 	_part_shader_program->setUniformValue("x", x - scale * part.x());
 	_part_shader_program->setUniformValue("y", y - scale * part.y());
 
 	part.bind_texture();
 	glDrawElements(GL_TRIANGLES, (GLsizei)part.index_size(), GL_UNSIGNED_INT, 0);
+}
+
+void TimelineGl::draw_insert_cursor()
+{
+	if(_insert_part_index < 0) return;
+
+	if(_insert_part_index > parts.size()) return;
+
+	glBindVertexArray(tVAO);// 绘制插入光标 /////////////////////////////////////////////
+
+	_simple_with_trans_shader_program->bind();
+	_simple_with_trans_shader_program->setUniformValue("ratio", _ratio);
+
+	const int x = _insert_part_index % 5;
+	const int y = _insert_part_index / 5;
+
+	constexpr float partWidth = 0.4f * (1.f - spTimelineGL::scroll_width);
+
+	const float fx = x * partWidth - 1.f;
+	const float fy = 1.f - (y * 0.4f + 0.2f) * _ratio;
+
+	_simple_with_trans_shader_program->setUniformValue("trans", QVector2D(fx, fy));
+
+	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+
+	glBindVertexArray(0);////////////////////////////////////////////////////////////
 }
