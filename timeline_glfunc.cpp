@@ -118,7 +118,15 @@ void TimelineGl::initializeGL()
 	_simple_shader_program->addShaderFromSourceFile(QOpenGLShader::Fragment, ":/PiYing/color_shape.frag");
 	_simple_shader_program->link();
 	_simple_shader_program->bind();
-	_simple_shader_program->setUniformValue("aColor", QVector4D(0.3f, 0.7f, 0.7f, 1.f));
+	_simple_shader_program->setUniformValue("aColor", QVector4D(0.2f, 0.6f, 0.6f, 0.8f));
+
+	//////////////////////////////////////////////
+
+	_simple_scroll_block_program->addShaderFromSourceFile(QOpenGLShader::Vertex, ":/PiYing/scroll_block.vert");
+	_simple_scroll_block_program->addShaderFromSourceFile(QOpenGLShader::Fragment, ":/PiYing/color_shape.frag");
+	_simple_scroll_block_program->link();
+	_simple_scroll_block_program->bind();
+	_simple_scroll_block_program->setUniformValue("aColor", QVector4D(0.3f, 0.8f, 0.6f, 0.8f));
 
 	//////////////////////////////////////////////
 

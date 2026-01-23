@@ -219,6 +219,7 @@
       <SubType>
       </SubType>
     </None>
+    <None Include="scroll_block.vert" />
     <None Include="selected_vert.vert" />
     <None Include="simple_triangle.vert" />
     <None Include="slideStyle.qss" />

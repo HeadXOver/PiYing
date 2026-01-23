@@ -76,6 +76,7 @@ protected: /// event
 private:
 	void move_time_cursor(float mouse_x);
 	void paint_timeline();
+	void draw_scroll();
 	void paint_parts();
 	void draw_part_and_child(Part& part, float x, float y);
 	void draw_insert_cursor();
@@ -112,6 +113,7 @@ private:
 
 	QOpenGLShaderProgram* _timeline_shader_program;
 	QOpenGLShaderProgram* _simple_shader_program;
+	QOpenGLShaderProgram* _simple_scroll_block_program;
 	QOpenGLShaderProgram* _simple_with_trans_shader_program;
 	QOpenGLShaderProgram* _rect_select_program;
 	QOpenGLShaderProgram* _part_shader_program;

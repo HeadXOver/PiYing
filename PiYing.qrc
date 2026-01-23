@@ -34,5 +34,6 @@
         <file>color_shape.frag</file>
         <file>simple_triangle.vert</file>
         <file>vert_with_trans.vert</file>
+        <file>scroll_block.vert</file>
     </qresource>
 </RCC>

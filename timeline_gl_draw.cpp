@@ -41,6 +41,34 @@ void TimelineGl::paint_timeline()
 	painter.drawLine(timeCursorPosition, 0, timeCursorPosition, height());
 }
 
+void TimelineGl::draw_scroll()
+{
+	glBindVertexArray(sVAO); // 绘制滑动条 /////////////////////////////////////////////
+
+	_simple_shader_program->bind();
+
+	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+
+	_simple_scroll_block_program->bind();
+	
+	const int y = parts.size() / 5 + 1;
+
+	const float fy = y * 0.2f * _ratio;
+
+	if (fy <= 1.f) {
+		_simple_scroll_block_program->setUniformValue("scale", 1.f);
+		_simple_scroll_block_program->setUniformValue("trans", 0.f);
+	}
+	else {
+		_simple_scroll_block_program->setUniformValue("scale", fy);
+		_simple_scroll_block_program->setUniformValue("trans", 0.f);
+	}
+
+	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+
+	glBindVertexArray(0);////////////////////////////////////////////////////////////
+}
+
 void TimelineGl::paint_parts()
 {
 	if (parts.size() == 0) return;
@@ -75,15 +103,9 @@ void TimelineGl::paint_parts()
 		draw_part_and_child(*parts[i], x, y);
 	}
 
-	glBindVertexArray(sVAO); // 绘制滑动条 /////////////////////////////////////////////
-
-	_simple_shader_program->bind();
-
-	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-
-	glBindVertexArray(0);////////////////////////////////////////////////////////////
-
 	draw_insert_cursor();
+
+	draw_scroll();
 }
 
 void TimelineGl::draw_part_and_child(Part& part, float x, float y)

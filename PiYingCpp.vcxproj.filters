@@ -473,5 +473,8 @@
     <None Include="vert_with_trans.vert">
       <Filter>Shader\verts</Filter>
     </None>
+    <None Include="scroll_block.vert">
+      <Filter>Shader\verts</Filter>
+    </None>
   </ItemGroup>
 </Project>

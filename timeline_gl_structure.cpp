@@ -38,11 +38,12 @@ TimelineGl::TimelineGl(QWidget* parent) : QOpenGLWidget(), _ratio(1.f), _ui_type
 
 #pragma endregion
 
-	_timeline_shader_program = new QOpenGLShaderProgram(this);
-	_simple_shader_program = new QOpenGLShaderProgram(this);
-	_simple_with_trans_shader_program = new QOpenGLShaderProgram(this);
-	_part_shader_program = new QOpenGLShaderProgram(this);
-	_rect_select_program = new QOpenGLShaderProgram(this);
+	_timeline_shader_program			= new QOpenGLShaderProgram(this);
+	_simple_shader_program				= new QOpenGLShaderProgram(this);
+	_simple_scroll_block_program		= new QOpenGLShaderProgram(this);
+	_simple_with_trans_shader_program	= new QOpenGLShaderProgram(this);
+	_part_shader_program				= new QOpenGLShaderProgram(this);
+	_rect_select_program				= new QOpenGLShaderProgram(this);
 
 	_scale_trans = new ScaleTrans();
 	_last_scale_trans = new ScaleTrans();
