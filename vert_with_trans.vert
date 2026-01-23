@@ -7,6 +7,6 @@ uniform float ratio = 1.f;
 
 void main()
 { 
-	vec2 pos = vec2(aPos.x, aPos.y * ratio);
-	gl_Position = vec4(aPos + trans, 0.f, 1.f);
+	vec2 pos = vec2(aPos.x, aPos.y * ratio * 0.8f);
+	gl_Position = vec4(pos + trans, 0.f, 1.f);
 }

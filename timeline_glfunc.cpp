@@ -148,6 +148,8 @@ void TimelineGl::resizeGL(int w, int h)
 	_rect_select_program->setUniformValue("ratio", _ratio);
 	_part_shader_program->bind();
 	_part_shader_program->setUniformValue("ratio", _ratio);
+	_simple_with_trans_shader_program->bind();
+	_simple_with_trans_shader_program->setUniformValue("ratio", _ratio);
 
 	_part_cursor.update_after_resize();
 }

@@ -33,7 +33,19 @@ void TimelineGl::wheelEvent(QWheelEvent* ev)
 		*_last_scale_trans = *_scale_trans;
 	}
 	else if (_ui_type == spTimelineGL::UiType::Part) {
+		const float scaleTrans = ev->angleDelta().y() / 1200.f;
 
+		const float toSet = _scroll_positon - scaleTrans;
+
+		if (toSet < 0) {
+			_scroll_positon = 0;
+		}
+		else if (toSet > 1.f - 1.f / _part_total_scale) {
+			_scroll_positon = 1.f - 1.f / _part_total_scale;
+		}
+		else {
+			_scroll_positon = toSet;
+		}
 	}
 	update();
 	ev->accept();
@@ -51,10 +63,11 @@ void TimelineGl::mousePressEvent(QMouseEvent* event)
 
 	if (event->button() == Qt::LeftButton) {
 		_pressing = true;
+		_last_mouse_pos = event->position();
 
 		if (_ui_type == spTimelineGL::UiType::Timeline) {
 			if (KeyboardStateWin::isCtrlHeld()) {
-				_draging_cursor = true;
+				_drag_type = spTimelineGL::DragType::Cursor;
 				move_time_cursor(event->position().x());
 				update();
 				return;
@@ -62,14 +75,23 @@ void TimelineGl::mousePressEvent(QMouseEvent* event)
 			const float diff_map = event->position().x() - (width() * _scale_trans->trans_x / 2.f + time_cursor);
 			const float diff_gl = diff_map * 2.f / (float)width();
 			if (cus::abs(diff_gl) < 0.02f) {
-				_draging_cursor = true;
+				_drag_type = spTimelineGL::DragType::Cursor;
 			}
 		}
 		else if (_ui_type == spTimelineGL::UiType::Part) {
+			if (event->pos().x() >= (1.f - spTimelineGL::scroll_width) * width() 
+				&& event->pos().y() > height() * _scroll_positon 
+				&& event->pos().y() < height() * (_scroll_positon + 1.f / _part_total_scale)
+				) {
+				_drag_type = spTimelineGL::DragType::Scroll;
+				update();
+				return;
+			}
+
 			const int index = get_index_by_mouse(event->pos());
 			if (index < 0) return;
 
-			_draging_part = true;
+			_drag_type = spTimelineGL::DragType::Part;
 
 			parts[index]->update_scale();
 
@@ -115,9 +137,8 @@ void TimelineGl::mousePressEvent(QMouseEvent* event)
 void TimelineGl::mouseReleaseEvent(QMouseEvent* event)
 {
 	_pressing = false;
-	_draging_cursor = false;
 
-	if (_ui_type == spTimelineGL::UiType::Part && event->button() == Qt::LeftButton && _draging_part) {
+	if (_ui_type == spTimelineGL::UiType::Part && event->button() == Qt::LeftButton && _drag_type == spTimelineGL::DragType::Part) {
 		const int index = get_index_by_mouse(event->pos(), _insert_part_index);
 
 		const bool indexInRange = (index >= 0 && index < parts.size());
@@ -139,7 +160,9 @@ void TimelineGl::mouseReleaseEvent(QMouseEvent* event)
 
 	_insert_part_index = -1;
 
-	_draging_part = false;
+	_last_scroll_positon = _scroll_positon;
+
+	_drag_type = spTimelineGL::DragType::None;
 
 	piYing->update_part_slider();
 	piYingGL->update();
@@ -150,17 +173,31 @@ void TimelineGl::mouseMoveEvent(QMouseEvent* event)
 {
 	if (event->buttons() == Qt::LeftButton) {
 		if (_ui_type == spTimelineGL::UiType::Timeline) {
-			if (_draging_cursor || KeyboardStateWin::isCtrlHeld()) {
+			if (_drag_type == spTimelineGL::DragType::Cursor || KeyboardStateWin::isCtrlHeld()) {
 				move_time_cursor(event->position().x());
 				update();
 			}
 		}
-		else if (_pressing && _ui_type == spTimelineGL::UiType::Part && _draging_part) {
-			_insert_part_index = -1;
-			_moving_select_part.set_cursor(
-				get_index_by_mouse(event->pos(), _insert_part_index)
-			);
-			update();
+		else if (_pressing && _ui_type == spTimelineGL::UiType::Part) {
+			switch (_drag_type) {
+			case spTimelineGL::DragType::Part: {
+				_insert_part_index = -1;
+				_moving_select_part.set_cursor(
+					get_index_by_mouse(event->pos(), _insert_part_index)
+				);
+				update();
+			}break;
+			case spTimelineGL::DragType::Scroll: {
+				float toSet = _last_scroll_positon + (event->position().y() - _last_mouse_pos.y()) / height();
+				const float maxLenth = 1.f - 1.f / _part_total_scale;
+
+				if(toSet < 0) toSet = 0;
+				else if (toSet > maxLenth) toSet = maxLenth;
+
+				_scroll_positon = toSet;
+				update();
+			}break;
+			}
 		}
 	}
 	else if (event->buttons() == Qt::MiddleButton) {

@@ -26,6 +26,14 @@ namespace spTimelineGL {
 		Timeline,
 	};
 
+	enum class DragType
+	{
+		None,
+		Part,
+		Cursor,
+		Scroll,
+	};
+
 	struct PartCursor
 	{
 		int _index{ -1 };
@@ -100,16 +108,18 @@ private:
 	int _insert_part_index{ -1 };
 
 	float time_cursor{ 0.f };
+	float _scroll_positon{ 0.f };
+	float _last_scroll_positon{ 0.f };
 	float _ratio;
+	float _part_total_scale{ 1.f };
 
-	bool _draging_cursor{ false };
-	bool _draging_part{ false };
 	bool _pressing{ false };
 
 	ScaleTrans* _scale_trans;
 	ScaleTrans* _last_scale_trans;
 
 	QPointF lastMiddleButtonPos;
+	QPointF _last_mouse_pos;
 
 	QOpenGLShaderProgram* _timeline_shader_program;
 	QOpenGLShaderProgram* _simple_shader_program;
@@ -126,6 +136,8 @@ private:
 
 	spTimelineGL::PartCursor _part_cursor;
 	spTimelineGL::PartCursor _moving_select_part;
+
+	spTimelineGL::DragType _drag_type = spTimelineGL::DragType::None;
 
 	QMenu* _merge_menu;
 	QMenu* _part_menu;

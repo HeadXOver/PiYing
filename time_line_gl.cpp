@@ -41,9 +41,11 @@ int TimelineGl::get_index_by_mouse(const QPoint& mouse) const
 {
 	constexpr float partLaySpace = 1.f - spTimelineGL::scroll_width;
 	const float fx = mouse.x() * 5 / (width() * partLaySpace);
-	const int y = mouse.y() * 5 / (height() * _ratio);
+	const int y = mouse.y() * 5 / (height() * _ratio) + _scroll_positon * _part_total_scale * 5 / _ratio;
 
 	const float x = floor(fx);
+
+	if(x < 0 || x > 4) return -1;
 
 	const int index = 5 * y + x;
 
@@ -56,7 +58,7 @@ int TimelineGl::get_index_by_mouse(const QPoint& mouse, int& o_dragType) const
 {
 	constexpr float partLaySpace = 1.f - spTimelineGL::scroll_width;
 	const float fx = mouse.x() * 5 / (width() * partLaySpace);
-	const int y = mouse.y() * 5 / (height() * _ratio);
+	const int y = mouse.y() * 5 / (height() * _ratio) + _scroll_positon * _part_total_scale * 5 / _ratio;
 
 	const float x = floor(fx);
 	const float r = fx - x;

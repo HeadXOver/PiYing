@@ -169,9 +169,6 @@
     <ClCompile Include="ratio_dialog.cpp">
       <Filter>Source Files\PiYingQObject</Filter>
     </ClCompile>
-    <ClCompile Include="tool_func.cpp">
-      <Filter>Source Files\ChELementTool</Filter>
-    </ClCompile>
     <ClCompile Include="cus_func_point2d.cpp">
       <Filter>Source Files\PiYingTool</Filter>
     </ClCompile>
@@ -273,6 +270,9 @@
     </ClCompile>
     <ClCompile Include="timeline_slots.cpp">
       <Filter>Source Files\timelineGL</Filter>
+    </ClCompile>
+    <ClCompile Include="tool_func.cpp">
+      <Filter>Source Files\piYingGL</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

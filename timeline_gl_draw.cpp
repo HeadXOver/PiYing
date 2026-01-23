@@ -51,17 +51,17 @@ void TimelineGl::draw_scroll()
 
 	_simple_scroll_block_program->bind();
 	
-	const int y = parts.size() / 5 + 1;
+	const int y = (int)parts.size() / 5 + 1;
 
-	const float fy = y * 0.2f * _ratio;
+	_part_total_scale = y * 0.2f * _ratio;
 
-	if (fy <= 1.f) {
+	if (_part_total_scale <= 1.f) {
 		_simple_scroll_block_program->setUniformValue("scale", 1.f);
 		_simple_scroll_block_program->setUniformValue("trans", 0.f);
 	}
 	else {
-		_simple_scroll_block_program->setUniformValue("scale", fy);
-		_simple_scroll_block_program->setUniformValue("trans", 0.f);
+		_simple_scroll_block_program->setUniformValue("scale", _part_total_scale);
+		_simple_scroll_block_program->setUniformValue("trans", _scroll_positon * 2.f);
 	}
 
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
@@ -78,7 +78,7 @@ void TimelineGl::paint_parts()
 	glBindVertexArray(tlVAO);///////////////////////////////////////////////////////
 
 	if (_pressing && _insert_part_index < 0) {
-		_rect_select_program->setUniformValue("trans", QVector2D(_moving_select_part.x, _moving_select_part.y));
+		_rect_select_program->setUniformValue("trans", QVector2D(_moving_select_part.x, _moving_select_part.y + _scroll_positon * 2.f * _part_total_scale));
 		_rect_select_program->setUniformValue("aColor", QVector4D(0.3f, 0.3f, 0.6f, 1.0f));
 
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
@@ -86,7 +86,7 @@ void TimelineGl::paint_parts()
 		_rect_select_program->setUniformValue("aColor", QVector4D(0.6f, 0.3f, 0.3f, 1.0f));
 	}
 
-	_rect_select_program->setUniformValue("trans", QVector2D(_part_cursor.x, _part_cursor.y));
+	_rect_select_program->setUniformValue("trans", QVector2D(_part_cursor.x, _part_cursor.y + _scroll_positon * 2.f * _part_total_scale));
 
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
@@ -114,6 +114,7 @@ void TimelineGl::draw_part_and_child(Part& part, float x, float y)
 
 	const float scale = 0.35f / cus::max(part.width() * (1.f + spTimelineGL::scroll_width), part.height());
 	_part_shader_program->setUniformValue("scale", scale);
+	_part_shader_program->setUniformValue("scroll", _scroll_positon * 2.f * _part_total_scale);
 	_part_shader_program->setUniformValue("x", x - scale * part.x());
 	_part_shader_program->setUniformValue("y", y - scale * part.y());
 
@@ -130,7 +131,6 @@ void TimelineGl::draw_insert_cursor()
 	glBindVertexArray(tVAO);// 绘制插入光标 /////////////////////////////////////////////
 
 	_simple_with_trans_shader_program->bind();
-	_simple_with_trans_shader_program->setUniformValue("ratio", _ratio);
 
 	const int x = _insert_part_index % 5;
 	const int y = _insert_part_index / 5;
@@ -140,7 +140,7 @@ void TimelineGl::draw_insert_cursor()
 	const float fx = x * partWidth - 1.f;
 	const float fy = 1.f - (y * 0.4f + 0.2f) * _ratio;
 
-	_simple_with_trans_shader_program->setUniformValue("trans", QVector2D(fx, fy));
+	_simple_with_trans_shader_program->setUniformValue("trans", QVector2D(fx, fy + _scroll_positon * 2.f * _part_total_scale));
 
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
