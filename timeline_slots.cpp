@@ -12,3 +12,13 @@ void TimelineGl::part_exchange()
 	piYing->update_part_slider();
 	piYingGL->update();
 }
+
+void TimelineGl::part_delete()
+{
+	if (_part_cursor._index < 0 || _part_cursor._index >= parts.size()) {
+		return;
+	}
+
+	parts[_part_cursor._index]->release_buffers();
+	parts.erase(parts.begin() + _part_cursor._index);
+}

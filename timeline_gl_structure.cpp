@@ -10,6 +10,9 @@
 TimelineGl::TimelineGl(QWidget* parent) : QOpenGLWidget(), _ratio(1.f), _ui_type(spTimelineGL::UiType::Timeline)
 {
 	_merge_menu = new QMenu(this);
+	_part_menu = new QMenu(this);
+
+#pragma region [merge menu]
 
 	QAction* beside_action = new QAction("合并", this);
 	QAction* layer_action = new QAction("父子", this);
@@ -22,6 +25,18 @@ TimelineGl::TimelineGl(QWidget* parent) : QOpenGLWidget(), _ratio(1.f), _ui_type
 	connect(beside_action, &QAction::triggered, this, [this] { part_beside_merge(); });
 	connect(layer_action, &QAction::triggered, this, [this] { part_layer_merge(); });
 	connect(exchange_action, &QAction::triggered, this, [this] { part_exchange(); });
+
+#pragma endregion
+
+#pragma region [part menu]
+
+	QAction* delete_action = new QAction("删除", this);
+
+	_part_menu->addAction(delete_action);
+
+	connect(delete_action, &QAction::triggered, this, [this] { part_delete(); });
+
+#pragma endregion
 
 	_timeline_shader_program = new QOpenGLShaderProgram(this);
 	_simple_shader_program = new QOpenGLShaderProgram(this);

@@ -68,9 +68,9 @@ protected: // gl function
 	void paintGL() override;
 
 protected: /// event
-	void wheelEvent(QWheelEvent* ev) override;
+	void wheelEvent(QWheelEvent* event) override;
 	void mousePressEvent(QMouseEvent* event) override;
-	void mouseReleaseEvent(QMouseEvent* e) override;
+	void mouseReleaseEvent(QMouseEvent* event) override;
 	void mouseMoveEvent(QMouseEvent* event) override;
 
 private:
@@ -85,6 +85,7 @@ private:
 	void part_beside_merge();
 	void part_layer_merge();
 	void part_exchange();
+	void part_delete();
 
 	int get_index_by_mouse(const QPoint& mouse) const;
 	int get_index_by_mouse(const QPoint& mouse, int& o_dragType) const;
@@ -125,5 +126,6 @@ private:
 	spTimelineGL::PartCursor _moving_select_part;
 
 	QMenu* _merge_menu;
+	QMenu* _part_menu;
 };
 

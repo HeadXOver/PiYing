@@ -9,6 +9,7 @@
 #include "global_objects.h"
 
 #include <qmouseevent>
+#include <qmenu>
 #include <qmessagebox>
 
 void TimelineGl::wheelEvent(QWheelEvent* ev)
@@ -43,8 +44,12 @@ void TimelineGl::mousePressEvent(QMouseEvent* event)
 	if (event->button() == Qt::MiddleButton) {
 		lastMiddleButtonPos = event->position();
 		*_last_scale_trans = *_scale_trans;
+
+		update();
+		return;
 	}
-	else if (event->button() == Qt::LeftButton) {
+
+	if (event->button() == Qt::LeftButton) {
 		_pressing = true;
 
 		if (_ui_type == spTimelineGL::UiType::Timeline) {
@@ -75,8 +80,34 @@ void TimelineGl::mousePressEvent(QMouseEvent* event)
 				piYing->update_part_slider();
 				piYingGL->update();
 			}
+		}
 
+		update();
+		return;
+	}
+
+	if (event->button() == Qt::RightButton) {
+		if (_ui_type == spTimelineGL::UiType::Part) {
+			const int index = get_index_by_mouse(event->pos());
+
+			if (index >= 0) {
+				parts[index]->update_scale();
+
+				if (index != _part_cursor._index) {
+					_part_cursor.set_cursor(index);
+				}
+			}
+
+			piYing->update_part_slider();
+			piYingGL->update();
 			update();
+
+			_part_menu->exec(QCursor::pos());
+
+			piYing->update_part_slider();
+			piYingGL->update();
+			update();
+			return;
 		}
 	}
 }
