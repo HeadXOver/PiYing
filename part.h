@@ -53,10 +53,13 @@ public:
 	float height() const;
 	float width() const;
 
+	bool same_texture_as(const Part& other);
+
 	unsigned int vao_timeline() const;
 	unsigned int vao_piying() const;
 
 public:
+	/// 用于标记部件在数组中的位置
 	unsigned int index{ 0 };
 
 private:

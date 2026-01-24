@@ -112,8 +112,23 @@ Part::Part(const Part& part1, const Part& part2) : _texture(part1._texture)
 	update_scale();
 }
 
-Part::Part(const Part& part) : _texture(part._texture)
+Part::Part(const Part& other) : 
+	_texture(other._texture),
+	_x(other._x),
+	_y(other._y),
+	_height(other._height),
+	_width(other._width),
+	_vert_texture_origin(std::make_unique<PointVector>(*other._vert_texture_origin)),
+	_vert_texture(std::make_unique<PointVector>(*other._vert_texture)),
+	_indices(other._indices)
 {
+	slide_applier = new SlideApplier(*other.slide_applier);
+
+	timelineGl->generate_vbo(*_vert_texture, _vbo);
+	timelineGl->generate_ebo(_indices, _ebo);
+
+	timelineGl->generate_vao(_vao_timeline, _vbo, _ebo);
+	piYingGL->generate_vao(_vao_piying, _vbo, _ebo);
 }
 
 Part::~Part()
@@ -290,9 +305,18 @@ void Part::add_copied_child(std::shared_ptr<Part> child)
 	_children.push_back(std::make_shared<Part>(*child));
 }
 
+bool Part::same_texture_as(const Part& other)
+{
+	return &_texture == &other._texture;
+}
+
 void Part::add_to_draw()
 {
 	partIsDraw[index] = true;
+
+	for (int i = 0; i < _children.size(); i++) {
+		if (_children[i]) _children[i]->add_to_draw();
+	}
 }
 
 void Part::update_transform(const QMatrix4x4& parentWorld)

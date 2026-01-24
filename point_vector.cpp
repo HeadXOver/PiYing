@@ -10,6 +10,11 @@ PointVector::PointVector(const PointVector& vector1, const PointVector& vector2)
 	points.insert(points.end(), vector2.points.begin(), vector2.points.end());
 }
 
+PointVector::PointVector(const PointVector& other)
+{
+	points = other.points;
+}
+
 void PointVector::push_back(float x, float y)
 {
 	points.push_back(x); 

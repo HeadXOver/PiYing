@@ -13,6 +13,7 @@ class SlideApplier final
 public:
     SlideApplier();
     SlideApplier(const SlideApplier& applier1, const SlideApplier& applier2, unsigned int skew);
+    SlideApplier(const SlideApplier& other);
     ~SlideApplier();
 
     void remove_slider_by_id(int id);

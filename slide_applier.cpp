@@ -24,6 +24,13 @@ SlideApplier::SlideApplier(const SlideApplier& applier1, const SlideApplier& app
     }
 }
 
+SlideApplier::SlideApplier(const SlideApplier& other)
+{
+    for (int i = 0; i < other.sliders.size(); ++i) {
+        sliders.push_back(std::make_unique<CharacterTrace>(*other.sliders[i]));
+    }
+}
+
 SlideApplier::~SlideApplier()
 {
 }

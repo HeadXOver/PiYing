@@ -9,6 +9,7 @@ class PointVector
 public:
 	PointVector() = default;
 	PointVector(const PointVector& vector1, const PointVector& vector2);
+	PointVector(const PointVector& other);
 	~PointVector() = default;
 
 	size_t float_size() const { return points.size(); }

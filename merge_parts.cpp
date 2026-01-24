@@ -13,6 +13,11 @@ void TimelineGl::ask_merge_parts()
 
 void TimelineGl::part_beside_merge()
 {
+	if (!parts[_part_cursor._index]->same_texture_as(*parts[_moving_select_part._index])) {
+		QMessageBox::information(this, tr("提示"), tr("两个部件的纹理不同，无法合并！"));
+		return;
+	}
+
 	int ret = QMessageBox::question(
 		this,
 		tr("提示"),
@@ -45,12 +50,13 @@ void TimelineGl::part_layer_merge()
 		QMessageBox::Yes
 	);
 
-	if (ret == QMessageBox::Yes) {
-		parts[_moving_select_part._index]->add_copied_child(parts[_part_cursor._index]);
-	}
-	else {
-		parts[_moving_select_part._index]->add_child(parts[_part_cursor._index]);
+	const int childIndex = _part_cursor._index;
+	const int parentIndex = _moving_select_part._index;
 
-		parts.erase(parts.begin() + _part_cursor._index);
+	if (ret == QMessageBox::Yes) {
+		parts.insert(parts.begin() + childIndex, std::make_shared<Part>(*parts[childIndex]));
 	}
+	parts[parentIndex]->add_child(parts[childIndex]);
+
+	_part_cursor.set_cursor(parentIndex);
 }
