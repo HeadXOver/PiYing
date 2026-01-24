@@ -44,6 +44,8 @@ public:
 	void add_child(std::shared_ptr<Part> child);
 	void add_copied_child(std::shared_ptr<Part> child);
 
+	void add_to_draw();
+
 	void update_transform(const QMatrix4x4& parentWorld = QMatrix4x4());
 
 	float x() const;
@@ -53,6 +55,9 @@ public:
 
 	unsigned int vao_timeline() const;
 	unsigned int vao_piying() const;
+
+public:
+	unsigned int index{ 0 };
 
 private:
 	float _x{ 0.f };

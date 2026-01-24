@@ -219,6 +219,32 @@ void PiYingGL::paint_selected_part()
 	glBindVertexArray(0);
 }
 
+void PiYingGL::paint_in_vector_part()
+{
+	size_t partSize = parts.size();
+
+	if (partSize == 0) return;
+
+	for (int i = 0; i < partSize; i++) {
+		if(!partIsDraw[i]) continue;
+
+		chShaderProgram->bind();
+		glBindVertexArray(parts[i]->vao_piying());
+
+		parts[i]->bind_texture();
+		glDrawElements(GL_TRIANGLES, (GLsizei)parts[i]->index_size(), GL_UNSIGNED_INT, 0);
+
+		_texture_tri_shader_program->bind();
+		_texture_tri_shader_program->setUniformValue("is_skelen", false);
+		_texture_tri_shader_program->setUniformValue("aColor", QVector4D(0.0f, 1.0f, 0.0f, 0.8f));
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);   // 把填充改成“线框”
+		glDrawElements(GL_TRIANGLES, (GLsizei)parts[i]->index_size(), GL_UNSIGNED_INT, 0);
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	}
+
+	glBindVertexArray(0);
+}
+
 void PiYingGL::draw_view_rectangle()
 {
 	glBindVertexArray(RECTANGLE_TEXTURE_VAO); ////////////////////////////////////////////////////

@@ -21,4 +21,11 @@ void TimelineGl::part_delete()
 
 	parts[_part_cursor._index]->release_buffers();
 	parts.erase(parts.begin() + _part_cursor._index);
+
+	if (parts.empty()) {
+		_part_cursor.set_cursor(-1);
+	}
+	else {
+		_part_cursor.set_cursor(0);
+	}
 }

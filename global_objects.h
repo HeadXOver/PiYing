@@ -19,3 +19,4 @@ inline TimelineGl* timelineGl = nullptr;
 inline std::vector<unsigned int>* currentIndex = nullptr;
 
 inline std::vector<std::shared_ptr<Part>> parts;
+inline std::vector<bool> partIsDraw;

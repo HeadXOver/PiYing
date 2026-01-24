@@ -290,6 +290,11 @@ void Part::add_copied_child(std::shared_ptr<Part> child)
 	_children.push_back(std::make_shared<Part>(*child));
 }
 
+void Part::add_to_draw()
+{
+	partIsDraw[index] = true;
+}
+
 void Part::update_transform(const QMatrix4x4& parentWorld)
 {
 	localTransform = _joint->get_local_transform();

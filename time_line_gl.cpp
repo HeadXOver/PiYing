@@ -22,6 +22,18 @@ void TimelineGl::release_buffers(unsigned int vao, unsigned int vbo, unsigned in
 	doneCurrent();
 }
 
+void TimelineGl::update_is_draw_part()
+{
+	/// 计算当前需要绘制的部分，先初始化标记
+	partIsDraw.assign(parts.size(), false);
+
+	for (int i = 0; i < parts.size(); i++) {
+		parts[i]->index = i;
+	}
+
+	parts[_part_cursor._index]->add_to_draw();
+}
+
 std::shared_ptr<Part> TimelineGl::get_current_part() const
 {
 	if(parts.size() == 0) return nullptr;

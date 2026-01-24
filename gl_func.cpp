@@ -136,7 +136,7 @@ void PiYingGL::paintGL() {
 		if (ch_element_tool_) ch_element_tool_->draw();
 	}
 	else if (editMode == EditMode::controlSlide) {
-		paint_selected_part();
+		paint_in_vector_part();
 		if (ch_element_tool_) ch_element_tool_->draw();
 	}
 	else return;

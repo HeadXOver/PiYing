@@ -67,6 +67,7 @@ public:
 	void generate_vao(unsigned int& vao, unsigned int vbo, unsigned int ebo);
 	void init_part_cursor();
 	void release_buffers(unsigned int vao, unsigned int vbo, unsigned int ebo);
+	void update_is_draw_part();
 
 	std::shared_ptr<Part> get_current_part() const;
 

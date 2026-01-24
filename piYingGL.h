@@ -20,7 +20,7 @@ enum class MousePos {
 	RightEdge,
 	TopEdge,
 	BottomEdge,
-	OutSide
+	OutSide,
 };
 
 enum class EditMode;
@@ -51,6 +51,7 @@ private:
 	void paintCharacterTexture();
 	void paint_applied_texture();
 	void paint_selected_part();
+	void paint_in_vector_part();
 	void draw_view_rectangle();
 	void addChVert(const QPointF& point);
 	void addGlobalAction(QMenu* menu, const QList<QAction*> action);
