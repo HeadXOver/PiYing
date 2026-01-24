@@ -80,7 +80,7 @@ void CtrlSlideWidget::delete_all_layout()
     sliderList.clear();
 }
 
-void CtrlSlideWidget::add_slider_by_part(std::shared_ptr<Part> part)
+void CtrlSlideWidget::add_slider_by_part(Part* part)
 {
     SlideApplier& applier = part->get_slide_applier();
 

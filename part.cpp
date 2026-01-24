@@ -295,19 +295,14 @@ void Part::release_buffers()
 	piYingGL->release_buffers(_vao_piying);
 }
 
-void Part::add_child(std::shared_ptr<Part> child)
+void Part::add_child(Part* child)
 {
 	_children.push_back(child);
 }
 
-void Part::add_copied_child(std::shared_ptr<Part> child)
+bool Part::same_texture_as(Part* other) const
 {
-	_children.push_back(std::make_shared<Part>(*child));
-}
-
-bool Part::same_texture_as(const Part& other)
-{
-	return &_texture == &other._texture;
+	return &_texture == &other->_texture;
 }
 
 void Part::add_to_draw()

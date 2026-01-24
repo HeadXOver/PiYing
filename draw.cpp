@@ -199,7 +199,7 @@ void PiYingGL::paint_selected_part()
 {
 	if(parts.size() == 0) return;
 
-	std::shared_ptr<Part> currentPart = timelineGl->get_current_part();
+	Part* currentPart = timelineGl->get_current_part();
 	if (!currentPart) return;
 
 	chShaderProgram->bind();

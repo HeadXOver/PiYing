@@ -34,7 +34,7 @@ void TimelineGl::update_is_draw_part()
 	parts[_part_cursor._index]->add_to_draw();
 }
 
-std::shared_ptr<Part> TimelineGl::get_current_part() const
+Part* TimelineGl::get_current_part() const
 {
 	if(parts.size() == 0) return nullptr;
 

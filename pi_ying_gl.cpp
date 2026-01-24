@@ -268,7 +268,7 @@ void PiYingGL::add_part(const QList<unsigned int>& indices)
 	const int currentVector = getCurrentChRow();
 	if (currentVector < 0) return;
 
-	parts.push_back(std::make_shared<Part>(*characterTextures[currentVector]->texture(), indices, editMode == EditMode::characterTexture));
+	parts.push_back(new Part(*characterTextures[currentVector]->texture(), indices, editMode == EditMode::characterTexture));
 	if (parts.size() == 1) {
 		timelineGl->init_part_cursor();
 		piYing->update_part_slider();

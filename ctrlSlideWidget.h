@@ -19,7 +19,7 @@ public:
     ~CtrlSlideWidget();
 
     void delete_all_layout();
-    void add_slider_by_part(std::shared_ptr<Part> part);
+    void add_slider_by_part(Part* part);
 
     QList<QString> get_slider_names();
 

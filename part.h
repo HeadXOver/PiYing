@@ -41,8 +41,8 @@ public:
 	void change_slider_value(int sliderIndex, int value);
 	void remove_slider(int sliderIndex);
 	void release_buffers();
-	void add_child(std::shared_ptr<Part> child);
-	void add_copied_child(std::shared_ptr<Part> child);
+	void add_child(Part* child);
+	void add_copied_child(Part* child);
 
 	void add_to_draw();
 
@@ -53,7 +53,7 @@ public:
 	float height() const;
 	float width() const;
 
-	bool same_texture_as(const Part& other);
+	bool same_texture_as(Part* other) const;
 
 	unsigned int vao_timeline() const;
 	unsigned int vao_piying() const;
@@ -81,8 +81,8 @@ private:
 
 	SlideApplier* slide_applier;
 
-	std::vector<std::shared_ptr<Part>> _children;
-	std::weak_ptr<Part> _parent;
+	std::vector<Part*> _children;
+	Part* _parent;
 	
 	std::unique_ptr<Joint> _joint;
 

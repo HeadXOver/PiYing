@@ -69,7 +69,7 @@ public:
 	void release_buffers(unsigned int vao, unsigned int vbo, unsigned int ebo);
 	void update_is_draw_part();
 
-	std::shared_ptr<Part> get_current_part() const;
+	Part* get_current_part() const;
 
 protected: // gl function
 	void initializeGL() override;
