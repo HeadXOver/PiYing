@@ -305,6 +305,11 @@ bool Part::same_texture_as(Part* other) const
 	return &_texture == &other->_texture;
 }
 
+bool Part::is_root() const
+{
+	return !_parent;
+}
+
 void Part::add_to_draw()
 {
 	partIsDraw[index] = true;

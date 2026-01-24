@@ -114,6 +114,7 @@
     <ClCompile Include="cus_func_string.cpp" />
     <ClCompile Include="cus_func_zone.cpp" />
     <ClCompile Include="events.cpp" />
+    <ClCompile Include="global_objects.cpp" />
     <ClCompile Include="Joint.cpp" />
     <ClCompile Include="merge_parts.cpp" />
     <ClCompile Include="part_cursor.cpp" />

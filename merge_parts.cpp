@@ -13,7 +13,7 @@ void TimelineGl::ask_merge_parts()
 
 void TimelineGl::part_beside_merge()
 {
-	if (!parts[_part_cursor._index]->same_texture_as(parts[_moving_select_part._index])) {
+	if (!_showing_parts[_part_cursor._index]->same_texture_as(_showing_parts[_moving_select_part._index])) {
 		QMessageBox::information(this, tr("提示"), tr("两个部件的纹理不同，无法合并！"));
 		return;
 	}
@@ -27,16 +27,17 @@ void TimelineGl::part_beside_merge()
 	);
 
 	if (ret == QMessageBox::Yes) {
-		parts.push_back(new Part(*parts[_part_cursor._index], *parts[_moving_select_part._index]));
+		parts.push_back(new Part(*_showing_parts[_part_cursor._index], *_showing_parts[_moving_select_part._index]));
+		update_showing_parts();
 	}
 	else {
-		if (!parts[_moving_select_part._index]->eat_another_part(*parts[_part_cursor._index])) return;
+		if (!_showing_parts[_moving_select_part._index]->eat_another_part(*_showing_parts[_part_cursor._index])) return;
 
 		/// 释放图形资源
-		parts[_part_cursor._index]->release_buffers();
+		_showing_parts[_part_cursor._index]->release_buffers();
 
 		/// 释放内存
-		parts.erase(parts.begin() + _part_cursor._index);
+		parts.erase(parts.begin() + _showing_parts[_part_cursor._index]->index);
 	}
 }
 

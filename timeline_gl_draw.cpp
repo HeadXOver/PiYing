@@ -71,12 +71,13 @@ void TimelineGl::draw_scroll()
 
 void TimelineGl::paint_parts()
 {
-	if (parts.size() == 0) return;
+	if (_showing_parts.size() == 0) return;
 
 	_rect_select_program->bind();
 
 	glBindVertexArray(tlVAO);///////////////////////////////////////////////////////
 
+	/// 绘制选择框
 	if (_pressing && _insert_part_index < 0) {
 		_rect_select_program->setUniformValue("trans", QVector2D(_moving_select_part.x, _moving_select_part.y + _scroll_positon * 2.f * _part_total_scale));
 		_rect_select_program->setUniformValue("aColor", QVector4D(0.3f, 0.3f, 0.6f, 1.0f));
@@ -96,11 +97,11 @@ void TimelineGl::paint_parts()
 	_part_shader_program->bind();
 
 	float x, y;
-	for (int i = 0; i < parts.size(); i++) {
+	for (int i = 0; i < _showing_parts.size(); i++) {
 		x = -0.8f + (i % 5) * 0.4f;
 		y = +0.8f - (i / 5) * 0.4f;
 
-		draw_part_and_child(*parts[i], x, y);
+		draw_part_and_child(*_showing_parts[i], x, y);
 	}
 
 	draw_insert_cursor();

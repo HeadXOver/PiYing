@@ -42,7 +42,6 @@ public:
 	void remove_slider(int sliderIndex);
 	void release_buffers();
 	void add_child(Part* child);
-	void add_copied_child(Part* child);
 
 	void add_to_draw();
 
@@ -54,6 +53,7 @@ public:
 	float width() const;
 
 	bool same_texture_as(Part* other) const;
+	bool is_root() const;
 
 	unsigned int vao_timeline() const;
 	unsigned int vao_piying() const;
@@ -82,7 +82,7 @@ private:
 	SlideApplier* slide_applier;
 
 	std::vector<Part*> _children;
-	Part* _parent;
+	Part* _parent{ nullptr };
 	
 	std::unique_ptr<Joint> _joint;
 

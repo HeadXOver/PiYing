@@ -9,6 +9,8 @@ class PointVectorLayer;
 class Part;
 class TimelineGl;
 
+void g_update_order();
+
 inline PiYingGL* piYingGL = nullptr;
 inline PiYing* piYing = nullptr;
 inline TimelineGl* timelineGl = nullptr;

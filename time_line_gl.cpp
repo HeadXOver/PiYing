@@ -34,13 +34,21 @@ void TimelineGl::update_is_draw_part()
 	parts[_part_cursor._index]->add_to_draw();
 }
 
+void TimelineGl::update_showing_parts()
+{
+	_showing_parts.clear();
+	for (int i = 0; i < parts.size(); i++) {
+		if(parts[i]->is_root()) _showing_parts.push_back(parts[i]);
+	}
+}
+
 Part* TimelineGl::get_current_part() const
 {
-	if(parts.size() == 0) return nullptr;
+	if(_showing_parts.size() == 0) return nullptr;
 
-	if (_part_cursor._index < 0) return nullptr;
+	if (_part_cursor._index < 0 || _part_cursor._index >= _showing_parts.size()) return nullptr;
 
-	return parts[_part_cursor._index];
+	return _showing_parts[_part_cursor._index];
 }
 
 void TimelineGl::move_time_cursor(float mouse_x)

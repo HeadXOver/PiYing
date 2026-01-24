@@ -68,6 +68,7 @@ public:
 	void init_part_cursor();
 	void release_buffers(unsigned int vao, unsigned int vbo, unsigned int ebo);
 	void update_is_draw_part();
+	void update_showing_parts();
 
 	Part* get_current_part() const;
 
@@ -142,5 +143,7 @@ private:
 
 	QMenu* _merge_menu;
 	QMenu* _part_menu;
+
+	std::vector<Part*> _showing_parts;
 };
 
