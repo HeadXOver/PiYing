@@ -97,6 +97,7 @@ private:
 	void part_layer_merge();
 	void part_exchange();
 	void part_delete();
+	void part_swap_by_showing_index(int from, int to);
 
 	int get_index_by_mouse(const QPoint& mouse) const;
 	int get_index_by_mouse(const QPoint& mouse, int& o_dragType) const;

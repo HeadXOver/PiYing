@@ -27,9 +27,7 @@ void TimelineGl::update_is_draw_part()
 	/// 计算当前需要绘制的部分，先初始化标记
 	partIsDraw.assign(parts.size(), false);
 
-	for (int i = 0; i < parts.size(); i++) {
-		parts[i]->index = i;
-	}
+	g_update_order();
 
 	parts[_part_cursor._index]->add_to_draw();
 }
@@ -46,7 +44,7 @@ Part* TimelineGl::get_current_part() const
 {
 	if(_showing_parts.size() == 0) return nullptr;
 
-	if (_part_cursor._index < 0 || _part_cursor._index >= _showing_parts.size()) return nullptr;
+	assert(_part_cursor._index >= 0 && _part_cursor._index < _showing_parts.size());
 
 	return _showing_parts[_part_cursor._index];
 }
@@ -110,34 +108,40 @@ int TimelineGl::get_index_by_mouse(const QPoint& mouse, int& o_dragType) const
 
 void TimelineGl::insert_from_to(int from, int to)
 {
-	if (from < 0 || to < 0 || from >= parts.size() || to > parts.size()) return;
+	assert(from >= 0 && to >= 0);
+	assert(from < parts.size() && to <= parts.size());
 
 	if (from == to || from + 1 == to) return;
 
 	if (to + 1 == from) {
-		std::swap(parts[from], parts[to]);
+		part_swap_by_showing_index(from, to);
 		_part_cursor.set_cursor(to);
 		return;
 	}
 
 	if (from + 2 == to) {
-		std::swap(parts[from], parts[from + 1]);
+		part_swap_by_showing_index(from, from + 1);
 		_part_cursor.set_cursor(from + 1);
 		return;
 	}
 
-	/// 交换
-	auto tmp = std::move(parts[from]);
+	int fromIndex = _showing_parts[from]->index;
+	Part* tmp = parts[fromIndex];
+
+	size_t toIndex = to == _showing_parts.size() ? parts.size() : _showing_parts[to]->index;
 
 	if (from < to) {
+		--toIndex;
 		--to;
-		std::move(parts.begin() + from + 1, parts.begin() + to + 1, parts.begin() + from);     // 左移 [i+1..j]
-		parts[to] = std::move(tmp);        // 放入目标
+		std::move(parts.begin() + fromIndex + 1, parts.begin() + toIndex + 1, parts.begin() + fromIndex);     // 左移 [i+1..j]
+		parts[toIndex] = tmp;        // 放入目标
 	}
 	else {
-		std::move_backward(parts.begin() + to, parts.begin() + from, parts.begin() + from + 1); // 右移 [j..i-1]
-		parts[to] = std::move(tmp);        // 放入目标
+		std::move_backward(parts.begin() + toIndex, parts.begin() + fromIndex, parts.begin() + fromIndex + 1); // 右移 [j..i-1]
+		parts[toIndex] = tmp;        // 放入目标
 	}
 
 	_part_cursor.set_cursor(to);
+	update_is_draw_part();
+	update_showing_parts();
 }

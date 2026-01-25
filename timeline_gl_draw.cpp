@@ -127,7 +127,7 @@ void TimelineGl::draw_insert_cursor()
 {
 	if(_insert_part_index < 0) return;
 
-	if(_insert_part_index > parts.size()) return;
+	if(_insert_part_index > parts.size()) _insert_part_index = parts.size();
 
 	glBindVertexArray(tVAO);// 绘制插入光标 /////////////////////////////////////////////
 
