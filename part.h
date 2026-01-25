@@ -60,7 +60,7 @@ public:
 
 public:
 	/// 用于标记部件在数组中的位置
-	unsigned int index{ 0 };
+	unsigned int _lay_index{ 0 };
 
 private:
 	float _x{ 0.f };
@@ -79,7 +79,7 @@ private:
 
 	std::vector<unsigned int> _indices;
 
-	SlideApplier* slide_applier;
+	SlideApplier* _slide_applier;
 
 	std::vector<Part*> _children;
 	Part* _parent{ nullptr };

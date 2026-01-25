@@ -5,18 +5,15 @@ class QMatrix4x4;
 class Joint final
 {
 public:
-    Joint() = default;
     QMatrix4x4 get_local_transform() const;
 
 private:
-    float center_x{ 0 };
-    float center_y{ 0 };
-
-    float trans_x{ 0 };
-    float trans_y{ 0 };
-
-    float rot{ 0 };
-
-    float scale_x{ 1.f };
-    float scale_y{ 1.f };
+    float 
+        center_x{ 0 },
+        center_y{ 0 },
+        trans_x{ 0 },
+        trans_y{ 0 },
+        rot{ 0 },
+        scale_x{ 1.f },
+        scale_y{ 1.f };
 };

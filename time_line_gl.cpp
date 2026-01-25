@@ -27,16 +27,19 @@ void TimelineGl::update_is_draw_part()
 	/// 计算当前需要绘制的部分，先初始化标记
 	partIsDraw.assign(parts.size(), false);
 
-	g_update_order();
+	assert(_part_cursor._index >= 0 && _part_cursor._index < _showing_parts.size());
 
-	parts[_part_cursor._index]->add_to_draw();
+	_showing_parts[_part_cursor._index]->add_to_draw();
 }
 
 void TimelineGl::update_showing_parts()
 {
 	_showing_parts.clear();
-	for (int i = 0; i < parts.size(); i++) {
-		if(parts[i]->is_root()) _showing_parts.push_back(parts[i]);
+
+	if (!_part_to_show) {
+		for (int i = 0; i < parts.size(); i++) {
+			if (parts[i]->is_root()) _showing_parts.push_back(parts[i]);
+		}
 	}
 }
 
@@ -125,10 +128,10 @@ void TimelineGl::insert_from_to(int from, int to)
 		return;
 	}
 
-	int fromIndex = _showing_parts[from]->index;
+	int fromIndex = _showing_parts[from]->_lay_index;
 	Part* tmp = parts[fromIndex];
 
-	size_t toIndex = to == _showing_parts.size() ? parts.size() : _showing_parts[to]->index;
+	size_t toIndex = to == _showing_parts.size() ? parts.size() : _showing_parts[to]->_lay_index;
 
 	if (from < to) {
 		--toIndex;
@@ -141,7 +144,9 @@ void TimelineGl::insert_from_to(int from, int to)
 		parts[toIndex] = tmp;        // 放入目标
 	}
 
+	/// 先设置光标
 	_part_cursor.set_cursor(to);
-	update_is_draw_part();
+
+	/// 再把该列出的part添加到_showing_parts中
 	update_showing_parts();
 }

@@ -2,9 +2,9 @@
 
 #include "part.h"
 
-void g_update_order()
+void g_update_parts_order()
 {
     for (int i = 0; i < parts.size(); i++) {
-        parts[i]->index = i;
+        parts[i]->_lay_index = i;
     }
 }

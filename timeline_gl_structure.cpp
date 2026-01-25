@@ -34,11 +34,17 @@ TimelineGl::TimelineGl(QWidget* parent) : QOpenGLWidget(), _ratio(1.f), _ui_type
 
 #pragma region [part menu]
 
-	QAction* delete_action = new QAction("删除", this);
+	QAction* partDelete_action = new QAction("删除", this);
+	QAction* partCopy_action = new QAction("复制", this);
+	_part_paste_action = new QAction("粘贴", this);
 
-	_part_menu->addAction(delete_action);
+	_part_paste_action->setEnabled(false);
 
-	connect(delete_action, &QAction::triggered, this, [this] { part_delete(); });
+	_part_menu->addAction(partCopy_action);
+	_part_menu->addAction(_part_paste_action);
+	_part_menu->addAction(partDelete_action);
+
+	connect(partDelete_action, &QAction::triggered, this, [this] { part_delete(); });
 
 #pragma endregion
 

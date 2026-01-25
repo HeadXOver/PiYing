@@ -26,7 +26,7 @@ Part::Part(
 ) :
 	_texture(texture)
 {
-	slide_applier = new SlideApplier();
+	_slide_applier = new SlideApplier();
 	_joint = std::make_unique<Joint>();
 
 	_vert_texture = std::make_unique<PointVector>();
@@ -101,7 +101,7 @@ Part::Part(const Part& part1, const Part& part2) : _texture(part1._texture)
 		_indices.push_back(tempSize + part2._indices[i]);
 	}
 
-	slide_applier = new SlideApplier(*part1.slide_applier, *part2.slide_applier, tempSize);
+	_slide_applier = new SlideApplier(*part1._slide_applier, *part2._slide_applier, tempSize);
 
 	timelineGl->generate_vbo(*_vert_texture, _vbo);
 	timelineGl->generate_ebo(_indices, _ebo);
@@ -113,27 +113,39 @@ Part::Part(const Part& part1, const Part& part2) : _texture(part1._texture)
 }
 
 Part::Part(const Part& other) : 
-	_texture(other._texture),
 	_x(other._x),
 	_y(other._y),
 	_height(other._height),
 	_width(other._width),
+	_texture(other._texture),
 	_vert_texture_origin(std::make_unique<PointVector>(*other._vert_texture_origin)),
 	_vert_texture(std::make_unique<PointVector>(*other._vert_texture)),
-	_indices(other._indices)
+	_indices(other._indices),
+	_slide_applier(new SlideApplier(*other._slide_applier)),
+	_parent(other._parent),
+	_joint(std::make_unique<Joint>()),
+	localTransform(other.localTransform),
+	worldTransform(other.worldTransform)
 {
-	slide_applier = new SlideApplier(*other.slide_applier);
+	static_assert(std::is_trivially_copyable_v<Joint>, "Must be trivially copyable");
+	std::memcpy(_joint.get(), other._joint.get(), sizeof(Joint));
 
 	timelineGl->generate_vbo(*_vert_texture, _vbo);
 	timelineGl->generate_ebo(_indices, _ebo);
 
 	timelineGl->generate_vao(_vao_timeline, _vbo, _ebo);
-	piYingGL->generate_vao(_vao_piying, _vbo, _ebo);
+	piYingGL->generate_vao(_vao_piying, _vbo, _ebo); 
+
+	for (size_t i = 0; i < other._children.size(); i++) {
+		_children.push_back(new Part(*other._children[i]));
+	}
 }
 
 Part::~Part()
 {
-	delete slide_applier;
+	release_buffers();
+
+	delete _slide_applier;
 }
 
 #pragma region [simple]
@@ -170,7 +182,7 @@ QPointF Part::get_vert(int index, bool isSkelen) const
 
 SlideApplier& Part::get_slide_applier()
 {
-	return *slide_applier;
+	return *_slide_applier;
 }
 
 void Part::bind_texture()
@@ -185,9 +197,9 @@ void Part::add_trace(int index, const QPolygonF& polygon)
 	QMenu tempMenu;
 	tempMenu.addAction(QString("新建控制器"));
 
-	const unsigned int n_sliders = slide_applier->n_sliders();
+	const unsigned int n_sliders = _slide_applier->n_sliders();
 	for (unsigned int i = 0; i < n_sliders; ++i)
-		tempMenu.addAction(QString("绑定到: %1").arg(slide_applier->get_slider_name(i)));
+		tempMenu.addAction(QString("绑定到: %1").arg(_slide_applier->get_slider_name(i)));
 
 	QAction* act = tempMenu.exec(QCursor::pos());
 	if (!act) return;
@@ -195,10 +207,10 @@ void Part::add_trace(int index, const QPolygonF& polygon)
 	int actionIndex = tempMenu.actions().indexOf(act) - 1;
 
 	if (actionIndex == -1) {
-		slide_applier->add_new_slider(index, polygon);
+		_slide_applier->add_new_slider(index, polygon);
 	}
 	else {
-		if (!slide_applier->add_trace_on_exist_slider(actionIndex, index, polygon)) {
+		if (!_slide_applier->add_trace_on_exist_slider(actionIndex, index, polygon)) {
 			QMessageBox::warning(nullptr, "警告", "该控制器已存在该点");
 		}
 	}
@@ -249,7 +261,7 @@ bool Part::eat_another_part(Part& other)
 
 	update_scale();
 
-	slide_applier->eat_other_sliders(other.slide_applier, tempSize);
+	_slide_applier->eat_other_sliders(other._slide_applier, tempSize);
 
 	timelineGl->update_buffers(*_vert_texture, _indices, _vbo, _ebo);
 
@@ -258,21 +270,21 @@ bool Part::eat_another_part(Part& other)
 
 void Part::change_slider_value(int sliderIndex, int value)
 {
-	slide_applier->change_current_value(sliderIndex, value);
+	_slide_applier->change_current_value(sliderIndex, value);
 
 	PointVectorLayer layer(*_vert_texture);
 	PointVectorLayer layer_origin(*_vert_texture_origin);
 
-	const std::map<unsigned int, QPolygonF>& tracesByPoint = slide_applier->get_trace_map(sliderIndex);
+	const std::map<unsigned int, QPolygonF>& tracesByPoint = _slide_applier->get_trace_map(sliderIndex);
 
 	QPointF displacement;
 	for (const auto& [key, val] : tracesByPoint) {
 		displacement = QPointF();
-		for (unsigned int i = 0; i < slide_applier->n_sliders(); ++i) {
-			const std::map<unsigned int, QPolygonF>& eachSlider = slide_applier->get_trace_map(i);
+		for (unsigned int i = 0; i < _slide_applier->n_sliders(); ++i) {
+			const std::map<unsigned int, QPolygonF>& eachSlider = _slide_applier->get_trace_map(i);
 			if (eachSlider.count(key)) {
 				const QPolygonF& eachTrace = eachSlider.at(key);
-				displacement += eachTrace[slide_applier->get_slider_current_value(i) * (eachTrace.size() - 1) / 1000];
+				displacement += eachTrace[_slide_applier->get_slider_current_value(i) * (eachTrace.size() - 1) / 1000];
 			}
 		}
 		layer.set_point(true, key, displacement + layer_origin.get(key, true)); 
@@ -285,7 +297,7 @@ void Part::change_slider_value(int sliderIndex, int value)
 
 void Part::remove_slider(int sliderIndex)
 {
-	slide_applier->remove_slider(sliderIndex);
+	_slide_applier->remove_slider(sliderIndex);
 	piYing->update_part_slider();
 }
 
@@ -312,10 +324,10 @@ bool Part::is_root() const
 
 void Part::add_to_draw()
 {
-	partIsDraw[index] = true;
+	partIsDraw[_lay_index] = true;
 
 	for (int i = 0; i < _children.size(); i++) {
-		if (_children[i]) _children[i]->add_to_draw();
+		_children[i]->add_to_draw();
 	}
 }
 

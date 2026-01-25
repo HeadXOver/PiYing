@@ -41,11 +41,8 @@ void TimelineGl::part_beside_merge()
 	else {
 		if (!_showing_parts[_moving_select_part._index]->eat_another_part(*_showing_parts[_part_cursor._index])) return;
 
-		/// 释放图形资源
-		_showing_parts[_part_cursor._index]->release_buffers();
-
 		/// 释放内存
-		parts.erase(parts.begin() + _showing_parts[_part_cursor._index]->index);
+		parts.erase(parts.begin() + _showing_parts[_part_cursor._index]->_lay_index);
 	}
 }
 
@@ -59,8 +56,8 @@ void TimelineGl::part_layer_merge()
 		QMessageBox::Yes
 	);
 
-	const int childIndex = _part_cursor._index;
-	const int parentIndex = _moving_select_part._index;
+	const int childIndex = _showing_parts[_part_cursor._index]->_lay_index;
+	const int parentIndex = _showing_parts[_moving_select_part._index]->_lay_index;
 
 	if (ret == QMessageBox::Yes) {
 		parts.insert(parts.begin() + childIndex, new Part(*parts[childIndex]));

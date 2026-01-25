@@ -97,6 +97,8 @@ private:
 	void part_layer_merge();
 	void part_exchange();
 	void part_delete();
+	void part_copy();
+	void part_paste();
 	void part_swap_by_showing_index(int from, int to);
 
 	int get_index_by_mouse(const QPoint& mouse) const;
@@ -146,8 +148,11 @@ private:
 	QMenu* _drag_diff_texture_menu;
 	QMenu* _part_menu;
 
+	QAction* _part_paste_action;
+
 	std::vector<Part*> _showing_parts;
 
 	Part* _part_to_show{ nullptr };
+	Part* _part_copying{ nullptr };
 };
 
