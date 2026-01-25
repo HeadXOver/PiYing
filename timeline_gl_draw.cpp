@@ -51,7 +51,7 @@ void TimelineGl::draw_scroll()
 
 	_simple_scroll_block_program->bind();
 	
-	const int y = (int)parts.size() / 5 + 1;
+	const size_t y = _showing_parts.size() / 5 + 1;
 
 	_part_total_scale = y * 0.2f * _ratio;
 
@@ -127,7 +127,7 @@ void TimelineGl::draw_insert_cursor()
 {
 	if(_insert_part_index < 0) return;
 
-	if(_insert_part_index > parts.size()) _insert_part_index = (int)parts.size();
+	if(_insert_part_index > _showing_parts.size()) _insert_part_index = (int)_showing_parts.size();
 
 	glBindVertexArray(tVAO);// 绘制插入光标 /////////////////////////////////////////////
 

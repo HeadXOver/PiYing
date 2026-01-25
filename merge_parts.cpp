@@ -1,6 +1,7 @@
 #include "time_line_gl.h"
 
 #include "part.h"
+#include "parts.h"
 #include "global_objects.h"
 
 #include <qmenu>
@@ -35,14 +36,14 @@ void TimelineGl::part_beside_merge()
 	);
 
 	if (ret == QMessageBox::Yes) {
-		parts.push_back(new Part(*_showing_parts[_part_cursor._index], *_showing_parts[_moving_select_part._index]));
+		parts->add(new Part(*_showing_parts[_part_cursor._index], *_showing_parts[_moving_select_part._index]));
 		update_showing_parts();
 	}
 	else {
 		if (!_showing_parts[_moving_select_part._index]->eat_another_part(*_showing_parts[_part_cursor._index])) return;
 
 		/// 释放内存
-		parts.erase(parts.begin() + _showing_parts[_part_cursor._index]->_lay_index);
+		parts->remove(_showing_parts[_part_cursor._index]->_lay_index);
 	}
 }
 
@@ -60,9 +61,9 @@ void TimelineGl::part_layer_merge()
 	const int parentIndex = _showing_parts[_moving_select_part._index]->_lay_index;
 
 	if (ret == QMessageBox::Yes) {
-		parts.insert(parts.begin() + childIndex, new Part(*parts[childIndex]));
+		parts->insert(childIndex, new Part(*(parts->get_part(childIndex))));
 	}
-	parts[parentIndex]->add_child(parts[childIndex]);
+	parts->get_part(parentIndex)->add_child(parts->get_part(childIndex));
 
 	_part_cursor.set_cursor(parentIndex);
 }

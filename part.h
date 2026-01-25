@@ -29,6 +29,7 @@ public:
 	size_t float_size() const;
 	size_t index_size() const;
 	size_t vertex_size() const;
+	size_t n_children() const;
 
 	QPointF get_vert(int index, bool isSkelen) const;
 
@@ -43,8 +44,6 @@ public:
 	void release_buffers();
 	void add_child(Part* child);
 
-	void add_to_draw();
-
 	void update_transform(const QMatrix4x4& parentWorld = QMatrix4x4());
 
 	float x() const;
@@ -54,6 +53,8 @@ public:
 
 	bool same_texture_as(Part* other) const;
 	bool is_root() const;
+
+	Part* get_child(size_t index) const;
 
 	unsigned int vao_timeline() const;
 	unsigned int vao_piying() const;

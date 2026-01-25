@@ -277,6 +277,9 @@
     <ClCompile Include="global_objects.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="parts.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="static_handle_zone.h">
@@ -397,6 +400,9 @@
       <Filter>Header Files\staticConst</Filter>
     </ClInclude>
     <ClInclude Include="Joint.h">
+      <Filter>Header Files\PiYingElememt</Filter>
+    </ClInclude>
+    <ClInclude Include="parts.h">
       <Filter>Header Files\PiYingElememt</Filter>
     </ClInclude>
   </ItemGroup>

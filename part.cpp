@@ -322,13 +322,14 @@ bool Part::is_root() const
 	return !_parent;
 }
 
-void Part::add_to_draw()
+Part* Part::get_child(size_t index) const
 {
-	partIsDraw[_lay_index] = true;
+	return _children[index];
+}
 
-	for (int i = 0; i < _children.size(); i++) {
-		_children[i]->add_to_draw();
-	}
+size_t Part::n_children() const
+{
+	return _children.size();
 }
 
 void Part::update_transform(const QMatrix4x4& parentWorld)

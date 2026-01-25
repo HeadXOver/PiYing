@@ -19,7 +19,7 @@ unsigned int VertGroup::operator[](int index) const
 	return verts[index];
 }
 
-int VertGroup::vert_size() const
+size_t VertGroup::vert_size() const
 {
 	return verts.size();
 }

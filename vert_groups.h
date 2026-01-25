@@ -13,7 +13,7 @@ public:
 
 public:
     void add_one_group(const QList<unsigned int>& indices);
-    int group_num() const;
+    size_t group_num() const;
     VertGroup* operator[](int index) const;
 
 private:

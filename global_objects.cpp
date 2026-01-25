@@ -1,10 +1,8 @@
 #include "global_objects.h"
 
-#include "part.h"
+#include "parts.h"
 
-void g_update_parts_order()
+void g_init()
 {
-    for (int i = 0; i < parts.size(); i++) {
-        parts[i]->_lay_index = i;
-    }
+    parts = new Parts;
 }

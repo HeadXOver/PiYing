@@ -12,6 +12,7 @@
 #include "point_vector_layer.h"
 #include "vert_groups.h"
 #include "slide_applier.h"
+#include "parts.h"
 #include "part.h"
 
 #include "piYingGLContainer.h"
@@ -268,9 +269,9 @@ void PiYingGL::add_part(const QList<unsigned int>& indices)
 	const int currentVector = getCurrentChRow();
 	if (currentVector < 0) return;
 
-	parts.push_back(new Part(*characterTextures[currentVector]->texture(), indices, editMode == EditMode::characterTexture));
+	parts->add(new Part(*characterTextures[currentVector]->texture(), indices, editMode == EditMode::characterTexture));
 	timelineGl->update_showing_parts();
-	if (parts.size() == 1) {
+	if (parts->size() == 1) {
 		timelineGl->init_part_cursor();
 		piYing->update_part_slider();
 	}
@@ -282,5 +283,5 @@ int PiYingGL::get_group_num() const
 {
 	const int currentVector = getCurrentChRow();
 	if (currentVector < 0) return 0;
- 	return _character_vert_groups[currentVector]->group_num();
+ 	return (int)_character_vert_groups[currentVector]->group_num();
 }

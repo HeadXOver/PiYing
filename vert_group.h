@@ -13,7 +13,7 @@ public:
     void add_group(const QList<unsigned int>& indices);
     unsigned int operator[](int index) const;
 
-    int vert_size() const;
+    size_t vert_size() const;
 
 private:
     std::vector<unsigned int> verts;

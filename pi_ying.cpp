@@ -24,6 +24,8 @@ PiYing::PiYing(QWidget* parent) : QMainWindow(parent)
 {
     piYing = this;
 
+    g_init();
+
     QFile sliderStyle(":/PiYing/slideStyle.qss");
     if (sliderStyle.open(QFile::ReadOnly)) {
         SLIDER_WIDGET_STYLE_SHEET = sliderStyle.readAll();

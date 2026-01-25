@@ -3,6 +3,7 @@
 #include "KeyboardStateWin.h"
 #include "scale_trans.h"
 #include "base_math.h"
+#include "parts.h"
 #include "part.h"
 #include "piYingGL.h"
 #include "PiYing.h"
@@ -92,7 +93,7 @@ void TimelineGl::mousePressEvent(QMouseEvent* event)
 
 			_drag_type = spTimelineGL::DragType::Part;
 
-			parts[index]->update_scale();
+			parts->update_scale(index);
 
 			if (index != _part_cursor._index) {
 				_part_cursor.set_cursor(index);
@@ -112,7 +113,7 @@ void TimelineGl::mousePressEvent(QMouseEvent* event)
 			const int index = get_index_by_mouse(event->pos());
 
 			if (index >= 0) {
-				parts[index]->update_scale();
+				parts->update_scale(index);
 
 				if (index != _part_cursor._index) {
 					_part_cursor.set_cursor(index);
@@ -140,7 +141,7 @@ void TimelineGl::mouseReleaseEvent(QMouseEvent* event)
 	if (_ui_type == spTimelineGL::UiType::Part && event->button() == Qt::LeftButton && _drag_type == spTimelineGL::DragType::Part) {
 		const int index = get_index_by_mouse(event->pos(), _insert_part_index);
 
-		const bool indexInRange = (index >= 0 && index < parts.size());
+		const bool indexInRange = (index >= 0 && index < _showing_parts.size());
 
 		if (_insert_part_index >= 0) {
 			/// 插入部件
@@ -153,9 +154,7 @@ void TimelineGl::mouseReleaseEvent(QMouseEvent* event)
 		}
 	}
 
-	for (int i = 0; i < parts.size(); i++) {
-		parts[i]->update_scale();
-	}
+	if (_part_cursor._index >= 0) parts->update_scale(_part_cursor._index);
 
 	_insert_part_index = -1;
 
