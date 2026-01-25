@@ -7,7 +7,23 @@
 
 void TimelineGl::part_exchange()
 {
-	std::swap(parts[_part_cursor._index], parts[_moving_select_part._index]);
+	if (_part_cursor._index == _moving_select_part._index) return;
+
+	Part* from = parts[_part_cursor._index];
+	Part* to = parts[_moving_select_part._index];
+
+	int indexFrom = from->index;
+	int indexTo = to->index;
+
+	parts[indexFrom] = to;
+	parts[indexTo] = from;
+
+	bool tmpBool = partIsDraw[indexFrom];
+	partIsDraw[indexFrom] = partIsDraw[indexTo];
+	partIsDraw[indexTo] = tmpBool;
+
+	_showing_parts[_part_cursor._index] = to;
+	_showing_parts[_moving_select_part._index] = from;
 
 	piYing->update_part_slider();
 	piYingGL->update();

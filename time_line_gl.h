@@ -145,5 +145,7 @@ private:
 	QMenu* _part_menu;
 
 	std::vector<Part*> _showing_parts;
+
+	Part* _part_to_show{ nullptr };
 };
 

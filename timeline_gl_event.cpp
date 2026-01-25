@@ -84,7 +84,6 @@ void TimelineGl::mousePressEvent(QMouseEvent* event)
 				&& event->pos().y() < height() * (_scroll_positon + 1.f / _part_total_scale)
 				) {
 				_drag_type = spTimelineGL::DragType::Scroll;
-				update();
 				return;
 			}
 

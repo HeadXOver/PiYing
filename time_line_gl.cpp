@@ -69,7 +69,7 @@ int TimelineGl::get_index_by_mouse(const QPoint& mouse) const
 
 	const int index = 5 * y + x;
 
-	if(index >= parts.size() || index < 0) return -1;
+	if(index >= _showing_parts.size() || index < 0) return -1;
 
 	return index;
 }
@@ -90,8 +90,8 @@ int TimelineGl::get_index_by_mouse(const QPoint& mouse, int& o_dragType) const
 		return -1;
 	}
 
-	if (index >= parts.size()) {
-		o_dragType = (int)parts.size();
+	if (index >= _showing_parts.size()) {
+		o_dragType = (int)_showing_parts.size();
 		return -1;
 	}
 
