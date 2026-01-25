@@ -8,7 +8,15 @@
 
 void TimelineGl::ask_merge_parts()
 {
-	_merge_menu->exec(QCursor::pos());
+	assert(_moving_select_part._index >= 0 && _moving_select_part._index < _showing_parts.size());
+	assert(_part_cursor._index >= 0 && _part_cursor._index < _showing_parts.size());
+
+	if (_showing_parts[_part_cursor._index]->same_texture_as(_showing_parts[_moving_select_part._index])) {
+		_drag_same_texture_menu->exec(QCursor::pos());
+	}
+	else {
+		_drag_diff_texture_menu->exec(QCursor::pos());
+	}
 }
 
 void TimelineGl::part_beside_merge()

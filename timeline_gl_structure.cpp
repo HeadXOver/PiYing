@@ -9,22 +9,26 @@
 
 TimelineGl::TimelineGl(QWidget* parent) : QOpenGLWidget(), _ratio(1.f), _ui_type(spTimelineGL::UiType::Timeline)
 {
-	_merge_menu = new QMenu(this);
+	_drag_same_texture_menu = new QMenu(this);
+	_drag_diff_texture_menu = new QMenu(this);
 	_part_menu = new QMenu(this);
 
 #pragma region [merge menu]
 
-	QAction* beside_action = new QAction("合并", this);
+	QAction* beside_action = new QAction("同纹合并", this);
 	QAction* layer_action = new QAction("父子", this);
 	QAction* exchange_action = new QAction("交换顺序", this);
-
-	_merge_menu->addAction(beside_action);
-	_merge_menu->addAction(layer_action);
-	_merge_menu->addAction(exchange_action);
 
 	connect(beside_action, &QAction::triggered, this, [this] { part_beside_merge(); });
 	connect(layer_action, &QAction::triggered, this, [this] { part_layer_merge(); });
 	connect(exchange_action, &QAction::triggered, this, [this] { part_exchange(); });
+
+	_drag_same_texture_menu->addAction(beside_action);
+	_drag_same_texture_menu->addAction(layer_action);
+	_drag_same_texture_menu->addAction(exchange_action);
+
+	_drag_diff_texture_menu->addAction(layer_action);
+	_drag_diff_texture_menu->addAction(exchange_action);
 
 #pragma endregion
 

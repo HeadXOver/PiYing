@@ -142,7 +142,8 @@ private:
 
 	spTimelineGL::DragType _drag_type = spTimelineGL::DragType::None;
 
-	QMenu* _merge_menu;
+	QMenu* _drag_same_texture_menu;
+	QMenu* _drag_diff_texture_menu;
 	QMenu* _part_menu;
 
 	std::vector<Part*> _showing_parts;
