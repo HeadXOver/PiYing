@@ -9,9 +9,6 @@
 
 void TimelineGl::ask_merge_parts()
 {
-	assert(_moving_select_part._index >= 0 && _moving_select_part._index < _showing_parts.size());
-	assert(_part_cursor._index >= 0 && _part_cursor._index < _showing_parts.size());
-
 	if (_showing_parts[_part_cursor._index]->same_texture_as(_showing_parts[_moving_select_part._index])) {
 		_drag_same_texture_menu->exec(QCursor::pos());
 	}
@@ -45,6 +42,8 @@ void TimelineGl::part_beside_merge()
 		/// 释放内存
 		parts->remove(_showing_parts[_part_cursor._index]->_lay_index);
 	}
+
+	update_showing_parts();
 }
 
 void TimelineGl::part_layer_merge()
