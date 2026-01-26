@@ -25,8 +25,6 @@ void TimelineGl::release_buffers(unsigned int vao, unsigned int vbo, unsigned in
 
 void TimelineGl::update_is_draw_part()
 {
-	assert(_part_cursor._index >= 0 && _part_cursor._index < _showing_parts.size());
-
 	parts->add_single_to_draw(_showing_parts[_part_cursor._index]);
 }
 
@@ -40,8 +38,6 @@ void TimelineGl::update_showing_parts()
 Part* TimelineGl::get_current_part() const
 {
 	if(_showing_parts.size() == 0) return nullptr;
-
-	assert(_part_cursor._index >= 0 && _part_cursor._index < _showing_parts.size());
 
 	return _showing_parts[_part_cursor._index];
 }

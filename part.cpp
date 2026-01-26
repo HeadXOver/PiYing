@@ -310,6 +310,7 @@ void Part::release_buffers()
 void Part::add_child(Part* child)
 {
 	_children.push_back(child);
+	child->_parent = this;
 }
 
 bool Part::same_texture_as(Part* other) const

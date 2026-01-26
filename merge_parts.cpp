@@ -34,7 +34,6 @@ void TimelineGl::part_beside_merge()
 
 	if (ret == QMessageBox::Yes) {
 		parts->add(new Part(*_showing_parts[_part_cursor._index], *_showing_parts[_moving_select_part._index]));
-		update_showing_parts();
 	}
 	else {
 		if (!_showing_parts[_moving_select_part._index]->eat_another_part(*_showing_parts[_part_cursor._index])) return;
@@ -64,5 +63,5 @@ void TimelineGl::part_layer_merge()
 	}
 	parts->get_part(parentIndex)->add_child(parts->get_part(childIndex));
 
-	_part_cursor.set_cursor(parentIndex);
+	update_showing_parts();
 }
