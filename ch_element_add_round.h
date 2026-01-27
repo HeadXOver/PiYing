@@ -18,6 +18,7 @@ struct ChElementAddRound final
 	void addRoundPoly(const int edgeCount);
 
 	QPointF center;
+	QPointF gl_center;
 	QPointF current_cursor;
 		
 	bool isPress{ false };

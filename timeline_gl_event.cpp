@@ -126,6 +126,8 @@ void TimelineGl::mousePressEvent(QMouseEvent* event)
 			piYingGL->update();
 			update();
 
+			_part_paste_action->setEnabled(_part_copying);
+
 			_part_menu->exec(QCursor::pos());
 
 			piYing->update_part_slider();

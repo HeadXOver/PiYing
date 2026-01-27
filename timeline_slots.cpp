@@ -50,10 +50,9 @@ void TimelineGl::part_delete()
 
 void TimelineGl::part_copy()
 {
-	assert(_part_cursor._index >= 0 && _part_cursor._index < _showing_parts.size());
-
 	if (_part_copying) {
 		delete _part_copying;
+		_part_copying = nullptr;
 	}
 
 	_part_copying = new Part(*_showing_parts[_part_cursor._index]);
@@ -61,13 +60,15 @@ void TimelineGl::part_copy()
 
 void TimelineGl::part_paste()
 {
-	assert(_part_cursor._index >= 0 && _part_cursor._index < _showing_parts.size());
-
 	if (!_part_copying) return;
 
 	parts->insert(_showing_parts[_part_cursor._index]->_lay_index + 1, new Part(*_part_copying));
 
 	update_showing_parts();
+
+	_part_cursor.set_cursor(_part_cursor._index + 1);
+
+	update_is_draw_by_piying();
 }
 
 void TimelineGl::part_swap_by_showing_index(int from, int to)

@@ -16,13 +16,16 @@ AskRoundPolyDialog::AskRoundPolyDialog(const QString& title, const int initial[3
     for (int i = 0; i < 3; ++i) {
         m_spin[i] = new QSpinBox(this);
         m_spin[i]->setSingleStep(1);
-        m_spin[i]->setValue(initial[i]);
-        lay->addRow(s[i], m_spin[i]);
     }
 
     m_spin[0]->setRange(0, 99999);
     m_spin[1]->setRange(3, 100);
-    m_spin[2]->setRange(-180, 180);
+    m_spin[2]->setRange(-360, 360);
+
+    for (int i = 0; i < 3; ++i) {
+        m_spin[i]->setValue(initial[i]);
+        lay->addRow(s[i], m_spin[i]);
+    }
 
     auto* bbox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
     connect(bbox, &QDialogButtonBox::accepted, this, &QDialog::accept);

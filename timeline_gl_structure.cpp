@@ -45,6 +45,8 @@ TimelineGl::TimelineGl(QWidget* parent) : QOpenGLWidget(), _ratio(1.f), _ui_type
 	_part_menu->addAction(partDelete_action);
 
 	connect(partDelete_action, &QAction::triggered, this, [this] { part_delete(); });
+	connect(partCopy_action, &QAction::triggered, this, [this] { part_copy(); });
+	connect(_part_paste_action, &QAction::triggered, this, [this] { part_paste(); });
 
 #pragma endregion
 

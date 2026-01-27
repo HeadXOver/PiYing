@@ -16,6 +16,7 @@ namespace {
 void ChElementAddRound::click(const QPointF& mouse) 
 {
 	center = mouse;
+	gl_center = piYingGL->GLViewProjMatrixInvert(center);
 	current_cursor = mouse;
 	isPress = true;
 	radius = 0;
@@ -29,19 +30,25 @@ void ChElementAddRound::move(const QPointF& mouse)
 
 void ChElementAddRound::release(const QPointF& mouse) 
 {
-	isPress = false;
-
-	if (radius < 6) return;
+	if (radius < 6) {
+		isPress = false;
+		return;
+	}
 
 	init_angle = QLineF(center, mouse).angle();
 
+	const QPointF glCursor = piYingGL->GLViewProjMatrixInvert(current_cursor);
+	const float lenth = QLineF(QPointF(), piYingGL->getInsProj().map(glCursor - gl_center)).length();
+
+	radius = lenth * 1000.f;
+
 	int init[3] {radius, 7, init_angle };
-	int outRadius, outEdgeCount, outAngle;
-	if (AskRoundPolyDialog(QString("设置多边形"), init, piYingGL).getValues(outRadius, outEdgeCount, outAngle)) {
-		radius = outRadius;
-		init_angle = outAngle;
+	int outEdgeCount;
+	if (AskRoundPolyDialog(QString("设置多边形"), init, piYingGL).getValues(radius, outEdgeCount, init_angle)) {
 		addRoundPoly(outEdgeCount);
 	}
+
+	isPress = false;
 }
 
 void ChElementAddRound::draw()
@@ -57,6 +64,7 @@ void ChElementAddRound::draw()
 	painter.setPen(QPen(Qt::black, 3));
 	painter.drawEllipse(center, radius, radius);
 	painter.drawLine(center, current_cursor);
+
 	painter.setPen(QPen(Qt::yellow, 1));
 	painter.drawEllipse(center, radius, radius);
 	painter.drawLine(center, current_cursor);
@@ -66,16 +74,14 @@ void ChElementAddRound::addRoundPoly(const int edgeCount)
 {
 	if (edgeCount < 3) return;
 
-	const QPointF glCenter = piYingGL->GLViewProjMatrixInvert(center);
-	const QPointF glCursor = piYingGL->GLViewProjMatrixInvert(current_cursor);
-	const float lenth = QLineF(QPointF(), piYingGL->getInsProj().map(glCursor - glCenter)).length();
+	const float lenth = radius / 1000.f;
 	const double initAngle = init_angle * angle_rad;
-	const double deltaAngle = 2 * 3.1415926 / edgeCount;
+	const double deltaAngle = (2 * 3.1415926) / edgeCount;
 	const int currentEnd = (int)currentLayer->size();
 
-	piYingGL->add_point_to_vert(glCenter);
+	piYingGL->add_point_to_vert(gl_center);
 	for (int i = 0; i < edgeCount; i++) {
-		piYingGL->add_point_to_vert(glCenter + lenth * piYingGL->getProj().map(QPointF(cos(initAngle + i * deltaAngle), sin(initAngle + i * deltaAngle))));
+		piYingGL->add_point_to_vert(gl_center + lenth * piYingGL->getProj().map(QPointF(cos(initAngle + i * deltaAngle), sin(initAngle + i * deltaAngle))));
 	}
 
 	for (int i = 0; i < edgeCount - 1; i++) {
