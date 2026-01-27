@@ -12,6 +12,7 @@ public:
 	void bind_texture(size_t index);
 	void add(Part* part);
 	void remove(size_t index);
+	void remove_with_children(size_t index);
 	void insert(size_t index, Part* part);
 	void insert_from_to(size_t from, size_t to);
 	void swap(size_t index1, size_t index2);
@@ -32,6 +33,7 @@ public:
 
 private:
 	void add_part_to_is_draw(Part* part);
+	void reset_layer();
 
 private:
 	std::vector<Part*> _parts;

@@ -166,6 +166,7 @@
     <ClInclude Include="ch_triangle_libre_select.h" />
     <ClInclude Include="ch_triangle_rect_select.h" />
     <ClInclude Include="ch_add_vert_trace.h" />
+    <ClInclude Include="cus_ask.h" />
     <ClInclude Include="enum_edit_mode.h" />
     <ClInclude Include="enum_select_handle_mode.h" />
     <ClInclude Include="global_objects.h" />

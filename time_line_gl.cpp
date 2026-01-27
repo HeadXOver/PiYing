@@ -10,8 +10,12 @@
 
 void TimelineGl::init_part_cursor()
 {
+	if (_part_cursor._index >= 0) {
+		return;
+	}
+
 	_part_cursor.set_cursor(0);
-	_moving_select_part.set_cursor(0);
+	_moving_select_part.set_cursor(-1);
 }
 
 void TimelineGl::release_buffers(unsigned int vao, unsigned int vbo, unsigned int ebo)
@@ -97,6 +101,15 @@ int TimelineGl::get_index_by_mouse(const QPoint& mouse, int& o_dragType) const
 	}
 
 	return index;
+}
+
+int TimelineGl::current_layer() const
+{
+	if(_showing_parts.size() == 0) return -1;
+
+	if (_part_cursor._index < 0) return -1;
+
+	return _showing_parts[_part_cursor._index]->_lay_index;
 }
 
 void TimelineGl::insert_from_to(int from, int to)

@@ -19,8 +19,23 @@ void Parts::remove(size_t index)
     _parts.erase(_parts.begin() + index);
     _part_is_draw.erase(_part_is_draw.begin() + index);
     for (; index < _parts.size(); ++index) {
-        _parts[index]->_lay_index = index;
+        _parts[index]->_lay_index = (int)index;
     }
+}
+
+void Parts::remove_with_children(size_t index)
+{
+    add_single_to_draw(index);
+
+    for (int i = (int)_part_is_draw.size() - 1; i >= 0; --i) {
+        if (_part_is_draw[i]) {
+            _parts.erase(_parts.begin() + i);
+        }
+    }
+
+    _part_is_draw.assign(_parts.size(), false);
+    
+    reset_layer();
 }
 
 void Parts::insert(size_t index, Part* part)
@@ -28,7 +43,7 @@ void Parts::insert(size_t index, Part* part)
     _parts.insert(_parts.begin() + index, part);
     _part_is_draw.insert(_part_is_draw.begin() + index, false);
     for (; index < _parts.size(); ++index) {
-        _parts[index]->_lay_index = index;
+        _parts[index]->_lay_index = (int)index;
     }
 }
 
@@ -40,14 +55,14 @@ void Parts::insert_from_to(size_t from, size_t to)
         std::move(_parts.begin() + from + 1, _parts.begin() + to + 1, _parts.begin() + from);
         _parts[to] = tmp;        // 放入目标
         for (; from <= to; ++from) {
-            _parts[from]->_lay_index = from;
+            _parts[from]->_lay_index = (int)from;
         }
     }
     else {
         std::move(_parts.begin() + to, _parts.begin() + from, _parts.begin() + to + 1);
         _parts[to] = tmp;        // 放入目标
         for (; to <= from; ++to) {
-            _parts[to]->_lay_index = to;
+            _parts[to]->_lay_index = (int)to;
         }
     }
 }
@@ -73,21 +88,21 @@ void Parts::update_scale(size_t index)
 
 void Parts::add_single_to_draw(size_t index)
 {
-    _part_is_draw.assign(_part_is_draw.size(), false);
+    _part_is_draw.assign(_parts.size(), false);
 
     add_part_to_is_draw(_parts[index]);
 }
 
 void Parts::add_single_to_draw(Part* part)
 {
-    _part_is_draw.assign(_part_is_draw.size(), false);
+    _part_is_draw.assign(_parts.size(), false);
 
     add_part_to_is_draw(part);
 }
 
 void Parts::add_to_draw_by_piying(Part* part)
 {
-    _part_is_draw.assign(_part_is_draw.size(), false);
+    _part_is_draw.assign(_parts.size(), false);
 
     if (!part) {
         for (int i = 0; i < _parts.size(); i++) {
@@ -142,5 +157,12 @@ void Parts::add_part_to_is_draw(Part* part)
 
     for (size_t i = 0; i < n_children; ++i) {
         add_part_to_is_draw(part->get_child(i));
+    }
+}
+
+void Parts::reset_layer()
+{
+    for (int i = 0; i < _parts.size(); i++) {
+        _parts[i]->_lay_index = i;
     }
 }

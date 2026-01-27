@@ -5,17 +5,36 @@
 #include "piYingGL.h"
 #include "PiYing.h"
 #include "global_objects.h"
+#include "cus_ask.h"
 
 void TimelineGl::part_exchange()
 {
 	part_swap_by_showing_index(_part_cursor._index, _moving_select_part._index);
+
+	_part_cursor.set_cursor(_moving_select_part._index);
+
+	update_is_draw_by_piying();
 }
 
 void TimelineGl::part_delete()
 {
-	assert(_part_cursor._index >= 0 && _part_cursor._index < parts.size());
+	Part* toDelete = _showing_parts[_part_cursor._index];
 
-	parts->remove(_showing_parts[_part_cursor._index]->_lay_index);
+	if (toDelete->have_child()) {
+		switch (CUS_YES_NO_OR_CANCEL("是否保留子项？")) {
+		case QMessageBox::Yes: {
+		}break;
+		case QMessageBox::No: {
+			parts->remove_with_children(toDelete->_lay_index);
+		}break;
+		case QMessageBox::Cancel: return;
+		}
+	}
+	else {
+		if (!CUS_YES_OR_NO("是否删除？")) return;
+
+		parts->remove(toDelete->_lay_index);
+	}
 
 	update_showing_parts();
 
@@ -25,6 +44,8 @@ void TimelineGl::part_delete()
 	else {
 		_part_cursor.set_cursor(0);
 	}
+
+	update_is_draw_by_piying();
 }
 
 void TimelineGl::part_copy()

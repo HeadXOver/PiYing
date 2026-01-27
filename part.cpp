@@ -320,6 +320,11 @@ bool Part::is_root() const
 	return !_parent;
 }
 
+bool Part::have_child() const
+{
+	return _children.size() > 0;
+}
+
 Part* Part::get_child(size_t index) const
 {
 	return _children[index];

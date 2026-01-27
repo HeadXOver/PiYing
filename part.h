@@ -53,6 +53,7 @@ public:
 
 	bool same_texture_as(Part* other) const;
 	bool is_root() const;
+	bool have_child() const;
 
 	Part* get_child(size_t index) const;
 

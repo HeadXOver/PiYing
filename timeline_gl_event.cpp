@@ -54,6 +54,8 @@ void TimelineGl::wheelEvent(QWheelEvent* ev)
 
 void TimelineGl::mousePressEvent(QMouseEvent* event)
 {
+	_moving_select_part.set_cursor(-1);
+
 	if (event->button() == Qt::MiddleButton) {
 		lastMiddleButtonPos = event->position();
 		*_last_scale_trans = *_scale_trans;
@@ -93,7 +95,7 @@ void TimelineGl::mousePressEvent(QMouseEvent* event)
 
 			_drag_type = spTimelineGL::DragType::Part;
 
-			parts->update_scale(index);
+			parts->update_scale(_showing_parts[index]->_lay_index);
 
 			if (index != _part_cursor._index) {
 				_part_cursor.set_cursor(index);
@@ -150,7 +152,6 @@ void TimelineGl::mouseReleaseEvent(QMouseEvent* event)
 		else if (index != _part_cursor._index && indexInRange) {
 			/// 打开部件菜单
 			ask_merge_parts();
-			_part_cursor.set_cursor(index);
 		}
 	}
 

@@ -103,6 +103,7 @@ private:
 
 	int get_index_by_mouse(const QPoint& mouse) const;
 	int get_index_by_mouse(const QPoint& mouse, int& o_dragType) const;
+	int current_layer() const;
 
 private:
 	unsigned int tlVAO = 0, tlVBO = 0, rectEBO = 0;

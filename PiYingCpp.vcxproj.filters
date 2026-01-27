@@ -405,6 +405,9 @@
     <ClInclude Include="parts.h">
       <Filter>Header Files\PiYingElememt</Filter>
     </ClInclude>
+    <ClInclude Include="cus_ask.h">
+      <Filter>Header Files\PiYingTool</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="ctrlSlideLayout.h">
