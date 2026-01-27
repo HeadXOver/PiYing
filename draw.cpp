@@ -227,22 +227,29 @@ void PiYingGL::paint_in_vector_part()
 	if (partSize == 0) return;
 
 	for (size_t i = 0; i < partSize; i++) {
+		/// 如果当前part没有标记，则跳过
 		if(!parts->part_is_draw(i)) continue;
 
+		/// 开始绘制纹理
 		chShaderProgram->bind();
 		glBindVertexArray(parts->get_vao_piying(i));
-
 		parts->bind_texture(i);
 		glDrawElements(GL_TRIANGLES, (GLsizei)parts->get_part(i)->index_size(), GL_UNSIGNED_INT, 0);
-
-		_texture_tri_shader_program->bind();
-		_texture_tri_shader_program->setUniformValue("is_skelen", false);
-		_texture_tri_shader_program->setUniformValue("aColor", QVector4D(0.0f, 1.0f, 0.0f, 0.8f));
-		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);   // 把填充改成“线框”
-		glDrawElements(GL_TRIANGLES, (GLsizei)parts->get_part(i)->index_size(), GL_UNSIGNED_INT, 0);
-		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	}
 
+	/// 获取选中的part
+	Part* currentPart = timelineGl->get_current_part();
+	glBindVertexArray(currentPart->vao_piying());
+
+	/// 开始绘制选中part的边框
+	_texture_tri_shader_program->bind();
+	_texture_tri_shader_program->setUniformValue("is_skelen", false);
+	_texture_tri_shader_program->setUniformValue("aColor", QVector4D(0.0f, 1.0f, 0.0f, 0.8f));
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);  ///< 把填充改成“线框”
+	glDrawElements(GL_TRIANGLES, (GLsizei)currentPart->index_size(), GL_UNSIGNED_INT, 0);
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);  ///< 恢复填充
+
+	/// 解绑VAO
 	glBindVertexArray(0);
 }
 

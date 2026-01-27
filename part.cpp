@@ -244,10 +244,7 @@ void Part::update_scale()
 
 bool Part::eat_another_part(Part& other)
 {
-	if (&_texture != &other._texture) {
-		QMessageBox::warning(piYingGL, "警告", "不能合并不同纹理的部位");
-		return false;
-	}
+	assert(&_texture == &other._texture);
 
 	/// 拼接顶点下标vector
 	const unsigned int tempSize = (unsigned int)_vert_texture_origin->half_point_size();

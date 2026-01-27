@@ -34,6 +34,7 @@ void PiYingGL::returnToStandard()
 	viewRotate.setValue(0.f);
 	viewTransX.setValue(0.f);
 	viewTransY.setValue(0.f);
+	update_trc();
 	update();
 }
 

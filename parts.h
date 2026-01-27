@@ -18,6 +18,7 @@ public:
 	void update_scale(size_t index);
 	void add_single_to_draw(size_t index);
 	void add_single_to_draw(Part* part);
+	void add_to_draw_by_piying(Part* part = nullptr);
 	void output_root_to_show(std::vector<Part*>& o_parts) const;
 
 	bool is_empty() const;

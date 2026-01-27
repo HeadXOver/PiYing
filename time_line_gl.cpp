@@ -23,16 +23,16 @@ void TimelineGl::release_buffers(unsigned int vao, unsigned int vbo, unsigned in
 	doneCurrent();
 }
 
-void TimelineGl::update_is_draw_part()
-{
-	parts->add_single_to_draw(_showing_parts[_part_cursor._index]);
-}
-
 void TimelineGl::update_showing_parts()
 {
 	if (!_part_to_show) {
 		parts->output_root_to_show(_showing_parts);
 	}
+}
+
+void TimelineGl::update_is_draw_by_piying()
+{
+	parts->add_to_draw_by_piying();
 }
 
 Part* TimelineGl::get_current_part() const

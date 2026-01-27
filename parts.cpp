@@ -85,6 +85,19 @@ void Parts::add_single_to_draw(Part* part)
     add_part_to_is_draw(part);
 }
 
+void Parts::add_to_draw_by_piying(Part* part)
+{
+    _part_is_draw.assign(_part_is_draw.size(), false);
+
+    if (!part) {
+        for (int i = 0; i < _parts.size(); i++) {
+            if (_parts[i]->is_root()) {
+                add_part_to_is_draw(_parts[i]);
+            }
+        }
+    }
+}
+
 void Parts::output_root_to_show(std::vector<Part*>& o_parts) const
 {
     o_parts.clear();

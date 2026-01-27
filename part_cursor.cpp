@@ -8,8 +8,6 @@ void spTimelineGL::PartCursor::set_cursor(int index)
 
 	x = -0.8f + (index % 5) * 0.4f;
 	y = 0.8f - (index / 5) * 0.4f * timelineGl->ratio();
-
-	timelineGl->update_is_draw_part();
 }
 
 void spTimelineGL::PartCursor::update_after_resize()
