@@ -2,6 +2,13 @@
 
 #include "part.h"
 
+Parts Parts::_instance;
+
+Parts& Parts::getInstance()
+{
+    return _instance;
+}
+
 void Parts::bind_texture(size_t index)
 {
     _parts[index]->bind_texture();

@@ -274,9 +274,6 @@
     <ClCompile Include="tool_func.cpp">
       <Filter>Source Files\piYingGL</Filter>
     </ClCompile>
-    <ClCompile Include="global_objects.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="parts.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

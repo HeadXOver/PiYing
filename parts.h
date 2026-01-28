@@ -9,6 +9,11 @@ class Parts final
 public:
 	Parts() = default;
 
+	Parts(const Parts&) = delete;
+	Parts& operator=(const Parts&) = delete;
+
+	static Parts& getInstance();
+
 	void bind_texture(size_t index);
 	void add(Part* part);
 	void remove(size_t index);
@@ -34,6 +39,9 @@ public:
 private:
 	void add_part_to_is_draw(Part* part);
 	void reset_layer();
+
+private:
+	static Parts _instance;
 
 private:
 	std::vector<Part*> _parts;

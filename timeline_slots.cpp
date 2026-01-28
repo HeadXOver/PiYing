@@ -25,7 +25,7 @@ void TimelineGl::part_delete()
 		case QMessageBox::Yes: {
 		}break;
 		case QMessageBox::No: {
-			parts->remove_with_children(toDelete->_lay_index);
+			Parts::getInstance().remove_with_children(toDelete->_lay_index);
 		}break;
 		case QMessageBox::Cancel: return;
 		}
@@ -33,7 +33,7 @@ void TimelineGl::part_delete()
 	else {
 		if (!CUS_YES_OR_NO("是否删除？")) return;
 
-		parts->remove(toDelete->_lay_index);
+		Parts::getInstance().remove(toDelete->_lay_index);
 	}
 
 	update_showing_parts();
@@ -62,7 +62,7 @@ void TimelineGl::part_paste()
 {
 	if (!_part_copying) return;
 
-	parts->insert(_showing_parts[_part_cursor._index]->_lay_index + 1, new Part(*_part_copying));
+	Parts::getInstance().insert(_showing_parts[_part_cursor._index]->_lay_index + 1, new Part(*_part_copying));
 
 	update_showing_parts();
 
@@ -82,5 +82,5 @@ void TimelineGl::part_swap_by_showing_index(int from, int to)
 	_showing_parts[from] = _showing_parts[to];
 	_showing_parts[to] = tmp;
 
-	parts->swap(tmp->_lay_index, _showing_parts[from]->_lay_index);
+	Parts::getInstance().swap(tmp->_lay_index, _showing_parts[from]->_lay_index);
 }

@@ -30,13 +30,13 @@ void TimelineGl::release_buffers(unsigned int vao, unsigned int vbo, unsigned in
 void TimelineGl::update_showing_parts()
 {
 	if (!_part_to_show) {
-		parts->output_root_to_show(_showing_parts);
+		Parts::getInstance().output_root_to_show(_showing_parts);
 	}
 }
 
 void TimelineGl::update_is_draw_by_piying()
 {
-	parts->add_to_draw_by_piying();
+	Parts::getInstance().add_to_draw_by_piying();
 }
 
 Part* TimelineGl::get_current_part() const
@@ -139,7 +139,7 @@ void TimelineGl::insert_from_to(int from, int to)
 		toIndex = _showing_parts[to]->_lay_index;
 	}
 
-	parts->insert_from_to(_showing_parts[from]->_lay_index, toIndex);
+	Parts::getInstance().insert_from_to(_showing_parts[from]->_lay_index, toIndex);
 
 	/// 先设置光标
 	_part_cursor.set_cursor((from < to) ? to - 1 : to);

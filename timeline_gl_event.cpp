@@ -95,7 +95,7 @@ void TimelineGl::mousePressEvent(QMouseEvent* event)
 
 			_drag_type = spTimelineGL::DragType::Part;
 
-			parts->update_scale(_showing_parts[index]->_lay_index);
+			Parts::getInstance().update_scale(_showing_parts[index]->_lay_index);
 
 			if (index != _part_cursor._index) {
 				_part_cursor.set_cursor(index);
@@ -115,7 +115,7 @@ void TimelineGl::mousePressEvent(QMouseEvent* event)
 			const int index = get_index_by_mouse(event->pos());
 
 			if (index >= 0) {
-				parts->update_scale(index);
+				Parts::getInstance().update_scale(index);
 
 				if (index != _part_cursor._index) {
 					_part_cursor.set_cursor(index);
@@ -157,7 +157,7 @@ void TimelineGl::mouseReleaseEvent(QMouseEvent* event)
 		}
 	}
 
-	if (_part_cursor._index >= 0) parts->update_scale(_part_cursor._index);
+	if (_part_cursor._index >= 0) Parts::getInstance().update_scale(_part_cursor._index);
 
 	_insert_part_index = -1;
 

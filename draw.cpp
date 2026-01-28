@@ -198,7 +198,7 @@ void PiYingGL::paint_applied_texture()
 
 void PiYingGL::paint_selected_part()
 {
-	if(parts->is_empty()) return;
+	if(Parts::getInstance().is_empty()) return;
 
 	Part* currentPart = timelineGl->get_current_part();
 	if (!currentPart) return;
@@ -222,22 +222,22 @@ void PiYingGL::paint_selected_part()
 
 void PiYingGL::paint_in_vector_part()
 {
-	size_t partSize = parts->size();
+	size_t partSize = Parts::getInstance().size();
 
 	if (partSize == 0) return;
 
 	bool nothing = true;
 	for (size_t i = 0; i < partSize; i++) {
 		/// 如果当前part没有标记，则跳过
-		if(!parts->part_is_draw(i)) continue;
+		if(!Parts::getInstance().part_is_draw(i)) continue;
 
 		nothing = false;
 
 		/// 开始绘制纹理
 		chShaderProgram->bind();
-		glBindVertexArray(parts->get_vao_piying(i));
-		parts->bind_texture(i);
-		glDrawElements(GL_TRIANGLES, (GLsizei)parts->get_part(i)->index_size(), GL_UNSIGNED_INT, 0);
+		glBindVertexArray(Parts::getInstance().get_vao_piying(i));
+		Parts::getInstance().bind_texture(i);
+		glDrawElements(GL_TRIANGLES, (GLsizei)Parts::getInstance().get_part(i)->index_size(), GL_UNSIGNED_INT, 0);
 	}
 
 	if (nothing) {

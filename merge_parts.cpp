@@ -27,13 +27,13 @@ void TimelineGl::part_beside_merge()
 	QMessageBox::StandardButton ans = CUS_YES_NO_OR_CANCEL("是否保留原部件？");
 
 	if (ans == QMessageBox::Yes) {
-		parts->add(new Part(*_showing_parts[_part_cursor._index], *_showing_parts[_moving_select_part._index]));
+		Parts::getInstance().add(new Part(*_showing_parts[_part_cursor._index], *_showing_parts[_moving_select_part._index]));
 	}
 	else if (ans == QMessageBox::No) {
 		if (!_showing_parts[_moving_select_part._index]->eat_another_part(*_showing_parts[_part_cursor._index])) return;
 
 		/// 释放内存
-		parts->remove(_showing_parts[_part_cursor._index]->_lay_index);
+		Parts::getInstance().remove(_showing_parts[_part_cursor._index]->_lay_index);
 	}
 	else {
 		return;
@@ -63,9 +63,9 @@ void TimelineGl::part_layer_merge()
 	const int parentIndex = _showing_parts[_moving_select_part._index]->_lay_index;
 
 	if (ans== QMessageBox::Yes) {
-		parts->insert(childIndex, new Part(*(parts->get_part(childIndex))));
+		Parts::getInstance().insert(childIndex, new Part(*(Parts::getInstance().get_part(childIndex))));
 	}
-	parts->get_part(parentIndex)->add_child(parts->get_part(childIndex));
+	Parts::getInstance().get_part(parentIndex)->add_child(Parts::getInstance().get_part(childIndex));
 
 	update_showing_parts();
 
