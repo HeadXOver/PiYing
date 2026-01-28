@@ -67,12 +67,12 @@ void PiYingGL::appendBgList(const QImage& image)
 
 	QIcon icon(QPixmap::fromImage(image).scaled(50, 50, Qt::KeepAspectRatio, Qt::SmoothTransformation));
 
-	QListWidgetItem* item = new QListWidgetItem(icon, getUniquebgName(ref_PiYing.bgImageList));
+	QListWidgetItem* item = new QListWidgetItem(icon, getUniquebgName(PiYing::getInstance().bgImageList));
 	item->setTextAlignment(Qt::AlignCenter);
 
-	ref_PiYing.bgImageList->addItem(item);
+	PiYing::getInstance().bgImageList->addItem(item);
 
-	if (getCurrentBgRow() < 0) ref_PiYing.bgImageList->setCurrentRow(0);
+	if (getCurrentBgRow() < 0) PiYing::getInstance().bgImageList->setCurrentRow(0);
 }
 
 void PiYingGL::add_character(const QString& imageName)
@@ -91,13 +91,13 @@ void PiYingGL::add_character(const QString& imageName)
 
 	QIcon icon(QPixmap::fromImage(img).scaled(50, 50, Qt::KeepAspectRatio, Qt::SmoothTransformation));
 
-	QListWidgetItem* item = new QListWidgetItem(icon, getUniquebgName(ref_PiYing.chImageList));
+	QListWidgetItem* item = new QListWidgetItem(icon, getUniquebgName(PiYing::getInstance().chImageList));
 	item->setTextAlignment(Qt::AlignCenter);
 
-	ref_PiYing.chImageList->addItem(item);
+	PiYing::getInstance().chImageList->addItem(item);
 
 	if (getCurrentChRow() < 0) {
-		ref_PiYing.chImageList->setCurrentRow(0);
+		PiYing::getInstance().chImageList->setCurrentRow(0);
 		currentLayer = new PointVectorLayer(*characterVerts[0]);
 		currentIndex = &characterTriangleIndices[0];
 	}
@@ -204,8 +204,8 @@ void PiYingGL::importBackground()
 
 		if (ret == QMessageBox::Yes) {
 			float ratio = img.width() / (float)img.height();
-			ref_PiYing.piYingGLContainer->setRatio(ratio);
-			ref_PiYing.piYingGLContainer->update();
+			PiYing::getInstance().piYingGLContainer->setRatio(ratio);
+			PiYing::getInstance().piYingGLContainer->update();
 			changeRatio(ratio);
 		}
 
@@ -251,12 +251,12 @@ Qt::CursorShape PiYingGL::getCursorShape(const MousePos& pos) const
 
 int PiYingGL::getCurrentBgRow() const
 {
-	return ref_PiYing.getCurrentBgRow();
+	return PiYing::getInstance().getCurrentBgRow();
 }
 
 int PiYingGL::getCurrentChRow() const
 {
-	return ref_PiYing.getCurrentChRow();
+	return PiYing::getInstance().getCurrentChRow();
 }
 
 void PiYingGL::addGlobalAction(QMenu* menu, const QList<QAction*> action)

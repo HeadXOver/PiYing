@@ -103,7 +103,7 @@ void PiYingGL::deleteBg()
 
 	delete backGrounds[getCurrentBgRow()];
 	backGrounds.removeAt(getCurrentBgRow());
-	delete ref_PiYing.bgImageList->takeItem(getCurrentBgRow());
+	delete PiYing::getInstance().bgImageList->takeItem(getCurrentBgRow());
 	update();
 }
 
@@ -122,10 +122,10 @@ void PiYingGL::deleteAllBg()
 			delete item;
 		}
 		backGrounds.clear();
-		for (int i = ref_PiYing.bgImageList->count() - 1; i >= 0; i--) {
-			delete ref_PiYing.bgImageList->takeItem(i);
+		for (int i = PiYing::getInstance().bgImageList->count() - 1; i >= 0; i--) {
+			delete PiYing::getInstance().bgImageList->takeItem(i);
 		}
-		ref_PiYing.bgImageList->clear();
+		PiYing::getInstance().bgImageList->clear();
 		update();
 	}
 }

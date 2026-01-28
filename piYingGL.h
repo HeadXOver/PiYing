@@ -161,8 +161,6 @@ public:
 	ViewData viewTransY;
 
 private:
-	PiYing& ref_PiYing;
-
 	unsigned int RECTANGLE_TEXTURE_VAO = 0, RECTANGLE_TEXTURE_VBO = 0, RECTANGLE_TEXTURE_EBO = 0;
 	unsigned int chVAO = 0, chVBO = 0, chEBO = 0;
 	unsigned int ttVAO = 0, ttEBO = 0;
