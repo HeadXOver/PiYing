@@ -17,11 +17,17 @@ namespace Ui{
 
 class PiYing : public QMainWindow
 {
-    Q_OBJECT
+	Q_OBJECT
+
+private:
 
 public:
-    PiYing(QWidget *parent = nullptr);
-    ~PiYing();
+	PiYing();
+	~PiYing();
+	PiYing(const PiYing&) = delete;
+	PiYing& operator=(const PiYing&) = delete;
+
+	static PiYing& getInstance();
 
 public:
 	int getCurrentBgRow();
@@ -39,7 +45,7 @@ protected:
 	void keyPressEvent(QKeyEvent* event) override;
 
 private slots:
-    void exportCurrentFrame();
+	void exportCurrentFrame();
 	void exportMainSlider();
 	void askScreenScale();
 	void onModeChanged(int mode);
@@ -52,7 +58,8 @@ private:
 	void all_button_unselect();
 
 private:
-    std::unique_ptr<Ui::PiYingClass> ui;
+	std::unique_ptr<Ui::PiYingClass> ui;
+	static PiYing* _instance;
 
 	// OpenGL widget
 	TimelineGl* timeLineGL = nullptr;
@@ -76,4 +83,3 @@ public:
 
 	PiYingGLContainer* piYingGLContainer = nullptr;
 };
-

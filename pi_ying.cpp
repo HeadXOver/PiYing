@@ -19,10 +19,11 @@
 #include <qsplitter>
 
 QString PiYing::SLIDER_WIDGET_STYLE_SHEET;
+PiYing* PiYing::_instance = nullptr;
 
-PiYing::PiYing(QWidget* parent) : QMainWindow(parent)
+PiYing::PiYing() : QMainWindow(nullptr)
 {
-    piYing = this;
+    _instance = this;
 
     QFile sliderStyle(":/PiYing/slideStyle.qss");
     if (sliderStyle.open(QFile::ReadOnly)) {
@@ -184,6 +185,11 @@ PiYing::~PiYing()
     safeDelete(splitListOpenGL);
     safeDelete(timeLineGL);
     safeDelete(sliderWidget);
+}
+
+PiYing& PiYing::getInstance()
+{
+    return *_instance;
 }
 
 int PiYing::getCurrentBgRow()

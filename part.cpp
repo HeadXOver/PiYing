@@ -295,7 +295,7 @@ void Part::change_slider_value(int sliderIndex, int value)
 void Part::remove_slider(int sliderIndex)
 {
 	_slide_applier->remove_slider(sliderIndex);
-	piYing->update_part_slider();
+	PiYing::getInstance().update_part_slider();
 }
 
 void Part::release_buffers()

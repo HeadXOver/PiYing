@@ -12,7 +12,6 @@ class TimelineGl;
 class Parts;
 
 inline PiYingGL* piYingGL = nullptr;
-inline PiYing* piYing = nullptr;
 inline TimelineGl* timelineGl = nullptr;
 
 inline PointVectorLayer* currentLayer = nullptr;

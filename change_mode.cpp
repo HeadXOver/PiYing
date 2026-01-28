@@ -15,11 +15,11 @@
 namespace {
 
     constexpr void(*change_edit_mode[])() = {
-        []() { piYing->change_edit_mode_overview(); },
-        []() { piYing->change_edit_mode_background(); },
-        []() { piYing->change_edit_mode_character_texture(); },
-        []() { piYing->change_edit_mode_character_skeleton(); },
-        []() { piYing->change_edit_mode_character_constrol_slider(); }
+        []() { PiYing::getInstance().change_edit_mode_overview(); },
+        []() { PiYing::getInstance().change_edit_mode_background(); },
+        []() { PiYing::getInstance().change_edit_mode_character_texture(); },
+        []() { PiYing::getInstance().change_edit_mode_character_skeleton(); },
+        []() { PiYing::getInstance().change_edit_mode_character_constrol_slider(); }
     };
 
     using change_edit_handler = void(*)();

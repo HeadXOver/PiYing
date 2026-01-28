@@ -101,7 +101,7 @@ void TimelineGl::mousePressEvent(QMouseEvent* event)
 				_part_cursor.set_cursor(index);
 				_moving_select_part.set_cursor(index);
 
-				piYing->update_part_slider();
+				PiYing::getInstance().update_part_slider();
 				piYingGL->update();
 			}
 		}
@@ -122,7 +122,7 @@ void TimelineGl::mousePressEvent(QMouseEvent* event)
 				}
 			}
 
-			piYing->update_part_slider();
+			PiYing::getInstance().update_part_slider();
 			piYingGL->update();
 			update();
 
@@ -130,7 +130,7 @@ void TimelineGl::mousePressEvent(QMouseEvent* event)
 
 			_part_menu->exec(QCursor::pos());
 
-			piYing->update_part_slider();
+			PiYing::getInstance().update_part_slider();
 			piYingGL->update();
 			update();
 			return;
@@ -165,7 +165,7 @@ void TimelineGl::mouseReleaseEvent(QMouseEvent* event)
 
 	_drag_type = spTimelineGL::DragType::None;
 
-	piYing->update_part_slider();
+	PiYing::getInstance().update_part_slider();
 	piYingGL->update();
 	update();
 }

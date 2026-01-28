@@ -53,7 +53,7 @@ bool SlideApplier::add_trace_on_exist_slider(int sliderId, int index, const QPol
 void SlideApplier::add_new_slider(int index, const QPolygonF& polygon)
 {
     sliders.push_back(std::make_unique<CharacterTrace>(index, polygon, get_unique_name("new slider")));
-    piYing->update_part_slider();
+    PiYing::getInstance().update_part_slider();
 }
 
 const std::map<unsigned int, QPolygonF>& SlideApplier::get_trace_map(int slide) const
