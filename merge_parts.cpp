@@ -2,7 +2,6 @@
 
 #include "part.h"
 #include "parts.h"
-#include "global_objects.h"
 #include "cus_ask.h"
 
 #include <qmenu>

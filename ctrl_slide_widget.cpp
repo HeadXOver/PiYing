@@ -5,7 +5,6 @@
 #include "part.h"
 #include "time_line_gl.h"
 #include "slide_applier.h"
-#include "global_objects.h"
 
 #include <QPushbutton>
 #include <QBoxLayout>

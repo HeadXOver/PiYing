@@ -1,7 +1,5 @@
 #include "time_line_gl.h"
 
-#include "global_objects.h"
-
 void spTimelineGL::PartCursor::set_cursor(int index)
 {
 	_index = index;

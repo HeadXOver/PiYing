@@ -2,7 +2,6 @@
 
 #include "character_trace.h"
 #include "PiYing.h"
-#include "global_objects.h"
 
 SlideApplier::SlideApplier()
 {

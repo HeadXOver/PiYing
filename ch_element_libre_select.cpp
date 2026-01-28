@@ -2,7 +2,6 @@
 
 #include "ch_element_select.h"
 #include "piYingGL.h"
-#include "global_objects.h"
 #include "SelectedPoints.h"
 #include "KeyboardStateWin.h"
 #include "point_vector_layer.h"
@@ -99,7 +98,7 @@ void ChElementLibreSelect::releasePos(const QPointF& mouse)
 
 	if (!KeyboardStateWin::isCtrlHeld()) chElementSelect->selected_points->clear();
 
-	const PointVectorLayer& points = *currentLayer;
+	const PointVectorLayer& points = *PiYingGL::getInstance().currentLayer();
 	QPointF existingPoint;
 	for (unsigned int i = 0; i < points.size(); i++) {
 		existingPoint = points.get(i, edit_skelen);

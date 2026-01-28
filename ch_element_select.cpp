@@ -1,6 +1,5 @@
 ﻿#include "ch_element_select.h"
 #include "piYingGL.h"
-#include "global_objects.h"
 #include "SelectedPoints.h"
 #include "static_handle_zone.h"
 #include "point_vector.h"
@@ -19,7 +18,7 @@ ChElementSelect::ChElementSelect() :
     edit_skelen(PiYingGL::getInstance().editMode == EditMode::characterSkeleton),
     editMode(ChElementEditMode::None)
 {
-    selected_points = std::make_unique<SelectedPoints>(false, *currentLayer);
+    selected_points = std::make_unique<SelectedPoints>(false, *PiYingGL::getInstance().currentLayer());
 }
 
 ChElementSelect::~ChElementSelect()
@@ -34,7 +33,7 @@ void ChElementSelect::escape()
 void ChElementSelect::deleteElement()
 {
     std::vector<unsigned int>& idx = *PiYingGL::getInstance().currentIndex();
-    const size_t nVert = currentLayer->size();
+    const size_t nVert = PiYingGL::getInstance().currentLayer()->size();
     const size_t nTri = idx.size() / 3;
 
     std::vector<bool> killVert(nVert, false);
@@ -70,11 +69,11 @@ void ChElementSelect::deleteElement()
     for (unsigned old = 0; old < nVert; ++old) {
         if (killVert[old]) continue;
 
-        currentLayer->copy_from_to(old, newVertCount);
+        PiYingGL::getInstance().currentLayer()->copy_from_to(old, newVertCount);
         old2new[old] = newVertCount++;
     }
 
-    currentLayer->resize(newVertCount);
+    PiYingGL::getInstance().currentLayer()->resize(newVertCount);
 
     size_t outIdx = 0;
     for (size_t t = 0; t < nTri; ++t) {
@@ -96,7 +95,7 @@ void ChElementSelect::draw_handle_and_selected()
     if(selected_points->size() == 0) return;
 
     // 计算中心点
-    PointVectorLayer& pointLayer = *currentLayer;
+    PointVectorLayer& pointLayer = *PiYingGL::getInstance().currentLayer();
     handleCenterPoint = QPointF();
     for (unsigned int i : selected_points->index()) {
         handleCenterPoint += edit_skelen ? pointLayer[i] : pointLayer(i);
@@ -173,7 +172,7 @@ void ChElementSelect::moveHandle(const QPointF& mouse)
 {
     if (editMode == ChElementEditMode::None) return;
 
-    PointVectorLayer& pointLayer = *currentLayer;
+    PointVectorLayer& pointLayer = *PiYingGL::getInstance().currentLayer();
 
     switch (editMode) {
     case ChElementEditMode::Move: {
@@ -244,7 +243,7 @@ void ChElementSelect::affirmHandle()
 
 void ChElementSelect::click_select(const QPointF& mouse)
 {
-    const PointVectorLayer& pointVector = *currentLayer;
+    const PointVectorLayer& pointVector = *PiYingGL::getInstance().currentLayer();
 
     for (unsigned int i = 0; i < pointVector.size(); i++) {
         if (QLineF(edit_skelen ? pointVector[i] : pointVector(i), mouse).length() < 0.02f / PiYingGL::getInstance().viewScale.value()) {
@@ -270,7 +269,7 @@ void ChElementSelect::update_selected_to_draw()
     selectedPointsFloat.reserve(selectedPoints.size() * 2);
 
     for (int i = 0; i < selectedPoints.size(); i++) {
-        const QPointF& selectPoint = currentLayer->get(selectedPoints[i], edit_skelen);
+        const QPointF& selectPoint = PiYingGL::getInstance().currentLayer()->get(selectedPoints[i], edit_skelen);
 
         selectedPointsFloat.push_back(selectPoint.x());
         selectedPointsFloat.push_back(selectPoint.y());

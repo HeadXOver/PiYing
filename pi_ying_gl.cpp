@@ -27,8 +27,6 @@
 
 #include "enum_edit_mode.h"
 
-#include "global_objects.h"
-
 #include <QColorDialog>
 #include <QMessageBox>
 #include <qfiledialog>
@@ -98,7 +96,7 @@ void PiYingGL::add_character(const QString& imageName)
 
 	if (getCurrentChRow() < 0) {
 		PiYing::getInstance().chImageList->setCurrentRow(0);
-		currentLayer = new PointVectorLayer(*characterVerts[0]);
+		_currentLayer = new PointVectorLayer(*characterVerts[0]);
 		_currentIndex = &characterTriangleIndices[0];
 	}
 
@@ -117,15 +115,15 @@ void PiYingGL::update_ch_tool()
 		ch_element_tool_ = nullptr;
 	}
 
-	if (currentLayer) {
-		delete currentLayer;
-		currentLayer = nullptr;
+	if (_currentLayer) {
+		delete _currentLayer;
+		_currentLayer = nullptr;
 	}
 
 	int currentVector = getCurrentChRow();
 	if (currentVector < 0) return;
 
-	currentLayer = new PointVectorLayer(*characterVerts[currentVector]);
+	_currentLayer = new PointVectorLayer(*characterVerts[currentVector]);
 	_currentIndex = &characterTriangleIndices[currentVector];
 
 	ch_element_tool_ = std::make_unique<ChElementTool>(_ch_tool_state);

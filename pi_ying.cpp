@@ -1,5 +1,5 @@
 #include "PiYing.h"
-#include "global_objects.h"
+
 #include "ctrlSlideWidget.h"
 #include "RatioDialog.h"
 #include "piYingGL.h"

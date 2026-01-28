@@ -1,7 +1,6 @@
 #include "add_ch_tex_poly.h"
 
 #include "piYingGL.h"
-#include "global_objects.h"
 #include "point_vector_layer.h"
 
 #include <qpainter>
@@ -34,7 +33,7 @@ void AddChTexPoly::enter()
 
 	for (int i = 0; i < index.size(); i++) {
 		if (index[i] < 0) {
-			index[i] = (int)currentLayer->size();
+			index[i] = (int)PiYingGL::getInstance().currentLayer()->size();
 			PiYingGL::getInstance().add_point_to_vert(points[i]);
 		}
 	}
@@ -74,8 +73,8 @@ void AddChTexPoly::click(const QPointF& mouseOri)
 
 	if (checkPointRepeat(mouse))  return;
 
-	for (unsigned int i = 0; i < currentLayer->size(); i++) {
-		const QPointF& readyPoint = currentLayer->get(i, false);
+	for (unsigned int i = 0; i < PiYingGL::getInstance().currentLayer()->size(); i++) {
+		const QPointF& readyPoint = PiYingGL::getInstance().currentLayer()->get(i, false);
 		if (QLineF(readyPoint, mouse).length() < 0.02f / PiYingGL::getInstance().viewScale.value()) {
 			if (!index.contains(i)) {
 				index.append(i);

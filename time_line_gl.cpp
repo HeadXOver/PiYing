@@ -4,7 +4,6 @@
 #include "base_math.h"
 #include "parts.h"
 #include "part.h"
-#include "global_objects.h"
 
 #include <qmessagebox>
 

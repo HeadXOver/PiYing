@@ -387,9 +387,6 @@
     <ClInclude Include="vert_group.h">
       <Filter>Header Files\PiYingElememt</Filter>
     </ClInclude>
-    <ClInclude Include="global_objects.h">
-      <Filter>Header Files\global</Filter>
-    </ClInclude>
     <ClInclude Include="ch_triangle_libre_select.h">
       <Filter>Header Files\ChELementTool</Filter>
     </ClInclude>

@@ -10,7 +10,6 @@
 #include "part.h"
 #include "enum_edit_mode.h"
 #include "enum_character_texture_tool_state.h"
-#include "global_objects.h"
 
 #include <qlabel>
 #include <QOpenGLShaderProgram.h>
@@ -147,8 +146,6 @@ PiYingGL::~PiYingGL()
 	for (ImageTexture* bg : backGrounds) delete bg;
 	for (PointVector* pv : characterVerts) delete pv;
 	for (VertGroups* vg : _character_vert_groups) delete vg;
-
-	if (currentLayer) delete currentLayer;
 }
 
 PiYingGL& PiYingGL::getInstance()

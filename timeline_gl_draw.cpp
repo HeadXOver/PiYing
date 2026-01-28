@@ -4,7 +4,6 @@
 #include "time_line.h"
 #include "scale_trans.h"
 #include "part.h"
-#include "global_objects.h"
 
 #include <qpainter>
 #include <qopengltexture>

@@ -3,7 +3,6 @@
 #include "static_gl_const.h"
 #include "point_vector.h"
 #include "piYingGL.h"
-#include "global_objects.h"
 
 #include <QOpenGLShaderProgram>
 #include <qimage>

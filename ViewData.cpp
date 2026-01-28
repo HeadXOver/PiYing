@@ -1,7 +1,6 @@
 #include "ViewData.h"
 
 #include "piYingGL.h"
-#include "global_objects.h"
 
 void ViewData::setValue(float v)
 {

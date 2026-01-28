@@ -2,7 +2,6 @@
 
 #include "ch_element_select.h"
 #include "piYingGL.h"
-#include "global_objects.h"
 #include "SelectedPoints.h"
 #include "KeyboardStateWin.h"
 #include "point_vector_layer.h"
@@ -69,7 +68,7 @@ void ChElementRectSelect::releasePos(const QPointF& mouse)
 	if(!KeyboardStateWin::isCtrlHeld()) chElementSelect->selected_points->clear();
 
 	const QRectF rect(chElementSelect->lastPos, mouse);
-	const PointVectorLayer& pointVector = *currentLayer;
+	const PointVectorLayer& pointVector = *PiYingGL::getInstance().currentLayer();
 	QPointF pos;
 	for (unsigned int i = 0; i < pointVector.size(); i++) {
 		pos = PiYingGL::getInstance().mapViewProjMatrix(pointVector.get(i, edit_skelen));

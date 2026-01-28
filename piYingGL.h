@@ -33,6 +33,7 @@ class QMenu;
 class ChElementTool;
 class QOpenGLShaderProgram;
 class PointVector;
+class PointVectorLayer;
 class CtrlSlideWidget;
 class SlideApplier;
 class VertGroups;
@@ -159,6 +160,7 @@ public:
 	CharacterToolState ch_tool_state() const { return _ch_tool_state; }
 
 	std::vector<unsigned int>* currentIndex() { return _currentIndex; }
+	PointVectorLayer* currentLayer() { return _currentLayer; }
 
 public:
 	EditMode editMode;
@@ -214,4 +216,5 @@ private:
 	std::unique_ptr<ChElementTool> ch_element_tool_;
 
 	std::vector<unsigned int>* _currentIndex = nullptr;
+	PointVectorLayer* _currentLayer = nullptr;
 };

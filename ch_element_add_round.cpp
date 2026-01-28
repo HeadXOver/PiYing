@@ -3,7 +3,6 @@
 #include "ask_round_poly_dialog.h"
 #include "point_vector_layer.h"
 #include "PiYingGL.h"
-#include "global_objects.h"
 
 #include <qpointf>
 #include <qpainter>
@@ -77,7 +76,7 @@ void ChElementAddRound::addRoundPoly(const int edgeCount)
 	const float lenth = radius / 1000.f;
 	const double initAngle = init_angle * angle_rad;
 	const double deltaAngle = (2 * 3.1415926) / edgeCount;
-	const int currentEnd = (int)currentLayer->size();
+	const int currentEnd = (int)PiYingGL::getInstance().currentLayer()->size();
 
 	PiYingGL::getInstance().add_point_to_vert(gl_center);
 	for (int i = 0; i < edgeCount; i++) {

@@ -3,7 +3,6 @@
 #include "piYingGL.h"
 #include "time_line_gl.h"
 #include "part.h"
-#include "global_objects.h"
 
 #include <qmessagebox>
 #include <qpainter>
@@ -68,7 +67,7 @@ void ChAddVertTrace::draw()
 {
 	if (current_index < 0) return;
 
-	const PointVectorLayer& pointLayer = *currentLayer;
+	const PointVectorLayer& pointLayer = *PiYingGL::getInstance().currentLayer();
 
 	QPointF selectPoint = PiYingGL::getInstance().mapViewProjMatrix(TimelineGl::getInstance().get_current_part()->get_vert(current_index, true));
 

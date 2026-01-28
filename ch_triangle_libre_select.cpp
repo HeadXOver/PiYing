@@ -2,7 +2,6 @@
 
 #include "ch_triangle_select.h"
 #include "piYingGL.h"
-#include "global_objects.h"
 #include "selected_triangle.h"
 #include "KeyboardStateWin.h"
 #include "point_vector_layer.h"
@@ -106,7 +105,7 @@ void ChTriangleLibreSelect::releasePos(const QPointF& mouse)
 
 	if (!KeyboardStateWin::isCtrlHeld()) chTriangleSelect->selected_trangle->clear();
 
-	const PointVectorLayer& pointVector = *currentLayer;
+	const PointVectorLayer& pointVector = *PiYingGL::getInstance().currentLayer();
 	const std::vector<unsigned int>& triangleIndices = *PiYingGL::getInstance().currentIndex();
 
 	QPointF eachTriangle[3];

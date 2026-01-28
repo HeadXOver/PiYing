@@ -1,19 +1,17 @@
 #include "piYingGL.h"
 
-#include "global_objects.h"
-#include "point_vector.h"
 #include "point_vector_layer.h"
 #include "static_gl_const.h"
 
 void PiYingGL::add_point_to_vert(const QPointF& p)
 {
-	currentLayer->push_back(p);
+	_currentLayer->push_back(p);
 }
 
 void PiYingGL::addChVert(const QPointF& point)
 {
-	_currentIndex->push_back((unsigned int)currentLayer->size());
-	currentLayer->push_back(point);
+	_currentIndex->push_back((unsigned int)_currentLayer->size());
+	_currentLayer->push_back(point);
 }
 
 void PiYingGL::addTriangle(int index1, int index2, int index3)

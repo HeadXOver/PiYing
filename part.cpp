@@ -12,7 +12,6 @@
 #include "PiYing.h"
 #include "slide_applier.h"
 #include "character_trace.h"
-#include "global_objects.h"
 
 #include <qopengltexture>
 #include <qpointf>
@@ -34,36 +33,42 @@ Part::Part(
 
 	PointVectorLayer layer(*_vert_texture);
 
-	std::vector<int> hashIndex(currentLayer->size(), -1);
+	PointVectorLayer& currentLayer = *PiYingGL::getInstance().currentLayer();
 
-	int eachIndex;
+	std::vector<int> hashIndex(currentLayer.size(), -1);
+
 	int currentIndex = 0;
 
-	const QPointF& firstPoint = (*currentLayer)[indices[0]];
-	float top = firstPoint.y();
-	float bottom = firstPoint.y();
-	float left = firstPoint.x();
-	float right = firstPoint.x();
+	QPointF eachPoint = currentLayer[indices[0]];
+	float top = eachPoint.y();
+	float bottom = eachPoint.y();
+	float left = eachPoint.x();
+	float right = eachPoint.x();
 
+	int eachIndex;
 	for (unsigned int i = 0; i < indices.size(); ++i) {
 		eachIndex = hashIndex[indices[i]];
 		if (eachIndex < 0) {
 			hashIndex[indices[i]] = currentIndex;
 			if (isTexture) {
-				layer.push_back((*currentLayer)(indices[i]));
+				eachPoint = currentLayer(indices[i]);
 
-				top = cus::max(top, (*currentLayer)(indices[i]).y());
-				bottom = cus::min(bottom, (*currentLayer)(indices[i]).y());
-				left = cus::min(left, (*currentLayer)(indices[i]).x());
-				right = cus::max(right, (*currentLayer)(indices[i]).x());
+				layer.push_back(eachPoint);
+
+				top = cus::max(top, eachPoint.y());
+				bottom = cus::min(bottom, eachPoint.y());
+				left = cus::min(left, eachPoint.x());
+				right = cus::max(right, eachPoint.x());
 			}
 			else {
-				layer.push_back((*currentLayer)(indices[i]), (*currentLayer)[indices[i]]);
+				eachPoint = currentLayer[indices[i]];
 
-				top = cus::max(top, (*currentLayer)[indices[i]].y());
-				bottom = cus::min(bottom, (*currentLayer)[indices[i]].y());
-				left = cus::min(left, (*currentLayer)[indices[i]].x());
-				right = cus::max(right, (*currentLayer)[indices[i]].x());
+				layer.push_back(currentLayer(indices[i]), eachPoint);
+
+				top = cus::max(top, eachPoint.y());
+				bottom = cus::min(bottom, eachPoint.y());
+				left = cus::min(left, eachPoint.x());
+				right = cus::max(right, eachPoint.x());
 			}
 
 			_indices.push_back(currentIndex++);

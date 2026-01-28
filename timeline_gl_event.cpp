@@ -7,7 +7,6 @@
 #include "part.h"
 #include "piYingGL.h"
 #include "PiYing.h"
-#include "global_objects.h"
 
 #include <qmouseevent>
 #include <qmenu>

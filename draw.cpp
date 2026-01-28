@@ -11,7 +11,6 @@
 #include "time_line_gl.h"
 #include "part.h"
 #include "parts.h"
-#include "global_objects.h"
 
 #include <qpainter>
 #include <qopengltexture>

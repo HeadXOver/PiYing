@@ -4,7 +4,6 @@
 #include "part.h"
 #include "piYingGL.h"
 #include "PiYing.h"
-#include "global_objects.h"
 #include "cus_ask.h"
 
 void TimelineGl::part_exchange()

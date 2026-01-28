@@ -168,7 +168,6 @@
     <ClInclude Include="cus_ask.h" />
     <ClInclude Include="enum_edit_mode.h" />
     <ClInclude Include="enum_select_handle_mode.h" />
-    <ClInclude Include="global_objects.h" />
     <ClInclude Include="Joint.h" />
     <ClInclude Include="part.h" />
     <ClInclude Include="parts.h" />
