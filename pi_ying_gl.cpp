@@ -99,7 +99,7 @@ void PiYingGL::add_character(const QString& imageName)
 	if (getCurrentChRow() < 0) {
 		PiYing::getInstance().chImageList->setCurrentRow(0);
 		currentLayer = new PointVectorLayer(*characterVerts[0]);
-		currentIndex = &characterTriangleIndices[0];
+		_currentIndex = &characterTriangleIndices[0];
 	}
 
 	update();
@@ -126,7 +126,7 @@ void PiYingGL::update_ch_tool()
 	if (currentVector < 0) return;
 
 	currentLayer = new PointVectorLayer(*characterVerts[currentVector]);
-	currentIndex = &characterTriangleIndices[currentVector];
+	_currentIndex = &characterTriangleIndices[currentVector];
 
 	ch_element_tool_ = std::make_unique<ChElementTool>(_ch_tool_state);
 

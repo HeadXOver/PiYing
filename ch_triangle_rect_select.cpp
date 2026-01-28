@@ -70,7 +70,7 @@ void ChTriangleRectSelect::releasePos(const QPointF& mouse)
 	if (!KeyboardStateWin::isCtrlHeld()) chTriangleSelect->selected_trangle->clear();
 
 	const PointVectorLayer& pointVector = *currentLayer;
-	const std::vector<unsigned int>& triangleIndices = *currentIndex;
+	const std::vector<unsigned int>& triangleIndices = *PiYingGL::getInstance().currentIndex();
 
 	QRectF rect(chTriangleSelect->lastPos, mouse);
 	QPointF eachTriangle[3];

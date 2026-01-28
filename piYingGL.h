@@ -158,6 +158,8 @@ public:
 
 	CharacterToolState ch_tool_state() const { return _ch_tool_state; }
 
+	std::vector<unsigned int>* currentIndex() { return _currentIndex; }
+
 public:
 	EditMode editMode;
 
@@ -210,4 +212,6 @@ private:
 	QMenu* rightButtonMenu;
 
 	std::unique_ptr<ChElementTool> ch_element_tool_;
+
+	std::vector<unsigned int>* _currentIndex = nullptr;
 };

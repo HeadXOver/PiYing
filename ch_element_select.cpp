@@ -33,7 +33,7 @@ void ChElementSelect::escape()
 
 void ChElementSelect::deleteElement()
 {
-    std::vector<unsigned int>& idx = *currentIndex;
+    std::vector<unsigned int>& idx = *PiYingGL::getInstance().currentIndex();
     const size_t nVert = currentLayer->size();
     const size_t nTri = idx.size() / 3;
 

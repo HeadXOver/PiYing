@@ -106,7 +106,7 @@ void AddTriangle::click(const QPointF& mouseOri)
 		unsigned int y[3] = { (unsigned int)indRepeat, firstIndex, secondIndex };
 		std::sort(y, y + 3);
 
-		std::vector<unsigned int>& cIndex = *currentIndex;
+		std::vector<unsigned int>& cIndex = *PiYingGL::getInstance().currentIndex();
 		for (int j = 0; j < cIndex.size(); j += 3) {
 			unsigned int x[3] = { cIndex[j + 0], cIndex[j + 1], cIndex[j + 2] };
 			std::sort(x, x + 3);
