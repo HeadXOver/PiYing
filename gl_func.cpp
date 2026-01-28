@@ -3,6 +3,9 @@
 #include "enum_edit_mode.h"
 #include "point_vector.h"
 #include "static_gl_const.h"
+#include "static_rect_vert.h"
+
+#include "enum_character_texture_tool_state.h"
 
 #include <QOpenGLShaderProgram.h>
 

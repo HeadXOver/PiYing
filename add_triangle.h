@@ -5,11 +5,12 @@
 #include <memory>
 #include <qpointf>
 
+/// <summary>
+/// @brief 添加一个三角形
+/// @details 点击三次，添加一个三角形
+/// </summary>
 struct AddTriangle final
 {
-	AddTriangle();
-	~AddTriangle();
-
 	bool addVert(unsigned int i);
 	bool checkPointRepeat(const QPointF& point);
 	void addVert(const QPointF& point);

@@ -1,11 +1,11 @@
 #pragma once
 
-#include "enum_select_handle_mode.h"
-
 #include <qpointf>
 #include <memory>
 
 class SelectedTriangle;
+
+enum class ChElementEditMode;
 
 struct ChTriangleSelect final
 {
@@ -31,5 +31,5 @@ struct ChTriangleSelect final
 	QPointF lastDHandleCenterPoint;
 
 	bool edit_skelen{ false };
-	ChElementEditMode editMode = ChElementEditMode::None;
+	ChElementEditMode editMode{ 0 };
 };

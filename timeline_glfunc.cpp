@@ -4,6 +4,8 @@
 #include "point_vector.h"
 #include "piYingGL.h"
 
+#include "static_rect_vert.h"
+
 #include <QOpenGLShaderProgram>
 #include <qimage>
 #include <qopengltexture>

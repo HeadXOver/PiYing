@@ -6,16 +6,17 @@
 #include "piYingGLContainer.h"
 #include "tool_button.h"
 #include "time_line_gl.h"
-#include "slide_applier.h"
+
 #include "enum_edit_mode.h"
+#include "enum_character_texture_tool_state.h"
 
 #include "ui_PiYing.h"
 
 #include <QMessageBox>
 #include <qkeyevent>
 #include <qfiledialog.h>
-#include <qlistwidget>
 #include <QComboBox>
+#include <qlistwidget>
 #include <qsplitter>
 
 QString PiYing::SLIDER_WIDGET_STYLE_SHEET;

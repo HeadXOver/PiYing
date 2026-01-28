@@ -72,9 +72,6 @@
     <Filter Include="Source Files\PiYingQObject\controlSlide">
       <UniqueIdentifier>{424e17ba-20f1-4c6b-b386-474e4e29da49}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\global">
-      <UniqueIdentifier>{9bdfed59-a7b9-40e7-bc83-5090b1d77a5f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Shader\frags">
       <UniqueIdentifier>{f932e95b-347d-42f0-8719-d90f9ac39180}</UniqueIdentifier>
     </Filter>

@@ -6,7 +6,6 @@ public:
     
     static bool isKeyHeld(int qtKey);
 
-    
     static bool isShiftHeld();
     static bool isCtrlHeld();
     static bool isAltHeld();

@@ -5,8 +5,6 @@
 #include <memory>
 #include <vector>
 
-#include "static_rect_vert.h"
-
 class QOpenGLShaderProgram;
 class QOpenGLTexture;
 class Timeline;

@@ -1,7 +1,6 @@
 ﻿#pragma once
 
 #include <qwidget>
-#include <memory>
 
 class QLabel;
 class QSlider;
@@ -24,4 +23,3 @@ public:
     QSlider* slider;
     QPushButton* rightButton;
 };
-;

@@ -2,7 +2,6 @@
 #include "piYingGL.h"
 #include "SelectedPoints.h"
 #include "static_handle_zone.h"
-#include "point_vector.h"
 #include "point_vector_layer.h"
 #include "KeyboardStateWin.h"
 
@@ -12,7 +11,6 @@
 #include "cus_func_point2d.h"
 
 #include <qpainter>
-#include "ch_triangle_select.h"
 
 ChElementSelect::ChElementSelect() : 
     edit_skelen(PiYingGL::getInstance().editMode == EditMode::characterSkeleton),

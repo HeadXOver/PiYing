@@ -1,12 +1,10 @@
 ﻿#pragma once
 
-#include <QDialog>
+#include <qdialog>
 
-QT_BEGIN_NAMESPACE
 class QSpinBox;
 class QDialogButtonBox;
 class QButtonGroup;
-QT_END_NAMESPACE
 
 struct Ratio {
     int w = 16;

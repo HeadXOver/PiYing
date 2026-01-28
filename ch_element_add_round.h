@@ -7,9 +7,6 @@
 
 struct ChElementAddRound final 
 {
-	ChElementAddRound();
-	~ChElementAddRound();
-
 	void click(const QPointF& mouse);
 	void move(const QPointF& mouse);
 	void release(const QPointF& mouse);

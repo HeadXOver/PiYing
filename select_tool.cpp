@@ -1,7 +1,8 @@
 #include "PiYing.h"
 #include "PiYingGL.h"
 #include "tool_button.h"
-#include "ui_PiYing.h"
+
+#include "enum_character_texture_tool_state.h"
 
 void PiYing::select_tool_texture(ToolButton* toolButton)
 {

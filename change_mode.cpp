@@ -4,6 +4,8 @@
 #include "ctrlSlideWidget.h"
 #include "part.h"
 #include "time_line_gl.h"
+
+#include "enum_character_texture_tool_state.h"
 #include "enum_edit_mode.h"
 
 #include "ui_PiYing.h"

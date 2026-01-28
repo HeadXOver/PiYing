@@ -5,14 +5,6 @@
 
 #include <qpainter>
 
-AddChTexPoly::AddChTexPoly()
-{
-}
-
-AddChTexPoly::~AddChTexPoly()
-{
-}
-
 void AddPolyEscape::escape()
 {
 	if (addChTexPoly->index.size() == 0) return;
@@ -28,10 +20,10 @@ void AddPolyEnter::enter()
 
 void AddChTexPoly::enter()
 {
-	int size = index.size();
+	const int size = (int)index.size();
 	if (size < 3) return;
 
-	for (int i = 0; i < index.size(); i++) {
+	for (int i = 0; i < size; i++) {
 		if (index[i] < 0) {
 			index[i] = (int)PiYingGL::getInstance().currentLayer()->size();
 			PiYingGL::getInstance().add_point_to_vert(points[i]);
@@ -69,13 +61,17 @@ void AddPolyClick::click(const QPointF& mouse)
 
 void AddChTexPoly::click(const QPointF& mouseOri)
 {
-	QPointF mouse = PiYingGL::getInstance().getViewProjMatrixInvert().map(PiYingGL::getInstance().mapToGL(mouseOri));
+	PiYingGL& piYingGL = PiYingGL::getInstance();
+
+	QPointF mouse = piYingGL.GLViewProjMatrixInvert(mouseOri);
 
 	if (checkPointRepeat(mouse))  return;
 
-	for (unsigned int i = 0; i < PiYingGL::getInstance().currentLayer()->size(); i++) {
-		const QPointF& readyPoint = PiYingGL::getInstance().currentLayer()->get(i, false);
-		if (QLineF(readyPoint, mouse).length() < 0.02f / PiYingGL::getInstance().viewScale.value()) {
+	PointVectorLayer& layer = *piYingGL.currentLayer();
+
+	for (unsigned int i = 0; i < layer.size(); i++) {
+		const QPointF& readyPoint = layer.get(i, false);
+		if (QLineF(readyPoint, mouse).length() < 0.02f / piYingGL.viewScale.value()) {
 			if (!index.contains(i)) {
 				index.append(i);
 				points.append(readyPoint);
@@ -90,11 +86,13 @@ void AddChTexPoly::click(const QPointF& mouseOri)
 
 void AddPolyDraw::draw()
 {
-	QPainter painter(&PiYingGL::getInstance());
+	PiYingGL& piYingGL = PiYingGL::getInstance();
+
+	QPainter painter(&piYingGL);
 	painter.setRenderHint(QPainter::Antialiasing);
 
 	for (QPointF selectPoint : addChTexPoly->points) {
-		selectPoint = PiYingGL::getInstance().mapViewProjMatrix(selectPoint);
+		selectPoint = piYingGL.mapViewProjMatrix(selectPoint);
 		painter.setPen(QPen(Qt::black, 8));
 		painter.drawPoint(selectPoint);
 		painter.setPen(QPen(Qt::red, 6));

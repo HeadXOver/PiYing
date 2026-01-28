@@ -4,15 +4,6 @@
 #include "point_vector_layer.h"
 
 #include <qpainter>
-#include <qpen>
-
-AddTriangle::AddTriangle()
-{
-}
-
-AddTriangle::~AddTriangle()
-{
-}
 
 bool AddTriangle::addVert(unsigned int i)
 {
@@ -68,14 +59,16 @@ void AddTriangleClick::click(const QPointF& mouse) {
 
 void AddTriangle::click(const QPointF& mouseOri)
 {
-	QPointF mouse = PiYingGL::getInstance().getViewProjMatrixInvert().map(PiYingGL::getInstance().mapToGL(mouseOri));
+	PiYingGL& piYingGL = PiYingGL::getInstance();
+
+	QPointF mouse = piYingGL.GLViewProjMatrixInvert(mouseOri);
 
 	if (checkPointRepeat(mouse))  return;
 
 	int indRepeat = -1;
-	PointVectorLayer& pointVector = *PiYingGL::getInstance().currentLayer();
+	PointVectorLayer& pointVector = *piYingGL.currentLayer();
 	for (unsigned int i = 0; i < pointVector.size(); i++) {
-		if (QLineF(pointVector(i), mouse).length() < 0.02f / PiYingGL::getInstance().viewScale.value()) {
+		if (QLineF(pointVector(i), mouse).length() < 0.02f / piYingGL.viewScale.value()) {
 			indRepeat = i;
 			break;
 		}
@@ -89,14 +82,14 @@ void AddTriangle::click(const QPointF& mouseOri)
 	if (numVert == 2) {
 		numInd = 0;
 		numVert = 0;
-		PiYingGL::getInstance().addTriangle(first, second, indRepeat >= 0 ? pointVector(indRepeat) : mouse);
+		piYingGL.addTriangle(first, second, indRepeat >= 0 ? pointVector(indRepeat) : mouse);
 		return;
 	}
 	if (numInd == 2) {
 		if (indRepeat < 0) {
 			numInd = 0;
 			numVert = 0;
-			PiYingGL::getInstance().addTriangle(firstIndex, secondIndex, mouse);
+			piYingGL.addTriangle(firstIndex, secondIndex, mouse);
 			return;
 		}
 
@@ -105,7 +98,7 @@ void AddTriangle::click(const QPointF& mouseOri)
 		unsigned int y[3] = { (unsigned int)indRepeat, firstIndex, secondIndex };
 		std::sort(y, y + 3);
 
-		std::vector<unsigned int>& cIndex = *PiYingGL::getInstance().currentIndex();
+		std::vector<unsigned int>& cIndex = *piYingGL.currentIndex();
 		for (int j = 0; j < cIndex.size(); j += 3) {
 			unsigned int x[3] = { cIndex[j + 0], cIndex[j + 1], cIndex[j + 2] };
 			std::sort(x, x + 3);
@@ -114,14 +107,14 @@ void AddTriangle::click(const QPointF& mouseOri)
 
 		numInd = 0;
 		numVert = 0;
-		PiYingGL::getInstance().addTriangle(indRepeat, firstIndex, secondIndex);
+		piYingGL.addTriangle(indRepeat, firstIndex, secondIndex);
 		return;
 	}
 	if (numInd == 1 && numVert == 1) {
 		if (indRepeat < 0) {
 			numInd = 0;
 			numVert = 0;
-			PiYingGL::getInstance().addTriangle(firstIndex, first, mouse);
+			piYingGL.addTriangle(firstIndex, first, mouse);
 			return;
 		}
 
@@ -129,7 +122,7 @@ void AddTriangle::click(const QPointF& mouseOri)
 
 		numInd = 0;
 		numVert = 0;
-		PiYingGL::getInstance().addTriangle(indRepeat, firstIndex, first);
+		piYingGL.addTriangle(indRepeat, firstIndex, first);
 	}
 }
 

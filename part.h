@@ -1,9 +1,7 @@
 #pragma once
 
-#include <qlist>
 #include <vector>
 #include <memory>
-#include <map>
 #include <qmatrix4x4>
 
 class QOpenGLTexture;

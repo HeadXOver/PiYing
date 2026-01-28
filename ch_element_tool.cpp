@@ -1,6 +1,8 @@
 #include "ch_element_tool.h"
+
 #include "piYing.h"
 #include "piYingGL.h"
+
 #include "add_triangle.h"
 #include "add_ch_tex_poly.h"
 #include "ch_element_select.h"
@@ -11,9 +13,9 @@
 #include "ch_triangle_libre_select.h"
 #include "ch_element_add_round.h"
 #include "ch_add_vert_trace.h"
-#include "SelectedPoints.h"
 
-#include <memory>
+#include "enum_character_texture_tool_state.h"
+
 #include <qpointf>
 
 namespace {

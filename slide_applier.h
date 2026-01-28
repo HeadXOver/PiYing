@@ -3,10 +3,10 @@
 #include <map>
 #include <memory>
 #include <vector>
-#include <qstring>
 
 class CharacterTrace;
 class QPolygonF;
+class QString;
 
 class SlideApplier final
 {

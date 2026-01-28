@@ -1,13 +1,13 @@
 #pragma once
 
-#include "enum_character_texture_tool_state.h"
-
 #include <memory>
 
 class QAction;
 class QWidget;
 class QIcon;
 class QString;
+
+enum class CharacterToolState;
 
 class ToolButton {
 public:

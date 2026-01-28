@@ -1,19 +1,11 @@
 #include "ch_add_vert_trace.h"
+
 #include "point_vector_layer.h"
 #include "piYingGL.h"
 #include "time_line_gl.h"
 #include "part.h"
 
-#include <qmessagebox>
 #include <qpainter>
-
-ChAddVertTrace::ChAddVertTrace()
-{
-}
-
-ChAddVertTrace::~ChAddVertTrace()
-{
-}
 
 void ChAddVertTrace::click(const QPointF& mouseOri)
 {

@@ -10,7 +10,6 @@
 
 #include <qpolygonf>
 #include <qpainter>
-#include <qpointf>
 
 namespace {
 	auto mapper = [](const QPointF& p) { return PiYingGL::getInstance().mapViewProjMatrix(p); };

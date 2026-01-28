@@ -4,9 +4,7 @@
 #include "point_vector_layer.h"
 #include "PiYingGL.h"
 
-#include <qpointf>
 #include <qpainter>
-#include "ch_add_vert_trace.h"
 
 namespace {
 	constexpr double angle_rad = 3.1415926 / 180.0;
@@ -88,14 +86,6 @@ void ChElementAddRound::addRoundPoly(const int edgeCount)
 	}
 
 	PiYingGL::getInstance().addTriangle(currentEnd, currentEnd + edgeCount, currentEnd + 1);
-}
-
-ChElementAddRound::ChElementAddRound()
-{
-}
-
-ChElementAddRound::~ChElementAddRound()
-{
 }
 
 void AddRoundClick::click(const QPointF& mouse)

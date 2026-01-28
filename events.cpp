@@ -51,6 +51,8 @@ void PiYingGL::mouseReleaseEvent(QMouseEvent* e)
 {
 	if (e->button() == Qt::LeftButton && ch_element_tool_) ch_element_tool_->release(e->position());
 
+	setCursor(Qt::CursorShape::ArrowCursor);
+
 	update();
 }
 

@@ -1,6 +1,6 @@
 #pragma once
 
-#include <QObject>
+#include <qobject>
 
 class ViewData : public QObject
 {

@@ -7,9 +7,6 @@
 
 struct ChAddVertTrace final
 {
-	ChAddVertTrace();
-	~ChAddVertTrace();
-
 	void click(const QPointF& mouse);
 	void move(const QPointF& mouse);
 	void release(const QPointF& mouse);

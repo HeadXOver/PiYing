@@ -7,7 +7,6 @@
 #include <memory>
 #include <vector>
 
-#include "static_rect_vert.h"
 #include "ViewData.h"
 
 enum class MousePos {

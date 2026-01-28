@@ -4,7 +4,6 @@
 
 #include "time_line_gl.h"
 #include "part.h"
-#include "global_objects.h"
 
 #include <qlabel>
 #include <qslider>
