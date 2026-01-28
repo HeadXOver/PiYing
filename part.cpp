@@ -293,14 +293,11 @@ void Part::change_slider_value(int sliderIndex, int value)
 	}
 
 	TimelineGl::getInstance().update_vbo(*_vert_texture, _vbo);
-	TimelineGl::getInstance().update();
-	PiYingGL::getInstance().update();
 }
 
 void Part::remove_slider(int sliderIndex)
 {
 	_slide_applier->remove_slider(sliderIndex);
-	PiYing::getInstance().update_part_slider();
 }
 
 void Part::release_buffers()

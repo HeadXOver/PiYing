@@ -3,6 +3,7 @@
 #include "slide_applier.h"
 
 #include "time_line_gl.h"
+#include "piYingGL.h"
 #include "part.h"
 
 #include <qlabel>
@@ -35,7 +36,11 @@ CtrlSlideLayout::CtrlSlideLayout(QString labelName, unsigned int id, int default
     connect(slider, &QSlider::valueChanged, this, [id](int value)
         {
             Part* part = TimelineGl::getInstance().get_current_part();
-            if(part) part->change_slider_value(id, value);
+            if (part) {
+                part->change_slider_value(id, value);
+                TimelineGl::getInstance().update();
+                PiYingGL::getInstance().update();
+            }
         }
     );
 

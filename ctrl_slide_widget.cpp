@@ -1,6 +1,7 @@
 ﻿#include "ctrlSlideWidget.h"
 #include "ctrlSlideLayout.h"
 
+#include "PiYing.h"
 #include "piYingGL.h"
 #include "part.h"
 #include "time_line_gl.h"
@@ -50,7 +51,10 @@ CtrlSlideWidget::~CtrlSlideWidget()
 void CtrlSlideWidget::setSlider(unsigned int sliderIndex)
 {
     QMenu* menu = new QMenu(this);
-    menu->addAction("删除", this, [sliderIndex, this] { TimelineGl::getInstance().get_current_part()->remove_slider(sliderIndex); });
+    menu->addAction("删除", this, [sliderIndex, this] { 
+        TimelineGl::getInstance().get_current_part()->remove_slider(sliderIndex);
+        PiYing::getInstance().update_part_slider();
+        });
     menu->addAction("重命名", this, [sliderIndex, this] { setName(sliderIndex); });
     menu->exec(QCursor::pos());
 }
