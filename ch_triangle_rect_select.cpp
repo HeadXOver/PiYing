@@ -15,7 +15,7 @@
 #include <qmessagebox>
 
 ChTriangleRectSelect::ChTriangleRectSelect() :
-	edit_skelen(piYingGL->editMode == EditMode::characterSkeleton)
+	edit_skelen(PiYingGL::getInstance().editMode == EditMode::characterSkeleton)
 {
 	chTriangleSelect = std::make_unique<ChTriangleSelect>();
 }
@@ -24,7 +24,7 @@ void ChTriangleRectSelect::draw()
 {
 	chTriangleSelect->draw_handle_and_selected();
 
-	QPainter painter(piYingGL);
+	QPainter painter(&PiYingGL::getInstance());
 	painter.setRenderHint(QPainter::Antialiasing);
 	painter.setBrush(QColor(225, 0, 0, 20));
 
@@ -60,7 +60,7 @@ void ChTriangleRectSelect::movePos(const QPointF& mouse)
 void ChTriangleRectSelect::releasePos(const QPointF& mouse)
 {
 	if (!isDraw) {
-		const QPointF glMouse = piYingGL->GLViewProjMatrixInvert(mouse);
+		const QPointF glMouse = PiYingGL::getInstance().GLViewProjMatrixInvert(mouse);
 
 		chTriangleSelect->click_select(glMouse);
 		return;
@@ -76,7 +76,7 @@ void ChTriangleRectSelect::releasePos(const QPointF& mouse)
 	QPointF eachTriangle[3];
 	const bool easySelect = mouse.x() > chTriangleSelect->lastPos.x();
 	for (unsigned int i = 0; i < triangleIndices.size(); i += 3) {
-		for (int j = 0; j < 3; ++j) eachTriangle[j] = piYingGL->mapViewProjMatrix(pointVector.get(triangleIndices[i + j], edit_skelen));
+		for (int j = 0; j < 3; ++j) eachTriangle[j] = PiYingGL::getInstance().mapViewProjMatrix(pointVector.get(triangleIndices[i + j], edit_skelen));
 
 		if (rect.contains(eachTriangle[0]) &&
 			rect.contains(eachTriangle[1]) &&

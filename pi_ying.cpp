@@ -50,8 +50,7 @@ PiYing::PiYing() : QMainWindow(nullptr)
     chImageList = new QListWidget();
 
     // OpenGL widget
-    piYingGL = new PiYingGL();
-    piYingGLContainer = new PiYingGLContainer(*piYingGL, ratio, this);
+    piYingGLContainer = new PiYingGLContainer(PiYingGL::getInstance(), ratio, this);
 
     splitTimelineOpenGL = new QSplitter(Qt::Vertical, this);
     splitListOpenGL = new QSplitter(Qt::Horizontal, this);
@@ -117,15 +116,15 @@ PiYing::PiYing() : QMainWindow(nullptr)
     connect(actionExportCurrentFrame,   SIGNAL(triggered()), this, SLOT(exportCurrentFrame()));
     connect(actionExportMainSlider,     SIGNAL(triggered()), this, SLOT(exportMainSlider()));
 	connect(actionScreenScale,          SIGNAL(triggered()), this, SLOT(askScreenScale()));
-    connect(actionDefaultColor,     &QAction::triggered,                this, [this]() {piYingGL->choseBackgroundColor(); });
+    connect(actionDefaultColor,     &QAction::triggered,                this, [this]() {PiYingGL::getInstance().choseBackgroundColor(); });
     connect(actionExit,             &QAction::triggered,                this, [this]() {close(); });
-    connect(actionImportBackGround, &QAction::triggered,                this, [this]() {piYingGL->importBackground(); });
-    connect(actionImportCharacter,  &QAction::triggered,                this, [this]() {piYingGL->importChatacter(); });
-    connect(chImageList,            &QListWidget::currentItemChanged,   this, [this]() {piYingGL->update_ch_tool(); piYingGL->update_ch_verts(); });
-    connect(bgImageList,            &QListWidget::currentItemChanged,   this, [this]() {piYingGL->update(); });
+    connect(actionImportBackGround, &QAction::triggered,                this, [this]() {PiYingGL::getInstance().importBackground(); });
+    connect(actionImportCharacter,  &QAction::triggered,                this, [this]() {PiYingGL::getInstance().importChatacter(); });
+    connect(chImageList,            &QListWidget::currentItemChanged,   this, [this]() {PiYingGL::getInstance().update_ch_tool(); PiYingGL::getInstance().update_ch_verts(); });
+    connect(bgImageList,            &QListWidget::currentItemChanged,   this, [this]() {PiYingGL::getInstance().update(); });
 
     piYingGLContainer->setRatio(ratio);
-    piYingGL->changeRatio(ratio);
+    PiYingGL::getInstance().changeRatio(ratio);
 
     splitTimelineOpenGL->addWidget(piYingGLContainer);
     splitTimelineOpenGL->addWidget(&TimelineGl::getInstance());
@@ -148,7 +147,7 @@ PiYing::PiYing() : QMainWindow(nullptr)
         qss.close();
     }
 
-    piYingGL->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    PiYingGL::getInstance().setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     TimelineGl::getInstance().setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     voidListWidget->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
 
@@ -176,7 +175,7 @@ PiYing::~PiYing()
     safeDelete(voidListWidget);
     safeDelete(bgImageList);
     safeDelete(chImageList);
-    safeDelete(piYingGL);
+    safeDelete(&PiYingGL::getInstance());
     safeDelete(piYingGLContainer);
     safeDelete(splitTimelineOpenGL);
     safeDelete(splitListOpenGL);
@@ -204,26 +203,26 @@ void PiYing::keyPressEvent(QKeyEvent* event)
     switch (event->key()) {
     case Qt::Key_Escape: {
         if (getCurrentChRow() < 0) return;
-        piYingGL->escapeChVert();
+        PiYingGL::getInstance().escapeChVert();
     }break;
     case Qt::Key_Delete: {
         if (getCurrentChRow() < 0) return;
-        piYingGL->deleteChElement();
+        PiYingGL::getInstance().deleteChElement();
     }break;
     case Qt::Key_Enter:
     case Qt::Key_Return: {
         if (getCurrentChRow() < 0) return;
-        piYingGL->enterChElement();
+        PiYingGL::getInstance().enterChElement();
     }break;
     case Qt::Key_1: {
-        switch (piYingGL->ch_tool_state()) {
+        switch (PiYingGL::getInstance().ch_tool_state()) {
         case CharacterToolState::RectSelectTriangle: {
             adapt_select_tool_button(CharacterToolState::RectSelectVert);
-            piYingGL->setChTool(CharacterToolState::RectSelectVert);
+            PiYingGL::getInstance().setChTool(CharacterToolState::RectSelectVert);
         }break;
         case CharacterToolState::LibreSelectTriangle: {
             adapt_select_tool_button(CharacterToolState::LibreSelectVert);
-            piYingGL->setChTool(CharacterToolState::LibreSelectVert);
+            PiYingGL::getInstance().setChTool(CharacterToolState::LibreSelectVert);
         }break;
         case CharacterToolState::LibreSelectVert:
         case CharacterToolState::RectSelectVert: return;
@@ -238,19 +237,19 @@ void PiYing::keyPressEvent(QKeyEvent* event)
             }
 
             _select_button->select();
-            piYingGL->setChTool(_select_button->toolState());
+            PiYingGL::getInstance().setChTool(_select_button->toolState());
         }
         }
     }break;
     case Qt::Key_3: {
-        switch (piYingGL->ch_tool_state()) {
+        switch (PiYingGL::getInstance().ch_tool_state()) {
         case CharacterToolState::RectSelectVert: {
             adapt_select_tool_button(CharacterToolState::RectSelectTriangle);
-            piYingGL->setChTool(CharacterToolState::RectSelectTriangle);
+            PiYingGL::getInstance().setChTool(CharacterToolState::RectSelectTriangle);
         }break;
         case CharacterToolState::LibreSelectVert: {
             adapt_select_tool_button(CharacterToolState::LibreSelectTriangle);
-            piYingGL->setChTool(CharacterToolState::LibreSelectTriangle);
+            PiYingGL::getInstance().setChTool(CharacterToolState::LibreSelectTriangle);
         }break;
         case CharacterToolState::LibreSelectTriangle:
         case CharacterToolState::RectSelectTriangle: return;
@@ -265,7 +264,7 @@ void PiYing::keyPressEvent(QKeyEvent* event)
             }
 
             _select_button->select();
-            piYingGL->setChTool(_select_button->toolState());
+            PiYingGL::getInstance().setChTool(_select_button->toolState());
         }
         }
     }break;
@@ -291,7 +290,7 @@ void PiYing::exportCurrentFrame(){
         return;
     }
 
-    QImage img = piYingGL->grabFramebuffer();
+    QImage img = PiYingGL::getInstance().grabFramebuffer();
 
     if (!img.save(path, format, 95))  QMessageBox::warning(this, tr("Error"), tr("Failed to save"));
 }
@@ -311,5 +310,5 @@ void PiYing::askScreenScale() {
     float ratio = float(r.w) / float(r.h);
     piYingGLContainer->setRatio(ratio);
     piYingGLContainer->update();
-    piYingGL->changeRatio(ratio);
+    PiYingGL::getInstance().changeRatio(ratio);
 }

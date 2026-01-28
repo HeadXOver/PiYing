@@ -18,7 +18,7 @@ void PiYing::select_tool_texture(ToolButton* toolButton)
             toolButton->set_unselected(QIcon(":/PiYing/selectRectChVert.png"));
             toolButton->set_toolState(CharacterToolState::RectSelectVert);
             toolButton->unSelect();
-            piYingGL->setChTool(CharacterToolState::None);
+            PiYingGL::getInstance().setChTool(CharacterToolState::None);
             return;
         }break;
         case CharacterToolState::RectSelectTriangle: {
@@ -31,7 +31,7 @@ void PiYing::select_tool_texture(ToolButton* toolButton)
             toolButton->set_unselected(QIcon(":/PiYing/rect_triangle_select.png"));
             toolButton->set_toolState(CharacterToolState::RectSelectTriangle);
             toolButton->unSelect();
-            piYingGL->setChTool(CharacterToolState::None);
+            PiYingGL::getInstance().setChTool(CharacterToolState::None);
             return;
         }break;
         default: return;
@@ -40,7 +40,7 @@ void PiYing::select_tool_texture(ToolButton* toolButton)
     else all_button_unselect();
 
     toolButton->select();
-    piYingGL->setChTool(toolButton->toolState());
+    PiYingGL::getInstance().setChTool(toolButton->toolState());
 }
 
 void PiYing::select_tool_skelen(ToolButton* toolButton)
@@ -50,21 +50,21 @@ void PiYing::select_tool_skelen(ToolButton* toolButton)
     for (ToolButton* item : toolChSkelenList) item->unSelect();
 
     toolButton->select();
-    piYingGL->setChTool(toolButton->toolState());
+    PiYingGL::getInstance().setChTool(toolButton->toolState());
 }
 
 void PiYing::select_tool_control_slider(ToolButton* toolButton)
 {
     if (toolButton->isSelect()) {
         toolButton->unSelect();
-        piYingGL->setChTool(CharacterToolState::None);
+        PiYingGL::getInstance().setChTool(CharacterToolState::None);
         return;
     }
 
     for (ToolButton* item : toolControlSliderList) item->unSelect();
 
     toolButton->select();
-    piYingGL->setChTool(toolButton->toolState());
+    PiYingGL::getInstance().setChTool(toolButton->toolState());
 }
 
 void PiYing::adapt_select_tool_button(CharacterToolState state)

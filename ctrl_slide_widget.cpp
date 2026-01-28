@@ -14,7 +14,7 @@
 #include <qlabel>
 #include <qslider>
 
-CtrlSlideWidget::CtrlSlideWidget() : QWidget(piYingGL)
+CtrlSlideWidget::CtrlSlideWidget() : QWidget()
 {
     sliderLayout = new QVBoxLayout(this);
 

@@ -150,3 +150,9 @@ PiYingGL::~PiYingGL()
 
 	if (currentLayer) delete currentLayer;
 }
+
+PiYingGL& PiYingGL::getInstance()
+{
+	static PiYingGL* instance = new PiYingGL();
+	return *instance;
+}

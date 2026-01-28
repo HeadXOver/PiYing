@@ -69,14 +69,14 @@ void AddTriangleClick::click(const QPointF& mouse) {
 
 void AddTriangle::click(const QPointF& mouseOri)
 {
-	QPointF mouse = piYingGL->getViewProjMatrixInvert().map(piYingGL->mapToGL(mouseOri));
+	QPointF mouse = PiYingGL::getInstance().getViewProjMatrixInvert().map(PiYingGL::getInstance().mapToGL(mouseOri));
 
 	if (checkPointRepeat(mouse))  return;
 
 	int indRepeat = -1;
 	PointVectorLayer& pointVector = *currentLayer;
 	for (unsigned int i = 0; i < pointVector.size(); i++) {
-		if (QLineF(pointVector(i), mouse).length() < 0.02f / piYingGL->viewScale.value()) {
+		if (QLineF(pointVector(i), mouse).length() < 0.02f / PiYingGL::getInstance().viewScale.value()) {
 			indRepeat = i;
 			break;
 		}
@@ -90,14 +90,14 @@ void AddTriangle::click(const QPointF& mouseOri)
 	if (numVert == 2) {
 		numInd = 0;
 		numVert = 0;
-		piYingGL->addTriangle(first, second, indRepeat >= 0 ? pointVector(indRepeat) : mouse);
+		PiYingGL::getInstance().addTriangle(first, second, indRepeat >= 0 ? pointVector(indRepeat) : mouse);
 		return;
 	}
 	if (numInd == 2) {
 		if (indRepeat < 0) {
 			numInd = 0;
 			numVert = 0;
-			piYingGL->addTriangle(firstIndex, secondIndex, mouse);
+			PiYingGL::getInstance().addTriangle(firstIndex, secondIndex, mouse);
 			return;
 		}
 
@@ -115,14 +115,14 @@ void AddTriangle::click(const QPointF& mouseOri)
 
 		numInd = 0;
 		numVert = 0;
-		piYingGL->addTriangle(indRepeat, firstIndex, secondIndex);
+		PiYingGL::getInstance().addTriangle(indRepeat, firstIndex, secondIndex);
 		return;
 	}
 	if (numInd == 1 && numVert == 1) {
 		if (indRepeat < 0) {
 			numInd = 0;
 			numVert = 0;
-			piYingGL->addTriangle(firstIndex, first, mouse);
+			PiYingGL::getInstance().addTriangle(firstIndex, first, mouse);
 			return;
 		}
 
@@ -130,7 +130,7 @@ void AddTriangle::click(const QPointF& mouseOri)
 
 		numInd = 0;
 		numVert = 0;
-		piYingGL->addTriangle(indRepeat, firstIndex, first);
+		PiYingGL::getInstance().addTriangle(indRepeat, firstIndex, first);
 	}
 }
 
@@ -161,10 +161,10 @@ void AddTriangle::draw()
 		toDraw.push_back(pointVector(firstIndex));
 	}
 
-	QPainter painter(piYingGL);
+	QPainter painter(&PiYingGL::getInstance());
 
 	for (QPointF& p : toDraw) {
-		p = piYingGL->mapViewProjMatrix(p);
+		p = PiYingGL::getInstance().mapViewProjMatrix(p);
 		painter.setPen(QPen(Qt::black, 8));
 		painter.drawPoint(p);
 		painter.setPen(QPen(Qt::red, 6));

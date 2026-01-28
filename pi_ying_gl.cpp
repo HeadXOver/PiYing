@@ -274,7 +274,7 @@ void PiYingGL::add_part(const QList<unsigned int>& indices)
 	TimelineGl::getInstance().init_part_cursor();
 	TimelineGl::getInstance().update_is_draw_by_piying();
 	PiYing::getInstance().update_part_slider();
-	piYingGL->update();
+	update();
 	TimelineGl::getInstance().update();
 }
 

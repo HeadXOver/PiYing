@@ -38,8 +38,8 @@ void PiYing::change_edit_mode_overview()
 
     TimelineGl::getInstance().set_to_timeline();
 
-    piYingGL->setChTool(CharacterToolState::None);
-    piYingGL->setEditMode(EditMode::OverView);
+    PiYingGL::getInstance().setChTool(CharacterToolState::None);
+    PiYingGL::getInstance().setEditMode(EditMode::OverView);
 }
 
 void PiYing::change_edit_mode_background()
@@ -51,8 +51,8 @@ void PiYing::change_edit_mode_background()
 
     TimelineGl::getInstance().set_to_timeline();
 
-    piYingGL->setChTool(CharacterToolState::None);
-    piYingGL->setEditMode(EditMode::BackGround);
+    PiYingGL::getInstance().setChTool(CharacterToolState::None);
+    PiYingGL::getInstance().setEditMode(EditMode::BackGround);
 }
 
 void PiYing::change_edit_mode_character_texture()
@@ -64,7 +64,7 @@ void PiYing::change_edit_mode_character_texture()
 
     TimelineGl::getInstance().set_to_part();
 
-    piYingGL->setEditMode(EditMode::characterTexture);
+    PiYingGL::getInstance().setEditMode(EditMode::characterTexture);
 
     for (ToolButton* item : toolChTexList) {
         ui->mainToolBar->addAction(item->action());
@@ -72,12 +72,12 @@ void PiYing::change_edit_mode_character_texture()
 
     for (ToolButton* item : toolChTexList) {
         if (item->isSelect()) {
-            piYingGL->setChTool(item->toolState());
+            PiYingGL::getInstance().setChTool(item->toolState());
             return;
         }
     }
 
-    if(!piYingGL->have_ch_tool()) piYingGL->setChTool(CharacterToolState::None);
+    if(!PiYingGL::getInstance().have_ch_tool()) PiYingGL::getInstance().setChTool(CharacterToolState::None);
 }
 
 void PiYing::change_edit_mode_character_skeleton()
@@ -89,7 +89,7 @@ void PiYing::change_edit_mode_character_skeleton()
 
     TimelineGl::getInstance().set_to_part();
 
-    piYingGL->setEditMode(EditMode::characterSkeleton);
+    PiYingGL::getInstance().setEditMode(EditMode::characterSkeleton);
 
     for (ToolButton* item : toolChSkelenList) {
         ui->mainToolBar->addAction(item->action());
@@ -97,12 +97,12 @@ void PiYing::change_edit_mode_character_skeleton()
 
     for (ToolButton* item : toolChSkelenList) {
         if (item->isSelect()) {
-            piYingGL->setChTool(item->toolState());
+            PiYingGL::getInstance().setChTool(item->toolState());
             return;
         }
     }
 
-    if (!piYingGL->have_ch_tool()) piYingGL->setChTool(CharacterToolState::None);
+    if (!PiYingGL::getInstance().have_ch_tool()) PiYingGL::getInstance().setChTool(CharacterToolState::None);
 }
 
 void PiYing::change_edit_mode_character_constrol_slider()
@@ -113,7 +113,7 @@ void PiYing::change_edit_mode_character_constrol_slider()
         splitListOpenGL->insertWidget(0, sliderWidget);
     else
         splitListOpenGL->insertWidget(0, voidListWidget);
-    piYingGL->setEditMode(EditMode::controlSlide);
+    PiYingGL::getInstance().setEditMode(EditMode::controlSlide);
     splitListOpenGL->setSizes({ width() / 5, width() * 4 / 5 });
 
     splitTimelineOpenGL->setSizes({ width() * 3 / 4, width() / 4 });
@@ -126,17 +126,17 @@ void PiYing::change_edit_mode_character_constrol_slider()
 
     for (ToolButton* item : toolControlSliderList) {
         if (item->isSelect()) {
-            piYingGL->setChTool(item->toolState());
+            PiYingGL::getInstance().setChTool(item->toolState());
             return;
         }
     }
 
-    piYingGL->setChTool(CharacterToolState::None);
+    PiYingGL::getInstance().setChTool(CharacterToolState::None);
 }
 
 void PiYing::update_part_slider()
 {
-    if (piYingGL->editMode != EditMode::controlSlide) return;
+    if (PiYingGL::getInstance().editMode != EditMode::controlSlide) return;
 
     Part* part = TimelineGl::getInstance().get_current_part();
     if (part) {

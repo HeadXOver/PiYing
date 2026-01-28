@@ -14,11 +14,11 @@
 #include <qpointf>
 
 namespace {
-	auto mapper = [](const QPointF& p) { return piYingGL->mapViewProjMatrix(p); };
+	auto mapper = [](const QPointF& p) { return PiYingGL::getInstance().mapViewProjMatrix(p); };
 }
 
 ChTriangleLibreSelect::ChTriangleLibreSelect() :
-	edit_skelen(piYingGL->editMode == EditMode::characterSkeleton)
+	edit_skelen(PiYingGL::getInstance().editMode == EditMode::characterSkeleton)
 {
 	chTriangleSelect = std::make_unique<ChTriangleSelect>();
 }
@@ -34,7 +34,7 @@ void ChTriangleLibreSelect::draw()
 
 	if (polygon.isEmpty() || !drawing) return;
 
-	QPainter painter(piYingGL);
+	QPainter painter(&PiYingGL::getInstance());
 	painter.setRenderHint(QPainter::Antialiasing);
 	painter.setBrush(QColor(225, 0, 0, 20));
 	painter.setPen(QPen(Qt::yellow, 1));
@@ -63,7 +63,7 @@ void ChTriangleLibreSelect::clickPos(const QPointF& mouseOri)
 		chTriangleSelect->affirmHandle();
 		return;
 	}
-	const QPointF mouse = piYingGL->getViewProjMatrixInvert().map(piYingGL->mapToGL(mouseOri));
+	const QPointF mouse = PiYingGL::getInstance().getViewProjMatrixInvert().map(PiYingGL::getInstance().mapToGL(mouseOri));
 
 	polygon << mouse;
 }
@@ -81,7 +81,7 @@ void ChTriangleLibreSelect::movePos(const QPointF& mouse)
 
 	drawing = true;
 
-	QPointF mapedMouse = piYingGL->GLViewProjMatrixInvert(mouse);
+	QPointF mapedMouse = PiYingGL::getInstance().GLViewProjMatrixInvert(mouse);
 	if (!polygon.isEmpty() && polygon.last() == mapedMouse) return;
 
 	polygon << mapedMouse;
@@ -92,7 +92,7 @@ void ChTriangleLibreSelect::releasePos(const QPointF& mouse)
 	isPress = false;
 
 	if (!drawing) {
-		const QPointF glMouse = piYingGL->getViewProjMatrixInvert().map(piYingGL->mapToGL(mouse));
+		const QPointF glMouse = PiYingGL::getInstance().getViewProjMatrixInvert().map(PiYingGL::getInstance().mapToGL(mouse));
 
 		chTriangleSelect->click_select(glMouse);
 		return;

@@ -35,7 +35,7 @@ void AddChTexPoly::enter()
 	for (int i = 0; i < index.size(); i++) {
 		if (index[i] < 0) {
 			index[i] = (int)currentLayer->size();
-			piYingGL->add_point_to_vert(points[i]);
+			PiYingGL::getInstance().add_point_to_vert(points[i]);
 		}
 	}
 
@@ -45,7 +45,7 @@ void AddChTexPoly::enter()
 	int n2 = 1;
 	int n3 = size - 1;
 	for (int i = 2; i < size; i++) {
-		piYingGL->addTriangle(index[n1], index[n2], index[n3]);
+		PiYingGL::getInstance().addTriangle(index[n1], index[n2], index[n3]);
 		n1 = n2;
 		n2 = n3;
 		n3 = i / 2 + 1;
@@ -70,13 +70,13 @@ void AddPolyClick::click(const QPointF& mouse)
 
 void AddChTexPoly::click(const QPointF& mouseOri)
 {
-	QPointF mouse = piYingGL->getViewProjMatrixInvert().map(piYingGL->mapToGL(mouseOri));
+	QPointF mouse = PiYingGL::getInstance().getViewProjMatrixInvert().map(PiYingGL::getInstance().mapToGL(mouseOri));
 
 	if (checkPointRepeat(mouse))  return;
 
 	for (unsigned int i = 0; i < currentLayer->size(); i++) {
 		const QPointF& readyPoint = currentLayer->get(i, false);
-		if (QLineF(readyPoint, mouse).length() < 0.02f / piYingGL->viewScale.value()) {
+		if (QLineF(readyPoint, mouse).length() < 0.02f / PiYingGL::getInstance().viewScale.value()) {
 			if (!index.contains(i)) {
 				index.append(i);
 				points.append(readyPoint);
@@ -91,11 +91,11 @@ void AddChTexPoly::click(const QPointF& mouseOri)
 
 void AddPolyDraw::draw()
 {
-	QPainter painter(piYingGL);
+	QPainter painter(&PiYingGL::getInstance());
 	painter.setRenderHint(QPainter::Antialiasing);
 
 	for (QPointF selectPoint : addChTexPoly->points) {
-		selectPoint = piYingGL->mapViewProjMatrix(selectPoint);
+		selectPoint = PiYingGL::getInstance().mapViewProjMatrix(selectPoint);
 		painter.setPen(QPen(Qt::black, 8));
 		painter.drawPoint(selectPoint);
 		painter.setPen(QPen(Qt::red, 6));

@@ -85,7 +85,7 @@ Part::Part(
 	TimelineGl::getInstance().generate_ebo(_indices, _ebo);
 
 	TimelineGl::getInstance().generate_vao(_vao_timeline, _vbo, _ebo);
-	piYingGL->generate_vao(_vao_piying, _vbo, _ebo);
+	PiYingGL::getInstance().generate_vao(_vao_piying, _vbo, _ebo);
 }
 
 Part::Part(const Part& part1, const Part& part2) : _texture(part1._texture)
@@ -107,7 +107,7 @@ Part::Part(const Part& part1, const Part& part2) : _texture(part1._texture)
 	TimelineGl::getInstance().generate_ebo(_indices, _ebo);
 
 	TimelineGl::getInstance().generate_vao(_vao_timeline, _vbo, _ebo);
-	piYingGL->generate_vao(_vao_piying, _vbo, _ebo);
+	PiYingGL::getInstance().generate_vao(_vao_piying, _vbo, _ebo);
 
 	update_scale();
 }
@@ -134,7 +134,7 @@ Part::Part(const Part& other) :
 	TimelineGl::getInstance().generate_ebo(_indices, _ebo);
 
 	TimelineGl::getInstance().generate_vao(_vao_timeline, _vbo, _ebo);
-	piYingGL->generate_vao(_vao_piying, _vbo, _ebo); 
+	PiYingGL::getInstance().generate_vao(_vao_piying, _vbo, _ebo);
 
 	for (size_t i = 0; i < other._children.size(); i++) {
 		_children.push_back(new Part(*other._children[i]));
@@ -289,7 +289,7 @@ void Part::change_slider_value(int sliderIndex, int value)
 
 	TimelineGl::getInstance().update_vbo(*_vert_texture, _vbo);
 	TimelineGl::getInstance().update();
-	piYingGL->update();
+	PiYingGL::getInstance().update();
 }
 
 void Part::remove_slider(int sliderIndex)
@@ -301,7 +301,7 @@ void Part::remove_slider(int sliderIndex)
 void Part::release_buffers()
 {
 	TimelineGl::getInstance().release_buffers(_vao_timeline, _vbo, _ebo);
-	piYingGL->release_buffers(_vao_piying);
+	PiYingGL::getInstance().release_buffers(_vao_piying);
 }
 
 void Part::add_child(Part* child)

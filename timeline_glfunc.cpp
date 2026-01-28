@@ -143,7 +143,7 @@ void TimelineGl::initializeGL()
 
 void TimelineGl::resizeGL(int w, int h)
 {
-	_ratio = (width() * piYingGL->height()) / (float)(piYingGL->width() * height());
+	_ratio = (width() * PiYingGL::getInstance().height()) / (float)(PiYingGL::getInstance().width() * height());
 	_rect_select_program->bind();
 	_rect_select_program->setUniformValue("ratio", _ratio);
 	_part_shader_program->bind();

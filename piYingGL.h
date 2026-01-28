@@ -46,6 +46,11 @@ public:
 	explicit PiYingGL();
 	virtual ~PiYingGL();
 
+	PiYingGL(const PiYingGL&) = delete;
+	PiYingGL& operator=(const PiYingGL&) = delete;
+
+	static PiYingGL& getInstance();
+
 private:
 	void paintBackgrounds();
 	void paintCharacterTexture();

@@ -14,7 +14,7 @@
 #include <qmessagebox>
 
 ChElementRectSelect::ChElementRectSelect() :
-	edit_skelen(piYingGL->editMode == EditMode::characterSkeleton)
+	edit_skelen(PiYingGL::getInstance().editMode == EditMode::characterSkeleton)
 {
 	chElementSelect = std::make_unique<ChElementSelect>();
 }
@@ -23,7 +23,7 @@ void ChElementRectSelect::draw()
 {
 	chElementSelect->draw_handle_and_selected();
 
-	QPainter painter(piYingGL);
+	QPainter painter(&PiYingGL::getInstance());
 	painter.setRenderHint(QPainter::Antialiasing);
 	painter.setBrush(QColor(225, 0, 0, 20));
 
@@ -44,7 +44,7 @@ void ChElementRectSelect::clickPos(const QPointF& mouseOri)
 		return;
 	}
 
-	const QPointF mouse = piYingGL->GLViewProjMatrixInvert(mouseOri);
+	const QPointF mouse = PiYingGL::getInstance().GLViewProjMatrixInvert(mouseOri);
 
 	chElementSelect->click_select(mouse);
 }
@@ -72,7 +72,7 @@ void ChElementRectSelect::releasePos(const QPointF& mouse)
 	const PointVectorLayer& pointVector = *currentLayer;
 	QPointF pos;
 	for (unsigned int i = 0; i < pointVector.size(); i++) {
-		pos = piYingGL->mapViewProjMatrix(pointVector.get(i, edit_skelen));
+		pos = PiYingGL::getInstance().mapViewProjMatrix(pointVector.get(i, edit_skelen));
 		if (rect.contains(pos) && !chElementSelect->selected_points->contains(i)) {
 			chElementSelect->selected_points->append(i);
 		}

@@ -16,7 +16,7 @@ namespace {
 void ChElementAddRound::click(const QPointF& mouse) 
 {
 	center = mouse;
-	gl_center = piYingGL->GLViewProjMatrixInvert(center);
+	gl_center = PiYingGL::getInstance().GLViewProjMatrixInvert(center);
 	current_cursor = mouse;
 	isPress = true;
 	radius = 0;
@@ -37,14 +37,14 @@ void ChElementAddRound::release(const QPointF& mouse)
 
 	init_angle = QLineF(center, mouse).angle();
 
-	const QPointF glCursor = piYingGL->GLViewProjMatrixInvert(current_cursor);
-	const float lenth = QLineF(QPointF(), piYingGL->getInsProj().map(glCursor - gl_center)).length();
+	const QPointF glCursor = PiYingGL::getInstance().GLViewProjMatrixInvert(current_cursor);
+	const float lenth = QLineF(QPointF(), PiYingGL::getInstance().getInsProj().map(glCursor - gl_center)).length();
 
 	radius = lenth * 1000.f;
 
 	int init[3] {radius, 7, init_angle };
 	int outEdgeCount;
-	if (AskRoundPolyDialog(QString("设置多边形"), init, piYingGL).getValues(radius, outEdgeCount, init_angle)) {
+	if (AskRoundPolyDialog(QString("设置多边形"), init, &PiYingGL::getInstance()).getValues(radius, outEdgeCount, init_angle)) {
 		addRoundPoly(outEdgeCount);
 	}
 
@@ -57,7 +57,7 @@ void ChElementAddRound::draw()
 
 	if(radius < 6) return;
 
-	QPainter painter(piYingGL);
+	QPainter painter(&PiYingGL::getInstance());
 	painter.setRenderHint(QPainter::Antialiasing);
 	painter.setBrush(QColor(225, 0, 0, 20));
 
@@ -79,16 +79,16 @@ void ChElementAddRound::addRoundPoly(const int edgeCount)
 	const double deltaAngle = (2 * 3.1415926) / edgeCount;
 	const int currentEnd = (int)currentLayer->size();
 
-	piYingGL->add_point_to_vert(gl_center);
+	PiYingGL::getInstance().add_point_to_vert(gl_center);
 	for (int i = 0; i < edgeCount; i++) {
-		piYingGL->add_point_to_vert(gl_center + lenth * piYingGL->getProj().map(QPointF(cos(initAngle + i * deltaAngle), sin(initAngle + i * deltaAngle))));
+		PiYingGL::getInstance().add_point_to_vert(gl_center + lenth * PiYingGL::getInstance().getProj().map(QPointF(cos(initAngle + i * deltaAngle), sin(initAngle + i * deltaAngle))));
 	}
 
 	for (int i = 0; i < edgeCount - 1; i++) {
-		piYingGL->addTriangle(currentEnd, currentEnd + i + 1, currentEnd + i + 2);
+		PiYingGL::getInstance().addTriangle(currentEnd, currentEnd + i + 1, currentEnd + i + 2);
 	}
 
-	piYingGL->addTriangle(currentEnd, currentEnd + edgeCount, currentEnd + 1);
+	PiYingGL::getInstance().addTriangle(currentEnd, currentEnd + edgeCount, currentEnd + 1);
 }
 
 ChElementAddRound::ChElementAddRound()
