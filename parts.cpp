@@ -4,6 +4,13 @@
 
 Parts Parts::_instance;
 
+Parts::~Parts()
+{
+    for (auto& part : _parts) {
+        delete part;
+    }
+}
+
 Parts& Parts::getInstance()
 {
     return _instance;

@@ -6,9 +6,10 @@ class Part;
 
 class Parts final
 {
-public:
 	Parts() = default;
+	~Parts();
 
+public:
 	Parts(const Parts&) = delete;
 	Parts& operator=(const Parts&) = delete;
 
