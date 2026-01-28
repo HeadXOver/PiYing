@@ -50,7 +50,7 @@ PiYing::PiYing() : QMainWindow(nullptr)
     chImageList = new QListWidget();
 
     // OpenGL widget
-    piYingGL = new PiYingGL(*this);
+    piYingGL = new PiYingGL();
     piYingGLContainer = new PiYingGLContainer(*piYingGL, ratio, this);
 
     splitTimelineOpenGL = new QSplitter(Qt::Vertical, this);
