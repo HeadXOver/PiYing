@@ -49,10 +49,11 @@ class TimelineGl : public QOpenGLWidget, QOpenGLFunctions_3_3_Core
 {
 	Q_OBJECT
 
-public:
+private:
 	TimelineGl();
 	~TimelineGl();
 
+public:
 	TimelineGl(const TimelineGl&) = delete;
 	TimelineGl& operator=(const TimelineGl&) = delete;
 
