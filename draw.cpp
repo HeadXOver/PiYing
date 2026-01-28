@@ -200,7 +200,7 @@ void PiYingGL::paint_selected_part()
 {
 	if(Parts::getInstance().is_empty()) return;
 
-	Part* currentPart = timelineGl->get_current_part();
+	Part* currentPart = TimelineGl::getInstance().get_current_part();
 	if (!currentPart) return;
 
 	chShaderProgram->bind();
@@ -246,7 +246,7 @@ void PiYingGL::paint_in_vector_part()
 	}
 
 	/// 获取选中的part
-	Part* currentPart = timelineGl->get_current_part();
+	Part* currentPart = TimelineGl::getInstance().get_current_part();
 	glBindVertexArray(currentPart->vao_piying());
 
 	/// 开始绘制选中part的边框

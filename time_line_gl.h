@@ -50,8 +50,13 @@ class TimelineGl : public QOpenGLWidget, QOpenGLFunctions_3_3_Core
 	Q_OBJECT
 
 public:
-	TimelineGl(QWidget* parent);
+	TimelineGl();
 	~TimelineGl();
+
+	TimelineGl(const TimelineGl&) = delete;
+	TimelineGl& operator=(const TimelineGl&) = delete;
+
+	static TimelineGl& getInstance();
 
 	float x_map_to_gl(const float x) const;
 	float ratio() const { return _ratio; }

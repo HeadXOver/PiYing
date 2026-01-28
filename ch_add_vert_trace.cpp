@@ -20,7 +20,7 @@ void ChAddVertTrace::click(const QPointF& mouseOri)
 {
 	const QPointF mouse = piYingGL->GLViewProjMatrixInvert(mouseOri);
 
-	Part* part = timelineGl->get_current_part();
+	Part* part = TimelineGl::getInstance().get_current_part();
 
     QPointF existPoint;
     for (unsigned int i = 0; i < part->vertex_size() / 2; i++) {
@@ -57,7 +57,7 @@ void ChAddVertTrace::release(const QPointF& mouse)
 		return;
 	}
 
-	Part* part = timelineGl->get_current_part();
+	Part* part = TimelineGl::getInstance().get_current_part();
 	if (part) part->add_trace(current_index, polygon);
 
 	current_index = -1;
@@ -70,7 +70,7 @@ void ChAddVertTrace::draw()
 
 	const PointVectorLayer& pointLayer = *currentLayer;
 
-	QPointF selectPoint = piYingGL->mapViewProjMatrix(timelineGl->get_current_part()->get_vert(current_index, true));
+	QPointF selectPoint = piYingGL->mapViewProjMatrix(TimelineGl::getInstance().get_current_part()->get_vert(current_index, true));
 
 	QPainter painter(piYingGL);
 	painter.setPen(QPen(Qt::black, 8));

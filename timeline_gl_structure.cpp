@@ -7,7 +7,7 @@
 #include <qopengltexture>
 #include <qmenu>
 
-TimelineGl::TimelineGl(QWidget* parent) : QOpenGLWidget(), _ratio(1.f), _ui_type(spTimelineGL::UiType::Timeline)
+TimelineGl::TimelineGl() : QOpenGLWidget(), _ratio(1.f), _ui_type(spTimelineGL::UiType::Timeline)
 {
 	_drag_same_texture_menu = new QMenu(this);
 	_drag_diff_texture_menu = new QMenu(this);
@@ -78,4 +78,10 @@ TimelineGl::~TimelineGl()
 	////////////////////////////////////////
 
 	doneCurrent();
+}
+
+TimelineGl& TimelineGl::getInstance()
+{
+	static TimelineGl* instance = new TimelineGl();
+	return *instance;
 }

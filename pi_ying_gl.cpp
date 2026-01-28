@@ -270,12 +270,12 @@ void PiYingGL::add_part(const QList<unsigned int>& indices)
 	if (currentVector < 0) return;
 
 	Parts::getInstance().add(new Part(*characterTextures[currentVector]->texture(), indices, editMode == EditMode::characterTexture));
-	timelineGl->update_showing_parts();
-	timelineGl->init_part_cursor();
-	timelineGl->update_is_draw_by_piying();
+	TimelineGl::getInstance().update_showing_parts();
+	TimelineGl::getInstance().init_part_cursor();
+	TimelineGl::getInstance().update_is_draw_by_piying();
 	PiYing::getInstance().update_part_slider();
 	piYingGL->update();
-	timelineGl->update();
+	TimelineGl::getInstance().update();
 }
 
 int PiYingGL::get_group_num() const

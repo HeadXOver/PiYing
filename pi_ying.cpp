@@ -53,9 +53,6 @@ PiYing::PiYing() : QMainWindow(nullptr)
     piYingGL = new PiYingGL(*this);
     piYingGLContainer = new PiYingGLContainer(*piYingGL, ratio, this);
 
-    timeLineGL = new TimelineGl(this);
-    timelineGl = timeLineGL;
-
     splitTimelineOpenGL = new QSplitter(Qt::Vertical, this);
     splitListOpenGL = new QSplitter(Qt::Horizontal, this);
 
@@ -131,7 +128,7 @@ PiYing::PiYing() : QMainWindow(nullptr)
     piYingGL->changeRatio(ratio);
 
     splitTimelineOpenGL->addWidget(piYingGLContainer);
-    splitTimelineOpenGL->addWidget(timeLineGL);
+    splitTimelineOpenGL->addWidget(&TimelineGl::getInstance());
     splitListOpenGL->addWidget(voidListWidget);
     splitListOpenGL->addWidget(splitTimelineOpenGL);
     splitTimelineOpenGL->setSizes({ width() * 5 / 6, width() / 6 });
@@ -152,7 +149,7 @@ PiYing::PiYing() : QMainWindow(nullptr)
     }
 
     piYingGL->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-    timeLineGL->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    TimelineGl::getInstance().setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     voidListWidget->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
 
     modeBox->addItems(
@@ -183,7 +180,7 @@ PiYing::~PiYing()
     safeDelete(piYingGLContainer);
     safeDelete(splitTimelineOpenGL);
     safeDelete(splitListOpenGL);
-    safeDelete(timeLineGL);
+    safeDelete(&TimelineGl::getInstance());
     safeDelete(sliderWidget);
 }
 

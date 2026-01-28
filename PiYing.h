@@ -61,9 +61,6 @@ private:
 	std::unique_ptr<Ui::PiYingClass> ui;
 	static PiYing* _instance;
 
-	// OpenGL widget
-	TimelineGl* timeLineGL = nullptr;
-
 	QSplitter* splitListOpenGL;
 	QSplitter* splitTimelineOpenGL;
 

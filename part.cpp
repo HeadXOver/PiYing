@@ -81,10 +81,10 @@ Part::Part(
 	_height = top - bottom;
 	_width = right - left;
 
-	timelineGl->generate_vbo(*_vert_texture, _vbo);
-	timelineGl->generate_ebo(_indices, _ebo);
+	TimelineGl::getInstance().generate_vbo(*_vert_texture, _vbo);
+	TimelineGl::getInstance().generate_ebo(_indices, _ebo);
 
-	timelineGl->generate_vao(_vao_timeline, _vbo, _ebo);
+	TimelineGl::getInstance().generate_vao(_vao_timeline, _vbo, _ebo);
 	piYingGL->generate_vao(_vao_piying, _vbo, _ebo);
 }
 
@@ -103,10 +103,10 @@ Part::Part(const Part& part1, const Part& part2) : _texture(part1._texture)
 
 	_slide_applier = new SlideApplier(*part1._slide_applier, *part2._slide_applier, tempSize);
 
-	timelineGl->generate_vbo(*_vert_texture, _vbo);
-	timelineGl->generate_ebo(_indices, _ebo);
+	TimelineGl::getInstance().generate_vbo(*_vert_texture, _vbo);
+	TimelineGl::getInstance().generate_ebo(_indices, _ebo);
 
-	timelineGl->generate_vao(_vao_timeline, _vbo, _ebo);
+	TimelineGl::getInstance().generate_vao(_vao_timeline, _vbo, _ebo);
 	piYingGL->generate_vao(_vao_piying, _vbo, _ebo);
 
 	update_scale();
@@ -130,10 +130,10 @@ Part::Part(const Part& other) :
 	static_assert(std::is_trivially_copyable_v<Joint>, "Must be trivially copyable");
 	std::memcpy(_joint.get(), other._joint.get(), sizeof(Joint));
 
-	timelineGl->generate_vbo(*_vert_texture, _vbo);
-	timelineGl->generate_ebo(_indices, _ebo);
+	TimelineGl::getInstance().generate_vbo(*_vert_texture, _vbo);
+	TimelineGl::getInstance().generate_ebo(_indices, _ebo);
 
-	timelineGl->generate_vao(_vao_timeline, _vbo, _ebo);
+	TimelineGl::getInstance().generate_vao(_vao_timeline, _vbo, _ebo);
 	piYingGL->generate_vao(_vao_piying, _vbo, _ebo); 
 
 	for (size_t i = 0; i < other._children.size(); i++) {
@@ -260,7 +260,7 @@ bool Part::eat_another_part(Part& other)
 
 	_slide_applier->eat_other_sliders(other._slide_applier, tempSize);
 
-	timelineGl->update_buffers(*_vert_texture, _indices, _vbo, _ebo);
+	TimelineGl::getInstance().update_buffers(*_vert_texture, _indices, _vbo, _ebo);
 
 	return true;
 }
@@ -287,8 +287,8 @@ void Part::change_slider_value(int sliderIndex, int value)
 		layer.set_point(true, key, displacement + layer_origin.get(key, true)); 
 	}
 
-	timelineGl->update_vbo(*_vert_texture, _vbo);
-	timelineGl->update();
+	TimelineGl::getInstance().update_vbo(*_vert_texture, _vbo);
+	TimelineGl::getInstance().update();
 	piYingGL->update();
 }
 
@@ -300,7 +300,7 @@ void Part::remove_slider(int sliderIndex)
 
 void Part::release_buffers()
 {
-	timelineGl->release_buffers(_vao_timeline, _vbo, _ebo);
+	TimelineGl::getInstance().release_buffers(_vao_timeline, _vbo, _ebo);
 	piYingGL->release_buffers(_vao_piying);
 }
 

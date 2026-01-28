@@ -35,7 +35,7 @@ CtrlSlideLayout::CtrlSlideLayout(QString labelName, unsigned int id, int default
 
     connect(slider, &QSlider::valueChanged, this, [id](int value)
         {
-            Part* part = timelineGl->get_current_part();
+            Part* part = TimelineGl::getInstance().get_current_part();
             if(part) part->change_slider_value(id, value);
         }
     );

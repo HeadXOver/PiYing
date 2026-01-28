@@ -36,7 +36,7 @@ void PiYing::change_edit_mode_overview()
 
     splitTimelineOpenGL->setSizes({ width() * 5 / 6, width() / 6 });
 
-    timeLineGL->set_to_timeline();
+    TimelineGl::getInstance().set_to_timeline();
 
     piYingGL->setChTool(CharacterToolState::None);
     piYingGL->setEditMode(EditMode::OverView);
@@ -49,7 +49,7 @@ void PiYing::change_edit_mode_background()
 
     splitTimelineOpenGL->setSizes({ width() * 5 / 6, width() / 6 });
 
-    timeLineGL->set_to_timeline();
+    TimelineGl::getInstance().set_to_timeline();
 
     piYingGL->setChTool(CharacterToolState::None);
     piYingGL->setEditMode(EditMode::BackGround);
@@ -62,7 +62,7 @@ void PiYing::change_edit_mode_character_texture()
 
     splitTimelineOpenGL->setSizes({ width() * 3 / 4, width() / 4 });
 
-    timeLineGL->set_to_part();
+    TimelineGl::getInstance().set_to_part();
 
     piYingGL->setEditMode(EditMode::characterTexture);
 
@@ -87,7 +87,7 @@ void PiYing::change_edit_mode_character_skeleton()
 
     splitTimelineOpenGL->setSizes({ width() * 3 / 4, width() / 4 });
 
-    timeLineGL->set_to_part();
+    TimelineGl::getInstance().set_to_part();
 
     piYingGL->setEditMode(EditMode::characterSkeleton);
 
@@ -108,7 +108,7 @@ void PiYing::change_edit_mode_character_skeleton()
 void PiYing::change_edit_mode_character_constrol_slider()
 {
     splitListOpenGL->widget(0)->setParent(nullptr);
-    Part* part = timelineGl->get_current_part();
+    Part* part = TimelineGl::getInstance().get_current_part();
     if(part)
         splitListOpenGL->insertWidget(0, sliderWidget);
     else
@@ -118,7 +118,7 @@ void PiYing::change_edit_mode_character_constrol_slider()
 
     splitTimelineOpenGL->setSizes({ width() * 3 / 4, width() / 4 });
 
-    timeLineGL->set_to_part();
+    TimelineGl::getInstance().set_to_part();
 
     for (ToolButton* item : toolControlSliderList) {
         ui->mainToolBar->addAction(item->action());
@@ -138,7 +138,7 @@ void PiYing::update_part_slider()
 {
     if (piYingGL->editMode != EditMode::controlSlide) return;
 
-    Part* part = timelineGl->get_current_part();
+    Part* part = TimelineGl::getInstance().get_current_part();
     if (part) {
         if (splitListOpenGL->widget(0) == voidListWidget) {
             splitListOpenGL->widget(0)->setParent(nullptr);
