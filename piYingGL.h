@@ -42,10 +42,11 @@ class PiYingGL : public QOpenGLWidget, QOpenGLFunctions_3_3_Core
 {
 	Q_OBJECT
 
-public:
+private:
 	explicit PiYingGL();
 	virtual ~PiYingGL();
 
+public:
 	PiYingGL(const PiYingGL&) = delete;
 	PiYingGL& operator=(const PiYingGL&) = delete;
 
