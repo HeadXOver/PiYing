@@ -12,7 +12,6 @@ int main(int argc, char *argv[])
         app.setStyleSheet(qss.readAll());
         qss.close();
     }
-    app.setFont(QFont("Segoe UI", 9));
 
     PiYing window;
     window.showMaximized();

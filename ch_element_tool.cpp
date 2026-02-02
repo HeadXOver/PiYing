@@ -18,27 +18,6 @@
 
 #include <qpointf>
 
-namespace {
-
-	constexpr void(*construct[])(ChElementTool* chElementTool) = {
-		nullptr,
-		[](ChElementTool* chElementTool) {chElementTool->construct_add_triangle(); },
-		[](ChElementTool* chElementTool) {chElementTool->construct_rect_select(); },
-		[](ChElementTool* chElementTool) {chElementTool->construct_libre_select(); },
-		[](ChElementTool* chElementTool) {chElementTool->construct_add_poly(); },
-		[](ChElementTool* chElementTool) {chElementTool->construct_add_round(); },
-		[](ChElementTool* chElementTool) {chElementTool->construct_add_vert_trace(); },
-		[](ChElementTool* chElementTool) {chElementTool->construct_rect_select_triangle(); },
-		[](ChElementTool* chElementTool) {chElementTool->construct_libre_select_triangle(); }
-	};
-
-	using stuct_handler = void(*)(ChElementTool*);
-	constexpr stuct_handler map_construct(CharacterToolState state) {
-		return construct[static_cast<int>(state)];
-	}
-
-}
-
 void ChElementTool::construct_add_triangle()
 {
 	std::shared_ptr<AddTriangle> addTriangle = std::make_shared<AddTriangle>();
@@ -124,9 +103,17 @@ void ChElementTool::construct_libre_select_triangle()
 
 ChElementTool::ChElementTool(CharacterToolState chToolState)
 {
-	if (chToolState == CharacterToolState::None) return;
-
-	map_construct(chToolState)(this);
+	switch (chToolState) {
+	case CharacterToolState::None: return;
+	case CharacterToolState::AddTriangle: construct_add_triangle(); break;
+	case CharacterToolState::AddPoly: construct_add_poly(); break;
+	case CharacterToolState::AddRound: construct_add_round(); break;
+	case CharacterToolState::RectSelectVert: construct_rect_select(); break;
+	case CharacterToolState::LibreSelectVert: construct_libre_select(); break;
+	case CharacterToolState::AddVertTrace: construct_add_vert_trace(); break;
+	case CharacterToolState::RectSelectTriangle: construct_rect_select_triangle(); break;
+	case CharacterToolState::LibreSelectTriangle: construct_libre_select_triangle(); break;
+	}
 }
 
 ChElementTool::~ChElementTool()
