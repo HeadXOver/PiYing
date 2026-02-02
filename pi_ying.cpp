@@ -6,6 +6,7 @@
 #include "piYingGLContainer.h"
 #include "tool_button.h"
 #include "time_line_gl.h"
+#include "cus_func_string.h"
 
 #include "enum_edit_mode.h"
 #include "enum_character_texture_tool_state.h"
@@ -58,16 +59,16 @@ PiYing::PiYing() : QMainWindow(nullptr)
 
     _select_button = new ToolButton(":/PiYing/selectRectChVert_S.png", ":/PiYing/selectRectChVert.png", "selectRectChVert", CharacterToolState::RectSelectVert, this);
 
-    toolChTexList.append(_select_button);
-    toolChTexList.append(new ToolButton(":/PiYing/addChVert_S.png", ":/PiYing/addChVert.png", "addChVert", CharacterToolState::AddTriangle, this));
-    toolChTexList.append(new ToolButton(":/PiYing/chAddPoly_S.png", ":/PiYing/chAddPoly.png", "chAddPoly", CharacterToolState::AddPoly, this));
-    toolChTexList.append(new ToolButton(":/PiYing/chAddRound_S.png", ":/PiYing/chAddRound.png", "chAddRound", CharacterToolState::AddRound, this));
+    toolChTexList.push_back(_select_button);
+    toolChTexList.push_back(new ToolButton(":/PiYing/addChVert_S.png", ":/PiYing/addChVert.png", "addChVert", CharacterToolState::AddTriangle, this));
+    toolChTexList.push_back(new ToolButton(":/PiYing/chAddPoly_S.png", ":/PiYing/chAddPoly.png", "chAddPoly", CharacterToolState::AddPoly, this));
+    toolChTexList.push_back(new ToolButton(":/PiYing/chAddRound_S.png", ":/PiYing/chAddRound.png", "chAddRound", CharacterToolState::AddRound, this));
 
     for (ToolButton* item : toolChTexList) {
         connect(item->action(), &QAction::triggered, this, [this, item]() {select_tool_texture(item); });
     }
 
-    toolControlSliderList.append(new ToolButton(":/PiYing/addVertTrace_S.png", ":/PiYing/addVertTrace.png", "addVertTrace", CharacterToolState::AddVertTrace, this));
+    toolControlSliderList.push_back(new ToolButton(":/PiYing/addVertTrace_S.png", ":/PiYing/addVertTrace.png", "addVertTrace", CharacterToolState::AddVertTrace, this));
 
     for (ToolButton* item : toolControlSliderList) {
         connect(item->action(), &QAction::triggered, this, [this, item]() {select_tool_control_slider(item); });
@@ -77,7 +78,7 @@ PiYing::PiYing() : QMainWindow(nullptr)
         connect(item->action(), &QAction::triggered, this, [this, item]() {select_tool_skelen(item); });    
     }
 
-    toolChSkelenList.append(_select_button); ///< 在连接之后添加，因为chRectSelectVert在toolChSkelenList中
+    toolChSkelenList.push_back(_select_button); ///< 在连接之后添加，因为chRectSelectVert在toolChSkelenList中
 
     QComboBox* modeBox = new QComboBox(this);
 
@@ -312,4 +313,46 @@ void PiYing::askScreenScale() {
     piYingGLContainer->setRatio(ratio);
     piYingGLContainer->update();
     PiYingGL::getInstance().changeRatio(ratio);
+}
+
+void PiYing::set_piying_gl_ratio(double ratio)
+{
+    piYingGLContainer->setRatio(ratio);
+    piYingGLContainer->update();
+}
+
+void PiYing::add_bg_item(QListWidgetItem* item)
+{
+    bgImageList->addItem(item);
+
+    if (getCurrentBgRow() < 0) bgImageList->setCurrentRow(0);
+}
+
+void PiYing::add_ch_item(QListWidgetItem* item)
+{
+    chImageList->addItem(item);
+
+    if (getCurrentChRow() < 0) chImageList->setCurrentRow(0);
+}
+
+void PiYing::delete_current_bg_item()
+{
+    delete bgImageList->takeItem(getCurrentBgRow());
+}
+
+void PiYing::delete_all_bg_item()
+{
+    for (int i = bgImageList->count() - 1; i >= 0; i--) {
+        delete bgImageList->takeItem(i);
+    }
+}
+
+QString PiYing::get_unique_bg_list_name() const
+{
+    return getUniqueListName(bgImageList);
+}
+
+QString PiYing::get_unique_ch_list_name() const
+{
+    return getUniqueListName(chImageList);
 }

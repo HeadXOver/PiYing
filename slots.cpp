@@ -4,6 +4,7 @@
 #include "image_transform.h"
 #include "image_texture.h"
 #include "AskTransformDialog.h"
+#include "cus_ask.h"
 
 #include <qmessagebox>
 #include <qlistwidget>
@@ -91,41 +92,28 @@ void PiYingGL::againstBg()
 
 void PiYingGL::deleteBg()
 {
-	const int ret = QMessageBox::question(
-		this,
-		tr("提示"),
-		tr("删除背景图？"),
-		QMessageBox::Yes | QMessageBox::No,
-		QMessageBox::No
-	);
-
-	if (ret != QMessageBox::Yes) return;
+	if (!CUS_YES_OR_NO("删除背景图？")) return;
 
 	delete backGrounds[getCurrentBgRow()];
 	backGrounds.removeAt(getCurrentBgRow());
-	delete PiYing::getInstance().bgImageList->takeItem(getCurrentBgRow());
+	PiYing::getInstance().delete_current_bg_item();
+
 	update();
 }
 
 void PiYingGL::deleteAllBg()
 {
-	const int ret = QMessageBox::question(
-		this,
-		tr("提示"),
-		tr("删除全部背景图？"),
-		QMessageBox::Yes | QMessageBox::No,
-		QMessageBox::No
-	);
+	if (!CUS_YES_OR_NO("删除全部背景图？")) return;
 
-	if (ret == QMessageBox::Yes) {
-		for (ImageTexture* item : backGrounds) {
-			delete item;
-		}
-		backGrounds.clear();
-		for (int i = PiYing::getInstance().bgImageList->count() - 1; i >= 0; i--) {
-			delete PiYing::getInstance().bgImageList->takeItem(i);
-		}
-		PiYing::getInstance().bgImageList->clear();
-		update();
+	for (ImageTexture* item : backGrounds) {
+		delete item;
 	}
+
+	backGrounds.clear();
+
+	PiYing::getInstance().delete_all_bg_item();
+
+	assert(backGrounds.empty());
+
+	update();
 }

@@ -3,4 +3,4 @@
 class QListWidget;
 class QString;
 
-QString getUniquebgName(const QListWidget* list);
+QString getUniqueListName(const QListWidget* list);

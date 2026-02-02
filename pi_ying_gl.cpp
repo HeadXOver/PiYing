@@ -65,12 +65,10 @@ void PiYingGL::appendBgList(const QImage& image)
 
 	QIcon icon(QPixmap::fromImage(image).scaled(50, 50, Qt::KeepAspectRatio, Qt::SmoothTransformation));
 
-	QListWidgetItem* item = new QListWidgetItem(icon, getUniquebgName(PiYing::getInstance().bgImageList));
+	QListWidgetItem* item = new QListWidgetItem(icon, PiYing::getInstance().get_unique_bg_list_name());
 	item->setTextAlignment(Qt::AlignCenter);
 
-	PiYing::getInstance().bgImageList->addItem(item);
-
-	if (getCurrentBgRow() < 0) PiYing::getInstance().bgImageList->setCurrentRow(0);
+	PiYing::getInstance().add_bg_item(item);
 }
 
 void PiYingGL::add_character(const QString& imageName)
@@ -89,16 +87,15 @@ void PiYingGL::add_character(const QString& imageName)
 
 	QIcon icon(QPixmap::fromImage(img).scaled(50, 50, Qt::KeepAspectRatio, Qt::SmoothTransformation));
 
-	QListWidgetItem* item = new QListWidgetItem(icon, getUniquebgName(PiYing::getInstance().chImageList));
+	QListWidgetItem* item = new QListWidgetItem(icon, PiYing::getInstance().get_unique_ch_list_name());
 	item->setTextAlignment(Qt::AlignCenter);
 
-	PiYing::getInstance().chImageList->addItem(item);
-
 	if (getCurrentChRow() < 0) {
-		PiYing::getInstance().chImageList->setCurrentRow(0);
 		_currentLayer = new PointVectorLayer(*characterVerts[0]);
 		_currentIndex = &characterTriangleIndices[0];
 	}
+
+	PiYing::getInstance().add_ch_item(item);
 
 	update();
 }
@@ -202,8 +199,7 @@ void PiYingGL::importBackground()
 
 		if (ret == QMessageBox::Yes) {
 			float ratio = img.width() / (float)img.height();
-			PiYing::getInstance().piYingGLContainer->setRatio(ratio);
-			PiYing::getInstance().piYingGLContainer->update();
+			PiYing::getInstance().set_piying_gl_ratio(ratio);
 			changeRatio(ratio);
 		}
 

@@ -2,12 +2,16 @@
 
 #include <QtWidgets/QMainWindow>
 #include <memory>
+#include <vector>
 
 enum class CharacterToolState;
+
 class CtrlSlideWidget;
 class TimelineGl;
 class ToolButton;
+class QString;
 class PiYingGLContainer;
+class QListWidgetItem;
 class QListWidget;
 class QSplitter;
 
@@ -40,6 +44,14 @@ public:
 	void change_edit_mode_character_constrol_slider();
 
 	void update_part_slider();
+	void set_piying_gl_ratio(double ratio);
+	void add_bg_item(QListWidgetItem* item);
+	void add_ch_item(QListWidgetItem* item);
+	void delete_current_bg_item();
+	void delete_all_bg_item();
+
+	QString get_unique_bg_list_name() const;
+	QString get_unique_ch_list_name() const;
 
 protected:
 	void keyPressEvent(QKeyEvent* event) override;
@@ -64,19 +76,19 @@ private:
 	QSplitter* splitListOpenGL;
 	QSplitter* splitTimelineOpenGL;
 
-	QList<ToolButton*> toolChTexList;
-	QList<ToolButton*> toolChSkelenList;
-	QList<ToolButton*> toolControlSliderList;
+	std::vector<ToolButton*> toolChTexList;
+	std::vector<ToolButton*> toolChSkelenList;
+	std::vector<ToolButton*> toolControlSliderList;
+
 	ToolButton* _select_button;
+
 	QListWidget* voidListWidget;
-
-	CtrlSlideWidget* sliderWidget = nullptr;
-
-public:
-	static QString SLIDER_WIDGET_STYLE_SHEET;
-
 	QListWidget* bgImageList = nullptr;
 	QListWidget* chImageList = nullptr;
 
+	CtrlSlideWidget* sliderWidget = nullptr;
+
 	PiYingGLContainer* piYingGLContainer = nullptr;
+
+	static QString SLIDER_WIDGET_STYLE_SHEET;
 };
