@@ -83,7 +83,6 @@ void PiYingGL::add_character(const QString& imageName)
 	doneCurrent();
 	characterTriangleIndices.push_back(std::vector<unsigned int>());
 	characterVerts.push_back(new PointVector());
-	_character_vert_groups.push_back(new VertGroups());
 
 	QIcon icon(QPixmap::fromImage(img).scaled(50, 50, Qt::KeepAspectRatio, Qt::SmoothTransformation));
 
@@ -270,11 +269,4 @@ void PiYingGL::add_part(const QList<unsigned int>& indices)
 	PiYing::getInstance().update_part_slider();
 	update();
 	TimelineGl::getInstance().update();
-}
-
-int PiYingGL::get_group_num() const
-{
-	const int currentVector = getCurrentChRow();
-	if (currentVector < 0) return 0;
- 	return (int)_character_vert_groups[currentVector]->group_num();
 }

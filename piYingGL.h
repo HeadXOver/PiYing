@@ -107,7 +107,6 @@ public:
 	void draw_selected_triangle(int nSelectedPoint);
 	void draw_triangle_frame(bool isSkelen);
 	void draw_rectangle(float cx, float cy, float width, float height);
-	void draw_group_rectangle(int groupIndex);
 	void update_ch_verts();
 	void update_trc();
 	void update_selected_verts(const std::vector<float>& selectedPoints);
@@ -122,8 +121,6 @@ public:
 
 	void generate_vao(unsigned int& vao, unsigned int vbo, unsigned int ebo);
 	void release_buffers(unsigned int vao);
-
-	int get_group_num() const;
 
 	bool addBackground(const QString& imageName, QImage& image);
 
@@ -186,8 +183,6 @@ private:
 	QList<ImageTexture*> characterTextures;
 
 	QList<PointVector*> characterVerts;
-
-	QList<VertGroups*> _character_vert_groups;
 
 	QList<std::vector<unsigned int>> characterTriangleIndices;
 

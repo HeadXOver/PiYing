@@ -94,39 +94,6 @@ void PiYingGL::draw_rectangle(float cx, float cy, float width, float height)
 	glBindVertexArray(0); ////////////////////////////////////////////////////////
 }
 
-void PiYingGL::draw_group_rectangle(int groupIndex)
-{
-	int currentRow = getCurrentChRow();
-	if (currentRow < 0) return;
-
-	VertGroups& groups = *_character_vert_groups[currentRow];
-	VertGroup& group = *groups[groupIndex];
-
-	size_t vertSize = group.vert_size();
-	if (vertSize <= 1) return;
-
-	PointVectorLayer layer(*characterVerts[currentRow]);
-
-	bool edit_skelon = editMode == EditMode::characterSkeleton;
-
-	QPointF pointInGroup = edit_skelon ? layer[group[0]] : layer(group[0]);
-
-	float top = pointInGroup.y();
-	float left = pointInGroup.x();
-	float bottom = pointInGroup.y();
-	float right = pointInGroup.x();
-
-	for (int i = 1; i < vertSize; i++) {
-		pointInGroup = edit_skelon ? layer[group[i]] : layer(group[i]);
-		top = cus::max(top, pointInGroup.y());
-		left = cus::min(left, pointInGroup.x());
-		bottom = cus::min(bottom, pointInGroup.y());
-		right = cus::max(right, pointInGroup.x());
-	}
-
-	draw_rectangle((left + right) / 2.f, (top + bottom) / 2.f, right - left + 0.05f / viewScale.value(), top - bottom + 0.05f / viewScale.value());
-}
-
 void PiYingGL::paintBackgrounds()
 {
 	draw_view_rectangle();
