@@ -125,11 +125,6 @@ void PiYingGL::initializeGL()
 	glDisable(GL_CULL_FACE);    // 不需要背面剔除
 }
 
-void PiYingGL::resizeGL(int w, int h)
-{
-	
-}
-
 void PiYingGL::paintGL() {
 	glClear(GL_COLOR_BUFFER_BIT);
 	if (editMode == EditMode::BackGround || editMode == EditMode::OverView)	paintBackgrounds();

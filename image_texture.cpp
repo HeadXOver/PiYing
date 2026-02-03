@@ -8,7 +8,8 @@
 
 ImageTexture::ImageTexture(const QImage& image, float currentRatio)
 {
-    _prescale = image.height() * currentRatio / float(image.width());
+    _image_ratio = image.width() / float(image.height());
+    _prescale = currentRatio / _image_ratio;
 
     _transform = std::make_unique<ImageTransform>();
 
@@ -20,6 +21,8 @@ ImageTexture::ImageTexture(const QImage& image, float currentRatio)
 
 ImageTexture::ImageTexture(const QImage& image) : _prescale(1.0f)
 {
+    _image_ratio = image.width() / float(image.height());
+
     _transform = std::make_unique<ImageTransform>();
 
     _texture = std::make_unique<QOpenGLTexture>(image.flipped());
@@ -130,6 +133,19 @@ void ImageTexture::resetTransform() {
 void ImageTexture::bind()
 {
     _texture->bind();
+}
+
+void ImageTexture::set_transform_by_new_ratio(float newRatio)
+{
+    const float oldScale = _prescale;
+    _prescale = newRatio / _image_ratio;
+
+    const float oldNewRatio = _prescale / oldScale;
+
+    _transform->add_scale(oldNewRatio, 1.0f);
+
+    const float oldX = _transform->get_trans_x();
+    _transform->add_trans(oldX * (oldNewRatio - 1.f), 0.0f);
 }
 
 void ImageTexture::operator=(const ImageTransform& transform) {

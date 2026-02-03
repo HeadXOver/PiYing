@@ -266,3 +266,10 @@ void PiYingGL::add_part(const QList<unsigned int>& indices)
 	update();
 	TimelineGl::getInstance().update();
 }
+
+void PiYingGL::resizeGL(int w, int h)
+{
+	for (int i = 0; i < backGrounds.size(); i++) {
+		backGrounds[i]->set_transform_by_new_ratio(w / (float)h);
+	}
+}

@@ -37,6 +37,8 @@ public:
     void resetTransform();
     void bind();
 
+    void set_transform_by_new_ratio(float newRatio);
+
     const ImageTransform& transform() const;
 
     QMatrix4x4 getMatrix() const;
@@ -50,5 +52,6 @@ private:
     std::unique_ptr<ImageTransform> _transform;
 
     float _prescale{ 1.0f };
+    float _image_ratio{ 1.0f };
 };
 
