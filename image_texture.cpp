@@ -94,7 +94,9 @@ void ImageTexture::addRot(float r)
 {
     _transform->add_rot(r);
 }
-QMatrix4x4 ImageTexture::getMatrix() const {
+
+QMatrix4x4 ImageTexture::getMatrix() const 
+{
     return _transform->getMatrix();
 }
 

@@ -124,7 +124,6 @@ public:
 	bool addBackground(const QString& imageName, float& o_ratio);
 
 	QPointF getRaletiveToRect(const QPointF& point, const ImageTransform& transform) const;
-	QPointF getRaletiveToGlobal(const QPointF& point, const ImageTransform& transform) const;
 	QPointF mapToGL(const QPointF& point) const;
 	QPointF mapToGL(float x, float y) const;
 	QPointF glToMap(const QPointF& point) const;
@@ -135,7 +134,7 @@ public:
 
 	QMatrix4x4 getViewMatrixInvert() const;
 	QMatrix4x4 getViewMatrix() const;
-	QMatrix4x4 getBgShaderMatrix(const ImageTransform& transform) const;
+	QMatrix4x4 getBgShaderMatrix(const QMatrix4x4& transform) const;
 	QMatrix4x4 getViewProjMatrixInvert() const;
 	QMatrix4x4 getViewProjMatrix() const;
 	QMatrix4x4 getProj() const;

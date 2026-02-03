@@ -44,9 +44,10 @@ public:
     QOpenGLTexture* texture() const;
 
 private:
-
     std::unique_ptr<QOpenGLTexture> _texture;
 
     std::unique_ptr<ImageTransform> _transform;
+
+    float ratio{ 1.0f };
 };
 

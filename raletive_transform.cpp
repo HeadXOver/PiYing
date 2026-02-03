@@ -7,11 +7,6 @@ QPointF PiYingGL::getRaletiveToRect(const QPointF& point, const ImageTransform& 
 	return (proj * transform.getMatrixInvert() * getViewMatrixInvert() * insProj).map(point); 
 }
 
-QPointF PiYingGL::getRaletiveToGlobal(const QPointF& point, const ImageTransform& transform) const
-{ 
-	return getBgShaderMatrix(transform).map(point);
-}
-
 QPointF PiYingGL::mapToGL(const QPointF& point) const
 { 
 	return QPointF((point.x() / float(width())) * 2.0f - 1.0f, 1.0f - (point.y() / float(height())) * 2.0f); 
@@ -61,9 +56,9 @@ QMatrix4x4 PiYingGL::getViewMatrix() const {
 	return mViewTransform;
 }
 
-QMatrix4x4 PiYingGL::getBgShaderMatrix(const ImageTransform& transform) const
+QMatrix4x4 PiYingGL::getBgShaderMatrix(const QMatrix4x4& transform) const
 { 
-	return proj * getViewMatrix() * transform.getMatrix() * insProj; 
+	return proj * getViewMatrix() * transform * insProj;
 }
 
 QMatrix4x4 PiYingGL::getViewProjMatrixInvert() const

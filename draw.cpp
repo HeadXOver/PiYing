@@ -106,7 +106,7 @@ void PiYingGL::paintBackgrounds()
 		ImageTexture* it = backGrounds[i];
 		it->bind();
 
-		_texture_color_shader_programme->setUniformValue("trc", getBgShaderMatrix(it->transform()));
+		_texture_color_shader_programme->setUniformValue("trc", getBgShaderMatrix(it->getMatrix()));
 		if (i == getCurrentBgRow()) {
 			_texture_color_shader_programme->setUniformValue("aColor", QVector4D(1.0f, 0.8f, 0.8f, 1.0f));
 			glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);

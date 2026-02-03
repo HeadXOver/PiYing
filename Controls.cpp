@@ -26,7 +26,7 @@ namespace {
 void PiYingGL::bgRotationControl(const QPointF& mouse, ImageTexture& image)
 {
 	setCursor(Qt::CursorShape::ClosedHandCursor);
-	QPointF center = getBgShaderMatrix(*lastImageTransform).map(QPointF(0.f, 0.f));
+	QPointF center = getBgShaderMatrix(lastImageTransform->getMatrix()).map(QPointF(0.f, 0.f));
 	QPointF vec1 = insProj.map(lastMousePos - center);
 	QPointF vec2 = insProj.map(mouse - center);
 	image = *lastImageTransform;
