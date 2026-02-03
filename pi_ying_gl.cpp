@@ -45,15 +45,17 @@ void PiYingGL::addBackground(const QString& imageName) {
 	update();
 }
 
-bool PiYingGL::addBackground(const QString& imageName, QImage& image)
+bool PiYingGL::addBackground(const QString& imageName, float& o_ratio)
 {
 	QImage img;
 	if (!img.load(imageName)) {
 		QMessageBox::warning(this, "Warning", "Failed to load image: " + imageName);
 		return false;
 	}
+
+	o_ratio = img.width() / (float)img.height();
+
 	appendBgList(img);
-	image = img;
 
 	update();
 	return true;
@@ -175,7 +177,7 @@ void PiYingGL::changeRatio(float ratio)
 		proj.setToIdentity();
 		proj.ortho(-1, 1, -1.0f / ratio, 1.0f / ratio, -1, 1);
 		insProj.setToIdentity();
-		insProj.ortho(-1, 1, ratio, ratio, -1, 1);
+		insProj.ortho(-1, 1, -ratio, ratio, -1, 1);
 	}
 	update();
 }
@@ -185,8 +187,8 @@ void PiYingGL::importBackground()
 	QStringList fileNames = QFileDialog::getOpenFileNames(this, "选择背景图", ".", "Images (*.png *.xpm *.jpg)");
 
 	if (fileNames.size() == 1) {
-		QImage img;
-		if (!addBackground(fileNames[0], img)) return;
+		float ratio;
+		if (!addBackground(fileNames[0], ratio)) return;
 
 		int ret = QMessageBox::question(
 			this,
@@ -197,7 +199,6 @@ void PiYingGL::importBackground()
 		);
 
 		if (ret == QMessageBox::Yes) {
-			float ratio = img.width() / (float)img.height();
 			PiYing::getInstance().set_piying_gl_ratio(ratio);
 			changeRatio(ratio);
 		}
@@ -250,11 +251,6 @@ int PiYingGL::getCurrentBgRow() const
 int PiYingGL::getCurrentChRow() const
 {
 	return PiYing::getInstance().getCurrentChRow();
-}
-
-void PiYingGL::addGlobalAction(QMenu* menu, const QList<QAction*> action)
-{
-	for (QAction* item : action)  menu->addAction(item);
 }
 
 void PiYingGL::add_part(const QList<unsigned int>& indices)

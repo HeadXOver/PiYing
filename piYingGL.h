@@ -59,8 +59,8 @@ private:
 	void paint_selected_part();
 	void paint_in_vector_part();
 	void draw_view_rectangle();
+	void appendBgList(const QImage& image);
 	void addChVert(const QPointF& point);
-	void addGlobalAction(QMenu* menu, const QList<QAction*> action);
 
 	int getCurrentBgRow() const;
 	int getCurrentChRow() const;
@@ -87,7 +87,6 @@ protected:
 
 public:
 	void addBackground(const QString& imageName);
-	void appendBgList(const QImage& image);
 	void add_character(const QString& imageName);
 	void setEditMode(EditMode mode);
 	void update_ch_tool();
@@ -122,7 +121,7 @@ public:
 	void generate_vao(unsigned int& vao, unsigned int vbo, unsigned int ebo);
 	void release_buffers(unsigned int vao);
 
-	bool addBackground(const QString& imageName, QImage& image);
+	bool addBackground(const QString& imageName, float& o_ratio);
 
 	QPointF getRaletiveToRect(const QPointF& point, const ImageTransform& transform) const;
 	QPointF getRaletiveToGlobal(const QPointF& point, const ImageTransform& transform) const;

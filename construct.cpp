@@ -16,6 +16,13 @@
 #include <qmenu>
 #include <qstatusbar>
 
+namespace {
+	void addGlobalAction(QMenu* menu, const QList<QAction*> action)
+	{
+		for (QAction* item : action)  menu->addAction(item);
+	}
+}
+
 PiYingGL::PiYingGL() : 
 	QOpenGLWidget(&PiYing::getInstance()),
 	viewScale(1.f)
