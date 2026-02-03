@@ -8,6 +8,7 @@
 #include "enum_character_texture_tool_state.h"
 
 #include <QOpenGLShaderProgram.h>
+#include <qmessagebox>
 
 void PiYingGL::initializeGL()
 {
@@ -122,6 +123,11 @@ void PiYingGL::initializeGL()
 	glLineWidth(3.0f);
 	glDisable(GL_DEPTH_TEST);   // 不需要深度测试
 	glDisable(GL_CULL_FACE);    // 不需要背面剔除
+}
+
+void PiYingGL::resizeGL(int w, int h)
+{
+	
 }
 
 void PiYingGL::paintGL() {

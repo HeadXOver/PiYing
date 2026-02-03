@@ -11,6 +11,7 @@ class QMatrix4x4;
 class ImageTexture final
 {
 public:
+    ImageTexture(const QImage& image, float currentRatio);
     ImageTexture(const QImage& image);
     ~ImageTexture();
 
@@ -48,6 +49,6 @@ private:
 
     std::unique_ptr<ImageTransform> _transform;
 
-    float ratio{ 1.0f };
+    float _prescale{ 1.0f };
 };
 

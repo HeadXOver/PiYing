@@ -6,7 +6,19 @@
 #include <qimage>
 #include <qpointf>
 
-ImageTexture::ImageTexture(const QImage& image)
+ImageTexture::ImageTexture(const QImage& image, float currentRatio)
+{
+    _prescale = image.height() * currentRatio / float(image.width());
+
+    _transform = std::make_unique<ImageTransform>();
+
+    _texture = std::make_unique<QOpenGLTexture>(image.flipped());
+    _texture->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
+    _texture->setMagnificationFilter(QOpenGLTexture::Linear);
+    _texture->setWrapMode(QOpenGLTexture::ClampToEdge);
+}
+
+ImageTexture::ImageTexture(const QImage& image) : _prescale(1.0f)
 {
     _transform = std::make_unique<ImageTransform>();
 
@@ -47,7 +59,7 @@ void ImageTexture::setRot(const QMatrix4x4& point)
 
 void ImageTexture::setScale(float x, float y)
 {
-    _transform->set_scale(x, y);
+    _transform->set_scale(x * _prescale, y);
 }
 
 void ImageTexture::setScale(const QPointF& point)
@@ -57,7 +69,7 @@ void ImageTexture::setScale(const QPointF& point)
 
 void ImageTexture::setScale(float s)
 {
-    _transform->set_scale(s);
+    _transform->set_scale(s * _prescale, s);
 }
 
 void ImageTexture::setScale(const QMatrix4x4& point)
@@ -112,6 +124,7 @@ QOpenGLTexture* ImageTexture::texture() const
 
 void ImageTexture::resetTransform() {
     _transform->reset();
+    _transform->set_scale(_prescale, 1.0f);
 }
 
 void ImageTexture::bind()

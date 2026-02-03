@@ -63,7 +63,7 @@ bool PiYingGL::addBackground(const QString& imageName, float& o_ratio)
 
 void PiYingGL::appendBgList(const QImage& image)
 {
-	backGrounds.append(new ImageTexture(image));
+	backGrounds.append(new ImageTexture(image, width() / float(height())));
 
 	QIcon icon(QPixmap::fromImage(image).scaled(50, 50, Qt::KeepAspectRatio, Qt::SmoothTransformation));
 
