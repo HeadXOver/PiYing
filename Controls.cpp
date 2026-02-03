@@ -42,8 +42,8 @@ void PiYingGL::bgTranslateControl(const QPointF& mouse, ImageTexture& image)
 
 void PiYingGL::bgScaleControl(const QPointF& mouse, ImageTexture& image)
 {
-	const QPointF mouseRaletive = getRaletiveToRect(mouse, *lastImageTransform);
-	const QPointF LastMouseRaletive = getRaletiveToRect(lastMousePos, *lastImageTransform);
+	const QPointF mouseRaletive = getRaletiveToRect(mouse, lastImageTransform->getMatrixInvert());
+	const QPointF LastMouseRaletive = getRaletiveToRect(lastMousePos, lastImageTransform->getMatrixInvert());
 	QPointF pAspect(1.0f, 1.0f);
 
 	image = *lastImageTransform;

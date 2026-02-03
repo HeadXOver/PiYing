@@ -20,7 +20,7 @@ void PiYingGL::mousePressEvent(QMouseEvent* event)
 			if(cur < 0) return;
 
 			ImageTexture* item = backGrounds[cur];
-			QPointF posV = getRaletiveToRect(lastMousePos, item->transform());
+			QPointF posV = getRaletiveToRect(lastMousePos, item->getMatrixInvert());
 			if (isInsideSquare(posV)) {
 				lastMousePosType = getMousePosType(posV);
 				*lastImageTransform = item->transform();
@@ -93,7 +93,7 @@ void PiYingGL::mouseMoveEvent(QMouseEvent* event) {
 		if (editMode != EditMode::BackGround) return;
 
 		int cur = getCurrentBgRow();
-		if (cur >= 0) setCursor(getCursorShape(getMousePosType(getRaletiveToRect(mouse, backGrounds[cur]->transform()))));
+		if (cur >= 0) setCursor(getCursorShape(getMousePosType(getRaletiveToRect(mouse, backGrounds[cur]->getMatrixInvert()))));
 		else setCursor(Qt::CursorShape::ArrowCursor);
 	}
 }

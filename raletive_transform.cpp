@@ -2,9 +2,9 @@
 
 #include "image_transform.h"
 
-QPointF PiYingGL::getRaletiveToRect(const QPointF& point, const ImageTransform& transform) const
+QPointF PiYingGL::getRaletiveToRect(const QPointF& point, const QMatrix4x4& transform) const
 {
-	return (proj * transform.getMatrixInvert() * getViewMatrixInvert() * insProj).map(point); 
+	return (proj * transform * getViewMatrixInvert() * insProj).map(point);
 }
 
 QPointF PiYingGL::mapToGL(const QPointF& point) const

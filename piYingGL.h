@@ -123,7 +123,7 @@ public:
 
 	bool addBackground(const QString& imageName, float& o_ratio);
 
-	QPointF getRaletiveToRect(const QPointF& point, const ImageTransform& transform) const;
+	QPointF getRaletiveToRect(const QPointF& point, const QMatrix4x4& transform) const;
 	QPointF mapToGL(const QPointF& point) const;
 	QPointF mapToGL(float x, float y) const;
 	QPointF glToMap(const QPointF& point) const;
