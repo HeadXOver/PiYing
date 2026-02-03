@@ -13,6 +13,8 @@ ImageTexture::ImageTexture(const QImage& image, float currentRatio)
 
     _transform = std::make_unique<ImageTransform>();
 
+    _transform->set_scale(1.f, _prescale);
+
     _texture = std::make_unique<QOpenGLTexture>(image.flipped());
     _texture->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
     _texture->setMagnificationFilter(QOpenGLTexture::Linear);
@@ -62,7 +64,7 @@ void ImageTexture::setRot(const QMatrix4x4& point)
 
 void ImageTexture::setScale(float x, float y)
 {
-    _transform->set_scale(x * _prescale, y);
+    _transform->set_scale(x, y * _prescale);
 }
 
 void ImageTexture::setScale(const QPointF& point)
@@ -72,7 +74,7 @@ void ImageTexture::setScale(const QPointF& point)
 
 void ImageTexture::setScale(float s)
 {
-    _transform->set_scale(s * _prescale, s);
+    _transform->set_scale(s, s * _prescale);
 }
 
 void ImageTexture::setScale(const QMatrix4x4& point)
@@ -127,7 +129,7 @@ QOpenGLTexture* ImageTexture::texture() const
 
 void ImageTexture::resetTransform() {
     _transform->reset();
-    _transform->set_scale(_prescale, 1.0f);
+    _transform->set_scale(1.f, _prescale);
 }
 
 void ImageTexture::bind()
@@ -142,10 +144,11 @@ void ImageTexture::set_transform_by_new_ratio(float newRatio)
 
     const float oldNewRatio = _prescale / oldScale;
 
-    _transform->add_scale(oldNewRatio, 1.0f);
+    _transform->add_scale(1.0f, oldNewRatio);
 
     const float oldX = _transform->get_trans_x();
-    _transform->add_trans(oldX * (oldNewRatio - 1.f), 0.0f);
+    const float oldY = _transform->get_trans_y();
+    _transform->set_trans(oldX * oldNewRatio, oldY * oldNewRatio);
 }
 
 void ImageTexture::operator=(const ImageTransform& transform) {
