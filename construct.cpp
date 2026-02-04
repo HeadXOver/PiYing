@@ -39,8 +39,8 @@ PiYingGL::PiYingGL() :
 	lastImageTransform =std::make_unique<ImageTransform>();
 	
 	float ratio = 16.f / 9.f;
-	proj.ortho(-ratio, ratio, -1, 1, -1, 1);
-	insProj.ortho(-1.0f / ratio, 1.0f / ratio, -1, 1, -1, 1);
+	_orth_ratio.ortho(-ratio, ratio, -1, 1, -1, 1);
+	_orth_ratio_invert.ortho(-1.0f / ratio, 1.0f / ratio, -1, 1, -1, 1);
 
 #pragma region right button menu
 

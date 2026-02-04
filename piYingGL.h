@@ -190,8 +190,8 @@ private:
 	float lastViewTransX = 0.f;
 	float lastViewTransY = 0.f;
 
-	QMatrix4x4 proj;
-	QMatrix4x4 insProj;
+	QMatrix4x4 _orth_ratio;
+	QMatrix4x4 _orth_ratio_invert;
 
 	std::unique_ptr<ImageTransform> lastImageTransform;
 

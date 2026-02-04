@@ -4,6 +4,7 @@
 #include <memory>
 #include <qmatrix4x4>
 
+class ImageTexture;
 class QOpenGLTexture;
 class PointVector;
 class QPointF;
@@ -16,7 +17,7 @@ class Joint;
 class Part final
 {
 public:
-	Part(QOpenGLTexture& texture, const QList<unsigned int>& indices, bool isTexture);
+	Part(ImageTexture& texture, const QList<unsigned int>& indices, bool isTexture);
 	Part(const Part& part1, const Part& part2);
 	Part(const Part& part);
 	~Part();
@@ -49,6 +50,8 @@ public:
 	float height() const;
 	float width() const;
 
+	float get_prescale() const;
+
 	bool same_texture_as(Part* other) const;
 	bool is_root() const;
 	bool have_child() const;
@@ -67,6 +70,8 @@ private:
 	float _y{ 0.f };
 	float _height{ 2.f };
 	float _width{ 2.f };
+	
+	const float _prescale;
 
 	unsigned int _vao_timeline;
 	unsigned int _vao_piying;

@@ -152,7 +152,7 @@ void PiYingGL::paintCharacterTexture()
 
 	characterTextures[i]->bind();
 
-	_texture_color_shader_programme->setUniformValue("trc", getViewProjMatrix());
+	_texture_color_shader_programme->setUniformValue("trc", getViewMatrix() * characterTextures[i]->getMatrix());
 
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
@@ -189,6 +189,7 @@ void PiYingGL::paint_applied_texture()
 	glBindVertexArray(chVAO); ////////////////////////////////////////////////////
 
 	_ch_shader_program->bind();
+	_ch_shader_program->setUniformValue("prescale", characterTextures[i]->get_prescale());
 
 	characterTextures[i]->bind();
 	glDrawElements(GL_TRIANGLES, (GLsizei)characterTriangleIndices[i].size(), GL_UNSIGNED_INT, 0);
@@ -204,6 +205,7 @@ void PiYingGL::paint_selected_part()
 	if (!currentPart) return;
 
 	_ch_shader_program->bind();
+	_ch_shader_program->setUniformValue("prescale", currentPart->get_prescale());
 
 	glBindVertexArray(currentPart->vao_piying());
 
@@ -226,6 +228,8 @@ void PiYingGL::paint_in_vector_part()
 
 	if (partSize == 0) return;
 
+	_ch_shader_program->bind();
+
 	bool nothing = true;
 	for (size_t i = 0; i < partSize; i++) {
 		/// 如果当前part没有标记，则跳过
@@ -234,9 +238,9 @@ void PiYingGL::paint_in_vector_part()
 		nothing = false;
 
 		/// 开始绘制纹理
-		_ch_shader_program->bind();
 		glBindVertexArray(Parts::getInstance().get_vao_piying(i));
 		Parts::getInstance().bind_texture(i);
+		_ch_shader_program->setUniformValue("prescale", Parts::getInstance().get_prescale(i));
 		glDrawElements(GL_TRIANGLES, (GLsizei)Parts::getInstance().get_part(i)->index_size(), GL_UNSIGNED_INT, 0);
 	}
 

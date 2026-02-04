@@ -6,6 +6,10 @@
 #include <qimage>
 #include <qpointf>
 
+namespace {
+    constexpr float DEFAULT_RATIO = 16.f / 9.f;
+}
+
 ImageTexture::ImageTexture(const QImage& image, float currentRatio)
 {
     _image_ratio = image.width() / float(image.height());
@@ -21,11 +25,14 @@ ImageTexture::ImageTexture(const QImage& image, float currentRatio)
     _texture->setWrapMode(QOpenGLTexture::ClampToEdge);
 }
 
-ImageTexture::ImageTexture(const QImage& image) : _prescale(1.0f)
+ImageTexture::ImageTexture(const QImage& image)
 {
     _image_ratio = image.width() / float(image.height());
+    _prescale = DEFAULT_RATIO / _image_ratio;
 
     _transform = std::make_unique<ImageTransform>();
+
+    _transform->set_scale(1.f, _prescale);
 
     _texture = std::make_unique<QOpenGLTexture>(image.flipped());
     _texture->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);

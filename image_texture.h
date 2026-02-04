@@ -40,6 +40,8 @@ public:
 
     void set_transform_by_new_ratio(float newRatio);
 
+    float get_prescale() const { return _prescale; }
+
     const ImageTransform& transform() const;
 
     QMatrix4x4 getMatrix() const;

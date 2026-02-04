@@ -31,6 +31,8 @@ public:
 	bool is_empty() const;
 	bool part_is_draw(size_t index) const;
 
+	float get_prescale(size_t index) const;
+
 	size_t size() const;
 
 	unsigned int get_vao_piying(size_t index) const;

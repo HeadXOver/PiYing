@@ -148,6 +148,11 @@ bool Parts::part_is_draw(size_t index) const
     return _part_is_draw[index];
 }
 
+float Parts::get_prescale(size_t index) const
+{
+    return _parts[index]->get_prescale();
+}
+
 size_t Parts::size() const
 {
     return _parts.size();

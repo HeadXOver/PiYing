@@ -12,6 +12,7 @@
 #include "PiYing.h"
 #include "slide_applier.h"
 #include "character_trace.h"
+#include "image_texture.h"
 
 #include <qopengltexture>
 #include <qpointf>
@@ -19,11 +20,12 @@
 #include <qmenu>
 
 Part::Part(
-	QOpenGLTexture& texture,
+	ImageTexture& texture,
 	const QList<unsigned int>& indices,
 	bool isTexture
 ) :
-	_texture(texture)
+	_texture(*texture.texture()),
+	_prescale(texture.get_prescale())
 {
 	_slide_applier = new SlideApplier();
 	_joint = std::make_unique<Joint>();
@@ -93,7 +95,9 @@ Part::Part(
 	PiYingGL::getInstance().generate_vao(_vao_piying, _vbo, _ebo);
 }
 
-Part::Part(const Part& part1, const Part& part2) : _texture(part1._texture)
+Part::Part(const Part& part1, const Part& part2) : 
+	_texture(part1._texture),
+	_prescale(part1._prescale)
 {
 	_vert_texture_origin = std::make_unique<PointVector>(*part1._vert_texture_origin, *part2._vert_texture_origin);
 	_vert_texture = std::make_unique<PointVector>(*part1._vert_texture, *part2._vert_texture);
@@ -130,7 +134,8 @@ Part::Part(const Part& other) :
 	_parent(other._parent),
 	_joint(std::make_unique<Joint>()),
 	localTransform(other.localTransform),
-	worldTransform(other.worldTransform)
+	worldTransform(other.worldTransform),
+	_prescale(other._prescale)
 {
 	static_assert(std::is_trivially_copyable_v<Joint>, "Must be trivially copyable");
 	std::memcpy(_joint.get(), other._joint.get(), sizeof(Joint));
@@ -367,6 +372,11 @@ float Part::height() const
 float Part::width() const
 {
 	return _width;
+}
+
+float Part::get_prescale() const
+{
+	return _prescale;
 }
 
 unsigned int Part::vao_timeline() const

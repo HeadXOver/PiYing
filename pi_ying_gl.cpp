@@ -170,16 +170,16 @@ void PiYingGL::choseBackgroundColor()
 void PiYingGL::changeRatio(float ratio)
 {
 	if (ratio > 1.0f) {
-		proj.setToIdentity();
-		proj.ortho(-ratio, ratio, -1, 1, -1, 1);
-		insProj.setToIdentity();
-		insProj.ortho(-1.0f / ratio, 1.0f / ratio, -1, 1, -1, 1);
+		_orth_ratio.setToIdentity();
+		_orth_ratio.ortho(-ratio, ratio, -1, 1, -1, 1);
+		_orth_ratio_invert.setToIdentity();
+		_orth_ratio_invert.ortho(-1.0f / ratio, 1.0f / ratio, -1, 1, -1, 1);
 	}
 	else {
-		proj.setToIdentity();
-		proj.ortho(-1, 1, -1.0f / ratio, 1.0f / ratio, -1, 1);
-		insProj.setToIdentity();
-		insProj.ortho(-1, 1, -ratio, ratio, -1, 1);
+		_orth_ratio.setToIdentity();
+		_orth_ratio.ortho(-1, 1, -1.0f / ratio, 1.0f / ratio, -1, 1);
+		_orth_ratio_invert.setToIdentity();
+		_orth_ratio_invert.ortho(-1, 1, -ratio, ratio, -1, 1);
 	}
 	update();
 }
@@ -260,7 +260,7 @@ void PiYingGL::add_part(const QList<unsigned int>& indices)
 	const int currentVector = getCurrentChRow();
 	if (currentVector < 0) return;
 
-	Parts::getInstance().add(new Part(*characterTextures[currentVector]->texture(), indices, editMode == EditMode::characterTexture));
+	Parts::getInstance().add(new Part(*characterTextures[currentVector], indices, editMode == EditMode::characterTexture));
 	TimelineGl::getInstance().update_showing_parts();
 	TimelineGl::getInstance().init_part_cursor();
 	TimelineGl::getInstance().update_is_draw_by_piying();

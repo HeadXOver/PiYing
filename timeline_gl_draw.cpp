@@ -117,6 +117,7 @@ void TimelineGl::draw_part_and_child(Part& part, float x, float y)
 	_part_shader_program->setUniformValue("scroll", _scroll_positon * 2.f * _part_total_scale);
 	_part_shader_program->setUniformValue("x", x - scale * part.x());
 	_part_shader_program->setUniformValue("y", y - scale * part.y());
+	_part_shader_program->setUniformValue("prescale", part.get_prescale());
 
 	part.bind_texture();
 	glDrawElements(GL_TRIANGLES, (GLsizei)part.index_size(), GL_UNSIGNED_INT, 0);
