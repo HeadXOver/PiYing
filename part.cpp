@@ -282,13 +282,13 @@ void Part::change_slider_value(int sliderIndex, int value)
 	PointVectorLayer layer(*_vert_texture);
 	PointVectorLayer layer_origin(*_vert_texture_origin);
 
-	const std::map<unsigned int, QPolygonF>& tracesByPoint = _slide_applier->get_trace_map(sliderIndex);
+	const std::unordered_map<unsigned int, QPolygonF>& tracesByPoint = _slide_applier->get_trace_map(sliderIndex);
 
 	QPointF displacement;
 	for (const auto& [key, val] : tracesByPoint) {
 		displacement = QPointF();
 		for (unsigned int i = 0; i < _slide_applier->n_sliders(); ++i) {
-			const std::map<unsigned int, QPolygonF>& eachSlider = _slide_applier->get_trace_map(i);
+			const std::unordered_map<unsigned int, QPolygonF>& eachSlider = _slide_applier->get_trace_map(i);
 			if (eachSlider.count(key)) {
 				const QPolygonF& eachTrace = eachSlider.at(key);
 				displacement += eachTrace[_slide_applier->get_slider_current_value(i) * (eachTrace.size() - 1) / 1000];

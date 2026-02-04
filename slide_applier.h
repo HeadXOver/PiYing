@@ -1,6 +1,6 @@
 #pragma once
 
-#include <map>
+#include <unordered_map>
 #include <memory>
 #include <vector>
 
@@ -20,7 +20,7 @@ public:
 
     bool add_trace_on_exist_slider(int sliderId, int index, const QPolygonF& polygon);
     void add_new_slider(int index, const QPolygonF& polygon);
-    const std::map<unsigned int, QPolygonF>& get_trace_map(int slide) const;
+    const std::unordered_map<unsigned int, QPolygonF>& get_trace_map(int slide) const;
 
     unsigned int n_sliders() const;
 

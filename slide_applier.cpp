@@ -55,7 +55,7 @@ void SlideApplier::add_new_slider(int index, const QPolygonF& polygon)
     PiYing::getInstance().update_part_slider();
 }
 
-const std::map<unsigned int, QPolygonF>& SlideApplier::get_trace_map(int slide) const
+const std::unordered_map<unsigned int, QPolygonF>& SlideApplier::get_trace_map(int slide) const
 {
     return sliders[slide]->get_traces();
 }

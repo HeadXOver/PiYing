@@ -1,7 +1,7 @@
 #pragma once
 
 #include <QPolygonF>
-#include <map>
+#include <unordered_map>
 #include <qstring>
 
 class QSlider;
@@ -14,7 +14,7 @@ public:
     CharacterTrace(const CharacterTrace& other, unsigned int skew);
     ~CharacterTrace();
 
-    std::map<unsigned int, QPolygonF>& get_traces();
+    std::unordered_map<unsigned int, QPolygonF>& get_traces();
 
     bool have_point(unsigned int index) const;
 
@@ -28,7 +28,7 @@ public:
     int get_current_slider_value() const;
 
 private:
-    std::map<unsigned int, QPolygonF> trace_by_index;
+    std::unordered_map<unsigned int, QPolygonF> trace_by_index;
     int current_slider_value{ 0 };
     QString _name;
 
