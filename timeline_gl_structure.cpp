@@ -59,8 +59,6 @@ TimelineGl::TimelineGl() : QOpenGLWidget(), _ratio(1.f), _ui_type(spTimelineGL::
 
 	_scale_trans = new ScaleTrans();
 	_last_scale_trans = new ScaleTrans();
-
-	_timelines.push_back(new Timeline(2));
 }
 
 TimelineGl::~TimelineGl()
