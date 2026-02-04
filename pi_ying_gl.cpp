@@ -24,6 +24,7 @@
 #include "image_texture.h"
 
 #include "cus_func_string.h"
+#include "cus_func_zone.h"
 
 #include "enum_edit_mode.h"
 

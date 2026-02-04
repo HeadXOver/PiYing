@@ -22,9 +22,9 @@ void PiYingGL::initializeGL()
 	_texture_color_shader_programme->addShaderFromSourceFile(QOpenGLShader::Fragment, ":/PiYing/texture_color_shape.frag");
 	_texture_color_shader_programme->link();
 
-	chShaderProgram->addShaderFromSourceFile(QOpenGLShader::Vertex, ":/PiYing/chEditershapes.vert");
-	chShaderProgram->addShaderFromSourceFile(QOpenGLShader::Fragment, ":/PiYing/texture_color_shape.frag");
-	chShaderProgram->link();
+	_ch_shader_program->addShaderFromSourceFile(QOpenGLShader::Vertex, ":/PiYing/chEditershapes.vert");
+	_ch_shader_program->addShaderFromSourceFile(QOpenGLShader::Fragment, ":/PiYing/texture_color_shape.frag");
+	_ch_shader_program->link();
 
 	_texture_tri_shader_program->addShaderFromSourceFile(QOpenGLShader::Vertex, ":/PiYing/texture_tri.vert");
 	_texture_tri_shader_program->addShaderFromSourceFile(QOpenGLShader::Fragment, ":/PiYing/color_shape.frag");
@@ -104,8 +104,8 @@ void PiYingGL::initializeGL()
 
 	/////////////////////global setting////////////////////////
 
-	chShaderProgram->bind();
-	chShaderProgram->setUniformValue("trc", QMatrix4x4());
+	_ch_shader_program->bind();
+	_ch_shader_program->setUniformValue("trc", QMatrix4x4());
 	_selected_vert_shader_program->bind();
 	_selected_vert_shader_program->setUniformValue("trc", QMatrix4x4());
 	_texture_tri_shader_program->bind();

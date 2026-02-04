@@ -188,7 +188,7 @@ void PiYingGL::paint_applied_texture()
 
 	glBindVertexArray(chVAO); ////////////////////////////////////////////////////
 
-	chShaderProgram->bind();
+	_ch_shader_program->bind();
 
 	characterTextures[i]->bind();
 	glDrawElements(GL_TRIANGLES, (GLsizei)characterTriangleIndices[i].size(), GL_UNSIGNED_INT, 0);
@@ -203,7 +203,7 @@ void PiYingGL::paint_selected_part()
 	Part* currentPart = TimelineGl::getInstance().get_current_part();
 	if (!currentPart) return;
 
-	chShaderProgram->bind();
+	_ch_shader_program->bind();
 
 	glBindVertexArray(currentPart->vao_piying());
 
@@ -234,7 +234,7 @@ void PiYingGL::paint_in_vector_part()
 		nothing = false;
 
 		/// 开始绘制纹理
-		chShaderProgram->bind();
+		_ch_shader_program->bind();
 		glBindVertexArray(Parts::getInstance().get_vao_piying(i));
 		Parts::getInstance().bind_texture(i);
 		glDrawElements(GL_TRIANGLES, (GLsizei)Parts::getInstance().get_part(i)->index_size(), GL_UNSIGNED_INT, 0);
@@ -292,8 +292,8 @@ void PiYingGL::update_ch_verts()
 void PiYingGL::update_trc()
 {
 	makeCurrent();
-	chShaderProgram->bind();
-	chShaderProgram->setUniformValue("trc", getViewProjMatrix());
+	_ch_shader_program->bind();
+	_ch_shader_program->setUniformValue("trc", getViewProjMatrix());
     _selected_vert_shader_program->bind();
 	_selected_vert_shader_program->setUniformValue("trc", getViewProjMatrix());
     _texture_tri_shader_program->bind();

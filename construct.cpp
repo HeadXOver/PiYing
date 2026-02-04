@@ -31,7 +31,7 @@ PiYingGL::PiYingGL() :
 	_ch_tool_state = CharacterToolState::None;
 
 	_texture_color_shader_programme = new QOpenGLShaderProgram(this);
-	chShaderProgram = new QOpenGLShaderProgram(this);
+	_ch_shader_program = new QOpenGLShaderProgram(this);
 	_selected_vert_shader_program = new QOpenGLShaderProgram(this);
 	_texture_tri_shader_program = new QOpenGLShaderProgram(this);
 	_rectangle_shader_program = new QOpenGLShaderProgram(this);

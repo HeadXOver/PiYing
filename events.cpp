@@ -4,6 +4,9 @@
 #include "image_texture.h"
 #include "KeyboardStateWin.h"
 #include "ch_element_tool.h"
+
+#include "cus_func_zone.h"
+
 #include "enum_edit_mode.h"
 
 #include <qmouseevent>

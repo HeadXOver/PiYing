@@ -49,3 +49,8 @@ bool isRectIntersectTriangle(const QRectF& rect, const QPointF* const triangle)
 
     return false;
 }
+
+bool isInsideSquare(const QPointF& point, float side)
+{
+    return (point.x() >= -side / 2.f && point.x() <= side / 2.f && point.y() >= -side / 2.f && point.y() <= side / 2.f);
+}

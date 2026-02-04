@@ -126,6 +126,7 @@ public:
 	void release_buffers(unsigned int vao);
 
 	bool addBackground(const QString& imageName, float& o_ratio);
+	bool have_ch_tool() const { return ch_element_tool_ != nullptr; }
 
 	QPointF getRaletiveToRect(const QPointF& point, const QMatrix4x4& transform) const;
 	QPointF mapToGL(const QPointF& point) const;
@@ -143,9 +144,6 @@ public:
 	QMatrix4x4 getViewProjMatrix() const;
 	QMatrix4x4 getProj() const;
 	QMatrix4x4 getInsProj() const;
-
-	bool isInsideSquare(const QPointF& point, float side = 2.0f) const { return (point.x() >= -side / 2.f && point.x() <= side / 2.f && point.y() >= -side / 2.f && point.y() <= side / 2.f); }
-	bool have_ch_tool() const { return ch_element_tool_ != nullptr; }
 
 	MousePos getMousePosType(const QPointF& point) const;
 
@@ -175,7 +173,7 @@ private:
 	unsigned int svVAO = 0, svVBO = 0;
 
 	QOpenGLShaderProgram* _texture_color_shader_programme;
-	QOpenGLShaderProgram* chShaderProgram;
+	QOpenGLShaderProgram* _ch_shader_program;
 	QOpenGLShaderProgram* _selected_vert_shader_program;
 	QOpenGLShaderProgram* _texture_tri_shader_program;
 	QOpenGLShaderProgram* _rectangle_shader_program;
