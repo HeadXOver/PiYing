@@ -105,6 +105,7 @@ void PiYingGL::setEditMode(EditMode mode)
 {
 	editMode = mode;
 	update_ch_tool();
+	update();
 }
 
 void PiYingGL::update_ch_tool()

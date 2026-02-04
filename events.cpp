@@ -59,7 +59,7 @@ void PiYingGL::mouseReleaseEvent(QMouseEvent* e)
 void PiYingGL::mouseMoveEvent(QMouseEvent* event) {
 	QPointF mouse = mapToGL(event->position());
 	if (event->buttons() == Qt::LeftButton) {
-		if (lastMousePosType != MousePos::OutSide) {
+		if (lastMousePosType != MousePos::OutSide && editMode == EditMode::BackGround) {
 			ImageTexture& item = *backGrounds[getCurrentBgRow()];
 			if (editMode == EditMode::BackGround) {
 				if (KeyboardStateWin::isAltHeld())

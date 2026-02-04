@@ -1,11 +1,10 @@
 #include "piYingGL.h"
 #include "ch_element_tool.h"
-#include "enum_edit_mode.h"
 #include "point_vector.h"
 #include "static_gl_const.h"
 #include "static_rect_vert.h"
 
-#include "enum_character_texture_tool_state.h"
+#include "enum_edit_mode.h"
 
 #include <QOpenGLShaderProgram.h>
 #include <qmessagebox>
@@ -127,23 +126,15 @@ void PiYingGL::initializeGL()
 
 void PiYingGL::paintGL() {
 	glClear(GL_COLOR_BUFFER_BIT);
-	if (editMode == EditMode::BackGround || editMode == EditMode::OverView)	paintBackgrounds();
-	else if (editMode == EditMode::characterTexture)						paintCharacterTexture();
-	else if (editMode == EditMode::characterSkeleton) {
-		paint_applied_texture();
-		if (_ch_tool_state != CharacterToolState::LibreSelectVert && 
-			_ch_tool_state != CharacterToolState::RectSelectVert &&
-			_ch_tool_state != CharacterToolState::RectSelectTriangle&&
-			_ch_tool_state != CharacterToolState::LibreSelectTriangle
-			) return;
-		draw_triangle_frame(true);
-		if (ch_element_tool_) ch_element_tool_->draw();
+
+	switch (editMode) {
+	case EditMode::BackGround:			paintBackgrounds(); break;
+	case EditMode::OverView:			paint_over_view(); break;
+	case EditMode::characterTexture:	paintCharacterTexture(); break;
+	case EditMode::characterSkeleton:	paint_character_skeleton(); break;
+	case EditMode::controlSlide:		paint_slider_platform(); break;
+	default: break;
 	}
-	else if (editMode == EditMode::controlSlide) {
-		paint_in_vector_part();
-		if (ch_element_tool_) ch_element_tool_->draw();
-	}
-	else return;
 
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }

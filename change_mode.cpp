@@ -4,6 +4,7 @@
 #include "ctrlSlideWidget.h"
 #include "part.h"
 #include "time_line_gl.h"
+#include "piYingGLContainer.h"
 
 #include "enum_character_texture_tool_state.h"
 #include "enum_edit_mode.h"
@@ -14,6 +15,7 @@
 #include <qlistwidget>
 
 namespace {
+    constexpr double DEFAULT_RATIO = 16.0 / 9.0;
 
     constexpr void(*change_edit_mode[])() = {
         []() { PiYing::getInstance().change_edit_mode_overview(); },
@@ -37,6 +39,8 @@ void PiYing::change_edit_mode_overview()
 
     splitTimelineOpenGL->setSizes({ width() * 5 / 6, width() / 6 });
 
+    set_piying_gl_ratio(_piying_gl_bg_ratio);
+
     TimelineGl::getInstance().set_to_timeline();
 
     PiYingGL::getInstance().setChTool(CharacterToolState::None);
@@ -50,6 +54,8 @@ void PiYing::change_edit_mode_background()
 
     splitTimelineOpenGL->setSizes({ width() * 5 / 6, width() / 6 });
 
+    set_piying_gl_ratio(_piying_gl_bg_ratio);
+
     TimelineGl::getInstance().set_to_timeline();
 
     PiYingGL::getInstance().setChTool(CharacterToolState::None);
@@ -62,6 +68,8 @@ void PiYing::change_edit_mode_character_texture()
     splitListOpenGL->insertWidget(0, chImageList);
 
     splitTimelineOpenGL->setSizes({ width() * 3 / 4, width() / 4 });
+
+    set_piying_gl_ratio(DEFAULT_RATIO);
 
     TimelineGl::getInstance().set_to_part();
 
@@ -87,6 +95,8 @@ void PiYing::change_edit_mode_character_skeleton()
     splitListOpenGL->insertWidget(0, chImageList);
 
     splitTimelineOpenGL->setSizes({ width() * 3 / 4, width() / 4 });
+
+    set_piying_gl_ratio(DEFAULT_RATIO);
 
     TimelineGl::getInstance().set_to_part();
 
@@ -118,6 +128,8 @@ void PiYing::change_edit_mode_character_constrol_slider()
     splitListOpenGL->setSizes({ width() / 5, width() * 4 / 5 });
 
     splitTimelineOpenGL->setSizes({ width() * 3 / 4, width() / 4 });
+
+    set_piying_gl_ratio(DEFAULT_RATIO);
 
     TimelineGl::getInstance().set_to_part();
 

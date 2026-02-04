@@ -45,14 +45,14 @@ PiYing::PiYing() : QMainWindow(nullptr)
     sliderWidget->setStyleSheet(SLIDER_WIDGET_STYLE_SHEET);
     sliderWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
-    float ratio = 16.0f / 9.0f;
+    _piying_gl_bg_ratio = 16.0 / 9.0;
 
     voidListWidget = new QListWidget();
     bgImageList = new QListWidget();
     chImageList = new QListWidget();
 
     // OpenGL widget
-    piYingGLContainer = new PiYingGLContainer(PiYingGL::getInstance(), ratio, this);
+    piYingGLContainer = new PiYingGLContainer(PiYingGL::getInstance(), _piying_gl_bg_ratio, this);
 
     splitTimelineOpenGL = new QSplitter(Qt::Vertical, this);
     splitListOpenGL = new QSplitter(Qt::Horizontal, this);
@@ -125,8 +125,8 @@ PiYing::PiYing() : QMainWindow(nullptr)
     connect(chImageList,            &QListWidget::currentItemChanged,   this, [this]() {PiYingGL::getInstance().update_ch_tool(); PiYingGL::getInstance().update_ch_verts(); });
     connect(bgImageList,            &QListWidget::currentItemChanged,   this, [this]() {PiYingGL::getInstance().update(); });
 
-    piYingGLContainer->setRatio(ratio);
-    PiYingGL::getInstance().changeRatio(ratio);
+    piYingGLContainer->setRatio(_piying_gl_bg_ratio);
+    PiYingGL::getInstance().changeRatio(_piying_gl_bg_ratio);
 
     splitTimelineOpenGL->addWidget(piYingGLContainer);
     splitTimelineOpenGL->addWidget(&TimelineGl::getInstance());
@@ -309,10 +309,10 @@ void PiYing::askScreenScale() {
 
     if (r.w == 0 || r.h == 0) return;
 
-    float ratio = float(r.w) / float(r.h);
-    piYingGLContainer->setRatio(ratio);
+    _piying_gl_bg_ratio= double(r.w) / double(r.h);
+    piYingGLContainer->setRatio(_piying_gl_bg_ratio);
     piYingGLContainer->update();
-    PiYingGL::getInstance().changeRatio(ratio);
+    PiYingGL::getInstance().changeRatio(_piying_gl_bg_ratio);
 }
 
 void PiYing::set_piying_gl_ratio(double ratio)

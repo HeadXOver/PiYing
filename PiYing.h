@@ -73,6 +73,8 @@ private:
 	std::unique_ptr<Ui::PiYingClass> ui;
 	static PiYing* _instance;
 
+	double _piying_gl_bg_ratio;
+
 	QSplitter* splitListOpenGL;
 	QSplitter* splitTimelineOpenGL;
 

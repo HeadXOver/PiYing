@@ -7,10 +7,12 @@
 #include "vert_groups.h"
 #include "vert_group.h"
 #include "base_math.h"
-#include "enum_edit_mode.h"
 #include "time_line_gl.h"
 #include "part.h"
 #include "parts.h"
+
+#include "enum_character_texture_tool_state.h"
+#include "enum_edit_mode.h"
 
 #include <qpainter>
 #include <qopengltexture>
@@ -120,6 +122,25 @@ void PiYingGL::paintBackgrounds()
 	glBindVertexArray(0);////////////////////////////////////////////////////////////
 }
 
+void PiYingGL::paint_over_view()
+{
+	draw_view_rectangle();
+
+	glBindVertexArray(RECTANGLE_TEXTURE_VAO);///////////////////////////////////////////////////////
+
+	_texture_color_shader_programme->bind();
+
+	for (int i = 0; i < backGrounds.size(); i++) {
+		backGrounds[i]->bind();
+
+		_texture_color_shader_programme->setUniformValue("trc", getBgShaderMatrix(backGrounds[i]->getMatrix()));
+
+		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+	}
+
+	glBindVertexArray(0);////////////////////////////////////////////////////////////
+}
+
 void PiYingGL::paintCharacterTexture()
 {
 	int i = getCurrentChRow();
@@ -139,6 +160,24 @@ void PiYingGL::paintCharacterTexture()
 
 	draw_triangle_frame(false);
 	
+	if (ch_element_tool_) ch_element_tool_->draw();
+}
+
+void PiYingGL::paint_character_skeleton()
+{
+	paint_applied_texture();
+	if (_ch_tool_state != CharacterToolState::LibreSelectVert &&
+		_ch_tool_state != CharacterToolState::RectSelectVert &&
+		_ch_tool_state != CharacterToolState::RectSelectTriangle &&
+		_ch_tool_state != CharacterToolState::LibreSelectTriangle
+		) return;
+	draw_triangle_frame(true);
+	if (ch_element_tool_) ch_element_tool_->draw();
+}
+
+void PiYingGL::paint_slider_platform()
+{
+	paint_in_vector_part();
 	if (ch_element_tool_) ch_element_tool_->draw();
 }
 

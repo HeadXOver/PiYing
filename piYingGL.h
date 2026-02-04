@@ -54,7 +54,10 @@ public:
 
 private:
 	void paintBackgrounds();
+	void paint_over_view();
 	void paintCharacterTexture();
+	void paint_character_skeleton();
+	void paint_slider_platform();
 	void paint_applied_texture();
 	void paint_selected_part();
 	void paint_in_vector_part();
