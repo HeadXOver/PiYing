@@ -113,6 +113,7 @@
     <ClCompile Include="cus_func_point2d.cpp" />
     <ClCompile Include="cus_func_string.cpp" />
     <ClCompile Include="cus_func_zone.cpp" />
+    <ClCompile Include="cus_readfile.cpp" />
     <ClCompile Include="events.cpp" />
     <ClCompile Include="Joint.cpp" />
     <ClCompile Include="merge_parts.cpp" />
@@ -166,6 +167,7 @@
     <ClInclude Include="ch_triangle_rect_select.h" />
     <ClInclude Include="ch_add_vert_trace.h" />
     <ClInclude Include="cus_ask.h" />
+    <ClInclude Include="cus_readfile.h" />
     <ClInclude Include="enum_edit_mode.h" />
     <ClInclude Include="enum_select_handle_mode.h" />
     <ClInclude Include="Joint.h" />

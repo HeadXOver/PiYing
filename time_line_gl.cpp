@@ -48,7 +48,7 @@ Part* TimelineGl::get_current_part() const
 void TimelineGl::move_time_cursor(float mouse_x)
 {
 	const float half_width = width() / 2.f;
-	time_cursor = cus::max(half_width * (1.f - _scale_trans->scale_lenth), mouse_x - _scale_trans->trans_x * half_width); ///< 确保非负
+	time_cursor = PiYingCus::max(half_width * (1.f - _scale_trans->scale_lenth), mouse_x - _scale_trans->trans_x * half_width); ///< 确保非负
 }
 
 int TimelineGl::get_index_by_mouse(const QPoint& mouse) const

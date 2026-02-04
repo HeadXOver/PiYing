@@ -274,6 +274,9 @@
     <ClCompile Include="parts.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="cus_readfile.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="static_handle_zone.h">
@@ -397,6 +400,9 @@
       <Filter>Header Files\Core</Filter>
     </ClInclude>
     <ClInclude Include="cus_ask.h">
+      <Filter>Header Files\CustomTool</Filter>
+    </ClInclude>
+    <ClInclude Include="cus_readfile.h">
       <Filter>Header Files\CustomTool</Filter>
     </ClInclude>
   </ItemGroup>

@@ -2,38 +2,38 @@
 
 #include <QPointF>
 
-float angleBetweenPoint(const QPointF& p1, const QPointF& p2) {
+float PiYingCus::angleBetweenPoint(const QPointF& p1, const QPointF& p2) {
     return atan2f(p1.y(), p1.x()) - atan2f(p2.y(), p2.x());
 }
 
-float angleBetweenPointDegree(const QPointF& p1, const QPointF& p2) {
+float PiYingCus::angleBetweenPointDegree(const QPointF& p1, const QPointF& p2) {
     return (atan2f(p1.y(), p1.x()) - atan2f(p2.y(), p2.x())) * 180.f / 3.1415927f;
 }
 
-QPointF getRotatedPoint(const QPointF& p, float angle) {
+QPointF PiYingCus::getRotatedPoint(const QPointF& p, float angle) {
     return QPointF(p.x() * cosf(angle) - p.y() * sinf(angle), p.x() * sinf(angle) + p.y() * cosf(angle));
 }
 
-QPointF getRotatedPoint(float x, float y, float angle) {
+QPointF PiYingCus::getRotatedPoint(float x, float y, float angle) {
     return QPointF(x * cosf(angle) - y * sinf(angle), x * sinf(angle) + y * cosf(angle));
 }
 
-QPointF getNormal(const QPointF& a, const QPointF& b)
+QPointF PiYingCus::getNormal(const QPointF& a, const QPointF& b)
 {
     return QPointF(a.y() - b.y(), b.x() - a.x());
 }
 
-float crossProduct(const QPointF& a, const QPointF& b, const QPointF& c)
+float PiYingCus::crossProduct(const QPointF& a, const QPointF& b, const QPointF& c)
 {
     return (b.x() - a.x()) * (c.y() - a.y()) - (b.y() - a.y()) * (c.x() - a.x());
 }
 
-float dot(const QPointF& a, const QPointF& b)
+float PiYingCus::dot(const QPointF& a, const QPointF& b)
 {
     return a.x() * b.x() + a.y() * b.y();
 }
 
-bool isCross(const QPointF& a, const QPointF& b, const QPointF& c, const QPointF& d)
+bool PiYingCus::isCross(const QPointF& a, const QPointF& b, const QPointF& c, const QPointF& d)
 {
     QPointF normal;
     float p, vert1, vert2;

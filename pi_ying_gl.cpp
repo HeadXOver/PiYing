@@ -219,7 +219,7 @@ void PiYingGL::importChatacter()
 
 MousePos PiYingGL::getMousePosType(const QPointF& point) const
 {
-	if (isInsideSquare(point)) {
+	if (PiYingCus::isInsideSquare(point)) {
 		if (point.x() < -0.9f) {
 			if (point.y() > 0.9f) return MousePos::LeftTop;
 			if (point.y() < -0.9f)  return MousePos::LeftBottom;

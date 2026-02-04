@@ -19,6 +19,8 @@ void PiYingGL::fullScreenBackGround()
 
 void PiYingGL::setViewToStandard()
 {
+	using namespace PiYingCus;
+
 	for (auto item : backGrounds) {
 		QMatrix4x4 combined = getViewMatrix() * item->getMatrix();
 		item->setTrans(getTrans(combined));

@@ -349,10 +349,10 @@ void PiYing::delete_all_bg_item()
 
 QString PiYing::get_unique_bg_list_name() const
 {
-    return getUniqueListName(bgImageList);
+    return PiYingCus::getUniqueListName(bgImageList);
 }
 
 QString PiYing::get_unique_ch_list_name() const
 {
-    return getUniqueListName(chImageList);
+    return PiYingCus::getUniqueListName(chImageList);
 }

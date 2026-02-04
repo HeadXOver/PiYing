@@ -157,12 +157,12 @@ void ChElementSelect::changeEditMode()
     qreal length = QLineF(dHandleCenterPoint, lastPos).length();
 
     if (length <= ROTATEHANDLE_RADIUS + HANDLE_ZONE && length >= ROTATEHANDLE_RADIUS - HANDLE_ZONE)                     editMode = ChElementEditMode::Rotate;   // 判断是否在旋转控制柄上
-    else if (isInRect(lastPos, dHandleCenterPoint, HANDLE_ZONE))                                                        editMode = ChElementEditMode::Move;     // 判断是否在中心点上
-    else if (isInRect(lastPos, dHandleCenterPoint, MOVEHANDLE_LENTH * 2, HANDLE_ZONE))                                  editMode = ChElementEditMode::MoveX;    // 判断是否在移动控制柄X上
-    else if (isInRect(lastPos, dHandleCenterPoint, HANDLE_ZONE, MOVEHANDLE_LENTH * 2))                                  editMode = ChElementEditMode::MoveY;    // 判断是否在移动控制柄Y上
-    else if (isInRect(lastPos, dHandleCenterPoint + QPoint(ROTATEHANDLE_RADIUS, ROTATEHANDLE_RADIUS), HANDLE_ZONE))     editMode = ChElementEditMode::Scale;    // 判断是否在缩放控制柄上
-    else if (isInRect(lastPos, dHandleCenterPoint + QPoint(SCALEHANDLE_DISTANCE, 0), HANDLE_ZONE))                      editMode = ChElementEditMode::ScaleX;   // 判断是否在缩放控制柄X上
-    else if (isInRect(lastPos, dHandleCenterPoint + QPoint(0, SCALEHANDLE_DISTANCE), HANDLE_ZONE))                      editMode = ChElementEditMode::ScaleY;   // 判断是否在缩放控制柄Y上
+    else if (PiYingCus::isInRect(lastPos, dHandleCenterPoint, HANDLE_ZONE))                                                        editMode = ChElementEditMode::Move;     // 判断是否在中心点上
+    else if (PiYingCus::isInRect(lastPos, dHandleCenterPoint, MOVEHANDLE_LENTH * 2, HANDLE_ZONE))                                  editMode = ChElementEditMode::MoveX;    // 判断是否在移动控制柄X上
+    else if (PiYingCus::isInRect(lastPos, dHandleCenterPoint, HANDLE_ZONE, MOVEHANDLE_LENTH * 2))                                  editMode = ChElementEditMode::MoveY;    // 判断是否在移动控制柄Y上
+    else if (PiYingCus::isInRect(lastPos, dHandleCenterPoint + QPoint(ROTATEHANDLE_RADIUS, ROTATEHANDLE_RADIUS), HANDLE_ZONE))     editMode = ChElementEditMode::Scale;    // 判断是否在缩放控制柄上
+    else if (PiYingCus::isInRect(lastPos, dHandleCenterPoint + QPoint(SCALEHANDLE_DISTANCE, 0), HANDLE_ZONE))                      editMode = ChElementEditMode::ScaleX;   // 判断是否在缩放控制柄X上
+    else if (PiYingCus::isInRect(lastPos, dHandleCenterPoint + QPoint(0, SCALEHANDLE_DISTANCE), HANDLE_ZONE))                      editMode = ChElementEditMode::ScaleY;   // 判断是否在缩放控制柄Y上
 	else                                                                                                                editMode = ChElementEditMode::None;     // 不在任何控制柄上
 }
 
@@ -192,6 +192,8 @@ void ChElementSelect::moveHandle(const QPointF& mouse)
         }
     }break;
     case ChElementEditMode::Rotate: {
+        using namespace PiYingCus;
+
         float angle = angleBetweenPoint(lastPos - lastDHandleCenterPoint, mouse - lastDHandleCenterPoint);
         QPointF toRot = PiYingGL::getInstance().getInsProj().map(lastHandleCenterPoint);
         for (int i = 0; i < selected_points->size(); i++) {

@@ -85,7 +85,7 @@ void ChTriangleRectSelect::releasePos(const QPointF& mouse)
 			) {
 			chTriangleSelect->selected_trangle->append(&triangleIndices[i]);
 		}
-		else if (easySelect && isRectIntersectTriangle(rect, eachTriangle)) {
+		else if (easySelect && PiYingCus::isRectIntersectTriangle(rect, eachTriangle)) {
 			if(!chTriangleSelect->selected_trangle->contains(&triangleIndices[i])) chTriangleSelect->selected_trangle->append(&triangleIndices[i]);
 		}
 	}

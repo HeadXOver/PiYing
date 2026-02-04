@@ -55,20 +55,20 @@ Part::Part(
 
 				layer.push_back(eachPoint);
 
-				top = cus::max(top, eachPoint.y());
-				bottom = cus::min(bottom, eachPoint.y());
-				left = cus::min(left, eachPoint.x());
-				right = cus::max(right, eachPoint.x());
+				top = PiYingCus::max(top, eachPoint.y());
+				bottom = PiYingCus::min(bottom, eachPoint.y());
+				left = PiYingCus::min(left, eachPoint.x());
+				right = PiYingCus::max(right, eachPoint.x());
 			}
 			else {
 				eachPoint = currentLayer[indices[i]];
 
 				layer.push_back(currentLayer(indices[i]), eachPoint);
 
-				top = cus::max(top, eachPoint.y());
-				bottom = cus::min(bottom, eachPoint.y());
-				left = cus::min(left, eachPoint.x());
-				right = cus::max(right, eachPoint.x());
+				top = PiYingCus::max(top, eachPoint.y());
+				bottom = PiYingCus::min(bottom, eachPoint.y());
+				left = PiYingCus::min(left, eachPoint.x());
+				right = PiYingCus::max(right, eachPoint.x());
 			}
 
 			_indices.push_back(currentIndex++);
@@ -234,10 +234,10 @@ void Part::update_scale()
 	QPointF eachPoint;
 	for (unsigned int i = 1; i < layer.size(); ++i) {
 		eachPoint = layer.get(i, true);
-		top = cus::max(top, eachPoint.y());
-		bottom = cus::min(bottom, eachPoint.y());
-		left = cus::min(left, eachPoint.x());
-		right = cus::max(right, eachPoint.x());
+		top = PiYingCus::max(top, eachPoint.y());
+		bottom = PiYingCus::min(bottom, eachPoint.y());
+		left = PiYingCus::min(left, eachPoint.x());
+		right = PiYingCus::max(right, eachPoint.x());
 	}
 
 	_x = (left + right) / 2.f;

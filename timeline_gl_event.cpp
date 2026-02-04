@@ -24,7 +24,7 @@ void TimelineGl::wheelEvent(QWheelEvent* ev)
 		const float diff_x = gl_mouse_x - _scale_trans->trans_x;
 		const float to_trans_x = diff_x * (1.f - scaleFactor);
 
-		_scale_trans->trans_x = cus::min(_scale_trans->scale_lenth - 1.f, _scale_trans->trans_x + to_trans_x);
+		_scale_trans->trans_x = PiYingCus::min(_scale_trans->scale_lenth - 1.f, _scale_trans->trans_x + to_trans_x);
 
 		const float xTimelineCursor = width() * _scale_trans->trans_x / 2.f + time_cursor;
 		const float diffTimelineCursor = xTimelineCursor - width() * (_scale_trans->trans_x + 1.f) / 2.f;
@@ -76,7 +76,7 @@ void TimelineGl::mousePressEvent(QMouseEvent* event)
 			}
 			const float diff_map = event->position().x() - (width() * _scale_trans->trans_x / 2.f + time_cursor);
 			const float diff_gl = diff_map * 2.f / (float)width();
-			if (cus::abs(diff_gl) < 0.02f) {
+			if (PiYingCus::abs(diff_gl) < 0.02f) {
 				_drag_type = spTimelineGL::DragType::Cursor;
 			}
 		}
@@ -202,13 +202,13 @@ void TimelineGl::mouseMoveEvent(QMouseEvent* event)
 	}
 	else if (event->buttons() == Qt::MiddleButton) {
 		const float to_trans_x = _last_scale_trans->trans_x + (event->position().x() - lastMiddleButtonPos.x()) * 2.f / width();
-		_scale_trans->trans_x = cus::min(_scale_trans->scale_lenth - 1.f, to_trans_x);
+		_scale_trans->trans_x = PiYingCus::min(_scale_trans->scale_lenth - 1.f, to_trans_x);
 
 		size_t timeline_size = _timelines.size();
 		if (timeline_size > 5) {
 			float to_trans_y = _last_scale_trans->trans_y - (event->position().y() - lastMiddleButtonPos.y()) * 2.f / height();
-			to_trans_y = cus::max(_scale_trans->scale_height - 1.f, to_trans_y);
-			_scale_trans->trans_y = cus::min(0.4f * timeline_size - 2.f, to_trans_y);
+			to_trans_y = PiYingCus::max(_scale_trans->scale_height - 1.f, to_trans_y);
+			_scale_trans->trans_y = PiYingCus::min(0.4f * timeline_size - 2.f, to_trans_y);
 		}
 		update();
 	}

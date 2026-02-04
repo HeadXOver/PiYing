@@ -112,7 +112,7 @@ void TimelineGl::draw_part_and_child(Part& part, float x, float y)
 {
 	glBindVertexArray(part.vao_timeline());
 
-	const float scale = 0.35f / cus::max(part.width() * (1.f + spTimelineGL::scroll_width), part.height());
+	const float scale = 0.35f / PiYingCus::max(part.width() * (1.f + spTimelineGL::scroll_width), part.height());
 	_part_shader_program->setUniformValue("scale", scale);
 	_part_shader_program->setUniformValue("scroll", _scroll_positon * 2.f * _part_total_scale);
 	_part_shader_program->setUniformValue("x", x - scale * part.x());

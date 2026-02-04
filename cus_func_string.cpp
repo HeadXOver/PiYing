@@ -3,7 +3,7 @@
 #include <qstring>
 #include <QListWidget>
 
-QString getUniqueListName(const QListWidget* list) {
+QString PiYingCus::getUniqueListName(const QListWidget* list) {
     QString s;
     bool repeat = false;
     for (int i = 1;; i++) {

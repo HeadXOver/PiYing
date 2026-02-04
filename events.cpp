@@ -24,7 +24,7 @@ void PiYingGL::mousePressEvent(QMouseEvent* event)
 
 			ImageTexture* item = backGrounds[cur];
 			QPointF posV = getRaletiveToRect(lastMousePos, item->getMatrixInvert());
-			if (isInsideSquare(posV)) {
+			if (PiYingCus::isInsideSquare(posV)) {
 				lastMousePosType = getMousePosType(posV);
 				*lastImageTransform = item->transform();
 			}

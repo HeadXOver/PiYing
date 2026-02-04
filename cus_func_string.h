@@ -3,4 +3,8 @@
 class QListWidget;
 class QString;
 
-QString getUniqueListName(const QListWidget* list);
+namespace PiYingCus {
+
+	QString getUniqueListName(const QListWidget* list);
+
+}

@@ -30,14 +30,14 @@ void PiYingGL::bgRotationControl(const QPointF& mouse, ImageTexture& image)
 	QPointF vec1 = insProj.map(lastMousePos - center);
 	QPointF vec2 = insProj.map(mouse - center);
 	image.set_transform(*lastImageTransform);
-	image.addRot(angleBetweenPointDegree(vec2, vec1));
+	image.addRot(PiYingCus::angleBetweenPointDegree(vec2, vec1));
 }
 
 void PiYingGL::bgTranslateControl(const QPointF& mouse, ImageTexture& image)
 {
 	setCursor(Qt::ClosedHandCursor);
 	image.set_transform(*lastImageTransform);
-	image.addTrans(getRotatedPoint(insProj.map(mouse - lastMousePos) / viewScale.value(), -viewRotate.value() * angle_rad));
+	image.addTrans(PiYingCus::getRotatedPoint(insProj.map(mouse - lastMousePos) / viewScale.value(), -viewRotate.value() * angle_rad));
 }
 
 void PiYingGL::bgScaleControl(const QPointF& mouse, ImageTexture& image)
@@ -74,6 +74,8 @@ void PiYingGL::bgScaleControl(const QPointF& mouse, ImageTexture& image)
 
 void PiYingGL::viewRotationControl(const QPointF& mouse)
 {
+	using namespace PiYingCus;
+
 	setCursor(Qt::CursorShape::ClosedHandCursor);
 	float r = angleBetweenPoint(insProj.map(mouse), insProj.map(lastMiddleButtonPos));
 	viewRotate.setValue(lastViewRotate + r * 180.f / 3.1415926f);

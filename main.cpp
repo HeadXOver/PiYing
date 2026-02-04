@@ -1,19 +1,14 @@
 #include "PiYing.h"
 
+#include "cus_readfile.h"
+
 #include <QtWidgets/QApplication>
-#include <qfile>
 
 int main(int argc, char *argv[])
 {
-    QApplication app(argc, argv);
+    QApplication app(argc, argv); app.setStyleSheet(PiYingCus::readAllFileToQString(":/PiYing/darkStyle.qss"));
 
-    QFile qss(":/PiYing/darkStyle.qss");
-    if (qss.open(QFile::ReadOnly)) {
-        app.setStyleSheet(qss.readAll());
-        qss.close();
-    }
+    PiYing window; window.showMaximized();
 
-    PiYing window;
-    window.showMaximized();
     return app.exec();
 }
