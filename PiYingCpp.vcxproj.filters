@@ -39,14 +39,8 @@
     <Filter Include="Header Files\PiYingWidget">
       <UniqueIdentifier>{c1f76cac-578d-4b43-95f0-97d8a67646ba}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\PiYingElement">
-      <UniqueIdentifier>{c7897473-4aa2-4a1e-b9e9-6cd904a6eac6}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\PiYingQObject">
       <UniqueIdentifier>{bce7286b-a62b-4632-8350-9f0ba6faf5ae}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\PiYingTool">
-      <UniqueIdentifier>{b6a97278-ec58-408e-b0b8-040eba828882}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\PiYngQObject">
       <UniqueIdentifier>{121a4bf5-966a-47ff-be36-b5fe218de77c}</UniqueIdentifier>
@@ -80,6 +74,12 @@
     </Filter>
     <Filter Include="Header Files\PiYingTool">
       <UniqueIdentifier>{f755ae81-636b-4048-95f4-0ff9883fdb74}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\CusTool">
+      <UniqueIdentifier>{b6a97278-ec58-408e-b0b8-040eba828882}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Core">
+      <UniqueIdentifier>{c7897473-4aa2-4a1e-b9e9-6cd904a6eac6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -146,37 +146,37 @@
       <Filter>Source Files\PiYingQObject</Filter>
     </ClCompile>
     <ClCompile Include="cus_func_transform.cpp">
-      <Filter>Source Files\PiYingTool</Filter>
+      <Filter>Source Files\CusTool</Filter>
     </ClCompile>
     <ClCompile Include="image_texture.cpp">
-      <Filter>Source Files\PiYingElement</Filter>
+      <Filter>Source Files\Core</Filter>
     </ClCompile>
     <ClCompile Include="image_transform.cpp">
-      <Filter>Source Files\PiYingElement</Filter>
+      <Filter>Source Files\Core</Filter>
     </ClCompile>
     <ClCompile Include="pi_ying_gl_container.cpp">
       <Filter>Source Files\PiYingQObject</Filter>
     </ClCompile>
     <ClCompile Include="tool_button.cpp">
-      <Filter>Source Files\PiYingElement</Filter>
+      <Filter>Source Files\Core</Filter>
     </ClCompile>
     <ClCompile Include="selected_points.cpp">
-      <Filter>Source Files\PiYingElement</Filter>
+      <Filter>Source Files\Core</Filter>
     </ClCompile>
     <ClCompile Include="ratio_dialog.cpp">
       <Filter>Source Files\PiYingQObject</Filter>
     </ClCompile>
     <ClCompile Include="cus_func_point2d.cpp">
-      <Filter>Source Files\PiYingTool</Filter>
+      <Filter>Source Files\CusTool</Filter>
     </ClCompile>
     <ClCompile Include="cus_func_string.cpp">
-      <Filter>Source Files\PiYingTool</Filter>
+      <Filter>Source Files\CusTool</Filter>
     </ClCompile>
     <ClCompile Include="cus_func_zone.cpp">
-      <Filter>Source Files\PiYingTool</Filter>
+      <Filter>Source Files\CusTool</Filter>
     </ClCompile>
     <ClCompile Include="keyboard_state_win.cpp">
-      <Filter>Source Files\PiYingTool</Filter>
+      <Filter>Source Files\CusTool</Filter>
     </ClCompile>
     <ClCompile Include="ch_element_add_round.cpp">
       <Filter>Source Files\ChELementTool</Filter>
@@ -197,19 +197,19 @@
       <Filter>Source Files\PiYing</Filter>
     </ClCompile>
     <ClCompile Include="slide_applier.cpp">
-      <Filter>Source Files\PiYingElement</Filter>
+      <Filter>Source Files\Core</Filter>
     </ClCompile>
     <ClCompile Include="character_trace.cpp">
-      <Filter>Source Files\PiYingElement</Filter>
+      <Filter>Source Files\Core</Filter>
     </ClCompile>
     <ClCompile Include="time_line.cpp">
-      <Filter>Source Files\PiYingElement</Filter>
+      <Filter>Source Files\Core</Filter>
     </ClCompile>
     <ClCompile Include="ch_triangle_select.cpp">
       <Filter>Source Files\ChELementTool</Filter>
     </ClCompile>
     <ClCompile Include="selected_triangle.cpp">
-      <Filter>Source Files\PiYingElement</Filter>
+      <Filter>Source Files\Core</Filter>
     </ClCompile>
     <ClCompile Include="ch_triangle_rect_select.cpp">
       <Filter>Source Files\ChELementTool</Filter>
@@ -218,25 +218,22 @@
       <Filter>Source Files\ChELementTool</Filter>
     </ClCompile>
     <ClCompile Include="part.cpp">
-      <Filter>Source Files\PiYingElement</Filter>
+      <Filter>Source Files\Core</Filter>
     </ClCompile>
     <ClCompile Include="vert_group.cpp">
-      <Filter>Source Files\PiYingElement</Filter>
+      <Filter>Source Files\Core</Filter>
     </ClCompile>
     <ClCompile Include="vert_groups.cpp">
-      <Filter>Source Files\PiYingElement</Filter>
+      <Filter>Source Files\Core</Filter>
     </ClCompile>
     <ClCompile Include="point_vector_layer.cpp">
-      <Filter>Source Files\PiYingElement</Filter>
+      <Filter>Source Files\Core</Filter>
     </ClCompile>
     <ClCompile Include="point_vector.cpp">
-      <Filter>Source Files\PiYingElement</Filter>
+      <Filter>Source Files\Core</Filter>
     </ClCompile>
     <ClCompile Include="scale_trans.cpp">
-      <Filter>Source Files\PiYingElement</Filter>
-    </ClCompile>
-    <ClCompile Include="ViewData.cpp">
-      <Filter>Source Files\PiYingElement</Filter>
+      <Filter>Source Files\Core</Filter>
     </ClCompile>
     <ClCompile Include="time_line_gl.cpp">
       <Filter>Source Files\timelineGL</Filter>
@@ -262,20 +259,23 @@
     <ClCompile Include="merge_parts.cpp">
       <Filter>Source Files\timelineGL</Filter>
     </ClCompile>
-    <ClCompile Include="Joint.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="timeline_slots.cpp">
       <Filter>Source Files\timelineGL</Filter>
     </ClCompile>
     <ClCompile Include="tool_func.cpp">
       <Filter>Source Files\piYingGL</Filter>
     </ClCompile>
-    <ClCompile Include="parts.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="cus_readfile.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\CusTool</Filter>
+    </ClCompile>
+    <ClCompile Include="Joint.cpp">
+      <Filter>Source Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="parts.cpp">
+      <Filter>Source Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="ViewData.cpp">
+      <Filter>Source Files\PiYingQObject</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
