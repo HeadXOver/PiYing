@@ -151,8 +151,13 @@ void ImageTexture::set_transform_by_new_ratio(float newRatio)
     _transform->set_trans(oldX * oldNewRatio, oldY * oldNewRatio);
 }
 
-void ImageTexture::operator=(const ImageTransform& transform) {
+void ImageTexture::set_transform(const ImageTransform& transform) {
     *_transform = transform;
+}
+
+void ImageTexture::set_transform(const ImageTransform* transform)
+{
+    *_transform = *transform;
 }
 
 const ImageTransform& ImageTexture::transform() const {

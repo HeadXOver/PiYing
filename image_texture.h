@@ -15,7 +15,8 @@ public:
     ImageTexture(const QImage& image);
     ~ImageTexture();
 
-    void operator=(const ImageTransform& transform);
+    void set_transform(const ImageTransform& transform);
+    void set_transform(const ImageTransform* transform);
 
     void setTrans(float x, float y);
     void setTrans(const QPointF& point);

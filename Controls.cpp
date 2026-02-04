@@ -29,14 +29,14 @@ void PiYingGL::bgRotationControl(const QPointF& mouse, ImageTexture& image)
 	QPointF center = getBgShaderMatrix(lastImageTransform->getMatrix()).map(QPointF(0.f, 0.f));
 	QPointF vec1 = insProj.map(lastMousePos - center);
 	QPointF vec2 = insProj.map(mouse - center);
-	image = *lastImageTransform;
+	image.set_transform(*lastImageTransform);
 	image.addRot(angleBetweenPointDegree(vec2, vec1));
 }
 
 void PiYingGL::bgTranslateControl(const QPointF& mouse, ImageTexture& image)
 {
 	setCursor(Qt::ClosedHandCursor);
-	image = *lastImageTransform;
+	image.set_transform(*lastImageTransform);
 	image.addTrans(getRotatedPoint(insProj.map(mouse - lastMousePos) / viewScale.value(), -viewRotate.value() * angle_rad));
 }
 
@@ -46,7 +46,7 @@ void PiYingGL::bgScaleControl(const QPointF& mouse, ImageTexture& image)
 	const QPointF LastMouseRaletive = getRaletiveToRect(lastMousePos, lastImageTransform->getMatrixInvert());
 	QPointF pAspect(1.0f, 1.0f);
 
-	image = *lastImageTransform;
+	image.set_transform(*lastImageTransform);
 
 	if (lastMousePosType == MousePos::BottomEdge || lastMousePosType == MousePos::LeftBottom || lastMousePosType == MousePos::RightBottom) {
 		pAspect.setY((1.0f - mouseRaletive.y()) / (1.0f - LastMouseRaletive.y()));

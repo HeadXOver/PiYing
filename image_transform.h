@@ -1,8 +1,7 @@
 #pragma once
 
 #include <memory>
-
-class QMatrix4x4;
+#include <qmatrix4x4>
 
 class ImageTransform
 {
@@ -39,8 +38,8 @@ public:
     const QMatrix4x4& scale() const;
 
 private:
-    std::unique_ptr<QMatrix4x4> trans_;
-    std::unique_ptr<QMatrix4x4> rot_;
-    std::unique_ptr<QMatrix4x4> scale_;
+    QMatrix4x4 trans_;
+    QMatrix4x4 rot_;
+    QMatrix4x4 scale_;
 };
 

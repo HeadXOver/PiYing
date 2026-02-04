@@ -122,9 +122,6 @@ void PiYingGL::paintBackgrounds()
 
 void PiYingGL::paintCharacterTexture()
 {
-	/// 绘制标准视图框
-	draw_view_rectangle();
-
 	int i = getCurrentChRow();
 	if (i < 0) return;
 
@@ -147,8 +144,6 @@ void PiYingGL::paintCharacterTexture()
 
 void PiYingGL::paint_applied_texture()
 {
-	draw_view_rectangle();
-
 	int i = getCurrentChRow();
 	if (i < 0) return;
 
