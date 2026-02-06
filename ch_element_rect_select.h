@@ -28,12 +28,12 @@ struct ChElementRectSelect final
 class RectSelectClick final : public ClickBehavior
 {
 public:
-	RectSelectClick(std::shared_ptr<ChElementRectSelect> rect_select) { rectSelect = rect_select; }
+	RectSelectClick(const std::shared_ptr<ChElementRectSelect> rect_select) : rectSelect(rect_select) {}
 
 	virtual void click(const QPointF& point) override;
 
 private:
-	std::shared_ptr<ChElementRectSelect> rectSelect;
+	const std::shared_ptr<ChElementRectSelect> rectSelect;
 };
 
 ///////////////////////////////////////////////////
@@ -41,12 +41,12 @@ private:
 class RectSelectMove final : public MouseMoveBehavior
 {
 public:
-	RectSelectMove(std::shared_ptr<ChElementRectSelect> rect_select) { rectSelect = rect_select; }
+	RectSelectMove(const std::shared_ptr<ChElementRectSelect> rect_select) : rectSelect(rect_select) {}
 
 	virtual void mouseMove(const QPointF& point) override;
 
 private:
-	std::shared_ptr<ChElementRectSelect> rectSelect;
+	const std::shared_ptr<ChElementRectSelect> rectSelect;
 };
 
 ///////////////////////////////////////////////////
@@ -54,12 +54,12 @@ private:
 class RectSelectRelease final : public ReleaseBehavior
 {
 public:
-	RectSelectRelease(std::shared_ptr<ChElementRectSelect> rect_select) { rectSelect = rect_select; }
+	RectSelectRelease(const std::shared_ptr<ChElementRectSelect> rect_select) : rectSelect(rect_select) {}
 
 	virtual void release(const QPointF& point) override;
 
 private:
-	std::shared_ptr<ChElementRectSelect> rectSelect;
+	const std::shared_ptr<ChElementRectSelect> rectSelect;
 };
 
 ///////////////////////////////////////////////////
@@ -67,13 +67,13 @@ private:
 class RectSelectDelete final : public DeleteElementBehavior
 {
 public:
-	RectSelectDelete(std::shared_ptr<ChElementRectSelect> rect_select) { rectSelect = rect_select; }
+	RectSelectDelete(const std::shared_ptr<ChElementRectSelect> rect_select) : rectSelect(rect_select) {}
 
 
 	virtual void deleteElement() override;
 
 private:
-	std::shared_ptr<ChElementRectSelect> rectSelect;
+	const std::shared_ptr<ChElementRectSelect> rectSelect;
 };
 
 ///////////////////////////////////////////////////
@@ -81,11 +81,11 @@ private:
 class RectSelectEscape final : public EscapeBehavior
 {
 public:
-	RectSelectEscape(std::shared_ptr<ChElementRectSelect> rect_select) { rectSelect = rect_select; }
+	RectSelectEscape(const std::shared_ptr<ChElementRectSelect> rect_select) : rectSelect(rect_select) {}
 	virtual void escape() override;
 
 private:
-	std::shared_ptr<ChElementRectSelect> rectSelect;
+	const std::shared_ptr<ChElementRectSelect> rectSelect;
 };
 
 ///////////////////////////////////////////////////
@@ -93,11 +93,11 @@ private:
 class RectSelectDraw final : public DrawBehavior
 {
 public:
-	RectSelectDraw(std::shared_ptr<ChElementRectSelect> rect_select) { rectSelect = rect_select; }
+	RectSelectDraw(const std::shared_ptr<ChElementRectSelect> rect_select) : rectSelect(rect_select) {}
 	virtual void draw() override;
 
 private:
-	std::shared_ptr<ChElementRectSelect> rectSelect;
+	const std::shared_ptr<ChElementRectSelect> rectSelect;
 };
 
 ///////////////////////////////////////////////////

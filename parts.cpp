@@ -25,7 +25,7 @@ void Parts::add(Part* part)
 {
     part->_lay_index = (int)_parts.size();
     _parts.push_back(part);
-    _part_is_draw.push_back(false);
+    _part_is_draw.push_back(0);
 }
 
 void Parts::remove(size_t index)
@@ -41,13 +41,13 @@ void Parts::remove_with_children(size_t index)
 {
     add_single_to_draw(index);
 
-    for (int i = (int)_part_is_draw.size() - 1; i >= 0; --i) {
+    for (size_t i = _part_is_draw.size() - 1; i >= 0; --i) {
         if (_part_is_draw[i]) {
             _parts.erase(_parts.begin() + i);
         }
     }
 
-    _part_is_draw.assign(_parts.size(), false);
+    _part_is_draw.assign(_parts.size(), 0);
     
     reset_layer();
 }
@@ -55,7 +55,7 @@ void Parts::remove_with_children(size_t index)
 void Parts::insert(size_t index, Part* part)
 {
     _parts.insert(_parts.begin() + index, part);
-    _part_is_draw.insert(_part_is_draw.begin() + index, false);
+    _part_is_draw.insert(_part_is_draw.begin() + index, 0);
     for (; index < _parts.size(); ++index) {
         _parts[index]->_lay_index = (int)index;
     }
@@ -90,7 +90,7 @@ void Parts::swap(size_t index1, size_t index2)
     _parts[index1] = _parts[index2];
     _parts[index2] = tmp;
 
-    bool tmpBool = _part_is_draw[index1];
+    char tmpBool = _part_is_draw[index1];
     _part_is_draw[index1] = _part_is_draw[index2];
     _part_is_draw[index2] = tmpBool;
 }
@@ -102,24 +102,24 @@ void Parts::update_scale(size_t index)
 
 void Parts::add_single_to_draw(size_t index)
 {
-    _part_is_draw.assign(_parts.size(), false);
+    _part_is_draw.assign(_parts.size(), 0);
 
     add_part_to_is_draw(_parts[index]);
 }
 
 void Parts::add_single_to_draw(Part* part)
 {
-    _part_is_draw.assign(_parts.size(), false);
+    _part_is_draw.assign(_parts.size(), 0);
 
     add_part_to_is_draw(part);
 }
 
 void Parts::add_to_draw_by_piying(Part* part)
 {
-    _part_is_draw.assign(_parts.size(), false);
+    _part_is_draw.assign(_parts.size(), 0);
 
     if (!part) {
-        for (int i = 0; i < _parts.size(); i++) {
+        for (size_t i = 0; i < _parts.size(); i++) {
             if (_parts[i]->is_root()) {
                 add_part_to_is_draw(_parts[i]);
             }
@@ -170,7 +170,7 @@ Part* Parts::get_part(size_t index) const
 
 void Parts::add_part_to_is_draw(Part* part)
 {
-    _part_is_draw[part->_lay_index] = true;
+    _part_is_draw[part->_lay_index] = 1;
 
     size_t n_children = part->n_children();
 

@@ -29,11 +29,11 @@ struct ChElementAddRound final
 class AddRoundClick final : public ClickBehavior 
 {
 public:
-	AddRoundClick(std::shared_ptr<ChElementAddRound> add) : addRound(add) {}
+	AddRoundClick(const std::shared_ptr<ChElementAddRound>& add) : addRound(add) {}
 	virtual void click(const QPointF& mouse) override;
 
 private:
-	std::shared_ptr<ChElementAddRound> addRound;
+	const std::shared_ptr<ChElementAddRound> addRound;
 };
 
 ////////////////////////////////////////////////
@@ -41,11 +41,11 @@ private:
 class AddRoundMove final : public MouseMoveBehavior
 {
 public:
-	AddRoundMove(std::shared_ptr<ChElementAddRound> add) : addRound(add) {}
+	AddRoundMove(const std::shared_ptr<ChElementAddRound>& add) : addRound(add) {}
 	virtual void mouseMove(const QPointF& mouse) override;
 
 private:
-	std::shared_ptr<ChElementAddRound> addRound;
+	const std::shared_ptr<ChElementAddRound> addRound;
 };
 
 ////////////////////////////////////////////////
@@ -53,11 +53,11 @@ private:
 class AddRoundRelease final : public ReleaseBehavior
 {
 public:
-	AddRoundRelease(std::shared_ptr<ChElementAddRound> add) : addRound(add) {}
+	AddRoundRelease(const std::shared_ptr<ChElementAddRound>& add) : addRound(add) {}
 	virtual void release(const QPointF& mouse) override;
 
 private:
-	std::shared_ptr<ChElementAddRound> addRound;
+	const std::shared_ptr<ChElementAddRound> addRound;
 };
 
 ////////////////////////////////////////////////
@@ -65,9 +65,9 @@ private:
 class AddRoundDraw final : public DrawBehavior
 {
 public:
-	AddRoundDraw(std::shared_ptr<ChElementAddRound> add) : addRound(add) {}
+	AddRoundDraw(const std::shared_ptr<ChElementAddRound>& add) : addRound(add) {}
 	virtual void draw() override;
 
 private:
-	std::shared_ptr<ChElementAddRound> addRound;
+	const std::shared_ptr<ChElementAddRound> addRound;
 };

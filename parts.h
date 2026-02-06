@@ -48,5 +48,5 @@ private:
 
 private:
 	std::vector<Part*> _parts;
-	std::vector<bool> _part_is_draw;
+	std::vector<char> _part_is_draw;
 };

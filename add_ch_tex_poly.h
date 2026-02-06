@@ -26,12 +26,12 @@ struct AddChTexPoly
 class AddPolyEscape final : public EscapeBehavior
 {
 public:
-	AddPolyEscape(std::shared_ptr<AddChTexPoly> add) { addChTexPoly = add; }
+	AddPolyEscape(const std::shared_ptr<AddChTexPoly>& add) : addChTexPoly(add) {}
 
 	virtual void escape() override;
 
 private:
-	std::shared_ptr<AddChTexPoly> addChTexPoly;
+	const std::shared_ptr<AddChTexPoly> addChTexPoly;
 };
 
 ////////////////////////////////////////////////////////
@@ -39,13 +39,13 @@ private:
 class AddPolyDelete final : public DeleteElementBehavior
 {
 public:
-	AddPolyDelete(std::shared_ptr<AddChTexPoly> add) { addChTexPoly = add; }
+	AddPolyDelete(const std::shared_ptr<AddChTexPoly>& add) : addChTexPoly(add) {}
 
 
 	virtual void deleteElement() override;
 
 private:
-	std::shared_ptr<AddChTexPoly> addChTexPoly;
+	const std::shared_ptr<AddChTexPoly> addChTexPoly;
 };
 
 ////////////////////////////////////////////////////////
@@ -53,11 +53,11 @@ private:
 class AddPolyClick final : public ClickBehavior
 {
 public:
-	AddPolyClick(std::shared_ptr<AddChTexPoly> add) { addChTexPoly = add; }
+	AddPolyClick(const std::shared_ptr<AddChTexPoly>& add) : addChTexPoly(add) {}
 	virtual void click(const QPointF& mouse) override;
 
 private:
-	std::shared_ptr<AddChTexPoly> addChTexPoly;
+	const std::shared_ptr<AddChTexPoly> addChTexPoly;
 };
 
 ////////////////////////////////////////////////////////
@@ -65,20 +65,20 @@ private:
 class AddPolyDraw final : public DrawBehavior
 {
 public:
-	AddPolyDraw(std::shared_ptr<AddChTexPoly> add) { addChTexPoly = add; }
+	AddPolyDraw(const std::shared_ptr<AddChTexPoly>& add) : addChTexPoly(add) {}
 	virtual void draw() override;
 
 private:
-	std::shared_ptr<AddChTexPoly> addChTexPoly;
+	const std::shared_ptr<AddChTexPoly> addChTexPoly;
 };
 
 class AddPolyEnter final : public EnterBehavior
 {
 public:
-	AddPolyEnter(std::shared_ptr<AddChTexPoly> add) { addChTexPoly = add; }
+	AddPolyEnter(const std::shared_ptr<AddChTexPoly>& add) : addChTexPoly(add) {}
 	virtual void enter() override;
 
 private:
-	std::shared_ptr<AddChTexPoly> addChTexPoly;
+	const std::shared_ptr<AddChTexPoly> addChTexPoly;
 };
 

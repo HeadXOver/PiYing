@@ -35,11 +35,11 @@ struct AddTriangle final
 class AddTriangleEscape final : public EscapeBehavior
 {
 public:
-	AddTriangleEscape(std::shared_ptr<AddTriangle> add) { addTriangle = add; }
+	AddTriangleEscape(const std::shared_ptr<AddTriangle>& add) : addTriangle(add) {}
 	virtual void escape() override;
 
 private:
-	std::shared_ptr<AddTriangle> addTriangle;
+	const std::shared_ptr<AddTriangle> addTriangle;
 };
 
 ////////////////////////////////////////////////////////
@@ -47,11 +47,11 @@ private:
 class AddTriangleDelete final : public DeleteElementBehavior
 {
 public:
-	AddTriangleDelete(std::shared_ptr<AddTriangle> add) { addTriangle = add; }
+	AddTriangleDelete(const std::shared_ptr<AddTriangle>& add) : addTriangle(add) {}
 	virtual void deleteElement() override;
 
 private:
-	std::shared_ptr<AddTriangle> addTriangle;
+	const std::shared_ptr<AddTriangle> addTriangle;
 };
 
 ////////////////////////////////////////////////////////
@@ -59,11 +59,11 @@ private:
 class AddTriangleClick final : public ClickBehavior
 {
 public:
-	AddTriangleClick(std::shared_ptr<AddTriangle> add) { addTriangle = add; }
+	AddTriangleClick(const std::shared_ptr<AddTriangle>& add) : addTriangle(add) {}
 	virtual void click(const QPointF& mouse) override;
 
 private:
-	std::shared_ptr<AddTriangle> addTriangle;
+	const std::shared_ptr<AddTriangle> addTriangle;
 };
 
 ////////////////////////////////////////////////////////
@@ -71,9 +71,9 @@ private:
 class AddTriangleDraw final : public DrawBehavior
 {
 public:
-	AddTriangleDraw(std::shared_ptr<AddTriangle> add) { addTriangle = add; }
+	AddTriangleDraw(const std::shared_ptr<AddTriangle>& add) : addTriangle(add) {}
 	virtual void draw() override;
 
 private:
-	std::shared_ptr<AddTriangle> addTriangle;
+	const std::shared_ptr<AddTriangle> addTriangle;
 };

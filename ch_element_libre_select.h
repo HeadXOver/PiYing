@@ -31,12 +31,12 @@ public:
 class LibreSelectClick final : public ClickBehavior
 {
 public:
-	LibreSelectClick(std::shared_ptr<ChElementLibreSelect> select) { libreSelect = select; }
+	LibreSelectClick(const std::shared_ptr<ChElementLibreSelect> select) : libreSelect(select) {}
 
 	virtual void click(const QPointF& point) override;
 
 private:
-	std::shared_ptr<ChElementLibreSelect> libreSelect;
+	const std::shared_ptr<ChElementLibreSelect> libreSelect;
 };
 
 ///////////////////////////////////////////////////
@@ -44,12 +44,12 @@ private:
 class LibreSelectMove final : public MouseMoveBehavior
 {
 public:
-	LibreSelectMove(std::shared_ptr<ChElementLibreSelect> select) { libreSelect = select; }
+	LibreSelectMove(const std::shared_ptr<ChElementLibreSelect> select) : libreSelect(select) {}
 
 	virtual void mouseMove(const QPointF& point) override;
 
 private:
-	std::shared_ptr<ChElementLibreSelect> libreSelect;
+	const std::shared_ptr<ChElementLibreSelect> libreSelect;
 };
 
 ///////////////////////////////////////////////////
@@ -57,12 +57,12 @@ private:
 class LibreSelectRelease final : public ReleaseBehavior
 {
 public:
-	LibreSelectRelease(std::shared_ptr<ChElementLibreSelect> select) { libreSelect = select; }
+	LibreSelectRelease(const std::shared_ptr<ChElementLibreSelect> select) : libreSelect(select) {}
 
 	virtual void release(const QPointF& point) override;
 
 private:
-	std::shared_ptr<ChElementLibreSelect> libreSelect;
+	const std::shared_ptr<ChElementLibreSelect> libreSelect;
 };
 
 ///////////////////////////////////////////////////
@@ -70,13 +70,12 @@ private:
 class LibreSelectDelete final : public DeleteElementBehavior
 {
 public:
-	LibreSelectDelete(std::shared_ptr<ChElementLibreSelect> select) { libreSelect = select; }
-
+	LibreSelectDelete(const std::shared_ptr<ChElementLibreSelect> select) : libreSelect(select) {}
 
 	virtual void deleteElement() override;
 
 private:
-	std::shared_ptr<ChElementLibreSelect> libreSelect;
+	const std::shared_ptr<ChElementLibreSelect> libreSelect;
 };
 
 ///////////////////////////////////////////////////
@@ -84,13 +83,12 @@ private:
 class LibreSelectEscape final : public EscapeBehavior
 {
 public:
-	LibreSelectEscape(std::shared_ptr<ChElementLibreSelect> select) { libreSelect = select; }
-
+	LibreSelectEscape(const std::shared_ptr<ChElementLibreSelect> select) : libreSelect(select) {}
 
 	virtual void escape() override;
 
 private:
-	std::shared_ptr<ChElementLibreSelect> libreSelect;
+	const std::shared_ptr<ChElementLibreSelect> libreSelect;
 };
 
 ///////////////////////////////////////////////////
@@ -98,11 +96,11 @@ private:
 class LibreSelectDraw final : public DrawBehavior
 {
 public:
-	LibreSelectDraw(std::shared_ptr<ChElementLibreSelect> select) { libreSelect = select; }
+	LibreSelectDraw(const std::shared_ptr<ChElementLibreSelect> select) : libreSelect(select) {}
 	virtual void draw() override;
 
 private:
-	std::shared_ptr<ChElementLibreSelect> libreSelect;
+	const std::shared_ptr<ChElementLibreSelect> libreSelect;
 };
 
 ///////////////////////////////////////////////////

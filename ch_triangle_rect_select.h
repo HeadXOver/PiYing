@@ -29,12 +29,12 @@ struct ChTriangleRectSelect final
 class RectSelectTriangleClick final : public ClickBehavior
 {
 public:
-	RectSelectTriangleClick(std::shared_ptr<ChTriangleRectSelect> rect_select) { rectSelect = rect_select; }
+	RectSelectTriangleClick(const std::shared_ptr<ChTriangleRectSelect> rect_select) : rectSelect(rect_select) {}
 
 	virtual void click(const QPointF& point) override;
 
 private:
-	std::shared_ptr<ChTriangleRectSelect> rectSelect;
+	const std::shared_ptr<ChTriangleRectSelect> rectSelect;
 };
 
 ///////////////////////////////////////////////////
@@ -42,12 +42,12 @@ private:
 class RectSelectTriangleMove final : public MouseMoveBehavior
 {
 public:
-	RectSelectTriangleMove(std::shared_ptr<ChTriangleRectSelect> rect_select) { rectSelect = rect_select; }
+	RectSelectTriangleMove(const std::shared_ptr<ChTriangleRectSelect> rect_select) : rectSelect(rect_select) {}
 
 	virtual void mouseMove(const QPointF& point) override;
 
 private:
-	std::shared_ptr<ChTriangleRectSelect> rectSelect;
+	const std::shared_ptr<ChTriangleRectSelect> rectSelect;
 };
 
 ///////////////////////////////////////////////////
@@ -55,12 +55,12 @@ private:
 class RectSelectTriangleRelease final : public ReleaseBehavior
 {
 public:
-	RectSelectTriangleRelease(std::shared_ptr<ChTriangleRectSelect> rect_select) { rectSelect = rect_select; }
+	RectSelectTriangleRelease(const std::shared_ptr<ChTriangleRectSelect> rect_select) : rectSelect(rect_select) {}
 
 	virtual void release(const QPointF& point) override;
 
 private:
-	std::shared_ptr<ChTriangleRectSelect> rectSelect;
+	const std::shared_ptr<ChTriangleRectSelect> rectSelect;
 };
 
 ///////////////////////////////////////////////////
@@ -68,13 +68,13 @@ private:
 class RectSelectTriangleDelete final : public DeleteElementBehavior
 {
 public:
-	RectSelectTriangleDelete(std::shared_ptr<ChTriangleRectSelect> rect_select) { rectSelect = rect_select; }
+	RectSelectTriangleDelete(const std::shared_ptr<ChTriangleRectSelect> rect_select) : rectSelect(rect_select) {}
 
 
 	virtual void deleteElement() override;
 
 private:
-	std::shared_ptr<ChTriangleRectSelect> rectSelect;
+	const std::shared_ptr<ChTriangleRectSelect> rectSelect;
 };
 
 ///////////////////////////////////////////////////
@@ -82,11 +82,11 @@ private:
 class RectSelectTriangleEscape final : public EscapeBehavior
 {
 public:
-	RectSelectTriangleEscape(std::shared_ptr<ChTriangleRectSelect> rect_select) { rectSelect = rect_select; }
+	RectSelectTriangleEscape(const std::shared_ptr<ChTriangleRectSelect> rect_select) : rectSelect(rect_select) {}
 	virtual void escape() override;
 
 private:
-	std::shared_ptr<ChTriangleRectSelect> rectSelect;
+	const std::shared_ptr<ChTriangleRectSelect> rectSelect;
 };
 
 ///////////////////////////////////////////////////
@@ -94,11 +94,11 @@ private:
 class RectSelectTriangleDraw final : public DrawBehavior
 {
 public:
-	RectSelectTriangleDraw(std::shared_ptr<ChTriangleRectSelect> rect_select) { rectSelect = rect_select; }
+	RectSelectTriangleDraw(const std::shared_ptr<ChTriangleRectSelect> rect_select) : rectSelect(rect_select) {}
 	virtual void draw() override;
 
 private:
-	std::shared_ptr<ChTriangleRectSelect> rectSelect;
+	const std::shared_ptr<ChTriangleRectSelect> rectSelect;
 };
 
 ///////////////////////////////////////////////////
@@ -106,11 +106,11 @@ private:
 class RectSelectTriangleEnter final : public EnterBehavior
 {
 public:
-	RectSelectTriangleEnter(std::shared_ptr<ChTriangleRectSelect> rect_select) { rectSelect = rect_select; }
+	RectSelectTriangleEnter(const std::shared_ptr<ChTriangleRectSelect> rect_select) : rectSelect(rect_select) {}
 	virtual void enter() override;
 
 private:
-	std::shared_ptr<ChTriangleRectSelect> rectSelect;
+	const std::shared_ptr<ChTriangleRectSelect> rectSelect;
 };
 
 

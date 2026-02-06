@@ -22,11 +22,11 @@ struct ChAddVertTrace final
 class AddVertTraceClick final : public ClickBehavior
 {
 public:
-	AddVertTraceClick(std::shared_ptr<ChAddVertTrace> add) : addTrace(add) {}
+	AddVertTraceClick(const std::shared_ptr<ChAddVertTrace>& add) : addTrace(add) {}
 	virtual void click(const QPointF& mouse) override;
 
 private:
-	std::shared_ptr<ChAddVertTrace> addTrace;
+	const std::shared_ptr<ChAddVertTrace> addTrace;
 };
 
 ////////////////////////////////////////////////
@@ -34,11 +34,11 @@ private:
 class AddVertTraceMove final : public MouseMoveBehavior
 {
 public:
-	AddVertTraceMove(std::shared_ptr<ChAddVertTrace> add) : addTrace(add) {}
+	AddVertTraceMove(const std::shared_ptr<ChAddVertTrace>& add) : addTrace(add) {}
 	virtual void mouseMove(const QPointF& mouse) override;
 
 private:
-	std::shared_ptr<ChAddVertTrace> addTrace;
+	const std::shared_ptr<ChAddVertTrace> addTrace;
 };
 
 ////////////////////////////////////////////////
@@ -46,11 +46,11 @@ private:
 class AddVertTraceRelease final : public ReleaseBehavior
 {
 public:
-	AddVertTraceRelease(std::shared_ptr<ChAddVertTrace> add) : addTrace(add) {}
+	AddVertTraceRelease(const std::shared_ptr<ChAddVertTrace>& add) : addTrace(add) {}
 	virtual void release(const QPointF& mouse) override;
 
 private:
-	std::shared_ptr<ChAddVertTrace> addTrace;
+	const std::shared_ptr<ChAddVertTrace> addTrace;
 };
 
 ////////////////////////////////////////////////
@@ -58,9 +58,9 @@ private:
 class AddVertTraceDraw final : public DrawBehavior
 {
 public:
-	AddVertTraceDraw(std::shared_ptr<ChAddVertTrace> add) : addTrace(add) {}
+	AddVertTraceDraw(const std::shared_ptr<ChAddVertTrace>& add) : addTrace(add) {}
 	virtual void draw() override;
 
 private:
-	std::shared_ptr<ChAddVertTrace> addTrace;
+	const std::shared_ptr<ChAddVertTrace> addTrace;
 };
