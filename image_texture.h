@@ -12,7 +12,6 @@ class ImageTexture final
 {
 public:
     ImageTexture(const QImage& image, float currentRatio);
-    ImageTexture(const QImage& image);
     ~ImageTexture();
 
     void set_transform(const ImageTransform& transform);

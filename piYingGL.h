@@ -28,6 +28,7 @@ enum class CharacterToolState;
 class PiYing;
 class ImageTransform;
 class ImageTexture;
+class CharacterTexture;
 class QMenu;
 class ChElementTool;
 class QOpenGLShaderProgram;
@@ -180,7 +181,7 @@ private:
 
 	// imageTextures
 	QList<ImageTexture*> backGrounds;
-	QList<ImageTexture*> characterTextures;
+	QList<CharacterTexture*> characterTextures;
 
 	QList<PointVector*> characterVerts;
 

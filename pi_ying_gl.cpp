@@ -22,6 +22,7 @@
 
 #include "image_transform.h"
 #include "image_texture.h"
+#include "character_texture.h"
 
 #include "cus_func_string.h"
 #include "cus_func_zone.h"
@@ -82,7 +83,7 @@ void PiYingGL::add_character(const QString& imageName)
 		return;
 	}
 	makeCurrent();
-	characterTextures.append(new ImageTexture(img));
+	characterTextures.append(new CharacterTexture(img));
 	doneCurrent();
 	characterTriangleIndices.push_back(std::vector<unsigned int>());
 	characterVerts.push_back(new PointVector());

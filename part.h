@@ -4,7 +4,7 @@
 #include <memory>
 #include <qmatrix4x4>
 
-class ImageTexture;
+class CharacterTexture;
 class QOpenGLTexture;
 class PointVector;
 class QPointF;
@@ -17,7 +17,7 @@ class Joint;
 class Part final
 {
 public:
-	Part(ImageTexture& texture, const QList<unsigned int>& indices, bool isTexture);
+	Part(CharacterTexture& texture, const QList<unsigned int>& indices, bool isTexture);
 	Part(const Part& part1, const Part& part2);
 	Part(const Part& part);
 	~Part();

@@ -2,6 +2,7 @@
 #include "piYing.h"
 #include "ch_element_tool.h"
 #include "image_texture.h"
+#include "character_texture.h"
 #include "point_vector.h"
 #include "point_vector_layer.h"
 #include "vert_groups.h"

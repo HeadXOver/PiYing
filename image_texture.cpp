@@ -25,21 +25,6 @@ ImageTexture::ImageTexture(const QImage& image, float currentRatio)
     _texture->setWrapMode(QOpenGLTexture::ClampToEdge);
 }
 
-ImageTexture::ImageTexture(const QImage& image)
-{
-    _image_ratio = image.width() / float(image.height());
-    _prescale = DEFAULT_RATIO / _image_ratio;
-
-    _transform = std::make_unique<ImageTransform>();
-
-    _transform->set_scale(1.f, _prescale);
-
-    _texture = std::make_unique<QOpenGLTexture>(image.flipped());
-    _texture->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
-    _texture->setMagnificationFilter(QOpenGLTexture::Linear);
-    _texture->setWrapMode(QOpenGLTexture::ClampToEdge);
-}
-
 ImageTexture::~ImageTexture()
 {
 }

@@ -4,6 +4,7 @@
 #include "ch_element_tool.h"
 #include "slide_applier.h"
 #include "image_texture.h"
+#include "character_texture.h"
 #include "point_vector.h"
 #include "point_vector_layer.h"
 #include "vert_groups.h"
@@ -149,7 +150,7 @@ PiYingGL::~PiYingGL()
 
 	doneCurrent();
 
-	for (ImageTexture* ch : characterTextures) delete ch;
+	for (CharacterTexture* ch : characterTextures) delete ch;
 	for (ImageTexture* bg : backGrounds) delete bg;
 	for (PointVector* pv : characterVerts) delete pv;
 }

@@ -12,7 +12,7 @@
 #include "PiYing.h"
 #include "slide_applier.h"
 #include "character_trace.h"
-#include "image_texture.h"
+#include "character_texture.h"
 
 #include <qopengltexture>
 #include <qpointf>
@@ -20,7 +20,7 @@
 #include <qmenu>
 
 Part::Part(
-	ImageTexture& texture,
+	CharacterTexture& texture,
 	const QList<unsigned int>& indices,
 	bool isTexture
 ) :

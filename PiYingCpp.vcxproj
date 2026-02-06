@@ -97,6 +97,7 @@
     <ClCompile Include="add_triangle.cpp" />
     <ClCompile Include="ask_transform_dialog.cpp" />
     <ClCompile Include="ask_round_poly_dialog.cpp" />
+    <ClCompile Include="character_texture.cpp" />
     <ClCompile Include="character_trace.cpp" />
     <ClCompile Include="ch_add_vert_trace.cpp" />
     <ClCompile Include="ch_element_add_round.cpp" />
@@ -162,6 +163,7 @@
   <ItemGroup>
     <ClInclude Include="add_ch_tex_poly.h" />
     <ClInclude Include="base_math.h" />
+    <ClInclude Include="character_texture.h" />
     <ClInclude Include="character_trace.h" />
     <ClInclude Include="ch_triangle_libre_select.h" />
     <ClInclude Include="ch_triangle_rect_select.h" />

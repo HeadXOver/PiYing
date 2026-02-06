@@ -277,6 +277,9 @@
     <ClCompile Include="ViewData.cpp">
       <Filter>Source Files\PiYingQObject</Filter>
     </ClCompile>
+    <ClCompile Include="character_texture.cpp">
+      <Filter>Source Files\Core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="static_handle_zone.h">
@@ -404,6 +407,9 @@
     </ClInclude>
     <ClInclude Include="cus_readfile.h">
       <Filter>Header Files\CustomTool</Filter>
+    </ClInclude>
+    <ClInclude Include="character_texture.h">
+      <Filter>Header Files\Core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
