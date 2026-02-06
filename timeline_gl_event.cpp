@@ -35,16 +35,14 @@ void TimelineGl::wheelEvent(QWheelEvent* ev)
 	else if (_ui_type == spTimelineGL::UiType::Part) {
 		const float scaleTrans = ev->angleDelta().y() / 1200.f;
 
-		const float toSet = _scroll_positon - scaleTrans;
+		_scroll_positon -= scaleTrans;
 
-		if (toSet < 0) {
-			_scroll_positon = 0;
-		}
-		else if (toSet > 1.f - 1.f / _part_total_scale) {
+		if (_scroll_positon > 1.f - 1.f / _part_total_scale) {
 			_scroll_positon = 1.f - 1.f / _part_total_scale;
 		}
-		else {
-			_scroll_positon = toSet;
+
+		if (_scroll_positon < 0) {
+			_scroll_positon = 0;
 		}
 	}
 	update();

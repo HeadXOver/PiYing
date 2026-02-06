@@ -153,7 +153,7 @@ void PiYingGL::paintCharacterTexture()
 
 	characterTextures[i]->bind();
 
-	_texture_color_shader_programme->setUniformValue("trc", getViewMatrix() * characterTextures[i]->getMatrix());
+	_texture_color_shader_programme->setUniformValue("trc", getBgShaderMatrix(characterTextures[i]->getMatrix()));
 
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 

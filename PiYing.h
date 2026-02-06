@@ -85,12 +85,10 @@ private:
 	ToolButton* _select_button;
 
 	QListWidget* voidListWidget;
-	QListWidget* bgImageList = nullptr;
-	QListWidget* chImageList = nullptr;
+	QListWidget* bgImageList;
+	QListWidget* chImageList;
 
-	CtrlSlideWidget* sliderWidget = nullptr;
+	CtrlSlideWidget* sliderWidget;
 
-	PiYingGLContainer* piYingGLContainer = nullptr;
-
-	static QString SLIDER_WIDGET_STYLE_SHEET;
+	PiYingGLContainer* piYingGLContainer;
 };

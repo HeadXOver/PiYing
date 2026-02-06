@@ -3,9 +3,7 @@
 #include <memory>
 
 class QOpenGLTexture;
-class ImageTransform;
 class QImage;
-class QPointF;
 class QMatrix4x4;
 
 class CharacterTexture final

@@ -7,6 +7,7 @@
 #include "tool_button.h"
 #include "time_line_gl.h"
 #include "cus_func_string.h"
+#include "cus_readfile.h"
 
 #include "enum_edit_mode.h"
 #include "enum_character_texture_tool_state.h"
@@ -20,21 +21,11 @@
 #include <qlistwidget>
 #include <qsplitter>
 
-QString PiYing::SLIDER_WIDGET_STYLE_SHEET;
 PiYing* PiYing::_instance = nullptr;
 
 PiYing::PiYing() : QMainWindow(nullptr)
 {
     _instance = this;
-
-    QFile sliderStyle(":/PiYing/slideStyle.qss");
-    if (sliderStyle.open(QFile::ReadOnly)) {
-        SLIDER_WIDGET_STYLE_SHEET = sliderStyle.readAll();
-        sliderStyle.close();
-    }
-    else {
-        QMessageBox::warning(this, "Error", "Failed to load style sheet");
-    }
 
     ui = std::make_unique<Ui::PiYingClass>();
     ui->setupUi(this);
@@ -42,7 +33,7 @@ PiYing::PiYing() : QMainWindow(nullptr)
     setFocusPolicy(Qt::StrongFocus);
 
     sliderWidget = new CtrlSlideWidget();
-    sliderWidget->setStyleSheet(SLIDER_WIDGET_STYLE_SHEET);
+    sliderWidget->setStyleSheet(PiYingCus::readAllFileToQString(":/PiYing/slideStyle.qss"));
     sliderWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
     _piying_gl_bg_ratio = 16.0 / 9.0;
@@ -109,8 +100,8 @@ PiYing::PiYing() : QMainWindow(nullptr)
     QAction* actionExportMainSlider     = childMenuExport->     addAction("主轴");
 
 	// actions of menu Edit
-    QAction* actionScreenScale           = childMenuScreen->     addAction("比例...");
-    QAction* actionDefaultColor          = childMenuScreen->     addAction("底色...");
+    QAction* actionScreenScale          = childMenuScreen->     addAction("比例...");
+    QAction* actionDefaultColor         = childMenuScreen->     addAction("底色...");
 
     // actions of menu Window
     QAction* actionChTool = childMenuTool->addAction("零件库");
@@ -133,33 +124,32 @@ PiYing::PiYing() : QMainWindow(nullptr)
     splitListOpenGL->addWidget(voidListWidget);
     splitListOpenGL->addWidget(splitTimelineOpenGL);
     splitTimelineOpenGL->setSizes({ width() * 5 / 6, width() / 6 });
-    splitListOpenGL->setStretchFactor(0, 1);
-    splitListOpenGL->setStretchFactor(1, 3);
+    splitListOpenGL->setStretchFactor(0, 0);
+    splitListOpenGL->setStretchFactor(1, 1);
 
     bgImageList->setUniformItemSizes(true);
     chImageList->setUniformItemSizes(true);
     bgImageList->setIconSize(QSize(50, 50));
     chImageList->setIconSize(QSize(50, 50));
 
-    QFile qss(":/PiYing/imageListStyle.qss");
-    if (qss.open(QFile::ReadOnly)) {
-        bgImageList->setStyleSheet(qss.readAll());
-        qss.seek(0);
-        chImageList->setStyleSheet(qss.readAll());
-        qss.close();
-    }
+    QString listStyleSheet = PiYingCus::readAllFileToQString(":/PiYing/imageListStyle.qss");
+    bgImageList->setStyleSheet(listStyleSheet);
+    chImageList->setStyleSheet(listStyleSheet);
 
     PiYingGL::getInstance().setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     TimelineGl::getInstance().setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+
     voidListWidget->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
+    bgImageList->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
+    chImageList->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
 
     modeBox->addItems(
         {
             "预览模式",
             "背景编辑",
             "角色纹理编辑",
-            "角色骨骼编辑",
-            "拼合台"
+            "初始变形",
+            "部件变形"
         }
     );
     ui->statusBar->addWidget(modeBox);
