@@ -20,13 +20,10 @@ public:
 
     void setTrans(float x, float y);
     void setTrans(const QPointF& point);
-    void setTrans(const QMatrix4x4& point);
     void setRot(float r);
-    void setRot(const QMatrix4x4& rot);
     void setScale(float x, float y);
     void setScale(const QPointF& point);
     void setScale(float s);
-    void setScale(const QMatrix4x4& point);
 
     void addTrans(const QPointF& point);
     void addScale(const QPointF& point);

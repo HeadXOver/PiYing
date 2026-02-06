@@ -23,9 +23,9 @@ void PiYingGL::setViewToStandard()
 
 	for (auto item : backGrounds) {
 		QMatrix4x4 combined = getViewMatrix() * item->getMatrix();
-		item->setTrans(getTrans(combined));
+		/*item->setTrans(getTrans(combined));
 		item->setRot(getRot(combined));
-		item->setScale(getScale(combined));
+		item->setScale(getScale(combined));*/
 	}
 
 	returnToStandard();

@@ -54,19 +54,9 @@ void ImageTexture::setTrans(const QPointF& point)
     _transform->set_trans(point.x(), point.y());
 }
 
-void ImageTexture::setTrans(const QMatrix4x4& point)
-{
-    _transform->set_trans(point);
-}
-
 void ImageTexture::setRot(float r)
 {
     _transform->set_rot(r);
-}
-
-void ImageTexture::setRot(const QMatrix4x4& point)
-{
-    _transform->set_rot(point);
 }
 
 void ImageTexture::setScale(float x, float y)
@@ -82,11 +72,6 @@ void ImageTexture::setScale(const QPointF& point)
 void ImageTexture::setScale(float s)
 {
     _transform->set_scale(s, s * _prescale);
-}
-
-void ImageTexture::setScale(const QMatrix4x4& point)
-{
-    _transform->set_scale(point);
 }
 
 void ImageTexture::addTrans(const QPointF& point)
