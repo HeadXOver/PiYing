@@ -12,8 +12,7 @@ namespace {
 
 ImageTexture::ImageTexture(const QImage& image, float currentRatio)
 {
-    _image_ratio = image.width() / float(image.height());
-    _prescale = currentRatio / _image_ratio;
+    _prescale = image.height() * currentRatio / static_cast<float>(image.width());
 
     _transform = std::make_unique<ImageTransform>();
 
@@ -22,7 +21,6 @@ ImageTexture::ImageTexture(const QImage& image, float currentRatio)
     _texture = std::make_unique<QOpenGLTexture>(image.flipped());
     _texture->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
     _texture->setMagnificationFilter(QOpenGLTexture::Linear);
-    _texture->setWrapMode(QOpenGLTexture::ClampToEdge);
 }
 
 ImageTexture::~ImageTexture()
@@ -117,7 +115,7 @@ void ImageTexture::bind()
 void ImageTexture::set_transform_by_new_ratio(float newRatio)
 {
     const float oldScale = _prescale;
-    _prescale = newRatio / _image_ratio;
+    _prescale = _texture->height() * newRatio / static_cast<float>(_texture->width());
 
     const float oldNewRatio = _prescale / oldScale;
 

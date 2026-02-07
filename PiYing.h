@@ -88,6 +88,7 @@ private:
 	QListWidget* bgImageList;
 	QListWidget* chImageList;
 
+	/// 用来装控制器的
 	CtrlSlideWidget* sliderWidget;
 
 	PiYingGLContainer* piYingGLContainer;

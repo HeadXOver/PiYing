@@ -6,7 +6,6 @@ PiYingGLContainer::PiYingGLContainer(QWidget& content, double ratio, QWidget* pa
 {
     QVBoxLayout* lay = new QVBoxLayout(this);
     lay->addWidget(&content);
-    lay->setContentsMargins(0, 0, 0, 0);
     setLayout(lay);
 }
 
@@ -21,10 +20,6 @@ void PiYingGLContainer::resizeEvent(QResizeEvent*)
     }
     // 居中
     r.moveCenter(rect().center());
-
-	// 防止越界
-    r.moveLeft(qMax(0, qMin(r.left(), width() - r.width())));
-    r.moveTop(qMax(0, qMin(r.top(), height() - r.height())));
 
     m_content.setGeometry(r);
 }

@@ -99,8 +99,6 @@ void PiYingGL::draw_rectangle(float cx, float cy, float width, float height)
 
 void PiYingGL::paintBackgrounds()
 {
-	draw_view_rectangle();
-
 	glBindVertexArray(RECTANGLE_TEXTURE_VAO);///////////////////////////////////////////////////////
 
 	_texture_color_shader_programme->bind();
@@ -119,6 +117,8 @@ void PiYingGL::paintBackgrounds()
 
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 	}
+
+	draw_view_rectangle();
 
 	glBindVertexArray(0);////////////////////////////////////////////////////////////
 }

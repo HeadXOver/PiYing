@@ -8,6 +8,20 @@
 
 namespace {
 	constexpr double angle_rad = 3.1415926 / 180.0;
+
+	constexpr float DEFAULT_RATIO = 16.0f / 9.0f;
+
+	QMatrix4x4 get_proj() {
+		QMatrix4x4 proj;
+		proj.ortho(-DEFAULT_RATIO, DEFAULT_RATIO, -1, 1, -1, 1);
+		return proj;
+	}
+
+	QMatrix4x4 get_proj_invert() {
+		QMatrix4x4 proj;
+		proj.ortho(-1.0f / DEFAULT_RATIO, 1.0f / DEFAULT_RATIO, -1, 1, -1, 1);
+		return proj;
+	}
 }
 
 void ChElementAddRound::click(const QPointF& mouse) 
@@ -35,7 +49,7 @@ void ChElementAddRound::release(const QPointF& mouse)
 	init_angle = QLineF(center, mouse).angle();
 
 	const QPointF glCursor = PiYingGL::getInstance().GLViewProjMatrixInvert(current_cursor);
-	const float lenth = QLineF(QPointF(), PiYingGL::getInstance().getInsProj().map(glCursor - gl_center)).length();
+	const float lenth = QLineF(QPointF(), get_proj_invert().map(glCursor - gl_center)).length();
 
 	radius = lenth * 1000.f;
 
@@ -78,7 +92,7 @@ void ChElementAddRound::addRoundPoly(const int edgeCount)
 
 	PiYingGL::getInstance().add_point_to_vert(gl_center);
 	for (int i = 0; i < edgeCount; i++) {
-		PiYingGL::getInstance().add_point_to_vert(gl_center + lenth * PiYingGL::getInstance().getProj().map(QPointF(cos(initAngle + i * deltaAngle), sin(initAngle + i * deltaAngle))));
+		PiYingGL::getInstance().add_point_to_vert(gl_center + lenth * get_proj().map(QPointF(cos(initAngle + i * deltaAngle), sin(initAngle + i * deltaAngle))));
 	}
 
 	for (int i = 0; i < edgeCount - 1; i++) {
