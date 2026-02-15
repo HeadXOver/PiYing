@@ -58,13 +58,12 @@ void TimelineGl::part_layer_merge()
 		return;
 	}
 
-	const int childIndex = _showing_parts[_part_cursor._index]->_lay_index;
-	const int parentIndex = _showing_parts[_moving_select_part._index]->_lay_index;
+	Part* child = _showing_parts[_part_cursor._index];
 
 	if (ans== QMessageBox::Yes) {
-		Parts::getInstance().insert(childIndex, new Part(*(Parts::getInstance().get_part(childIndex))));
+		Parts::getInstance().insert(child->_lay_index, new Part(*child));
 	}
-	Parts::getInstance().get_part(parentIndex)->add_child(Parts::getInstance().get_part(childIndex));
+	_showing_parts[_moving_select_part._index]->add_child(child);
 
 	update_showing_parts();
 

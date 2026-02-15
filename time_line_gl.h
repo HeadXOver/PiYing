@@ -92,7 +92,8 @@ private:
 	void paint_timeline();
 	void draw_scroll();
 	void paint_parts();
-	void draw_part_and_child(Part& part, float x, float y);
+	void update_part_shader_program_data(Part& root, float x, float y);
+	void draw_part_and_child(Part& part);
 	void draw_insert_cursor();
 	void ask_merge_parts();
 	void insert_from_to(int from, int to);

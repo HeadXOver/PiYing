@@ -97,7 +97,7 @@ void Parts::swap(size_t index1, size_t index2)
 
 void Parts::update_scale(size_t index)
 {
-    _parts[index]->update_scale();
+    _parts[index]->update_global_scale();
 }
 
 void Parts::add_single_to_draw(size_t index)

@@ -100,27 +100,37 @@ void TimelineGl::paint_parts()
 		x = -0.8f + (i % 5) * 0.4f;
 		y = +0.8f - (i / 5) * 0.4f;
 
-		draw_part_and_child(*_showing_parts[i], x, y);
+		update_part_shader_program_data(*_showing_parts[i], x, y);
+
+		draw_part_and_child(*_showing_parts[i]);
 	}
+
+	glBindVertexArray(0);////////////////////////////////////////////////////////////
 
 	draw_insert_cursor();
 
 	draw_scroll();
 }
 
-void TimelineGl::draw_part_and_child(Part& part, float x, float y)
+void TimelineGl::update_part_shader_program_data(Part& root, float x, float y)
 {
-	glBindVertexArray(part.vao_timeline());
-
-	const float scale = 0.35f / PiYingCus::max(part.width() * (1.f + spTimelineGL::scroll_width), part.height());
+	const float scale = 0.35f / PiYingCus::max(root.width() * (1.f + spTimelineGL::scroll_width), root.height());
 	_part_shader_program->setUniformValue("scale", scale);
 	_part_shader_program->setUniformValue("scroll", _scroll_positon * 2.f * _part_total_scale);
-	_part_shader_program->setUniformValue("x", x - scale * part.x());
-	_part_shader_program->setUniformValue("y", y - scale * part.y());
-	_part_shader_program->setUniformValue("prescale", part.get_prescale());
+	_part_shader_program->setUniformValue("x", x - scale * root.x());
+	_part_shader_program->setUniformValue("y", y - scale * root.y());
+	_part_shader_program->setUniformValue("prescale", root.get_prescale());
+}
 
+void TimelineGl::draw_part_and_child(Part& part)
+{
 	part.bind_texture();
+	glBindVertexArray(part.vao_timeline());
 	glDrawElements(GL_TRIANGLES, (GLsizei)part.index_size(), GL_UNSIGNED_INT, 0);
+
+	for (int i = 0; i < part.n_children(); i++) {
+		draw_part_and_child(*part.get_child(i));
+	}
 }
 
 void TimelineGl::draw_insert_cursor()

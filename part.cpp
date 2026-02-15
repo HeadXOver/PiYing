@@ -118,7 +118,7 @@ Part::Part(const Part& part1, const Part& part2) :
 	TimelineGl::getInstance().generate_vao(_vao_timeline, _vbo, _ebo);
 	PiYingGL::getInstance().generate_vao(_vao_piying, _vbo, _ebo);
 
-	update_scale();
+	update_global_scale();
 }
 
 Part::Part(const Part& other) : 
@@ -252,6 +252,25 @@ void Part::update_scale()
 	_width = right - left;
 }
 
+void Part::update_global_scale()
+{
+	if (_children.empty()) {
+		update_scale();
+		return;
+	}
+
+	float top = global_top();
+	float bottom = global_bottom();
+	float left = global_left();
+	float right = global_right();
+
+	_x = (left + right) / 2.f;
+	_y = (top + bottom) / 2.f;
+
+	_height = top - bottom;
+	_width = right - left;
+}
+
 bool Part::eat_another_part(Part& other)
 {
 	assert(&_texture == &other._texture);
@@ -266,7 +285,7 @@ bool Part::eat_another_part(Part& other)
 	*_vert_texture_origin += *other._vert_texture_origin;	///< 拼接顶点坐标vector
 	*_vert_texture += *other._vert_texture;					///< 拼接顶点坐标vector
 
-	update_scale();
+	update_global_scale();
 
 	_slide_applier->eat_other_sliders(other._slide_applier, tempSize);
 
@@ -372,6 +391,102 @@ float Part::height() const
 float Part::width() const
 {
 	return _width;
+}
+
+float Part::local_top() const
+{
+	const PointVectorLayer layer(*_vert_texture);
+
+	float top = layer.get(0, true).y();
+
+	for (int i = 1; i < layer.size(); ++i) {
+		top = PiYingCus::max(top, layer.get(i, true).y());
+	}
+
+	return top;
+}
+
+float Part::local_bottom() const
+{
+	const PointVectorLayer layer(*_vert_texture);
+
+	float bottom = layer.get(0, true).y();
+
+	for (unsigned int i = 1; i < layer.size(); ++i) {
+		bottom = PiYingCus::min(bottom, layer.get(i, true).y());
+	}
+
+	return bottom;
+}
+
+float Part::local_left() const
+{
+	const PointVectorLayer layer(*_vert_texture);
+
+	float left = layer.get(0, true).x();
+
+	for (unsigned int i = 1; i < layer.size(); ++i) {
+		left = PiYingCus::min(left, layer.get(i, true).x());
+	}
+
+	return left;
+}
+
+float Part::local_right() const
+{
+	const PointVectorLayer layer(*_vert_texture);
+
+	float right = layer.get(0, true).x();
+
+	for (unsigned int i = 1; i < layer.size(); ++i) {
+		right = PiYingCus::max(right, layer.get(i, true).x());
+	}
+
+	return right;
+}
+
+float Part::global_top() const
+{
+	float top = local_top();
+
+	for (Part* child : _children) {
+		top = PiYingCus::max(top, child->global_top());
+	}
+
+	return top;
+}
+
+float Part::global_bottom() const
+{
+	float bottom = local_bottom();
+
+	for (Part* child : _children) {
+		bottom = PiYingCus::min(bottom, child->global_bottom());
+	}
+
+	return bottom;
+}
+
+float Part::global_left() const
+{
+	float left = local_left();
+
+	for (Part* child : _children) {
+		left = PiYingCus::min(left, child->global_left());
+	}
+
+	return left;
+}
+
+float Part::global_right() const
+{
+	float right = local_right();
+
+	for (Part* child : _children) {
+		right = PiYingCus::max(right, child->global_right());
+	}
+
+	return right;
 }
 
 float Part::get_prescale() const

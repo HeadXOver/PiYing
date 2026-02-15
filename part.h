@@ -37,7 +37,7 @@ public:
 	void bind_texture();
 	void add_trace(int index, const QPolygonF& polygon);
 	void update_scale();
-	bool eat_another_part(Part& other);
+	void update_global_scale();
 	void change_slider_value(int sliderIndex, int value);
 	void remove_slider(int sliderIndex);
 	void release_buffers();
@@ -50,9 +50,20 @@ public:
 	float height() const;
 	float width() const;
 
+	float local_top() const;
+	float local_bottom() const;
+	float local_left() const;
+	float local_right() const;
+
+	float global_top() const;
+	float global_bottom() const;
+	float global_left() const;
+	float global_right() const;
+
 	float get_prescale() const;
 
 	bool same_texture_as(Part* other) const;
+	bool eat_another_part(Part& other);
 	bool is_root() const;
 	bool have_child() const;
 
@@ -70,7 +81,7 @@ private:
 	float _y{ 0.f };
 	float _height{ 2.f };
 	float _width{ 2.f };
-	
+
 	const float _prescale;
 
 	unsigned int _vao_timeline;
@@ -88,7 +99,7 @@ private:
 
 	std::vector<Part*> _children;
 	Part* _parent{ nullptr };
-	
+
 	std::unique_ptr<Joint> _joint;
 
 	QMatrix4x4 localTransform;   // 相对于父节点
