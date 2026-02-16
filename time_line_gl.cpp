@@ -38,6 +38,11 @@ void TimelineGl::update_is_draw_by_piying()
 	Parts::getInstance().add_to_draw_by_piying();
 }
 
+void TimelineGl::enter_part(Part& part)
+{
+	_part_to_show = &part;
+}
+
 Part* TimelineGl::get_current_part() const
 {
 	if(_showing_parts.size() == 0) return nullptr;

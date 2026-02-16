@@ -49,10 +49,14 @@ void TimelineGl::draw_scroll()
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
 	_simple_scroll_block_program->bind();
-	
-	const size_t y = _showing_parts.size() / 5 + 1;
 
-	_part_total_scale = y * 0.2f * _ratio;
+	/*
+	* 乘0.2是除以5，每个部件的高度是0.2 * _ratio
+	* 公式是：
+	* (部件数量 / 5 + 1) * 0.2 * _ratio = 总高度
+	* 即，部件占用行数 * 每个部件高度 = 总高度
+	*/
+	_part_total_scale = (_showing_parts.size() * 0.04f + 0.2f) * _ratio;
 
 	if (_part_total_scale <= 1.f) {
 		_simple_scroll_block_program->setUniformValue("scale", 1.f);
@@ -95,12 +99,8 @@ void TimelineGl::paint_parts()
 	/// 绘制每个部件
 	_part_shader_program->bind();
 
-	float x, y;
 	for (int i = 0; i < _showing_parts.size(); i++) {
-		x = -0.8f + (i % 5) * 0.4f;
-		y = +0.8f - (i / 5) * 0.4f;
-
-		update_part_shader_program_data(*_showing_parts[i], x, y);
+		update_part_shader_program_data(*_showing_parts[i], -0.8f + (i % 5) * 0.4f, 0.8f - (i / 5) * 0.4f);
 
 		draw_part_and_child(*_showing_parts[i]);
 	}

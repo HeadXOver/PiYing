@@ -73,6 +73,7 @@ public:
 	void release_buffers(unsigned int vao, unsigned int vbo, unsigned int ebo);
 	void update_showing_parts();
 	void update_is_draw_by_piying();
+	void enter_part(Part& part);
 
 	Part* get_current_part() const;
 
