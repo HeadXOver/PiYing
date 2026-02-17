@@ -27,6 +27,7 @@ public:
 	void add_single_to_draw(Part* part);
 	void add_to_draw_by_piying(Part* part = nullptr);
 	void output_root_to_show(std::vector<Part*>& o_parts) const;
+	void output_detail_to_show(std::vector<Part*>& o_parts, Part& part) const;
 
 	bool is_empty() const;
 	bool part_is_draw(size_t index) const;

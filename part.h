@@ -68,6 +68,7 @@ public:
 	bool have_child() const;
 
 	Part* get_child(size_t index) const;
+	Part* get_parent() const;
 
 	unsigned int vao_timeline() const;
 	unsigned int vao_piying() const;

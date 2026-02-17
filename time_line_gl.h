@@ -73,7 +73,6 @@ public:
 	void release_buffers(unsigned int vao, unsigned int vbo, unsigned int ebo);
 	void update_showing_parts();
 	void update_is_draw_by_piying();
-	void enter_part(Part& part);
 
 	Part* get_current_part() const;
 
@@ -87,6 +86,7 @@ protected: /// event
 	void mousePressEvent(QMouseEvent* event) override;
 	void mouseReleaseEvent(QMouseEvent* event) override;
 	void mouseMoveEvent(QMouseEvent* event) override;
+	void mouseDoubleClickEvent(QMouseEvent* event) override;
 
 private:
 	void move_time_cursor(float mouse_x);

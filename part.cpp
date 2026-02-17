@@ -1,5 +1,7 @@
 #include "part.h"
 
+#include "parts.h"
+
 #include "point_vector.h"
 #include "point_vector_layer.h"
 
@@ -147,7 +149,9 @@ Part::Part(const Part& other) :
 	PiYingGL::getInstance().generate_vao(_vao_piying, _vbo, _ebo);
 
 	for (size_t i = 0; i < other._children.size(); i++) {
-		_children.push_back(new Part(*other._children[i]));
+		Part* child = new Part(*other._children[i]); 
+		Parts::getInstance().insert(other._lay_index, child);
+		_children.push_back(child);
 	}
 }
 
@@ -332,6 +336,18 @@ void Part::release_buffers()
 
 void Part::add_child(Part* child)
 {
+	bool had = false;
+	for (auto& each : _children) {
+		if (each == child) {
+			had = true;
+			break;
+		}
+	}
+	if (had) {
+		QMessageBox::warning(nullptr, "警告", "该部件已存在该子部件");
+		return;
+	}
+
 	_children.push_back(child);
 	child->_parent = this;
 }
@@ -354,6 +370,11 @@ bool Part::have_child() const
 Part* Part::get_child(size_t index) const
 {
 	return _children[index];
+}
+
+Part* Part::get_parent() const
+{
+	return _parent;
 }
 
 size_t Part::n_children() const

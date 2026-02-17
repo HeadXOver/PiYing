@@ -211,3 +211,33 @@ void TimelineGl::mouseMoveEvent(QMouseEvent* event)
 		update();
 	}
 }
+
+void TimelineGl::mouseDoubleClickEvent(QMouseEvent* event)
+{
+	if (_ui_type == spTimelineGL::UiType::Part && event->button() == Qt::LeftButton) {
+		const int index = get_index_by_mouse(event->pos(), _insert_part_index);
+
+		if (index >= 0 && index < _showing_parts.size()) {
+			Part& part = *_showing_parts[index];
+
+			_part_to_show = 
+				(_part_to_show == &part) ? part.get_parent() :
+				&part;
+		}
+		else if (_part_to_show) {
+			_part_to_show = nullptr;
+		}
+		else return;
+
+		update_showing_parts();
+
+		_part_cursor.set_cursor(0);
+		_moving_select_part.set_cursor(0);
+
+		Parts::getInstance().add_to_draw_by_piying(_part_to_show);
+
+		PiYing::getInstance().update_part_slider();
+		PiYingGL::getInstance().update();
+		update();
+	}
+}

@@ -30,17 +30,15 @@ void TimelineGl::update_showing_parts()
 {
 	if (!_part_to_show) {
 		Parts::getInstance().output_root_to_show(_showing_parts);
+		return;
 	}
+
+	Parts::getInstance().output_detail_to_show(_showing_parts, *_part_to_show);
 }
 
 void TimelineGl::update_is_draw_by_piying()
 {
 	Parts::getInstance().add_to_draw_by_piying();
-}
-
-void TimelineGl::enter_part(Part& part)
-{
-	_part_to_show = &part;
 }
 
 Part* TimelineGl::get_current_part() const

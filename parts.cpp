@@ -39,9 +39,12 @@ void Parts::remove(size_t index)
 
 void Parts::remove_with_children(size_t index)
 {
+    /*
+    * 利用_part_is_draw[index] = 1;删除一个部件及其子部件
+    */
     add_single_to_draw(index);
 
-    for (size_t i = _part_is_draw.size() - 1; i >= 0; --i) {
+    for (long long i = _part_is_draw.size() - 1; i >= 0; --i) {
         if (_part_is_draw[i]) {
             _parts.erase(_parts.begin() + i);
         }
@@ -124,7 +127,11 @@ void Parts::add_to_draw_by_piying(Part* part)
                 add_part_to_is_draw(_parts[i]);
             }
         }
+
+        return;
     }
+
+    add_part_to_is_draw(part);
 }
 
 void Parts::output_root_to_show(std::vector<Part*>& o_parts) const
@@ -135,6 +142,17 @@ void Parts::output_root_to_show(std::vector<Part*>& o_parts) const
         if (part->is_root()) {
             o_parts.push_back(part);
         }
+    }
+}
+
+void Parts::output_detail_to_show(std::vector<Part*>& o_parts, Part& part) const
+{
+    o_parts.clear();
+
+    o_parts.push_back(&part);
+
+    for (int i = 0; i < part.n_children(); ++i) {
+        o_parts.push_back(part.get_child(i));
     }
 }
 
