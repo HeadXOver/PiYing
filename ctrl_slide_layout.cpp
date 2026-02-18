@@ -13,7 +13,7 @@
 #include <qmessagebox>
 #include <qmenu>
 
-CtrlSlideLayout::CtrlSlideLayout(QString labelName, unsigned int id, int defaultValue, QWidget* parent) : QWidget(parent)
+CtrlSlideLayout::CtrlSlideLayout(QString labelName, size_t id, int defaultValue, QWidget* parent) : QWidget(parent)
 {
     layout = new QHBoxLayout(this);
 

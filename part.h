@@ -38,8 +38,8 @@ public:
 	void add_trace(int index, const QPolygonF& polygon);
 	void update_scale();
 	void update_global_scale();
-	void change_slider_value(int sliderIndex, int value);
-	void remove_slider(int sliderIndex) noexcept;
+	void change_slider_value(size_t sliderIndex, int value);
+	void remove_slider(size_t sliderIndex) noexcept;
 	void release_buffers() noexcept;
 	void add_child(Part* child);
 

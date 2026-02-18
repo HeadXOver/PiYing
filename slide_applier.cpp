@@ -34,7 +34,7 @@ SlideApplier::~SlideApplier()
 {
 }
 
-void SlideApplier::remove_slider_by_id(int id)
+void SlideApplier::remove_slider_by_id(int id) noexcept
 {
     sliders.erase(sliders.begin() + id);
 }
@@ -55,27 +55,22 @@ void SlideApplier::add_new_slider(int index, const QPolygonF& polygon)
     PiYing::getInstance().update_part_slider();
 }
 
-const std::unordered_map<unsigned int, QPolygonF>& SlideApplier::get_trace_map(int slide) const
+const std::unordered_map<unsigned int, QPolygonF>& SlideApplier::get_trace_map(size_t slide) const
 {
     return sliders[slide]->get_traces();
 }
 
-unsigned int SlideApplier::n_sliders() const
-{
-    return (unsigned int)sliders.size();
-}
-
-const QString& SlideApplier::get_slider_name(int id) const
+const QString& SlideApplier::get_slider_name(size_t id) const
 {
     return sliders[id]->name();
 }
 
-void SlideApplier::change_current_value(int sliderIndex, int value)
+void SlideApplier::change_current_value(size_t sliderIndex, int value)
 {
     sliders[sliderIndex]->set_current_value(value);
 }
 
-void SlideApplier::remove_slider(int sliderIndex) noexcept
+void SlideApplier::remove_slider(size_t sliderIndex) noexcept
 {
     sliders.erase(sliders.begin() + sliderIndex);
 }
@@ -97,7 +92,7 @@ void SlideApplier::eat_other_sliders(SlideApplier* other, unsigned int skew)
     }
 }
 
-int SlideApplier::get_slider_current_value(int sliderIndex) const
+int SlideApplier::get_slider_current_value(size_t sliderIndex) const
 {
     return sliders[sliderIndex]->get_current_slider_value();
 }

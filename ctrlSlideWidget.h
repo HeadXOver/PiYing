@@ -24,10 +24,10 @@ public:
     QList<QString> get_slider_names();
 
 private:
-    void setSlider(unsigned int sliderIndex);
-    void setName(unsigned int sliderIndex);
+    void setSlider(size_t sliderIndex);
+    void setName(size_t sliderIndex);
 
-    QString get_unique_name(const QString& str, int sliderIndex);
+    QString get_unique_name(const QString& str, size_t sliderIndex);
 
 private:
     QList<CtrlSlideLayout*> sliderList;

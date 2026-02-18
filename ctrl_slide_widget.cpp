@@ -48,7 +48,7 @@ CtrlSlideWidget::~CtrlSlideWidget()
     }
 }
 
-void CtrlSlideWidget::setSlider(unsigned int sliderIndex)
+void CtrlSlideWidget::setSlider(size_t sliderIndex)
 {
     QMenu* menu = new QMenu(this);
     menu->addAction("删除", this, [sliderIndex, this] { 
@@ -59,7 +59,7 @@ void CtrlSlideWidget::setSlider(unsigned int sliderIndex)
     menu->exec(QCursor::pos());
 }
 
-void CtrlSlideWidget::setName(unsigned int sliderIndex)
+void CtrlSlideWidget::setName(size_t sliderIndex)
 {
     bool ok;
     QString text = QInputDialog::getText(
@@ -87,18 +87,18 @@ void CtrlSlideWidget::add_slider_by_part(Part* part)
 {
     SlideApplier& applier = part->get_slide_applier();
 
-    const unsigned int nApplier = applier.n_sliders();
+    const size_t nApplier = applier.n_sliders();
 
-    for (unsigned int i = 0; i < nApplier; i++) {
+    for (size_t i = 0; i < nApplier; i++) {
         CtrlSlideLayout* ctrlSlideLayout = new CtrlSlideLayout(applier.get_slider_name(i), i, applier.get_slider_current_value(i), this);
         sliderList.push_back(ctrlSlideLayout);
 
-        sliderLayout->insertWidget(i + 1, ctrlSlideLayout);
+        sliderLayout->insertWidget(static_cast<int>(i) + 1, ctrlSlideLayout);
         connect(ctrlSlideLayout->rightButton, &QPushButton::pressed, this, [i, this] { setSlider(i); });
     }
 }
 
-QString CtrlSlideWidget::get_unique_name(const QString& str, int sliderIndex)
+QString CtrlSlideWidget::get_unique_name(const QString& str, size_t sliderIndex)
 {
     QString name;
     for (int i = 0;; i++) {

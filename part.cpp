@@ -211,8 +211,8 @@ void Part::add_trace(int index, const QPolygonF& polygon)
 	QMenu tempMenu;
 	tempMenu.addAction(QString("新建控制器"));
 
-	const unsigned int n_sliders = _slide_applier->n_sliders();
-	for (unsigned int i = 0; i < n_sliders; ++i)
+	const size_t n_sliders = _slide_applier->n_sliders();
+	for (size_t i = 0; i < n_sliders; ++i)
 		tempMenu.addAction(QString("绑定到: %1").arg(_slide_applier->get_slider_name(i)));
 
 	QAction* act = tempMenu.exec(QCursor::pos());
@@ -298,7 +298,7 @@ bool Part::eat_another_part(Part& other)
 	return true;
 }
 
-void Part::change_slider_value(int sliderIndex, int value)
+void Part::change_slider_value(size_t sliderIndex, int value)
 {
 	_slide_applier->change_current_value(sliderIndex, value);
 
@@ -310,7 +310,7 @@ void Part::change_slider_value(int sliderIndex, int value)
 	QPointF displacement;
 	for (const auto& [key, val] : tracesByPoint) {
 		displacement = QPointF();
-		for (unsigned int i = 0; i < _slide_applier->n_sliders(); ++i) {
+		for (size_t i = 0; i < _slide_applier->n_sliders(); ++i) {
 			const std::unordered_map<unsigned int, QPolygonF>& eachSlider = _slide_applier->get_trace_map(i);
 			if (eachSlider.count(key)) {
 				const QPolygonF& eachTrace = eachSlider.at(key);
@@ -323,7 +323,7 @@ void Part::change_slider_value(int sliderIndex, int value)
 	TimelineGl::getInstance().update_vbo(*_vert_texture, _vbo);
 }
 
-void Part::remove_slider(int sliderIndex) noexcept
+void Part::remove_slider(size_t sliderIndex) noexcept
 {
 	_slide_applier->remove_slider(sliderIndex);
 }
