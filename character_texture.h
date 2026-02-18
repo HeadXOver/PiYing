@@ -14,11 +14,11 @@ public:
 
     void bind();
 
-    float get_prescale() const { return _prescale; }
+    float get_prescale() const noexcept { return _prescale; }
 
-    QMatrix4x4 getMatrix() const;
+    QMatrix4x4 getMatrix() const noexcept;
 
-    QOpenGLTexture* texture() const;
+    QOpenGLTexture* texture() const noexcept;
 
 private:
     const std::unique_ptr<QOpenGLTexture> _texture;

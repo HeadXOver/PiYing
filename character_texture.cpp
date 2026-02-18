@@ -23,14 +23,14 @@ CharacterTexture::~CharacterTexture()
 {
 }
 
-QMatrix4x4 CharacterTexture::getMatrix() const
+QMatrix4x4 CharacterTexture::getMatrix() const noexcept
 {
     QMatrix4x4 matrix;
     matrix.scale(1.f, _prescale);
     return matrix;
 }
 
-QOpenGLTexture* CharacterTexture::texture() const
+QOpenGLTexture* CharacterTexture::texture() const noexcept
 {
     return _texture.get();
 }

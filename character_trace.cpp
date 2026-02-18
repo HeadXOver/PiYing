@@ -15,14 +15,6 @@ CharacterTrace::CharacterTrace(unsigned int index, const QPolygonF& poly, const 
 	trace_by_index[index] = screenPoly;
 }
 
-CharacterTrace::CharacterTrace(const CharacterTrace& other) : 
-	trace(other.trace),
-	_name(other._name),
-	current_slider_value(other.current_slider_value),
-	trace_by_index(other.trace_by_index)
-{
-}
-
 CharacterTrace::CharacterTrace(const CharacterTrace& other, unsigned int skew) :
 	trace(other.trace),
 	_name(other._name),
@@ -37,12 +29,12 @@ CharacterTrace::~CharacterTrace()
 {
 }
 
-std::unordered_map<unsigned int, QPolygonF>& CharacterTrace::get_traces()
+const std::unordered_map<unsigned int, QPolygonF>& CharacterTrace::get_traces() const noexcept
 {
 	return trace_by_index;
 }
 
-bool CharacterTrace::have_point(unsigned int index) const
+bool CharacterTrace::have_point(unsigned int index) const noexcept
 {
 	return trace_by_index.count(index);
 }
@@ -60,32 +52,33 @@ void CharacterTrace::add_point(unsigned int index, const QPolygonF& poly)
 	trace_by_index[index] = screenPoly;
 }
 
-void CharacterTrace::set_current_value(int value)
+void CharacterTrace::set_current_value(int value) noexcept
 {
 	current_slider_value = value;
 }
 
-void CharacterTrace::set_name(const QString& name)
+void CharacterTrace::set_name(const QString& name) noexcept
 {
 	_name = name;
 }
 
 void CharacterTrace::add_skew(unsigned int skew)
 {
-	std::unordered_map<unsigned int, QPolygonF> newMap;
-	newMap.swap(trace_by_index);  // 把原数据移到 newMap
-	trace_by_index.clear();
-	for (auto& [index, poly] : newMap) {
-		trace_by_index[index + skew] = std::move(poly);
+	std::unordered_map<unsigned int, QPolygonF> oldMap;
+	oldMap.swap(trace_by_index);
+	trace_by_index.reserve(oldMap.size());
+
+	for (auto& [index, poly] : oldMap) {
+		trace_by_index.emplace(index + skew, std::move(poly));
 	}
 }
 
-const QString& CharacterTrace::name() const
+const QString& CharacterTrace::name() const noexcept
 {
 	return _name;
 }
 
-int CharacterTrace::get_current_slider_value() const
+int CharacterTrace::get_current_slider_value() const noexcept
 {
 	return current_slider_value;
 }
