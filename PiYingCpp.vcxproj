@@ -147,7 +147,6 @@
     <ClCompile Include="point_vector_layer.cpp" />
     <ClCompile Include="ratio_dialog.cpp" />
     <ClCompile Include="gl_func.cpp" />
-    <ClCompile Include="scale_trans.cpp" />
     <ClCompile Include="selected_points.cpp" />
     <ClCompile Include="selected_triangle.cpp" />
     <ClCompile Include="slide_applier.cpp" />

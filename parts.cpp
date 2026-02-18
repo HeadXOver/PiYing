@@ -11,7 +11,7 @@ Parts::~Parts()
     }
 }
 
-Parts& Parts::getInstance()
+Parts& Parts::getInstance() noexcept
 {
     return _instance;
 }
@@ -156,7 +156,7 @@ void Parts::output_detail_to_show(std::vector<Part*>& o_parts, Part& part) const
     }
 }
 
-bool Parts::is_empty() const
+bool Parts::is_empty() const noexcept
 {
     return _parts.empty();
 }
@@ -169,11 +169,6 @@ bool Parts::part_is_draw(size_t index) const
 float Parts::get_prescale(size_t index) const
 {
     return _parts[index]->get_prescale();
-}
-
-size_t Parts::size() const
-{
-    return _parts.size();
 }
 
 unsigned int Parts::get_vao_piying(size_t index) const

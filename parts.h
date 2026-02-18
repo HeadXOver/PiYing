@@ -13,7 +13,7 @@ public:
 	Parts(const Parts&) = delete;
 	Parts& operator=(const Parts&) = delete;
 
-	static Parts& getInstance();
+	static Parts& getInstance() noexcept;
 
 	void bind_texture(size_t index);
 	void add(Part* part);
@@ -29,12 +29,12 @@ public:
 	void output_root_to_show(std::vector<Part*>& o_parts) const;
 	void output_detail_to_show(std::vector<Part*>& o_parts, Part& part) const;
 
-	bool is_empty() const;
+	bool is_empty() const noexcept;
 	bool part_is_draw(size_t index) const;
 
 	float get_prescale(size_t index) const;
 
-	size_t size() const;
+	inline size_t size() const noexcept { return _parts.size(); }
 
 	unsigned int get_vao_piying(size_t index) const;
 

@@ -5,17 +5,12 @@
 namespace {
 	bool is_same_triangle(const unsigned int* a, const unsigned int* b) 
 	{
-		for (int i = 0; i < 3; ++i) {
-			bool found = false;
-			for (int j = 0; j < 3; ++j) {
-				if (a[i] == b[j]) {
-					found = true;
-					break;
-				}
-			}
-			if (!found) return false;
-		}
-		return true;
+		return (a[0] == b[0] && a[1] == b[1] && a[2] == b[2]) ||
+			(a[0] == b[0] && a[1] == b[2] && a[2] == b[1]) ||
+			(a[0] == b[1] && a[1] == b[0] && a[2] == b[2]) ||
+			(a[0] == b[1] && a[1] == b[2] && a[2] == b[0]) ||
+			(a[0] == b[2] && a[1] == b[0] && a[2] == b[1]) ||
+			(a[0] == b[2] && a[1] == b[1] && a[2] == b[0]);
 	}
 }
 
@@ -45,7 +40,7 @@ void SelectedTriangle::append(const unsigned int* ind)
 	lastVertPos.append(QPointF());
 }
 
-void SelectedTriangle::remove_last_triangle()
+void SelectedTriangle::remove_last_triangle() noexcept
 {
 	selectedIndex.removeLast();
 	selectedIndex.removeLast();

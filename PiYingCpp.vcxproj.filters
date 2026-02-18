@@ -232,9 +232,6 @@
     <ClCompile Include="point_vector.cpp">
       <Filter>Source Files\Core</Filter>
     </ClCompile>
-    <ClCompile Include="scale_trans.cpp">
-      <Filter>Source Files\Core</Filter>
-    </ClCompile>
     <ClCompile Include="time_line_gl.cpp">
       <Filter>Source Files\timelineGL</Filter>
     </ClCompile>

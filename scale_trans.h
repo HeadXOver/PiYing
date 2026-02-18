@@ -2,7 +2,9 @@
 
 struct ScaleTrans 
 {
-	void operator=(const ScaleTrans& other);
+	ScaleTrans() = default;
+	ScaleTrans(const ScaleTrans& other) = default;
+	ScaleTrans& operator=(const ScaleTrans& other) = default;
 
 	float scale_height{ 1.f };
 	float scale_lenth{ 1.f };
