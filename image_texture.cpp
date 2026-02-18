@@ -87,17 +87,17 @@ void ImageTexture::addRot(float r)
     _transform->add_rot(r);
 }
 
-QMatrix4x4 ImageTexture::getMatrix() const 
+QMatrix4x4 ImageTexture::getMatrix() const noexcept
 {
     return _transform->getMatrix();
 }
 
-QMatrix4x4 ImageTexture::getMatrixInvert() const
+QMatrix4x4 ImageTexture::getMatrixInvert() const noexcept
 {
     return _transform->getMatrixInvert();
 }
 
-QOpenGLTexture* ImageTexture::texture() const
+QOpenGLTexture* ImageTexture::texture() const noexcept
 {
     return _texture.get();
 }
@@ -126,15 +126,17 @@ void ImageTexture::set_transform_by_new_ratio(float newRatio)
     _transform->set_trans(oldX * oldNewRatio, oldY * oldNewRatio);
 }
 
-void ImageTexture::set_transform(const ImageTransform& transform) {
+void ImageTexture::set_transform(const ImageTransform& transform) noexcept
+{
     *_transform = transform;
 }
 
-void ImageTexture::set_transform(const ImageTransform* transform)
+void ImageTexture::set_transform(const ImageTransform* transform) noexcept
 {
     *_transform = *transform;
 }
 
-const ImageTransform& ImageTexture::transform() const {
+const ImageTransform& ImageTexture::transform() const noexcept
+{
     return *_transform;
 }

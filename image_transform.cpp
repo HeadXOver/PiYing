@@ -10,7 +10,7 @@ ImageTransform::~ImageTransform()
 {
 }
 
-void ImageTransform::operator=(const ImageTransform& other)
+void ImageTransform::operator=(const ImageTransform& other) noexcept
 {
     _transform = other._transform;
     _transform_invert = other._transform_invert;
@@ -22,42 +22,42 @@ void ImageTransform::operator=(const ImageTransform& other)
     _scale_y = other._scale_y;
 }
 
-const QMatrix4x4& ImageTransform::getMatrix() const 
+const QMatrix4x4& ImageTransform::getMatrix() const noexcept
 {
     return _transform;
 }
 
-const QMatrix4x4& ImageTransform::getMatrixInvert() const 
+const QMatrix4x4& ImageTransform::getMatrixInvert() const noexcept
 { 
     return _transform_invert;
 }
 
-float ImageTransform::get_trans_x() const
+float ImageTransform::get_trans_x() const noexcept
 {
     return _trans_x;
 }
 
-float ImageTransform::get_trans_y() const
+float ImageTransform::get_trans_y() const noexcept
 {
     return _trans_y;
 }
 
-float ImageTransform::get_rot_degree() const
+float ImageTransform::get_rot_degree() const noexcept
 {
     return _rot_degree;
 }
 
-float ImageTransform::get_scale_x() const
+float ImageTransform::get_scale_x() const noexcept
 {
     return _scale_x;
 }
 
-float ImageTransform::get_scale_y() const
+float ImageTransform::get_scale_y() const noexcept
 {
     return _scale_y;
 }
 
-void ImageTransform::reset()
+void ImageTransform::reset() noexcept
 {
     _transform.setToIdentity();
     _transform_invert.setToIdentity();

@@ -14,8 +14,8 @@ public:
     ImageTexture(const QImage& image, float currentRatio);
     ~ImageTexture();
 
-    void set_transform(const ImageTransform& transform);
-    void set_transform(const ImageTransform* transform);
+    void set_transform(const ImageTransform& transform) noexcept;
+    void set_transform(const ImageTransform* transform) noexcept;
 
     void setTrans(float x, float y);
     void setTrans(const QPointF& point);
@@ -36,12 +36,12 @@ public:
 
     void set_transform_by_new_ratio(float newRatio);
 
-    const ImageTransform& transform() const;
+    const ImageTransform& transform() const noexcept;
 
-    QMatrix4x4 getMatrix() const;
-    QMatrix4x4 getMatrixInvert() const;
+    QMatrix4x4 getMatrix() const noexcept;
+    QMatrix4x4 getMatrixInvert() const noexcept;
 
-    QOpenGLTexture* texture() const;
+    QOpenGLTexture* texture() const noexcept;
 
 private:
     std::unique_ptr<QOpenGLTexture> _texture;
