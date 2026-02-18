@@ -2,7 +2,7 @@
 
 #include <qmatrix4x4>
 
-QMatrix4x4 Joint::get_local_transform() const
+QMatrix4x4 Joint::get_local_transform() const noexcept
 {
     QMatrix4x4 m;
     m.translate(center_x, center_y);

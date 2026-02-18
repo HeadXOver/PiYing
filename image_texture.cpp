@@ -27,62 +27,62 @@ ImageTexture::~ImageTexture()
 {
 }
 
-void ImageTexture::setTrans(float x, float y)
+void ImageTexture::setTrans(float x, float y) noexcept
 {
     _transform->set_trans(x, y);
 }
 
-void ImageTexture::setTrans(const QPointF& point)
+void ImageTexture::setTrans(const QPointF& point) noexcept
 {
     _transform->set_trans(point.x(), point.y());
 }
 
-void ImageTexture::setRot(float r)
+void ImageTexture::setRot(float r) noexcept
 {
     _transform->set_rot(r);
 }
 
-void ImageTexture::setScale(float x, float y)
+void ImageTexture::setScale(float x, float y) noexcept
 {
     _transform->set_scale(x, y * _prescale);
 }
 
-void ImageTexture::setScale(const QPointF& point)
+void ImageTexture::setScale(const QPointF& point) noexcept
 {
     _transform->set_scale(point.x(), point.y());
 }
 
-void ImageTexture::setScale(float s)
+void ImageTexture::setScale(float s) noexcept
 {
     _transform->set_scale(s, s * _prescale);
 }
 
-void ImageTexture::addTrans(const QPointF& point)
+void ImageTexture::addTrans(const QPointF& point) noexcept
 {
     addTrans(point.x(), point.y());
 }
 
-void ImageTexture::addScale(const QPointF& point)
+void ImageTexture::addScale(const QPointF& point) noexcept
 {
     addScale(point.x(), point.y());
 }
 
-void ImageTexture::addTrans(float x, float y)
+void ImageTexture::addTrans(float x, float y) noexcept
 {
     _transform->add_trans(x, y);
 }
 
-void ImageTexture::addScale(float x, float y)
+void ImageTexture::addScale(float x, float y) noexcept
 {
     _transform->add_scale(x, y);
 }
 
-void ImageTexture::addScale(float s)
+void ImageTexture::addScale(float s) noexcept
 {
     addScale(s, s);
 }
 
-void ImageTexture::addRot(float r)
+void ImageTexture::addRot(float r) noexcept
 {
     _transform->add_rot(r);
 }
@@ -102,7 +102,8 @@ QOpenGLTexture* ImageTexture::texture() const noexcept
     return _texture.get();
 }
 
-void ImageTexture::resetTransform() {
+void ImageTexture::resetTransform() noexcept
+{ 
     _transform->reset();
     _transform->set_scale(1.f, _prescale);
 }

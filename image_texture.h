@@ -17,21 +17,21 @@ public:
     void set_transform(const ImageTransform& transform) noexcept;
     void set_transform(const ImageTransform* transform) noexcept;
 
-    void setTrans(float x, float y);
-    void setTrans(const QPointF& point);
-    void setRot(float r);
-    void setScale(float x, float y);
-    void setScale(const QPointF& point);
-    void setScale(float s);
+    void setTrans(float x, float y) noexcept;
+    void setTrans(const QPointF& point) noexcept;
+    void setRot(float r) noexcept;
+    void setScale(float x, float y) noexcept;
+    void setScale(const QPointF& point) noexcept;
+    void setScale(float s) noexcept;
 
-    void addTrans(const QPointF& point);
-    void addScale(const QPointF& point);
-    void addTrans(float x, float y);
-    void addScale(float x, float y);
-    void addScale(float s);
-    void addRot(float r);
+    void addTrans(const QPointF& point) noexcept;
+    void addScale(const QPointF& point) noexcept;
+    void addTrans(float x, float y) noexcept;
+    void addScale(float x, float y) noexcept;
+    void addScale(float s) noexcept;
+    void addRot(float r) noexcept;
 
-    void resetTransform();
+    void resetTransform() noexcept;
     void bind();
 
     void set_transform_by_new_ratio(float newRatio);

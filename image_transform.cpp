@@ -69,7 +69,7 @@ void ImageTransform::reset() noexcept
     _scale_y = 1.0f;
 }
 
-void ImageTransform::set_trans(float x, float y)
+void ImageTransform::set_trans(float x, float y) noexcept
 {
     _trans_x = x;
     _trans_y = y;
@@ -77,14 +77,14 @@ void ImageTransform::set_trans(float x, float y)
     update_matrix();
 }
 
-void ImageTransform::set_rot(float degree)
+void ImageTransform::set_rot(float degree) noexcept
 {
     _rot_degree = degree;
 
     update_matrix();
 }
 
-void ImageTransform::set_scale(float x, float y)
+void ImageTransform::set_scale(float x, float y) noexcept
 {
     _scale_x = x;
     _scale_y = y;
@@ -92,7 +92,7 @@ void ImageTransform::set_scale(float x, float y)
     update_matrix();
 }
 
-void ImageTransform::set_scale(float s)
+void ImageTransform::set_scale(float s) noexcept
 {
     _scale_x = s;
     _scale_y = s;
@@ -100,7 +100,7 @@ void ImageTransform::set_scale(float s)
     update_matrix();
 }
 
-void ImageTransform::add_trans(float x, float y)
+void ImageTransform::add_trans(float x, float y) noexcept
 {
     _trans_x += x;
     _trans_y += y;
@@ -108,14 +108,14 @@ void ImageTransform::add_trans(float x, float y)
     update_matrix();
 }
 
-void ImageTransform::add_rot(float degree)
+void ImageTransform::add_rot(float degree) noexcept
 {
     _rot_degree += degree;
 
     update_matrix();
 }
 
-void ImageTransform::add_scale(float x, float y)
+void ImageTransform::add_scale(float x, float y) noexcept
 {
     _scale_x *= x;
     _scale_y *= y;
@@ -123,7 +123,7 @@ void ImageTransform::add_scale(float x, float y)
     update_matrix();
 }
 
-QMatrix4x4 ImageTransform::trans() const
+QMatrix4x4 ImageTransform::trans() const noexcept
 {
     QMatrix4x4 trans;
     trans.translate(_trans_x, _trans_y);
@@ -131,7 +131,7 @@ QMatrix4x4 ImageTransform::trans() const
     return trans;
 }
 
-QMatrix4x4 ImageTransform::rot() const
+QMatrix4x4 ImageTransform::rot() const noexcept
 {
     QMatrix4x4 rot;
     rot.rotate(_rot_degree, 0.0f, 0.0f, 1.0f);
@@ -139,7 +139,7 @@ QMatrix4x4 ImageTransform::rot() const
     return rot;
 }
 
-QMatrix4x4 ImageTransform::scale() const
+QMatrix4x4 ImageTransform::scale() const noexcept
 {
     QMatrix4x4 scale;
     scale.scale(_scale_x, _scale_y);
@@ -147,7 +147,7 @@ QMatrix4x4 ImageTransform::scale() const
     return scale;
 }
 
-void ImageTransform::update_matrix()
+void ImageTransform::update_matrix() noexcept
 {
     _transform.setToIdentity();
 

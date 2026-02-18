@@ -5,7 +5,10 @@ class QMatrix4x4;
 class Joint final
 {
 public:
-    QMatrix4x4 get_local_transform() const;
+    Joint() = default;
+    Joint& operator=(const Joint& other) = default;
+
+    QMatrix4x4 get_local_transform() const noexcept;
 
 private:
     float 

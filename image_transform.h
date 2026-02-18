@@ -21,21 +21,21 @@ public:
     float get_scale_y() const noexcept;
 
     void reset() noexcept;
-    void set_trans(float x, float y);
-    void set_rot(float degree);
-    void set_scale(float x, float y);
-    void set_scale(float s);
+    void set_trans(float x, float y) noexcept;
+    void set_rot(float degree) noexcept;
+    void set_scale(float x, float y) noexcept;
+    void set_scale(float s) noexcept;
 
-    void add_trans(float x, float y);
-    void add_rot(float degree);
-    void add_scale(float x, float y);
+    void add_trans(float x, float y) noexcept;
+    void add_rot(float degree) noexcept;
+    void add_scale(float x, float y) noexcept;
 
-    QMatrix4x4 trans() const;
-    QMatrix4x4 rot() const;
-    QMatrix4x4 scale() const;
+    QMatrix4x4 trans() const noexcept;
+    QMatrix4x4 rot() const noexcept;
+    QMatrix4x4 scale() const noexcept;
 
 private:
-    void update_matrix();
+    void update_matrix() noexcept;
 
 private:
     QMatrix4x4 _transform;
