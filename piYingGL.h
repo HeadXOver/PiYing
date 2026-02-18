@@ -124,7 +124,7 @@ public:
 	void addTriangle(const QPointF& point1, const QPointF& point2, const QPointF& point3);
 
 	void generate_vao(unsigned int& vao, unsigned int vbo, unsigned int ebo);
-	void release_buffers(unsigned int vao);
+	void release_buffers(unsigned int vao) noexcept;
 
 	bool addBackground(const QString& imageName, float& o_ratio);
 	bool have_ch_tool() const { return ch_element_tool_ != nullptr; }

@@ -12,11 +12,11 @@ public:
 	PointVector(const PointVector& other);
 	~PointVector() = default;
 
-	size_t float_size() const { return points.size(); }
-	size_t point_size() const { return points.size() / (size_t)2; }
-	size_t half_point_size() const { return points.size() / (size_t)4; }
+	size_t float_size() const noexcept { return points.size(); }
+	size_t point_size() const noexcept { return points.size() / (size_t)2; }
+	size_t half_point_size() const noexcept { return points.size() / (size_t)4; }
 
-	const float* data() const { return points.data(); }
+	const float* data() const noexcept { return points.data(); }
 
 	void push_back(float x, float y);
 	void push_back(const QPointF& p);

@@ -17,7 +17,7 @@ void TimelineGl::init_part_cursor()
 	_moving_select_part.set_cursor(-1);
 }
 
-void TimelineGl::release_buffers(unsigned int vao, unsigned int vbo, unsigned int ebo)
+void TimelineGl::release_buffers(unsigned int vao, unsigned int vbo, unsigned int ebo) noexcept
 {
 	makeCurrent();	
 

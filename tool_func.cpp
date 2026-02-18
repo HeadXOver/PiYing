@@ -61,7 +61,7 @@ void PiYingGL::generate_vao(unsigned int& vao, unsigned int vbo, unsigned int eb
 	doneCurrent();
 }
 
-void PiYingGL::release_buffers(unsigned int vao)
+void PiYingGL::release_buffers(unsigned int vao) noexcept
 {
 	makeCurrent();
 	glDeleteVertexArrays(1, &vao);

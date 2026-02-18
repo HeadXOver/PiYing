@@ -164,27 +164,27 @@ Part::~Part()
 
 #pragma region [simple]
 
-const float* Part::float_data() const
+const float* Part::float_data() const noexcept
 {
 	return _vert_texture->data();
 }
 
-const unsigned int* Part::index_data() const
+const unsigned int* Part::index_data() const noexcept
 {
 	return _indices.data();
 }
 
-size_t Part::float_size() const
+size_t Part::float_size() const noexcept
 {
 	return _vert_texture->float_size();
 }
 
-size_t Part::index_size() const
+size_t Part::index_size() const noexcept
 {
 	return _indices.size();
 }
 
-size_t Part::vertex_size() const
+size_t Part::vertex_size() const noexcept
 {
 	return _vert_texture->point_size();
 }
@@ -194,7 +194,7 @@ QPointF Part::get_vert(int index, bool isSkelen) const
 	return (*_vert_texture)[index + index + (isSkelen ? 0 : 1)];
 }
 
-SlideApplier& Part::get_slide_applier()
+SlideApplier& Part::get_slide_applier() noexcept
 {
 	return *_slide_applier;
 }
@@ -323,12 +323,12 @@ void Part::change_slider_value(int sliderIndex, int value)
 	TimelineGl::getInstance().update_vbo(*_vert_texture, _vbo);
 }
 
-void Part::remove_slider(int sliderIndex)
+void Part::remove_slider(int sliderIndex) noexcept
 {
 	_slide_applier->remove_slider(sliderIndex);
 }
 
-void Part::release_buffers()
+void Part::release_buffers() noexcept
 {
 	TimelineGl::getInstance().release_buffers(_vao_timeline, _vbo, _ebo);
 	PiYingGL::getInstance().release_buffers(_vao_piying);
@@ -337,7 +337,7 @@ void Part::release_buffers()
 void Part::add_child(Part* child)
 {
 	bool had = false;
-	for (auto& each : _children) {
+	for (Part* each : _children) {
 		if (each == child) {
 			had = true;
 			break;
@@ -352,17 +352,17 @@ void Part::add_child(Part* child)
 	child->_parent = this;
 }
 
-bool Part::same_texture_as(Part* other) const
+bool Part::same_texture_as(Part* other) const noexcept
 {
 	return &_texture == &other->_texture;
 }
 
-bool Part::is_root() const
+bool Part::is_root() const noexcept
 {
 	return !_parent;
 }
 
-bool Part::have_child() const
+bool Part::have_child() const noexcept
 {
 	return _children.size() > 0;
 }
@@ -372,12 +372,7 @@ Part* Part::get_child(size_t index) const
 	return _children[index];
 }
 
-Part* Part::get_parent() const
-{
-	return _parent;
-}
-
-size_t Part::n_children() const
+size_t Part::n_children() const noexcept
 {
 	return _children.size();
 }
@@ -387,32 +382,12 @@ void Part::update_transform(const QMatrix4x4& parentWorld)
 	localTransform = _joint->get_local_transform();
 	worldTransform = parentWorld * localTransform;
 
-	for (auto& child : _children) {
+	for (Part* child : _children) {
 		if (child) child->update_transform(worldTransform);
 	}
 }
 
 #pragma region [get value]
-
-float Part::x() const
-{
-	return _x;
-}
-
-float Part::y() const
-{
-	return _y;
-}
-
-float Part::height() const
-{
-	return _height;
-}
-
-float Part::width() const
-{
-	return _width;
-}
 
 float Part::local_top() const
 {
@@ -508,21 +483,6 @@ float Part::global_right() const
 	}
 
 	return right;
-}
-
-float Part::get_prescale() const
-{
-	return _prescale;
-}
-
-unsigned int Part::vao_timeline() const
-{
-	return _vao_timeline;
-}
-
-unsigned int Part::vao_piying() const
-{
-	return _vao_piying;
 }
 
 #pragma endregion

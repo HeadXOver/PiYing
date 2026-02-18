@@ -70,7 +70,7 @@ public:
 	void generate_ebo(const std::vector<unsigned int>& indices, unsigned int& vbo);
 	void generate_vao(unsigned int& vao, unsigned int vbo, unsigned int ebo);
 	void init_part_cursor();
-	void release_buffers(unsigned int vao, unsigned int vbo, unsigned int ebo);
+	void release_buffers(unsigned int vao, unsigned int vbo, unsigned int ebo) noexcept;
 	void update_showing_parts();
 	void update_is_draw_by_piying();
 

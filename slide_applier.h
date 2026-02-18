@@ -30,7 +30,7 @@ public:
     QString get_unique_name_except(const QString& str, int exceptId) const;
 
     void change_current_value(int sliderIndex, int value);
-    void remove_slider(int sliderIndex);
+    void remove_slider(int sliderIndex) noexcept;
     void eat_other_sliders(SlideApplier* other, unsigned int skew);
 
     int get_slider_current_value(int sliderIndex) const;

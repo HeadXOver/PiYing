@@ -75,7 +75,7 @@ void SlideApplier::change_current_value(int sliderIndex, int value)
     sliders[sliderIndex]->set_current_value(value);
 }
 
-void SlideApplier::remove_slider(int sliderIndex)
+void SlideApplier::remove_slider(int sliderIndex) noexcept
 {
     sliders.erase(sliders.begin() + sliderIndex);
 }

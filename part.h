@@ -22,33 +22,33 @@ public:
 	Part(const Part& part);
 	~Part();
 
-	const float* float_data() const;
-	const unsigned int* index_data() const;
+	const float* float_data() const noexcept;
+	const unsigned int* index_data() const noexcept;
 
-	size_t float_size() const;
-	size_t index_size() const;
-	size_t vertex_size() const;
-	size_t n_children() const;
+	size_t float_size() const noexcept;
+	size_t index_size() const noexcept;
+	size_t vertex_size() const noexcept;
+	size_t n_children() const noexcept;
 
 	QPointF get_vert(int index, bool isSkelen) const;
 
-	SlideApplier& get_slide_applier();
+	SlideApplier& get_slide_applier() noexcept;
 
 	void bind_texture();
 	void add_trace(int index, const QPolygonF& polygon);
 	void update_scale();
 	void update_global_scale();
 	void change_slider_value(int sliderIndex, int value);
-	void remove_slider(int sliderIndex);
-	void release_buffers();
+	void remove_slider(int sliderIndex) noexcept;
+	void release_buffers() noexcept;
 	void add_child(Part* child);
 
 	void update_transform(const QMatrix4x4& parentWorld = QMatrix4x4());
 
-	float x() const;
-	float y() const;
-	float height() const;
-	float width() const;
+	float x() const noexcept { return _x; }
+	float y() const noexcept { return _y; }
+	float height() const noexcept { return _height; }
+	float width() const noexcept { return _width; }
 
 	float local_top() const;
 	float local_bottom() const;
@@ -60,18 +60,18 @@ public:
 	float global_left() const;
 	float global_right() const;
 
-	float get_prescale() const;
+	float get_prescale() const noexcept { return _prescale; }
 
-	bool same_texture_as(Part* other) const;
+	bool same_texture_as(Part* other) const noexcept;
+	bool is_root() const noexcept;
+	bool have_child() const noexcept;
 	bool eat_another_part(Part& other);
-	bool is_root() const;
-	bool have_child() const;
 
 	Part* get_child(size_t index) const;
-	Part* get_parent() const;
+	Part* get_parent() const noexcept { return _parent; }
 
-	unsigned int vao_timeline() const;
-	unsigned int vao_piying() const;
+	unsigned int vao_timeline() const noexcept { return _vao_timeline; }
+	unsigned int vao_piying() const noexcept { return _vao_piying; }
 
 public:
 	/// 用于标记部件在数组中的位置
