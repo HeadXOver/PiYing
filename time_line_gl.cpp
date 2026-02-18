@@ -19,7 +19,8 @@ void TimelineGl::init_part_cursor()
 
 void TimelineGl::release_buffers(unsigned int vao, unsigned int vbo, unsigned int ebo)
 {
-	makeCurrent();
+	makeCurrent();	
+
 	glDeleteBuffers(1, &vbo);
 	glDeleteVertexArrays(1, &vao);
 	glDeleteBuffers(1, &ebo);

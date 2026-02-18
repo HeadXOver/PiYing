@@ -437,11 +437,11 @@
     <QtMoc Include="AskTransformDialog.h">
       <Filter>Header Files\PiYngQObject</Filter>
     </QtMoc>
-    <QtMoc Include="ask_round_poly_dialog.h">
-      <Filter>Header Files\PiYngQObject</Filter>
-    </QtMoc>
     <QtMoc Include="time_line_gl.h">
       <Filter>Header Files\PiYingWidget</Filter>
+    </QtMoc>
+    <QtMoc Include="ask_round_poly_dialog.h">
+      <Filter>Header Files\PiYngQObject</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>
