@@ -16,7 +16,7 @@ bool PiYingCus::isInRect(const QPointF& mouse, const QPointF& pos, int width, in
     return  centerRect.contains(mouse);
 }
 
-bool PiYingCus::isPointInTriangle(const QPointF& point, const QPointF* const triangle)
+bool PiYingCus::isPointInTriangle(const QPointF& point, const QPointF* const triangle) noexcept
 {
     using namespace PiYingCus;
 
@@ -52,7 +52,7 @@ bool PiYingCus::isRectIntersectTriangle(const QRectF& rect, const QPointF* const
     return false;
 }
 
-bool PiYingCus::isInsideSquare(const QPointF& point, float side)
+bool PiYingCus::isInsideSquare(const QPointF& point, float side) noexcept
 {
     return (point.x() >= -side / 2.f && point.x() <= side / 2.f && point.y() >= -side / 2.f && point.y() <= side / 2.f);
 }

@@ -38,7 +38,7 @@ void ToolButton::set_unselected(const QIcon& icon)
     *unselected_ = icon;
 }
 
-void ToolButton::set_toolState(CharacterToolState state)
+void ToolButton::set_toolState(CharacterToolState state) noexcept
 {
     toolState_ = state;
 }
@@ -46,19 +46,4 @@ void ToolButton::set_toolState(CharacterToolState state)
 void ToolButton::update()
 {
     action_->setIcon(isSelect_ ? *selected_ : *unselected_);
-}
-
-QAction* ToolButton::action() const
-{
-    return action_;
-}
-
-CharacterToolState ToolButton::toolState() const
-{
-    return toolState_;
-}
-
-bool ToolButton::isSelect() const
-{
-    return isSelect_;
 }

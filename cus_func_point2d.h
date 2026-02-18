@@ -12,8 +12,8 @@ namespace PiYingCus {
 
 	QPointF getNormal(const QPointF& a, const QPointF& b);
 
-	float crossProduct(const QPointF& a, const QPointF& b, const QPointF& c);
-	float dot(const QPointF& a, const QPointF& b);
+	float crossProduct(const QPointF& a, const QPointF& b, const QPointF& c) noexcept;
+	float dot(const QPointF& a, const QPointF& b) noexcept;
 
 	bool isCross(const QPointF& a, const QPointF& b, const QPointF& c, const QPointF& d);
 

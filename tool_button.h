@@ -20,13 +20,13 @@ public:
     void set_selected(const QIcon& icon);
     void set_unselected(const QIcon& icon);
 
-    void set_toolState(CharacterToolState state);
+    void set_toolState(CharacterToolState state) noexcept;
 
     void update();
 
-    QAction* action() const;
-    CharacterToolState toolState() const;
-    bool isSelect() const;
+    QAction* action() const noexcept { return action_; }
+    CharacterToolState toolState() const noexcept { return toolState_; }
+    bool isSelect() const noexcept { return isSelect_; }
 
 private:
     QAction* action_;

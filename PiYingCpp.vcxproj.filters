@@ -220,12 +220,6 @@
     <ClCompile Include="part.cpp">
       <Filter>Source Files\Core</Filter>
     </ClCompile>
-    <ClCompile Include="vert_group.cpp">
-      <Filter>Source Files\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="vert_groups.cpp">
-      <Filter>Source Files\Core</Filter>
-    </ClCompile>
     <ClCompile Include="point_vector_layer.cpp">
       <Filter>Source Files\Core</Filter>
     </ClCompile>
@@ -379,12 +373,6 @@
       <Filter>Header Files\staticConst</Filter>
     </ClInclude>
     <ClInclude Include="selected_triangle.h">
-      <Filter>Header Files\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="vert_groups.h">
-      <Filter>Header Files\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="vert_group.h">
       <Filter>Header Files\Core</Filter>
     </ClInclude>
     <ClInclude Include="ch_triangle_libre_select.h">

@@ -160,8 +160,6 @@
     <ClCompile Include="tool_button.cpp" />
     <ClCompile Include="change_mode.cpp" />
     <ClCompile Include="select_tool.cpp" />
-    <ClCompile Include="vert_group.cpp" />
-    <ClCompile Include="vert_groups.cpp" />
     <ClCompile Include="ViewData.cpp" />
     <QtRcc Include="PiYing.qrc" />
     <QtUic Include="PiYing.ui" />
@@ -188,8 +186,6 @@
     <ClInclude Include="static_gl_const.h" />
     <ClInclude Include="time_line.h" />
     <ClInclude Include="scale_trans.h" />
-    <ClInclude Include="vert_group.h" />
-    <ClInclude Include="vert_groups.h" />
     <ClInclude Include="ch_triangle_select.h" />
     <QtMoc Include="ask_round_poly_dialog.h" />
     <ClInclude Include="ch_element_libre_select.h" />

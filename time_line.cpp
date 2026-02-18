@@ -8,11 +8,6 @@ Timeline::Timeline(float lenth) :_lenth(lenth), _back(lenth)
 {
 }
 
-float Timeline::lenth() const
-{
-	return _lenth;
-}
-
 QVector4D Timeline::get_transform(int line, const ScaleTrans* scaleTrans) const
 {
 	float unit_lenth = 0.3f * _lenth;

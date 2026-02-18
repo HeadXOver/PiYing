@@ -23,12 +23,12 @@ QPointF PiYingCus::getNormal(const QPointF& a, const QPointF& b)
     return QPointF(a.y() - b.y(), b.x() - a.x());
 }
 
-float PiYingCus::crossProduct(const QPointF& a, const QPointF& b, const QPointF& c)
+float PiYingCus::crossProduct(const QPointF& a, const QPointF& b, const QPointF& c) noexcept
 {
     return (b.x() - a.x()) * (c.y() - a.y()) - (b.y() - a.y()) * (c.x() - a.x());
 }
 
-float PiYingCus::dot(const QPointF& a, const QPointF& b)
+float PiYingCus::dot(const QPointF& a, const QPointF& b) noexcept
 {
     return a.x() * b.x() + a.y() * b.y();
 }
