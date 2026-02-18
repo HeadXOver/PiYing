@@ -11,10 +11,11 @@
 /// </summary>
 struct AddTriangle final
 {
-	bool addVert(unsigned int i);
-	bool checkPointRepeat(const QPointF& point);
-	void addVert(const QPointF& point);
-	void reduceOne();
+	bool addVert(unsigned int i) noexcept;
+	bool checkPointRepeat(const QPointF& point) const noexcept;
+
+	void addVert(const QPointF& point) noexcept;
+	void reduceOne() noexcept;
 	void click(const QPointF& mouse);
 	void draw();
 

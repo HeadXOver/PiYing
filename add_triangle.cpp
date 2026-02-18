@@ -5,7 +5,7 @@
 
 #include <qpainter>
 
-bool AddTriangle::addVert(unsigned int i)
+bool AddTriangle::addVert(unsigned int i) noexcept
 {
 	if(numInd == 0) firstIndex = i;
 	else if (numInd == 1) {
@@ -17,14 +17,14 @@ bool AddTriangle::addVert(unsigned int i)
 	return true;
 }
 
-bool AddTriangle::checkPointRepeat(const QPointF& point)
+bool AddTriangle::checkPointRepeat(const QPointF& point) const noexcept
 {
 	if (numVert == 0) return false;
 	if (numVert == 1) return first == point;
 	return first == point ||second == point;
 }
 
-void AddTriangle::addVert(const QPointF& point)
+void AddTriangle::addVert(const QPointF& point) noexcept
 {
 	if (numVert == 0) first = point;
 	else if (numVert == 1) second = point;
@@ -33,7 +33,7 @@ void AddTriangle::addVert(const QPointF& point)
 	numVert++;
 }
 
-void AddTriangle::reduceOne()
+void AddTriangle::reduceOne() noexcept
 {
 	if (numVert == 0 && numInd == 0) return;
 	if (numVert == 0 && numInd == 1 || numVert == 1 && numInd == 0) {
