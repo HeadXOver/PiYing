@@ -78,7 +78,7 @@ TimelineGl::~TimelineGl()
 	doneCurrent();
 }
 
-TimelineGl& TimelineGl::getInstance()
+TimelineGl& TimelineGl::getInstance() noexcept
 {
 	static TimelineGl* instance = new TimelineGl();
 	return *instance;

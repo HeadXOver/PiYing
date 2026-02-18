@@ -51,7 +51,7 @@ public:
 	PiYingGL(const PiYingGL&) = delete;
 	PiYingGL& operator=(const PiYingGL&) = delete;
 
-	static PiYingGL& getInstance();
+	static PiYingGL& getInstance() noexcept;
 
 private:
 	void paintBackgrounds();
@@ -123,11 +123,11 @@ public:
 	void addTriangle(int index1, const QPointF& point2, const QPointF& point3);
 	void addTriangle(const QPointF& point1, const QPointF& point2, const QPointF& point3);
 
-	void generate_vao(unsigned int& vao, unsigned int vbo, unsigned int ebo);
+	void generate_vao(unsigned int& vao, unsigned int vbo, unsigned int ebo) noexcept;
 	void release_buffers(unsigned int vao) noexcept;
 
 	bool addBackground(const QString& imageName, float& o_ratio);
-	bool have_ch_tool() const { return ch_element_tool_ != nullptr; }
+	bool have_ch_tool() const noexcept { return ch_element_tool_ != nullptr; }
 
 	QPointF getRaletiveToRect(const QPointF& point, const QMatrix4x4& transform) const;
 	QPointF mapToGL(const QPointF& point) const;
@@ -138,26 +138,22 @@ public:
 	QPointF GLViewProjMatrixInvert(const QPointF& point) const;
 	QPointF GLViewMatrixInvert(const QPointF& point) const;
 
-	QMatrix4x4 getViewMatrixInvert() const;
-	QMatrix4x4 getViewMatrix() const;
-	QMatrix4x4 getBgShaderMatrix(const QMatrix4x4& transform) const;
-	QMatrix4x4 getViewProjMatrixInvert() const;
-	QMatrix4x4 getViewProjMatrix() const;
-	QMatrix4x4 getProj() const;
-	QMatrix4x4 getInsProj() const;
+	QMatrix4x4 getViewMatrixInvert() const noexcept;
+	QMatrix4x4 getViewMatrix() const noexcept;
+	QMatrix4x4 getBgShaderMatrix(const QMatrix4x4& transform) const noexcept;
+	QMatrix4x4 getViewProjMatrixInvert() const noexcept;
+	QMatrix4x4 getViewProjMatrix() const noexcept;
+	QMatrix4x4 getProj() const noexcept;
+	QMatrix4x4 getInsProj() const noexcept;
 
-	MousePos getMousePosType(const QPointF& point) const;
+	MousePos getMousePosType(const QPointF& point) const noexcept;
 
 	Qt::CursorShape getCursorShape(const MousePos& pos) const;
 
-	QList<PointVector*>& ref_characterVerts() { return characterVerts; }
-	PointVector& ref_characterVerts(int index) { return *(characterVerts[index]); }
-	QList<std::vector<unsigned int>>& ref_characterTriangleIndices() { return characterTriangleIndices; }
+	CharacterToolState ch_tool_state() const noexcept { return _ch_tool_state; }
 
-	CharacterToolState ch_tool_state() const { return _ch_tool_state; }
-
-	std::vector<unsigned int>* currentIndex() { return _currentIndex; }
-	PointVectorLayer* currentLayer() { return _currentLayer; }
+	std::vector<unsigned int>* currentIndex() noexcept { return _currentIndex; }
+	PointVectorLayer* currentLayer() noexcept { return _currentLayer; }
 
 public:
 	EditMode editMode;

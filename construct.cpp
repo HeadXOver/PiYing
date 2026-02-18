@@ -154,7 +154,7 @@ PiYingGL::~PiYingGL()
 	for (PointVector* pv : characterVerts) delete pv;
 }
 
-PiYingGL& PiYingGL::getInstance()
+PiYingGL& PiYingGL::getInstance() noexcept
 {
 	static PiYingGL* instance = new PiYingGL();
 	return *instance;

@@ -217,7 +217,7 @@ void PiYingGL::importChatacter()
 	for (const QString& fileName : fileNames) add_character(fileName);
 }
 
-MousePos PiYingGL::getMousePosType(const QPointF& point) const
+MousePos PiYingGL::getMousePosType(const QPointF& point) const noexcept
 {
 	if (PiYingCus::isInsideSquare(point)) {
 		if (point.x() < -0.9f) {

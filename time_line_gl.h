@@ -38,8 +38,8 @@ namespace spTimelineGL {
 		float x{ 0.f };
 		float y{ 0.f };
 
-		void set_cursor(int index);
-		void update_after_resize();
+		void set_cursor(int index) noexcept;
+		void update_after_resize() noexcept;
 	};
 }
 
@@ -55,13 +55,13 @@ public:
 	TimelineGl(const TimelineGl&) = delete;
 	TimelineGl& operator=(const TimelineGl&) = delete;
 
-	static TimelineGl& getInstance();
+	static TimelineGl& getInstance() noexcept;
 
 	float x_map_to_gl(const float x) const;
-	float ratio() const { return _ratio; }
+	float ratio() const noexcept { return _ratio; }
 
-	void set_to_timeline();
-	void set_to_part();
+	void set_to_timeline() noexcept;
+	void set_to_part() noexcept;
 
 	void generate_vbo(const PointVector& pointVector, unsigned int& vbo);
 	void update_vbo(const PointVector& pointVector, unsigned int vbo);
@@ -69,7 +69,7 @@ public:
 	void update_buffers(const PointVector& pointVector, const std::vector<unsigned int>& indices, unsigned int vbo, unsigned int ebo);
 	void generate_ebo(const std::vector<unsigned int>& indices, unsigned int& vbo);
 	void generate_vao(unsigned int& vao, unsigned int vbo, unsigned int ebo);
-	void init_part_cursor();
+	void init_part_cursor() noexcept;
 	void release_buffers(unsigned int vao, unsigned int vbo, unsigned int ebo) noexcept;
 	void update_showing_parts();
 	void update_is_draw_by_piying();

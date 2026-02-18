@@ -31,7 +31,7 @@ public:
 	PiYing(const PiYing&) = delete;
 	PiYing& operator=(const PiYing&) = delete;
 
-	static PiYing& getInstance();
+	static PiYing& getInstance() noexcept;
 
 public:
 	int getCurrentBgRow();

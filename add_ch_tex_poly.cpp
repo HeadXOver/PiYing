@@ -67,7 +67,7 @@ void AddChTexPoly::click(const QPointF& mouseOri)
 
 	if (checkPointRepeat(mouse))  return;
 
-	PointVectorLayer& layer = *piYingGL.currentLayer();
+	const PointVectorLayer& layer = *piYingGL.currentLayer();
 
 	for (unsigned int i = 0; i < layer.size(); i++) {
 		const QPointF& readyPoint = layer.get(i, false);

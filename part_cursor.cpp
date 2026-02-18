@@ -1,6 +1,6 @@
 #include "time_line_gl.h"
 
-void spTimelineGL::PartCursor::set_cursor(int index)
+void spTimelineGL::PartCursor::set_cursor(int index) noexcept
 {
 	_index = index;
 
@@ -8,7 +8,7 @@ void spTimelineGL::PartCursor::set_cursor(int index)
 	y = 0.8f - (index / 5) * 0.4f * TimelineGl::getInstance().ratio();
 }
 
-void spTimelineGL::PartCursor::update_after_resize()
+void spTimelineGL::PartCursor::update_after_resize() noexcept
 {
 	y = 0.8f - (_index / 5) * 0.4f * TimelineGl::getInstance().ratio();
 }

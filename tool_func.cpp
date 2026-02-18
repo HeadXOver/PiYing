@@ -46,7 +46,7 @@ void PiYingGL::addTriangle(const QPointF& point1, const QPointF& point2, const Q
 	update_ch_verts();
 }
 
-void PiYingGL::generate_vao(unsigned int& vao, unsigned int vbo, unsigned int ebo)
+void PiYingGL::generate_vao(unsigned int& vao, unsigned int vbo, unsigned int ebo) noexcept
 {
 	makeCurrent();
 	glGenVertexArrays(1, &vao);

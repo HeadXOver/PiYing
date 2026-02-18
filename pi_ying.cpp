@@ -175,7 +175,7 @@ PiYing::~PiYing()
     safeDelete(sliderWidget);
 }
 
-PiYing& PiYing::getInstance()
+PiYing& PiYing::getInstance() noexcept
 {
     return *_instance;
 }

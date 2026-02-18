@@ -7,7 +7,7 @@
 
 #include <qmessagebox>
 
-void TimelineGl::init_part_cursor()
+void TimelineGl::init_part_cursor() noexcept
 {
 	if (_part_cursor._index >= 0) {
 		return;
