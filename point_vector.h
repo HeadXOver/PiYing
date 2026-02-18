@@ -20,19 +20,19 @@ public:
 
 	void push_back(float x, float y);
 	void push_back(const QPointF& p);
-	void clear();
+	void clear() noexcept{ points.clear(); }
 	void resize(int size);
-	void remove_last();
-	void set_point(int i, float x, float y);
-	void set_point(int i, const QPointF& p);
+	void remove_last() noexcept;
+	void set_point(size_t i, float x, float y);
+	void set_point(size_t i, const QPointF& p);
 	void copy_to_vector(std::vector<float>& other);
 	void copy_from_vector(std::vector<float>& other);
 	
-	bool contain(const QPointF& p) const;
+	bool contain(const QPointF& p) const noexcept;
 
-	std::vector<float>& get_vector() { return points; }
+	std::vector<float>& get_vector() noexcept { return points; }
 
-	const QPointF operator[](int i) const;
+	const QPointF operator[](size_t i) const;
 
 	void operator+=(const PointVector& other);
 

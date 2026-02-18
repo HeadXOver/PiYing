@@ -5,8 +5,6 @@
 #include "character_texture.h"
 #include "point_vector.h"
 #include "point_vector_layer.h"
-#include "vert_groups.h"
-#include "vert_group.h"
 #include "base_math.h"
 #include "time_line_gl.h"
 #include "part.h"

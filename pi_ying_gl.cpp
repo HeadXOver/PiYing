@@ -10,7 +10,6 @@
 #include "ch_element_tool.h"
 #include "point_vector.h"
 #include "point_vector_layer.h"
-#include "vert_groups.h"
 #include "slide_applier.h"
 #include "parts.h"
 #include "part.h"

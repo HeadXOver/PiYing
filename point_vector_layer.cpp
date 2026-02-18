@@ -7,17 +7,17 @@ PointVectorLayer::PointVectorLayer(PointVector& pointVector) : point_vector(poin
 {
 }
 
-const QPointF PointVectorLayer::operator[](int index) const 
+const QPointF PointVectorLayer::operator[](size_t index) const
 {
 	return point_vector[index + index];
 }
 
-const QPointF PointVectorLayer::operator()(int index) const
+const QPointF PointVectorLayer::operator()(size_t index) const
 {
 	return point_vector[index + index + 1];
 }
 
-const QPointF PointVectorLayer::get(int index, bool isSkelen) const
+const QPointF PointVectorLayer::get(size_t index, bool isSkelen) const
 {
 	return point_vector[index + index + (isSkelen ? 0 : 1)];
 }
@@ -46,14 +46,14 @@ void PointVectorLayer::copy_from_to(int from, int to)
 	point_vector.set_point(to + to + 1, point_vector[from + from + 1]);
 }
 
-size_t PointVectorLayer::size() const 
-{
-	return point_vector.point_size() / (size_t)2;
-}
-
-void PointVectorLayer::clear() 
+void PointVectorLayer::clear() noexcept
 {
 	point_vector.clear();
+}
+
+size_t PointVectorLayer::size() const noexcept 
+{
+	return point_vector.point_size() / 2; 
 }
 
 void PointVectorLayer::resize(int size) {

@@ -26,33 +26,28 @@ void PointVector::push_back(const QPointF& p)
 	push_back(p.x(), p.y());
 }
 
-void PointVector::clear()
-{
-	points.clear();
-}
-
 void PointVector::resize(int size)
 {
 	points.resize(size + size); 
 }
 
-void PointVector::remove_last()
+void PointVector::remove_last() noexcept
 {
 	if (points.empty()) return;
 	points.pop_back();
 	points.pop_back();
 }
 
-void PointVector::set_point(int i, float x, float y)
+void PointVector::set_point(size_t i, float x, float y)
 {
-	const int i2 = i + i;
+	const size_t i2 = i + i;
 	points[i2] = x;
 	points[i2 + 1] = y;
 }
 
-void PointVector::set_point(int i, const QPointF& p)
+void PointVector::set_point(size_t i, const QPointF& p)
 {
-	const int i2 = i + i;
+	const size_t i2 = i + i;
 	points[i2] = p.x();
 	points[i2 + 1] = p.y();
 }
@@ -72,17 +67,17 @@ void PointVector::operator+=(const PointVector& other)
 	points.insert(points.end(), other.points.begin(), other.points.end());
 }
 
-bool PointVector::contain(const QPointF& p) const
+bool PointVector::contain(const QPointF& p) const noexcept
 {
-	for (int i = 0; i < points.size(); i += 2) {
+	for (size_t i = 0; i < points.size(); i += 2) {
 		if (points[i] != p.x() || points[i + 1] != p.y()) continue;
 		return true;
 	}
 	return false;
 }
 
-const QPointF PointVector::operator[](int i) const 
+const QPointF PointVector::operator[](size_t i) const 
 {
-	const int i2 = i + i;
+	const size_t i2 = i + i;
 	return QPointF(points[i2], points[i2 + 1]);
 }
