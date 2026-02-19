@@ -12,15 +12,11 @@ namespace {
 
 CharacterTexture::CharacterTexture(const QImage& image):
     _prescale(DEFAULT_RATIO * float(image.height()) / (float)image.width()),
-    _texture(std::make_unique<QOpenGLTexture>(image.flipped()))
+    _texture(image.flipped())
 {
-    _texture->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
-    _texture->setMagnificationFilter(QOpenGLTexture::Linear);
-    _texture->setWrapMode(QOpenGLTexture::ClampToEdge);
-}
-
-CharacterTexture::~CharacterTexture()
-{
+    _texture.setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
+    _texture.setMagnificationFilter(QOpenGLTexture::Linear);
+    _texture.setWrapMode(QOpenGLTexture::ClampToEdge);
 }
 
 QMatrix4x4 CharacterTexture::getMatrix() const noexcept
@@ -30,12 +26,12 @@ QMatrix4x4 CharacterTexture::getMatrix() const noexcept
     return matrix;
 }
 
-QOpenGLTexture* CharacterTexture::texture() const noexcept
+QOpenGLTexture& CharacterTexture::texture() noexcept
 {
-    return _texture.get();
+    return _texture;
 }
 
 void CharacterTexture::bind()
 {
-    _texture->bind();
+    _texture.bind();
 }

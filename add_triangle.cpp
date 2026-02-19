@@ -67,7 +67,7 @@ void AddTriangle::click(const QPointF& mouseOri)
 
 	int indRepeat = -1;
 	const PointVectorLayer& pointVector = *piYingGL.currentLayer();
-	for (unsigned int i = 0; i < pointVector.size(); i++) {
+	for (int i = 0; i < pointVector.size(); i++) {
 		if (QLineF(pointVector(i), mouse).length() < 0.02f / piYingGL.viewScale.value()) {
 			indRepeat = i;
 			break;
@@ -95,14 +95,29 @@ void AddTriangle::click(const QPointF& mouseOri)
 
 		if (indRepeat == firstIndex || indRepeat == secondIndex) return;
 
-		unsigned int y[3] = { (unsigned int)indRepeat, firstIndex, secondIndex };
-		std::sort(y, y + 3);
+		unsigned int tempIndex1 = static_cast<unsigned int>(indRepeat);
+		unsigned int tempIndex2 = firstIndex;
+		unsigned int tempIndex3 = secondIndex;
+
+		// 3元素排序网络（3次比较，3次交换）
+		if (tempIndex1 > tempIndex2) std::swap(tempIndex1, tempIndex2);
+		if (tempIndex2 > tempIndex3) std::swap(tempIndex2, tempIndex3);
+		if (tempIndex1 > tempIndex2) std::swap(tempIndex1, tempIndex2);
 
 		const std::vector<unsigned int>& cIndex = *piYingGL.currentIndex();
+
+		// 无分支/最小分支的3元素排序，然后比较
 		for (int j = 0; j < cIndex.size(); j += 3) {
-			unsigned int x[3] = { cIndex[j + 0], cIndex[j + 1], cIndex[j + 2] };
-			std::sort(x, x + 3);
-			if (x[0] == y[0] && x[1] == y[1] && x[2] == y[2]) return;
+			unsigned int eachIndex1 = cIndex[j];
+			unsigned int eachIndex2 = cIndex[j + 1];
+			unsigned int eachIndex3 = cIndex[j + 2];
+
+			// 3元素排序网络（3次比较，3次交换）
+			if (eachIndex1 > eachIndex2) std::swap(eachIndex1, eachIndex2);
+			if (eachIndex2 > eachIndex3) std::swap(eachIndex2, eachIndex3);
+			if (eachIndex1 > eachIndex2) std::swap(eachIndex1, eachIndex2);
+
+			if (eachIndex1 == tempIndex1 && eachIndex2 == tempIndex2 && eachIndex3 == tempIndex3) return;
 		}
 
 		numInd = 0;

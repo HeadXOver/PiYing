@@ -1,6 +1,7 @@
 #pragma once
 
 #include <memory>
+#include <qopengltexture>
 
 class QOpenGLTexture;
 class QImage;
@@ -10,7 +11,7 @@ class CharacterTexture final
 {
 public:
     CharacterTexture(const QImage& image);
-    ~CharacterTexture();
+    ~CharacterTexture() = default;
 
     void bind();
 
@@ -18,10 +19,10 @@ public:
 
     QMatrix4x4 getMatrix() const noexcept;
 
-    QOpenGLTexture* texture() const noexcept;
+    QOpenGLTexture& texture() noexcept;
 
 private:
-    const std::unique_ptr<QOpenGLTexture> _texture;
+    QOpenGLTexture _texture;
 
     const float _prescale;
 };

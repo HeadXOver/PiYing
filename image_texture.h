@@ -1,8 +1,8 @@
 #pragma once
 
 #include <memory>
+#include <qopengltexture>
 
-class QOpenGLTexture;
 class ImageTransform;
 class QImage;
 class QPointF;
@@ -41,10 +41,8 @@ public:
     QMatrix4x4 getMatrix() const noexcept;
     QMatrix4x4 getMatrixInvert() const noexcept;
 
-    QOpenGLTexture* texture() const noexcept;
-
 private:
-    std::unique_ptr<QOpenGLTexture> _texture;
+    QOpenGLTexture _texture;
 
     std::unique_ptr<ImageTransform> _transform;
 

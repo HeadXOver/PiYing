@@ -10,17 +10,15 @@ namespace {
     constexpr float DEFAULT_RATIO = 16.f / 9.f;
 }
 
-ImageTexture::ImageTexture(const QImage& image, float currentRatio)
+ImageTexture::ImageTexture(const QImage& image, float currentRatio) :
+    _prescale(image.height()* currentRatio / static_cast<float>(image.width())),
+    _transform(std::make_unique<ImageTransform>()),
+    _texture(image.flipped())
 {
-    _prescale = image.height() * currentRatio / static_cast<float>(image.width());
-
-    _transform = std::make_unique<ImageTransform>();
-
     _transform->set_scale(1.f, _prescale);
 
-    _texture = std::make_unique<QOpenGLTexture>(image.flipped());
-    _texture->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
-    _texture->setMagnificationFilter(QOpenGLTexture::Linear);
+    _texture.setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
+    _texture.setMagnificationFilter(QOpenGLTexture::Linear);
 }
 
 ImageTexture::~ImageTexture()
@@ -97,11 +95,6 @@ QMatrix4x4 ImageTexture::getMatrixInvert() const noexcept
     return _transform->getMatrixInvert();
 }
 
-QOpenGLTexture* ImageTexture::texture() const noexcept
-{
-    return _texture.get();
-}
-
 void ImageTexture::resetTransform() noexcept
 { 
     _transform->reset();
@@ -110,13 +103,13 @@ void ImageTexture::resetTransform() noexcept
 
 void ImageTexture::bind()
 {
-    _texture->bind();
+    _texture.bind();
 }
 
 void ImageTexture::set_transform_by_new_ratio(float newRatio)
 {
     const float oldScale = _prescale;
-    _prescale = _texture->height() * newRatio / static_cast<float>(_texture->width());
+    _prescale = _texture.height() * newRatio / static_cast<float>(_texture.width());
 
     const float oldNewRatio = _prescale / oldScale;
 

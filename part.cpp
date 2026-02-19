@@ -26,7 +26,7 @@ Part::Part(
 	const QList<unsigned int>& indices,
 	bool isTexture
 ) :
-	_texture(*texture.texture()),
+	_texture(texture.texture()),
 	_prescale(texture.get_prescale())
 {
 	_slide_applier = new SlideApplier();
