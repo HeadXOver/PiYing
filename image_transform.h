@@ -6,19 +6,16 @@
 class ImageTransform
 {
 public:
-    ImageTransform();
-    ~ImageTransform();
-
     void operator=(const ImageTransform& other) noexcept;
 
-    const QMatrix4x4& getMatrix() const noexcept;
-    const QMatrix4x4& getMatrixInvert() const noexcept;
+    const QMatrix4x4& getMatrix() const noexcept { return _transform; }
+    const QMatrix4x4& getMatrixInvert() const noexcept { return _transform_invert; }
 
-    float get_trans_x() const noexcept;
-    float get_trans_y() const noexcept;
-    float get_rot_degree() const noexcept;
-    float get_scale_x() const noexcept;
-    float get_scale_y() const noexcept;
+    float get_trans_x() const noexcept { return _trans_x; }
+    float get_trans_y() const noexcept { return _trans_y; }
+    float get_rot_degree() const noexcept { return _rot_degree; }
+    float get_scale_x() const noexcept { return _scale_x; }
+    float get_scale_y() const noexcept { return _scale_y; }
 
     void reset() noexcept;
     void set_trans(float x, float y) noexcept;

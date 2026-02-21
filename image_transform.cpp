@@ -2,14 +2,6 @@
 
 #include <qmatrix4x4>
 
-ImageTransform::ImageTransform()
-{
-}
-
-ImageTransform::~ImageTransform()
-{
-}
-
 void ImageTransform::operator=(const ImageTransform& other) noexcept
 {
     _transform = other._transform;
@@ -20,41 +12,6 @@ void ImageTransform::operator=(const ImageTransform& other) noexcept
     _rot_degree = other._rot_degree;
     _scale_x = other._scale_x;
     _scale_y = other._scale_y;
-}
-
-const QMatrix4x4& ImageTransform::getMatrix() const noexcept
-{
-    return _transform;
-}
-
-const QMatrix4x4& ImageTransform::getMatrixInvert() const noexcept
-{ 
-    return _transform_invert;
-}
-
-float ImageTransform::get_trans_x() const noexcept
-{
-    return _trans_x;
-}
-
-float ImageTransform::get_trans_y() const noexcept
-{
-    return _trans_y;
-}
-
-float ImageTransform::get_rot_degree() const noexcept
-{
-    return _rot_degree;
-}
-
-float ImageTransform::get_scale_x() const noexcept
-{
-    return _scale_x;
-}
-
-float ImageTransform::get_scale_y() const noexcept
-{
-    return _scale_y;
 }
 
 void ImageTransform::reset() noexcept
