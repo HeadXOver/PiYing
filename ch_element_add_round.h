@@ -5,8 +5,9 @@
 #include <memory>
 #include <qpointf>
 
-struct ChElementAddRound final 
+class ChElementAddRound final 
 {
+public:
 	void click(const QPointF& mouse);
 	void mouse_move(const QPointF& mouse);
 	void release(const QPointF& mouse);
@@ -14,6 +15,7 @@ struct ChElementAddRound final
 
 	void addRoundPoly(const int edgeCount);
 
+private:
 	QPointF center;
 	QPointF gl_center;
 	QPointF current_cursor;
