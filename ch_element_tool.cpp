@@ -119,35 +119,35 @@ ChElementTool::ChElementTool(CharacterToolState chToolState)
 ChElementTool::~ChElementTool() {}
 
 void ChElementTool::click(const QPointF& mouse) {
-	if(clickBehavior) clickBehavior->click(mouse);
+	if(clickBehavior) clickBehavior->act(mouse);
 }
 
 void ChElementTool::release(const QPointF& mouse)
 {
-	if (releaseBehavior) releaseBehavior->release(mouse);
+	if (releaseBehavior) releaseBehavior->act(mouse);
 }
 
 void ChElementTool::move(const QPointF& mouse)
 {
-	if (moveBehavior) moveBehavior->mouse_move(mouse);
+	if (moveBehavior) moveBehavior->act(mouse);
 }
 
 void ChElementTool::draw()
 {
-	if(drawBehavior) drawBehavior->draw();
+	if(drawBehavior) drawBehavior->act();
 }
 
 void ChElementTool::escape()
 {
-	if(escapeBehavior) escapeBehavior->escape();
+	if(escapeBehavior) escapeBehavior->act();
 }
 
 void ChElementTool::delete_element() 
 {
-	if (deleteBehavior) deleteBehavior->delete_element();
+	if (deleteBehavior) deleteBehavior->act();
 }
 
 void ChElementTool::enter() 
 {
-	if (enterBehavior) enterBehavior->enter();
+	if (enterBehavior) enterBehavior->act();
 }

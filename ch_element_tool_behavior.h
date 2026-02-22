@@ -7,7 +7,7 @@ class ClassName final : public ClickBehavior \
 { \
 public: \
     ClassName(const std::shared_ptr<DataName>& data) : _data(data) {} \
-    virtual void click(const QPointF& mouse) override { _data->click(mouse); } \
+    virtual void act(const QPointF& mouse) override { _data->click(mouse); } \
 private: \
     const std::shared_ptr<DataName> _data; \
 };
@@ -19,7 +19,7 @@ class ClassName final : public MouseMoveBehavior \
 { \
 public: \
     ClassName(const std::shared_ptr<DataName>& data) : _data(data) {} \
-    virtual void mouse_move(const QPointF& mouse) override { _data->mouse_move(mouse); } \
+    virtual void act(const QPointF& mouse) override { _data->mouse_move(mouse); } \
 private: \
     const std::shared_ptr<DataName> _data; \
 };
@@ -31,7 +31,7 @@ class ClassName final : public EscapeBehavior \
 { \
 public: \
     ClassName(const std::shared_ptr<DataName>& data) : _data(data) {} \
-    virtual void escape() override { _data->escape(); } \
+    virtual void act() override { _data->escape(); } \
 private: \
     const std::shared_ptr<DataName> _data; \
 };
@@ -43,7 +43,7 @@ class ClassName final : public EnterBehavior \
 { \
 public: \
     ClassName(const std::shared_ptr<DataName>& data) : _data(data) {} \
-    virtual void enter() override { _data->enter(); } \
+    virtual void act() override { _data->enter(); } \
 private: \
     const std::shared_ptr<DataName> _data; \
 };
@@ -55,7 +55,7 @@ class ClassName final : public DeleteElementBehavior \
 { \
 public: \
     ClassName(const std::shared_ptr<DataName>& data) : _data(data) {} \
-    virtual void delete_element() override { _data->delete_element(); } \
+    virtual void act() override { _data->delete_element(); } \
 private: \
     const std::shared_ptr<DataName> _data; \
 };
@@ -67,7 +67,7 @@ class ClassName final : public DrawBehavior \
 { \
 public: \
     ClassName(const std::shared_ptr<DataName>& data) : _data(data) {} \
-    virtual void draw() override { _data->draw(); } \
+    virtual void act() override { _data->draw(); } \
 private: \
     const std::shared_ptr<DataName> _data; \
 };
@@ -79,7 +79,7 @@ class ClassName final : public ReleaseBehavior \
 { \
 public: \
     ClassName(const std::shared_ptr<DataName>& data) : _data(data) {} \
-    virtual void release(const QPointF& mouse) override { _data->release(mouse); } \
+    virtual void act(const QPointF& mouse) override { _data->release(mouse); } \
 private: \
     const std::shared_ptr<DataName> _data; \
 };
@@ -89,36 +89,36 @@ private: \
 class QPointF;
 
 struct ClickBehavior {
-    virtual void click(const QPointF& mouse) = 0;
+    virtual void act(const QPointF& mouse) = 0;
     virtual ~ClickBehavior() = default;
 };
 
 struct MouseMoveBehavior {
-    virtual void mouse_move(const QPointF& mouse) = 0;
+    virtual void act(const QPointF& mouse) = 0;
     virtual ~MouseMoveBehavior() = default;
 };
 
 struct EscapeBehavior {
-    virtual void escape() = 0;
+    virtual void act() = 0;
     virtual ~EscapeBehavior() = default;
 };
 
 struct EnterBehavior {
-    virtual void enter() = 0;
+    virtual void act() = 0;
     virtual ~EnterBehavior() = default;
 };
 
 struct DeleteElementBehavior {
-    virtual void delete_element() = 0;
+    virtual void act() = 0;
     virtual ~DeleteElementBehavior() = default;
 };
 
 struct ReleaseBehavior {
-    virtual void release(const QPointF& mouse) = 0;
+    virtual void act(const QPointF& mouse) = 0;
     virtual ~ReleaseBehavior() = default;
 };
 
 struct DrawBehavior {
-    virtual void draw() = 0;
+    virtual void act() = 0;
     virtual ~DrawBehavior() = default;
 };
