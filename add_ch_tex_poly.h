@@ -19,9 +19,9 @@ public:
 	void delete_element();
 	void draw();
 
+private:
 	bool checkPointRepeat(const QPointF& point);
 
-private:
 	QList<QPointF> points;
 	QList<int> index;
 };

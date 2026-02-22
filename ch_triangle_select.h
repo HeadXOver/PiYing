@@ -13,6 +13,8 @@ public:
 	ChTriangleSelect();
 	~ChTriangleSelect();
 
+	ChElementEditMode get_edit_mode() const noexcept { return editMode; }
+
 	void escape();
 	void enter();
 	void deleteElement();
@@ -23,8 +25,7 @@ public:
 	void click_select(const QPointF& mouse);
 	void update_selected_to_draw();
 
-	ChElementEditMode get_edit_mode() const noexcept { return editMode; }
-
+public:
 	std::unique_ptr<SelectedTriangle> selected_trangle;
 
 	QPointF lastPos;

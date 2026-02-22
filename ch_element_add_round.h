@@ -13,6 +13,7 @@ public:
 	void release(const QPointF& mouse);
 	void draw();
 
+private:
 	void addRoundPoly(const int edgeCount);
 
 private:

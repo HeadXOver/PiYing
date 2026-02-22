@@ -17,9 +17,9 @@ namespace {
 }
 
 ChTriangleLibreSelect::ChTriangleLibreSelect() :
-	edit_skelen(PiYingGL::getInstance().editMode == EditMode::characterSkeleton)
+	edit_skelen(PiYingGL::getInstance().editMode == EditMode::characterSkeleton),
+	chTriangleSelect(std::make_unique<ChTriangleSelect>())
 {
-	chTriangleSelect = std::make_unique<ChTriangleSelect>();
 }
 
 void ChTriangleLibreSelect::enter()

@@ -12,15 +12,16 @@
 class AddTriangle final
 {
 public:
-	bool addVert(unsigned int i) noexcept;
-	bool checkPointRepeat(const QPointF& point) const noexcept;
-
-	void addVert(const QPointF& point) noexcept;
-
 	void click(const QPointF& mouse);
 	void delete_element() noexcept;
 	void escape() noexcept;
 	void draw();
+
+private:
+	bool addVert(unsigned int i) noexcept;
+	bool checkPointRepeat(const QPointF& point) const noexcept;
+
+	void addVert(const QPointF& point) noexcept;
 
 private:
 	QPointF first;

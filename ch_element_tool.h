@@ -28,6 +28,7 @@ public:
 	void delete_element();
 	void enter();
 
+private:
 	void construct_add_triangle();
 	void construct_add_poly();
 	void construct_add_round();

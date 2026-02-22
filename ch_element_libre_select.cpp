@@ -16,9 +16,9 @@ namespace {
 }
 
 ChElementLibreSelect::ChElementLibreSelect() :
-	edit_skelen(PiYingGL::getInstance().editMode == EditMode::characterSkeleton)
+	edit_skelen(PiYingGL::getInstance().editMode == EditMode::characterSkeleton),
+	chElementSelect(std::make_unique<ChElementSelect>())
 {
-	chElementSelect = std::make_unique<ChElementSelect>();
 }
 
 void ChElementLibreSelect::draw()
