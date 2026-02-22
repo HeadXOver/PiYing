@@ -21,27 +21,5 @@ struct ChAddVertTrace final
  
 PIYING_CLICK_BEHAVIOR(AddVertTraceClick, ChAddVertTrace)
 PIYING_MOVEMOUSE_BEHAVIOR(AddVertTraceMove, ChAddVertTrace)
-
-////////////////////////////////////////////////
-
-class AddVertTraceRelease final : public ReleaseBehavior
-{
-public:
-	AddVertTraceRelease(const std::shared_ptr<ChAddVertTrace>& add) : addTrace(add) {}
-	virtual void release(const QPointF& mouse) override { addTrace->release(mouse); }
-
-private:
-	const std::shared_ptr<ChAddVertTrace> addTrace;
-};
-
-////////////////////////////////////////////////
-
-class AddVertTraceDraw final : public DrawBehavior
-{
-public:
-	AddVertTraceDraw(const std::shared_ptr<ChAddVertTrace>& add) : addTrace(add) {}
-	virtual void draw() override { addTrace->draw(); }
-
-private:
-	const std::shared_ptr<ChAddVertTrace> addTrace;
-};
+PIYING_RELEASE_BEHAVIOR(AddVertTraceRelease, ChAddVertTrace)
+PIYING_DRAW_BEHAVIOR(AddVertTraceDraw, ChAddVertTrace)

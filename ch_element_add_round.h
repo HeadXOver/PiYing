@@ -8,7 +8,7 @@
 struct ChElementAddRound final 
 {
 	void click(const QPointF& mouse);
-	void move(const QPointF& mouse);
+	void mouse_move(const QPointF& mouse);
 	void release(const QPointF& mouse);
 	void draw();
 
@@ -25,49 +25,8 @@ struct ChElementAddRound final
 };
 
 ////////////////////////////////////////////////
-
-class AddRoundClick final : public ClickBehavior 
-{
-public:
-	AddRoundClick(const std::shared_ptr<ChElementAddRound>& add) : addRound(add) {}
-	virtual void click(const QPointF& mouse) override;
-
-private:
-	const std::shared_ptr<ChElementAddRound> addRound;
-};
-
-////////////////////////////////////////////////
-
-class AddRoundMove final : public MouseMoveBehavior
-{
-public:
-	AddRoundMove(const std::shared_ptr<ChElementAddRound>& add) : addRound(add) {}
-	virtual void mouse_move(const QPointF& mouse) override;
-
-private:
-	const std::shared_ptr<ChElementAddRound> addRound;
-};
-
-////////////////////////////////////////////////
-
-class AddRoundRelease final : public ReleaseBehavior
-{
-public:
-	AddRoundRelease(const std::shared_ptr<ChElementAddRound>& add) : addRound(add) {}
-	virtual void release(const QPointF& mouse) override;
-
-private:
-	const std::shared_ptr<ChElementAddRound> addRound;
-};
-
-////////////////////////////////////////////////
-
-class AddRoundDraw final : public DrawBehavior
-{
-public:
-	AddRoundDraw(const std::shared_ptr<ChElementAddRound>& add) : addRound(add) {}
-	virtual void draw() override;
-
-private:
-	const std::shared_ptr<ChElementAddRound> addRound;
-};
+ 
+PIYING_CLICK_BEHAVIOR(AddRoundClick, ChElementAddRound)
+PIYING_MOVEMOUSE_BEHAVIOR(AddRoundMove, ChElementAddRound)
+PIYING_RELEASE_BEHAVIOR(AddRoundRelease, ChElementAddRound)
+PIYING_DRAW_BEHAVIOR(AddRoundDraw, ChElementAddRound)

@@ -33,7 +33,7 @@ void ChElementAddRound::click(const QPointF& mouse)
 	radius = 0;
 }
 
-void ChElementAddRound::move(const QPointF& mouse) 
+void ChElementAddRound::mouse_move(const QPointF& mouse) 
 {
 	radius = QLineF(center, mouse).length();
 	current_cursor = mouse;
@@ -100,24 +100,4 @@ void ChElementAddRound::addRoundPoly(const int edgeCount)
 	}
 
 	PiYingGL::getInstance().addTriangle(currentEnd, currentEnd + edgeCount, currentEnd + 1);
-}
-
-void AddRoundClick::click(const QPointF& mouse)
-{
-	addRound->click(mouse);
-}
-
-void AddRoundMove::mouse_move(const QPointF& mouse)
-{
-	addRound->move(mouse);
-}
-
-void AddRoundRelease::release(const QPointF& mouse)
-{
-	addRound->release(mouse);
-}
-
-void AddRoundDraw::draw()
-{
-	addRound->draw();
 }
