@@ -33,7 +33,7 @@ void AddTriangle::addVert(const QPointF& point) noexcept
 	numVert++;
 }
 
-void AddTriangle::reduceOne() noexcept
+void AddTriangle::escape() noexcept
 {
 	if (numVert == 0 && numInd == 0) return;
 	if (numVert == 0 && numInd == 1 || numVert == 1 && numInd == 0) {
@@ -47,14 +47,10 @@ void AddTriangle::reduceOne() noexcept
 	else numVert--;
 }
 
-void AddTriangleDelete::delete_element()
+void AddTriangle::delete_element() noexcept
 {
-	addTriangle->numInd = 0;
-	addTriangle->numVert = 0;
-}
-
-void AddTriangleClick::click(const QPointF& mouse) {
-	addTriangle->click(mouse);
+	numInd = 0;
+	numVert = 0;
 }
 
 void AddTriangle::click(const QPointF& mouseOri)
@@ -141,10 +137,6 @@ void AddTriangle::click(const QPointF& mouseOri)
 	}
 }
 
-void AddTriangleDraw::draw() {
-	addTriangle->draw();
-}
-
 void AddTriangle::draw()
 {
 	if (numInd == 0 && numVert == 0) return;
@@ -177,9 +169,4 @@ void AddTriangle::draw()
 		painter.setPen(QPen(Qt::red, 6));
 		painter.drawPoint(p);
 	}
-}
-
-void AddTriangleEscape::escape()
-{
-	addTriangle->reduceOne();
 }
