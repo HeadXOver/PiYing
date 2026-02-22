@@ -86,7 +86,7 @@ void RectSelectClick::click(const QPointF& point)
 	rectSelect->clickPos(point);
 }
 
-void RectSelectMove::mouseMove(const QPointF& point)
+void RectSelectMove::mouse_move(const QPointF& point)
 {
 	rectSelect->movePos(point);
 }

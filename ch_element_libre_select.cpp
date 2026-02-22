@@ -114,7 +114,7 @@ void LibreSelectClick::click(const QPointF& point)
 	libreSelect->clickPos(point);
 }
 
-void LibreSelectMove::mouseMove(const QPointF& point)
+void LibreSelectMove::mouse_move(const QPointF& point)
 {
 	libreSelect->movePos(point);
 }

@@ -107,7 +107,7 @@ void AddRoundClick::click(const QPointF& mouse)
 	addRound->click(mouse);
 }
 
-void AddRoundMove::mouseMove(const QPointF& mouse)
+void AddRoundMove::mouse_move(const QPointF& mouse)
 {
 	addRound->move(mouse);
 }

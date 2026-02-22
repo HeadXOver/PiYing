@@ -30,7 +30,7 @@ void ChAddVertTrace::click(const QPointF& mouseOri)
     current_index = -1;
 }
 
-void ChAddVertTrace::move(const QPointF& mouse) 
+void ChAddVertTrace::mouse_move(const QPointF& mouse) 
 {
 	if(!presse_on_vert) return;
 
@@ -81,24 +81,4 @@ void ChAddVertTrace::draw()
 	);
 
 	painter.drawPolyline(screenPoly);
-}
-
-void AddVertTraceClick::click(const QPointF& mouse)
-{
-	addTrace->click(mouse);
-}
-
-void AddVertTraceMove::mouseMove(const QPointF& mouse)
-{
-	addTrace->move(mouse);
-}
-
-void AddVertTraceRelease::release(const QPointF& mouse)
-{
-	addTrace->release(mouse);
-}
-
-void AddVertTraceDraw::draw()
-{
-	addTrace->draw();
 }

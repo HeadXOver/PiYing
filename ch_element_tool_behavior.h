@@ -15,11 +15,11 @@ private: \
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #define PIYING_MOVEMOUSE_BEHAVIOR(ClassName, DataName) \
-class ClassName final : public ClickBehavior \
+class ClassName final : public MouseMoveBehavior \
 { \
 public: \
     ClassName(const std::shared_ptr<DataName>& data) : _data(data) {} \
-    virtual void mouseMove(const QPointF& mouse) override { _data->mouseMove(mouse); } \
+    virtual void mouse_move(const QPointF& mouse) override { _data->mouse_move(mouse); } \
 private: \
     const std::shared_ptr<DataName> _data; \
 };
@@ -94,7 +94,7 @@ struct ClickBehavior {
 };
 
 struct MouseMoveBehavior {
-    virtual void mouseMove(const QPointF& mouse) = 0;
+    virtual void mouse_move(const QPointF& mouse) = 0;
     virtual ~MouseMoveBehavior() = default;
 };
 

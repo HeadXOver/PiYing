@@ -42,7 +42,7 @@ class AddRoundMove final : public MouseMoveBehavior
 {
 public:
 	AddRoundMove(const std::shared_ptr<ChElementAddRound>& add) : addRound(add) {}
-	virtual void mouseMove(const QPointF& mouse) override;
+	virtual void mouse_move(const QPointF& mouse) override;
 
 private:
 	const std::shared_ptr<ChElementAddRound> addRound;

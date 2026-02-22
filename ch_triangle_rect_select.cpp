@@ -103,7 +103,7 @@ void RectSelectTriangleClick::click(const QPointF& point)
 	rectSelect->clickPos(point);
 }
 
-void RectSelectTriangleMove::mouseMove(const QPointF& point)
+void RectSelectTriangleMove::mouse_move(const QPointF& point)
 {
 	rectSelect->movePos(point);
 }

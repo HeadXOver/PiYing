@@ -20,85 +20,85 @@
 
 void ChElementTool::construct_add_triangle()
 {
-	std::shared_ptr<AddTriangle> addTriangle = std::make_shared<AddTriangle>();
-	clickBehavior = std::make_unique<AddTriangleClick>(addTriangle);
-	escapeBehavior = std::make_unique<AddTriangleEscape>(addTriangle);
-	drawBehavior = std::make_unique<AddTriangleDraw>(addTriangle);
-	deleteBehavior = std::make_unique<AddTriangleDelete>(addTriangle);
+	std::shared_ptr<AddTriangle> data = std::make_shared<AddTriangle>();
+	clickBehavior = std::make_unique<AddTriangleClick>(data);
+	escapeBehavior = std::make_unique<AddTriangleEscape>(data);
+	drawBehavior = std::make_unique<AddTriangleDraw>(data);
+	deleteBehavior = std::make_unique<AddTriangleDelete>(data);
 }
 
 void ChElementTool::construct_add_poly()
 {
-	std::shared_ptr<AddChTexPoly> addPoly = std::make_shared<AddChTexPoly>();
-	clickBehavior = std::make_unique<AddPolyClick>(addPoly);
-	escapeBehavior = std::make_unique<AddPolyEscape>(addPoly);
-	drawBehavior = std::make_unique<AddPolyDraw>(addPoly);
-	deleteBehavior = std::make_unique<AddPolyDelete>(addPoly);
-	enterBehavior = std::make_unique<AddPolyEnter>(addPoly);
+	std::shared_ptr<AddChTexPoly> data = std::make_shared<AddChTexPoly>();
+	clickBehavior = std::make_unique<AddPolyClick>(data);
+	escapeBehavior = std::make_unique<AddPolyEscape>(data);
+	drawBehavior = std::make_unique<AddPolyDraw>(data);
+	deleteBehavior = std::make_unique<AddPolyDelete>(data);
+	enterBehavior = std::make_unique<AddPolyEnter>(data);
 }
 
 void ChElementTool::construct_add_round()
 {
-	std::shared_ptr<ChElementAddRound> addRound = std::make_shared<ChElementAddRound>();
-	clickBehavior = std::make_unique<AddRoundClick>(addRound);
-	moveBehavior = std::make_unique<AddRoundMove>(addRound);
-	releaseBehavior = std::make_unique<AddRoundRelease>(addRound);
-	drawBehavior = std::make_unique<AddRoundDraw>(addRound);
+	std::shared_ptr<ChElementAddRound> data = std::make_shared<ChElementAddRound>();
+	clickBehavior = std::make_unique<AddRoundClick>(data);
+	moveBehavior = std::make_unique<AddRoundMove>(data);
+	releaseBehavior = std::make_unique<AddRoundRelease>(data);
+	drawBehavior = std::make_unique<AddRoundDraw>(data);
 }
 
 void ChElementTool::construct_rect_select()
 {
-	std::shared_ptr<ChElementRectSelect> rectSelect = std::make_shared<ChElementRectSelect>();
-	clickBehavior = std::make_unique<RectSelectClick>(rectSelect);
-	escapeBehavior = std::make_unique<RectSelectEscape>(rectSelect);
-	drawBehavior = std::make_unique<RectSelectDraw>(rectSelect);
-	releaseBehavior = std::make_unique<RectSelectRelease>(rectSelect);
-	moveBehavior = std::make_unique<RectSelectMove>(rectSelect);
-	deleteBehavior = std::make_unique<RectSelectDelete>(rectSelect);
+	std::shared_ptr<ChElementRectSelect> data = std::make_shared<ChElementRectSelect>();
+	clickBehavior = std::make_unique<RectSelectClick>(data);
+	escapeBehavior = std::make_unique<RectSelectEscape>(data);
+	drawBehavior = std::make_unique<RectSelectDraw>(data);
+	releaseBehavior = std::make_unique<RectSelectRelease>(data);
+	moveBehavior = std::make_unique<RectSelectMove>(data);
+	deleteBehavior = std::make_unique<RectSelectDelete>(data);
 }
 
 void ChElementTool::construct_libre_select()
 {
-	std::shared_ptr<ChElementLibreSelect> libreSelect = std::make_shared<ChElementLibreSelect>();
-	clickBehavior = std::make_unique<LibreSelectClick>(libreSelect);
-	escapeBehavior = std::make_unique<LibreSelectEscape>(libreSelect);
-	drawBehavior = std::make_unique<LibreSelectDraw>(libreSelect);
-	releaseBehavior = std::make_unique<LibreSelectRelease>(libreSelect);
-	moveBehavior = std::make_unique<LibreSelectMove>(libreSelect);
-	deleteBehavior = std::make_unique<LibreSelectDelete>(libreSelect);
+	std::shared_ptr<ChElementLibreSelect> data = std::make_shared<ChElementLibreSelect>();
+	clickBehavior = std::make_unique<LibreSelectClick>(data);
+	escapeBehavior = std::make_unique<LibreSelectEscape>(data);
+	drawBehavior = std::make_unique<LibreSelectDraw>(data);
+	releaseBehavior = std::make_unique<LibreSelectRelease>(data);
+	moveBehavior = std::make_unique<LibreSelectMove>(data);
+	deleteBehavior = std::make_unique<LibreSelectDelete>(data);
 }
 
 void ChElementTool::construct_add_vert_trace()
 {
-	std::shared_ptr<ChAddVertTrace> addVertTrace = std::make_shared<ChAddVertTrace>();
-	clickBehavior = std::make_unique<AddVertTraceClick>(addVertTrace);
-	drawBehavior = std::make_unique<AddVertTraceDraw>(addVertTrace);
-	releaseBehavior = std::make_unique<AddVertTraceRelease>(addVertTrace);
-	moveBehavior = std::make_unique<AddVertTraceMove>(addVertTrace);
+	std::shared_ptr<ChAddVertTrace> data = std::make_shared<ChAddVertTrace>();
+	clickBehavior = std::make_unique<AddVertTraceClick>(data);
+	drawBehavior = std::make_unique<AddVertTraceDraw>(data);
+	releaseBehavior = std::make_unique<AddVertTraceRelease>(data);
+	moveBehavior = std::make_unique<AddVertTraceMove>(data);
 }
 
 void ChElementTool::construct_rect_select_triangle()
 {
-	std::shared_ptr<ChTriangleRectSelect> rectSelect = std::make_shared<ChTriangleRectSelect>();
-	clickBehavior = std::make_unique<RectSelectTriangleClick>(rectSelect);
-	escapeBehavior = std::make_unique<RectSelectTriangleEscape>(rectSelect);
-	drawBehavior = std::make_unique<RectSelectTriangleDraw>(rectSelect);
-	releaseBehavior = std::make_unique<RectSelectTriangleRelease>(rectSelect);
-	moveBehavior = std::make_unique<RectSelectTriangleMove>(rectSelect);
-	deleteBehavior = std::make_unique<RectSelectTriangleDelete>(rectSelect);
-	enterBehavior = std::make_unique<RectSelectTriangleEnter>(rectSelect);
+	std::shared_ptr<ChTriangleRectSelect> data = std::make_shared<ChTriangleRectSelect>();
+	clickBehavior = std::make_unique<RectSelectTriangleClick>(data);
+	escapeBehavior = std::make_unique<RectSelectTriangleEscape>(data);
+	drawBehavior = std::make_unique<RectSelectTriangleDraw>(data);
+	releaseBehavior = std::make_unique<RectSelectTriangleRelease>(data);
+	moveBehavior = std::make_unique<RectSelectTriangleMove>(data);
+	deleteBehavior = std::make_unique<RectSelectTriangleDelete>(data);
+	enterBehavior = std::make_unique<RectSelectTriangleEnter>(data);
 }
 
 void ChElementTool::construct_libre_select_triangle()
 {
-	std::shared_ptr<ChTriangleLibreSelect> libreSelect = std::make_shared<ChTriangleLibreSelect>();
-	clickBehavior = std::make_unique<LibreSelectTriangleClick>(libreSelect);
-	escapeBehavior = std::make_unique<LibreSelectTriangleEscape>(libreSelect);
-	drawBehavior = std::make_unique<LibreSelectTriangleDraw>(libreSelect);
-	releaseBehavior = std::make_unique<LibreSelectTriangleRelease>(libreSelect);
-	moveBehavior = std::make_unique<LibreSelectTriangleMove>(libreSelect);
-	deleteBehavior = std::make_unique<LibreSelectTriangleDelete>(libreSelect);
-	enterBehavior = std::make_unique<LibreSelectTriangleEnter>(libreSelect);
+	std::shared_ptr<ChTriangleLibreSelect> data = std::make_shared<ChTriangleLibreSelect>();
+	clickBehavior = std::make_unique<LibreSelectTriangleClick>(data);
+	escapeBehavior = std::make_unique<LibreSelectTriangleEscape>(data);
+	drawBehavior = std::make_unique<LibreSelectTriangleDraw>(data);
+	releaseBehavior = std::make_unique<LibreSelectTriangleRelease>(data);
+	moveBehavior = std::make_unique<LibreSelectTriangleMove>(data);
+	deleteBehavior = std::make_unique<LibreSelectTriangleDelete>(data);
+	enterBehavior = std::make_unique<LibreSelectTriangleEnter>(data);
 }
 
 ChElementTool::ChElementTool(CharacterToolState chToolState)
@@ -116,9 +116,7 @@ ChElementTool::ChElementTool(CharacterToolState chToolState)
 	}
 }
 
-ChElementTool::~ChElementTool()
-{
-}
+ChElementTool::~ChElementTool() {}
 
 void ChElementTool::click(const QPointF& mouse) {
 	if(clickBehavior) clickBehavior->click(mouse);
@@ -131,7 +129,7 @@ void ChElementTool::release(const QPointF& mouse)
 
 void ChElementTool::move(const QPointF& mouse)
 {
-	if (moveBehavior) moveBehavior->mouseMove(mouse);
+	if (moveBehavior) moveBehavior->mouse_move(mouse);
 }
 
 void ChElementTool::draw()

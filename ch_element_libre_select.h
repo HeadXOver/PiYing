@@ -46,7 +46,7 @@ class LibreSelectMove final : public MouseMoveBehavior
 public:
 	LibreSelectMove(const std::shared_ptr<ChElementLibreSelect> select) : libreSelect(select) {}
 
-	virtual void mouseMove(const QPointF& point) override;
+	virtual void mouse_move(const QPointF& point) override;
 
 private:
 	const std::shared_ptr<ChElementLibreSelect> libreSelect;

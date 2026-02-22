@@ -46,7 +46,7 @@ class LibreSelectTriangleMove final : public MouseMoveBehavior
 public:
 	LibreSelectTriangleMove(const std::shared_ptr<ChTriangleLibreSelect> select) : libreSelect(select) {}
 
-	virtual void mouseMove(const QPointF& point) override;
+	virtual void mouse_move(const QPointF& point) override;
 
 private:
 	const std::shared_ptr<ChTriangleLibreSelect> libreSelect;

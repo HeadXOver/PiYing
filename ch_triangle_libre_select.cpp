@@ -129,7 +129,7 @@ void LibreSelectTriangleClick::click(const QPointF& point)
 	libreSelect->clickPos(point);
 }
 
-void LibreSelectTriangleMove::mouseMove(const QPointF& point)
+void LibreSelectTriangleMove::mouse_move(const QPointF& point)
 {
 	libreSelect->movePos(point);
 }

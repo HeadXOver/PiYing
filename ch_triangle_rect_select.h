@@ -44,7 +44,7 @@ class RectSelectTriangleMove final : public MouseMoveBehavior
 public:
 	RectSelectTriangleMove(const std::shared_ptr<ChTriangleRectSelect> rect_select) : rectSelect(rect_select) {}
 
-	virtual void mouseMove(const QPointF& point) override;
+	virtual void mouse_move(const QPointF& point) override;
 
 private:
 	const std::shared_ptr<ChTriangleRectSelect> rectSelect;
