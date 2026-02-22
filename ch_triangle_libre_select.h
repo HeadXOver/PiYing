@@ -14,9 +14,11 @@ public:
 	~ChTriangleLibreSelect() = default;
 
 	void draw();
-	void clickPos(const QPointF& mouse);
-	void movePos(const QPointF& mouse);
-	void releasePos(const QPointF& mouse);
+	void click(const QPointF& mouse);
+	void mouse_move(const QPointF& mouse);
+	void release(const QPointF& mouse);
+	void escape();
+	void delete_element();
 	void enter();
 
 	std::unique_ptr<ChTriangleSelect> chTriangleSelect;
@@ -26,94 +28,12 @@ public:
 	bool isPress = false;
 };
 
-///////////////////////////////////////////////////
+/// ////////////////////////////////////////////////////////////////////////
 
-class LibreSelectTriangleClick final : public ClickBehavior
-{
-public:
-	LibreSelectTriangleClick(const std::shared_ptr<ChTriangleLibreSelect> select) : libreSelect(select) {}
-
-	virtual void click(const QPointF& point) override;
-
-private:
-	const std::shared_ptr<ChTriangleLibreSelect> libreSelect;
-};
-
-///////////////////////////////////////////////////
-
-class LibreSelectTriangleMove final : public MouseMoveBehavior
-{
-public:
-	LibreSelectTriangleMove(const std::shared_ptr<ChTriangleLibreSelect> select) : libreSelect(select) {}
-
-	virtual void mouse_move(const QPointF& point) override;
-
-private:
-	const std::shared_ptr<ChTriangleLibreSelect> libreSelect;
-};
-
-///////////////////////////////////////////////////
-
-class LibreSelectTriangleRelease final : public ReleaseBehavior
-{
-public:
-	LibreSelectTriangleRelease(const std::shared_ptr<ChTriangleLibreSelect> select) : libreSelect(select) {}
-
-	virtual void release(const QPointF& point) override;
-
-private:
-	const std::shared_ptr<ChTriangleLibreSelect> libreSelect;
-};
-
-///////////////////////////////////////////////////
-
-class LibreSelectTriangleDelete final : public DeleteElementBehavior
-{
-public:
-	LibreSelectTriangleDelete(const std::shared_ptr<ChTriangleLibreSelect> select) : libreSelect(select) {}
-
-
-	virtual void delete_element() override;
-
-private:
-	const std::shared_ptr<ChTriangleLibreSelect> libreSelect;
-};
-
-///////////////////////////////////////////////////
-
-class LibreSelectTriangleEscape final : public EscapeBehavior
-{
-public:
-	LibreSelectTriangleEscape(const std::shared_ptr<ChTriangleLibreSelect> select) : libreSelect(select) {}
-
-
-	virtual void escape() override;
-
-private:
-	const std::shared_ptr<ChTriangleLibreSelect> libreSelect;
-};
-
-///////////////////////////////////////////////////
-
-class LibreSelectTriangleDraw final : public DrawBehavior
-{
-public:
-	LibreSelectTriangleDraw(const std::shared_ptr<ChTriangleLibreSelect> select) : libreSelect(select) {}
-	virtual void draw() override;
-
-private:
-	const std::shared_ptr<ChTriangleLibreSelect> libreSelect;
-};
-
-///////////////////////////////////////////////////
-
-class LibreSelectTriangleEnter final : public EnterBehavior
-{
-public:
-	LibreSelectTriangleEnter(const std::shared_ptr<ChTriangleLibreSelect> select) : libreSelect(select) {}
-	virtual void enter() override;
-
-private:
-	const std::shared_ptr<ChTriangleLibreSelect> libreSelect;
-};
-
+PIYING_CLICK_BEHAVIOR(LibreSelectTriangleClick, ChTriangleLibreSelect)
+PIYING_MOVEMOUSE_BEHAVIOR(LibreSelectTriangleMove, ChTriangleLibreSelect)
+PIYING_RELEASE_BEHAVIOR(LibreSelectTriangleRelease, ChTriangleLibreSelect)
+PIYING_ENTER_BEHAVIOR(LibreSelectTriangleEnter, ChTriangleLibreSelect)
+PIYING_DRAW_BEHAVIOR(LibreSelectTriangleDraw, ChTriangleLibreSelect)
+PIYING_DELETE_BEHAVIOR(LibreSelectTriangleDelete, ChTriangleLibreSelect)
+PIYING_ESCAPE_BEHAVIOR(LibreSelectTriangleEscape, ChTriangleLibreSelect)

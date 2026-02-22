@@ -49,7 +49,7 @@ void ChTriangleLibreSelect::draw()
 	painter.drawLine(screenPoly.last(), screenPoly.first());
 }
 
-void ChTriangleLibreSelect::clickPos(const QPointF& mouseOri)
+void ChTriangleLibreSelect::click(const QPointF& mouseOri)
 {
 	isPress = true;
 	chTriangleSelect->lastPos = mouseOri;
@@ -67,7 +67,7 @@ void ChTriangleLibreSelect::clickPos(const QPointF& mouseOri)
 	polygon << mouse;
 }
 
-void ChTriangleLibreSelect::movePos(const QPointF& mouse)
+void ChTriangleLibreSelect::mouse_move(const QPointF& mouse)
 {
 	drawing = false;
 
@@ -86,7 +86,7 @@ void ChTriangleLibreSelect::movePos(const QPointF& mouse)
 	polygon << mapedMouse;
 }
 
-void ChTriangleLibreSelect::releasePos(const QPointF& mouse)
+void ChTriangleLibreSelect::release(const QPointF& mouse)
 {
 	isPress = false;
 
@@ -124,37 +124,12 @@ void ChTriangleLibreSelect::releasePos(const QPointF& mouse)
 	chTriangleSelect->update_selected_to_draw();
 }
 
-void LibreSelectTriangleClick::click(const QPointF& point)
+void ChTriangleLibreSelect::delete_element()
 {
-	libreSelect->clickPos(point);
+	chTriangleSelect->deleteElement();
 }
 
-void LibreSelectTriangleMove::mouse_move(const QPointF& point)
+void ChTriangleLibreSelect::escape()
 {
-	libreSelect->movePos(point);
-}
-
-void LibreSelectTriangleRelease::release(const QPointF& point)
-{
-	libreSelect->releasePos(point);
-}
-
-void LibreSelectTriangleDelete::delete_element()
-{
-	libreSelect->chTriangleSelect->deleteElement();
-}
-
-void LibreSelectTriangleEscape::escape()
-{
-	libreSelect->chTriangleSelect->escape();
-}
-
-void LibreSelectTriangleDraw::draw()
-{
-	libreSelect->draw();
-}
-
-void LibreSelectTriangleEnter::enter()
-{
-	libreSelect->enter();
+	chTriangleSelect->escape();
 }
