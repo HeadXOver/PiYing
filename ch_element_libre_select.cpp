@@ -43,7 +43,7 @@ void ChElementLibreSelect::draw()
 	painter.drawLine(screenPoly.last(), screenPoly.first());
 }
 
-void ChElementLibreSelect::clickPos(const QPointF& mouseOri)
+void ChElementLibreSelect::click(const QPointF& mouseOri)
 {
 	isPress = true;
 	chElementSelect->lastPos = mouseOri;
@@ -52,7 +52,7 @@ void ChElementLibreSelect::clickPos(const QPointF& mouseOri)
 
 	chElementSelect->changeEditMode();
 
-	if (chElementSelect->editMode != ChElementEditMode::None) {
+	if (chElementSelect->getEditMode() != ChElementEditMode::None) {
 		chElementSelect->affirmHandle();
 		return;
 	}
@@ -64,11 +64,17 @@ void ChElementLibreSelect::clickPos(const QPointF& mouseOri)
 	chElementSelect->click_select(mouse);
 }
 
-void ChElementLibreSelect::movePos(const QPointF& mouse)
+void ChElementLibreSelect::escape()
+{
+	if (isPress) return;
+	chElementSelect->escape();
+}
+
+void ChElementLibreSelect::mouse_move(const QPointF& mouse)
 {
 	drawing = false;
 
-	if (chElementSelect->editMode != ChElementEditMode::None) {
+	if (chElementSelect->getEditMode() != ChElementEditMode::None) {
 		chElementSelect->moveHandle(mouse);
 		return;
 	}
@@ -83,7 +89,7 @@ void ChElementLibreSelect::movePos(const QPointF& mouse)
 	polygon << mapedMouse;
 }
 
-void ChElementLibreSelect::releasePos(const QPointF& mouse)
+void ChElementLibreSelect::release(const QPointF& mouse)
 {
 	isPress = false;
 
@@ -109,32 +115,7 @@ void ChElementLibreSelect::releasePos(const QPointF& mouse)
 	chElementSelect->update_selected_to_draw();
 }
 
-void LibreSelectClick::click(const QPointF& point)
+void ChElementLibreSelect::delete_element()
 {
-	libreSelect->clickPos(point);
-}
-
-void LibreSelectMove::mouse_move(const QPointF& point)
-{
-	libreSelect->movePos(point);
-}
-
-void LibreSelectRelease::release(const QPointF& point)
-{
-	libreSelect->releasePos(point);
-}
-
-void LibreSelectDelete::delete_element()
-{
-	libreSelect->chElementSelect->deleteElement();
-}
-
-void LibreSelectEscape::escape()
-{
-	libreSelect->chElementSelect->escape();
-}
-
-void LibreSelectDraw::draw()
-{
-	libreSelect->draw();
+	chElementSelect->deleteElement();
 }

@@ -6,8 +6,9 @@
 class SelectedPoints;
 enum class ChElementEditMode;
 
-struct ChElementSelect final
+class ChElementSelect final
 {
+public:
 	ChElementSelect();
 	~ChElementSelect();
 
@@ -20,9 +21,15 @@ struct ChElementSelect final
 	void click_select(const QPointF& mouse);
 	void update_selected_to_draw();
 
+	QPointF get_last_pos() const noexcept { return lastPos; }
+
+	ChElementEditMode getEditMode() const noexcept { return editMode; }
+
 	std::unique_ptr<SelectedPoints> selected_points;
 
 	QPointF lastPos;
+
+private:
 	QPointF handleCenterPoint;
 	QPointF dHandleCenterPoint;
 	QPointF lastHandleCenterPoint;

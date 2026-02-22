@@ -29,17 +29,18 @@ void ChElementRectSelect::draw()
 
 	if (isDraw) {
 		painter.setPen(QPen(Qt::yellow, 1));
-		painter.drawRect(chElementSelect->lastPos.x(), chElementSelect->lastPos.y(), rect.x() - chElementSelect->lastPos.x(), rect.y() - chElementSelect->lastPos.y());
+		const QPointF& lastPos = chElementSelect->get_last_pos();
+		painter.drawRect(lastPos.x(), lastPos.y(), rect.x() - lastPos.x(), rect.y() - lastPos.y());
 	}
 }
 
-void ChElementRectSelect::clickPos(const QPointF& mouseOri)
+void ChElementRectSelect::click(const QPointF& mouseOri)
 {
 	chElementSelect->lastPos = mouseOri;
 
 	chElementSelect->changeEditMode();
 
-	if (chElementSelect->editMode != ChElementEditMode::None) {
+	if (chElementSelect->getEditMode() != ChElementEditMode::None) {
 		chElementSelect->affirmHandle();
 		return;
 	}
@@ -49,9 +50,9 @@ void ChElementRectSelect::clickPos(const QPointF& mouseOri)
 	chElementSelect->click_select(mouse);
 }
 
-void ChElementRectSelect::movePos(const QPointF& mouse)
+void ChElementRectSelect::mouse_move(const QPointF& mouse)
 {
-	if (chElementSelect->editMode != ChElementEditMode::None) {
+	if (chElementSelect->getEditMode() != ChElementEditMode::None) {
 		chElementSelect->moveHandle(mouse);
 		isDraw = false;
 		return;
@@ -61,7 +62,7 @@ void ChElementRectSelect::movePos(const QPointF& mouse)
 	isDraw = true;
 }
 
-void ChElementRectSelect::releasePos(const QPointF& mouse)
+void ChElementRectSelect::release(const QPointF& mouse)
 {
 	if (!isDraw) return;
 	isDraw = false;
@@ -81,32 +82,12 @@ void ChElementRectSelect::releasePos(const QPointF& mouse)
 	chElementSelect->update_selected_to_draw();
 }
 
-void RectSelectClick::click(const QPointF& point)
+void ChElementRectSelect::delete_element()
 {
-	rectSelect->clickPos(point);
+	chElementSelect->deleteElement();
 }
 
-void RectSelectMove::mouse_move(const QPointF& point)
+void ChElementRectSelect::escape()
 {
-	rectSelect->movePos(point);
-}
-
-void RectSelectRelease::release(const QPointF& point)
-{
-	rectSelect->releasePos(point);
-}
-
-void RectSelectDelete::delete_element()
-{
-	rectSelect->chElementSelect->deleteElement();
-}
-
-void RectSelectEscape::escape()
-{
-	rectSelect->chElementSelect->escape();
-}
-
-void RectSelectDraw::draw()
-{
-	rectSelect->draw();
+	chElementSelect->escape();
 }
