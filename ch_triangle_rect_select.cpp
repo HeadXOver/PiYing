@@ -34,7 +34,7 @@ void ChTriangleRectSelect::draw()
 	}
 }
 
-void ChTriangleRectSelect::clickPos(const QPointF& mouseOri)
+void ChTriangleRectSelect::click(const QPointF& mouseOri)
 {
 	chTriangleSelect->lastPos = mouseOri;
 
@@ -45,7 +45,7 @@ void ChTriangleRectSelect::clickPos(const QPointF& mouseOri)
 	}
 }
 
-void ChTriangleRectSelect::movePos(const QPointF& mouse)
+void ChTriangleRectSelect::mouse_move(const QPointF& mouse)
 {
 	if (chTriangleSelect->editMode != ChElementEditMode::None) {
 		chTriangleSelect->moveHandle(mouse);
@@ -57,7 +57,7 @@ void ChTriangleRectSelect::movePos(const QPointF& mouse)
 	isDraw = true;
 }
 
-void ChTriangleRectSelect::releasePos(const QPointF& mouse)
+void ChTriangleRectSelect::release(const QPointF& mouse)
 {
 	if (!isDraw) {
 		const QPointF glMouse = PiYingGL::getInstance().GLViewProjMatrixInvert(mouse);
@@ -98,37 +98,12 @@ void ChTriangleRectSelect::enter()
 	chTriangleSelect->enter();
 }
 
-void RectSelectTriangleClick::click(const QPointF& point)
+void ChTriangleRectSelect::delete_element()
 {
-	rectSelect->clickPos(point);
+	chTriangleSelect->deleteElement();
 }
 
-void RectSelectTriangleMove::mouse_move(const QPointF& point)
+void ChTriangleRectSelect::escape()
 {
-	rectSelect->movePos(point);
-}
-
-void RectSelectTriangleRelease::release(const QPointF& point)
-{
-	rectSelect->releasePos(point);
-}
-
-void RectSelectTriangleDelete::delete_element()
-{
-	rectSelect->chTriangleSelect->deleteElement();
-}
-
-void RectSelectTriangleEscape::escape()
-{
-	rectSelect->chTriangleSelect->escape();
-}
-
-void RectSelectTriangleDraw::draw()
-{
-	rectSelect->draw();
-}
-
-void RectSelectTriangleEnter::enter()
-{
-	rectSelect->enter();
+	chTriangleSelect->escape();
 }

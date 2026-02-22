@@ -7,7 +7,7 @@
 
 struct ChTriangleSelect;
 
-struct ChTriangleLibreSelect final
+class ChTriangleLibreSelect final
 {
 public:
 	ChTriangleLibreSelect();
@@ -21,6 +21,7 @@ public:
 	void delete_element();
 	void enter();
 
+private:
 	std::unique_ptr<ChTriangleSelect> chTriangleSelect;
 	QPolygonF polygon;
 	bool drawing = false;
