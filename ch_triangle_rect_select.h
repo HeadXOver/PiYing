@@ -5,7 +5,7 @@
 
 #include "ch_element_tool_behavior.h"
 
-struct ChTriangleSelect;
+class ChTriangleSelect;
 
 class ChTriangleRectSelect final
 {

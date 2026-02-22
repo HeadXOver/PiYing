@@ -7,8 +7,9 @@ class SelectedTriangle;
 
 enum class ChElementEditMode;
 
-struct ChTriangleSelect final
+class ChTriangleSelect final
 {
+public:
 	ChTriangleSelect();
 	~ChTriangleSelect();
 
@@ -22,9 +23,13 @@ struct ChTriangleSelect final
 	void click_select(const QPointF& mouse);
 	void update_selected_to_draw();
 
+	ChElementEditMode get_edit_mode() const noexcept { return editMode; }
+
 	std::unique_ptr<SelectedTriangle> selected_trangle;
 
 	QPointF lastPos;
+
+private:
 	QPointF handleCenterPoint;
 	QPointF dHandleCenterPoint;
 	QPointF lastHandleCenterPoint;

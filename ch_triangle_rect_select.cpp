@@ -40,14 +40,14 @@ void ChTriangleRectSelect::click(const QPointF& mouseOri)
 
 	chTriangleSelect->changeEditMode();
 
-	if (chTriangleSelect->editMode != ChElementEditMode::None) {
+	if (chTriangleSelect->get_edit_mode() != ChElementEditMode::None) {
 		chTriangleSelect->affirmHandle();
 	}
 }
 
 void ChTriangleRectSelect::mouse_move(const QPointF& mouse)
 {
-	if (chTriangleSelect->editMode != ChElementEditMode::None) {
+	if (chTriangleSelect->get_edit_mode() != ChElementEditMode::None) {
 		chTriangleSelect->moveHandle(mouse);
 		isDraw = false;
 		return;

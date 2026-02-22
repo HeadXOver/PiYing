@@ -58,7 +58,7 @@ void ChTriangleLibreSelect::click(const QPointF& mouseOri)
 
 	chTriangleSelect->changeEditMode();
 
-	if (chTriangleSelect->editMode != ChElementEditMode::None) {
+	if (chTriangleSelect->get_edit_mode() != ChElementEditMode::None) {
 		chTriangleSelect->affirmHandle();
 		return;
 	}
@@ -71,7 +71,7 @@ void ChTriangleLibreSelect::mouse_move(const QPointF& mouse)
 {
 	drawing = false;
 
-	if (chTriangleSelect->editMode != ChElementEditMode::None) {
+	if (chTriangleSelect->get_edit_mode() != ChElementEditMode::None) {
 		chTriangleSelect->moveHandle(mouse);
 		return;
 	}
