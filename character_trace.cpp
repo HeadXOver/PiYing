@@ -4,15 +4,8 @@
 
 CharacterTrace::CharacterTrace(unsigned int index, const QPolygonF& poly, const QString& name) : _name(name)
 {
-	QPointF origin = poly[0];
-	QPolygonF screenPoly;
-	screenPoly.reserve(poly.size());
-	std::transform(poly.cbegin(), poly.cend(),
-		std::back_inserter(screenPoly),
-		[origin](const QPointF& p) { return p - origin; }
-	);
-
-	trace_by_index[index] = screenPoly;
+	// 记录相对于第一个点的偏移量
+	trace_by_index[index] = poly.translated(-poly[0]);
 }
 
 CharacterTrace::CharacterTrace(const CharacterTrace& other, unsigned int skew) :
