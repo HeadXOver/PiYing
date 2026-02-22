@@ -19,7 +19,7 @@ public:
 
     void setTrans(float x, float y) noexcept;
     void setTrans(const QPointF& point) noexcept;
-    void setRot(float r) noexcept;
+    void set_rot_radian(float r) noexcept;
     void setScale(float x, float y) noexcept;
     void setScale(const QPointF& point) noexcept;
     void setScale(float s) noexcept;
@@ -29,7 +29,7 @@ public:
     void addTrans(float x, float y) noexcept;
     void addScale(float x, float y) noexcept;
     void addScale(float s) noexcept;
-    void addRot(float r) noexcept;
+    void add_rot_radian(float r) noexcept;
 
     void resetTransform() noexcept;
     void bind();

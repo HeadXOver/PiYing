@@ -16,7 +16,7 @@ void PiYingGL::bgRotationControl(const QPointF& mouse, ImageTexture& image)
 	QPointF vec1 = _orth_ratio_invert.map(lastMousePos - center);
 	QPointF vec2 = _orth_ratio_invert.map(mouse - center);
 	image.set_transform(*lastImageTransform);
-	image.addRot(PiYingCus::angleBetweenPointDegree(vec2, vec1));
+	image.add_rot_radian(PiYingCus::angleBetweenPoint(vec2, vec1));
 }
 
 void PiYingGL::bgTranslateControl(const QPointF& mouse, ImageTexture& image)

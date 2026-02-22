@@ -67,7 +67,7 @@ void PiYingGL::bgSetTransform()
 		};
 		if (AskBgTransformDialog("设置变换", d, this).getValues(transX, transY, Rot, ScaleX, ScaleY)) {
 			image->setTrans(transX, transY);
-			image->setRot(Rot);
+			image->set_rot_radian(Rot);
 			image->setScale(ScaleX, ScaleY);
 		}
 	}

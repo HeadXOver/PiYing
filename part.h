@@ -20,13 +20,18 @@ public:
 	Part(CharacterTexture& texture, const QList<unsigned int>& indices, bool isTexture);
 	Part(const Part& part1, const Part& part2);
 	Part(const Part& part);
+	Part& operator=(Part part)
+	{
+		std::swap(*this, part);
+		return *this;
+	}
 	~Part();
 
 	const float* float_data() const noexcept;
-	const unsigned int* index_data() const noexcept;
+	const unsigned int* index_data() const noexcept { return _indices.data(); }
 
 	size_t float_size() const noexcept;
-	size_t index_size() const noexcept;
+	size_t index_size() const noexcept { return _indices.size(); }
 	size_t vertex_size() const noexcept;
 	size_t n_children() const noexcept;
 

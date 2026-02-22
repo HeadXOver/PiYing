@@ -169,19 +169,9 @@ const float* Part::float_data() const noexcept
 	return _vert_texture->data();
 }
 
-const unsigned int* Part::index_data() const noexcept
-{
-	return _indices.data();
-}
-
 size_t Part::float_size() const noexcept
 {
 	return _vert_texture->float_size();
-}
-
-size_t Part::index_size() const noexcept
-{
-	return _indices.size();
 }
 
 size_t Part::vertex_size() const noexcept

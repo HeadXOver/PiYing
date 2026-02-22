@@ -35,9 +35,9 @@ void ImageTexture::setTrans(const QPointF& point) noexcept
     _transform->set_trans(point.x(), point.y());
 }
 
-void ImageTexture::setRot(float r) noexcept
+void ImageTexture::set_rot_radian(float r) noexcept
 {
-    _transform->set_rot(r);
+    _transform->set_rot_radian(r);
 }
 
 void ImageTexture::setScale(float x, float y) noexcept
@@ -80,9 +80,9 @@ void ImageTexture::addScale(float s) noexcept
     addScale(s, s);
 }
 
-void ImageTexture::addRot(float r) noexcept
+void ImageTexture::add_rot_radian(float r) noexcept
 {
-    _transform->add_rot(r);
+    _transform->add_rot_radian(r);
 }
 
 QMatrix4x4 ImageTexture::getMatrix() const noexcept
