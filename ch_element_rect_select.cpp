@@ -96,7 +96,7 @@ void RectSelectRelease::release(const QPointF& point)
 	rectSelect->releasePos(point);
 }
 
-void RectSelectDelete::deleteElement()
+void RectSelectDelete::delete_element()
 {
 	rectSelect->chElementSelect->deleteElement();
 }

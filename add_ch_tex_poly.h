@@ -12,8 +12,11 @@
 /// </summary>
 struct AddChTexPoly
 {
+	void escape();
 	void click(const QPointF& mouse);
 	void enter();
+	void delete_element();
+	void draw();
 
 	bool checkPointRepeat(const QPointF& point);
 
@@ -23,62 +26,9 @@ struct AddChTexPoly
 
 ////////////////////////////////////////////////////////
 
-class AddPolyEscape final : public EscapeBehavior
-{
-public:
-	AddPolyEscape(const std::shared_ptr<AddChTexPoly>& add) : addChTexPoly(add) {}
-
-	virtual void escape() override;
-
-private:
-	const std::shared_ptr<AddChTexPoly> addChTexPoly;
-};
-
-////////////////////////////////////////////////////////
-
-class AddPolyDelete final : public DeleteElementBehavior
-{
-public:
-	AddPolyDelete(const std::shared_ptr<AddChTexPoly>& add) : addChTexPoly(add) {}
-
-
-	virtual void deleteElement() override;
-
-private:
-	const std::shared_ptr<AddChTexPoly> addChTexPoly;
-};
-
-////////////////////////////////////////////////////////
-
-class AddPolyClick final : public ClickBehavior
-{
-public:
-	AddPolyClick(const std::shared_ptr<AddChTexPoly>& add) : addChTexPoly(add) {}
-	virtual void click(const QPointF& mouse) override;
-
-private:
-	const std::shared_ptr<AddChTexPoly> addChTexPoly;
-};
-
-////////////////////////////////////////////////////////
-
-class AddPolyDraw final : public DrawBehavior
-{
-public:
-	AddPolyDraw(const std::shared_ptr<AddChTexPoly>& add) : addChTexPoly(add) {}
-	virtual void draw() override;
-
-private:
-	const std::shared_ptr<AddChTexPoly> addChTexPoly;
-};
-
-class AddPolyEnter final : public EnterBehavior
-{
-public:
-	AddPolyEnter(const std::shared_ptr<AddChTexPoly>& add) : addChTexPoly(add) {}
-	virtual void enter() override;
-
-private:
-	const std::shared_ptr<AddChTexPoly> addChTexPoly;
-};
+PIYING_ESCAPE_BEHAVIOR(AddPolyEscape, AddChTexPoly)
+PIYING_DELETE_BEHAVIOR(AddPolyDelete, AddChTexPoly)
+PIYING_CLICK_BEHAVIOR(AddPolyClick, AddChTexPoly)
+PIYING_DRAW_BEHAVIOR(AddPolyDraw, AddChTexPoly)
+PIYING_ENTER_BEHAVIOR(AddPolyEnter, AddChTexPoly)
 

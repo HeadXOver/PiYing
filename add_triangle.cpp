@@ -47,7 +47,7 @@ void AddTriangle::reduceOne() noexcept
 	else numVert--;
 }
 
-void AddTriangleDelete::deleteElement()
+void AddTriangleDelete::delete_element()
 {
 	addTriangle->numInd = 0;
 	addTriangle->numVert = 0;

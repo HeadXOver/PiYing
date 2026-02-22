@@ -124,7 +124,7 @@ void LibreSelectRelease::release(const QPointF& point)
 	libreSelect->releasePos(point);
 }
 
-void LibreSelectDelete::deleteElement()
+void LibreSelectDelete::delete_element()
 {
 	libreSelect->chElementSelect->deleteElement();
 }

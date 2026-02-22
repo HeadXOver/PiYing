@@ -139,7 +139,7 @@ void LibreSelectTriangleRelease::release(const QPointF& point)
 	libreSelect->releasePos(point);
 }
 
-void LibreSelectTriangleDelete::deleteElement()
+void LibreSelectTriangleDelete::delete_element()
 {
 	libreSelect->chTriangleSelect->deleteElement();
 }

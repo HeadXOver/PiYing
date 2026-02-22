@@ -5,17 +5,12 @@
 
 #include <qpainter>
 
-void AddPolyEscape::escape()
+void AddChTexPoly::escape() 
 {
-	if (addChTexPoly->index.size() == 0) return;
+	if (index.size() == 0) return;
 
-	addChTexPoly->index.removeLast();
-	addChTexPoly->points.removeLast();
-}
-
-void AddPolyEnter::enter() 
-{
-	addChTexPoly->enter();
+	index.removeLast();
+	points.removeLast();
 }
 
 void AddChTexPoly::enter()
@@ -48,15 +43,10 @@ void AddChTexPoly::enter()
 	index.clear();
 }
 
-void AddPolyDelete::deleteElement()
+void AddChTexPoly::delete_element()
 {
-	addChTexPoly->index.clear();
-	addChTexPoly->points.clear();
-}
-
-void AddPolyClick::click(const QPointF& mouse) 
-{
-	addChTexPoly->click(mouse);
+	index.clear();
+	points.clear();
 }
 
 void AddChTexPoly::click(const QPointF& mouseOri)
@@ -84,14 +74,14 @@ void AddChTexPoly::click(const QPointF& mouseOri)
 	points.append(mouse);
 }
 
-void AddPolyDraw::draw()
+void AddChTexPoly::draw()
 {
 	PiYingGL& piYingGL = PiYingGL::getInstance();
 
 	QPainter painter(&piYingGL);
 	painter.setRenderHint(QPainter::Antialiasing);
 
-	for (QPointF selectPoint : addChTexPoly->points) {
+	for (QPointF selectPoint : points) {
 		selectPoint = piYingGL.mapViewProjMatrix(selectPoint);
 		painter.setPen(QPen(Qt::black, 8));
 		painter.drawPoint(selectPoint);

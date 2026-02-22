@@ -21,14 +21,13 @@ CharacterTexture::CharacterTexture(const QImage& image):
 
 QMatrix4x4 CharacterTexture::getMatrix() const noexcept
 {
-    QMatrix4x4 matrix;
-    matrix.scale(1.f, _prescale);
-    return matrix;
-}
-
-QOpenGLTexture& CharacterTexture::texture() noexcept
-{
-    return _texture;
+    const float scaleMatrix[16] = {
+        1.f, 0.f, 0.f, 0.f,
+        0.f, _prescale, 0.f, 0.f,
+        0.f, 0.f, 1.f, 0.f,
+        0.f, 0.f, 0.f, 1.f
+    };
+    return QMatrix4x4(scaleMatrix);
 }
 
 void CharacterTexture::bind()

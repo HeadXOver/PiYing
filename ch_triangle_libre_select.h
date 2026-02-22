@@ -73,7 +73,7 @@ public:
 	LibreSelectTriangleDelete(const std::shared_ptr<ChTriangleLibreSelect> select) : libreSelect(select) {}
 
 
-	virtual void deleteElement() override;
+	virtual void delete_element() override;
 
 private:
 	const std::shared_ptr<ChTriangleLibreSelect> libreSelect;

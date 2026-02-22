@@ -146,7 +146,7 @@ void ChElementTool::escape()
 
 void ChElementTool::delete_element() 
 {
-	if (deleteBehavior) deleteBehavior->deleteElement();
+	if (deleteBehavior) deleteBehavior->delete_element();
 }
 
 void ChElementTool::enter() 

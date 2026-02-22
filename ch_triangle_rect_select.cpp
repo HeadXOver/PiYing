@@ -113,7 +113,7 @@ void RectSelectTriangleRelease::release(const QPointF& point)
 	rectSelect->releasePos(point);
 }
 
-void RectSelectTriangleDelete::deleteElement()
+void RectSelectTriangleDelete::delete_element()
 {
 	rectSelect->chTriangleSelect->deleteElement();
 }

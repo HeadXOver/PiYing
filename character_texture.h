@@ -19,7 +19,7 @@ public:
 
     QMatrix4x4 getMatrix() const noexcept;
 
-    QOpenGLTexture& texture() noexcept;
+    QOpenGLTexture& texture() noexcept { return _texture; }
 
 private:
     QOpenGLTexture _texture;

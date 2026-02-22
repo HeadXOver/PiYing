@@ -299,7 +299,10 @@ void PiYing::askScreenScale() {
 
     if (r.w == 0 || r.h == 0) return;
 
-    _piying_gl_bg_ratio= double(r.w) / double(r.h);
+    _piying_gl_bg_ratio = static_cast<double>(r.w) / static_cast<double>(r.h);
+
+    if (PiYingGL::getInstance().editMode != EditMode::OverView && PiYingGL::getInstance().editMode != EditMode::BackGround) return;
+
     piYingGLContainer->setRatio(_piying_gl_bg_ratio);
     piYingGLContainer->update();
     PiYingGL::getInstance().changeRatio(_piying_gl_bg_ratio);

@@ -70,7 +70,7 @@ public:
 	RectSelectDelete(const std::shared_ptr<ChElementRectSelect> rect_select) : rectSelect(rect_select) {}
 
 
-	virtual void deleteElement() override;
+	virtual void delete_element() override;
 
 private:
 	const std::shared_ptr<ChElementRectSelect> rectSelect;

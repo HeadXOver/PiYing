@@ -49,7 +49,7 @@ class AddTriangleDelete final : public DeleteElementBehavior
 {
 public:
 	AddTriangleDelete(const std::shared_ptr<AddTriangle>& add) : addTriangle(add) {}
-	virtual void deleteElement() override;
+	virtual void delete_element() override;
 
 private:
 	const std::shared_ptr<AddTriangle> addTriangle;
