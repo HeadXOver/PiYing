@@ -27,22 +27,14 @@ const std::unordered_map<unsigned int, QPolygonF>& CharacterTrace::get_traces() 
 	return trace_by_index;
 }
 
-bool CharacterTrace::have_point(unsigned int index) const noexcept
+bool CharacterTrace::have_point(unsigned int index) const
 {
 	return trace_by_index.count(index);
 }
 
 void CharacterTrace::add_point(unsigned int index, const QPolygonF& poly)
 {
-	QPointF origin = poly[0];
-	QPolygonF screenPoly;
-	screenPoly.reserve(poly.size());
-	std::transform(poly.cbegin(), poly.cend(),
-		std::back_inserter(screenPoly),
-		[origin](const QPointF& p) { return p - origin; }
-	);
-
-	trace_by_index[index] = screenPoly;
+	trace_by_index[index] = poly.translated(-poly[0]);
 }
 
 void CharacterTrace::set_current_value(int value) noexcept

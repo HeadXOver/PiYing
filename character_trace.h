@@ -16,7 +16,7 @@ public:
 
     const std::unordered_map<unsigned int, QPolygonF>& get_traces() const noexcept;
 
-    bool have_point(unsigned int index) const noexcept;
+    bool have_point(unsigned int index) const;
 
     void add_point(unsigned int index, const QPolygonF& poly);
     void set_current_value(int value) noexcept;
