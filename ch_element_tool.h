@@ -29,6 +29,7 @@ public:
 	void enter();
 
 private:
+	void construct_void();
 	void construct_add_triangle();
 	void construct_add_poly();
 	void construct_add_round();

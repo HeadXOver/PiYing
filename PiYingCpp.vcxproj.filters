@@ -396,9 +396,6 @@
     <ClInclude Include="character_texture.h">
       <Filter>Header Files\Core</Filter>
     </ClInclude>
-    <ClInclude Include="piying_void_tool.h">
-      <Filter>Header Files\PiYingTool</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="ctrlSlideLayout.h">
