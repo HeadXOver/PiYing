@@ -18,10 +18,3 @@ private:
 	bool presse_on_vert = false;
 	QPolygonF polygon;
 };
-
-////////////////////////////////////////////////
- 
-PIYING_CLICK_BEHAVIOR(AddVertTraceClick, ChAddVertTrace)
-PIYING_MOVEMOUSE_BEHAVIOR(AddVertTraceMove, ChAddVertTrace)
-PIYING_RELEASE_BEHAVIOR(AddVertTraceRelease, ChAddVertTrace)
-PIYING_DRAW_BEHAVIOR(AddVertTraceDraw, ChAddVertTrace)

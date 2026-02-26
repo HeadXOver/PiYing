@@ -21,84 +21,143 @@
 void ChElementTool::construct_add_triangle()
 {
 	std::shared_ptr<AddTriangle> data = std::make_shared<AddTriangle>();
+
+	PIYING_CLICK_BEHAVIOR(AddTriangle);
+	PIYING_ESCAPE_BEHAVIOR(AddTriangle);
+	PIYING_DELETE_BEHAVIOR(AddTriangle);
+	PIYING_DRAW_BEHAVIOR(AddTriangle);
+
 	clickBehavior = std::make_unique<AddTriangleClick>(data);
 	escapeBehavior = std::make_unique<AddTriangleEscape>(data);
-	drawBehavior = std::make_unique<AddTriangleDraw>(data);
 	deleteBehavior = std::make_unique<AddTriangleDelete>(data);
+	drawBehavior = std::make_unique<AddTriangleDraw>(data);
 }
 
 void ChElementTool::construct_add_poly()
 {
 	std::shared_ptr<AddChTexPoly> data = std::make_shared<AddChTexPoly>();
-	clickBehavior = std::make_unique<AddPolyClick>(data);
-	escapeBehavior = std::make_unique<AddPolyEscape>(data);
-	drawBehavior = std::make_unique<AddPolyDraw>(data);
-	deleteBehavior = std::make_unique<AddPolyDelete>(data);
-	enterBehavior = std::make_unique<AddPolyEnter>(data);
+
+	PIYING_ESCAPE_BEHAVIOR(AddChTexPoly);
+	PIYING_DELETE_BEHAVIOR(AddChTexPoly);
+	PIYING_CLICK_BEHAVIOR(AddChTexPoly);
+	PIYING_DRAW_BEHAVIOR(AddChTexPoly);
+	PIYING_ENTER_BEHAVIOR(AddChTexPoly);
+
+	clickBehavior = std::make_unique<AddChTexPolyClick>(data);
+	escapeBehavior = std::make_unique<AddChTexPolyEscape>(data);
+	drawBehavior = std::make_unique<AddChTexPolyDraw>(data);
+	deleteBehavior = std::make_unique<AddChTexPolyDelete>(data);
+	enterBehavior = std::make_unique<AddChTexPolyEnter>(data);
 }
 
 void ChElementTool::construct_add_round()
 {
 	std::shared_ptr<ChElementAddRound> data = std::make_shared<ChElementAddRound>();
-	clickBehavior = std::make_unique<AddRoundClick>(data);
-	moveBehavior = std::make_unique<AddRoundMove>(data);
-	releaseBehavior = std::make_unique<AddRoundRelease>(data);
-	drawBehavior = std::make_unique<AddRoundDraw>(data);
+
+	PIYING_CLICK_BEHAVIOR(ChElementAddRound);
+	PIYING_MOVEMOUSE_BEHAVIOR(ChElementAddRound);
+	PIYING_RELEASE_BEHAVIOR(ChElementAddRound);
+	PIYING_DRAW_BEHAVIOR(ChElementAddRound);
+
+	clickBehavior = std::make_unique<ChElementAddRoundClick>(data);
+	moveBehavior = std::make_unique<ChElementAddRoundMoveMouse>(data);
+	releaseBehavior = std::make_unique<ChElementAddRoundRelease>(data);
+	drawBehavior = std::make_unique<ChElementAddRoundDraw>(data);
 }
 
 void ChElementTool::construct_rect_select()
 {
 	std::shared_ptr<ChElementRectSelect> data = std::make_shared<ChElementRectSelect>();
-	clickBehavior = std::make_unique<RectSelectClick>(data);
-	escapeBehavior = std::make_unique<RectSelectEscape>(data);
-	drawBehavior = std::make_unique<RectSelectDraw>(data);
-	releaseBehavior = std::make_unique<RectSelectRelease>(data);
-	moveBehavior = std::make_unique<RectSelectMove>(data);
-	deleteBehavior = std::make_unique<RectSelectDelete>(data);
+
+	PIYING_CLICK_BEHAVIOR(ChElementRectSelect);
+	PIYING_MOVEMOUSE_BEHAVIOR(ChElementRectSelect);
+	PIYING_RELEASE_BEHAVIOR(ChElementRectSelect);
+	PIYING_DELETE_BEHAVIOR(ChElementRectSelect);
+	PIYING_DRAW_BEHAVIOR(ChElementRectSelect);
+	PIYING_ESCAPE_BEHAVIOR(ChElementRectSelect);
+
+	clickBehavior = std::make_unique<ChElementRectSelectClick>(data);
+	escapeBehavior = std::make_unique<ChElementRectSelectEscape>(data);
+	drawBehavior = std::make_unique<ChElementRectSelectDraw>(data);
+	releaseBehavior = std::make_unique<ChElementRectSelectRelease>(data);
+	moveBehavior = std::make_unique<ChElementRectSelectMoveMouse>(data);
+	deleteBehavior = std::make_unique<ChElementRectSelectDelete>(data);
 }
 
 void ChElementTool::construct_libre_select()
 {
 	std::shared_ptr<ChElementLibreSelect> data = std::make_shared<ChElementLibreSelect>();
-	clickBehavior = std::make_unique<LibreSelectClick>(data);
-	escapeBehavior = std::make_unique<LibreSelectEscape>(data);
-	drawBehavior = std::make_unique<LibreSelectDraw>(data);
-	releaseBehavior = std::make_unique<LibreSelectRelease>(data);
-	moveBehavior = std::make_unique<LibreSelectMove>(data);
-	deleteBehavior = std::make_unique<LibreSelectDelete>(data);
+
+	PIYING_CLICK_BEHAVIOR(ChElementLibreSelect);
+	PIYING_MOVEMOUSE_BEHAVIOR(ChElementLibreSelect);
+	PIYING_RELEASE_BEHAVIOR(ChElementLibreSelect);
+	PIYING_ESCAPE_BEHAVIOR(ChElementLibreSelect);
+	PIYING_DELETE_BEHAVIOR(ChElementLibreSelect);
+	PIYING_DRAW_BEHAVIOR(ChElementLibreSelect);
+
+	clickBehavior = std::make_unique<ChElementLibreSelectClick>(data);
+	escapeBehavior = std::make_unique<ChElementLibreSelectEscape>(data);
+	drawBehavior = std::make_unique<ChElementLibreSelectDraw>(data);
+	releaseBehavior = std::make_unique<ChElementLibreSelectRelease>(data);
+	moveBehavior = std::make_unique<ChElementLibreSelectMoveMouse>(data);
+	deleteBehavior = std::make_unique<ChElementLibreSelectDelete>(data);
 }
 
 void ChElementTool::construct_add_vert_trace()
 {
 	std::shared_ptr<ChAddVertTrace> data = std::make_shared<ChAddVertTrace>();
-	clickBehavior = std::make_unique<AddVertTraceClick>(data);
-	drawBehavior = std::make_unique<AddVertTraceDraw>(data);
-	releaseBehavior = std::make_unique<AddVertTraceRelease>(data);
-	moveBehavior = std::make_unique<AddVertTraceMove>(data);
+
+	PIYING_CLICK_BEHAVIOR(ChAddVertTrace);
+	PIYING_MOVEMOUSE_BEHAVIOR(ChAddVertTrace);
+	PIYING_RELEASE_BEHAVIOR(ChAddVertTrace);
+	PIYING_DRAW_BEHAVIOR(ChAddVertTrace);
+
+	clickBehavior = std::make_unique<ChAddVertTraceClick>(data);
+	drawBehavior = std::make_unique<ChAddVertTraceDraw>(data);
+	releaseBehavior = std::make_unique<ChAddVertTraceRelease>(data);
+	moveBehavior = std::make_unique<ChAddVertTraceMoveMouse>(data);
 }
 
 void ChElementTool::construct_rect_select_triangle()
 {
 	std::shared_ptr<ChTriangleRectSelect> data = std::make_shared<ChTriangleRectSelect>();
-	clickBehavior = std::make_unique<RectSelectTriangleClick>(data);
-	escapeBehavior = std::make_unique<RectSelectTriangleEscape>(data);
-	drawBehavior = std::make_unique<RectSelectTriangleDraw>(data);
-	releaseBehavior = std::make_unique<RectSelectTriangleRelease>(data);
-	moveBehavior = std::make_unique<RectSelectTriangleMove>(data);
-	deleteBehavior = std::make_unique<RectSelectTriangleDelete>(data);
-	enterBehavior = std::make_unique<RectSelectTriangleEnter>(data);
+
+	PIYING_CLICK_BEHAVIOR(ChTriangleRectSelect);
+	PIYING_MOVEMOUSE_BEHAVIOR(ChTriangleRectSelect);
+	PIYING_RELEASE_BEHAVIOR(ChTriangleRectSelect);
+	PIYING_ESCAPE_BEHAVIOR(ChTriangleRectSelect);
+	PIYING_DELETE_BEHAVIOR(ChTriangleRectSelect);
+	PIYING_DRAW_BEHAVIOR(ChTriangleRectSelect);
+	PIYING_ENTER_BEHAVIOR(ChTriangleRectSelect);
+
+	clickBehavior = std::make_unique<ChTriangleRectSelectClick>(data);
+	escapeBehavior = std::make_unique<ChTriangleRectSelectEscape>(data);
+	drawBehavior = std::make_unique<ChTriangleRectSelectDraw>(data);
+	releaseBehavior = std::make_unique<ChTriangleRectSelectRelease>(data);
+	moveBehavior = std::make_unique<ChTriangleRectSelectMoveMouse>(data);
+	deleteBehavior = std::make_unique<ChTriangleRectSelectDelete>(data);
+	enterBehavior = std::make_unique<ChTriangleRectSelectEnter>(data);
 }
 
 void ChElementTool::construct_libre_select_triangle()
 {
 	std::shared_ptr<ChTriangleLibreSelect> data = std::make_shared<ChTriangleLibreSelect>();
-	clickBehavior = std::make_unique<LibreSelectTriangleClick>(data);
-	escapeBehavior = std::make_unique<LibreSelectTriangleEscape>(data);
-	drawBehavior = std::make_unique<LibreSelectTriangleDraw>(data);
-	releaseBehavior = std::make_unique<LibreSelectTriangleRelease>(data);
-	moveBehavior = std::make_unique<LibreSelectTriangleMove>(data);
-	deleteBehavior = std::make_unique<LibreSelectTriangleDelete>(data);
-	enterBehavior = std::make_unique<LibreSelectTriangleEnter>(data);
+
+	PIYING_CLICK_BEHAVIOR(ChTriangleLibreSelect);
+	PIYING_MOVEMOUSE_BEHAVIOR(ChTriangleLibreSelect);
+	PIYING_RELEASE_BEHAVIOR(ChTriangleLibreSelect);
+	PIYING_ENTER_BEHAVIOR(ChTriangleLibreSelect);
+	PIYING_DRAW_BEHAVIOR(ChTriangleLibreSelect);
+	PIYING_DELETE_BEHAVIOR(ChTriangleLibreSelect);
+	PIYING_ESCAPE_BEHAVIOR(ChTriangleLibreSelect);
+
+	clickBehavior = std::make_unique<ChTriangleLibreSelectClick>(data);
+	escapeBehavior = std::make_unique<ChTriangleLibreSelectEscape>(data);
+	drawBehavior = std::make_unique<ChTriangleLibreSelectDraw>(data);
+	releaseBehavior = std::make_unique<ChTriangleLibreSelectRelease>(data);
+	moveBehavior = std::make_unique<ChTriangleLibreSelectMoveMouse>(data);
+	deleteBehavior = std::make_unique<ChTriangleLibreSelectDelete>(data);
+	enterBehavior = std::make_unique<ChTriangleLibreSelectEnter>(data);
 }
 
 ChElementTool::ChElementTool(CharacterToolState chToolState)

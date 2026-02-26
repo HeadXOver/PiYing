@@ -182,6 +182,7 @@
     <ClInclude Include="Joint.h" />
     <ClInclude Include="part.h" />
     <ClInclude Include="parts.h" />
+    <ClInclude Include="piying_void_tool.h" />
     <ClInclude Include="selected_triangle.h" />
     <ClInclude Include="static_gl_const.h" />
     <ClInclude Include="time_line.h" />

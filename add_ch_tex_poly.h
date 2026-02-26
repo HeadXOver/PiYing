@@ -26,11 +26,4 @@ private:
 	QList<int> index;
 };
 
-////////////////////////////////////////////////////////
-
-PIYING_ESCAPE_BEHAVIOR(AddPolyEscape, AddChTexPoly)
-PIYING_DELETE_BEHAVIOR(AddPolyDelete, AddChTexPoly)
-PIYING_CLICK_BEHAVIOR(AddPolyClick, AddChTexPoly)
-PIYING_DRAW_BEHAVIOR(AddPolyDraw, AddChTexPoly)
-PIYING_ENTER_BEHAVIOR(AddPolyEnter, AddChTexPoly)
 

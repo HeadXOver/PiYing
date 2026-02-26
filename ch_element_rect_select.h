@@ -26,13 +26,4 @@ private:
 	QPointF rect;
 	bool isDraw = false;
 };
-
-///////////////////////////////////////////////////
-
-PIYING_CLICK_BEHAVIOR(RectSelectClick, ChElementRectSelect)
-PIYING_MOVEMOUSE_BEHAVIOR(RectSelectMove, ChElementRectSelect)
-PIYING_RELEASE_BEHAVIOR(RectSelectRelease, ChElementRectSelect)
-PIYING_DELETE_BEHAVIOR(RectSelectDelete, ChElementRectSelect)
-PIYING_DRAW_BEHAVIOR(RectSelectDraw, ChElementRectSelect)
-PIYING_ESCAPE_BEHAVIOR(RectSelectEscape, ChElementRectSelect)
  

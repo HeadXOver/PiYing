@@ -35,10 +35,3 @@ private:
 	int numVert = 0;
 	int numInd = 0;
 };
-
-////////////////////////////////////////////////////////
-
-PIYING_ESCAPE_BEHAVIOR(AddTriangleEscape, AddTriangle)
-PIYING_DELETE_BEHAVIOR(AddTriangleDelete, AddTriangle)
-PIYING_CLICK_BEHAVIOR(AddTriangleClick, AddTriangle)
-PIYING_DRAW_BEHAVIOR(AddTriangleDraw, AddTriangle)

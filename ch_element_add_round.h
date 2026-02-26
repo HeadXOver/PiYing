@@ -26,10 +26,3 @@ private:
 	int radius{ 0 };
 	int init_angle{ 0 };
 };
-
-////////////////////////////////////////////////
- 
-PIYING_CLICK_BEHAVIOR(AddRoundClick, ChElementAddRound)
-PIYING_MOVEMOUSE_BEHAVIOR(AddRoundMove, ChElementAddRound)
-PIYING_RELEASE_BEHAVIOR(AddRoundRelease, ChElementAddRound)
-PIYING_DRAW_BEHAVIOR(AddRoundDraw, ChElementAddRound)

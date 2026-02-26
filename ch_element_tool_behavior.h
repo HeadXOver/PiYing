@@ -2,11 +2,11 @@
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-#define PIYING_CLICK_BEHAVIOR(ClassName, DataName) \
-class ClassName final : public ClickBehavior \
+#define PIYING_CLICK_BEHAVIOR(DataName) \
+class DataName ## Click final : public ClickBehavior \
 { \
 public: \
-    ClassName(const std::shared_ptr<DataName>& data) : _data(data) {} \
+    DataName ## Click(const std::shared_ptr<DataName>& data) : _data(data) {} \
     virtual void act(const QPointF& mouse) override { _data->click(mouse); } \
 private: \
     const std::shared_ptr<DataName> _data; \
@@ -14,11 +14,11 @@ private: \
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-#define PIYING_MOVEMOUSE_BEHAVIOR(ClassName, DataName) \
-class ClassName final : public MouseMoveBehavior \
+#define PIYING_MOVEMOUSE_BEHAVIOR(DataName) \
+class DataName ## MoveMouse final : public MouseMoveBehavior \
 { \
 public: \
-    ClassName(const std::shared_ptr<DataName>& data) : _data(data) {} \
+    DataName ## MoveMouse(const std::shared_ptr<DataName>& data) : _data(data) {} \
     virtual void act(const QPointF& mouse) override { _data->mouse_move(mouse); } \
 private: \
     const std::shared_ptr<DataName> _data; \
@@ -26,11 +26,11 @@ private: \
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-#define PIYING_ESCAPE_BEHAVIOR(ClassName, DataName) \
-class ClassName final : public EscapeBehavior \
+#define PIYING_ESCAPE_BEHAVIOR(DataName) \
+class DataName ## Escape final : public EscapeBehavior \
 { \
 public: \
-    ClassName(const std::shared_ptr<DataName>& data) : _data(data) {} \
+    DataName ## Escape(const std::shared_ptr<DataName>& data) : _data(data) {} \
     virtual void act() override { _data->escape(); } \
 private: \
     const std::shared_ptr<DataName> _data; \
@@ -38,11 +38,11 @@ private: \
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-#define PIYING_ENTER_BEHAVIOR(ClassName, DataName) \
-class ClassName final : public EnterBehavior \
+#define PIYING_ENTER_BEHAVIOR(DataName) \
+class DataName ## Enter final : public EnterBehavior \
 { \
 public: \
-    ClassName(const std::shared_ptr<DataName>& data) : _data(data) {} \
+    DataName ## Enter(const std::shared_ptr<DataName>& data) : _data(data) {} \
     virtual void act() override { _data->enter(); } \
 private: \
     const std::shared_ptr<DataName> _data; \
@@ -50,11 +50,11 @@ private: \
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-#define PIYING_DELETE_BEHAVIOR(ClassName, DataName) \
-class ClassName final : public DeleteElementBehavior \
+#define PIYING_DELETE_BEHAVIOR(DataName) \
+class DataName ## Delete final : public DeleteElementBehavior \
 { \
 public: \
-    ClassName(const std::shared_ptr<DataName>& data) : _data(data) {} \
+    DataName ## Delete(const std::shared_ptr<DataName>& data) : _data(data) {} \
     virtual void act() override { _data->delete_element(); } \
 private: \
     const std::shared_ptr<DataName> _data; \
@@ -62,11 +62,11 @@ private: \
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-#define PIYING_DRAW_BEHAVIOR(ClassName, DataName) \
-class ClassName final : public DrawBehavior \
+#define PIYING_DRAW_BEHAVIOR(DataName) \
+class DataName ## Draw final : public DrawBehavior \
 { \
 public: \
-    ClassName(const std::shared_ptr<DataName>& data) : _data(data) {} \
+    DataName ## Draw(const std::shared_ptr<DataName>& data) : _data(data) {} \
     virtual void act() override { _data->draw(); } \
 private: \
     const std::shared_ptr<DataName> _data; \
@@ -74,11 +74,11 @@ private: \
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-#define PIYING_RELEASE_BEHAVIOR(ClassName, DataName) \
-class ClassName final : public ReleaseBehavior \
+#define PIYING_RELEASE_BEHAVIOR(DataName) \
+class DataName ## Release final : public ReleaseBehavior \
 { \
 public: \
-    ClassName(const std::shared_ptr<DataName>& data) : _data(data) {} \
+    DataName ## Release(const std::shared_ptr<DataName>& data) : _data(data) {} \
     virtual void act(const QPointF& mouse) override { _data->release(mouse); } \
 private: \
     const std::shared_ptr<DataName> _data; \

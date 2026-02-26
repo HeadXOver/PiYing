@@ -28,13 +28,3 @@ private:
 	bool edit_skelen{ false };
 	bool isPress = false;
 };
-
-/// ////////////////////////////////////////////////////////////////////////
-
-PIYING_CLICK_BEHAVIOR(LibreSelectTriangleClick, ChTriangleLibreSelect)
-PIYING_MOVEMOUSE_BEHAVIOR(LibreSelectTriangleMove, ChTriangleLibreSelect)
-PIYING_RELEASE_BEHAVIOR(LibreSelectTriangleRelease, ChTriangleLibreSelect)
-PIYING_ENTER_BEHAVIOR(LibreSelectTriangleEnter, ChTriangleLibreSelect)
-PIYING_DRAW_BEHAVIOR(LibreSelectTriangleDraw, ChTriangleLibreSelect)
-PIYING_DELETE_BEHAVIOR(LibreSelectTriangleDelete, ChTriangleLibreSelect)
-PIYING_ESCAPE_BEHAVIOR(LibreSelectTriangleEscape, ChTriangleLibreSelect)
