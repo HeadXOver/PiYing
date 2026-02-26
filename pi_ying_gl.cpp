@@ -2,28 +2,16 @@
 
 #include "piYing.h"
 #include "time_line_gl.h"
-
-#include "add_triangle.h"
-#include "add_ch_tex_poly.h"
-#include "ch_element_libre_select.h"
-
 #include "ch_element_tool.h"
+
 #include "point_vector.h"
 #include "point_vector_layer.h"
-#include "slide_applier.h"
 #include "parts.h"
 #include "part.h"
 
-#include "piYingGLContainer.h"
-#include "ctrlSlideWidget.h"
-
-#include "KeyboardStateWin.h"
-
-#include "image_transform.h"
 #include "image_texture.h"
 #include "character_texture.h"
 
-#include "cus_func_string.h"
 #include "cus_func_zone.h"
 
 #include "enum_edit_mode.h"
@@ -32,8 +20,6 @@
 #include <QMessageBox>
 #include <qfiledialog>
 #include <qlistwidget>
-#include <qopenglshaderprogram>
-#include <qmenu>
 
 void PiYingGL::addBackground(const QString& imageName) {
 	QImage img;
@@ -138,24 +124,6 @@ void PiYingGL::setChTool(CharacterToolState state)
 	update_ch_tool();
 }
 
-void PiYingGL::deleteChElement()
-{
-if (ch_element_tool_) ch_element_tool_->delete_element();
-	update();
-}
-
-void PiYingGL::enterChElement()
-{
-	if (ch_element_tool_) ch_element_tool_->enter();
-	update();
-}
-
-void PiYingGL::escapeChVert()
-{
-	if (ch_element_tool_) ch_element_tool_->escape();
-	update();
-}
-
 void PiYingGL::choseBackgroundColor()
 {
 	QColor color = QColorDialog::getColor(Qt::black , this, "选择幕布底色");
@@ -237,14 +205,6 @@ MousePos PiYingGL::getMousePosType(const QPointF& point) const noexcept
 	return MousePos::OutSide;
 }
 
-Qt::CursorShape PiYingGL::getCursorShape(const MousePos& pos) const
-{
-	if (pos == MousePos::OutSide) return Qt::ArrowCursor;
-	if (pos == MousePos::Inside) return Qt::OpenHandCursor;
-	if (!KeyboardStateWin::isAltHeld()) return Qt::CursorShape::CrossCursor;
-	return Qt::OpenHandCursor;
-}
-
 int PiYingGL::getCurrentBgRow() const
 {
 	return PiYing::getInstance().getCurrentBgRow();
@@ -267,11 +227,4 @@ void PiYingGL::add_part(const QList<unsigned int>& indices)
 	PiYing::getInstance().update_part_slider();
 	update();
 	TimelineGl::getInstance().update();
-}
-
-void PiYingGL::resizeGL(int w, int h)
-{
-	for (int i = 0; i < backGrounds.size(); i++) {
-		backGrounds[i]->set_transform_by_new_ratio(w / (float)h);
-	}
 }

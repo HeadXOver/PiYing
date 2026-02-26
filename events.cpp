@@ -127,3 +127,29 @@ void PiYingGL::contextMenuEvent(QContextMenuEvent* e)
 
 	e->accept();
 }
+
+Qt::CursorShape PiYingGL::getCursorShape(const MousePos& pos) const
+{
+	if (pos == MousePos::OutSide) return Qt::ArrowCursor;
+	if (pos == MousePos::Inside) return Qt::OpenHandCursor;
+	if (!KeyboardStateWin::isAltHeld()) return Qt::CursorShape::CrossCursor;
+	return Qt::OpenHandCursor;
+}
+
+void PiYingGL::deleteChElement()
+{
+	if (ch_element_tool_) ch_element_tool_->delete_element();
+	update();
+}
+
+void PiYingGL::enterChElement()
+{
+	if (ch_element_tool_) ch_element_tool_->enter();
+	update();
+}
+
+void PiYingGL::escapeChVert()
+{
+	if (ch_element_tool_) ch_element_tool_->escape();
+	update();
+}

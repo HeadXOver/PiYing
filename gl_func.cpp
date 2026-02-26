@@ -3,6 +3,7 @@
 #include "point_vector.h"
 #include "static_gl_const.h"
 #include "static_rect_vert.h"
+#include "image_texture.h"
 
 #include "enum_edit_mode.h"
 
@@ -122,6 +123,13 @@ void PiYingGL::initializeGL()
 	glLineWidth(3.0f);
 	glDisable(GL_DEPTH_TEST);   // 不需要深度测试
 	glDisable(GL_CULL_FACE);    // 不需要背面剔除
+}
+
+void PiYingGL::resizeGL(int w, int h)
+{
+	for (int i = 0; i < backGrounds.size(); i++) {
+		backGrounds[i]->set_transform_by_new_ratio(w / (float)h);
+	}
 }
 
 void PiYingGL::paintGL() {
