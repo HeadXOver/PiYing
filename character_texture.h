@@ -3,7 +3,6 @@
 #include <memory>
 #include <qopengltexture>
 
-class QOpenGLTexture;
 class QImage;
 class QMatrix4x4;
 
@@ -13,13 +12,13 @@ public:
     CharacterTexture(const QImage& image);
     ~CharacterTexture() = default;
 
-    void bind();
+    void bind() { _texture.bind(); }
 
     float get_prescale() const noexcept { return _prescale; }
 
-    QMatrix4x4 getMatrix() const noexcept;
-
     QOpenGLTexture& texture() noexcept { return _texture; }
+
+    QMatrix4x4 getMatrix() const noexcept;
 
 private:
     QOpenGLTexture _texture;

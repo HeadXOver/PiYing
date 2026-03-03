@@ -22,16 +22,6 @@ CharacterTrace::~CharacterTrace()
 {
 }
 
-const std::unordered_map<unsigned int, QPolygonF>& CharacterTrace::get_traces() const noexcept
-{
-	return trace_by_index;
-}
-
-bool CharacterTrace::have_point(unsigned int index) const
-{
-	return trace_by_index.count(index);
-}
-
 void CharacterTrace::add_point(unsigned int index, const QPolygonF& poly)
 {
 	trace_by_index[index] = poly.translated(-poly[0]);
@@ -56,14 +46,4 @@ void CharacterTrace::add_skew(unsigned int skew)
 	for (auto& [index, poly] : oldMap) {
 		trace_by_index.emplace(index + skew, std::move(poly));
 	}
-}
-
-const QString& CharacterTrace::name() const noexcept
-{
-	return _name;
-}
-
-int CharacterTrace::get_current_slider_value() const noexcept
-{
-	return current_slider_value;
 }

@@ -292,14 +292,23 @@ void PiYingGL::update_ch_verts()
 	doneCurrent();
 }
 
+void PiYingGL::update_sub_ch_verts()
+{
+	int currentVector = getCurrentChRow();
+	if (currentVector < 0) return;
+
+	makeCurrent();
+	glBindBuffer(GL_ARRAY_BUFFER, chVBO);
+	glBufferSubData(GL_ARRAY_BUFFER, 0, characterVerts[currentVector]->float_size() * sizeof(float), characterVerts[currentVector]->data());
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	doneCurrent();
+}
+
 void PiYingGL::update_trc()
 {
 	makeCurrent();
-	_ch_shader_program->bind();
 	_ch_shader_program->setUniformValue("trc", getViewProjMatrix());
-    _selected_vert_shader_program->bind();
 	_selected_vert_shader_program->setUniformValue("trc", getViewProjMatrix());
-    _texture_tri_shader_program->bind();
 	_texture_tri_shader_program->setUniformValue("trc", getViewProjMatrix());
 	doneCurrent();
 }

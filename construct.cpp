@@ -126,32 +126,6 @@ PiYingGL::PiYingGL() :
 
 PiYingGL::~PiYingGL()
 {
-	makeCurrent();
-
-	////////////////////////////////////////
-
-	if (RECTANGLE_TEXTURE_VAO) glDeleteVertexArrays(1, &RECTANGLE_TEXTURE_VAO);
-	if (RECTANGLE_TEXTURE_EBO) glDeleteBuffers(1, &RECTANGLE_TEXTURE_EBO);
-
-	if (chVAO) glDeleteVertexArrays(1, &chVAO);
-	if (chVBO) glDeleteBuffers(1, &chVBO);
-	if (chEBO) glDeleteBuffers(1, &chEBO);
-
-	if (ttVAO) glDeleteVertexArrays(1, &ttVAO);
-	if (ttEBO) glDeleteBuffers(1, &ttEBO);
-
-	if (svVAO) glDeleteVertexArrays(1, &svVAO);
-	if (svVBO) glDeleteBuffers(1, &svVBO);
-
-	if (RECTANGLE_TEXTURE_VBO) glDeleteBuffers(1, &RECTANGLE_TEXTURE_VBO);
-
-	////////////////////////////////////////
-
-	doneCurrent();
-
-	for (CharacterTexture* ch : characterTextures) delete ch;
-	for (ImageTexture* bg : backGrounds) delete bg;
-	for (PointVector* pv : characterVerts) delete pv;
 }
 
 PiYingGL& PiYingGL::getInstance() noexcept

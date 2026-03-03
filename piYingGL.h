@@ -112,6 +112,7 @@ public:
 	void draw_triangle_frame(bool isSkelen);
 	void draw_rectangle(float cx, float cy, float width, float height);
 	void update_ch_verts();
+	void update_sub_ch_verts();
 	void update_trc();
 	void update_selected_verts(const std::vector<float>& selectedPoints);
 	void update_selected_triangle(const unsigned int* data, int size);

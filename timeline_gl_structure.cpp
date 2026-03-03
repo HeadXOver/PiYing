@@ -63,19 +63,6 @@ TimelineGl::TimelineGl() : QOpenGLWidget(), _ratio(1.f), _ui_type(spTimelineGL::
 
 TimelineGl::~TimelineGl()
 {
-	for (Timeline* it : _timelines) delete it;
-
-	makeCurrent();
-
-	////////////////////////////////////////
-
-	glDeleteBuffers(1, &tlVBO);
-	glDeleteVertexArrays(1, &tlVAO);
-	glDeleteBuffers(1, &rectEBO);
-
-	////////////////////////////////////////
-
-	doneCurrent();
 }
 
 TimelineGl& TimelineGl::getInstance() noexcept

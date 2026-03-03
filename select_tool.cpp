@@ -9,26 +9,26 @@ void PiYing::select_tool_texture(ToolButton* toolButton)
     if (toolButton->isSelect()) {
         switch (toolButton->toolState()) {
         case CharacterToolState::RectSelectVert: {
-            toolButton->set_selected(QIcon(":/PiYing/selectLibreChVert_S.png"));
-            toolButton->set_unselected(QIcon(":/PiYing/selectLibreChVert.png"));
+            toolButton->set_selected(":/PiYing/selectLibreChVert_S.png");
+            toolButton->set_unselected(":/PiYing/selectLibreChVert.png");
             toolButton->set_toolState(CharacterToolState::LibreSelectVert);
         }break;
         case CharacterToolState::LibreSelectVert: {
-            toolButton->set_selected(QIcon(":/PiYing/selectRectChVert_S.png"));
-            toolButton->set_unselected(QIcon(":/PiYing/selectRectChVert.png"));
+            toolButton->set_selected(":/PiYing/selectRectChVert_S.png");
+            toolButton->set_unselected(":/PiYing/selectRectChVert.png");
             toolButton->set_toolState(CharacterToolState::RectSelectVert);
             toolButton->unSelect();
             PiYingGL::getInstance().setChTool(CharacterToolState::None);
             return;
         }break;
         case CharacterToolState::RectSelectTriangle: {
-            toolButton->set_selected(QIcon(":/PiYing/libre_triangle_select_S.png"));
-            toolButton->set_unselected(QIcon(":/PiYing/libre_triangle_select.png"));
+            toolButton->set_selected(":/PiYing/libre_triangle_select_S.png");
+            toolButton->set_unselected(":/PiYing/libre_triangle_select.png");
             toolButton->set_toolState(CharacterToolState::LibreSelectTriangle);
         }break;
         case CharacterToolState::LibreSelectTriangle: {
-            toolButton->set_selected(QIcon(":/PiYing/rect_triangle_select_S.png"));
-            toolButton->set_unselected(QIcon(":/PiYing/rect_triangle_select.png"));
+            toolButton->set_selected(":/PiYing/rect_triangle_select_S.png");
+            toolButton->set_unselected(":/PiYing/rect_triangle_select.png");
             toolButton->set_toolState(CharacterToolState::RectSelectTriangle);
             toolButton->unSelect();
             PiYingGL::getInstance().setChTool(CharacterToolState::None);
@@ -71,26 +71,26 @@ void PiYing::adapt_select_tool_button(CharacterToolState state)
 {
     switch (state) {
     case CharacterToolState::RectSelectVert: {
-        _select_button->set_selected(QIcon(":/PiYing/selectRectChVert_S.png"));
-        _select_button->set_unselected(QIcon(":/PiYing/selectRectChVert.png"));
+        _select_button->set_selected(":/PiYing/selectRectChVert_S.png");
+        _select_button->set_unselected(":/PiYing/selectRectChVert.png");
         _select_button->set_toolState(CharacterToolState::RectSelectVert);
         _select_button->update();
     }break;
     case CharacterToolState::LibreSelectVert: {
-        _select_button->set_selected(QIcon(":/PiYing/selectLibreChVert_S.png"));
-        _select_button->set_unselected(QIcon(":/PiYing/selectLibreChVert.png"));
+        _select_button->set_selected(":/PiYing/selectLibreChVert_S.png");
+        _select_button->set_unselected(":/PiYing/selectLibreChVert.png");
         _select_button->set_toolState(CharacterToolState::LibreSelectVert);
         _select_button->update();
     }break;
     case CharacterToolState::RectSelectTriangle: {
-        _select_button->set_selected(QIcon(":/PiYing/rect_triangle_select_S.png"));
-        _select_button->set_unselected(QIcon(":/PiYing/rect_triangle_select.png"));
+        _select_button->set_selected(":/PiYing/rect_triangle_select_S.png");
+        _select_button->set_unselected(":/PiYing/rect_triangle_select.png");
         _select_button->set_toolState(CharacterToolState::RectSelectTriangle);
         _select_button->update();
     }break;
     case CharacterToolState::LibreSelectTriangle: {
-        _select_button->set_selected(QIcon(":/PiYing/libre_triangle_select_S.png"));
-        _select_button->set_unselected(QIcon(":/PiYing/libre_triangle_select.png"));
+        _select_button->set_selected(":/PiYing/libre_triangle_select_S.png");
+        _select_button->set_unselected(":/PiYing/libre_triangle_select.png");
         _select_button->set_toolState(CharacterToolState::LibreSelectTriangle);
         _select_button->update();
     }break;

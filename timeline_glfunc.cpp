@@ -16,7 +16,7 @@ void TimelineGl::initializeGL()
 
 	initializeOpenGLFunctions();
 	glClearColor(0.1f, 0.1f, 0.2f, 0.4f);
-	_texture = std::make_unique<QOpenGLTexture>(QImage(":/PiYing/timeline.png").flipped());
+	_texture = new QOpenGLTexture(QImage(":/PiYing/timeline.png").flipped());
 	_texture->setWrapMode(QOpenGLTexture::Repeat);
 
 	//////////////initialize timeline rectangle///////////////////////

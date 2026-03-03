@@ -2,7 +2,6 @@
 #include "image_transform.h"
 
 #include <qmatrix4x4>
-#include <qopengltexture>
 #include <qimage>
 #include <qpointf>
 
@@ -28,9 +27,4 @@ QMatrix4x4 CharacterTexture::getMatrix() const noexcept
         0.f, 0.f, 0.f, 1.f
     };
     return QMatrix4x4(scaleMatrix);
-}
-
-void CharacterTexture::bind()
-{
-    _texture.bind();
 }

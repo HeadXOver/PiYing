@@ -1,10 +1,10 @@
 #pragma once
 
 #include <memory>
+#include <qicon>
 
 class QAction;
 class QWidget;
-class QIcon;
 class QString;
 
 enum class CharacterToolState;
@@ -20,6 +20,9 @@ public:
     void set_selected(const QIcon& icon);
     void set_unselected(const QIcon& icon);
 
+    void set_selected(const QString& iconFile);
+    void set_unselected(const QString& iconFile);
+
     void set_toolState(CharacterToolState state) noexcept;
 
     void update();
@@ -30,8 +33,8 @@ public:
 
 private:
     QAction* action_;
-    std::unique_ptr<QIcon> selected_;
-    std::unique_ptr<QIcon> unselected_;
+    QIcon selected_;
+    QIcon unselected_;
     CharacterToolState toolState_;
     bool isSelect_ = false;
 };

@@ -60,6 +60,7 @@ PiYing::PiYing() : QMainWindow(nullptr)
     }
 
     toolControlSliderList.push_back(new ToolButton(":/PiYing/addVertTrace_S.png", ":/PiYing/addVertTrace.png", "addVertTrace", CharacterToolState::AddVertTrace, this));
+    toolControlSliderList.push_back(_select_button);
 
     for (ToolButton* item : toolControlSliderList) {
         connect(item->action(), &QAction::triggered, this, [this, item]() {select_tool_control_slider(item); });
@@ -163,16 +164,6 @@ PiYing::PiYing() : QMainWindow(nullptr)
 
 PiYing::~PiYing()
 {
-    auto safeDelete = [](QObject* obj) { if (obj && !obj->parent()) delete obj; };
-    safeDelete(voidListWidget);
-    safeDelete(bgImageList);
-    safeDelete(chImageList);
-    safeDelete(&PiYingGL::getInstance());
-    safeDelete(piYingGLContainer);
-    safeDelete(splitTimelineOpenGL);
-    safeDelete(splitListOpenGL);
-    safeDelete(&TimelineGl::getInstance());
-    safeDelete(sliderWidget);
 }
 
 PiYing& PiYing::getInstance() noexcept

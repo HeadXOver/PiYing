@@ -140,7 +140,7 @@ private:
 	QOpenGLShaderProgram* _rect_select_program;
 	QOpenGLShaderProgram* _part_shader_program;
 
-	std::unique_ptr<QOpenGLTexture> _texture;
+	QOpenGLTexture* _texture;
 
 	std::vector<Timeline*> _timelines;
 

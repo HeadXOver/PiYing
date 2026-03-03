@@ -1,10 +1,9 @@
 ﻿#pragma once
 
 #include <qdialog>
-
-class QSpinBox;
-class QDialogButtonBox;
-class QButtonGroup;
+#include <qspinbox>
+#include <qbuttongroup>
+#include <qdialogbuttonbox>
 
 struct Ratio {
     int w = 16;
@@ -26,8 +25,8 @@ private slots:
 private:
     void buildUi();
 
-    QButtonGroup* m_presetGroup;
-    QSpinBox* m_customW;
-    QSpinBox* m_customH;
-    QDialogButtonBox* m_buttons;
+    QButtonGroup m_presetGroup;
+    QSpinBox m_customW;
+    QSpinBox m_customH;
+    QDialogButtonBox m_buttons;
 };
