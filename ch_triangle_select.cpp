@@ -249,7 +249,7 @@ void ChTriangleSelect::moveHandle(const QPointF& mouse)
     }
 
     update_selected_to_draw();
-    PiYingGL::getInstance().update_ch_verts();
+    PiYingGL::getInstance().update_sub_ch_verts();
 }
 
 void ChTriangleSelect::affirmHandle()

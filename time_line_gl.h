@@ -65,6 +65,7 @@ public:
 
 	void generate_vbo(const PointVector& pointVector, unsigned int& vbo);
 	void update_vbo(const PointVector& pointVector, unsigned int vbo);
+	void update_sub_vbo(const PointVector& pointVector, unsigned int vbo);
 	void update_ebo(const std::vector<unsigned int>& indices, unsigned int ebo);
 	void update_buffers(const PointVector& pointVector, const std::vector<unsigned int>& indices, unsigned int vbo, unsigned int ebo);
 	void generate_ebo(const std::vector<unsigned int>& indices, unsigned int& vbo);

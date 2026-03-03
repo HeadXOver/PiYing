@@ -310,7 +310,7 @@ void Part::change_slider_value(size_t sliderIndex, int value)
 		layer.set_point(true, key, displacement + layer_origin.get(key, true)); 
 	}
 
-	TimelineGl::getInstance().update_vbo(*_vert_texture, _vbo);
+	TimelineGl::getInstance().update_sub_vbo(*_vert_texture, _vbo);
 }
 
 void Part::remove_slider(size_t sliderIndex) noexcept

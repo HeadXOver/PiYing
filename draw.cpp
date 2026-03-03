@@ -306,9 +306,15 @@ void PiYingGL::update_sub_ch_verts()
 
 void PiYingGL::update_trc()
 {
+	// 更新着色器中的矩阵
+	// 要先绑定，再更新，否则无效
+
 	makeCurrent();
+	_ch_shader_program->bind();
 	_ch_shader_program->setUniformValue("trc", getViewProjMatrix());
+	_selected_vert_shader_program->bind();
 	_selected_vert_shader_program->setUniformValue("trc", getViewProjMatrix());
+	_texture_tri_shader_program->bind();
 	_texture_tri_shader_program->setUniformValue("trc", getViewProjMatrix());
 	doneCurrent();
 }

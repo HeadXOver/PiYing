@@ -171,7 +171,7 @@ void TimelineGl::generate_vbo(const PointVector& pointVector, unsigned int& vbo)
 
 	glGenBuffers(1, &vbo);
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
-	glBufferData(GL_ARRAY_BUFFER, pointVector.float_size() * sizeof(float), pointVector.data(), GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, pointVector.float_size() * sizeof(float), pointVector.data(), GL_DYNAMIC_DRAW);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 	doneCurrent();
@@ -181,7 +181,16 @@ void TimelineGl::update_vbo(const PointVector& pointVector, unsigned int vbo)
 {
 	makeCurrent();
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
-	glBufferData(GL_ARRAY_BUFFER, pointVector.float_size() * sizeof(float), pointVector.data(), GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, pointVector.float_size() * sizeof(float), pointVector.data(), GL_DYNAMIC_DRAW);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	doneCurrent();
+}
+
+void TimelineGl::update_sub_vbo(const PointVector& pointVector, unsigned int vbo)
+{
+	makeCurrent();
+	glBindBuffer(GL_ARRAY_BUFFER, vbo);
+	glBufferSubData(GL_ARRAY_BUFFER, 0, pointVector.float_size() * sizeof(float), pointVector.data());
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	doneCurrent();
 }
