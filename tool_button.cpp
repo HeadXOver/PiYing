@@ -4,16 +4,17 @@
 #include <qaction>
 #include <qicon>
 
-ToolButton::ToolButton(const QString& selectedFileName, const QString& unselectedFileName, const QString& actionName, CharacterToolState state, QWidget* parent) :
+ToolButton::ToolButton(const QString& selectedFileName, const QString& unselectedFileName, const QString& actionName, CharacterToolState state) :
     selected_(selectedFileName),
     unselected_(unselectedFileName)
 {
-    action_ = new QAction(unselected_, actionName, parent);
+    action_ = new QAction(unselected_, actionName);
     toolState_ = state;
 }
 
 ToolButton::~ToolButton()
 {
+    delete action_;
 }
 
 void ToolButton::select() 

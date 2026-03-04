@@ -1,6 +1,5 @@
 #pragma once
 
-#include <memory>
 #include <qicon>
 
 class QAction;
@@ -11,7 +10,7 @@ enum class CharacterToolState;
 
 class ToolButton {
 public:
-    ToolButton(const QString& selectedFileName, const QString& unselectedFileName, const QString& actionName, CharacterToolState state, QWidget* parent);
+    ToolButton(const QString& selectedFileName, const QString& unselectedFileName, const QString& actionName, CharacterToolState state);
     ~ToolButton();
 
     void select();

@@ -8,6 +8,7 @@
 #include "time_line_gl.h"
 #include "cus_func_string.h"
 #include "cus_readfile.h"
+#include "ch_texture_toolbar.h"
 
 #include "enum_edit_mode.h"
 #include "enum_character_texture_tool_state.h"
@@ -31,7 +32,8 @@ PiYing::PiYing() :
     bgImageList(new QListWidget()),
     chImageList(new QListWidget()),
     splitTimelineOpenGL(new QSplitter(Qt::Vertical, this)),
-    splitListOpenGL(new QSplitter(Qt::Horizontal, this))
+    splitListOpenGL(new QSplitter(Qt::Horizontal, this)),
+    toolChTexList(new ChTextureToolbar())
 {
     _instance = this; ///< 单例初始化
 
@@ -48,33 +50,12 @@ PiYing::PiYing() :
 
 #pragma region [工具栏按钮]
 
-    _select_button = new ToolButton(":/PiYing/selectRectChVert_S.png", ":/PiYing/selectRectChVert.png", "selectRectChVert", CharacterToolState::RectSelectVert, this);
-    ToolButton* const addTriangleToolButton = new ToolButton(":/PiYing/addChVert_S.png", ":/PiYing/addChVert.png", "addChVert", CharacterToolState::AddTriangle, this);
-    ToolButton* const addPolyToolButton = new ToolButton(":/PiYing/chAddPoly_S.png", ":/PiYing/chAddPoly.png", "chAddPoly", CharacterToolState::AddPoly, this);
-    ToolButton* const addRoundToolButton = new ToolButton(":/PiYing/chAddRound_S.png", ":/PiYing/chAddRound.png", "chAddRound", CharacterToolState::AddRound, this);
-    ToolButton* const addVertTraceToolButton = new ToolButton(":/PiYing/addVertTrace_S.png", ":/PiYing/addVertTrace.png", "addVertTrace", CharacterToolState::AddVertTrace, this);
+    ToolButton* const textureSelectToolButton = new ToolButton(":/PiYing/selectRectChVert_S.png", ":/PiYing/selectRectChVert.png", "selectRectChVert", CharacterToolState::RectSelectVert);
+    ToolButton* const skelenSelectToolButton = new ToolButton(":/PiYing/selectRectChVert_S.png", ":/PiYing/selectRectChVert.png", "selectRectChVert", CharacterToolState::RectSelectVert);
+    ToolButton* const partElementSelectToolButton = new ToolButton(":/PiYing/selectRectChVert_S.png", ":/PiYing/selectRectChVert.png", "selectRectChVert", CharacterToolState::RectSelectVertPart);
+    ToolButton* const addVertTraceToolButton = new ToolButton(":/PiYing/addVertTrace_S.png", ":/PiYing/addVertTrace.png", "addVertTrace", CharacterToolState::AddVertTrace);
 
-    connect(_select_button->action(), &QAction::triggered, this, [this] {select_tool_texture(_select_button); });
-    connect(addTriangleToolButton->action(), &QAction::triggered, this, [this, addTriangleToolButton] {select_tool_texture(addTriangleToolButton); });
-    connect(addPolyToolButton->action(), &QAction::triggered, this, [this, addPolyToolButton] {select_tool_texture(addPolyToolButton); });
-    connect(addRoundToolButton->action(), &QAction::triggered, this, [this, addRoundToolButton] {select_tool_texture(addRoundToolButton); });
     connect(addVertTraceToolButton->action(), &QAction::triggered, this, [this, addVertTraceToolButton] {select_tool_control_slider(addVertTraceToolButton); });
-
-    toolChTexList = {
-        _select_button,
-        addTriangleToolButton,
-        addPolyToolButton,
-        addRoundToolButton
-    };
-
-    toolControlSliderList = { 
-        _select_button, 
-        addVertTraceToolButton
-    };
-
-    toolChSkelenList = { 
-        _select_button 
-    };
 
 #pragma endregion
 
@@ -204,57 +185,17 @@ void PiYing::keyPressEvent(QKeyEvent* event)
         PiYingGL::getInstance().enterChElement();
     }break;
     case Qt::Key_1: {
-        switch (PiYingGL::getInstance().ch_tool_state()) {
-        case CharacterToolState::RectSelectTriangle: {
-            adapt_select_tool_button(CharacterToolState::RectSelectVert);
-            PiYingGL::getInstance().setChTool(CharacterToolState::RectSelectVert);
+        switch (PiYingGL::getInstance().editMode) {
+        case EditMode::characterTexture: {
+            toolChTexList->press_1();
         }break;
-        case CharacterToolState::LibreSelectTriangle: {
-            adapt_select_tool_button(CharacterToolState::LibreSelectVert);
-            PiYingGL::getInstance().setChTool(CharacterToolState::LibreSelectVert);
-        }break;
-        case CharacterToolState::LibreSelectVert:
-        case CharacterToolState::RectSelectVert: return;
-        default: {
-            all_button_unselect();
-
-            if (_select_button->toolState() == CharacterToolState::RectSelectTriangle) {
-                adapt_select_tool_button(CharacterToolState::RectSelectVert);
-            }
-            else if (_select_button->toolState() == CharacterToolState::LibreSelectTriangle) {
-                adapt_select_tool_button(CharacterToolState::LibreSelectVert);
-            }
-
-            _select_button->select();
-            PiYingGL::getInstance().setChTool(_select_button->toolState());
-        }
         }
     }break;
     case Qt::Key_3: {
-        switch (PiYingGL::getInstance().ch_tool_state()) {
-        case CharacterToolState::RectSelectVert: {
-            adapt_select_tool_button(CharacterToolState::RectSelectTriangle);
-            PiYingGL::getInstance().setChTool(CharacterToolState::RectSelectTriangle);
+        switch (PiYingGL::getInstance().editMode) {
+        case EditMode::characterTexture: {
+            toolChTexList->press_3();
         }break;
-        case CharacterToolState::LibreSelectVert: {
-            adapt_select_tool_button(CharacterToolState::LibreSelectTriangle);
-            PiYingGL::getInstance().setChTool(CharacterToolState::LibreSelectTriangle);
-        }break;
-        case CharacterToolState::LibreSelectTriangle:
-        case CharacterToolState::RectSelectTriangle: return;
-        default: {
-            all_button_unselect();
-
-            if (_select_button->toolState() == CharacterToolState::RectSelectVert) {
-                adapt_select_tool_button(CharacterToolState::RectSelectTriangle);
-            }
-            else if (_select_button->toolState() == CharacterToolState::LibreSelectVert) {
-                adapt_select_tool_button(CharacterToolState::LibreSelectTriangle);
-            }
-
-            _select_button->select();
-            PiYingGL::getInstance().setChTool(_select_button->toolState());
-        }
         }
     }break;
     }

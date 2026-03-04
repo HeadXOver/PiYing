@@ -271,6 +271,9 @@
     <ClCompile Include="character_texture.cpp">
       <Filter>Source Files\Core</Filter>
     </ClCompile>
+    <ClCompile Include="ch_texture_toolbar.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="static_handle_zone.h">
@@ -395,6 +398,9 @@
     </ClInclude>
     <ClInclude Include="character_texture.h">
       <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="ch_texture_toolbar.h">
+      <Filter>Header Files\CustomTool</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -7,6 +7,7 @@
 enum class CharacterToolState;
 
 class CtrlSlideWidget;
+class ChTextureToolbar;
 class TimelineGl;
 class ToolButton;
 class QString;
@@ -63,11 +64,8 @@ private slots:
 	void onModeChanged(int mode);
 
 private:
-	void select_tool_texture(ToolButton* toolButton);
 	void select_tool_skelen(ToolButton* toolButton);
 	void select_tool_control_slider(ToolButton* toolButton);
-	void adapt_select_tool_button(CharacterToolState state);
-	void all_button_unselect();
 
 private:
 	std::unique_ptr<Ui::PiYingClass> ui;
@@ -78,11 +76,7 @@ private:
 	QSplitter* splitListOpenGL;
 	QSplitter* splitTimelineOpenGL;
 
-	std::vector<ToolButton*> toolChTexList;
-	std::vector<ToolButton*> toolChSkelenList;
-	std::vector<ToolButton*> toolControlSliderList;
-
-	ToolButton* _select_button;
+	ChTextureToolbar* toolChTexList;
 
 	QListWidget* voidListWidget;
 	QListWidget* bgImageList;
