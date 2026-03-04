@@ -10,6 +10,7 @@
 #include "cus_readfile.h"
 #include "ch_texture_toolbar.h"
 #include "ch_skelen_toolbar.h"
+#include "control_slider_toolbar.h"
 
 #include "enum_edit_mode.h"
 #include "enum_character_texture_tool_state.h"
@@ -35,7 +36,8 @@ PiYing::PiYing() :
     splitTimelineOpenGL(new QSplitter(Qt::Vertical, this)),
     splitListOpenGL(new QSplitter(Qt::Horizontal, this)),
     toolChTexList(new ChTextureToolbar()),
-    toolChSkelenList(new ChSkelenToolbar())
+    toolChSkelenList(new ChSkelenToolbar()),
+    toolControlSliderList(new ControlSliderToolbar())
 {
     _instance = this; ///< 单例初始化
 
@@ -49,17 +51,6 @@ PiYing::PiYing() :
 
     // OpenGL widget
     piYingGLContainer = new PiYingGLContainer(PiYingGL::getInstance(), _piying_gl_bg_ratio, this);
-
-#pragma region [工具栏按钮]
-
-    ToolButton* const textureSelectToolButton = new ToolButton(":/PiYing/selectRectChVert_S.png", ":/PiYing/selectRectChVert.png", "selectRectChVert", CharacterToolState::RectSelectVert);
-    ToolButton* const skelenSelectToolButton = new ToolButton(":/PiYing/selectRectChVert_S.png", ":/PiYing/selectRectChVert.png", "selectRectChVert", CharacterToolState::RectSelectVert);
-    ToolButton* const partElementSelectToolButton = new ToolButton(":/PiYing/selectRectChVert_S.png", ":/PiYing/selectRectChVert.png", "selectRectChVert", CharacterToolState::RectSelectVertPart);
-    ToolButton* const addVertTraceToolButton = new ToolButton(":/PiYing/addVertTrace_S.png", ":/PiYing/addVertTrace.png", "addVertTrace", CharacterToolState::AddVertTrace);
-
-    connect(addVertTraceToolButton->action(), &QAction::triggered, this, [this, addVertTraceToolButton] {select_tool_control_slider(addVertTraceToolButton); });
-
-#pragma endregion
 
     // menuBar
     QMenu* menuFile = new QMenu("文件(&F)", this);
@@ -194,6 +185,9 @@ void PiYing::keyPressEvent(QKeyEvent* event)
         case EditMode::characterSkeleton: {
             toolChSkelenList->press_1();
         }break;
+        case EditMode::controlSlide: {
+            toolControlSliderList->press_1();
+        }break;
         }
     }break;
     case Qt::Key_3: {
@@ -203,6 +197,9 @@ void PiYing::keyPressEvent(QKeyEvent* event)
         }break;
         case EditMode::characterSkeleton: {
             toolChSkelenList->press_3();
+        }break;
+        case EditMode::controlSlide: {
+            toolControlSliderList->press_3();
         }break;
         }
     }break;

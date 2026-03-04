@@ -187,9 +187,6 @@
     <ClCompile Include="change_mode.cpp">
       <Filter>Source Files\PiYing</Filter>
     </ClCompile>
-    <ClCompile Include="select_tool.cpp">
-      <Filter>Source Files\PiYing</Filter>
-    </ClCompile>
     <ClCompile Include="ch_add_vert_trace.cpp">
       <Filter>Source Files\ChELementTool</Filter>
     </ClCompile>
@@ -275,6 +272,9 @@
       <Filter>Source Files\PiYingQObject</Filter>
     </ClCompile>
     <ClCompile Include="ch_skelen_toolbar.cpp">
+      <Filter>Source Files\PiYingQObject</Filter>
+    </ClCompile>
+    <ClCompile Include="control_slider_toolbar.cpp">
       <Filter>Source Files\PiYingQObject</Filter>
     </ClCompile>
   </ItemGroup>
@@ -406,6 +406,9 @@
       <Filter>Header Files\PiYngQObject</Filter>
     </ClInclude>
     <ClInclude Include="ch_skelen_toolbar.h">
+      <Filter>Header Files\PiYngQObject</Filter>
+    </ClInclude>
+    <ClInclude Include="control_slider_toolbar.h">
       <Filter>Header Files\PiYngQObject</Filter>
     </ClInclude>
   </ItemGroup>

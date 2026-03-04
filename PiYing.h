@@ -9,6 +9,7 @@ enum class CharacterToolState;
 class CtrlSlideWidget;
 class ChTextureToolbar;
 class ChSkelenToolbar;
+class ControlSliderToolbar;
 class TimelineGl;
 class ToolButton;
 class QString;
@@ -65,9 +66,6 @@ private slots:
 	void onModeChanged(int mode);
 
 private:
-	void select_tool_control_slider(ToolButton* toolButton);
-
-private:
 	std::unique_ptr<Ui::PiYingClass> ui;
 	static PiYing* _instance;
 
@@ -78,6 +76,7 @@ private:
 
 	ChTextureToolbar* toolChTexList;
 	ChSkelenToolbar* toolChSkelenList;
+	ControlSliderToolbar* toolControlSliderList;
 
 	QListWidget* voidListWidget;
 	QListWidget* bgImageList;

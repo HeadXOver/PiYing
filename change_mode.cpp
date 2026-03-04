@@ -7,6 +7,7 @@
 #include "piYingGLContainer.h"
 #include "ch_texture_toolbar.h"
 #include "ch_skelen_toolbar.h"
+#include "control_slider_toolbar.h"
 
 #include "enum_character_texture_tool_state.h"
 #include "enum_edit_mode.h"
@@ -115,18 +116,8 @@ void PiYing::change_edit_mode_character_constrol_slider()
 
     TimelineGl::getInstance().set_to_part();
 
-    /*for (ToolButton* item : toolControlSliderList) {
-        ui->mainToolBar->addAction(item->action());
-    }
-
-    for (ToolButton* item : toolControlSliderList) {
-        if (item->isSelect()) {
-            PiYingGL::getInstance().setChTool(item->toolState());
-            return;
-        }
-    }*/
-
-    PiYingGL::getInstance().setChTool(CharacterToolState::None);
+    toolControlSliderList->set_to_toolbar(ui->mainToolBar);
+    toolControlSliderList->remember_last_tool();
 }
 
 void PiYing::update_part_slider()

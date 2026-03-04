@@ -121,6 +121,7 @@
     <ClCompile Include="ch_triangle_rect_select.cpp" />
     <ClCompile Include="ch_triangle_select.cpp" />
     <ClCompile Include="controls.cpp" />
+    <ClCompile Include="control_slider_toolbar.cpp" />
     <ClCompile Include="ctrl_slide_layout.cpp" />
     <ClCompile Include="ctrl_slide_widget.cpp" />
     <ClCompile Include="cus_func_point2d.cpp" />
@@ -161,7 +162,6 @@
     <ClCompile Include="time_line_gl.cpp" />
     <ClCompile Include="tool_button.cpp" />
     <ClCompile Include="change_mode.cpp" />
-    <ClCompile Include="select_tool.cpp" />
     <ClCompile Include="ViewData.cpp" />
     <QtRcc Include="PiYing.qrc" />
     <QtUic Include="PiYing.ui" />
@@ -179,6 +179,7 @@
     <ClInclude Include="ch_triangle_libre_select.h" />
     <ClInclude Include="ch_triangle_rect_select.h" />
     <ClInclude Include="ch_add_vert_trace.h" />
+    <ClInclude Include="control_slider_toolbar.h" />
     <ClInclude Include="cus_ask.h" />
     <ClInclude Include="cus_readfile.h" />
     <ClInclude Include="enum_edit_mode.h" />
