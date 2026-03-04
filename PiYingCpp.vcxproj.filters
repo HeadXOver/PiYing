@@ -476,5 +476,8 @@
     <None Include="scroll_block.vert">
       <Filter>Shader\verts</Filter>
     </None>
+    <None Include="texture_alpha_shape.frag">
+      <Filter>Shader\frags</Filter>
+    </None>
   </ItemGroup>
 </Project>

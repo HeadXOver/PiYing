@@ -222,6 +222,7 @@
   <ItemGroup>
     <None Include="bgshapes.vert" />
     <None Include="chEditershapes.vert" />
+    <None Include="texture_alpha_shape.frag" />
     <None Include="color_shape.frag" />
     <None Include="darkStyle.qss" />
     <None Include="imageListStyle.qss" />

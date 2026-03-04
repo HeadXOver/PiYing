@@ -20,11 +20,11 @@ void PiYingGL::initializeGL()
 	_rectangle_shader_program->link();
 
 	_texture_color_shader_programme->addShaderFromSourceFile(QOpenGLShader::Vertex, ":/PiYing/bgshapes.vert");
-	_texture_color_shader_programme->addShaderFromSourceFile(QOpenGLShader::Fragment, ":/PiYing/texture_color_shape.frag");
+	_texture_color_shader_programme->addShaderFromSourceFile(QOpenGLShader::Fragment, ":/PiYing/texture_alpha_shape.frag");
 	_texture_color_shader_programme->link();
 
 	_ch_shader_program->addShaderFromSourceFile(QOpenGLShader::Vertex, ":/PiYing/chEditershapes.vert");
-	_ch_shader_program->addShaderFromSourceFile(QOpenGLShader::Fragment, ":/PiYing/texture_color_shape.frag");
+	_ch_shader_program->addShaderFromSourceFile(QOpenGLShader::Fragment, ":/PiYing/texture_alpha_shape.frag");
 	_ch_shader_program->link();
 
 	_texture_tri_shader_program->addShaderFromSourceFile(QOpenGLShader::Vertex, ":/PiYing/texture_tri.vert");

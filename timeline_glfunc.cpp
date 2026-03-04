@@ -108,7 +108,7 @@ void TimelineGl::initializeGL()
 	//////////////////////////////////////////////
 
 	_part_shader_program->addShaderFromSourceFile(QOpenGLShader::Vertex, ":/PiYing/square_icon.vert");
-	_part_shader_program->addShaderFromSourceFile(QOpenGLShader::Fragment, ":/PiYing/texture_color_shape.frag");
+	_part_shader_program->addShaderFromSourceFile(QOpenGLShader::Fragment, ":/PiYing/texture_alpha_shape.frag");
 	_part_shader_program->link();
 	_part_shader_program->bind();
 	_rect_select_program->setUniformValue("aColor", QVector4D(1.f, 1.f, 1.f, 1.f));
