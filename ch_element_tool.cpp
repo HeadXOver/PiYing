@@ -145,6 +145,7 @@ ChElementTool::ChElementTool(CharacterToolState chToolState)
 	case CharacterToolState::AddVertTrace: construct_add_vert_trace(); return;
 	case CharacterToolState::RectSelectTriangle: construct_rect_select_triangle(); return;
 	case CharacterToolState::LibreSelectTriangle: construct_libre_select_triangle(); return;
+	default: construct_void(); return;
 	}
 }
 
