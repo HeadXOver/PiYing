@@ -9,6 +9,7 @@
 #include "cus_func_string.h"
 #include "cus_readfile.h"
 #include "ch_texture_toolbar.h"
+#include "ch_skelen_toolbar.h"
 
 #include "enum_edit_mode.h"
 #include "enum_character_texture_tool_state.h"
@@ -33,7 +34,8 @@ PiYing::PiYing() :
     chImageList(new QListWidget()),
     splitTimelineOpenGL(new QSplitter(Qt::Vertical, this)),
     splitListOpenGL(new QSplitter(Qt::Horizontal, this)),
-    toolChTexList(new ChTextureToolbar())
+    toolChTexList(new ChTextureToolbar()),
+    toolChSkelenList(new ChSkelenToolbar())
 {
     _instance = this; ///< 单例初始化
 
@@ -189,12 +191,18 @@ void PiYing::keyPressEvent(QKeyEvent* event)
         case EditMode::characterTexture: {
             toolChTexList->press_1();
         }break;
+        case EditMode::characterSkeleton: {
+            toolChSkelenList->press_1();
+        }break;
         }
     }break;
     case Qt::Key_3: {
         switch (PiYingGL::getInstance().editMode) {
         case EditMode::characterTexture: {
             toolChTexList->press_3();
+        }break;
+        case EditMode::characterSkeleton: {
+            toolChSkelenList->press_3();
         }break;
         }
     }break;

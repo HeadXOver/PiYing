@@ -8,6 +8,7 @@ enum class CharacterToolState;
 
 class CtrlSlideWidget;
 class ChTextureToolbar;
+class ChSkelenToolbar;
 class TimelineGl;
 class ToolButton;
 class QString;
@@ -64,7 +65,6 @@ private slots:
 	void onModeChanged(int mode);
 
 private:
-	void select_tool_skelen(ToolButton* toolButton);
 	void select_tool_control_slider(ToolButton* toolButton);
 
 private:
@@ -77,6 +77,7 @@ private:
 	QSplitter* splitTimelineOpenGL;
 
 	ChTextureToolbar* toolChTexList;
+	ChSkelenToolbar* toolChSkelenList;
 
 	QListWidget* voidListWidget;
 	QListWidget* bgImageList;

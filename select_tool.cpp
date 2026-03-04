@@ -4,16 +4,6 @@
 
 #include "enum_character_texture_tool_state.h"
 
-void PiYing::select_tool_skelen(ToolButton* toolButton)
-{
-    if (toolButton->isSelect()) return; 
-
-    //for (ToolButton* item : toolChSkelenList) item->unSelect();
-
-    toolButton->select();
-    PiYingGL::getInstance().setChTool(toolButton->toolState());
-}
-
 void PiYing::select_tool_control_slider(ToolButton* toolButton)
 {
     if (toolButton->isSelect()) {

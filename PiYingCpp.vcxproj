@@ -115,6 +115,7 @@
     <ClCompile Include="ch_element_rect_select.cpp" />
     <ClCompile Include="ch_element_select.cpp" />
     <ClCompile Include="ch_element_tool.cpp" />
+    <ClCompile Include="ch_skelen_toolbar.cpp" />
     <ClCompile Include="ch_texture_toolbar.cpp" />
     <ClCompile Include="ch_triangle_libre_select.cpp" />
     <ClCompile Include="ch_triangle_rect_select.cpp" />
@@ -173,6 +174,7 @@
     <ClInclude Include="base_math.h" />
     <ClInclude Include="character_texture.h" />
     <ClInclude Include="character_trace.h" />
+    <ClInclude Include="ch_skelen_toolbar.h" />
     <ClInclude Include="ch_texture_toolbar.h" />
     <ClInclude Include="ch_triangle_libre_select.h" />
     <ClInclude Include="ch_triangle_rect_select.h" />

@@ -272,7 +272,10 @@
       <Filter>Source Files\Core</Filter>
     </ClCompile>
     <ClCompile Include="ch_texture_toolbar.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\PiYingQObject</Filter>
+    </ClCompile>
+    <ClCompile Include="ch_skelen_toolbar.cpp">
+      <Filter>Source Files\PiYingQObject</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -400,7 +403,10 @@
       <Filter>Header Files\Core</Filter>
     </ClInclude>
     <ClInclude Include="ch_texture_toolbar.h">
-      <Filter>Header Files\CustomTool</Filter>
+      <Filter>Header Files\PiYngQObject</Filter>
+    </ClInclude>
+    <ClInclude Include="ch_skelen_toolbar.h">
+      <Filter>Header Files\PiYngQObject</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

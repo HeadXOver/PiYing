@@ -6,6 +6,7 @@
 #include "time_line_gl.h"
 #include "piYingGLContainer.h"
 #include "ch_texture_toolbar.h"
+#include "ch_skelen_toolbar.h"
 
 #include "enum_character_texture_tool_state.h"
 #include "enum_edit_mode.h"
@@ -93,18 +94,8 @@ void PiYing::change_edit_mode_character_skeleton()
 
     PiYingGL::getInstance().setEditMode(EditMode::characterSkeleton);
 
-    /*for (ToolButton* item : toolChSkelenList) {
-        ui->mainToolBar->addAction(item->action());
-    }
-
-    for (ToolButton* item : toolChSkelenList) {
-        if (item->isSelect()) {
-            PiYingGL::getInstance().setChTool(item->toolState());
-            return;
-        }
-    }*/
-
-    if (!PiYingGL::getInstance().have_ch_tool()) PiYingGL::getInstance().setChTool(CharacterToolState::None);
+    toolChSkelenList->set_to_toolbar(ui->mainToolBar);
+    toolChSkelenList->remember_last_tool();
 }
 
 void PiYing::change_edit_mode_character_constrol_slider()
