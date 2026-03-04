@@ -10,5 +10,9 @@ enum class CharacterToolState {
     AddVertTrace,
     RectSelectTriangle,
     LibreSelectTriangle,
+    RectSelectVertPart,
+    LibreSelectVertPart,
+    RectSelectTrianglePart,
+    LibreSelectTrianglePart,
 };
 

@@ -97,9 +97,7 @@ void PiYingGL::setEditMode(EditMode mode)
 
 void PiYingGL::update_ch_tool()
 {
-	if (ch_element_tool_) {
-		ch_element_tool_ = nullptr;
-	}
+	ch_element_tool_ = nullptr;
 
 	if (_currentLayer) {
 		delete _currentLayer;

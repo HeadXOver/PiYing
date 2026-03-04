@@ -50,11 +50,10 @@ class TimelineGl : public QOpenGLWidget, QOpenGLFunctions_3_3_Core
 private:
 	TimelineGl();
 	~TimelineGl();
-
-public:
 	TimelineGl(const TimelineGl&) = delete;
 	TimelineGl& operator=(const TimelineGl&) = delete;
 
+public:
 	static TimelineGl& getInstance() noexcept;
 
 	float x_map_to_gl(const float x) const;
@@ -141,7 +140,7 @@ private:
 	QOpenGLShaderProgram* _rect_select_program;
 	QOpenGLShaderProgram* _part_shader_program;
 
-	QOpenGLTexture* _texture;
+	QOpenGLTexture* _texture{ };
 
 	std::vector<Timeline*> _timelines;
 

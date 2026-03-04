@@ -23,56 +23,60 @@
 
 PiYing* PiYing::_instance = nullptr;
 
-PiYing::PiYing() : QMainWindow(nullptr)
+PiYing::PiYing() :
+    QMainWindow(nullptr),
+    ui(std::make_unique<Ui::PiYingClass>()),
+    sliderWidget(new CtrlSlideWidget()),
+    voidListWidget(new QListWidget()),
+    bgImageList(new QListWidget()),
+    chImageList(new QListWidget()),
+    splitTimelineOpenGL(new QSplitter(Qt::Vertical, this)),
+    splitListOpenGL(new QSplitter(Qt::Horizontal, this))
 {
-    _instance = this;
+    _instance = this; ///< 单例初始化
 
-    ui = std::make_unique<Ui::PiYingClass>();
     ui->setupUi(this);
+
     setWindowTitle("皮影");
     setFocusPolicy(Qt::StrongFocus);
 
-    sliderWidget = new CtrlSlideWidget();
     sliderWidget->setStyleSheet(PiYingCus::readAllFileToQString(":/PiYing/slideStyle.qss"));
     sliderWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-
-    _piying_gl_bg_ratio = 16.0 / 9.0;
-
-    voidListWidget = new QListWidget();
-    bgImageList = new QListWidget();
-    chImageList = new QListWidget();
 
     // OpenGL widget
     piYingGLContainer = new PiYingGLContainer(PiYingGL::getInstance(), _piying_gl_bg_ratio, this);
 
-    splitTimelineOpenGL = new QSplitter(Qt::Vertical, this);
-    splitListOpenGL = new QSplitter(Qt::Horizontal, this);
+#pragma region [工具栏按钮]
 
     _select_button = new ToolButton(":/PiYing/selectRectChVert_S.png", ":/PiYing/selectRectChVert.png", "selectRectChVert", CharacterToolState::RectSelectVert, this);
+    ToolButton* const addTriangleToolButton = new ToolButton(":/PiYing/addChVert_S.png", ":/PiYing/addChVert.png", "addChVert", CharacterToolState::AddTriangle, this);
+    ToolButton* const addPolyToolButton = new ToolButton(":/PiYing/chAddPoly_S.png", ":/PiYing/chAddPoly.png", "chAddPoly", CharacterToolState::AddPoly, this);
+    ToolButton* const addRoundToolButton = new ToolButton(":/PiYing/chAddRound_S.png", ":/PiYing/chAddRound.png", "chAddRound", CharacterToolState::AddRound, this);
+    ToolButton* const addVertTraceToolButton = new ToolButton(":/PiYing/addVertTrace_S.png", ":/PiYing/addVertTrace.png", "addVertTrace", CharacterToolState::AddVertTrace, this);
 
-    toolChTexList.push_back(_select_button);
-    toolChTexList.push_back(new ToolButton(":/PiYing/addChVert_S.png", ":/PiYing/addChVert.png", "addChVert", CharacterToolState::AddTriangle, this));
-    toolChTexList.push_back(new ToolButton(":/PiYing/chAddPoly_S.png", ":/PiYing/chAddPoly.png", "chAddPoly", CharacterToolState::AddPoly, this));
-    toolChTexList.push_back(new ToolButton(":/PiYing/chAddRound_S.png", ":/PiYing/chAddRound.png", "chAddRound", CharacterToolState::AddRound, this));
+    connect(_select_button->action(), &QAction::triggered, this, [this] {select_tool_texture(_select_button); });
+    connect(addTriangleToolButton->action(), &QAction::triggered, this, [this, addTriangleToolButton] {select_tool_texture(addTriangleToolButton); });
+    connect(addPolyToolButton->action(), &QAction::triggered, this, [this, addPolyToolButton] {select_tool_texture(addPolyToolButton); });
+    connect(addRoundToolButton->action(), &QAction::triggered, this, [this, addRoundToolButton] {select_tool_texture(addRoundToolButton); });
+    connect(addVertTraceToolButton->action(), &QAction::triggered, this, [this, addVertTraceToolButton] {select_tool_control_slider(addVertTraceToolButton); });
 
-    for (ToolButton* item : toolChTexList) {
-        connect(item->action(), &QAction::triggered, this, [this, item]() {select_tool_texture(item); });
-    }
+    toolChTexList = {
+        _select_button,
+        addTriangleToolButton,
+        addPolyToolButton,
+        addRoundToolButton
+    };
 
-    toolControlSliderList.push_back(new ToolButton(":/PiYing/addVertTrace_S.png", ":/PiYing/addVertTrace.png", "addVertTrace", CharacterToolState::AddVertTrace, this));
-    toolControlSliderList.push_back(_select_button);
+    toolControlSliderList = { 
+        _select_button, 
+        addVertTraceToolButton
+    };
 
-    for (ToolButton* item : toolControlSliderList) {
-        connect(item->action(), &QAction::triggered, this, [this, item]() {select_tool_control_slider(item); });
-    }
+    toolChSkelenList = { 
+        _select_button 
+    };
 
-    for (ToolButton* item : toolChSkelenList) {
-        connect(item->action(), &QAction::triggered, this, [this, item]() {select_tool_skelen(item); });    
-    }
-
-    toolChSkelenList.push_back(_select_button); ///< 在连接之后添加，因为chRectSelectVert在toolChSkelenList中
-
-    QComboBox* modeBox = new QComboBox(this);
+#pragma endregion
 
     // menuBar
     QMenu* menuFile = new QMenu("文件(&F)", this);
@@ -80,42 +84,42 @@ PiYing::PiYing() : QMainWindow(nullptr)
     QMenu* menuWindow = new QMenu("窗口(&W)", this);
 
     ui->menuBar->addMenu(menuFile);
-	ui->menuBar->addMenu(menuEdit);
+    ui->menuBar->addMenu(menuEdit);
     ui->menuBar->addMenu(menuWindow);
 
-	// child menu of menu File
+    // child menu of menu File
     QMenu* childMenuImport = menuFile->addMenu("导入");
     QMenu* childMenuExport = menuFile->addMenu("导出");
 
-	// child menu of menu Edit
+    // child menu of menu Edit
     QMenu* childMenuScreen = menuEdit->addMenu("幕布");
 
     // actions of menu Window
     QMenu* childMenuTool = menuWindow->addMenu("打开");
 
-	// actions of menu File
-    QAction* actionExit                 = menuFile->            addAction("退出");
-    QAction* actionImportBackGround     = childMenuImport->     addAction("背景图");
-    QAction* actionImportCharacter      = childMenuImport->     addAction("角色图");
-    QAction* actionExportCurrentFrame   = childMenuExport->     addAction("当前帧");
-    QAction* actionExportMainSlider     = childMenuExport->     addAction("主轴");
+    // actions of menu File
+    QAction* actionExit = menuFile->addAction("退出");
+    QAction* actionImportBackGround = childMenuImport->addAction("背景图");
+    QAction* actionImportCharacter = childMenuImport->addAction("角色图");
+    QAction* actionExportCurrentFrame = childMenuExport->addAction("当前帧");
+    QAction* actionExportMainSlider = childMenuExport->addAction("主轴");
 
-	// actions of menu Edit
-    QAction* actionScreenScale          = childMenuScreen->     addAction("比例...");
-    QAction* actionDefaultColor         = childMenuScreen->     addAction("底色...");
+    // actions of menu Edit
+    QAction* actionScreenScale = childMenuScreen->addAction("比例...");
+    QAction* actionDefaultColor = childMenuScreen->addAction("底色...");
 
     // actions of menu Window
     QAction* actionChTool = childMenuTool->addAction("零件库");
 
-    connect(actionExportCurrentFrame,   SIGNAL(triggered()), this, SLOT(exportCurrentFrame()));
-    connect(actionExportMainSlider,     SIGNAL(triggered()), this, SLOT(exportMainSlider()));
-	connect(actionScreenScale,          SIGNAL(triggered()), this, SLOT(askScreenScale()));
-    connect(actionDefaultColor,     &QAction::triggered,                this, [this]() {PiYingGL::getInstance().choseBackgroundColor(); });
-    connect(actionExit,             &QAction::triggered,                this, [this]() {close(); });
-    connect(actionImportBackGround, &QAction::triggered,                this, [this]() {PiYingGL::getInstance().importBackground(); });
-    connect(actionImportCharacter,  &QAction::triggered,                this, [this]() {PiYingGL::getInstance().importChatacter(); });
-    connect(chImageList,            &QListWidget::currentItemChanged,   this, [this]() {PiYingGL::getInstance().update_ch_tool(); PiYingGL::getInstance().update_ch_verts(); });
-    connect(bgImageList,            &QListWidget::currentItemChanged,   this, [this]() {PiYingGL::getInstance().update(); });
+    connect(actionExportCurrentFrame, &QAction::triggered, this, [this] { exportCurrentFrame(); });
+    connect(actionExportMainSlider, &QAction::triggered, this, [this] { exportMainSlider(); });
+    connect(actionScreenScale, &QAction::triggered, this, [this] { askScreenScale(); });
+    connect(actionDefaultColor, &QAction::triggered, this, [this] { PiYingGL::getInstance().choseBackgroundColor(); });
+    connect(actionExit, &QAction::triggered, this, [this] { close(); });
+    connect(actionImportBackGround, &QAction::triggered, this, [this] { PiYingGL::getInstance().importBackground(); });
+    connect(actionImportCharacter, &QAction::triggered, this, [this] { PiYingGL::getInstance().importChatacter(); });
+    connect(chImageList, &QListWidget::currentItemChanged, this, [this] { PiYingGL::getInstance().update_ch_tool(); PiYingGL::getInstance().update_ch_verts(); });
+    connect(bgImageList, &QListWidget::currentItemChanged, this, [this] { PiYingGL::getInstance().update(); });
 
     piYingGLContainer->setRatio(_piying_gl_bg_ratio);
     PiYingGL::getInstance().changeRatio(_piying_gl_bg_ratio);
@@ -143,6 +147,8 @@ PiYing::PiYing() : QMainWindow(nullptr)
     voidListWidget->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
     bgImageList->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
     chImageList->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
+
+    QComboBox* modeBox = new QComboBox(this);
 
     modeBox->addItems(
         {
