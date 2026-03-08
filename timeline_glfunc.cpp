@@ -177,7 +177,7 @@ void TimelineGl::generate_vbo(const PointVectorLayer& pointVector, unsigned int&
 	doneCurrent();
 }
 
-void TimelineGl::update_vbo(const PointVector& pointVector, unsigned int vbo)
+void TimelineGl::update_vbo(const PointVectorLayer& pointVector, unsigned int vbo)
 {
 	makeCurrent();
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
