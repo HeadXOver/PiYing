@@ -36,7 +36,7 @@ public:
 
 	void operator+=(const PointVector& other);
 
-private:
+protected:
 	std::vector<float> points;
 };
 
@@ -67,11 +67,19 @@ private:
 
 ////////////////////////////////////////////////////////////////////////////////////
 
-class PointVectorLayer
+class PointVectorLayer : private PointVector
 {
 public:
-	PointVectorLayer(PointVector& point_vector);
+	PointVectorLayer() = default;
+	~PointVectorLayer() = default;
 
+	PointVectorLayer(const PointVectorLayer& vector1, const PointVectorLayer& vector2);
+	PointVectorLayer(const PointVectorLayer& other);
+
+	PointVectorLayer& operator=(const PointVectorLayer& other);
+	PointVectorLayer& operator+=(const PointVectorLayer& other);
+
+public:
 	const QPointF operator[](size_t index) const;
 	const QPointF operator()(size_t index) const;
 
@@ -84,8 +92,8 @@ public:
 	void resize(int size);
 	void clear() noexcept;
 
-	size_t size() const noexcept;
+	const float* data() const noexcept { return points.data(); }
 
-private:
-	PointVector& point_vector;
+	size_t float_size() const noexcept { return points.size(); }
+	size_t element_size() const noexcept;
 };

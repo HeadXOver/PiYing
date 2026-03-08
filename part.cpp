@@ -31,10 +31,8 @@ Part::Part(
 	_slide_applier = new SlideApplier();
 	_joint = std::make_unique<Joint>();
 
-	_vert_texture = std::make_unique<PointVector>();
-	_vert_texture_origin = std::make_unique<PointVector>();
-
-	PointVectorLayerToMut layer(*_vert_texture);
+	_vert_texture = std::make_unique<PointVectorLayer>();
+	_vert_texture_origin = std::make_unique<PointVectorLayer>();
 
 	PointVectorLayerToMut& currentLayer = *PiYingGL::getInstance().currentLayer();
 
@@ -56,7 +54,7 @@ Part::Part(
 			if (isTexture) {
 				eachPoint = currentLayer(indices[i]);
 
-				layer.push_back(eachPoint);
+				_vert_texture->push_back(eachPoint);
 
 				top = PiYingCus::max(top, eachPoint.y());
 				bottom = PiYingCus::min(bottom, eachPoint.y());
@@ -66,7 +64,7 @@ Part::Part(
 			else {
 				eachPoint = currentLayer[indices[i]];
 
-				layer.push_back(currentLayer(indices[i]), eachPoint);
+				_vert_texture->push_back(currentLayer(indices[i]), eachPoint);
 
 				top = PiYingCus::max(top, eachPoint.y());
 				bottom = PiYingCus::min(bottom, eachPoint.y());
@@ -81,7 +79,7 @@ Part::Part(
 		}
 	}
 
-	_vert_texture_origin->get_vector() = _vert_texture->get_vector();
+	*_vert_texture_origin = *_vert_texture;
 
 	_x = (left + right) / 2.f;
 	_y = (top + bottom) / 2.f;
@@ -98,12 +96,11 @@ Part::Part(
 
 Part::Part(const Part& part1, const Part& part2) : 
 	_texture(part1._texture),
-	_prescale(part1._prescale)
+	_prescale(part1._prescale),
+	_vert_texture_origin(std::make_unique<PointVectorLayer>(*part1._vert_texture_origin, *part2._vert_texture_origin)),
+	_vert_texture(std::make_unique<PointVectorLayer>(*part1._vert_texture, *part2._vert_texture))
 {
-	_vert_texture_origin = std::make_unique<PointVector>(*part1._vert_texture_origin, *part2._vert_texture_origin);
-	_vert_texture = std::make_unique<PointVector>(*part1._vert_texture, *part2._vert_texture);
-
-	const unsigned int tempSize = (unsigned int)part1._vert_texture->half_point_size();
+	const unsigned int tempSize = (unsigned int)part1._vert_texture->element_size();
 	_indices.reserve(part1._indices.size() + part2._indices.size());
 	_indices.insert(_indices.end(), part1._indices.begin(), part1._indices.end());
 
@@ -128,8 +125,8 @@ Part::Part(const Part& other) :
 	_height(other._height),
 	_width(other._width),
 	_texture(other._texture),
-	_vert_texture_origin(std::make_unique<PointVector>(*other._vert_texture_origin)),
-	_vert_texture(std::make_unique<PointVector>(*other._vert_texture)),
+	_vert_texture_origin(std::make_unique<PointVectorLayer>(*other._vert_texture_origin)),
+	_vert_texture(std::make_unique<PointVectorLayer>(*other._vert_texture)),
 	_indices(other._indices),
 	_slide_applier(new SlideApplier(*other._slide_applier)),
 	_parent(other._parent),
@@ -175,12 +172,12 @@ size_t Part::float_size() const noexcept
 
 size_t Part::vertex_size() const noexcept
 {
-	return _vert_texture->point_size();
+	return _vert_texture->element_size();
 }
 
 QPointF Part::get_vert(int index, bool isSkelen) const
 {
-	return (*_vert_texture)[index + index + (isSkelen ? 0 : 1)];
+	return _vert_texture->get(index, isSkelen);
 }
 
 SlideApplier& Part::get_slide_applier() noexcept
@@ -221,17 +218,15 @@ void Part::add_trace(int index, const QPolygonF& polygon)
 
 void Part::update_scale()
 {
-	PointVectorLayerToMut layer(*_vert_texture);
-
-	const QPointF& firstPoint = layer.get(0, true);
+	const QPointF& firstPoint = _vert_texture->get(0, true);
 	float top = firstPoint.y();
 	float bottom = firstPoint.y();
 	float left = firstPoint.x();
 	float right = firstPoint.x();
 
 	QPointF eachPoint;
-	for (unsigned int i = 1; i < layer.size(); ++i) {
-		eachPoint = layer.get(i, true);
+	for (unsigned int i = 1; i < _vert_texture->element_size(); ++i) {
+		eachPoint = _vert_texture->get(i, true);
 		top = PiYingCus::max(top, eachPoint.y());
 		bottom = PiYingCus::min(bottom, eachPoint.y());
 		left = PiYingCus::min(left, eachPoint.x());
@@ -269,7 +264,7 @@ bool Part::eat_another_part(Part& other)
 	assert(&_texture == &other._texture);
 
 	/// 拼接顶点下标vector
-	const unsigned int tempSize = (unsigned int)_vert_texture_origin->half_point_size();
+	const unsigned int tempSize = (unsigned int)_vert_texture_origin->element_size();
 	_indices.reserve(_indices.size() + other._indices.size());
 	for (int i = 0; i < other._indices.size(); ++i) {
 		_indices.push_back(other._indices[i] + tempSize);
@@ -291,9 +286,6 @@ void Part::change_slider_value(size_t sliderIndex, int value)
 {
 	_slide_applier->change_current_value(sliderIndex, value);
 
-	PointVectorLayerToMut layer(*_vert_texture);
-	PointVectorLayerToMut layer_origin(*_vert_texture_origin);
-
 	const std::unordered_map<unsigned int, QPolygonF>& tracesByPoint = _slide_applier->get_trace_map(sliderIndex);
 
 	QPointF displacement;
@@ -306,7 +298,7 @@ void Part::change_slider_value(size_t sliderIndex, int value)
 				displacement += eachTrace[_slide_applier->get_slider_current_value(i) * (eachTrace.size() - 1) / 1000];
 			}
 		}
-		layer.set_point(true, key, displacement + layer_origin.get(key, true)); 
+		_vert_texture->set_point(true, key, displacement + _vert_texture_origin->get(key, true));
 	}
 
 	TimelineGl::getInstance().update_sub_vbo(*_vert_texture, _vbo);
@@ -380,12 +372,10 @@ void Part::update_transform(const QMatrix4x4& parentWorld)
 
 float Part::local_top() const
 {
-	const PointVectorLayerToMut layer(*_vert_texture);
+	float top = _vert_texture->get(0, true).y();
 
-	float top = layer.get(0, true).y();
-
-	for (int i = 1; i < layer.size(); ++i) {
-		top = PiYingCus::max(top, layer.get(i, true).y());
+	for (int i = 1; i < _vert_texture->element_size(); ++i) {
+		top = PiYingCus::max(top, _vert_texture->get(i, true).y());
 	}
 
 	return top;
@@ -393,12 +383,10 @@ float Part::local_top() const
 
 float Part::local_bottom() const
 {
-	const PointVectorLayerToMut layer(*_vert_texture);
+	float bottom = _vert_texture->get(0, true).y();
 
-	float bottom = layer.get(0, true).y();
-
-	for (unsigned int i = 1; i < layer.size(); ++i) {
-		bottom = PiYingCus::min(bottom, layer.get(i, true).y());
+	for (unsigned int i = 1; i < _vert_texture->element_size(); ++i) {
+		bottom = PiYingCus::min(bottom, _vert_texture->get(i, true).y());
 	}
 
 	return bottom;
@@ -406,12 +394,10 @@ float Part::local_bottom() const
 
 float Part::local_left() const
 {
-	const PointVectorLayerToMut layer(*_vert_texture);
+	float left = _vert_texture->get(0, true).x();
 
-	float left = layer.get(0, true).x();
-
-	for (unsigned int i = 1; i < layer.size(); ++i) {
-		left = PiYingCus::min(left, layer.get(i, true).x());
+	for (unsigned int i = 1; i < _vert_texture->element_size(); ++i) {
+		left = PiYingCus::min(left, _vert_texture->get(i, true).x());
 	}
 
 	return left;
@@ -419,12 +405,10 @@ float Part::local_left() const
 
 float Part::local_right() const
 {
-	const PointVectorLayerToMut layer(*_vert_texture);
+	float right = _vert_texture->get(0, true).x();
 
-	float right = layer.get(0, true).x();
-
-	for (unsigned int i = 1; i < layer.size(); ++i) {
-		right = PiYingCus::max(right, layer.get(i, true).x());
+	for (unsigned int i = 1; i < _vert_texture->element_size(); ++i) {
+		right = PiYingCus::max(right, _vert_texture->get(i, true).x());
 	}
 
 	return right;

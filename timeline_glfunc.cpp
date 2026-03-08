@@ -165,7 +165,7 @@ void TimelineGl::paintGL()
 	}
 }
 
-void TimelineGl::generate_vbo(const PointVector& pointVector, unsigned int& vbo)
+void TimelineGl::generate_vbo(const PointVectorLayer& pointVector, unsigned int& vbo)
 {
 	makeCurrent();
 
@@ -186,7 +186,7 @@ void TimelineGl::update_vbo(const PointVector& pointVector, unsigned int vbo)
 	doneCurrent();
 }
 
-void TimelineGl::update_sub_vbo(const PointVector& pointVector, unsigned int vbo)
+void TimelineGl::update_sub_vbo(const PointVectorLayer& pointVector, unsigned int vbo)
 {
 	makeCurrent();
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
@@ -204,7 +204,7 @@ void TimelineGl::update_ebo(const std::vector<unsigned int>& indices, const unsi
 	doneCurrent();
 }
 
-void TimelineGl::update_buffers(const PointVector& pointVector, const std::vector<unsigned int>& indices, unsigned int vbo, unsigned int ebo)
+void TimelineGl::update_buffers(const PointVectorLayer& pointVector, const std::vector<unsigned int>& indices, unsigned int vbo, unsigned int ebo)
 {
 	makeCurrent();
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);

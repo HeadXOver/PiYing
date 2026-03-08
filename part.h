@@ -6,7 +6,7 @@
 
 class CharacterTexture;
 class QOpenGLTexture;
-class PointVector;
+class PointVectorLayer;
 class QPointF;
 class QPolygonF;
 class CtrlSlideWidget;
@@ -27,6 +27,7 @@ public:
 	}
 	~Part();
 
+public:
 	const float* float_data() const noexcept;
 	const unsigned int* index_data() const noexcept { return _indices.data(); }
 
@@ -96,8 +97,8 @@ private:
 
 	QOpenGLTexture& _texture;
 
-	std::unique_ptr<PointVector> _vert_texture_origin;
-	std::unique_ptr<PointVector> _vert_texture;
+	std::unique_ptr<PointVectorLayer> _vert_texture_origin;
+	std::unique_ptr<PointVectorLayer> _vert_texture;
 
 	std::vector<unsigned int> _indices;
 

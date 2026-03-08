@@ -14,7 +14,7 @@ void ChAddVertTrace::click(const QPointF& mouseOri)
 	Part* part = TimelineGl::getInstance().get_current_part();
 
     QPointF existPoint;
-    for (unsigned int i = 0; i < part->vertex_size() / 2; i++) {
+    for (unsigned int i = 0; i < part->vertex_size(); i++) {
 		existPoint = part->get_vert(i, true);
         if (QLineF(existPoint, mouse).length() < 0.02f / PiYingGL::getInstance().viewScale.value()) {
             current_index = i;
