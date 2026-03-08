@@ -34,9 +34,9 @@ Part::Part(
 	_vert_texture = std::make_unique<PointVectorLayer>();
 	_vert_texture_origin = std::make_unique<PointVectorLayer>();
 
-	PointVectorLayerToMut& currentLayer = *PiYingGL::getInstance().currentLayer();
+	PointVectorLayer& currentLayer = *PiYingGL::getInstance().currentLayer();
 
-	std::vector<int> hashIndex(currentLayer.size(), -1);
+	std::vector<int> hashIndex(currentLayer.element_size(), -1);
 
 	int currentIndex = 0;
 

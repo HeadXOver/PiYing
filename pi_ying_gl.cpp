@@ -70,7 +70,7 @@ void PiYingGL::add_character(const QString& imageName)
 	characterTextures.append(new CharacterTexture(img));
 	doneCurrent();
 	characterTriangleIndices.push_back(std::vector<unsigned int>());
-	characterVerts.push_back(new PointVector());
+	characterVerts.push_back(new PointVectorLayer());
 
 	QIcon icon(QPixmap::fromImage(img).scaled(50, 50, Qt::KeepAspectRatio, Qt::SmoothTransformation));
 
@@ -78,7 +78,7 @@ void PiYingGL::add_character(const QString& imageName)
 	item->setTextAlignment(Qt::AlignCenter);
 
 	if (getCurrentChRow() < 0) {
-		_currentLayer = new PointVectorLayerToMut(*characterVerts[0]);
+		_currentLayer = characterVerts[0];
 		_currentIndex = &characterTriangleIndices[0];
 	}
 
@@ -106,7 +106,7 @@ void PiYingGL::update_ch_tool()
 	int currentVector = getCurrentChRow();
 	if (currentVector < 0) return;
 
-	_currentLayer = new PointVectorLayerToMut(*characterVerts[currentVector]);
+	_currentLayer = characterVerts[currentVector];
 	_currentIndex = &characterTriangleIndices[currentVector];
 
 	ch_element_tool_ = std::make_unique<ChElementTool>(_ch_tool_state);

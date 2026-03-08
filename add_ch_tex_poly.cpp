@@ -20,7 +20,7 @@ void AddChTexPoly::enter()
 
 	for (int i = 0; i < size; i++) {
 		if (index[i] < 0) {
-			index[i] = (int)PiYingGL::getInstance().currentLayer()->size();
+			index[i] = (int)PiYingGL::getInstance().currentLayer()->element_size();
 			PiYingGL::getInstance().add_point_to_vert(points[i]);
 		}
 	}
@@ -57,9 +57,9 @@ void AddChTexPoly::click(const QPointF& mouseOri)
 
 	if (checkPointRepeat(mouse))  return;
 
-	const PointVectorLayerToMut& layer = *piYingGL.currentLayer();
+	const PointVectorLayer& layer = *piYingGL.currentLayer();
 
-	for (unsigned int i = 0; i < layer.size(); i++) {
+	for (unsigned int i = 0; i < layer.element_size(); i++) {
 		const QPointF& readyPoint = layer.get(i, false);
 		if (QLineF(readyPoint, mouse).length() < 0.02f / piYingGL.viewScale.value()) {
 			if (!index.contains(i)) {

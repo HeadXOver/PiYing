@@ -102,9 +102,9 @@ void ChElementLibreSelect::release(const QPointF& mouse)
 
 	if (!KeyboardStateWin::isCtrlHeld()) chElementSelect->clear();
 
-	const PointVectorLayerToMut& points = *PiYingGL::getInstance().currentLayer();
+	const PointVectorLayer& points = *PiYingGL::getInstance().currentLayer();
 	QPointF existingPoint;
-	for (unsigned int i = 0; i < points.size(); i++) {
+	for (unsigned int i = 0; i < points.element_size(); i++) {
 		existingPoint = points.get(i, edit_skelen);
 		if (polygon.containsPoint(existingPoint, Qt::OddEvenFill) && !chElementSelect->contains(i)) {
 			chElementSelect->append(i);

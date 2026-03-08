@@ -10,7 +10,7 @@ void PiYingGL::add_point_to_vert(const QPointF& p)
 
 void PiYingGL::addChVert(const QPointF& point)
 {
-	_currentIndex->push_back((unsigned int)_currentLayer->size());
+	_currentIndex->push_back((unsigned int)_currentLayer->element_size());
 	_currentLayer->push_back(point);
 }
 

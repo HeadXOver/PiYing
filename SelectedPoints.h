@@ -3,12 +3,12 @@
 #include <qlist>
 #include <qpointf>
 
-class PointVectorLayerToMut;
+class PointVectorLayer;
 
 class SelectedPoints
 {
 public:
-	SelectedPoints(PointVectorLayerToMut& vert) : sVert(vert) {}
+	SelectedPoints(PointVectorLayer& vert) : sVert(vert) {}
 
 	const QList<unsigned int>& index() const noexcept { return selectedIndex; }
 	const QList<QPointF>& vert() const noexcept { return lastVertPos; }
@@ -30,6 +30,6 @@ private:
 	QList<unsigned int> selectedIndex;
 	QList<QPointF> lastVertPos;
 
-	PointVectorLayerToMut& sVert;
+	PointVectorLayer& sVert;
 };
 
