@@ -98,10 +98,7 @@ void PiYingGL::update_ch_tool()
 {
 	ch_element_tool_ = nullptr;
 
-	if (_currentLayer) {
-		delete _currentLayer;
-		_currentLayer = nullptr;
-	}
+	_currentLayer = nullptr;
 
 	int currentVector = getCurrentChRow();
 	if (currentVector < 0) return;
