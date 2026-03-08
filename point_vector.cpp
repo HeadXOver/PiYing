@@ -81,3 +81,62 @@ const QPointF PointVector::operator[](size_t i) const
 	const size_t i2 = i + i;
 	return QPointF(points[i2], points[i2 + 1]);
 }
+
+///////////////////////////////////////////////////////////////////////////////////
+
+PointVectorLayer::PointVectorLayer(PointVector& pointVector) : point_vector(pointVector)
+{
+}
+
+const QPointF PointVectorLayer::operator[](size_t index) const
+{
+	return point_vector[index + index];
+}
+
+const QPointF PointVectorLayer::operator()(size_t index) const
+{
+	return point_vector[index + index + 1];
+}
+
+const QPointF PointVectorLayer::get(size_t index, bool isSkelen) const
+{
+	return point_vector[index + index + (isSkelen ? 0 : 1)];
+}
+
+void PointVectorLayer::push_back(const QPointF& point)
+{
+	point_vector.push_back(point);
+	point_vector.push_back(point);
+}
+
+void PointVectorLayer::push_back(const QPointF& tex, const QPointF& ske)
+{
+	point_vector.push_back(ske);
+	point_vector.push_back(tex);
+}
+
+void PointVectorLayer::set_point(bool edit_skelon, int index, const QPointF& point)
+{
+	int index_ = edit_skelon ? index + index : index + index + 1;
+	point_vector.set_point(index_, point);
+}
+
+void PointVectorLayer::copy_from_to(int from, int to)
+{
+	point_vector.set_point(to + to, point_vector[from + from]);
+	point_vector.set_point(to + to + 1, point_vector[from + from + 1]);
+}
+
+void PointVectorLayer::clear() noexcept
+{
+	point_vector.clear();
+}
+
+size_t PointVectorLayer::size() const noexcept
+{
+	return point_vector.point_size() / 2;
+}
+
+void PointVectorLayer::resize(int size) {
+	point_vector.resize(size * 2);
+}

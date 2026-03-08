@@ -59,7 +59,7 @@ void ChAddVertTrace::draw()
 {
 	if (current_index < 0) return;
 
-	const PointVectorLayer& pointLayer = *PiYingGL::getInstance().currentLayer();
+	const PointVectorLayerToMut& pointLayer = *PiYingGL::getInstance().currentLayer();
 
 	QPointF selectPoint = PiYingGL::getInstance().mapViewProjMatrix(TimelineGl::getInstance().get_current_part()->get_vert(current_index, true));
 

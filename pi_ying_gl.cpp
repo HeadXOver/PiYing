@@ -78,7 +78,7 @@ void PiYingGL::add_character(const QString& imageName)
 	item->setTextAlignment(Qt::AlignCenter);
 
 	if (getCurrentChRow() < 0) {
-		_currentLayer = new PointVectorLayer(*characterVerts[0]);
+		_currentLayer = new PointVectorLayerToMut(*characterVerts[0]);
 		_currentIndex = &characterTriangleIndices[0];
 	}
 
@@ -106,7 +106,7 @@ void PiYingGL::update_ch_tool()
 	int currentVector = getCurrentChRow();
 	if (currentVector < 0) return;
 
-	_currentLayer = new PointVectorLayer(*characterVerts[currentVector]);
+	_currentLayer = new PointVectorLayerToMut(*characterVerts[currentVector]);
 	_currentIndex = &characterTriangleIndices[currentVector];
 
 	ch_element_tool_ = std::make_unique<ChElementTool>(_ch_tool_state);

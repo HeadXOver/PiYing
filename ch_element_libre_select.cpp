@@ -102,7 +102,7 @@ void ChElementLibreSelect::release(const QPointF& mouse)
 
 	if (!KeyboardStateWin::isCtrlHeld()) chElementSelect->clear();
 
-	const PointVectorLayer& points = *PiYingGL::getInstance().currentLayer();
+	const PointVectorLayerToMut& points = *PiYingGL::getInstance().currentLayer();
 	QPointF existingPoint;
 	for (unsigned int i = 0; i < points.size(); i++) {
 		existingPoint = points.get(i, edit_skelen);

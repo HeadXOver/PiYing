@@ -34,9 +34,9 @@ Part::Part(
 	_vert_texture = std::make_unique<PointVector>();
 	_vert_texture_origin = std::make_unique<PointVector>();
 
-	PointVectorLayer layer(*_vert_texture);
+	PointVectorLayerToMut layer(*_vert_texture);
 
-	PointVectorLayer& currentLayer = *PiYingGL::getInstance().currentLayer();
+	PointVectorLayerToMut& currentLayer = *PiYingGL::getInstance().currentLayer();
 
 	std::vector<int> hashIndex(currentLayer.size(), -1);
 
@@ -221,7 +221,7 @@ void Part::add_trace(int index, const QPolygonF& polygon)
 
 void Part::update_scale()
 {
-	PointVectorLayer layer(*_vert_texture);
+	PointVectorLayerToMut layer(*_vert_texture);
 
 	const QPointF& firstPoint = layer.get(0, true);
 	float top = firstPoint.y();
@@ -291,8 +291,8 @@ void Part::change_slider_value(size_t sliderIndex, int value)
 {
 	_slide_applier->change_current_value(sliderIndex, value);
 
-	PointVectorLayer layer(*_vert_texture);
-	PointVectorLayer layer_origin(*_vert_texture_origin);
+	PointVectorLayerToMut layer(*_vert_texture);
+	PointVectorLayerToMut layer_origin(*_vert_texture_origin);
 
 	const std::unordered_map<unsigned int, QPolygonF>& tracesByPoint = _slide_applier->get_trace_map(sliderIndex);
 
@@ -380,7 +380,7 @@ void Part::update_transform(const QMatrix4x4& parentWorld)
 
 float Part::local_top() const
 {
-	const PointVectorLayer layer(*_vert_texture);
+	const PointVectorLayerToMut layer(*_vert_texture);
 
 	float top = layer.get(0, true).y();
 
@@ -393,7 +393,7 @@ float Part::local_top() const
 
 float Part::local_bottom() const
 {
-	const PointVectorLayer layer(*_vert_texture);
+	const PointVectorLayerToMut layer(*_vert_texture);
 
 	float bottom = layer.get(0, true).y();
 
@@ -406,7 +406,7 @@ float Part::local_bottom() const
 
 float Part::local_left() const
 {
-	const PointVectorLayer layer(*_vert_texture);
+	const PointVectorLayerToMut layer(*_vert_texture);
 
 	float left = layer.get(0, true).x();
 
@@ -419,7 +419,7 @@ float Part::local_left() const
 
 float Part::local_right() const
 {
-	const PointVectorLayer layer(*_vert_texture);
+	const PointVectorLayerToMut layer(*_vert_texture);
 
 	float right = layer.get(0, true).x();
 

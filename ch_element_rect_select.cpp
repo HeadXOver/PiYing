@@ -67,7 +67,7 @@ void ChElementRectSelect::release(const QPointF& mouse)
 	if(!KeyboardStateWin::isCtrlHeld()) chElementSelect->clear();
 
 	const QRectF rect(chElementSelect->get_last_pos(), mouse);
-	const PointVectorLayer& pointVector = *PiYingGL::getInstance().currentLayer();
+	const PointVectorLayerToMut& pointVector = *PiYingGL::getInstance().currentLayer();
 	QPointF pos;
 	for (unsigned int i = 0; i < pointVector.size(); i++) {
 		pos = PiYingGL::getInstance().mapViewProjMatrix(pointVector.get(i, chElementSelect->is_edit_skelen()));

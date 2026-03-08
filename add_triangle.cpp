@@ -62,7 +62,7 @@ void AddTriangle::click(const QPointF& mouseOri)
 	if (checkPointRepeat(mouse))  return;
 
 	int indRepeat = -1;
-	const PointVectorLayer& pointVector = *piYingGL.currentLayer();
+	const PointVectorLayerToMut& pointVector = *piYingGL.currentLayer();
 	for (int i = 0; i < pointVector.size(); i++) {
 		if (QLineF(pointVector(i), mouse).length() < 0.02f / piYingGL.viewScale.value()) {
 			indRepeat = i;
@@ -142,7 +142,7 @@ void AddTriangle::draw()
 	if (numInd == 0 && numVert == 0) return;
 
 	std::vector<QPointF> toDraw;
-	const PointVectorLayer& pointVector = *PiYingGL::getInstance().currentLayer();
+	const PointVectorLayerToMut& pointVector = *PiYingGL::getInstance().currentLayer();
 	if (numInd == 1 && numVert == 0) {
 		toDraw.push_back(pointVector(firstIndex));
 	}

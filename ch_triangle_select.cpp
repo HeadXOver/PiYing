@@ -39,7 +39,7 @@ void ChTriangleSelect::enter()
 void ChTriangleSelect::deleteElement()
 {
     std::vector<unsigned int>& idx = *PiYingGL::getInstance().currentIndex();
-    PointVectorLayer& pointLayer = *PiYingGL::getInstance().currentLayer();
+    PointVectorLayerToMut& pointLayer = *PiYingGL::getInstance().currentLayer();
     const size_t nVert = pointLayer.size();
     const size_t nTri = idx.size() / 3;
 
@@ -102,7 +102,7 @@ void ChTriangleSelect::draw_handle_and_selected()
     if (selected_trangle->size() == 0) return;
 
     // 计算中心点
-    PointVectorLayer& pointLayer = *PiYingGL::getInstance().currentLayer();
+    PointVectorLayerToMut& pointLayer = *PiYingGL::getInstance().currentLayer();
     _gl_handle_center = QPointF();
     for (unsigned int i : selected_trangle->index_list()) {
         _gl_handle_center += edit_skelen ? pointLayer[i] : pointLayer(i);
@@ -187,7 +187,7 @@ void ChTriangleSelect::moveHandle(const QPointF& mouse)
 {
     if (editMode == ChElementEditMode::None) return;
 
-    PointVectorLayer& pointLayer = *PiYingGL::getInstance().currentLayer();
+    PointVectorLayerToMut& pointLayer = *PiYingGL::getInstance().currentLayer();
 
     /// 根据 editMode 进行变换
     switch (editMode) {
@@ -261,7 +261,7 @@ void ChTriangleSelect::affirmHandle()
 
 void ChTriangleSelect::click_select(const QPointF& mouse)
 {
-    const PointVectorLayer& pointVector = *PiYingGL::getInstance().currentLayer();
+    const PointVectorLayerToMut& pointVector = *PiYingGL::getInstance().currentLayer();
     const std::vector<unsigned int>& triangleIndices = *PiYingGL::getInstance().currentIndex();
 
     QPointF eachTriangle[3];

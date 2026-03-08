@@ -93,7 +93,7 @@ void ChElementSelect::draw_handle_and_selected()
     if(selected_points->size() == 0) return;
 
     // 计算中心点
-    PointVectorLayer& pointLayer = *PiYingGL::getInstance().currentLayer();
+    PointVectorLayerToMut& pointLayer = *PiYingGL::getInstance().currentLayer();
     handleCenterPoint = QPointF();
     for (unsigned int i : selected_points->index()) {
         handleCenterPoint += _edit_shape ? pointLayer[i] : pointLayer(i);
@@ -180,7 +180,7 @@ void ChElementSelect::moveHandle(const QPointF& mouse)
 {
     if (editMode == ChElementEditMode::None) return;
 
-    PointVectorLayer& pointLayer = *PiYingGL::getInstance().currentLayer();
+    PointVectorLayerToMut& pointLayer = *PiYingGL::getInstance().currentLayer();
 
     switch (editMode) {
     case ChElementEditMode::Move: {
@@ -253,7 +253,7 @@ void ChElementSelect::affirmHandle()
 
 void ChElementSelect::click_select(const QPointF& mouse)
 {
-    const PointVectorLayer& pointVector = *PiYingGL::getInstance().currentLayer();
+    const PointVectorLayerToMut& pointVector = *PiYingGL::getInstance().currentLayer();
 
     for (unsigned int i = 0; i < pointVector.size(); i++) {
         if (QLineF(_edit_shape ? pointVector[i] : pointVector(i), mouse).length() < 0.02f / PiYingGL::getInstance().viewScale.value()) {

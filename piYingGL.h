@@ -33,7 +33,7 @@ class QMenu;
 class ChElementTool;
 class QOpenGLShaderProgram;
 class PointVector;
-class PointVectorLayer;
+class PointVectorLayerToMut;
 class CtrlSlideWidget;
 class SlideApplier;
 class VertGroups;
@@ -154,7 +154,7 @@ public:
 	CharacterToolState ch_tool_state() const noexcept { return _ch_tool_state; }
 
 	std::vector<unsigned int>* currentIndex() noexcept { return _currentIndex; }
-	PointVectorLayer* currentLayer() noexcept { return _currentLayer; }
+	PointVectorLayerToMut* currentLayer() noexcept { return _currentLayer; }
 
 public:
 	EditMode editMode;
@@ -208,5 +208,5 @@ private:
 	std::unique_ptr<ChElementTool> ch_element_tool_;
 
 	std::vector<unsigned int>* _currentIndex = nullptr;
-	PointVectorLayer* _currentLayer = nullptr;
+	PointVectorLayerToMut* _currentLayer = nullptr;
 };
