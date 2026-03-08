@@ -1,7 +1,7 @@
 #include "add_ch_tex_poly.h"
 
 #include "piYingGL.h"
-#include "point_vector_layer.h"
+#include "point_vector.h"
 
 #include <qpainter>
 

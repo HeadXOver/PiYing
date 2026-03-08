@@ -1,7 +1,5 @@
 #pragma once
 
-#include "ch_element_tool_behavior.h"
-
 #include <memory>
 #include <qpolygon>
 

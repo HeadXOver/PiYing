@@ -133,6 +133,7 @@
     <ClCompile Include="merge_parts.cpp" />
     <ClCompile Include="parts.cpp" />
     <ClCompile Include="part_cursor.cpp" />
+    <ClCompile Include="part_vert_rect_select.cpp" />
     <ClCompile Include="timeline_gl_event.cpp" />
     <ClCompile Include="timeline_glfunc.cpp" />
     <ClCompile Include="timeline_gl_draw.cpp" />
@@ -187,6 +188,8 @@
     <ClInclude Include="Joint.h" />
     <ClInclude Include="part.h" />
     <ClInclude Include="parts.h" />
+    <ClInclude Include="part_vert_rect_select.h" />
+    <ClInclude Include="part_vert_select.h" />
     <ClInclude Include="selected_triangle.h" />
     <ClInclude Include="static_gl_const.h" />
     <ClInclude Include="time_line.h" />
@@ -200,7 +203,6 @@
     <ClInclude Include="image_texture.h" />
     <ClInclude Include="image_transform.h" />
     <ClInclude Include="point_vector.h" />
-    <ClInclude Include="point_vector_layer.h" />
     <ClInclude Include="SelectedPoints.h" />
     <ClInclude Include="slide_applier.h" />
     <QtMoc Include="time_line_gl.h" />

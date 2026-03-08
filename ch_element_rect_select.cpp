@@ -4,7 +4,7 @@
 #include "piYingGL.h"
 #include "SelectedPoints.h"
 #include "KeyboardStateWin.h"
-#include "point_vector_layer.h"
+#include "point_vector.h"
 
 #include "enum_select_handle_mode.h"
 #include "enum_edit_mode.h"
@@ -14,7 +14,6 @@
 #include <qmessagebox>
 
 ChElementRectSelect::ChElementRectSelect() :
-	edit_skelen(PiYingGL::getInstance().editMode == EditMode::characterSkeleton),
 	chElementSelect(std::make_unique<ChElementSelect>())
 {
 }
@@ -36,9 +35,7 @@ void ChElementRectSelect::draw()
 
 void ChElementRectSelect::click(const QPointF& mouseOri)
 {
-	chElementSelect->lastPos = mouseOri;
-
-	chElementSelect->changeEditMode();
+	chElementSelect->change_edit_mode_by_setting_last_pos(mouseOri);
 
 	if (chElementSelect->getEditMode() != ChElementEditMode::None) {
 		chElementSelect->affirmHandle();
@@ -67,15 +64,15 @@ void ChElementRectSelect::release(const QPointF& mouse)
 	if (!isDraw) return;
 	isDraw = false;
 
-	if(!KeyboardStateWin::isCtrlHeld()) chElementSelect->selected_points->clear();
+	if(!KeyboardStateWin::isCtrlHeld()) chElementSelect->clear();
 
-	const QRectF rect(chElementSelect->lastPos, mouse);
+	const QRectF rect(chElementSelect->get_last_pos(), mouse);
 	const PointVectorLayer& pointVector = *PiYingGL::getInstance().currentLayer();
 	QPointF pos;
 	for (unsigned int i = 0; i < pointVector.size(); i++) {
-		pos = PiYingGL::getInstance().mapViewProjMatrix(pointVector.get(i, edit_skelen));
-		if (rect.contains(pos) && !chElementSelect->selected_points->contains(i)) {
-			chElementSelect->selected_points->append(i);
+		pos = PiYingGL::getInstance().mapViewProjMatrix(pointVector.get(i, chElementSelect->is_edit_skelen()));
+		if (rect.contains(pos) && !chElementSelect->contains(i)) {
+			chElementSelect->append(i);
 		}
 	}
 

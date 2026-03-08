@@ -37,7 +37,7 @@ void ImageTransform::set_rot_radian(float degree) noexcept
 {
     _rot_radian = degree;
 
-    update_2_matrix();
+    update_all_matrix();
 }
 
 void ImageTransform::set_scale(float x, float y) noexcept
@@ -45,7 +45,7 @@ void ImageTransform::set_scale(float x, float y) noexcept
     _scale_x = x;
     _scale_y = y;
         
-    update_2_matrix();
+    update_all_matrix();
 }
 
 void ImageTransform::set_scale(float s) noexcept
@@ -53,7 +53,7 @@ void ImageTransform::set_scale(float s) noexcept
     _scale_x = s;
     _scale_y = s;
 
-    update_2_matrix();
+    update_all_matrix();
 }
 
 void ImageTransform::add_trans(float x, float y) noexcept
@@ -71,7 +71,7 @@ void ImageTransform::add_rot_radian(float degree) noexcept
 {
     _rot_radian += degree;
 
-    update_2_matrix();
+    update_all_matrix();
 }
 
 void ImageTransform::add_scale(float x, float y) noexcept
@@ -131,7 +131,7 @@ QMatrix4x4 ImageTransform::scale() const noexcept
     return QMatrix4x4(scaleMatrix);
 }
 
-void ImageTransform::update_2_matrix() noexcept
+void ImageTransform::update_all_matrix() noexcept
 {
     const float cosValue = cos(_rot_radian);
     const float sinValue = sin(_rot_radian);

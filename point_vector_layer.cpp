@@ -1,6 +1,5 @@
-#include "point_vector_layer.h"
-
 #include "point_vector.h"
+
 #include <qpointf>
 
 PointVectorLayer::PointVectorLayer(PointVector& pointVector) : point_vector(pointVector)

@@ -1,7 +1,7 @@
 ﻿#include "ch_element_add_round.h"
 
 #include "ask_round_poly_dialog.h"
-#include "point_vector_layer.h"
+#include "point_vector.h"
 #include "PiYingGL.h"
 
 #include <qpainter>

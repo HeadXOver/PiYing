@@ -2,7 +2,7 @@
 #include "piYingGL.h"
 #include "SelectedPoints.h"
 #include "static_handle_zone.h"
-#include "point_vector_layer.h"
+#include "point_vector.h"
 #include "KeyboardStateWin.h"
 
 #include "enum_select_handle_mode.h"
@@ -13,10 +13,10 @@
 #include <qpainter>
 
 ChElementSelect::ChElementSelect() : 
-    edit_skelen(PiYingGL::getInstance().editMode == EditMode::characterSkeleton),
+    _edit_shape(PiYingGL::getInstance().editMode != EditMode::characterTexture),
     editMode(ChElementEditMode::None)
 {
-    selected_points = std::make_unique<SelectedPoints>(false, *PiYingGL::getInstance().currentLayer());
+    selected_points = std::make_unique<SelectedPoints>(*PiYingGL::getInstance().currentLayer());
 }
 
 ChElementSelect::~ChElementSelect()
@@ -96,7 +96,7 @@ void ChElementSelect::draw_handle_and_selected()
     PointVectorLayer& pointLayer = *PiYingGL::getInstance().currentLayer();
     handleCenterPoint = QPointF();
     for (unsigned int i : selected_points->index()) {
-        handleCenterPoint += edit_skelen ? pointLayer[i] : pointLayer(i);
+        handleCenterPoint += _edit_shape ? pointLayer[i] : pointLayer(i);
     }
     
     handleCenterPoint /= selected_points->size();
@@ -147,8 +147,10 @@ void ChElementSelect::draw_handle_and_selected()
     PiYingGL::getInstance().draw_selected_points(selected_points->size());
 }
 
-void ChElementSelect::changeEditMode()
+void ChElementSelect::change_edit_mode_by_setting_last_pos(const QPointF& mouse)
 {
+    lastPos = mouse;
+
     if (selected_points->size() == 0) {
         editMode = ChElementEditMode::None;
         return;
@@ -184,19 +186,19 @@ void ChElementSelect::moveHandle(const QPointF& mouse)
     case ChElementEditMode::Move: {
         QPointF toMove = PiYingGL::getInstance().GLViewProjMatrixInvert(mouse) - PiYingGL::getInstance().GLViewProjMatrixInvert(lastPos);
         for (int i = 0; i < selected_points->size(); i++) {
-            pointLayer.set_point(edit_skelen, (*selected_points)[i], selected_points->getVert(i) + toMove);
+            pointLayer.set_point(_edit_shape, (*selected_points)[i], selected_points->getVert(i) + toMove);
         }
     }break;
     case ChElementEditMode::MoveX: {
         QPointF toMove = PiYingGL::getInstance().GLViewProjMatrixInvert(mouse.x(), 0.f) - PiYingGL::getInstance().GLViewProjMatrixInvert(lastPos.x(), 0.f);
         for (int i = 0; i < selected_points->size(); i++) {
-            pointLayer.set_point(edit_skelen, (*selected_points)[i], selected_points->getVert(i) + toMove);
+            pointLayer.set_point(_edit_shape, (*selected_points)[i], selected_points->getVert(i) + toMove);
         }
     }break;
     case ChElementEditMode::MoveY: {
         QPointF toMove = PiYingGL::getInstance().GLViewProjMatrixInvert(0.f, mouse.y()) - PiYingGL::getInstance().GLViewProjMatrixInvert(0.f, lastPos.y());
         for (int i = 0; i < selected_points->size(); i++) {
-            pointLayer.set_point(edit_skelen, (*selected_points)[i], selected_points->getVert(i) + toMove);
+            pointLayer.set_point(_edit_shape, (*selected_points)[i], selected_points->getVert(i) + toMove);
         }
     }break;
     case ChElementEditMode::Rotate: {
@@ -205,9 +207,9 @@ void ChElementSelect::moveHandle(const QPointF& mouse)
         float angle = angleBetweenPoint(lastPos - lastDHandleCenterPoint, mouse - lastDHandleCenterPoint);
         QPointF toRot = PiYingGL::getInstance().getInsProj().map(lastHandleCenterPoint);
         for (int i = 0; i < selected_points->size(); i++) {
-            pointLayer.set_point(edit_skelen, (*selected_points)[i], toRot + getRotatedPoint(PiYingGL::getInstance().getInsProj().map(selected_points->getVert(i) - lastHandleCenterPoint), angle));
-            pointLayer.set_point(edit_skelen, (*selected_points)[i], PiYingGL::getInstance().getProj().map(
-                edit_skelen ?
+            pointLayer.set_point(_edit_shape, (*selected_points)[i], toRot + getRotatedPoint(PiYingGL::getInstance().getInsProj().map(selected_points->getVert(i) - lastHandleCenterPoint), angle));
+            pointLayer.set_point(_edit_shape, (*selected_points)[i], PiYingGL::getInstance().getProj().map(
+                _edit_shape ?
                 pointLayer[(*selected_points)[i]] :
                 pointLayer((*selected_points)[i]))
             );
@@ -217,7 +219,7 @@ void ChElementSelect::moveHandle(const QPointF& mouse)
         float scale = (mouse.x() + mouse.y() - dHandleCenterPoint.x() - dHandleCenterPoint.y()) / (ROTATEHANDLE_RADIUS + ROTATEHANDLE_RADIUS);
         QPointF toScale = lastHandleCenterPoint * (scale - 1);
         for (int i = 0; i < selected_points->size(); i++) {
-            pointLayer.set_point(edit_skelen, (*selected_points)[i], selected_points->getVert(i) * scale - toScale);
+            pointLayer.set_point(_edit_shape, (*selected_points)[i], selected_points->getVert(i) * scale - toScale);
         }
     }break;
     case ChElementEditMode::ScaleX: {
@@ -225,7 +227,7 @@ void ChElementSelect::moveHandle(const QPointF& mouse)
         float scaleX = lastDHandleCenterPoint.x() * (1 - scale);
         for (int i = 0; i < selected_points->size(); i++) {
             QPointF mapOri = PiYingGL::getInstance().mapViewProjMatrix(selected_points->getVert(i));
-            pointLayer.set_point(edit_skelen, (*selected_points)[i], PiYingGL::getInstance().GLViewProjMatrixInvert(mapOri.x() * scale + scaleX, mapOri.y()));
+            pointLayer.set_point(_edit_shape, (*selected_points)[i], PiYingGL::getInstance().GLViewProjMatrixInvert(mapOri.x() * scale + scaleX, mapOri.y()));
         }
     }break;
     case ChElementEditMode::ScaleY: {
@@ -233,7 +235,7 @@ void ChElementSelect::moveHandle(const QPointF& mouse)
         float scaleY = lastDHandleCenterPoint.y() * (1 - scale);
         for (int i = 0; i < selected_points->size(); i++) {
             QPointF mapOri = PiYingGL::getInstance().mapViewProjMatrix(selected_points->getVert(i));
-            pointLayer.set_point(edit_skelen, (*selected_points)[i], PiYingGL::getInstance().GLViewProjMatrixInvert(mapOri.x(), mapOri.y() * scale + scaleY));
+            pointLayer.set_point(_edit_shape, (*selected_points)[i], PiYingGL::getInstance().GLViewProjMatrixInvert(mapOri.x(), mapOri.y() * scale + scaleY));
         }
     }break;
     }
@@ -244,7 +246,7 @@ void ChElementSelect::moveHandle(const QPointF& mouse)
 
 void ChElementSelect::affirmHandle()
 {
-    selected_points->affirmVert(edit_skelen);
+    selected_points->affirmVert(_edit_shape);
     lastHandleCenterPoint = handleCenterPoint;
     lastDHandleCenterPoint = dHandleCenterPoint;
 }
@@ -254,7 +256,7 @@ void ChElementSelect::click_select(const QPointF& mouse)
     const PointVectorLayer& pointVector = *PiYingGL::getInstance().currentLayer();
 
     for (unsigned int i = 0; i < pointVector.size(); i++) {
-        if (QLineF(edit_skelen ? pointVector[i] : pointVector(i), mouse).length() < 0.02f / PiYingGL::getInstance().viewScale.value()) {
+        if (QLineF(_edit_shape ? pointVector[i] : pointVector(i), mouse).length() < 0.02f / PiYingGL::getInstance().viewScale.value()) {
             if (selected_points->contains(i)) return;
 
             if (!KeyboardStateWin::isCtrlHeld()) selected_points->clear(); 
@@ -277,11 +279,21 @@ void ChElementSelect::update_selected_to_draw()
     selectedPointsFloat.reserve(selectedPoints.size() * 2);
 
     for (int i = 0; i < selectedPoints.size(); i++) {
-        const QPointF& selectPoint = PiYingGL::getInstance().currentLayer()->get(selectedPoints[i], edit_skelen);
+        const QPointF& selectPoint = PiYingGL::getInstance().currentLayer()->get(selectedPoints[i], _edit_shape);
 
         selectedPointsFloat.push_back(selectPoint.x());
         selectedPointsFloat.push_back(selectPoint.y());
     }
 
     PiYingGL::getInstance().update_selected_verts(selectedPointsFloat);
+}
+
+void ChElementSelect::clear()
+{
+    selected_points->clear();
+}
+
+bool ChElementSelect::contains(unsigned int index) const noexcept
+{
+    return selected_points->contains(index);
 }

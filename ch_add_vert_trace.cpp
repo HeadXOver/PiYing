@@ -1,6 +1,6 @@
 #include "ch_add_vert_trace.h"
 
-#include "point_vector_layer.h"
+#include "point_vector.h"
 #include "piYingGL.h"
 #include "time_line_gl.h"
 #include "part.h"

@@ -1,6 +1,6 @@
 #include "selected_triangle.h"
 
-#include "point_vector_layer.h"
+#include "point_vector.h"
 
 namespace {
 	bool is_same_triangle(const unsigned int* a, const unsigned int* b) 

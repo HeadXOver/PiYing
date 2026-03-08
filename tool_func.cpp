@@ -1,6 +1,6 @@
 #include "piYingGL.h"
 
-#include "point_vector_layer.h"
+#include "point_vector.h"
 #include "static_gl_const.h"
 
 void PiYingGL::add_point_to_vert(const QPointF& p)

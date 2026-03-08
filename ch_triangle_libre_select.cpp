@@ -4,7 +4,7 @@
 #include "piYingGL.h"
 #include "selected_triangle.h"
 #include "KeyboardStateWin.h"
-#include "point_vector_layer.h"
+#include "point_vector.h"
 
 #include "enum_select_handle_mode.h"
 #include "enum_edit_mode.h"

@@ -1,6 +1,7 @@
 #include "SelectedPoints.h"
 
-#include "point_vector_layer.h"
+#include "point_vector.h"
+#include "ch_element_select.h"
 
 const QPointF& SelectedPoints::getVert(int index) const
 {
@@ -11,6 +12,16 @@ void SelectedPoints::append(unsigned int ind)
 {
 	selectedIndex.append(ind);
 	lastVertPos.append(QPointF());
+}
+
+void ChElementSelect::push_back(unsigned int index)
+{
+	selected_points->append(index);
+}
+
+void ChElementSelect::append(unsigned int index)
+{
+	selected_points->append(index);
 }
 
 void SelectedPoints::affirmVert(bool edit_skelen)

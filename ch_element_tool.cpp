@@ -13,6 +13,9 @@
 #include "ch_triangle_libre_select.h"
 #include "ch_element_add_round.h"
 #include "ch_add_vert_trace.h"
+#include "part_vert_rect_select.h"
+
+#include "ch_element_tool_behavior.h"
 
 #include "enum_character_texture_tool_state.h"
 
@@ -133,6 +136,31 @@ void ChElementTool::construct_libre_select_triangle()
 	enterBehavior = std::make_unique<PiYingToolEnter<ChTriangleLibreSelect>>(data);
 }
 
+void ChElementTool::construct_libre_select_vert_part()
+{
+	std::shared_ptr<PartVertRectSelect> data = std::make_shared<PartVertRectSelect>();
+
+	enterBehavior = std::make_unique<PiYingVoidEnter>();
+	clickBehavior = std::make_unique<PiYingToolClick<PartVertRectSelect>>(data);
+	moveBehavior = std::make_unique<PiYingToolMouseMove<PartVertRectSelect>>(data);
+	releaseBehavior = std::make_unique<PiYingToolRelease<PartVertRectSelect>>(data);
+	escapeBehavior = std::make_unique<PiYingToolEscape<PartVertRectSelect>>(data);
+	deleteBehavior = std::make_unique<PiYingToolDelete<PartVertRectSelect>>(data);
+	drawBehavior = std::make_unique<PiYingToolDraw<PartVertRectSelect>>(data);
+}
+
+void ChElementTool::construct_rect_select_vert_part()
+{
+}
+
+void ChElementTool::construct_libre_select_triangle_part()
+{
+}
+
+void ChElementTool::construct_rect_select_triangle_part()
+{
+}
+
 ChElementTool::ChElementTool(CharacterToolState chToolState)
 {
 	switch (chToolState) {
@@ -145,6 +173,7 @@ ChElementTool::ChElementTool(CharacterToolState chToolState)
 	case CharacterToolState::AddVertTrace: construct_add_vert_trace(); return;
 	case CharacterToolState::RectSelectTriangle: construct_rect_select_triangle(); return;
 	case CharacterToolState::LibreSelectTriangle: construct_libre_select_triangle(); return;
+	case CharacterToolState::LibreSelectVertPart: construct_libre_select_triangle(); return;
 	default: construct_void(); return;
 	}
 }

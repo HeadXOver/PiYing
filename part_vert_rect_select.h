@@ -5,11 +5,11 @@
 
 class ChElementSelect;
 
-class ChElementRectSelect final
+class PartVertRectSelect final
 {
 public:
-	ChElementRectSelect();
-	~ChElementRectSelect() = default;
+	PartVertRectSelect();
+	~PartVertRectSelect() = default;
 
 	void draw();
 	void delete_element();
@@ -19,8 +19,4 @@ public:
 	void release(const QPointF& mouse);
 
 private:
-	std::unique_ptr<ChElementSelect> chElementSelect;
-	QPointF rect;
-	bool isDraw = false;
 };
- 

@@ -38,7 +38,7 @@ private:
 	QPointF lastDHandleCenterPoint;
 
 	QPointF lastPos;
-	
+
 	const bool _edit_shape;
 	ChElementEditMode editMode;
 

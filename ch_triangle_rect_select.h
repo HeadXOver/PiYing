@@ -3,8 +3,6 @@
 #include <memory>
 #include <qpointf>
 
-#include "ch_element_tool_behavior.h"
-
 class ChTriangleSelect;
 
 class ChTriangleRectSelect final

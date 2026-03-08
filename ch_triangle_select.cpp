@@ -3,7 +3,7 @@
 #include "piYingGL.h"
 #include "selected_triangle.h"
 #include "static_handle_zone.h"
-#include "point_vector_layer.h"
+#include "point_vector.h"
 #include "KeyboardStateWin.h"
 
 #include "enum_select_handle_mode.h"
@@ -103,14 +103,14 @@ void ChTriangleSelect::draw_handle_and_selected()
 
     // 计算中心点
     PointVectorLayer& pointLayer = *PiYingGL::getInstance().currentLayer();
-    handleCenterPoint = QPointF();
+    _gl_handle_center = QPointF();
     for (unsigned int i : selected_trangle->index_list()) {
-        handleCenterPoint += edit_skelen ? pointLayer[i] : pointLayer(i);
+        _gl_handle_center += edit_skelen ? pointLayer[i] : pointLayer(i);
     }
 
-    handleCenterPoint /= selected_trangle->size();
+    _gl_handle_center /= selected_trangle->size();
 
-    dHandleCenterPoint = PiYingGL::getInstance().mapViewProjMatrix(handleCenterPoint);
+    _widget_handle_center = PiYingGL::getInstance().mapViewProjMatrix(_gl_handle_center);
 
 /// 以下区域代码，绘制控制柄，只与 dHandleCenterPoint 有关，所以折叠
 #pragma region [draw handle] 
@@ -121,34 +121,34 @@ void ChTriangleSelect::draw_handle_and_selected()
 
     // 绘制圆
     painter.setPen(QPen(Qt::black, 4));
-    painter.drawEllipse(dHandleCenterPoint, ROTATEHANDLE_RADIUS, ROTATEHANDLE_RADIUS);
+    painter.drawEllipse(_widget_handle_center, ROTATEHANDLE_RADIUS, ROTATEHANDLE_RADIUS);
     painter.setPen(QPen(Qt::yellow, 2));
-    painter.drawEllipse(dHandleCenterPoint, ROTATEHANDLE_RADIUS, ROTATEHANDLE_RADIUS);
+    painter.drawEllipse(_widget_handle_center, ROTATEHANDLE_RADIUS, ROTATEHANDLE_RADIUS);
 
     // 绘制移动控制柄
     painter.setPen(QPen(Qt::black, 6));
-    painter.drawLine(dHandleCenterPoint.x() - MOVEHANDLE_LENTH, dHandleCenterPoint.y(), dHandleCenterPoint.x() + MOVEHANDLE_LENTH, dHandleCenterPoint.y());
-    painter.drawLine(dHandleCenterPoint.x(), dHandleCenterPoint.y() - MOVEHANDLE_LENTH, dHandleCenterPoint.x(), dHandleCenterPoint.y() + MOVEHANDLE_LENTH);
+    painter.drawLine(_widget_handle_center.x() - MOVEHANDLE_LENTH, _widget_handle_center.y(), _widget_handle_center.x() + MOVEHANDLE_LENTH, _widget_handle_center.y());
+    painter.drawLine(_widget_handle_center.x(), _widget_handle_center.y() - MOVEHANDLE_LENTH, _widget_handle_center.x(), _widget_handle_center.y() + MOVEHANDLE_LENTH);
     painter.setPen(QPen(Qt::green, 4));
-    painter.drawLine(dHandleCenterPoint.x() - MOVEHANDLE_LENTH, dHandleCenterPoint.y(), dHandleCenterPoint.x() + MOVEHANDLE_LENTH, dHandleCenterPoint.y());
+    painter.drawLine(_widget_handle_center.x() - MOVEHANDLE_LENTH, _widget_handle_center.y(), _widget_handle_center.x() + MOVEHANDLE_LENTH, _widget_handle_center.y());
     painter.setPen(QPen(Qt::red, 4));
-    painter.drawLine(dHandleCenterPoint.x(), dHandleCenterPoint.y() - MOVEHANDLE_LENTH, dHandleCenterPoint.x(), dHandleCenterPoint.y() + MOVEHANDLE_LENTH);
+    painter.drawLine(_widget_handle_center.x(), _widget_handle_center.y() - MOVEHANDLE_LENTH, _widget_handle_center.x(), _widget_handle_center.y() + MOVEHANDLE_LENTH);
 
     // 绘制中心点
     painter.setPen(QPen(Qt::black, 12));
-    painter.drawPoint(dHandleCenterPoint);
+    painter.drawPoint(_widget_handle_center);
     painter.setPen(QPen(Qt::yellow, HANDLE_ZONE));
-    painter.drawPoint(dHandleCenterPoint);
+    painter.drawPoint(_widget_handle_center);
 
     // 绘制缩放控制柄
     painter.setPen(QPen(Qt::black, 12));
-    painter.drawPoint(dHandleCenterPoint.x(), dHandleCenterPoint.y() + SCALEHANDLE_DISTANCE);
-    painter.drawPoint(dHandleCenterPoint.x() + SCALEHANDLE_DISTANCE, dHandleCenterPoint.y());
-    painter.drawPoint(dHandleCenterPoint.x() + ROTATEHANDLE_RADIUS, dHandleCenterPoint.y() + ROTATEHANDLE_RADIUS);
+    painter.drawPoint(_widget_handle_center.x(), _widget_handle_center.y() + SCALEHANDLE_DISTANCE);
+    painter.drawPoint(_widget_handle_center.x() + SCALEHANDLE_DISTANCE, _widget_handle_center.y());
+    painter.drawPoint(_widget_handle_center.x() + ROTATEHANDLE_RADIUS, _widget_handle_center.y() + ROTATEHANDLE_RADIUS);
     painter.setPen(QPen(Qt::yellow, HANDLE_ZONE));
-    painter.drawPoint(dHandleCenterPoint.x(), dHandleCenterPoint.y() + SCALEHANDLE_DISTANCE);
-    painter.drawPoint(dHandleCenterPoint.x() + SCALEHANDLE_DISTANCE, dHandleCenterPoint.y());
-    painter.drawPoint(dHandleCenterPoint.x() + ROTATEHANDLE_RADIUS, dHandleCenterPoint.y() + ROTATEHANDLE_RADIUS);
+    painter.drawPoint(_widget_handle_center.x(), _widget_handle_center.y() + SCALEHANDLE_DISTANCE);
+    painter.drawPoint(_widget_handle_center.x() + SCALEHANDLE_DISTANCE, _widget_handle_center.y());
+    painter.drawPoint(_widget_handle_center.x() + ROTATEHANDLE_RADIUS, _widget_handle_center.y() + ROTATEHANDLE_RADIUS);
 
 #pragma endregion 
 
@@ -163,22 +163,22 @@ void ChTriangleSelect::changeEditMode()
         return;
     }
 
-    qreal length = QLineF(dHandleCenterPoint, lastPos).length();
+    qreal length = QLineF(_widget_handle_center, lastPos).length();
 
     editMode =
         (length <= ROTATEHANDLE_RADIUS + HANDLE_ZONE && length >= ROTATEHANDLE_RADIUS - HANDLE_ZONE) ?
         ChElementEditMode::Rotate :     // 判断是否在旋转控制柄上
-        (PiYingCus::isInRect(lastPos, dHandleCenterPoint, HANDLE_ZONE)) ?
+        (PiYingCus::isInRect(lastPos, _widget_handle_center, HANDLE_ZONE)) ?
         ChElementEditMode::Move :       // 判断是否在中心点上
-        (PiYingCus::isInRect(lastPos, dHandleCenterPoint, MOVEHANDLE_LENTH * 2, HANDLE_ZONE)) ?
+        (PiYingCus::isInRect(lastPos, _widget_handle_center, MOVEHANDLE_LENTH * 2, HANDLE_ZONE)) ?
         ChElementEditMode::MoveX :      // 判断是否在移动控制柄X上
-        (PiYingCus::isInRect(lastPos, dHandleCenterPoint, HANDLE_ZONE, MOVEHANDLE_LENTH * 2)) ?
+        (PiYingCus::isInRect(lastPos, _widget_handle_center, HANDLE_ZONE, MOVEHANDLE_LENTH * 2)) ?
         ChElementEditMode::MoveY :      // 判断是否在移动控制柄Y上
-        (PiYingCus::isInRect(lastPos, dHandleCenterPoint + QPoint(ROTATEHANDLE_RADIUS, ROTATEHANDLE_RADIUS), HANDLE_ZONE)) ?
+        (PiYingCus::isInRect(lastPos, _widget_handle_center + QPoint(ROTATEHANDLE_RADIUS, ROTATEHANDLE_RADIUS), HANDLE_ZONE)) ?
         ChElementEditMode::Scale :      // 判断是否在缩放控制柄上
-        (PiYingCus::isInRect(lastPos, dHandleCenterPoint + QPoint(SCALEHANDLE_DISTANCE, 0), HANDLE_ZONE)) ?
+        (PiYingCus::isInRect(lastPos, _widget_handle_center + QPoint(SCALEHANDLE_DISTANCE, 0), HANDLE_ZONE)) ?
         ChElementEditMode::ScaleX :     // 判断是否在缩放控制柄X上
-        (PiYingCus::isInRect(lastPos, dHandleCenterPoint + QPoint(0, SCALEHANDLE_DISTANCE), HANDLE_ZONE)) ?
+        (PiYingCus::isInRect(lastPos, _widget_handle_center + QPoint(0, SCALEHANDLE_DISTANCE), HANDLE_ZONE)) ?
         ChElementEditMode::ScaleY :     // 判断是否在缩放控制柄Y上
         ChElementEditMode::None;        // 不在任何控制柄上                                                                                                             editMode = ChElementEditMode::None;     // 不在任何控制柄上
 }
@@ -224,7 +224,7 @@ void ChTriangleSelect::moveHandle(const QPointF& mouse)
         }
     }break;
     case ChElementEditMode::Scale: {
-        float scale = (mouse.x() + mouse.y() - dHandleCenterPoint.x() - dHandleCenterPoint.y()) / (ROTATEHANDLE_RADIUS + ROTATEHANDLE_RADIUS);
+        float scale = (mouse.x() + mouse.y() - _widget_handle_center.x() - _widget_handle_center.y()) / (ROTATEHANDLE_RADIUS + ROTATEHANDLE_RADIUS);
         QPointF toScale = lastHandleCenterPoint * (scale - 1);
         for (int i = 0; i < selected_trangle->size(); i++) {
             pointLayer.set_point(edit_skelen, (*selected_trangle)[i], selected_trangle->getVert(i) * scale - toScale);
@@ -255,8 +255,8 @@ void ChTriangleSelect::moveHandle(const QPointF& mouse)
 void ChTriangleSelect::affirmHandle()
 {
     selected_trangle->affirmVert(edit_skelen);
-    lastHandleCenterPoint = handleCenterPoint;
-    lastDHandleCenterPoint = dHandleCenterPoint;
+    lastHandleCenterPoint = _gl_handle_center;
+    lastDHandleCenterPoint = _widget_handle_center;
 }
 
 void ChTriangleSelect::click_select(const QPointF& mouse)

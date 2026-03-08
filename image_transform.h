@@ -13,7 +13,7 @@ public:
 
     float get_trans_x() const noexcept { return _trans_x; }
     float get_trans_y() const noexcept { return _trans_y; }
-    float get_rot_degree() const noexcept { return 180 * _rot_radian / 3.1415927f; }
+    float get_rot_degree() const noexcept { return _rot_radian * (180.f / 3.1415927f); }
     float get_rot_radian() const noexcept { return _rot_radian; }
     float get_scale_x() const noexcept { return _scale_x; }
     float get_scale_y() const noexcept { return _scale_y; }
@@ -33,7 +33,7 @@ public:
     QMatrix4x4 scale() const noexcept;
 
 private:
-    void update_2_matrix() noexcept;
+    void update_all_matrix() noexcept;
     void update_matrix_invert() noexcept;
 
 private:

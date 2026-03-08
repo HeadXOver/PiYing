@@ -3,7 +3,6 @@
 #include "parts.h"
 
 #include "point_vector.h"
-#include "point_vector_layer.h"
 
 #include "base_math.h"
 

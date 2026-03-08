@@ -181,9 +181,6 @@
     <ClCompile Include="ch_element_add_round.cpp">
       <Filter>Source Files\ChELementTool</Filter>
     </ClCompile>
-    <ClCompile Include="ask_round_poly_dialog.cpp">
-      <Filter>Source Files\PiYingQObject</Filter>
-    </ClCompile>
     <ClCompile Include="change_mode.cpp">
       <Filter>Source Files\PiYing</Filter>
     </ClCompile>
@@ -277,6 +274,12 @@
     <ClCompile Include="control_slider_toolbar.cpp">
       <Filter>Source Files\PiYingQObject</Filter>
     </ClCompile>
+    <ClCompile Include="part_vert_rect_select.cpp">
+      <Filter>Source Files\PiYingQObject</Filter>
+    </ClCompile>
+    <ClCompile Include="ask_round_poly_dialog.cpp">
+      <Filter>Source Files\ChELementTool</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="static_handle_zone.h">
@@ -337,9 +340,6 @@
       <Filter>Header Files\CustomTool</Filter>
     </ClInclude>
     <ClInclude Include="point_vector.h">
-      <Filter>Header Files\PiYingContainer</Filter>
-    </ClInclude>
-    <ClInclude Include="point_vector_layer.h">
       <Filter>Header Files\PiYingContainer</Filter>
     </ClInclude>
     <ClInclude Include="ch_element_add_round.h">
@@ -410,6 +410,12 @@
     </ClInclude>
     <ClInclude Include="control_slider_toolbar.h">
       <Filter>Header Files\PiYngQObject</Filter>
+    </ClInclude>
+    <ClInclude Include="part_vert_rect_select.h">
+      <Filter>Header Files\PiYingTool</Filter>
+    </ClInclude>
+    <ClInclude Include="part_vert_select.h">
+      <Filter>Header Files\PiYingTool</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

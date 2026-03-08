@@ -38,6 +38,10 @@ private:
 	void construct_add_vert_trace();
 	void construct_rect_select_triangle();
 	void construct_libre_select_triangle();
+	void construct_libre_select_vert_part();
+	void construct_rect_select_vert_part();
+	void construct_libre_select_triangle_part();
+	void construct_rect_select_triangle_part();
 
 private:
 

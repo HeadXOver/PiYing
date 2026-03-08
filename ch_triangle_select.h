@@ -31,8 +31,8 @@ public:
 	QPointF lastPos;
 
 private:
-	QPointF handleCenterPoint;
-	QPointF dHandleCenterPoint;
+	QPointF _gl_handle_center;
+	QPointF _widget_handle_center;
 	QPointF lastHandleCenterPoint;
 	QPointF lastDHandleCenterPoint;
 

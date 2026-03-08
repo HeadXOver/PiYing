@@ -4,7 +4,7 @@
 #include "piYingGL.h"
 #include "SelectedPoints.h"
 #include "KeyboardStateWin.h"
-#include "point_vector_layer.h"
+#include "point_vector.h"
 #include "enum_select_handle_mode.h"
 #include "enum_edit_mode.h"
 
@@ -46,11 +46,10 @@ void ChElementLibreSelect::draw()
 void ChElementLibreSelect::click(const QPointF& mouseOri)
 {
 	isPress = true;
-	chElementSelect->lastPos = mouseOri;
 
 	polygon.clear();
 
-	chElementSelect->changeEditMode();
+	chElementSelect->change_edit_mode_by_setting_last_pos(mouseOri);
 
 	if (chElementSelect->getEditMode() != ChElementEditMode::None) {
 		chElementSelect->affirmHandle();
@@ -101,14 +100,14 @@ void ChElementLibreSelect::release(const QPointF& mouse)
 
 	polygon << polygon.first();
 
-	if (!KeyboardStateWin::isCtrlHeld()) chElementSelect->selected_points->clear();
+	if (!KeyboardStateWin::isCtrlHeld()) chElementSelect->clear();
 
 	const PointVectorLayer& points = *PiYingGL::getInstance().currentLayer();
 	QPointF existingPoint;
 	for (unsigned int i = 0; i < points.size(); i++) {
 		existingPoint = points.get(i, edit_skelen);
-		if (polygon.containsPoint(existingPoint, Qt::OddEvenFill) && !chElementSelect->selected_points->contains(i)) {
-			chElementSelect->selected_points->append(i);
+		if (polygon.containsPoint(existingPoint, Qt::OddEvenFill) && !chElementSelect->contains(i)) {
+			chElementSelect->append(i);
 		}
 	}
 

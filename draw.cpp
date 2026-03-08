@@ -4,7 +4,6 @@
 #include "image_texture.h"
 #include "character_texture.h"
 #include "point_vector.h"
-#include "point_vector_layer.h"
 #include "base_math.h"
 #include "time_line_gl.h"
 #include "part.h"
