@@ -97,7 +97,6 @@ void PiYingGL::setEditMode(EditMode mode)
 void PiYingGL::update_ch_tool()
 {
 	ch_element_tool_ = nullptr;
-
 	_currentLayer = nullptr;
 
 	int currentVector = getCurrentChRow();
