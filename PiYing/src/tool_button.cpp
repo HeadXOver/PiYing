@@ -1,0 +1,60 @@
+#include "tool_button.h"
+
+#include <qwidget>
+#include <qaction>
+#include <qicon>
+
+ToolButton::ToolButton(const QString& selectedFileName, const QString& unselectedFileName, const QString& actionName, CharacterToolState state) :
+    selected_(selectedFileName),
+    unselected_(unselectedFileName)
+{
+    action_ = new QAction(unselected_, actionName);
+    toolState_ = state;
+}
+
+ToolButton::~ToolButton()
+{
+    delete action_;
+}
+
+void ToolButton::select() 
+{
+    action_->setIcon(selected_);
+    isSelect_ = true;
+}
+
+void ToolButton::unSelect()
+{
+    action_->setIcon(unselected_);
+    isSelect_ = false;
+}
+
+void ToolButton::set_selected(const QIcon& icon)
+{
+    selected_ = icon;
+}
+
+void ToolButton::set_unselected(const QIcon& icon)
+{
+    unselected_ = icon;
+}
+
+void ToolButton::set_selected(const QString& iconFile)
+{
+    selected_ = QIcon(iconFile);
+}
+
+void ToolButton::set_unselected(const QString& iconFile)
+{
+    unselected_ = QIcon(iconFile);
+}
+
+void ToolButton::set_toolState(CharacterToolState state) noexcept
+{
+    toolState_ = state;
+}
+
+void ToolButton::update()
+{
+    action_->setIcon(isSelect_ ? selected_ : unselected_);
+}

@@ -1,0 +1,223 @@
+#pragma once
+
+#include <QOpenGLWidget>
+#include <qopenglfunctions_3_3_Core>
+#include <qpoint>
+#include <qmatrix4x4>
+#include <memory>
+#include <vector>
+
+#include "ViewData.h"
+
+enum class MousePos {
+	Inside,
+	LeftTop,
+	LeftBottom,
+	RightTop,
+	RightBottom,
+	LeftEdge,
+	RightEdge,
+	TopEdge,
+	BottomEdge,
+	OutSide,
+};
+
+enum class EditMode;
+enum class CharacterToolState;
+
+class PiYing;
+class ImageTransform;
+namespace piying {
+	class Texture;
+	class ImageTexture;
+	namespace tool {
+		class PiyingTool;
+	}
+}
+class QMenu;
+class QOpenGLShaderProgram;
+class PointVectorLayer;
+class CtrlSlideWidget;
+class SlideApplier;
+class VertGroups;
+class Part;
+
+class PiYingGL : public QOpenGLWidget, QOpenGLFunctions_3_3_Core
+{
+	Q_OBJECT
+
+private:
+	explicit PiYingGL();
+	virtual ~PiYingGL();
+
+public:
+	PiYingGL(const PiYingGL&) = delete;
+	PiYingGL& operator=(const PiYingGL&) = delete;
+
+	static PiYingGL& getInstance() noexcept;
+
+private:
+	void paintBackgrounds();
+	void paint_over_view();
+	void paintCharacterTexture();
+	void paint_character_skeleton();
+	void paint_slider_platform();
+	void paint_applied_texture();
+	void paint_selected_part();
+	void paint_in_vector_part();
+	void draw_view_rectangle();
+	void appendBgList(const QImage& image);
+	void addChVert(const QPointF& point);
+
+	int getCurrentBgRow() const;
+	int getCurrentChRow() const;
+
+private slots:
+	void fullScreenBackGround();
+	void setViewToStandard();
+	void returnToStandard();
+	void returnBgTransform();
+	void bgSetTransform();
+	void againstBg();
+	void deleteBg();
+	void deleteAllBg();
+
+protected:
+	void initializeGL() override;
+	void resizeGL(int w, int h) override;
+	void paintGL() override;
+
+	void mousePressEvent(QMouseEvent* event) override;
+	void mouseReleaseEvent(QMouseEvent* e) override;
+	void mouseMoveEvent(QMouseEvent* event) override;
+	void wheelEvent(QWheelEvent* ev) override;
+	void contextMenuEvent(QContextMenuEvent* e) override;
+
+public:
+	void addBackground(const QString& imageName);
+	void add_character(const QString& imageName);
+	void setEditMode(EditMode mode);
+	void update_ch_tool();
+	void setChTool(CharacterToolState state);
+	void deleteChElement();
+	void enterChElement();
+	void escapeChVert();
+	void choseBackgroundColor();
+	void changeRatio(float ratio);
+	void importBackground();
+	void importChatacter();
+	void bgRotationControl(const QPointF& mouse, piying::ImageTexture& image);
+	void bgTranslateControl(const QPointF& mouse, piying::ImageTexture& image);
+	void bgScaleControl(const QPointF& mouse, piying::ImageTexture& image);
+	void viewRotationControl(const QPointF& mouse);
+	void draw_selected_points(size_t nSelectedPoint);
+	void draw_selected_triangle(size_t nSelectedPoint);
+	void draw_triangle_frame(bool isSkelen);
+	void draw_rectangle(float cx, float cy, float width, float height);
+	void update_ch_verts();
+	void update_sub_ch_verts();
+	void update_trc();
+	void update_selected_verts(const std::vector<float>& selectedPoints);
+	void update_selected_triangle(const unsigned int* data, size_t size);
+	void update_selected_triangle_texture();
+	void update_selected_triangle_part();
+	void add_part(const QList<unsigned int>& indices);
+
+	void add_point_to_vert(const QPointF& p);
+	void addTriangle(int index1, int index2, int index3);
+	void addTriangle(int index1, int index2, const QPointF& point3);
+	void addTriangle(int index1, const QPointF& point2, const QPointF& point3);
+	void addTriangle(const QPointF& point1, const QPointF& point2, const QPointF& point3);
+
+	void generate_vao(unsigned int& vao, unsigned int vbo, unsigned int ebo) noexcept;
+	void release_buffers(unsigned int vao) noexcept;
+
+	bool addBackground(const QString& imageName, float& o_ratio);
+	bool have_ch_tool() const noexcept { return ch_element_tool_ != nullptr; }
+
+	float view_rotate_degree() const noexcept;
+
+	QPointF getRaletiveToRect(const QPointF& point, const QMatrix4x4& transform) const;
+	QPointF mapToGL(const QPointF& point) const;
+	QPointF mapToGL(float x, float y) const;
+	QPointF glToMap(const QPointF& point) const;
+	QPointF mapViewProjMatrix(const QPointF& point) const;
+	QPointF GLViewProjMatrixInvert(float x, float y) const;
+	QPointF GLViewProjMatrixInvert(const QPointF& point) const;
+	QPointF GLViewMatrixInvert(const QPointF& point) const;
+
+	QMatrix4x4 get_map_to_gl_matrix() const noexcept;
+	QMatrix4x4 get_gl_to_map_matrix() const noexcept;
+
+	QMatrix4x4 getViewMatrixInvert() const noexcept;
+	QMatrix4x4 getViewMatrix() const noexcept;
+	QMatrix4x4 getBgShaderMatrix(const QMatrix4x4& transform) const noexcept;
+	QMatrix4x4 getViewProjMatrixInvert() const noexcept;
+	QMatrix4x4 getViewProjMatrix() const noexcept;
+
+	const QMatrix4x4& getProj() const noexcept;
+	const QMatrix4x4& getInsProj() const noexcept;
+
+	MousePos getMousePosType(const QPointF& point) const noexcept;
+
+	Qt::CursorShape getCursorShape(const MousePos& pos) const;
+
+	CharacterToolState ch_tool_state() const noexcept { return _ch_tool_state; }
+
+	std::vector<unsigned int>* currentIndex() noexcept { return _currentIndex; }
+	PointVectorLayer* currentLayer() noexcept;
+
+public:
+	EditMode editMode;
+
+	ViewData viewScale;
+	ViewData viewRotate;
+	ViewData viewTransX;
+	ViewData viewTransY;
+
+private:
+	unsigned int RECTANGLE_TEXTURE_VAO = 0, RECTANGLE_TEXTURE_VBO = 0, RECTANGLE_TEXTURE_EBO = 0;
+	unsigned int chVAO = 0, chVBO = 0, chEBO = 0;
+	unsigned int ttVAO = 0, ttVBO = 0, ttEBO = 0;
+	unsigned int svVAO = 0, svVBO = 0;
+
+	QOpenGLShaderProgram* _texture_color_shader_programme;
+	QOpenGLShaderProgram* _ch_shader_program;
+	QOpenGLShaderProgram* _selected_vert_shader_program;
+	QOpenGLShaderProgram* _texture_tri_shader_program;
+	QOpenGLShaderProgram* _rectangle_shader_program;
+
+	// imageTextures
+	QList<piying::ImageTexture*> backGrounds;
+	QList<piying::Texture*> characterTextures;
+
+	QList<PointVectorLayer*> characterVerts;
+
+	QList<std::vector<unsigned int>> characterTriangleIndices;
+
+	float lastViewRotate = 0.f;
+	float lastViewTransX = 0.f;
+	float lastViewTransY = 0.f;
+
+	QMatrix4x4 _orth_ratio;
+	QMatrix4x4 _orth_ratio_invert;
+
+	std::unique_ptr<ImageTransform> lastImageTransform;
+
+	QPointF lastMousePos;
+	QPointF lastMiddleButtonPos;
+
+	MousePos lastMousePosType = MousePos::OutSide;
+
+	CharacterToolState _ch_tool_state;
+
+	QMenu* rightButtonMenuChTex;
+	QMenu* rightButtonMenuBg_S;
+	QMenu* rightButtonMenuBg;
+	QMenu* rightButtonMenu;
+
+	std::unique_ptr<piying::tool::PiyingTool> ch_element_tool_;
+
+	std::vector<unsigned int>* _currentIndex = nullptr;
+	PointVectorLayer* _currentLayer = nullptr;
+};

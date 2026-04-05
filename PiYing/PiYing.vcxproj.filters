@@ -1,0 +1,521 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>qml;cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>qrc;rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Form Files">
+      <UniqueIdentifier>{99349809-55BA-4b9d-BF79-8FDBB0286EB3}</UniqueIdentifier>
+      <Extensions>ui</Extensions>
+    </Filter>
+    <Filter Include="Translation Files">
+      <UniqueIdentifier>{639EADAA-A684-42e4-A9AD-28FC9BCB8F7C}</UniqueIdentifier>
+      <Extensions>ts</Extensions>
+    </Filter>
+    <Filter Include="shaders">
+      <UniqueIdentifier>{3f7e0f74-30b0-46a6-8af6-2431b009110a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="shaders\frag">
+      <UniqueIdentifier>{d42ae0f4-4677-43db-8263-7cc755ca5f32}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="shaders\verts">
+      <UniqueIdentifier>{297cc1ea-b028-474c-bc62-d0f695d49e2f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\tool">
+      <UniqueIdentifier>{442501c7-18ad-4d95-b0d1-ad9ddcb5e7f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\cusfunc">
+      <UniqueIdentifier>{b49c756c-755d-4ddc-8537-3c7a3ac82027}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\tool\part">
+      <UniqueIdentifier>{afd1c6ac-824c-4d23-9af4-2fa6a244afa7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\tool\texture">
+      <UniqueIdentifier>{b2372f56-dd0c-417e-9369-e83e8bb9b079}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\piying_widget">
+      <UniqueIdentifier>{1144423c-1743-41a9-bd7b-d1b991798ef1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\piying_enum">
+      <UniqueIdentifier>{b8a5b619-1bac-4c90-821d-5b3660736a18}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\global_value">
+      <UniqueIdentifier>{ab08d2cf-bff4-422e-baf3-7e660711ad08}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Core">
+      <UniqueIdentifier>{e083f417-622f-4313-95f7-f7c9820618ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\piying_qobject">
+      <UniqueIdentifier>{6ba62f7b-63f4-41bf-b9fa-21d09c4219a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\piying_class">
+      <UniqueIdentifier>{2a439846-1e15-4fdf-bdfe-f5158c0a36f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\cus_func">
+      <UniqueIdentifier>{8fae5e28-bb78-4f3b-a878-6273ac32e5c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\piying_gl">
+      <UniqueIdentifier>{c80c97e6-4c63-44b8-9f5a-a11b8a29d08c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\piying">
+      <UniqueIdentifier>{c7f9e7ac-6192-473b-8fbe-c877cad518b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\tool">
+      <UniqueIdentifier>{c46b52ed-369a-40c2-ae12-0d984cca7de7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\tool\part">
+      <UniqueIdentifier>{bf0e6654-c413-4064-9424-ed26a2b2a57f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\tool\texture">
+      <UniqueIdentifier>{2f41b559-5d7b-4891-b6c0-43707039b2e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Core">
+      <UniqueIdentifier>{11882003-6ec6-4afc-be67-1b241c33c2f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\timeline_gl">
+      <UniqueIdentifier>{5708b143-d796-4822-9945-455d6530a28c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\piying_qobject">
+      <UniqueIdentifier>{a22b9131-410c-4773-a9b9-0ad8aeb542ba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\piying_class">
+      <UniqueIdentifier>{056a6e40-0623-45e5-a346-4405777d40cf}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <QtRcc Include="PiYing.qrc">
+      <Filter>Resource Files</Filter>
+    </QtRcc>
+    <QtUic Include="PiYing.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cus_func_point2d.cpp">
+      <Filter>Source Files\cus_func</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cus_func_string.cpp">
+      <Filter>Source Files\cus_func</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cus_func_transform.cpp">
+      <Filter>Source Files\cus_func</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cus_func_zone.cpp">
+      <Filter>Source Files\cus_func</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cus_readfile.cpp">
+      <Filter>Source Files\cus_func</Filter>
+    </ClCompile>
+    <ClCompile Include="src\draw.cpp">
+      <Filter>Source Files\piying_gl</Filter>
+    </ClCompile>
+    <ClCompile Include="src\events.cpp">
+      <Filter>Source Files\piying_gl</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gl_func.cpp">
+      <Filter>Source Files\piying_gl</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Controls.cpp">
+      <Filter>Source Files\piying_gl</Filter>
+    </ClCompile>
+    <ClCompile Include="src\pi_ying_gl.cpp">
+      <Filter>Source Files\piying_gl</Filter>
+    </ClCompile>
+    <ClCompile Include="src\construct.cpp">
+      <Filter>Source Files\piying_gl</Filter>
+    </ClCompile>
+    <ClCompile Include="src\pi_ying.cpp">
+      <Filter>Source Files\piying</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tool_part_handle.cpp">
+      <Filter>Source Files\tool\part</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tool_part_triangle_libre_select.cpp">
+      <Filter>Source Files\tool\part</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tool_part_triangle_rect_select.cpp">
+      <Filter>Source Files\tool\part</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tool_part_triangle_select.cpp">
+      <Filter>Source Files\tool\part</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tool_part_vert_libre_select.cpp">
+      <Filter>Source Files\tool\part</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tool_part_vert_rect_select.cpp">
+      <Filter>Source Files\tool\part</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tool_part_vert_select.cpp">
+      <Filter>Source Files\tool\part</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tool_add_vert_trace.cpp">
+      <Filter>Source Files\tool\part</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tool_add_poly.cpp">
+      <Filter>Source Files\tool\texture</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tool_add_round.cpp">
+      <Filter>Source Files\tool\texture</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tooL_add_triangle.cpp">
+      <Filter>Source Files\tool\texture</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tool_triangle_libre_select.cpp">
+      <Filter>Source Files\tool\texture</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tool_triangle_rect_select.cpp">
+      <Filter>Source Files\tool\texture</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tool_triangle_select.cpp">
+      <Filter>Source Files\tool\texture</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tool_vert_libre_select.cpp">
+      <Filter>Source Files\tool\texture</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tool_vert_rect_select.cpp">
+      <Filter>Source Files\tool\texture</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tool_vert_select.cpp">
+      <Filter>Source Files\tool\texture</Filter>
+    </ClCompile>
+    <ClCompile Include="src\piying_tool.cpp">
+      <Filter>Source Files\tool</Filter>
+    </ClCompile>
+    <ClCompile Include="src\change_mode.cpp">
+      <Filter>Source Files\piying</Filter>
+    </ClCompile>
+    <ClCompile Include="src\image_transform.cpp">
+      <Filter>Source Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\image_texture.cpp">
+      <Filter>Source Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Joint.cpp">
+      <Filter>Source Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\part.cpp">
+      <Filter>Source Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\parts.cpp">
+      <Filter>Source Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\point_vector.cpp">
+      <Filter>Source Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\point_vector_layer.cpp">
+      <Filter>Source Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\piying_texture.cpp">
+      <Filter>Source Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\selected_points.cpp">
+      <Filter>Source Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\selected_triangle.cpp">
+      <Filter>Source Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\slide_applier.cpp">
+      <Filter>Source Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\timeline_gl_event.cpp">
+      <Filter>Source Files\timeline_gl</Filter>
+    </ClCompile>
+    <ClCompile Include="src\timeline_gl_draw.cpp">
+      <Filter>Source Files\timeline_gl</Filter>
+    </ClCompile>
+    <ClCompile Include="src\time_line_gl.cpp">
+      <Filter>Source Files\timeline_gl</Filter>
+    </ClCompile>
+    <ClCompile Include="src\timeline_gl_structure.cpp">
+      <Filter>Source Files\timeline_gl</Filter>
+    </ClCompile>
+    <ClCompile Include="src\timeline_gl_get.cpp">
+      <Filter>Source Files\timeline_gl</Filter>
+    </ClCompile>
+    <ClCompile Include="src\timeline_glfunc.cpp">
+      <Filter>Source Files\timeline_gl</Filter>
+    </ClCompile>
+    <ClCompile Include="src\timeline_slots.cpp">
+      <Filter>Source Files\timeline_gl</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tool_func.cpp">
+      <Filter>Source Files\piying_gl</Filter>
+    </ClCompile>
+    <ClCompile Include="src\raletive_transform.cpp">
+      <Filter>Source Files\piying_gl</Filter>
+    </ClCompile>
+    <ClCompile Include="src\pi_ying_gl_container.cpp">
+      <Filter>Source Files\piying_gl</Filter>
+    </ClCompile>
+    <ClCompile Include="src\slots.cpp">
+      <Filter>Source Files\piying_gl</Filter>
+    </ClCompile>
+    <ClCompile Include="src\part_cursor.cpp">
+      <Filter>Source Files\timeline_gl</Filter>
+    </ClCompile>
+    <ClCompile Include="src\merge_parts.cpp">
+      <Filter>Source Files\timeline_gl</Filter>
+    </ClCompile>
+    <ClCompile Include="src\keyboard_state_win.cpp">
+      <Filter>Source Files\cus_func</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ViewData.cpp">
+      <Filter>Source Files\piying_qobject</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ctrl_slide_widget.cpp">
+      <Filter>Source Files\piying_qobject</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ctrl_slide_layout.cpp">
+      <Filter>Source Files\piying_qobject</Filter>
+    </ClCompile>
+    <ClCompile Include="src\control_slider_toolbar.cpp">
+      <Filter>Source Files\piying_qobject</Filter>
+    </ClCompile>
+    <ClCompile Include="src\character_trace.cpp">
+      <Filter>Header Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ratio_dialog.cpp">
+      <Filter>Source Files\piying_qobject</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ask_round_poly_dialog.cpp">
+      <Filter>Source Files\piying_qobject</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ask_transform_dialog.cpp">
+      <Filter>Source Files\piying_qobject</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ch_skelen_toolbar.cpp">
+      <Filter>Source Files\piying_qobject</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ch_texture_toolbar.cpp">
+      <Filter>Source Files\piying_qobject</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tool_button.cpp">
+      <Filter>Source Files\piying_class</Filter>
+    </ClCompile>
+    <ClCompile Include="src\time_line.cpp">
+      <Filter>Source Files\piying_class</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="piYingGL.h">
+      <Filter>Header Files\piying_widget</Filter>
+    </QtMoc>
+    <QtMoc Include="piYingGLContainer.h">
+      <Filter>Header Files\piying_widget</Filter>
+    </QtMoc>
+    <QtMoc Include="time_line_gl.h">
+      <Filter>Header Files\piying_widget</Filter>
+    </QtMoc>
+    <QtMoc Include="ctrlSlideWidget.h">
+      <Filter>Header Files\piying_widget</Filter>
+    </QtMoc>
+    <QtMoc Include="ctrlSlideLayout.h">
+      <Filter>Header Files\piying_widget</Filter>
+    </QtMoc>
+    <QtMoc Include="ask_round_poly_dialog.h">
+      <Filter>Header Files\piying_qobject</Filter>
+    </QtMoc>
+    <QtMoc Include="AskTransformDialog.h">
+      <Filter>Header Files\piying_qobject</Filter>
+    </QtMoc>
+    <QtMoc Include="RatioDialog.h">
+      <Filter>Header Files\piying_qobject</Filter>
+    </QtMoc>
+    <QtMoc Include="ViewData.h">
+      <Filter>Header Files\piying_qobject</Filter>
+    </QtMoc>
+    <QtMoc Include="PiYing.h">
+      <Filter>Header Files\piying_widget</Filter>
+    </QtMoc>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="cus_ask.h">
+      <Filter>Header Files\cusfunc</Filter>
+    </ClInclude>
+    <ClInclude Include="cus_func_point2d.h">
+      <Filter>Header Files\cusfunc</Filter>
+    </ClInclude>
+    <ClInclude Include="cus_func_string.h">
+      <Filter>Header Files\cusfunc</Filter>
+    </ClInclude>
+    <ClInclude Include="cus_func_transform.h">
+      <Filter>Header Files\cusfunc</Filter>
+    </ClInclude>
+    <ClInclude Include="cus_func_zone.h">
+      <Filter>Header Files\cusfunc</Filter>
+    </ClInclude>
+    <ClInclude Include="cus_readfile.h">
+      <Filter>Header Files\cusfunc</Filter>
+    </ClInclude>
+    <ClInclude Include="tool_part_handle.h">
+      <Filter>Header Files\tool\part</Filter>
+    </ClInclude>
+    <ClInclude Include="tool_part_triangle_libre_select.h">
+      <Filter>Header Files\tool\part</Filter>
+    </ClInclude>
+    <ClInclude Include="tool_part_triangle_rect_select.h">
+      <Filter>Header Files\tool\part</Filter>
+    </ClInclude>
+    <ClInclude Include="tool_part_triangle_select.h">
+      <Filter>Header Files\tool\part</Filter>
+    </ClInclude>
+    <ClInclude Include="tool_part_vert_libre_select.h">
+      <Filter>Header Files\tool\part</Filter>
+    </ClInclude>
+    <ClInclude Include="tool_part_vert_rect_select.h">
+      <Filter>Header Files\tool\part</Filter>
+    </ClInclude>
+    <ClInclude Include="tool_part_vert_select.h">
+      <Filter>Header Files\tool\part</Filter>
+    </ClInclude>
+    <ClInclude Include="tool_add_vert_trace.h">
+      <Filter>Header Files\tool\part</Filter>
+    </ClInclude>
+    <ClInclude Include="tool_vert_select.h">
+      <Filter>Header Files\tool\texture</Filter>
+    </ClInclude>
+    <ClInclude Include="tool_triangle_libre_select.h">
+      <Filter>Header Files\tool\texture</Filter>
+    </ClInclude>
+    <ClInclude Include="tool_triangle_rect_select.h">
+      <Filter>Header Files\tool\texture</Filter>
+    </ClInclude>
+    <ClInclude Include="tool_triangle_select.h">
+      <Filter>Header Files\tool\texture</Filter>
+    </ClInclude>
+    <ClInclude Include="tool_vert_libre_select.h">
+      <Filter>Header Files\tool\texture</Filter>
+    </ClInclude>
+    <ClInclude Include="tool_vert_rect_select.h">
+      <Filter>Header Files\tool\texture</Filter>
+    </ClInclude>
+    <ClInclude Include="tool_add_poly.h">
+      <Filter>Header Files\tool\texture</Filter>
+    </ClInclude>
+    <ClInclude Include="tool_add_round.h">
+      <Filter>Header Files\tool\texture</Filter>
+    </ClInclude>
+    <ClInclude Include="tool_add_triangle.h">
+      <Filter>Header Files\tool\texture</Filter>
+    </ClInclude>
+    <ClInclude Include="piying_tool_behavior.h">
+      <Filter>Header Files\tool</Filter>
+    </ClInclude>
+    <ClInclude Include="piying_tool.h">
+      <Filter>Header Files\tool</Filter>
+    </ClInclude>
+    <ClInclude Include="enum_edit_mode.h">
+      <Filter>Header Files\piying_enum</Filter>
+    </ClInclude>
+    <ClInclude Include="enum_select_handle_mode.h">
+      <Filter>Header Files\piying_enum</Filter>
+    </ClInclude>
+    <ClInclude Include="enum_character_texture_tool_state.h">
+      <Filter>Header Files\piying_enum</Filter>
+    </ClInclude>
+    <ClInclude Include="static_gl_const.h">
+      <Filter>Header Files\global_value</Filter>
+    </ClInclude>
+    <ClInclude Include="static_handle_zone.h">
+      <Filter>Header Files\global_value</Filter>
+    </ClInclude>
+    <ClInclude Include="static_rect_vert.h">
+      <Filter>Header Files\global_value</Filter>
+    </ClInclude>
+    <ClInclude Include="base_math.h">
+      <Filter>Header Files\cusfunc</Filter>
+    </ClInclude>
+    <ClInclude Include="ch_skelen_toolbar.h">
+      <Filter>Header Files\piying_qobject</Filter>
+    </ClInclude>
+    <ClInclude Include="ch_texture_toolbar.h">
+      <Filter>Header Files\piying_qobject</Filter>
+    </ClInclude>
+    <ClInclude Include="character_trace.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="image_transform.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Joint.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="part.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="parts.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="selected_points.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="slide_applier.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="piying_texture.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="point_vector.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="scale_trans.h">
+      <Filter>Header Files\piying_class</Filter>
+    </ClInclude>
+    <ClInclude Include="time_line.h">
+      <Filter>Header Files\piying_class</Filter>
+    </ClInclude>
+    <ClInclude Include="tool_button.h">
+      <Filter>Header Files\piying_class</Filter>
+    </ClInclude>
+    <ClInclude Include="control_slider_toolbar.h">
+      <Filter>Header Files\piying_qobject</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyboardStateWin.h">
+      <Filter>Header Files\cusfunc</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="texture_alpha_shape.frag">
+      <Filter>shaders\frag</Filter>
+    </None>
+    <None Include="texture_color_shape.frag">
+      <Filter>shaders\frag</Filter>
+    </None>
+    <None Include="bgshapes.vert">
+      <Filter>shaders\verts</Filter>
+    </None>
+    <None Include="chEditershapes.vert">
+      <Filter>shaders\verts</Filter>
+    </None>
+    <None Include="scroll_block.vert">
+      <Filter>shaders\verts</Filter>
+    </None>
+    <None Include="selected_vert.vert">
+      <Filter>shaders\verts</Filter>
+    </None>
+    <None Include="simple_triangle.vert">
+      <Filter>shaders\verts</Filter>
+    </None>
+    <None Include="square_icon.vert">
+      <Filter>shaders\verts</Filter>
+    </None>
+    <None Include="texture_tri.vert">
+      <Filter>shaders\verts</Filter>
+    </None>
+    <None Include="vert_with_trans.vert">
+      <Filter>shaders\verts</Filter>
+    </None>
+  </ItemGroup>
+</Project>

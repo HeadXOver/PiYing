@@ -1,0 +1,84 @@
+#include "tool_add_vert_trace.h"
+
+#include "point_vector.h"
+#include "piYingGL.h"
+#include "time_line_gl.h"
+#include "part.h"
+
+#include <qpainter>
+
+void piying::tool::part::AddVertTrace::click(const QPointF& mouseOri)
+{
+	const QPointF mouse = PiYingGL::getInstance().GLViewProjMatrixInvert(mouseOri);
+
+	Part* part = TimelineGl::getInstance().get_current_part();
+
+    QPointF existPoint;
+    for (unsigned int i = 0; i < part->vertex_size(); i++) {
+		existPoint = part->get_vert(i, true);
+        if (QLineF(existPoint, mouse).length() < 0.02f / PiYingGL::getInstance().viewScale.value()) {
+            current_index = i;
+			presse_on_vert = true;
+			polygon.clear();
+			polygon << existPoint;
+			polygon << mouse;
+
+            return;
+        }
+    }
+
+    current_index = -1;
+}
+
+void piying::tool::part::AddVertTrace::mouse_move(const QPointF& mouse)
+{
+	if(!presse_on_vert) return;
+
+	QPointF glMouse = PiYingGL::getInstance().GLViewProjMatrixInvert(mouse);
+	if (polygon.isEmpty() || polygon.last() != glMouse) polygon << glMouse;
+}
+
+void piying::tool::part::AddVertTrace::release(const QPointF& mouse)
+{
+	presse_on_vert = false;
+
+	if (polygon.size() < 3) {
+		current_index = -1;
+		polygon.clear();
+		return;
+	}
+
+	Part* part = TimelineGl::getInstance().get_current_part();
+	if (part) part->add_trace(current_index, polygon);
+
+	current_index = -1;
+	polygon.clear();
+}
+
+void piying::tool::part::AddVertTrace::draw()
+{
+	if (current_index < 0) return;
+
+	const PointVectorLayer& pointLayer = *PiYingGL::getInstance().currentLayer();
+
+	QPointF selectPoint = PiYingGL::getInstance().mapViewProjMatrix(TimelineGl::getInstance().get_current_part()->get_vert(current_index, true));
+
+	QPainter painter(&PiYingGL::getInstance());
+	painter.setPen(QPen(Qt::black, 8));
+	painter.drawPoint(selectPoint);
+	painter.setPen(QPen(Qt::red, 6));
+	painter.drawPoint(selectPoint);
+
+	if (polygon.isEmpty()) return;
+
+	painter.setPen(QPen(Qt::yellow, 1));
+
+	QPolygonF screenPoly;
+	screenPoly.reserve(polygon.size());
+	std::transform(polygon.cbegin(), polygon.cend(),
+		std::back_inserter(screenPoly),
+		[this](const QPointF& p) { return PiYingGL::getInstance().mapViewProjMatrix(p); }
+	);
+
+	painter.drawPolyline(screenPoly);
+}

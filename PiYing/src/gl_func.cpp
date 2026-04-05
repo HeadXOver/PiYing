@@ -1,0 +1,149 @@
+#include "piYingGL.h"
+#include "piying_tool.h"
+#include "point_vector.h"
+#include "static_gl_const.h"
+#include "static_rect_vert.h"
+#include "piying_texture.h"
+
+#include "enum_edit_mode.h"
+
+#include <QOpenGLShaderProgram.h>
+#include <qmessagebox>
+
+void PiYingGL::initializeGL()
+{
+	initializeOpenGLFunctions();
+
+	/// programmes
+	_rectangle_shader_program->addShaderFromSourceFile(QOpenGLShader::Vertex, ":/PiYing/bgshapes.vert");
+	_rectangle_shader_program->addShaderFromSourceFile(QOpenGLShader::Fragment, ":/PiYing/color_shape.frag");
+	_rectangle_shader_program->link();
+
+	_texture_color_shader_programme->addShaderFromSourceFile(QOpenGLShader::Vertex, ":/PiYing/bgshapes.vert");
+	_texture_color_shader_programme->addShaderFromSourceFile(QOpenGLShader::Fragment, ":/PiYing/texture_alpha_shape.frag");
+	_texture_color_shader_programme->link();
+
+	_ch_shader_program->addShaderFromSourceFile(QOpenGLShader::Vertex, ":/PiYing/chEditershapes.vert");
+	_ch_shader_program->addShaderFromSourceFile(QOpenGLShader::Fragment, ":/PiYing/texture_alpha_shape.frag");
+	_ch_shader_program->link();
+
+	_texture_tri_shader_program->addShaderFromSourceFile(QOpenGLShader::Vertex, ":/PiYing/texture_tri.vert");
+	_texture_tri_shader_program->addShaderFromSourceFile(QOpenGLShader::Fragment, ":/PiYing/color_shape.frag");
+	_texture_tri_shader_program->link();
+
+	_selected_vert_shader_program->addShaderFromSourceFile(QOpenGLShader::Vertex, ":/PiYing/selected_vert.vert");
+	_selected_vert_shader_program->addShaderFromSourceFile(QOpenGLShader::Fragment, ":/PiYing/color_shape.frag");
+	_selected_vert_shader_program->link();
+
+	/// generate VAO
+	glGenVertexArrays(1, &RECTANGLE_TEXTURE_VAO);
+	glGenVertexArrays(1, &chVAO);
+	glGenVertexArrays(1, &ttVAO);
+	glGenVertexArrays(1, &svVAO);
+
+	/// generate VBO
+	glGenBuffers(1, &RECTANGLE_TEXTURE_VBO);
+	glGenBuffers(1, &chVBO);
+	glGenBuffers(1, &ttVBO);
+	glGenBuffers(1, &svVBO);
+
+	/// generate EBO
+	glGenBuffers(1, &RECTANGLE_TEXTURE_EBO);
+	glGenBuffers(1, &chEBO);
+	glGenBuffers(1, &ttEBO);
+
+	/// buffer data vbo
+	glBindBuffer(GL_ARRAY_BUFFER, RECTANGLE_TEXTURE_VBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(RECTANGLE_VERT), RECTANGLE_VERT, GL_STATIC_DRAW);
+
+	/// buffer data ebo
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, RECTANGLE_TEXTURE_EBO);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(RECTANGLE_INDECES), RECTANGLE_INDECES, GL_STATIC_DRAW);
+
+	//////////////initialize rect texture///////////////////////
+
+	glBindVertexArray(RECTANGLE_TEXTURE_VAO);
+
+	glBindBuffer(GL_ARRAY_BUFFER, RECTANGLE_TEXTURE_VBO);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, RECTANGLE_TEXTURE_EBO);
+
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, FLOAT2, (void*)0);
+	glEnableVertexAttribArray(0);
+
+	////////////////initialize character editer///////////////////////
+
+	glBindVertexArray(chVAO);
+	glBindBuffer(GL_ARRAY_BUFFER, chVBO);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, chEBO);
+
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, FLOAT4, (void*)0);
+	glEnableVertexAttribArray(0);
+
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, FLOAT4, DEBU_FLOAT2);
+	glEnableVertexAttribArray(1);
+
+	//////////////initialize texture triangles///////////////////////
+
+	glBindVertexArray(ttVAO);
+	glBindBuffer(GL_ARRAY_BUFFER, ttVBO);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ttEBO);
+
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, FLOAT4, DEBU_FLOAT2);
+	glEnableVertexAttribArray(0);
+
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, FLOAT4, (void*)0);
+	glEnableVertexAttribArray(1);
+
+	//////////////initialize selected points///////////////////////
+
+	glBindVertexArray(svVAO);
+	glBindBuffer(GL_ARRAY_BUFFER, svVBO);
+
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, FLOAT2, (void*)0);
+	glEnableVertexAttribArray(0);
+
+	glBindVertexArray(0); ///< end initialize
+
+	/////////////////////global setting////////////////////////
+
+	_ch_shader_program->bind();
+	_ch_shader_program->setUniformValue("trc", QMatrix4x4());
+	_selected_vert_shader_program->bind();
+	_selected_vert_shader_program->setUniformValue("trc", QMatrix4x4());
+	_texture_tri_shader_program->bind();
+	_texture_tri_shader_program->setUniformValue("trc", QMatrix4x4());
+	_rectangle_shader_program->bind();
+	_rectangle_shader_program->setUniformValue("aColor", QVector4D(0.2f, 0.2f, 1.0f, 1.0f)); 
+
+
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glActiveTexture(GL_TEXTURE0);
+	glEnable(GL_PROGRAM_POINT_SIZE);
+	glLineWidth(3.0f);
+	glDisable(GL_DEPTH_TEST);   // 不需要深度测试
+	glDisable(GL_CULL_FACE);    // 不需要背面剔除
+}
+
+void PiYingGL::resizeGL(int w, int h)
+{
+	for (int i = 0; i < backGrounds.size(); i++) {
+		backGrounds[i]->set_transform_by_new_ratio(w / (float)h);
+	}
+}
+
+void PiYingGL::paintGL() {
+	glClear(GL_COLOR_BUFFER_BIT);
+
+	switch (editMode) {
+	case EditMode::BackGround:			paintBackgrounds(); break;
+	case EditMode::OverView:			paint_over_view(); break;
+	case EditMode::characterTexture:	paintCharacterTexture(); break;
+	case EditMode::characterSkeleton:	paint_character_skeleton(); break;
+	case EditMode::controlSlide:		paint_slider_platform(); break;
+	default: break;
+	}
+
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+}

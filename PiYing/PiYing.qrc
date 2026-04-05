@@ -1,0 +1,42 @@
+<RCC>
+    <qresource prefix="/PiYing">
+        <file>bgshapes.vert</file>
+        <file>darkStyle.qss</file>
+        <file>chEditershapes.vert</file>
+        <file>imageListStyle.qss</file>
+        <file>slideStyle.qss</file>
+        <file>timeline_rect_shape.vert</file>
+        <file>selected_vert.vert</file>
+        <file>texture_tri.vert</file>
+        <file>square_icon.vert</file>
+        <file>part_select_rect.vert</file>
+        <file>texture_color_shape.frag</file>
+        <file>color_shape.frag</file>
+        <file>simple_triangle.vert</file>
+        <file>vert_with_trans.vert</file>
+        <file>scroll_block.vert</file>
+        <file>texture_alpha_shape.frag</file>
+        <file>piying_icons/timeline.png</file>
+        <file>piying_icons/addChVert.png</file>
+        <file>piying_icons/addChVert_S.png</file>
+        <file>piying_icons/addVertTrace.png</file>
+        <file>piying_icons/addVertTrace_S.png</file>
+        <file>piying_icons/chAddPoly.png</file>
+        <file>piying_icons/chAddPoly_S.png</file>
+        <file>piying_icons/chAddRound.png</file>
+        <file>piying_icons/chAddRound_S.png</file>
+        <file>piying_icons/libre_select.png</file>
+        <file>piying_icons/libre_select_S.png</file>
+        <file>piying_icons/libre_triangle_select.png</file>
+        <file>piying_icons/libre_triangle_select_S.png</file>
+        <file>piying_icons/rect_select.png</file>
+        <file>piying_icons/rect_select_S.png</file>
+        <file>piying_icons/rect_triangle_select.png</file>
+        <file>piying_icons/rect_triangle_select_S.png</file>
+        <file>piying_icons/selectLibreChVert.png</file>
+        <file>piying_icons/selectLibreChVert_S.png</file>
+        <file>piying_icons/selectRectChVert.png</file>
+        <file>piying_icons/selectRectChVert_S.png</file>
+        <file>piying_icons/setIcon.png</file>
+    </qresource>
+</RCC>

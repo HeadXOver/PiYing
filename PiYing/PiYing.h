@@ -1,0 +1,89 @@
+#pragma once
+
+#include <QtWidgets/QMainWindow>
+#include <memory>
+#include <vector>
+
+enum class CharacterToolState;
+
+class CtrlSlideWidget;
+class ChTextureToolbar;
+class ChSkelenToolbar;
+class ControlSliderToolbar;
+class TimelineGl;
+class ToolButton;
+class QString;
+class PiYingGLContainer;
+class QListWidgetItem;
+class QListWidget;
+class QSplitter;
+
+namespace Ui{
+	class PiYingClass;
+}
+
+class PiYing : public QMainWindow
+{
+	Q_OBJECT
+
+private:
+
+public:
+	PiYing();
+	~PiYing();
+	PiYing(const PiYing&) = delete;
+	PiYing& operator=(const PiYing&) = delete;
+
+	static PiYing& getInstance() noexcept;
+
+public:
+	int getCurrentBgRow();
+	int getCurrentChRow();
+
+	void change_edit_mode_overview();
+	void change_edit_mode_character_texture();
+	void change_edit_mode_character_skeleton();
+	void change_edit_mode_background();
+	void change_edit_mode_character_constrol_slider();
+
+	void update_part_slider();
+	void set_piying_gl_ratio(double ratio);
+	void add_bg_item(QListWidgetItem* item);
+	void add_ch_item(QListWidgetItem* item);
+	void delete_current_bg_item();
+	void delete_all_bg_item();
+
+	QString get_unique_bg_list_name() const;
+	QString get_unique_ch_list_name() const;
+
+protected:
+	void keyPressEvent(QKeyEvent* event) override;
+
+private slots:
+	void exportCurrentFrame();
+	void exportMainSlider();
+	void askScreenScale();
+	void onModeChanged(int mode);
+
+private:
+	std::unique_ptr<Ui::PiYingClass> ui;
+	static PiYing* _instance;
+
+	double _piying_gl_bg_ratio{ 16.0 / 9.0 };
+
+	QSplitter* splitListOpenGL;
+	QSplitter* splitTimelineOpenGL;
+
+	ChTextureToolbar* toolChTexList;
+	ChSkelenToolbar* toolChSkelenList;
+	ControlSliderToolbar* toolControlSliderList;
+
+	QListWidget* voidListWidget;
+	QListWidget* bgImageList;
+	QListWidget* chImageList;
+
+	/// 用来装控制器的
+	CtrlSlideWidget* sliderWidget;
+
+	PiYingGLContainer* piYingGLContainer;
+};

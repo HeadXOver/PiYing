@@ -1,0 +1,148 @@
+#include "PiYing.h"
+#include "PiYingGL.h"
+#include "tool_button.h"
+#include "ctrlSlideWidget.h"
+#include "part.h"
+#include "time_line_gl.h"
+#include "piYingGLContainer.h"
+#include "ch_texture_toolbar.h"
+#include "ch_skelen_toolbar.h"
+#include "control_slider_toolbar.h"
+
+#include "enum_character_texture_tool_state.h"
+#include "enum_edit_mode.h"
+
+#include "ui_PiYing.h"
+
+#include <qsplitter>
+#include <qlistwidget>
+
+namespace {
+    constexpr double DEFAULT_RATIO = 16.0 / 9.0;
+
+    constexpr void(*change_edit_mode[])() = {
+        [] { PiYing::getInstance().change_edit_mode_overview(); },
+        [] { PiYing::getInstance().change_edit_mode_background(); },
+        [] { PiYing::getInstance().change_edit_mode_character_texture(); },
+        [] { PiYing::getInstance().change_edit_mode_character_skeleton(); },
+        [] { PiYing::getInstance().change_edit_mode_character_constrol_slider(); }
+    };
+
+    using change_edit_handler = void(*)();
+    constexpr change_edit_handler map_change_edit(int state) {
+        return change_edit_mode[state];
+    }
+
+}
+
+void PiYing::change_edit_mode_overview()
+{
+    splitListOpenGL->widget(0)->setParent(nullptr);
+    splitListOpenGL->insertWidget(0, voidListWidget);
+
+    splitTimelineOpenGL->setSizes({ width() * 5 / 6, width() / 6 });
+
+    set_piying_gl_ratio(_piying_gl_bg_ratio);
+
+    TimelineGl::getInstance().set_to_timeline();
+
+    PiYingGL::getInstance().setChTool(CharacterToolState::None);
+    PiYingGL::getInstance().setEditMode(EditMode::OverView);
+}
+
+void PiYing::change_edit_mode_background()
+{
+    splitListOpenGL->widget(0)->setParent(nullptr);
+    splitListOpenGL->insertWidget(0, bgImageList);
+
+    splitTimelineOpenGL->setSizes({ width() * 5 / 6, width() / 6 });
+
+    set_piying_gl_ratio(_piying_gl_bg_ratio);
+
+    TimelineGl::getInstance().set_to_timeline();
+
+    PiYingGL::getInstance().setChTool(CharacterToolState::None);
+    PiYingGL::getInstance().setEditMode(EditMode::BackGround);
+}
+
+void PiYing::change_edit_mode_character_texture()
+{
+    splitListOpenGL->widget(0)->setParent(nullptr);
+    splitListOpenGL->insertWidget(0, chImageList);
+
+    splitTimelineOpenGL->setSizes({ width() * 3 / 4, width() / 4 });
+
+    set_piying_gl_ratio(DEFAULT_RATIO);
+
+    TimelineGl::getInstance().set_to_part();
+
+    PiYingGL::getInstance().setEditMode(EditMode::characterTexture);
+
+    toolChTexList->set_to_toolbar(ui->mainToolBar);
+    toolChTexList->remember_last_tool();
+}
+
+void PiYing::change_edit_mode_character_skeleton()
+{
+    splitListOpenGL->widget(0)->setParent(nullptr);
+    splitListOpenGL->insertWidget(0, chImageList);
+
+    splitTimelineOpenGL->setSizes({ width() * 3 / 4, width() / 4 });
+
+    set_piying_gl_ratio(DEFAULT_RATIO);
+
+    TimelineGl::getInstance().set_to_part();
+
+    PiYingGL::getInstance().setEditMode(EditMode::characterSkeleton);
+
+    toolChSkelenList->set_to_toolbar(ui->mainToolBar);
+    toolChSkelenList->remember_last_tool();
+}
+
+void PiYing::change_edit_mode_character_constrol_slider()
+{
+    splitListOpenGL->widget(0)->setParent(nullptr);
+    Part* part = TimelineGl::getInstance().get_current_part();
+    if(part)
+        splitListOpenGL->insertWidget(0, sliderWidget);
+    else
+        splitListOpenGL->insertWidget(0, voidListWidget);
+    PiYingGL::getInstance().setEditMode(EditMode::controlSlide);
+    splitListOpenGL->setSizes({ width() / 5, width() * 4 / 5 });
+
+    splitTimelineOpenGL->setSizes({ width() * 3 / 4, width() / 4 });
+
+    set_piying_gl_ratio(DEFAULT_RATIO);
+
+    TimelineGl::getInstance().set_to_part();
+
+    toolControlSliderList->set_to_toolbar(ui->mainToolBar);
+    toolControlSliderList->remember_last_tool();
+}
+
+void PiYing::update_part_slider()
+{
+    if (PiYingGL::getInstance().editMode != EditMode::controlSlide) return;
+
+    Part* part = TimelineGl::getInstance().get_current_part();
+    if (part) {
+        if (splitListOpenGL->widget(0) == voidListWidget) {
+            splitListOpenGL->widget(0)->setParent(nullptr);
+            splitListOpenGL->insertWidget(0, sliderWidget);
+        }
+
+        sliderWidget->delete_all_layout();
+        sliderWidget->add_slider_by_part(part);
+    }
+    else if (splitListOpenGL->widget(0) != voidListWidget) {
+        splitListOpenGL->widget(0)->setParent(nullptr);
+        splitListOpenGL->insertWidget(0, voidListWidget);
+    }
+
+    splitListOpenGL->setSizes({ width() / 5, width() * 4 / 5 });
+}
+
+void PiYing::onModeChanged(int mode)
+{
+    map_change_edit(mode)();
+}

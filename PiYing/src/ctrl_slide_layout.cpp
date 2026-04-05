@@ -1,0 +1,52 @@
+﻿#include "ctrlSlideLayout.h"
+#include "ctrlSlideWidget.h"
+#include "slide_applier.h"
+
+#include "time_line_gl.h"
+#include "piYingGL.h"
+#include "part.h"
+
+#include <qlabel>
+#include <qslider>
+#include <qpushbutton>
+#include <qhboxlayout>
+#include <qmessagebox>
+#include <qmenu>
+
+CtrlSlideLayout::CtrlSlideLayout(QString labelName, size_t id, int defaultValue, QWidget* parent) : QWidget(parent)
+{
+    layout = new QHBoxLayout(this);
+
+    label = new QLabel(labelName, this);
+    label->setStyleSheet("QLabel { background-color : white; color : black; }");
+
+    slider = new QSlider(Qt::Horizontal, this);
+    slider->setRange(0, 1000);
+    slider->setValue(defaultValue);
+
+    rightButton = new QPushButton(this);
+    rightButton->setIcon(QIcon(":/PiYing/piying_icons/setIcon.png"));
+    rightButton->setIconSize(QSize(16, 16));
+    rightButton->setFixedSize(QSize(16, 16));
+
+    layout->addWidget(label);
+    layout->addWidget(slider);
+    layout->addWidget(rightButton);
+
+    connect(slider, &QSlider::valueChanged, this, [id](int value)
+        {
+            Part* part = TimelineGl::getInstance().get_current_part();
+            if (part) {
+                part->change_slider_value(id, value);
+                TimelineGl::getInstance().update();
+                PiYingGL::getInstance().update();
+            }
+        }
+    );
+
+    setLayout(layout);
+}
+
+CtrlSlideLayout::~CtrlSlideLayout()
+{
+}

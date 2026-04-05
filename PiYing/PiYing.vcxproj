@@ -1,0 +1,251 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{91FAC8E8-2388-4780-8678-230BE416C8AD}</ProjectGuid>
+    <Keyword>QtVS_v304</Keyword>
+    <WindowsTargetPlatformVersion Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">10.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">10.0</WindowsTargetPlatformVersion>
+    <QtMsBuild Condition="'$(QtMsBuild)'=='' OR !Exists('$(QtMsBuild)\qt.targets')">$(MSBuildProjectDirectory)\QtMsBuild</QtMsBuild>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v143</PlatformToolset>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v143</PlatformToolset>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Condition="Exists('$(QtMsBuild)\qt_defaults.props')">
+    <Import Project="$(QtMsBuild)\qt_defaults.props" />
+  </ImportGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="QtSettings">
+    <QtInstall>6.9.2_msvc2022_64</QtInstall>
+    <QtModules>core;gui;widgets;opengl;openglwidgets;</QtModules>
+    <QtBuildConfig>debug</QtBuildConfig>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'" Label="QtSettings">
+    <QtInstall>6.9.2_msvc2022_64</QtInstall>
+    <QtModules>core;gui;widgets;opengl;openglwidgets;opengl;openglwidgets</QtModules>
+    <QtBuildConfig>release</QtBuildConfig>
+  </PropertyGroup>
+  <Target Name="QtMsBuildNotFound" BeforeTargets="CustomBuild;ClCompile" Condition="!Exists('$(QtMsBuild)\qt.targets') or !Exists('$(QtMsBuild)\qt.props')">
+    <Message Importance="High" Text="QtMsBuild: could not locate qt.targets, qt.props; project may not build correctly." />
+  </Target>
+  <ImportGroup Label="ExtensionSettings" />
+  <ImportGroup Label="Shared" />
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(QtMsBuild)\Qt.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(QtMsBuild)\Qt.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="Configuration">
+    <ClCompile>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'" Label="Configuration">
+    <ClCompile>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <QtRcc Include="PiYing.qrc" />
+    <QtUic Include="PiYing.ui" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\ask_round_poly_dialog.cpp" />
+    <ClCompile Include="src\ask_transform_dialog.cpp" />
+    <ClCompile Include="src\change_mode.cpp" />
+    <ClCompile Include="src\character_trace.cpp" />
+    <ClCompile Include="src\ch_skelen_toolbar.cpp" />
+    <ClCompile Include="src\ch_texture_toolbar.cpp" />
+    <ClCompile Include="src\construct.cpp" />
+    <ClCompile Include="src\Controls.cpp" />
+    <ClCompile Include="src\control_slider_toolbar.cpp" />
+    <ClCompile Include="src\ctrl_slide_layout.cpp" />
+    <ClCompile Include="src\ctrl_slide_widget.cpp" />
+    <ClCompile Include="src\cus_func_point2d.cpp" />
+    <ClCompile Include="src\cus_func_string.cpp" />
+    <ClCompile Include="src\cus_func_transform.cpp" />
+    <ClCompile Include="src\cus_func_zone.cpp" />
+    <ClCompile Include="src\cus_readfile.cpp" />
+    <ClCompile Include="src\draw.cpp" />
+    <ClCompile Include="src\events.cpp" />
+    <ClCompile Include="src\gl_func.cpp" />
+    <ClCompile Include="src\image_texture.cpp" />
+    <ClCompile Include="src\image_transform.cpp" />
+    <ClCompile Include="src\Joint.cpp" />
+    <ClCompile Include="src\keyboard_state_win.cpp" />
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\merge_parts.cpp" />
+    <ClCompile Include="src\part.cpp" />
+    <ClCompile Include="src\parts.cpp" />
+    <ClCompile Include="src\part_cursor.cpp" />
+    <ClCompile Include="src\piying_texture.cpp" />
+    <ClCompile Include="src\piying_tool.cpp" />
+    <ClCompile Include="src\pi_ying.cpp" />
+    <ClCompile Include="src\pi_ying_gl.cpp" />
+    <ClCompile Include="src\pi_ying_gl_container.cpp" />
+    <ClCompile Include="src\point_vector.cpp" />
+    <ClCompile Include="src\point_vector_layer.cpp" />
+    <ClCompile Include="src\raletive_transform.cpp" />
+    <ClCompile Include="src\ratio_dialog.cpp" />
+    <ClCompile Include="src\selected_points.cpp" />
+    <ClCompile Include="src\selected_triangle.cpp" />
+    <ClCompile Include="src\slide_applier.cpp" />
+    <ClCompile Include="src\slots.cpp" />
+    <ClCompile Include="src\timeline_glfunc.cpp" />
+    <ClCompile Include="src\timeline_gl_draw.cpp" />
+    <ClCompile Include="src\timeline_gl_event.cpp" />
+    <ClCompile Include="src\timeline_gl_get.cpp" />
+    <ClCompile Include="src\timeline_gl_structure.cpp" />
+    <ClCompile Include="src\timeline_slots.cpp" />
+    <ClCompile Include="src\time_line.cpp" />
+    <ClCompile Include="src\time_line_gl.cpp" />
+    <ClCompile Include="src\tool_add_poly.cpp" />
+    <ClCompile Include="src\tool_add_round.cpp" />
+    <ClCompile Include="src\tooL_add_triangle.cpp" />
+    <ClCompile Include="src\tool_add_vert_trace.cpp" />
+    <ClCompile Include="src\tool_button.cpp" />
+    <ClCompile Include="src\tool_func.cpp" />
+    <ClCompile Include="src\tool_part_handle.cpp" />
+    <ClCompile Include="src\tool_part_triangle_libre_select.cpp" />
+    <ClCompile Include="src\tool_part_triangle_rect_select.cpp" />
+    <ClCompile Include="src\tool_part_triangle_select.cpp" />
+    <ClCompile Include="src\tool_part_vert_libre_select.cpp" />
+    <ClCompile Include="src\tool_part_vert_rect_select.cpp" />
+    <ClCompile Include="src\tool_part_vert_select.cpp" />
+    <ClCompile Include="src\tool_triangle_libre_select.cpp" />
+    <ClCompile Include="src\tool_triangle_rect_select.cpp" />
+    <ClCompile Include="src\tool_triangle_select.cpp" />
+    <ClCompile Include="src\tool_vert_libre_select.cpp" />
+    <ClCompile Include="src\tool_vert_rect_select.cpp" />
+    <ClCompile Include="src\tool_vert_select.cpp" />
+    <ClCompile Include="src\ViewData.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="ask_round_poly_dialog.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="AskTransformDialog.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="base_math.h" />
+    <ClInclude Include="character_trace.h" />
+    <ClInclude Include="ch_skelen_toolbar.h" />
+    <ClInclude Include="ch_texture_toolbar.h" />
+    <ClInclude Include="control_slider_toolbar.h" />
+    <ClInclude Include="cus_ask.h" />
+    <ClInclude Include="cus_func_point2d.h" />
+    <ClInclude Include="cus_func_string.h" />
+    <ClInclude Include="cus_func_transform.h" />
+    <ClInclude Include="cus_func_zone.h" />
+    <ClInclude Include="cus_readfile.h" />
+    <ClInclude Include="enum_character_texture_tool_state.h" />
+    <ClInclude Include="enum_edit_mode.h" />
+    <ClInclude Include="enum_select_handle_mode.h" />
+    <ClInclude Include="image_transform.h" />
+    <ClInclude Include="Joint.h" />
+    <ClInclude Include="KeyboardStateWin.h" />
+    <ClInclude Include="part.h" />
+    <ClInclude Include="parts.h" />
+    <ClInclude Include="point_vector.h" />
+    <ClInclude Include="scale_trans.h" />
+    <ClInclude Include="selected_points.h" />
+    <ClInclude Include="slide_applier.h" />
+    <ClInclude Include="static_gl_const.h" />
+    <ClInclude Include="static_handle_zone.h" />
+    <ClInclude Include="static_rect_vert.h" />
+    <ClInclude Include="time_line.h" />
+    <ClInclude Include="tool_add_poly.h" />
+    <ClInclude Include="tool_add_round.h" />
+    <ClInclude Include="tool_add_triangle.h" />
+    <ClInclude Include="tool_add_vert_trace.h" />
+    <ClInclude Include="tool_button.h" />
+    <ClInclude Include="tool_part_handle.h" />
+    <ClInclude Include="tool_part_triangle_libre_select.h" />
+    <ClInclude Include="tool_part_triangle_rect_select.h" />
+    <ClInclude Include="tool_part_triangle_select.h" />
+    <ClInclude Include="tool_part_vert_libre_select.h" />
+    <ClInclude Include="tool_part_vert_rect_select.h" />
+    <ClInclude Include="tool_part_vert_select.h" />
+    <ClInclude Include="tool_triangle_libre_select.h" />
+    <ClInclude Include="tool_triangle_rect_select.h" />
+    <ClInclude Include="tool_triangle_select.h" />
+    <ClInclude Include="tool_vert_libre_select.h" />
+    <ClInclude Include="tool_vert_rect_select.h" />
+    <ClInclude Include="tool_vert_select.h" />
+    <QtMoc Include="ViewData.h" />
+    <QtMoc Include="time_line_gl.h" />
+    <QtMoc Include="RatioDialog.h" />
+    <QtMoc Include="piYingGLContainer.h" />
+    <QtMoc Include="piYingGL.h" />
+    <ClInclude Include="piying_texture.h" />
+    <ClInclude Include="piying_tool.h" />
+    <ClInclude Include="piying_tool_behavior.h" />
+    <QtMoc Include="PiYing.h" />
+    <QtMoc Include="ctrlSlideWidget.h" />
+    <QtMoc Include="ctrlSlideLayout.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bgshapes.vert" />
+    <None Include="chEditershapes.vert" />
+    <None Include="scroll_block.vert" />
+    <None Include="selected_vert.vert" />
+    <None Include="simple_triangle.vert" />
+    <None Include="square_icon.vert" />
+    <None Include="texture_alpha_shape.frag" />
+    <None Include="texture_color_shape.frag" />
+    <None Include="texture_tri.vert" />
+    <None Include="vert_with_trans.vert" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
+    <Import Project="$(QtMsBuild)\qt.targets" />
+  </ImportGroup>
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
