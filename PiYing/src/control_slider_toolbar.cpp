@@ -8,10 +8,12 @@
 
 ControlSliderToolbar::ControlSliderToolbar() :
 	_select(new ToolButton(":/PiYing/piying_icons/selectRectChVert_S.png", ":/PiYing/piying_icons/selectRectChVert.png", "selectRectChVert", CharacterToolState::RectSelectVertPart)),
-	_add_vert_trace(new ToolButton(":/PiYing/piying_icons/addVertTrace_S.png", ":/PiYing/piying_icons/addVertTrace.png", "addVertTrace", CharacterToolState::AddVertTrace))
+	_add_vert_trace(new ToolButton(":/PiYing/piying_icons/addVertTrace_S.png", ":/PiYing/piying_icons/addVertTrace.png", "addVertTrace", CharacterToolState::AddVertTrace)),
+	_add_line_trace(new ToolButton(":/PiYing/piying_icons/add_line_trace_S.png", ":/PiYing/piying_icons/add_line_trace.png", "addLineTrace", CharacterToolState::AddLineTrace))
 {
 	connect(_select->action(), &QAction::triggered, this, [this] { click_select(); }); 
 	connect(_add_vert_trace->action(), &QAction::triggered, this, [this] { click_add_vert_trace(); });
+	connect(_add_line_trace->action(), &QAction::triggered, this, [this] { click_add_line_trace(); });
 }
 
 void ControlSliderToolbar::set_to_toolbar(QToolBar* toolbar)
@@ -20,6 +22,7 @@ void ControlSliderToolbar::set_to_toolbar(QToolBar* toolbar)
 
 	toolbar->addAction(_select->action());
 	toolbar->addAction(_add_vert_trace->action());
+	toolbar->addAction(_add_line_trace->action());
 }
 
 void ControlSliderToolbar::remember_last_tool()
@@ -29,6 +32,9 @@ void ControlSliderToolbar::remember_last_tool()
 	}
 	else if (_add_vert_trace->isSelect()) {
 		PiYingGL::getInstance().setChTool(CharacterToolState::AddVertTrace);
+	}
+	else if (_add_line_trace->isSelect()) {
+		PiYingGL::getInstance().setChTool(CharacterToolState::AddLineTrace);
 	}
 	else {
 		PiYingGL::getInstance().setChTool(CharacterToolState::None);
@@ -72,6 +78,7 @@ void ControlSliderToolbar::press_1()
 
 		_select->select();
 		_add_vert_trace->unSelect();
+		_add_line_trace->unSelect();
 		PiYingGL::getInstance().setChTool(_select->toolState());
 	}
 	}
@@ -114,6 +121,7 @@ void ControlSliderToolbar::press_3()
 
 		_select->select();
 		_add_vert_trace->unSelect();
+		_add_line_trace->unSelect();
 		PiYingGL::getInstance().setChTool(_select->toolState());
 	}
 	}
@@ -155,6 +163,8 @@ void ControlSliderToolbar::press_4()
 		}
 
 		_select->select();
+		_add_vert_trace->unSelect();
+		_add_line_trace->unSelect();
 		PiYingGL::getInstance().setChTool(_select->toolState());
 	}
 	}
@@ -213,6 +223,7 @@ void ControlSliderToolbar::click_select()
 
 	_select->select();
 	_add_vert_trace->unSelect();
+	_add_line_trace->unSelect();
 	PiYingGL::getInstance().setChTool(_select->toolState());
 }
 
@@ -227,4 +238,18 @@ void ControlSliderToolbar::click_add_vert_trace()
 	_select->unSelect();
 	_add_vert_trace->select();
 	PiYingGL::getInstance().setChTool(CharacterToolState::AddVertTrace);
+}
+
+void ControlSliderToolbar::click_add_line_trace()
+{
+	if (_add_line_trace->isSelect()) {
+		_add_line_trace->unSelect();
+		PiYingGL::getInstance().setChTool(CharacterToolState::None);
+		return;
+	}
+
+	_select->unSelect();
+	_add_vert_trace->unSelect();
+	_add_line_trace->select();
+	PiYingGL::getInstance().setChTool(CharacterToolState::AddLineTrace);
 }

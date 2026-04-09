@@ -38,5 +38,7 @@
         <file>piying_icons/selectRectChVert.png</file>
         <file>piying_icons/selectRectChVert_S.png</file>
         <file>piying_icons/setIcon.png</file>
+        <file>piying_icons/add_line_trace.png</file>
+        <file>piying_icons/add_line_trace_S.png</file>
     </qresource>
 </RCC>

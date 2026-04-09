@@ -90,6 +90,9 @@
     <Filter Include="Source Files\piying_class">
       <UniqueIdentifier>{056a6e40-0623-45e5-a346-4405777d40cf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\piying_tool_bar">
+      <UniqueIdentifier>{f8b93a20-1c34-4c47-882e-e2441cb60f31}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <QtRcc Include="PiYing.qrc">
@@ -283,9 +286,6 @@
     <ClCompile Include="src\control_slider_toolbar.cpp">
       <Filter>Source Files\piying_qobject</Filter>
     </ClCompile>
-    <ClCompile Include="src\character_trace.cpp">
-      <Filter>Header Files\Core</Filter>
-    </ClCompile>
     <ClCompile Include="src\ratio_dialog.cpp">
       <Filter>Source Files\piying_qobject</Filter>
     </ClCompile>
@@ -306,6 +306,9 @@
     </ClCompile>
     <ClCompile Include="src\time_line.cpp">
       <Filter>Source Files\piying_class</Filter>
+    </ClCompile>
+    <ClCompile Include="src\character_trace.cpp">
+      <Filter>Source Files\Core</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -437,12 +440,6 @@
     <ClInclude Include="base_math.h">
       <Filter>Header Files\cusfunc</Filter>
     </ClInclude>
-    <ClInclude Include="ch_skelen_toolbar.h">
-      <Filter>Header Files\piying_qobject</Filter>
-    </ClInclude>
-    <ClInclude Include="ch_texture_toolbar.h">
-      <Filter>Header Files\piying_qobject</Filter>
-    </ClInclude>
     <ClInclude Include="character_trace.h">
       <Filter>Header Files\Core</Filter>
     </ClInclude>
@@ -479,11 +476,17 @@
     <ClInclude Include="tool_button.h">
       <Filter>Header Files\piying_class</Filter>
     </ClInclude>
-    <ClInclude Include="control_slider_toolbar.h">
-      <Filter>Header Files\piying_qobject</Filter>
-    </ClInclude>
     <ClInclude Include="KeyboardStateWin.h">
       <Filter>Header Files\cusfunc</Filter>
+    </ClInclude>
+    <ClInclude Include="ch_texture_toolbar.h">
+      <Filter>Header Files\piying_tool_bar</Filter>
+    </ClInclude>
+    <ClInclude Include="ch_skelen_toolbar.h">
+      <Filter>Header Files\piying_tool_bar</Filter>
+    </ClInclude>
+    <ClInclude Include="control_slider_toolbar.h">
+      <Filter>Header Files\piying_tool_bar</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

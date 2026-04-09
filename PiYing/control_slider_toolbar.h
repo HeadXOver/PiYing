@@ -19,8 +19,10 @@ public:
 private:
     void click_select();
     void click_add_vert_trace();
+    void click_add_line_trace();
 
 private:
     ToolButton* _select;
     ToolButton* _add_vert_trace;
+    ToolButton* _add_line_trace;
 };
