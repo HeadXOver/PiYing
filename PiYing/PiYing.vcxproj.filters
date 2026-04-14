@@ -310,6 +310,9 @@
     <ClCompile Include="src\character_trace.cpp">
       <Filter>Source Files\Core</Filter>
     </ClCompile>
+    <ClCompile Include="piying_curve.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="piYingGL.h">
@@ -487,6 +490,9 @@
     </ClInclude>
     <ClInclude Include="control_slider_toolbar.h">
       <Filter>Header Files\piying_tool_bar</Filter>
+    </ClInclude>
+    <ClInclude Include="piying_curve.h">
+      <Filter>Header Files\Core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

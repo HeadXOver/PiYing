@@ -8,6 +8,10 @@ class CharacterTrace;
 class QPolygonF;
 class QString;
 
+namespace piying {
+    class Curve;
+}
+
 class SlideApplier final
 {
 public:
@@ -29,7 +33,7 @@ public:
     bool add_trace_on_exist_slider(int sliderId, int index, const QPolygonF& polygon);
     bool contains(unsigned int pointIndex) const noexcept;
 
-    const std::unordered_map<unsigned int, QPolygonF>& get_trace_map(size_t slide) const;
+    const std::unordered_map<unsigned int, piying::Curve>& get_trace_map(size_t slide) const;
 
     size_t n_sliders() const noexcept { return sliders.size(); }
 

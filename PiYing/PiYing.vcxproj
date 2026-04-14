@@ -96,6 +96,7 @@
     <QtUic Include="PiYing.ui" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="piying_curve.cpp" />
     <ClCompile Include="src\ask_round_poly_dialog.cpp" />
     <ClCompile Include="src\ask_transform_dialog.cpp" />
     <ClCompile Include="src\change_mode.cpp" />
@@ -192,6 +193,7 @@
     <ClInclude Include="KeyboardStateWin.h" />
     <ClInclude Include="part.h" />
     <ClInclude Include="parts.h" />
+    <ClInclude Include="piying_curve.h" />
     <ClInclude Include="point_vector.h" />
     <ClInclude Include="scale_trans.h" />
     <ClInclude Include="selected_points.h" />

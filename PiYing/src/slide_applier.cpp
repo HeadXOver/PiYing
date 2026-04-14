@@ -2,6 +2,7 @@
 
 #include "character_trace.h"
 #include "PiYing.h"
+#include "piying_curve.h"
 
 SlideApplier::SlideApplier()
 {
@@ -63,7 +64,7 @@ void SlideApplier::add_new_slider(int index, const QPolygonF& polygon)
     PiYing::getInstance().update_part_slider();
 }
 
-const std::unordered_map<unsigned int, QPolygonF>& SlideApplier::get_trace_map(size_t slide) const
+const std::unordered_map<unsigned int, piying::Curve>& SlideApplier::get_trace_map(size_t slide) const
 {
     return sliders[slide]->get_traces();
 }

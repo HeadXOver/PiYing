@@ -14,6 +14,7 @@
 #include "slide_applier.h"
 #include "character_trace.h"
 #include "piying_texture.h"
+#include "piying_curve.h"
 
 #include <qopengltexture>
 #include <qpointf>
@@ -291,16 +292,16 @@ void Part::change_slider_value(size_t sliderIndex, int value)
 {
 	_slide_applier->change_current_value(sliderIndex, value);
 
-	const std::unordered_map<unsigned int, QPolygonF>& tracesByPoint = _slide_applier->get_trace_map(sliderIndex);
+	const std::unordered_map<unsigned int, piying::Curve>& tracesByPoint = _slide_applier->get_trace_map(sliderIndex);
 
 	QPointF displacement;
 	for (const auto& [key, val] : tracesByPoint) {
 		displacement = QPointF();
 		for (size_t i = 0; i < _slide_applier->n_sliders(); ++i) {
-			const std::unordered_map<unsigned int, QPolygonF>& eachSlider = _slide_applier->get_trace_map(i);
+			const std::unordered_map<unsigned int, piying::Curve>& eachSlider = _slide_applier->get_trace_map(i);
 			if (eachSlider.count(key)) {
-				const QPolygonF& eachTrace = eachSlider.at(key);
-				displacement += eachTrace[_slide_applier->get_slider_current_value(i) * (eachTrace.size() - 1) / 1000];
+				const piying::Curve& eachTrace = eachSlider.at(key);
+				displacement += eachTrace.get_positon(_slide_applier->get_slider_current_value(i));
 			}
 		}
 		_vert_texture->set_point(true, key, displacement + _vert_texture_origin->get(key, true));

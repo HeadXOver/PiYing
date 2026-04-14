@@ -4,6 +4,10 @@
 #include <unordered_map>
 #include <qstring>
 
+namespace piying {
+    class Curve;
+}
+
 class QSlider;
 
 class CharacterTrace
@@ -16,7 +20,7 @@ public:
 
     CharacterTrace& operator=(const CharacterTrace& other) = default;
 
-    const std::unordered_map<unsigned int, QPolygonF>& get_traces() const noexcept { return trace_by_index; }
+    const std::unordered_map<unsigned int, piying::Curve>& get_traces() const noexcept { return trace_by_index; }
 
     bool have_point(unsigned int index) const noexcept { return trace_by_index.count(index); }
 
@@ -30,10 +34,8 @@ public:
     int get_current_slider_value() const noexcept { return current_slider_value; }
 
 private:
-    std::unordered_map<unsigned int, QPolygonF> trace_by_index;
+    std::unordered_map<unsigned int, piying::Curve> trace_by_index;
     int current_slider_value{ 0 };
     QString _name;
-
-    QPolygonF trace;
 };
 

@@ -1,6 +1,7 @@
 #include "character_trace.h"
 
 #include <qpolygonf>
+#include <piying_curve.h>
 
 CharacterTrace::CharacterTrace(unsigned int index, const QPolygonF& poly, const QString& name) : _name(name)
 {
@@ -9,7 +10,6 @@ CharacterTrace::CharacterTrace(unsigned int index, const QPolygonF& poly, const 
 }
 
 CharacterTrace::CharacterTrace(const CharacterTrace& other, unsigned int skew) :
-	trace(other.trace),
 	_name(other._name),
 	current_slider_value(other.current_slider_value)
 {
@@ -39,7 +39,7 @@ void CharacterTrace::set_name(const QString& name) noexcept
 
 void CharacterTrace::add_skew(unsigned int skew)
 {
-	std::unordered_map<unsigned int, QPolygonF> oldMap;
+	std::unordered_map<unsigned int, piying::Curve> oldMap;
 	oldMap.swap(trace_by_index);
 	trace_by_index.reserve(oldMap.size());
 
