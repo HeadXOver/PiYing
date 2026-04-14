@@ -10,14 +10,18 @@ namespace piying{
 	class Curve final
 	{
 	public:
-		Curve() {}
 		Curve(const QPolygonF& poly);
 
 	public:
-		QPointF get_positon(int value) const noexcept;
+		QPointF get_position(int value) const noexcept { return (this->*vari_get)(value); }
 
 	private:
-		std::vector<QPointF> points;
+		QPointF get_position_poly(int value) const noexcept;
+		QPointF get_position_insert(int value) const noexcept;
+
+	private:
+		QPointF(Curve::* vari_get)(int value) const noexcept;
+		const std::vector<QPointF> points;
 	};
 
 }

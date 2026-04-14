@@ -6,15 +6,15 @@
 CharacterTrace::CharacterTrace(unsigned int index, const QPolygonF& poly, const QString& name) : _name(name)
 {
 	// 记录相对于第一个点的偏移量
-	trace_by_index[index] = poly.translated(-poly[0]);
+	trace_by_index.emplace(index, poly.translated(-poly[0]));
 }
 
 CharacterTrace::CharacterTrace(const CharacterTrace& other, unsigned int skew) :
 	_name(other._name),
 	current_slider_value(other.current_slider_value)
 {
-	for (auto& [index, poly] : other.trace_by_index) {
-		trace_by_index[index + skew] = poly;
+	for (auto [index, poly] : other.trace_by_index) {
+		trace_by_index.emplace(index + skew, poly);
 	}
 }
 
@@ -24,7 +24,7 @@ CharacterTrace::~CharacterTrace()
 
 void CharacterTrace::add_point(unsigned int index, const QPolygonF& poly)
 {
-	trace_by_index[index] = poly.translated(-poly[0]);
+	trace_by_index.emplace(index, poly.translated(-poly[0]));
 }
 
 void CharacterTrace::set_current_value(int value) noexcept

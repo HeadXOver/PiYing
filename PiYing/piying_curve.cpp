@@ -5,14 +5,23 @@
 piying::Curve::Curve(const QPolygonF& poly) :
 	points(poly.begin(), poly.end())
 {
+	if (points.size() >= 707) {
+		vari_get = &Curve::get_position_poly;
+	}
+	else {
+		vari_get = &Curve::get_position_insert;
+	}
 }
 
-QPointF piying::Curve::get_positon(int value) const noexcept
+QPointF piying::Curve::get_position_poly(int value) const noexcept
 {
 	if (value >= 1000) return points.back();
 
-	if (points.size() >= 707) return points[value * (points.size() - 1) / 1000];
+	return points[value * (points.size() - 1) / 1000];
+}
 
+QPointF piying::Curve::get_position_insert(int value) const noexcept
+{
 	float indexF = value * (points.size() - 1) / 1000.f;
 	int index = static_cast<int>(indexF);
 	indexF -= index;

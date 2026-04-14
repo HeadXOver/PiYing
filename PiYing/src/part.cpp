@@ -301,7 +301,7 @@ void Part::change_slider_value(size_t sliderIndex, int value)
 			const std::unordered_map<unsigned int, piying::Curve>& eachSlider = _slide_applier->get_trace_map(i);
 			if (eachSlider.count(key)) {
 				const piying::Curve& eachTrace = eachSlider.at(key);
-				displacement += eachTrace.get_positon(_slide_applier->get_slider_current_value(i));
+				displacement += eachTrace.get_position(_slide_applier->get_slider_current_value(i));
 			}
 		}
 		_vert_texture->set_point(true, key, displacement + _vert_texture_origin->get(key, true));
