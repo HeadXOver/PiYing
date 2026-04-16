@@ -50,6 +50,16 @@ bool SlideApplier::add_trace_on_exist_slider(int sliderId, int index, const QPol
     return true;
 }
 
+bool SlideApplier::add_trace_on_exist_slider(int sliderId, int index, const QPointF& point)
+{
+    CharacterTrace& trace = *sliders[sliderId];
+
+    if (trace.have_point(index)) return false;
+    trace.add_point(index, point);
+
+    return true;
+}
+
 bool SlideApplier::contains(unsigned int pointIndex) const noexcept
 {
     for (int i = 0; i < sliders.size(); ++i) {
@@ -61,6 +71,12 @@ bool SlideApplier::contains(unsigned int pointIndex) const noexcept
 void SlideApplier::add_new_slider(int index, const QPolygonF& polygon)
 {
     sliders.push_back(std::make_unique<CharacterTrace>(index, polygon, get_unique_name("new slider")));
+    PiYing::getInstance().update_part_slider();
+}
+
+void SlideApplier::add_new_slider(int index, const QPointF& point)
+{
+    sliders.push_back(std::make_unique<CharacterTrace>(index, point, get_unique_name("new slider")));
     PiYing::getInstance().update_part_slider();
 }
 

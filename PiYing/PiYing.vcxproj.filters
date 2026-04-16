@@ -30,17 +30,8 @@
     <Filter Include="shaders\verts">
       <UniqueIdentifier>{297cc1ea-b028-474c-bc62-d0f695d49e2f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\tool">
-      <UniqueIdentifier>{442501c7-18ad-4d95-b0d1-ad9ddcb5e7f7}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\cusfunc">
       <UniqueIdentifier>{b49c756c-755d-4ddc-8537-3c7a3ac82027}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\tool\part">
-      <UniqueIdentifier>{afd1c6ac-824c-4d23-9af4-2fa6a244afa7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\tool\texture">
-      <UniqueIdentifier>{b2372f56-dd0c-417e-9369-e83e8bb9b079}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\piying_widget">
       <UniqueIdentifier>{1144423c-1743-41a9-bd7b-d1b991798ef1}</UniqueIdentifier>
@@ -92,6 +83,15 @@
     </Filter>
     <Filter Include="Header Files\piying_tool_bar">
       <UniqueIdentifier>{f8b93a20-1c34-4c47-882e-e2441cb60f31}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\piying_tool">
+      <UniqueIdentifier>{442501c7-18ad-4d95-b0d1-ad9ddcb5e7f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\piying_tool\part">
+      <UniqueIdentifier>{afd1c6ac-824c-4d23-9af4-2fa6a244afa7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\piying_tool\texture">
+      <UniqueIdentifier>{b2372f56-dd0c-417e-9369-e83e8bb9b079}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -313,6 +313,9 @@
     <ClCompile Include="piying_curve.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="tool_add_line_trace.cpp">
+      <Filter>Source Files\tool\part</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="piYingGL.h">
@@ -366,61 +369,61 @@
       <Filter>Header Files\cusfunc</Filter>
     </ClInclude>
     <ClInclude Include="tool_part_handle.h">
-      <Filter>Header Files\tool\part</Filter>
+      <Filter>Header Files\piying_tool\part</Filter>
     </ClInclude>
     <ClInclude Include="tool_part_triangle_libre_select.h">
-      <Filter>Header Files\tool\part</Filter>
+      <Filter>Header Files\piying_tool\part</Filter>
     </ClInclude>
     <ClInclude Include="tool_part_triangle_rect_select.h">
-      <Filter>Header Files\tool\part</Filter>
+      <Filter>Header Files\piying_tool\part</Filter>
     </ClInclude>
     <ClInclude Include="tool_part_triangle_select.h">
-      <Filter>Header Files\tool\part</Filter>
+      <Filter>Header Files\piying_tool\part</Filter>
     </ClInclude>
     <ClInclude Include="tool_part_vert_libre_select.h">
-      <Filter>Header Files\tool\part</Filter>
+      <Filter>Header Files\piying_tool\part</Filter>
     </ClInclude>
     <ClInclude Include="tool_part_vert_rect_select.h">
-      <Filter>Header Files\tool\part</Filter>
+      <Filter>Header Files\piying_tool\part</Filter>
     </ClInclude>
     <ClInclude Include="tool_part_vert_select.h">
-      <Filter>Header Files\tool\part</Filter>
+      <Filter>Header Files\piying_tool\part</Filter>
     </ClInclude>
     <ClInclude Include="tool_add_vert_trace.h">
-      <Filter>Header Files\tool\part</Filter>
+      <Filter>Header Files\piying_tool\part</Filter>
     </ClInclude>
     <ClInclude Include="tool_vert_select.h">
-      <Filter>Header Files\tool\texture</Filter>
+      <Filter>Header Files\piying_tool\texture</Filter>
     </ClInclude>
     <ClInclude Include="tool_triangle_libre_select.h">
-      <Filter>Header Files\tool\texture</Filter>
+      <Filter>Header Files\piying_tool\texture</Filter>
     </ClInclude>
     <ClInclude Include="tool_triangle_rect_select.h">
-      <Filter>Header Files\tool\texture</Filter>
+      <Filter>Header Files\piying_tool\texture</Filter>
     </ClInclude>
     <ClInclude Include="tool_triangle_select.h">
-      <Filter>Header Files\tool\texture</Filter>
+      <Filter>Header Files\piying_tool\texture</Filter>
     </ClInclude>
     <ClInclude Include="tool_vert_libre_select.h">
-      <Filter>Header Files\tool\texture</Filter>
+      <Filter>Header Files\piying_tool\texture</Filter>
     </ClInclude>
     <ClInclude Include="tool_vert_rect_select.h">
-      <Filter>Header Files\tool\texture</Filter>
+      <Filter>Header Files\piying_tool\texture</Filter>
     </ClInclude>
     <ClInclude Include="tool_add_poly.h">
-      <Filter>Header Files\tool\texture</Filter>
+      <Filter>Header Files\piying_tool\texture</Filter>
     </ClInclude>
     <ClInclude Include="tool_add_round.h">
-      <Filter>Header Files\tool\texture</Filter>
+      <Filter>Header Files\piying_tool\texture</Filter>
     </ClInclude>
     <ClInclude Include="tool_add_triangle.h">
-      <Filter>Header Files\tool\texture</Filter>
+      <Filter>Header Files\piying_tool\texture</Filter>
     </ClInclude>
     <ClInclude Include="piying_tool_behavior.h">
-      <Filter>Header Files\tool</Filter>
+      <Filter>Header Files\piying_tool</Filter>
     </ClInclude>
     <ClInclude Include="piying_tool.h">
-      <Filter>Header Files\tool</Filter>
+      <Filter>Header Files\piying_tool</Filter>
     </ClInclude>
     <ClInclude Include="enum_edit_mode.h">
       <Filter>Header Files\piying_enum</Filter>
@@ -493,6 +496,9 @@
     </ClInclude>
     <ClInclude Include="piying_curve.h">
       <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="tool_add_line_trace.h">
+      <Filter>Header Files\piying_tool\part</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

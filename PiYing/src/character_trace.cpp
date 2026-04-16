@@ -9,6 +9,11 @@ CharacterTrace::CharacterTrace(unsigned int index, const QPolygonF& poly, const 
 	trace_by_index.emplace(index, poly.translated(-poly[0]));
 }
 
+CharacterTrace::CharacterTrace(unsigned int index, const QPointF& point, const QString& name) : _name(name)
+{
+	trace_by_index.emplace(index, point);
+}
+
 CharacterTrace::CharacterTrace(const CharacterTrace& other, unsigned int skew) :
 	_name(other._name),
 	current_slider_value(other.current_slider_value)
@@ -25,6 +30,11 @@ CharacterTrace::~CharacterTrace()
 void CharacterTrace::add_point(unsigned int index, const QPolygonF& poly)
 {
 	trace_by_index.emplace(index, poly.translated(-poly[0]));
+}
+
+void CharacterTrace::add_point(unsigned int index, const QPointF& point)
+{
+	trace_by_index.emplace(index, point);
 }
 
 void CharacterTrace::set_current_value(int value) noexcept

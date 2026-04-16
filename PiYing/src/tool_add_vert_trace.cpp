@@ -18,7 +18,6 @@ void piying::tool::part::AddVertTrace::click(const QPointF& mouseOri)
 		existPoint = part->get_vert(i, true);
         if (QLineF(existPoint, mouse).length() < 0.02f / PiYingGL::getInstance().viewScale.value()) {
             current_index = i;
-			presse_on_vert = true;
 			polygon.clear();
 			polygon << existPoint;
 			polygon << mouse;
@@ -32,7 +31,7 @@ void piying::tool::part::AddVertTrace::click(const QPointF& mouseOri)
 
 void piying::tool::part::AddVertTrace::mouse_move(const QPointF& mouse)
 {
-	if(!presse_on_vert) return;
+	if(current_index < 0) return;
 
 	QPointF glMouse = PiYingGL::getInstance().GLViewProjMatrixInvert(mouse);
 	if (polygon.isEmpty() || polygon.last() != glMouse) polygon << glMouse;
@@ -40,7 +39,7 @@ void piying::tool::part::AddVertTrace::mouse_move(const QPointF& mouse)
 
 void piying::tool::part::AddVertTrace::release(const QPointF& mouse)
 {
-	presse_on_vert = false;
+	if (current_index < 0) return;
 
 	if (polygon.size() < 3) {
 		current_index = -1;
@@ -59,8 +58,6 @@ void piying::tool::part::AddVertTrace::draw()
 {
 	if (current_index < 0) return;
 
-	const PointVectorLayer& pointLayer = *PiYingGL::getInstance().currentLayer();
-
 	QPointF selectPoint = PiYingGL::getInstance().mapViewProjMatrix(TimelineGl::getInstance().get_current_part()->get_vert(current_index, true));
 
 	QPainter painter(&PiYingGL::getInstance());
@@ -77,7 +74,7 @@ void piying::tool::part::AddVertTrace::draw()
 	screenPoly.reserve(polygon.size());
 	std::transform(polygon.cbegin(), polygon.cend(),
 		std::back_inserter(screenPoly),
-		[this](const QPointF& p) { return PiYingGL::getInstance().mapViewProjMatrix(p); }
+		[](const QPointF& p) -> QPointF { return PiYingGL::getInstance().mapViewProjMatrix(p); }
 	);
 
 	painter.drawPolyline(screenPoly);

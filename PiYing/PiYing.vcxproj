@@ -166,6 +166,7 @@
     <ClCompile Include="src\tool_vert_rect_select.cpp" />
     <ClCompile Include="src\tool_vert_select.cpp" />
     <ClCompile Include="src\ViewData.cpp" />
+    <ClCompile Include="tool_add_line_trace.cpp" />
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="ask_round_poly_dialog.h" />
@@ -202,6 +203,7 @@
     <ClInclude Include="static_handle_zone.h" />
     <ClInclude Include="static_rect_vert.h" />
     <ClInclude Include="time_line.h" />
+    <ClInclude Include="tool_add_line_trace.h" />
     <ClInclude Include="tool_add_poly.h" />
     <ClInclude Include="tool_add_round.h" />
     <ClInclude Include="tool_add_triangle.h" />

@@ -14,6 +14,7 @@ class CharacterTrace
 {
 public:
     CharacterTrace(unsigned int index, const QPolygonF& poly, const QString& name);
+    CharacterTrace(unsigned int index, const QPointF& point, const QString& name);
     CharacterTrace(const CharacterTrace& other) = default;
     CharacterTrace(const CharacterTrace& other, unsigned int skew);
     ~CharacterTrace();
@@ -25,6 +26,7 @@ public:
     bool have_point(unsigned int index) const noexcept { return trace_by_index.count(index); }
 
     void add_point(unsigned int index, const QPolygonF& poly);
+    void add_point(unsigned int index, const QPointF& point);
     void set_current_value(int value) noexcept;
     void set_name(const QString& name) noexcept;
     void add_skew(unsigned int skew);

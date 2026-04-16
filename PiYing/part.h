@@ -44,6 +44,7 @@ public:
 
 	void bind_texture();
 	void add_trace(int index, const QPolygonF& polygon);
+	void add_trace(int index, const QPointF& point);
 	void update_scale();
 	void update_global_scale();
 	void change_slider_value(size_t sliderIndex, int value);

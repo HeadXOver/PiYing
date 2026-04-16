@@ -1,11 +1,11 @@
 #pragma once
 
-#include <qpolygon>
+#include <qpointf>
 
 namespace piying::tool {
 	namespace part {
 
-		class AddVertTrace final
+		class AddLineTrace final
 		{
 		public:
 			void click(const QPointF& mouse);
@@ -15,7 +15,8 @@ namespace piying::tool {
 
 		private:
 			int current_index = -1;
-			QPolygonF polygon;
+			QPointF _origin_vert_pos;
+			QPointF _current_mouse_pos;
 		};
 
 	}

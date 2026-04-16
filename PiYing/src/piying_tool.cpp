@@ -13,6 +13,7 @@
 #include "tool_triangle_libre_select.h"
 #include "tool_add_round.h"
 #include "tool_add_vert_trace.h"
+#include "tool_add_line_trace.h"
 #include "tool_part_vert_rect_select.h"
 #include "tool_part_vert_libre_select.h"
 #include "tool_part_triangle_rect_select.h"
@@ -112,6 +113,19 @@ void piying::tool::PiyingTool::construct_add_vert_trace()
 	moveBehavior = std::make_unique<piying::tool::MouseMove<piying::tool::part::AddVertTrace>>(data);
 	releaseBehavior = std::make_unique<piying::tool::Release<piying::tool::part::AddVertTrace>>(data);
 	drawBehavior = std::make_unique<piying::tool::Draw<piying::tool::part::AddVertTrace>>(data);
+}
+
+void piying::tool::PiyingTool::construct_add_line_trace()
+{
+	std::shared_ptr<piying::tool::part::AddLineTrace> data = std::make_shared<piying::tool::part::AddLineTrace>();
+
+	escapeBehavior = std::make_unique<piying::tool::VoidActBehavior>();
+	deleteBehavior = std::make_unique<piying::tool::VoidActBehavior>();
+	enterBehavior = std::make_unique<piying::tool::VoidActBehavior>();
+	clickBehavior = std::make_unique<piying::tool::Click<piying::tool::part::AddLineTrace>>(data);
+	moveBehavior = std::make_unique<piying::tool::MouseMove<piying::tool::part::AddLineTrace>>(data);
+	releaseBehavior = std::make_unique<piying::tool::Release<piying::tool::part::AddLineTrace>>(data);
+	drawBehavior = std::make_unique<piying::tool::Draw<piying::tool::part::AddLineTrace>>(data);
 }
 
 void piying::tool::PiyingTool::construct_rect_select_triangle()
@@ -215,6 +229,7 @@ piying::tool::PiyingTool::PiyingTool(CharacterToolState chToolState)
 	case CharacterToolState::RectSelectVert: construct_rect_select(); return;
 	case CharacterToolState::LibreSelectVert: construct_libre_select(); return;
 	case CharacterToolState::AddVertTrace: construct_add_vert_trace(); return;
+	case CharacterToolState::AddLineTrace: construct_add_line_trace(); return;
 	case CharacterToolState::RectSelectTriangle: construct_rect_select_triangle(); return;
 	case CharacterToolState::LibreSelectTriangle: construct_libre_select_triangle(); return;
 	case CharacterToolState::RectSelectVertPart: construct_rect_select_vert_part(); return;

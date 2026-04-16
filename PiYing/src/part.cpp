@@ -217,6 +217,30 @@ void Part::add_trace(int index, const QPolygonF& polygon)
 	}
 }
 
+void Part::add_trace(int index, const QPointF& point)
+{
+	QMenu tempMenu;
+	tempMenu.addAction(QString("新建控制器"));
+
+	const size_t n_sliders = _slide_applier->n_sliders();
+	for (size_t i = 0; i < n_sliders; ++i)
+		tempMenu.addAction(QString("绑定到: %1").arg(_slide_applier->get_slider_name(i)));
+
+	QAction* act = tempMenu.exec(QCursor::pos());
+	if (!act) return;
+
+	int actionIndex = tempMenu.actions().indexOf(act) - 1;
+
+	if (actionIndex == -1) {
+		_slide_applier->add_new_slider(index, point);
+	}
+	else {
+		if (!_slide_applier->add_trace_on_exist_slider(actionIndex, index, point)) {
+			QMessageBox::warning(nullptr, "警告", "该控制器已存在该点");
+		}
+	}
+}
+
 void Part::update_scale()
 {
 	const QPointF& firstPoint = _vert_texture->get(0, true);
