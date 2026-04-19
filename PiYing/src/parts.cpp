@@ -181,6 +181,11 @@ Part* Parts::get_part(size_t index) const
     return _parts[index];
 }
 
+QMatrix4x4 Parts::get_world_matrix(size_t index) const
+{
+    return _parts[index]->get_world_matrix();
+}
+
 void Parts::add_part_to_is_draw(Part* part)
 {
     _part_is_draw[part->_lay_index] = 1;

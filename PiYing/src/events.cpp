@@ -88,7 +88,7 @@ void PiYingGL::mouseMoveEvent(QMouseEvent* event) {
 			QPointF toTrans = _orth_ratio_invert.map(mouse - lastMiddleButtonPos);
 			viewTransX.setValue(lastViewTransX + toTrans.x());
 			viewTransY.setValue(lastViewTransY + toTrans.y());
-			update_trc();
+			update_view_matrix_of_shaders();
 		}
 		update();
 	}
@@ -111,7 +111,7 @@ void PiYingGL::wheelEvent(QWheelEvent* ev)
 	viewTransX.setValue(viewTransX.value() * scaleFactor + toTrans.x());
 	viewTransY.setValue(viewTransY.value() * scaleFactor + toTrans.y());
 
-	update_trc();
+	update_view_matrix_of_shaders();
 	update();
 	ev->accept();
 }

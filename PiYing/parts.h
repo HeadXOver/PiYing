@@ -3,6 +3,7 @@
 #include <vector>
 
 class Part;
+class QMatrix4x4;
 
 class Parts final
 {
@@ -39,6 +40,8 @@ public:
 	unsigned int get_vao_piying(size_t index) const;
 
 	Part* get_part(size_t index) const;
+
+	QMatrix4x4 get_world_matrix(size_t index) const;
 
 private:
 	void add_part_to_is_draw(Part* part);

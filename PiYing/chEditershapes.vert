@@ -11,6 +11,6 @@ uniform float prescale = 1.f;
 
 void main()
 {
-	gl_Position = view_proj * vec4(aPos.x, aPos.y, 0.f, 1.0f);
+	gl_Position = view_proj * trc * vec4(aPos.x, aPos.y, 0.f, 1.0f);
 	TexCoord = (vec2(aTexCoord.x, aTexCoord.y / prescale) + vec2(1.f, 1.f)) * 0.5f;
 }

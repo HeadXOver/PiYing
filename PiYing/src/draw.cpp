@@ -236,13 +236,11 @@ void PiYingGL::paint_in_vector_part()
 		glBindVertexArray(Parts::getInstance().get_vao_piying(i));
 		Parts::getInstance().bind_texture(i);
 		_ch_shader_program->setUniformValue("prescale", Parts::getInstance().get_prescale(i));
+		_ch_shader_program->setUniformValue("trc", Parts::getInstance().get_world_matrix(i));
 		glDrawElements(GL_TRIANGLES, (GLsizei)Parts::getInstance().get_part(i)->index_size(), GL_UNSIGNED_INT, 0);
 	}
 
-	if (nothing) {
-		glBindVertexArray(0); ///< 解绑VAO
-		return;
-	}
+	if (nothing) return;
 
 	/// 获取选中的part
 	Part* currentPart = TimelineGl::getInstance().get_current_part();
@@ -300,7 +298,7 @@ void PiYingGL::update_sub_ch_verts()
 	doneCurrent();
 }
 
-void PiYingGL::update_trc()
+void PiYingGL::update_view_matrix_of_shaders()
 {
 	// 更新着色器中的矩阵
 	// 要先绑定，再更新，否则无效

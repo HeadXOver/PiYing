@@ -72,5 +72,5 @@ void PiYingGL::viewRotationControl(const QPointF& mouse)
 	QPointF toRot = getRotatedPoint(lastViewTransX, lastViewTransY, r);
 	viewTransX.setValue(toRot.x());
 	viewTransY.setValue(toRot.y());
-	update_trc();
+	update_view_matrix_of_shaders();
 }
