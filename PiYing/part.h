@@ -40,8 +40,8 @@ public:
 
 	QPointF get_vert(int index, bool isSkelen) const;
 
-	QMatrix4x4 get_local_matrix() const noexcept { return localTransform; }
-	QMatrix4x4 get_world_matrix() const noexcept { return worldTransform; }
+	const QMatrix4x4& get_local_matrix() const noexcept { return localTransform; }
+	const QMatrix4x4& get_world_matrix() const noexcept { return worldTransform; }
 
 	SlideApplier& get_slide_applier() noexcept;
 

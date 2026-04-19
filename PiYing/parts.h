@@ -41,7 +41,7 @@ public:
 
 	Part* get_part(size_t index) const;
 
-	QMatrix4x4 get_world_matrix(size_t index) const;
+	const QMatrix4x4& get_world_matrix(size_t index) const;
 
 private:
 	void add_part_to_is_draw(Part* part);
