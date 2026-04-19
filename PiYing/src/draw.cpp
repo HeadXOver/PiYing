@@ -307,7 +307,7 @@ void PiYingGL::update_trc()
 
 	makeCurrent();
 	_ch_shader_program->bind();
-	_ch_shader_program->setUniformValue("trc", getViewProjMatrix());
+	_ch_shader_program->setUniformValue("view_proj", getViewProjMatrix());
 	_selected_vert_shader_program->bind();
 	_selected_vert_shader_program->setUniformValue("trc", getViewProjMatrix());
 	_texture_tri_shader_program->bind();

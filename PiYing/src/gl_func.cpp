@@ -107,6 +107,7 @@ void PiYingGL::initializeGL()
 	/////////////////////global setting////////////////////////
 
 	_ch_shader_program->bind();
+	_ch_shader_program->setUniformValue("view_proj", QMatrix4x4());
 	_ch_shader_program->setUniformValue("trc", QMatrix4x4());
 	_selected_vert_shader_program->bind();
 	_selected_vert_shader_program->setUniformValue("trc", QMatrix4x4());
