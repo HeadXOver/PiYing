@@ -42,10 +42,10 @@ const QPointF PointVectorLayer::get(size_t index, bool isSkelen) const
 	return PointVector::operator[](index + index + (isSkelen ? 0 : 1));
 }
 
-void PointVectorLayer::push_back(const QPointF& point)
+void PointVectorLayer::push_back(double x, double y)
 {
-	PointVector::push_back(point);
-	PointVector::push_back(point);
+	PointVector::push_back(x, y);
+	PointVector::push_back(x, y);
 }
 
 void PointVectorLayer::push_back(const QPointF& tex, const QPointF& ske)

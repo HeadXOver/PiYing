@@ -46,7 +46,7 @@ void piying::tool::part::AddLineTrace::release(const QPointF& mouse)
 	}
 
 	Part* part = TimelineGl::getInstance().get_current_part();
-	if (part) part->add_trace(current_index, PiYingGL::getInstance().GLViewProjMatrixInvert(_current_mouse_pos));
+	if (part) part->add_trace(current_index, PiYingGL::getInstance().GLViewProjMatrixInvert(_current_mouse_pos) - _origin_vert_pos);
 
 	current_index = -1;
 }

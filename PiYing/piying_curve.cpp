@@ -13,8 +13,8 @@ piying::Curve::Curve(const QPolygonF& poly) :
 	}
 }
 
-piying::Curve::Curve(const QPointF& point) :
-	points({point})
+piying::Curve::Curve(double x, double y) :
+	points({QPointF(x, y)})
 {
 	vari_get = &Curve::get_position_linear;
 }
@@ -40,6 +40,6 @@ QPointF piying::Curve::get_position_insert(int value) const noexcept
 
 QPointF piying::Curve::get_position_linear(int value) const noexcept
 {
-	float ratio = value / 1000.f;
+	double ratio = value / 1000.f;
 	return ratio * points[0];
 }

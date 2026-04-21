@@ -55,7 +55,7 @@ Part::Part(
 			if (isTexture) {
 				eachPoint = currentLayer(indices[i]);
 
-				_vert_texture->push_back(eachPoint);
+				_vert_texture->push_back(eachPoint.x(), eachPoint.y());
 
 				top = piying::max(top, eachPoint.y());
 				bottom = piying::min(bottom, eachPoint.y());

@@ -124,6 +124,8 @@ public:
 	void add_part(const QList<unsigned int>& indices);
 
 	void add_point_to_vert(const QPointF& p);
+	void add_point_to_vert(double x, double y);
+
 	void addTriangle(int index1, int index2, int index3);
 	void addTriangle(int index1, int index2, const QPointF& point3);
 	void addTriangle(int index1, const QPointF& point2, const QPointF& point3);

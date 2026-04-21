@@ -5,13 +5,18 @@
 
 void PiYingGL::add_point_to_vert(const QPointF& p)
 {
-	_currentLayer->push_back(p);
+	_currentLayer->push_back(p.x(), p.y());
+}
+
+void PiYingGL::add_point_to_vert(double x, double y)
+{
+	_currentLayer->push_back(x, y);
 }
 
 void PiYingGL::addChVert(const QPointF& point)
 {
 	_currentIndex->push_back((unsigned int)_currentLayer->element_size());
-	_currentLayer->push_back(point);
+	_currentLayer->push_back(point.x(), point.y());
 }
 
 void PiYingGL::addTriangle(int index1, int index2, int index3)

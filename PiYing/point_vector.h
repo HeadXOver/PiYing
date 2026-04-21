@@ -60,7 +60,7 @@ public:
 
 	const QPointF get(size_t index, bool isSkelen) const;
 
-	void push_back(const QPointF& point);
+	void push_back(double x, double y);
 	void push_back(const QPointF& tex, const QPointF& ske);
 	void set_point(bool first, int index, const QPointF& point);
 	void copy_from_to(int from, int to);

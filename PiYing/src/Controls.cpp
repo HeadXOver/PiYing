@@ -56,7 +56,7 @@ void PiYingGL::bgScaleControl(const QPointF& mouse, piying::ImageTexture& image)
 		pAspect.setY(pAspect.x());
 	}
 
-	image.addScale(pAspect);
+	image.addScale(pAspect.x(), pAspect.y());
 	pAspect.setX(leftRight * (1.f - pAspect.x()));
 	pAspect.setY(topButton * (1.f - pAspect.y()));
 	image.addTrans((lastImageTransform->rot() * lastImageTransform->scale() * _orth_ratio_invert).map(pAspect));

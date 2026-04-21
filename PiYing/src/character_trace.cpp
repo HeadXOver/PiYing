@@ -11,7 +11,7 @@ CharacterTrace::CharacterTrace(unsigned int index, const QPolygonF& poly, const 
 
 CharacterTrace::CharacterTrace(unsigned int index, const QPointF& point, const QString& name) : _name(name)
 {
-	trace_by_index.emplace(index, point);
+	trace_by_index.emplace(index, piying::Curve(point.x(), point.y()));
 }
 
 CharacterTrace::CharacterTrace(const CharacterTrace& other, unsigned int skew) :
@@ -34,7 +34,7 @@ void CharacterTrace::add_point(unsigned int index, const QPolygonF& poly)
 
 void CharacterTrace::add_point(unsigned int index, const QPointF& point)
 {
-	trace_by_index.emplace(index, point);
+	trace_by_index.emplace(index, piying::Curve(point.x(), point.y()));
 }
 
 void CharacterTrace::set_current_value(int value) noexcept

@@ -39,14 +39,11 @@ namespace piying {
         void set_transform(const ImageTransform* transform) noexcept;
 
         void setTrans(float x, float y) noexcept;
-        void setTrans(const QPointF& point) noexcept;
         void set_rot_radian(float r) noexcept;
         void setScale(float x, float y) noexcept;
-        void setScale(const QPointF& point) noexcept;
         void setScale(float s) noexcept;
 
         void addTrans(const QPointF& point) noexcept;
-        void addScale(const QPointF& point) noexcept;
         void addTrans(float x, float y) noexcept;
         void addScale(float x, float y) noexcept;
         void addScale(float s) noexcept;

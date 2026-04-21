@@ -28,11 +28,6 @@ void piying::ImageTexture::setTrans(float x, float y) noexcept
     _transform->set_trans(x, y);
 }
 
-void piying::ImageTexture::setTrans(const QPointF& point) noexcept
-{
-    _transform->set_trans(point.x(), point.y());
-}
-
 void piying::ImageTexture::set_rot_radian(float r) noexcept
 {
     _transform->set_rot_radian(r);
@@ -43,11 +38,6 @@ void piying::ImageTexture::setScale(float x, float y) noexcept
     _transform->set_scale(x, y * _prescale);
 }
 
-void piying::ImageTexture::setScale(const QPointF& point) noexcept
-{
-    _transform->set_scale(point.x(), point.y());
-}
-
 void piying::ImageTexture::setScale(float s) noexcept
 {
     _transform->set_scale(s, s * _prescale);
@@ -56,11 +46,6 @@ void piying::ImageTexture::setScale(float s) noexcept
 void piying::ImageTexture::addTrans(const QPointF& point) noexcept
 {
     addTrans(point.x(), point.y());
-}
-
-void piying::ImageTexture::addScale(const QPointF& point) noexcept
-{
-    addScale(point.x(), point.y());
 }
 
 void piying::ImageTexture::addTrans(float x, float y) noexcept
