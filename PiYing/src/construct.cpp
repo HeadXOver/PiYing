@@ -112,10 +112,10 @@ PiYingGL::PiYingGL() :
 	PiYing::getInstance().statusBar()->addPermanentWidget(new QLabel(tr("视图缩放"), this));
 	PiYing::getInstance().statusBar()->addPermanentWidget(labelViewScale);
 
-	connect(&viewScale, &ViewData::valueChanged, this, [labelViewScale](float v) {labelViewScale->setText(tr("%1  ").arg(v)); });
-	connect(&viewTransX, &ViewData::valueChanged, this, [labelViewTransX](float v) {labelViewTransX->setText(tr("%1  ").arg(v)); });
-	connect(&viewTransY, &ViewData::valueChanged, this, [labelViewTransY](float v) {labelViewTransY->setText(tr("%1  ").arg(v)); });
-	connect(&viewRotate, &ViewData::valueChanged, this, [labelViewRot](float v) {labelViewRot->setText(tr("%1  ").arg(v)); });
+	connect(&viewScale, &ViewData::valueChanged, this, [labelViewScale](float v) {labelViewScale->setText(tr("%1  ").arg(v)); PiYingGL::getInstance().update_view_matrix(); });
+	connect(&viewTransX, &ViewData::valueChanged, this, [labelViewTransX](float v) {labelViewTransX->setText(tr("%1  ").arg(v)); PiYingGL::getInstance().update_view_matrix(); });
+	connect(&viewTransY, &ViewData::valueChanged, this, [labelViewTransY](float v) {labelViewTransY->setText(tr("%1  ").arg(v)); PiYingGL::getInstance().update_view_matrix(); });
+	connect(&viewRotate, &ViewData::valueChanged, this, [labelViewRot](float v) {labelViewRot->setText(tr("%1  ").arg(v)); PiYingGL::getInstance().update_view_matrix(); });
 
 #pragma endregion
 

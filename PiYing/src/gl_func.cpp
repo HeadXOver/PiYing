@@ -129,6 +129,26 @@ void PiYingGL::initializeGL()
 
 void PiYingGL::resizeGL(int w, int h)
 {
+	float scaleX = 2.0f / static_cast<float>(w);
+	float scaleY = -2.0f / static_cast<float>(h);
+
+	_map_to_gl_matrix = {
+		scaleX,0,0,-1,
+		0,scaleY,0,1,
+		0,0,1,0,
+		0,0,0,1
+	};
+
+	scaleX = w / 2;
+	scaleY = h / 2;
+
+	_gl_to_map_matrix = {
+		scaleX,0,0,scaleX,
+		0,scaleY,0,-scaleY,
+		0,0,1,0,
+		0,0,0,1
+	};
+
 	for (int i = 0; i < backGrounds.size(); i++) {
 		backGrounds[i]->set_transform_by_new_ratio(w / (float)h);
 	}

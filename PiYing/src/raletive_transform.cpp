@@ -40,38 +40,23 @@ QPointF PiYingGL::GLViewMatrixInvert(const QPointF& point) const
 	return getViewMatrixInvert().map(mapToGL(point));
 }
 
-QMatrix4x4 PiYingGL::get_map_to_gl_matrix() const noexcept
+void PiYingGL::update_view_matrix()
 {
-	QMatrix4x4 m;
-	m.translate(-1.0f, 1.0f);
-	m.scale(2.0f / static_cast<float>(width()), -2.0f / static_cast<float>(height()));
-	return m;
-}
+	_view_matrix = {
+		viewScale.value(), 0.0f, 0.0f, viewTransX.value(),
+		0.0f, viewScale.value(), 0.0f, viewTransY.value(),
+		0.0f, 0.0f, 1.0f, 0.0f,
+		0.0f, 0.0f, 0.0f, 1.0f
+	};
+	_view_matrix.rotate(viewRotate.value(), 0.0f, 0.0f, 1.0f);
 
-QMatrix4x4 PiYingGL::get_gl_to_map_matrix() const noexcept
-{
-	QMatrix4x4 m;
-	m.scale(static_cast<float>(width()) / 2.0f, -static_cast<float>(height()) / 2.0f);
-	m.translate(1.0f, -1.0f);
-	return m;
-}
+	_view_matrix_invert.setToIdentity();
+	_view_matrix_invert.rotate(-viewRotate.value(), 0.0f, 0.0f, 1.0f);
 
-QMatrix4x4 PiYingGL::getViewMatrixInvert() const noexcept 
-{
-	QMatrix4x4 mViewTransform;
-	mViewTransform.rotate(-viewRotate.value(), 0.0f, 0.0f, 1.0f);
-	mViewTransform.scale(1 / viewScale.value());
-	mViewTransform.translate(-viewTransX.value(), -viewTransY.value());
-	return mViewTransform;
-}
+	float scale = 1 / viewScale.value();
 
-QMatrix4x4 PiYingGL::getViewMatrix() const noexcept
-{
-	QMatrix4x4 mViewTransform;
-	mViewTransform.translate(viewTransX.value(), viewTransY.value());
-	mViewTransform.scale(viewScale.value());
-	mViewTransform.rotate(viewRotate.value(), 0.0f, 0.0f, 1.0f);
-	return mViewTransform;
+	_view_matrix_invert.scale(scale, scale);
+	_view_matrix_invert.translate(-viewTransX.value(), -viewTransY.value());
 }
 
 QMatrix4x4 PiYingGL::getBgShaderMatrix(const QMatrix4x4& transform) const noexcept

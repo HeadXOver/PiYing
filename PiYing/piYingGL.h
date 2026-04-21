@@ -97,7 +97,6 @@ public:
 	void addBackground(const QString& imageName);
 	void add_character(const QString& imageName);
 	void setEditMode(EditMode mode);
-	void update_ch_tool();
 	void setChTool(CharacterToolState state);
 	void deleteChElement();
 	void enterChElement();
@@ -114,6 +113,8 @@ public:
 	void draw_selected_triangle(size_t nSelectedPoint);
 	void draw_triangle_frame(bool isSkelen);
 	void draw_rectangle(float cx, float cy, float width, float height);
+
+	void update_ch_tool();
 	void update_ch_verts();
 	void update_sub_ch_verts();
 	void update_view_matrix_of_shaders();
@@ -121,6 +122,8 @@ public:
 	void update_selected_triangle(const unsigned int* data, size_t size);
 	void update_selected_triangle_texture();
 	void update_selected_triangle_part();
+	void update_view_matrix();
+
 	void add_part(const QList<unsigned int>& indices);
 
 	void add_point_to_vert(const QPointF& p);
@@ -148,11 +151,12 @@ public:
 	QPointF GLViewProjMatrixInvert(const QPointF& point) const;
 	QPointF GLViewMatrixInvert(const QPointF& point) const;
 
-	QMatrix4x4 get_map_to_gl_matrix() const noexcept;
-	QMatrix4x4 get_gl_to_map_matrix() const noexcept;
+	const QMatrix4x4& get_map_to_gl_matrix() const noexcept { return _map_to_gl_matrix; }
+	const QMatrix4x4& get_gl_to_map_matrix() const noexcept { return _gl_to_map_matrix; }
 
-	QMatrix4x4 getViewMatrixInvert() const noexcept;
-	QMatrix4x4 getViewMatrix() const noexcept;
+	QMatrix4x4 getViewMatrixInvert() const noexcept { return _view_matrix_invert; }
+	QMatrix4x4 getViewMatrix() const noexcept { return _view_matrix; }
+
 	QMatrix4x4 getBgShaderMatrix(const QMatrix4x4& transform) const noexcept;
 	QMatrix4x4 getViewProjMatrixInvert() const noexcept;
 	QMatrix4x4 getViewProjMatrix() const noexcept;
@@ -222,4 +226,10 @@ private:
 
 	std::vector<unsigned int>* _currentIndex = nullptr;
 	PointVectorLayer* _currentLayer = nullptr;
+
+	QMatrix4x4 _map_to_gl_matrix;
+	QMatrix4x4 _gl_to_map_matrix;
+
+	QMatrix4x4 _view_matrix;
+	QMatrix4x4 _view_matrix_invert;
 };
