@@ -30,7 +30,7 @@ namespace piying {
 
 			bool contains(unsigned int index) const noexcept;
 
-			QPointF get_last_pos() const noexcept { return lastPos; }
+			const QPointF& get_last_pos() const noexcept { return lastPos; }
 
 			ToolHandleControlMode edit_mode() const noexcept { return _edit_mode; }
 

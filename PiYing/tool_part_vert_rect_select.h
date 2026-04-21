@@ -23,8 +23,9 @@ namespace piying::tool {
 
 		private:
 			std::unique_ptr<VertSelect> _vert_select;
-			QPointF rect;
-			bool isDraw = false;
+			double rectX{};
+			double rectY{};
+			bool isDraw{ false };
 			bool _is_press{ false };
 		};
 

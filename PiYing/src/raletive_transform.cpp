@@ -4,7 +4,7 @@
 
 QPointF PiYingGL::getRaletiveToRect(const QPointF& point, const QMatrix4x4& transform) const
 {
-	return (_orth_ratio * transform * getViewMatrixInvert() * _orth_ratio_invert).map(point);
+	return (_orth_ratio * transform * _view_matrix_invert * _orth_ratio_invert).map(point);
 }
 
 QPointF PiYingGL::mapToGL(const QPointF& point) const
@@ -23,21 +23,21 @@ QPointF PiYingGL::glToMap(const QPointF& point) const
 
 QPointF PiYingGL::mapViewProjMatrix(const QPointF& point) const
 { 
-	return glToMap(getViewProjMatrix().map(point)); 
+	return glToMap(_view_proj_matrix.map(point));
 }
 QPointF PiYingGL::GLViewProjMatrixInvert(float x, float y) const
 { 
-	return getViewProjMatrixInvert().map(mapToGL(x, y)); 
+	return _view_proj_matrix_invert.map(mapToGL(x, y));
 }
 
 QPointF PiYingGL::GLViewProjMatrixInvert(const QPointF& point) const
 { 
-	return getViewProjMatrixInvert().map(mapToGL(point)); 
+	return _view_proj_matrix_invert.map(mapToGL(point));
 }
 
 QPointF PiYingGL::GLViewMatrixInvert(const QPointF& point) const
 {
-	return getViewMatrixInvert().map(mapToGL(point));
+	return _view_matrix_invert.map(mapToGL(point));
 }
 
 void PiYingGL::update_view_matrix()

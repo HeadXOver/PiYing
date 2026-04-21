@@ -30,7 +30,7 @@ void piying::tool::part::VertRectSelect::draw()
 	if (isDraw) {
 		painter.setPen(QPen(Qt::yellow, 1));
 		const QPointF& lastPos = _vert_select->get_last_pos();
-		painter.drawRect(lastPos.x(), lastPos.y(), rect.x() - lastPos.x(), rect.y() - lastPos.y());
+		painter.drawRect(lastPos.x(), lastPos.y(), rectX - lastPos.x(), rectY - lastPos.y());
 	}
 }
 
@@ -69,7 +69,9 @@ void piying::tool::part::VertRectSelect::mouse_move(const QPointF& mouse)
 		return;
 	}
 
-	rect = mouse;
+	rectX = mouse.x();
+	rectY = mouse.y();
+
 	isDraw = true;
 }
 
