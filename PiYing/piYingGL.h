@@ -123,6 +123,7 @@ public:
 	void update_selected_triangle_texture();
 	void update_selected_triangle_part();
 	void update_view_matrix();
+	void update_view_proj_matrix();
 
 	void add_part(const QList<unsigned int>& indices);
 
@@ -154,15 +155,16 @@ public:
 	const QMatrix4x4& get_map_to_gl_matrix() const noexcept { return _map_to_gl_matrix; }
 	const QMatrix4x4& get_gl_to_map_matrix() const noexcept { return _gl_to_map_matrix; }
 
-	QMatrix4x4 getViewMatrixInvert() const noexcept { return _view_matrix_invert; }
-	QMatrix4x4 getViewMatrix() const noexcept { return _view_matrix; }
+	const QMatrix4x4& getViewMatrixInvert() const noexcept { return _view_matrix_invert; }
+	const QMatrix4x4& getViewMatrix() const noexcept { return _view_matrix; }
 
 	QMatrix4x4 getBgShaderMatrix(const QMatrix4x4& transform) const noexcept;
-	QMatrix4x4 getViewProjMatrixInvert() const noexcept;
-	QMatrix4x4 getViewProjMatrix() const noexcept;
 
-	const QMatrix4x4& getProj() const noexcept;
-	const QMatrix4x4& getInsProj() const noexcept;
+	const QMatrix4x4& getViewProjMatrixInvert() const noexcept { return _view_proj_matrix_invert; }
+	const QMatrix4x4& getViewProjMatrix() const noexcept { return _view_proj_matrix; }
+
+	const QMatrix4x4& getProj() const noexcept { return _orth_ratio; }
+	const QMatrix4x4& getInsProj() const noexcept { return _orth_ratio_invert; }
 
 	MousePos getMousePosType(const QPointF& point) const noexcept;
 
@@ -232,4 +234,7 @@ private:
 
 	QMatrix4x4 _view_matrix;
 	QMatrix4x4 _view_matrix_invert;
+
+	QMatrix4x4 _view_proj_matrix;
+	QMatrix4x4 _view_proj_matrix_invert;
 };

@@ -155,6 +155,9 @@ void PiYingGL::changeRatio(float ratio)
 		_orth_ratio_invert.setToIdentity();
 		_orth_ratio_invert.ortho(-1, 1, -ratio, ratio, -1, 1);
 	}
+
+	update_view_proj_matrix();
+
 	update();
 }
 

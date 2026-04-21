@@ -57,29 +57,17 @@ void PiYingGL::update_view_matrix()
 
 	_view_matrix_invert.scale(scale, scale);
 	_view_matrix_invert.translate(-viewTransX.value(), -viewTransY.value());
+
+	update_view_proj_matrix();
+}
+
+void PiYingGL::update_view_proj_matrix()
+{
+	_view_proj_matrix = _orth_ratio * _view_matrix * _orth_ratio_invert;
+	_view_proj_matrix_invert = _orth_ratio * _view_matrix_invert * _orth_ratio_invert;
 }
 
 QMatrix4x4 PiYingGL::getBgShaderMatrix(const QMatrix4x4& transform) const noexcept
 { 
-	return _orth_ratio * getViewMatrix() * transform * _orth_ratio_invert;
-}
-
-QMatrix4x4 PiYingGL::getViewProjMatrixInvert() const noexcept
-{ 
-	return _orth_ratio * getViewMatrixInvert() * _orth_ratio_invert;
-}
-
-QMatrix4x4 PiYingGL::getViewProjMatrix() const noexcept
-{
-	return _orth_ratio * getViewMatrix() * _orth_ratio_invert;
-}
-
-const QMatrix4x4& PiYingGL::getProj() const noexcept
-{
-	return _orth_ratio;
-}
-
-const QMatrix4x4& PiYingGL::getInsProj() const noexcept
-{
-	return _orth_ratio_invert;
+	return _orth_ratio * _view_matrix * transform * _orth_ratio_invert;
 }
