@@ -195,6 +195,7 @@
     <ClInclude Include="part.h" />
     <ClInclude Include="parts.h" />
     <ClInclude Include="piying_curve.h" />
+    <ClInclude Include="point.h" />
     <ClInclude Include="point_vector.h" />
     <ClInclude Include="scale_trans.h" />
     <ClInclude Include="selected_points.h" />

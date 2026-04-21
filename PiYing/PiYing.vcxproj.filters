@@ -93,6 +93,9 @@
     <Filter Include="Header Files\piying_tool\texture">
       <UniqueIdentifier>{b2372f56-dd0c-417e-9369-e83e8bb9b079}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\piying_type">
+      <UniqueIdentifier>{1b691e4c-d986-489e-b897-2f4fbe87eed0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <QtRcc Include="PiYing.qrc">
@@ -499,6 +502,9 @@
     </ClInclude>
     <ClInclude Include="tool_add_line_trace.h">
       <Filter>Header Files\piying_tool\part</Filter>
+    </ClInclude>
+    <ClInclude Include="point.h">
+      <Filter>Header Files\piying_type</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
