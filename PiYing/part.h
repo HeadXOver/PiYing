@@ -39,6 +39,7 @@ public:
 	size_t n_children() const noexcept;
 
 	QPointF get_vert(int index, bool isSkelen) const;
+	QPointF get_joint_center() const;
 
 	const QMatrix4x4& get_local_matrix() const noexcept { return localTransform; }
 	const QMatrix4x4& get_world_matrix() const noexcept { return worldTransform; }
@@ -56,7 +57,8 @@ public:
 	void release_buffers() noexcept;
 	void add_child(Part* child);
 
-	void update_transform(const QMatrix4x4& parentWorld = QMatrix4x4());
+	void update_transform(const QMatrix4x4& parentWorld);
+	void update_transform();
 
 	float x() const noexcept { return _x; }
 	float y() const noexcept { return _y; }

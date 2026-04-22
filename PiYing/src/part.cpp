@@ -183,6 +183,11 @@ QPointF Part::get_vert(int index, bool isSkelen) const
 	return _vert_texture->get(index, isSkelen);
 }
 
+QPointF Part::get_joint_center() const
+{
+	return QPointF();
+}
+
 SlideApplier& Part::get_slide_applier() noexcept
 {
 	return *_slide_applier;
@@ -399,6 +404,16 @@ void Part::update_transform(const QMatrix4x4& parentWorld)
 {
 	localTransform = _joint->get_local_transform();
 	worldTransform = parentWorld * localTransform;
+
+	for (Part* child : _children) {
+		if (child) child->update_transform(worldTransform);
+	}
+}
+
+void Part::update_transform()
+{
+	localTransform = _joint->get_local_transform();
+	worldTransform = localTransform;
 
 	for (Part* child : _children) {
 		if (child) child->update_transform(worldTransform);

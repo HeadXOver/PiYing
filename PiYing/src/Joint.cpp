@@ -1,6 +1,7 @@
 #include "Joint.h"
 
 #include <qmatrix4x4>
+#include <qpointf>
 
 QMatrix4x4 Joint::get_local_transform() const noexcept
 {
@@ -16,4 +17,15 @@ void Joint::set_center(float x, float y) noexcept
 {
     center_x = x;
     center_y = y;
+}
+
+void Joint::set_center(const QPointF& center) noexcept
+{
+    center_x = center.x();
+    center_y = center.y();
+}
+
+QPointF Joint::get_center() const noexcept
+{
+    return QPointF(center_x, center_y);
 }

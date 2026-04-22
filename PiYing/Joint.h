@@ -1,6 +1,7 @@
 #pragma once
 
 class QMatrix4x4;
+class QPointF;
 
 class Joint final
 {
@@ -11,6 +12,9 @@ public:
     QMatrix4x4 get_local_transform() const noexcept;
 
     void set_center(float x, float y) noexcept;
+    void set_center(const QPointF& center) noexcept;
+
+    QPointF get_center() const noexcept;
 
 private:
     float 
