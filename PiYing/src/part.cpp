@@ -134,7 +134,6 @@ Part::Part(const Part& other) :
 	_slide_applier(new SlideApplier(*other._slide_applier)),
 	_parent(other._parent),
 	_joint(std::make_unique<Joint>()),
-	localTransform(other.localTransform),
 	worldTransform(other.worldTransform),
 	_prescale(other._prescale)
 {
@@ -186,6 +185,11 @@ QPointF Part::get_vert(int index, bool isSkelen) const
 QPointF Part::get_joint_center() const
 {
 	return QPointF();
+}
+
+const QMatrix4x4& Part::get_local_matrix() const noexcept
+{
+	return _joint->get_matrix();
 }
 
 SlideApplier& Part::get_slide_applier() noexcept
@@ -402,8 +406,7 @@ size_t Part::n_children() const noexcept
 
 void Part::update_transform(const QMatrix4x4& parentWorld)
 {
-	localTransform = _joint->get_local_transform();
-	worldTransform = parentWorld * localTransform;
+	worldTransform = parentWorld * _joint->get_matrix();
 
 	for (Part* child : _children) {
 		if (child) child->update_transform(worldTransform);
@@ -412,8 +415,7 @@ void Part::update_transform(const QMatrix4x4& parentWorld)
 
 void Part::update_transform()
 {
-	localTransform = _joint->get_local_transform();
-	worldTransform = localTransform;
+	worldTransform = _joint->get_matrix();
 
 	for (Part* child : _children) {
 		if (child) child->update_transform(worldTransform);

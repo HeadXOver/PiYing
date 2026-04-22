@@ -1,28 +1,28 @@
 #include "Joint.h"
 
-#include <qmatrix4x4>
 #include <qpointf>
 
-QMatrix4x4 Joint::get_local_transform() const noexcept
+void Joint::update_matrix() noexcept
 {
-    QMatrix4x4 m;
-    m.translate(trans_x + center_x, trans_y + center_y);
-    m.rotate(rot, 0, 0, 1);
-    m.scale(scale_x, scale_y);
-    m.translate(-center_x, -center_y);
-    return m;
+    localTransform.setToIdentity();
+    localTransform.translate(trans_x + center_x, trans_y + center_y);
+    localTransform.rotate(rot, 0, 0, 1);
+    localTransform.scale(scale_x, scale_y);
+    localTransform.translate(-center_x, -center_y);
 }
 
 void Joint::set_center(float x, float y) noexcept
 {
     center_x = x;
     center_y = y;
+    update_matrix();
 }
 
 void Joint::set_center(const QPointF& center) noexcept
 {
     center_x = center.x();
     center_y = center.y();
+    update_matrix();
 }
 
 QPointF Joint::get_center() const noexcept

@@ -41,7 +41,7 @@ public:
 	QPointF get_vert(int index, bool isSkelen) const;
 	QPointF get_joint_center() const;
 
-	const QMatrix4x4& get_local_matrix() const noexcept { return localTransform; }
+	const QMatrix4x4& get_local_matrix() const noexcept;
 	const QMatrix4x4& get_world_matrix() const noexcept { return worldTransform; }
 
 	SlideApplier& get_slide_applier() noexcept;
@@ -124,6 +124,5 @@ private:
 
 	std::unique_ptr<Joint> _joint;
 
-	QMatrix4x4 localTransform;   // 相对于父节点
 	QMatrix4x4 worldTransform;   // 缓存的世界变换
 };

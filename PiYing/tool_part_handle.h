@@ -30,6 +30,8 @@ namespace piying {
 				QPointF lastDHandleCenterPoint;
 
 				QPointF _last_pos;
+				double _last_x;
+				double _last_y;
 				bool _is_press{ false };
 				HandleControlMode _edit_mode;
 			};
