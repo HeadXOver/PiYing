@@ -64,26 +64,26 @@ bool piying::isInsideSquare(const QPointF& point, float side) noexcept
     return (point.x() >= -side / 2.f && point.x() <= side / 2.f && point.y() >= -side / 2.f && point.y() <= side / 2.f);
 }
 
-ToolHandleControlMode piying::controlModeByMousePos(const QPointF& mouse, const QPointF& center)
+piying::tool::HandleControlMode piying::controlModeByMousePos(const QPointF& mouse, const QPointF& center)
 {
     const qreal length = QLineF(center, mouse).length();
 
     return
         (length <= ROTATEHANDLE_RADIUS + HANDLE_ZONE && length >= ROTATEHANDLE_RADIUS - HANDLE_ZONE) ?
-        ToolHandleControlMode::Rotate :     // 判断是否在旋转控制柄上
+        tool::HandleControlMode::Rotate :     // 判断是否在旋转控制柄上
         (piying::isInRect(mouse, center, HANDLE_ZONE)) ?
-        ToolHandleControlMode::Move :       // 判断是否在中心点上
+        tool::HandleControlMode::Move :       // 判断是否在中心点上
         (piying::isInRect(mouse, center, MOVEHANDLE_LENTH * 2, HANDLE_ZONE)) ?
-        ToolHandleControlMode::MoveX :      // 判断是否在移动控制柄X上
+        tool::HandleControlMode::MoveX :      // 判断是否在移动控制柄X上
         (piying::isInRect(mouse, center, HANDLE_ZONE, MOVEHANDLE_LENTH * 2)) ?
-        ToolHandleControlMode::MoveY :      // 判断是否在移动控制柄Y上
+        tool::HandleControlMode::MoveY :      // 判断是否在移动控制柄Y上
         (piying::isInRect(mouse, center + QPoint(ROTATEHANDLE_RADIUS, ROTATEHANDLE_RADIUS), HANDLE_ZONE)) ?
-        ToolHandleControlMode::Scale :      // 判断是否在缩放控制柄上
+        tool::HandleControlMode::Scale :      // 判断是否在缩放控制柄上
         (piying::isInRect(mouse, center + QPoint(SCALEHANDLE_DISTANCE, 0), HANDLE_ZONE)) ?
-        ToolHandleControlMode::ScaleX :     // 判断是否在缩放控制柄X上
+        tool::HandleControlMode::ScaleX :     // 判断是否在缩放控制柄X上
         (piying::isInRect(mouse, center + QPoint(0, SCALEHANDLE_DISTANCE), HANDLE_ZONE)) ?
-        ToolHandleControlMode::ScaleY :     // 判断是否在缩放控制柄Y上
-        ToolHandleControlMode::None;        // 不在任何控制柄上
+        tool::HandleControlMode::ScaleY :     // 判断是否在缩放控制柄Y上
+        tool::HandleControlMode::None;        // 不在任何控制柄上
 }
 
 void piying::drawHandleZone(QWidget* widget, const QPointF& position)

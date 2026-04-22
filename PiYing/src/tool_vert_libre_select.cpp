@@ -51,7 +51,7 @@ void piying::tool::texture::VertLibreSelect::click(const QPointF& mouseOri)
 
 	chElementSelect->change_edit_mode_by_setting_last_pos(mouseOri);
 
-	if (chElementSelect->getEditMode() != ToolHandleControlMode::None) {
+	if (chElementSelect->getEditMode() != HandleControlMode::None) {
 		chElementSelect->affirmHandle();
 		return;
 	}
@@ -75,7 +75,7 @@ void piying::tool::texture::VertLibreSelect::mouse_move(const QPointF& mouse)
 
 	if (!isPress) return;
 
-	if (chElementSelect->getEditMode() != ToolHandleControlMode::None) {
+	if (chElementSelect->getEditMode() != HandleControlMode::None) {
 		chElementSelect->moveHandle(mouse);
 		return;
 	}

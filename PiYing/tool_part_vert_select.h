@@ -3,49 +3,53 @@
 #include <qpointf>
 #include <memory>
 
-enum class ToolHandleControlMode;
-
 namespace piying {
 
 	class SelectedPoints;
 
-	namespace tool::part {
+	namespace tool {
 
-		class VertSelect final
-		{
-		public:
-			VertSelect();
-			~VertSelect();
+		enum class HandleControlMode;
+		
+		namespace part {
 
-			void change_edit_mode_by_setting_last_pos(const QPointF& mouse);
-			void click_select(const QPointF& mouse);
-			void update_selected_to_draw();
-			void draw_handle_and_selected();
-			void move_handle(const QPointF& mouse);
-			void append(unsigned int index);
-			void clear();
-			void affirm_handle();
-			void delete_element();
-			void escape();
+			class VertSelect final
+			{
+			public:
+				VertSelect();
+				~VertSelect();
 
-			bool contains(unsigned int index) const noexcept;
+				void change_edit_mode_by_setting_last_pos(const QPointF& mouse);
+				void click_select(const QPointF& mouse);
+				void update_selected_to_draw();
+				void draw_handle_and_selected();
+				void move_handle(const QPointF& mouse);
+				void append(unsigned int index);
+				void clear();
+				void affirm_handle();
+				void delete_element();
+				void escape();
 
-			const QPointF& get_last_pos() const noexcept { return lastPos; }
+				bool contains(unsigned int index) const noexcept;
 
-			ToolHandleControlMode edit_mode() const noexcept { return _edit_mode; }
+				const QPointF& get_last_pos() const noexcept { return lastPos; }
 
-		private:
-			QPointF handleCenterPoint;
-			QPointF dHandleCenterPoint;
-			QPointF lastHandleCenterPoint;
-			QPointF lastDHandleCenterPoint;
+				HandleControlMode edit_mode() const noexcept { return _edit_mode; }
 
-			QPointF lastPos;
+			private:
+				QPointF handleCenterPoint;
+				QPointF dHandleCenterPoint;
+				QPointF lastHandleCenterPoint;
+				QPointF lastDHandleCenterPoint;
 
-			ToolHandleControlMode _edit_mode;
+				QPointF lastPos;
 
-			std::unique_ptr<SelectedPoints> selected_points;
-		};
+				HandleControlMode _edit_mode;
+
+				std::unique_ptr<SelectedPoints> selected_points;
+			};
+
+		}
 
 	}
 }

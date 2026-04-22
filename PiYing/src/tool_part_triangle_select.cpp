@@ -17,7 +17,7 @@
 #include <array>
 
 piying::tool::part::TriangleSelect::TriangleSelect() :
-    editMode(ToolHandleControlMode::None)
+    editMode(HandleControlMode::None)
 {
     selected_trangle = std::make_unique<SelectedTriangle>();
 }
@@ -117,7 +117,7 @@ void piying::tool::part::TriangleSelect::draw_handle_and_selected()
 void piying::tool::part::TriangleSelect::changeEditMode()
 {
     if (selected_trangle->isEmpty()) {
-        editMode = ToolHandleControlMode::None;
+        editMode = HandleControlMode::None;
         return;
     }
 
@@ -132,21 +132,21 @@ void piying::tool::part::TriangleSelect::mouse_press(const QPointF& mouse)
 
     changeEditMode();
 
-    if (editMode != ToolHandleControlMode::None) {
+    if (editMode != HandleControlMode::None) {
         affirmHandle();
     }
 }
 
 void piying::tool::part::TriangleSelect::moveHandle(const QPointF& mouse)
 {
-    if (editMode == ToolHandleControlMode::None) return;
+    if (editMode == HandleControlMode::None) return;
 
     PointVectorLayer& pointLayer = *TimelineGl::getInstance().currentLayer();
     PointVectorLayer& pointLayerOrigin = *TimelineGl::getInstance().currentLayerOrigin();
 
     /// 根据 editMode 进行变换
     switch (editMode) {
-    case ToolHandleControlMode::Move: {
+    case HandleControlMode::Move: {
         const QPointF toMove = PiYingGL::getInstance().GLViewProjMatrixInvert(mouse) - PiYingGL::getInstance().GLViewProjMatrixInvert(lastPos);
         QPointF toSet;
         for (int i = 0; i < selected_trangle->point_size(); i++) {
@@ -155,7 +155,7 @@ void piying::tool::part::TriangleSelect::moveHandle(const QPointF& mouse)
             pointLayerOrigin.set_point(true, (*selected_trangle)[i], toSet);
         }
     }break;
-    case ToolHandleControlMode::MoveX: {
+    case HandleControlMode::MoveX: {
         const QPointF toMove = PiYingGL::getInstance().GLViewProjMatrixInvert(mouse.x(), 0.f) - PiYingGL::getInstance().GLViewProjMatrixInvert(lastPos.x(), 0.f);
         QPointF toSet;
         for (int i = 0; i < selected_trangle->point_size(); i++) {
@@ -164,7 +164,7 @@ void piying::tool::part::TriangleSelect::moveHandle(const QPointF& mouse)
             pointLayerOrigin.set_point(true, (*selected_trangle)[i], toSet);
         }
     }break;
-    case ToolHandleControlMode::MoveY: {
+    case HandleControlMode::MoveY: {
         const QPointF toMove = PiYingGL::getInstance().GLViewProjMatrixInvert(0.f, mouse.y()) - PiYingGL::getInstance().GLViewProjMatrixInvert(0.f, lastPos.y());
         QPointF toSet;
         for (int i = 0; i < selected_trangle->point_size(); i++) {
@@ -173,7 +173,7 @@ void piying::tool::part::TriangleSelect::moveHandle(const QPointF& mouse)
             pointLayerOrigin.set_point(true, (*selected_trangle)[i], toSet);
         }
     }break;
-    case ToolHandleControlMode::Rotate: {
+    case HandleControlMode::Rotate: {
         using namespace piying;
 
         QMatrix4x4 rotation = PiYingGL::getInstance().getProj();
@@ -188,7 +188,7 @@ void piying::tool::part::TriangleSelect::moveHandle(const QPointF& mouse)
             pointLayer.set_point(true, (*selected_trangle)[i], toSet);
         }
     }break;
-    case ToolHandleControlMode::Scale: {
+    case HandleControlMode::Scale: {
         float scale = (mouse.x() + mouse.y() - _widget_handle_center.x() - _widget_handle_center.y()) / (ROTATEHANDLE_RADIUS + ROTATEHANDLE_RADIUS);
         QPointF toScale = lastHandleCenterPoint * (scale - 1);
         QPointF toSet;
@@ -198,7 +198,7 @@ void piying::tool::part::TriangleSelect::moveHandle(const QPointF& mouse)
             pointLayerOrigin.set_point(true, (*selected_trangle)[i], toSet);
         }
     }break;
-    case ToolHandleControlMode::ScaleX: {
+    case HandleControlMode::ScaleX: {
         const float scale = (mouse.x() - lastDHandleCenterPoint.x()) / ROTATEHANDLE_RADIUS;
         const float scaleX = lastDHandleCenterPoint.x() * (1 - scale);
 
@@ -215,7 +215,7 @@ void piying::tool::part::TriangleSelect::moveHandle(const QPointF& mouse)
             pointLayerOrigin.set_point(true, (*selected_trangle)[i], toSet);
         }
     }break;
-    case ToolHandleControlMode::ScaleY: {
+    case HandleControlMode::ScaleY: {
         const float scale = (mouse.y() - lastDHandleCenterPoint.y()) / ROTATEHANDLE_RADIUS;
         const float scaleY = lastDHandleCenterPoint.y() * (1 - scale);
 

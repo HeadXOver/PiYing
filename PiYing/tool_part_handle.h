@@ -3,33 +3,38 @@
 #include <memory>
 #include <qpointf>
 
-enum class ToolHandleControlMode;
+namespace piying {
+	
+	namespace tool {
 
-namespace piying::tool {
-	namespace part {
+		enum class HandleControlMode;
 
-		class Handle final
-		{
-		public:
-			Handle();
-			~Handle();
+		namespace part {
 
-			void draw();
-			void click(const QPointF& mouse);
-			void mouse_move(const QPointF& mouse);
-			void release(const QPointF& mouse);
-			void delete_element();
+			class Handle final
+			{
+			public:
+				Handle();
+				~Handle();
 
-		private:
-			QPointF handleCenterPoint;
-			QPointF dHandleCenterPoint;
-			QPointF lastHandleCenterPoint;
-			QPointF lastDHandleCenterPoint;
+				void draw();
+				void click(const QPointF& mouse);
+				void mouse_move(const QPointF& mouse);
+				void release(const QPointF& mouse);
+				void delete_element();
 
-			QPointF _last_pos;
-			bool _is_press{ false };
-			ToolHandleControlMode _edit_mode;
-		};
+			private:
+				QPointF handleCenterPoint;
+				QPointF dHandleCenterPoint;
+				QPointF lastHandleCenterPoint;
+				QPointF lastDHandleCenterPoint;
+
+				QPointF _last_pos;
+				bool _is_press{ false };
+				HandleControlMode _edit_mode;
+			};
+
+		}
 
 	}
 }

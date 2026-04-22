@@ -66,7 +66,7 @@ void piying::tool::texture::TriangleLibreSelect::mouse_move(const QPointF& mouse
 
 	if (!isPress) return;
 
-	if (chTriangleSelect->get_edit_mode() != ToolHandleControlMode::None) {
+	if (chTriangleSelect->get_edit_mode() != HandleControlMode::None) {
 		chTriangleSelect->moveHandle(mouse);
 		return;
 	}

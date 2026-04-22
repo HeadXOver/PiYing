@@ -14,7 +14,7 @@
 
 piying::tool::texture::VertSelect::VertSelect() :
     _edit_shape(PiYingGL::getInstance().editMode != EditMode::characterTexture),
-    editMode(ToolHandleControlMode::None)
+    editMode(HandleControlMode::None)
 {
     selected_points = std::make_unique<SelectedPoints>();
 }
@@ -112,7 +112,7 @@ void piying::tool::texture::VertSelect::change_edit_mode_by_setting_last_pos(con
     lastPos = mouse;
 
     if (selected_points->point_size() == 0) {
-        editMode = ToolHandleControlMode::None;
+        editMode = HandleControlMode::None;
         return;
     }
 
@@ -121,30 +121,30 @@ void piying::tool::texture::VertSelect::change_edit_mode_by_setting_last_pos(con
 
 void piying::tool::texture::VertSelect::moveHandle(const QPointF& mouse)
 {
-    if (editMode == ToolHandleControlMode::None) return;
+    if (editMode == HandleControlMode::None) return;
 
     PointVectorLayer& pointLayer = *PiYingGL::getInstance().currentLayer();
 
     switch (editMode) {
-    case ToolHandleControlMode::Move: {
+    case HandleControlMode::Move: {
         QPointF toMove = PiYingGL::getInstance().GLViewProjMatrixInvert(mouse) - PiYingGL::getInstance().GLViewProjMatrixInvert(lastPos);
         for (int i = 0; i < selected_points->point_size(); i++) {
             pointLayer.set_point(_edit_shape, (*selected_points)[i], selected_points->getVert(i) + toMove);
         }
     }break;
-    case ToolHandleControlMode::MoveX: {
+    case HandleControlMode::MoveX: {
         QPointF toMove = PiYingGL::getInstance().GLViewProjMatrixInvert(mouse.x(), 0.f) - PiYingGL::getInstance().GLViewProjMatrixInvert(lastPos.x(), 0.f);
         for (int i = 0; i < selected_points->point_size(); i++) {
             pointLayer.set_point(_edit_shape, (*selected_points)[i], selected_points->getVert(i) + toMove);
         }
     }break;
-    case ToolHandleControlMode::MoveY: {
+    case HandleControlMode::MoveY: {
         QPointF toMove = PiYingGL::getInstance().GLViewProjMatrixInvert(0.f, mouse.y()) - PiYingGL::getInstance().GLViewProjMatrixInvert(0.f, lastPos.y());
         for (int i = 0; i < selected_points->point_size(); i++) {
             pointLayer.set_point(_edit_shape, (*selected_points)[i], selected_points->getVert(i) + toMove);
         }
     }break;
-    case ToolHandleControlMode::Rotate: {
+    case HandleControlMode::Rotate: {
         using namespace piying;
 
         QMatrix4x4 rotation = PiYingGL::getInstance().getProj();
@@ -156,14 +156,14 @@ void piying::tool::texture::VertSelect::moveHandle(const QPointF& mouse)
             pointLayer.set_point(_edit_shape, (*selected_points)[i], rotation.map(selected_points->getVert(i)) + mappedLastHandleCenterPoint);
         }
     }break;
-    case ToolHandleControlMode::Scale: {
+    case HandleControlMode::Scale: {
         float scale = (mouse.x() + mouse.y() - dHandleCenterPoint.x() - dHandleCenterPoint.y()) / (ROTATEHANDLE_RADIUS + ROTATEHANDLE_RADIUS);
         QPointF toScale = lastHandleCenterPoint * (scale - 1);
         for (int i = 0; i < selected_points->point_size(); i++) {
             pointLayer.set_point(_edit_shape, (*selected_points)[i], selected_points->getVert(i) * scale - toScale);
         }
     }break;
-    case ToolHandleControlMode::ScaleX: {
+    case HandleControlMode::ScaleX: {
         float scale = (mouse.x() - lastDHandleCenterPoint.x()) / ROTATEHANDLE_RADIUS;
         float scaleX = lastDHandleCenterPoint.x() * (1 - scale);
         for (int i = 0; i < selected_points->point_size(); i++) {
@@ -171,7 +171,7 @@ void piying::tool::texture::VertSelect::moveHandle(const QPointF& mouse)
             pointLayer.set_point(_edit_shape, (*selected_points)[i], PiYingGL::getInstance().GLViewProjMatrixInvert(mapOri.x() * scale + scaleX, mapOri.y()));
         }
     }break;
-    case ToolHandleControlMode::ScaleY: {
+    case HandleControlMode::ScaleY: {
         float scale = (mouse.y() - lastDHandleCenterPoint.y()) / ROTATEHANDLE_RADIUS;
         float scaleY = lastDHandleCenterPoint.y() * (1 - scale);
         for (int i = 0; i < selected_points->point_size(); i++) {

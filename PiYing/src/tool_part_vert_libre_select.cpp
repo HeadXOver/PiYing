@@ -53,7 +53,7 @@ void piying::tool::part::VertLibreSelect::click(const QPointF& mouseOri)
 
 	_vert_select->change_edit_mode_by_setting_last_pos(mouseOri);
 
-	if (_vert_select->edit_mode() != ToolHandleControlMode::None) {
+	if (_vert_select->edit_mode() != HandleControlMode::None) {
 		_vert_select->affirm_handle();
 		return;
 	}
@@ -77,7 +77,7 @@ void piying::tool::part::VertLibreSelect::mouse_move(const QPointF& mouse)
 
 	if (!isPress) return;
 
-	if (_vert_select->edit_mode() != ToolHandleControlMode::None) {
+	if (_vert_select->edit_mode() != HandleControlMode::None) {
 		_vert_select->move_handle(mouse);
 		return;
 	}

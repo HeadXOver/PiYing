@@ -17,7 +17,7 @@
 #include <qpainter>
 
 piying::tool::part::VertSelect::VertSelect() :
-	_edit_mode(ToolHandleControlMode::None)
+	_edit_mode(HandleControlMode::None)
 {
 	selected_points = std::make_unique<piying::SelectedPoints>();
 }
@@ -29,7 +29,7 @@ void piying::tool::part::VertSelect::change_edit_mode_by_setting_last_pos(const 
     lastPos = mouse;
 
     if (selected_points->isEmpty()) {
-        _edit_mode = ToolHandleControlMode::None;
+        _edit_mode = HandleControlMode::None;
         return;
     }
 
@@ -96,13 +96,13 @@ void piying::tool::part::VertSelect::draw_handle_and_selected()
 
 void piying::tool::part::VertSelect::move_handle(const QPointF& mouse)
 {
-    if (_edit_mode == ToolHandleControlMode::None) return;
+    if (_edit_mode == HandleControlMode::None) return;
 
     PointVectorLayer& pointLayer = *TimelineGl::getInstance().currentLayer();
     PointVectorLayer& pointLayerOrigin = *TimelineGl::getInstance().currentLayerOrigin();
 
     switch (_edit_mode) {
-    case ToolHandleControlMode::Move: {
+    case HandleControlMode::Move: {
         const QPointF toMove = PiYingGL::getInstance().GLViewProjMatrixInvert(mouse) - PiYingGL::getInstance().GLViewProjMatrixInvert(lastPos);
         QPointF toSet;
         for (int i = 0; i < selected_points->point_size(); i++) {
@@ -111,7 +111,7 @@ void piying::tool::part::VertSelect::move_handle(const QPointF& mouse)
             pointLayerOrigin.set_point(true, (*selected_points)[i], toSet);
         }
     }break;
-    case ToolHandleControlMode::MoveX: {
+    case HandleControlMode::MoveX: {
         const QPointF toMove = PiYingGL::getInstance().GLViewProjMatrixInvert(mouse.x(), 0.f) - PiYingGL::getInstance().GLViewProjMatrixInvert(lastPos.x(), 0.f);
         QPointF toSet;
         for (int i = 0; i < selected_points->point_size(); i++) {
@@ -120,7 +120,7 @@ void piying::tool::part::VertSelect::move_handle(const QPointF& mouse)
             pointLayerOrigin.set_point(true, (*selected_points)[i], toSet);
         }
     }break;
-    case ToolHandleControlMode::MoveY: {
+    case HandleControlMode::MoveY: {
         const QPointF toMove = PiYingGL::getInstance().GLViewProjMatrixInvert(0.f, mouse.y()) - PiYingGL::getInstance().GLViewProjMatrixInvert(0.f, lastPos.y());
         QPointF toSet;
         for (int i = 0; i < selected_points->point_size(); i++) {
@@ -129,7 +129,7 @@ void piying::tool::part::VertSelect::move_handle(const QPointF& mouse)
             pointLayerOrigin.set_point(true, (*selected_points)[i], toSet);
         }
     }break;
-    case ToolHandleControlMode::Rotate: {
+    case HandleControlMode::Rotate: {
         using namespace piying;
 
         QMatrix4x4 rotation = PiYingGL::getInstance().getProj();
@@ -144,7 +144,7 @@ void piying::tool::part::VertSelect::move_handle(const QPointF& mouse)
             pointLayer.set_point(true, (*selected_points)[i], toSet);
         }
     }break;
-    case ToolHandleControlMode::Scale: {
+    case HandleControlMode::Scale: {
         float scale = (mouse.x() + mouse.y() - dHandleCenterPoint.x() - dHandleCenterPoint.y()) / (ROTATEHANDLE_RADIUS + ROTATEHANDLE_RADIUS);
         const QPointF toScale = lastHandleCenterPoint * (scale - 1);
         QPointF toSet;
@@ -154,7 +154,7 @@ void piying::tool::part::VertSelect::move_handle(const QPointF& mouse)
             pointLayerOrigin.set_point(true, (*selected_points)[i], toSet);
         }
     }break;
-    case ToolHandleControlMode::ScaleX: {
+    case HandleControlMode::ScaleX: {
         float scale = (mouse.x() - lastDHandleCenterPoint.x()) / ROTATEHANDLE_RADIUS;
         float scaleX = lastDHandleCenterPoint.x() * (1 - scale);
         QPointF toSet;
@@ -165,7 +165,7 @@ void piying::tool::part::VertSelect::move_handle(const QPointF& mouse)
             pointLayerOrigin.set_point(true, (*selected_points)[i], toSet);
         }
     }break;
-    case ToolHandleControlMode::ScaleY: {
+    case HandleControlMode::ScaleY: {
         float scale = (mouse.y() - lastDHandleCenterPoint.y()) / ROTATEHANDLE_RADIUS;
         float scaleY = lastDHandleCenterPoint.y() * (1 - scale);
         QPointF toSet;

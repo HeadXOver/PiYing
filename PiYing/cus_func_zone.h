@@ -4,9 +4,13 @@ class QPointF;
 class QRectF;
 class QWidget;
 
-enum class ToolHandleControlMode;
-
 namespace piying {
+
+	namespace tool {
+
+		enum class HandleControlMode;
+
+	}
 
 	bool isInRect(const QPointF& mouse, const QPointF& pos, int zone);
 	bool isInRect(const QPointF& mouse, const QPointF& pos, int width, int height);
@@ -17,7 +21,7 @@ namespace piying {
 
 	bool isInsideSquare(const QPointF& point, float side = 2.0f) noexcept;
 
-	ToolHandleControlMode controlModeByMousePos(const QPointF& mouse, const QPointF& center);
+	tool::HandleControlMode controlModeByMousePos(const QPointF& mouse, const QPointF& center);
 
 	void drawHandleZone(QWidget* painter, const QPointF& position);
 

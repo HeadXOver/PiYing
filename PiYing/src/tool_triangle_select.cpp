@@ -16,7 +16,7 @@
 
 piying::tool::texture::TriangleSelect::TriangleSelect() :
     edit_skelen(PiYingGL::getInstance().editMode == EditMode::characterSkeleton),
-    editMode(ToolHandleControlMode::None)
+    editMode(HandleControlMode::None)
 {
     selected_trangle = std::make_unique<SelectedTriangle>();
 }
@@ -123,7 +123,7 @@ void piying::tool::texture::TriangleSelect::draw_handle_and_selected()
 void piying::tool::texture::TriangleSelect::changeEditMode()
 {
     if (selected_trangle->isEmpty()) {
-        editMode = ToolHandleControlMode::None;
+        editMode = HandleControlMode::None;
         return;
     }
 
@@ -132,31 +132,31 @@ void piying::tool::texture::TriangleSelect::changeEditMode()
 
 void piying::tool::texture::TriangleSelect::moveHandle(const QPointF& mouse)
 {
-    if (editMode == ToolHandleControlMode::None) return;
+    if (editMode == HandleControlMode::None) return;
 
     PointVectorLayer& pointLayer = *PiYingGL::getInstance().currentLayer();
 
     /// 根据 editMode 进行变换
     switch (editMode) {
-    case ToolHandleControlMode::Move: {
+    case HandleControlMode::Move: {
         QPointF toMove = PiYingGL::getInstance().GLViewProjMatrixInvert(mouse) - PiYingGL::getInstance().GLViewProjMatrixInvert(lastPos);
         for (int i = 0; i < selected_trangle->point_size(); i++) {
             pointLayer.set_point(edit_skelen, (*selected_trangle)[i], selected_trangle->getVert(i) + toMove);
         }
     }break;
-    case ToolHandleControlMode::MoveX: {
+    case HandleControlMode::MoveX: {
         QPointF toMove = PiYingGL::getInstance().GLViewProjMatrixInvert(mouse.x(), 0.f) - PiYingGL::getInstance().GLViewProjMatrixInvert(lastPos.x(), 0.f);
         for (int i = 0; i < selected_trangle->point_size(); i++) {
             pointLayer.set_point(edit_skelen, (*selected_trangle)[i], selected_trangle->getVert(i) + toMove);
         }
     }break;
-    case ToolHandleControlMode::MoveY: {
+    case HandleControlMode::MoveY: {
         QPointF toMove = PiYingGL::getInstance().GLViewProjMatrixInvert(0.f, mouse.y()) - PiYingGL::getInstance().GLViewProjMatrixInvert(0.f, lastPos.y());
         for (int i = 0; i < selected_trangle->point_size(); i++) {
             pointLayer.set_point(edit_skelen, (*selected_trangle)[i], selected_trangle->getVert(i) + toMove);
         }
     }break;
-    case ToolHandleControlMode::Rotate: {
+    case HandleControlMode::Rotate: {
         using namespace piying;
 
         QMatrix4x4 rotation = PiYingGL::getInstance().getProj();
@@ -168,14 +168,14 @@ void piying::tool::texture::TriangleSelect::moveHandle(const QPointF& mouse)
             pointLayer.set_point(edit_skelen, (*selected_trangle)[i], rotation.map(selected_trangle->getVert(i)) + mappedLastHandleCenterPoint);
         }
     }break;
-    case ToolHandleControlMode::Scale: {
+    case HandleControlMode::Scale: {
         float scale = (mouse.x() + mouse.y() - _widget_handle_center.x() - _widget_handle_center.y()) / (ROTATEHANDLE_RADIUS + ROTATEHANDLE_RADIUS);
         QPointF toScale = lastHandleCenterPoint * (scale - 1);
         for (int i = 0; i < selected_trangle->point_size(); i++) {
             pointLayer.set_point(edit_skelen, (*selected_trangle)[i], selected_trangle->getVert(i) * scale - toScale);
         }
     }break;
-    case ToolHandleControlMode::ScaleX: {
+    case HandleControlMode::ScaleX: {
         const float scale = (mouse.x() - lastDHandleCenterPoint.x()) / ROTATEHANDLE_RADIUS;
         const float scaleX = lastDHandleCenterPoint.x() * (1 - scale);
 
@@ -189,7 +189,7 @@ void piying::tool::texture::TriangleSelect::moveHandle(const QPointF& mouse)
             pointLayer.set_point(edit_skelen, (*selected_trangle)[i], trans.map(selected_trangle->getVert(i)));
         }
     }break;
-    case ToolHandleControlMode::ScaleY: {
+    case HandleControlMode::ScaleY: {
         const float scale = (mouse.y() - lastDHandleCenterPoint.y()) / ROTATEHANDLE_RADIUS;
         const float scaleY = lastDHandleCenterPoint.y() * (1 - scale);
 
@@ -222,7 +222,7 @@ void piying::tool::texture::TriangleSelect::mouse_press(const QPointF& mouse)
 
     changeEditMode();
 
-    if (editMode != ToolHandleControlMode::None) {
+    if (editMode != HandleControlMode::None) {
         affirmHandle();
     }
 }

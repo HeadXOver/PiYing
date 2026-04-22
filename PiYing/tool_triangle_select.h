@@ -3,47 +3,51 @@
 #include <qpointf>
 #include <memory>
 
-enum class ToolHandleControlMode;
-
 namespace piying {
 
 	class SelectedTriangle;
 
-	namespace tool::texture {
+	namespace tool{
 
-		class TriangleSelect final
-		{
-		public:
-			TriangleSelect();
-			~TriangleSelect();
+		enum class HandleControlMode;
+		
+		namespace texture {
 
-			ToolHandleControlMode get_edit_mode() const noexcept { return editMode; }
+			class TriangleSelect final
+			{
+			public:
+				TriangleSelect();
+				~TriangleSelect();
 
-			void escape();
-			void enter();
-			void deleteElement();
-			void draw_handle_and_selected();
-			void changeEditMode();
-			void moveHandle(const QPointF& mouse);
-			void affirmHandle();
-			void mouse_press(const QPointF& mouse);
-			void click_select(const QPointF& mouse);
-			void update_selected_to_draw();
+				HandleControlMode get_edit_mode() const noexcept { return editMode; }
 
-		public:
-			std::unique_ptr<SelectedTriangle> selected_trangle;
+				void escape();
+				void enter();
+				void deleteElement();
+				void draw_handle_and_selected();
+				void changeEditMode();
+				void moveHandle(const QPointF& mouse);
+				void affirmHandle();
+				void mouse_press(const QPointF& mouse);
+				void click_select(const QPointF& mouse);
+				void update_selected_to_draw();
 
-			QPointF lastPos;
+			public:
+				std::unique_ptr<SelectedTriangle> selected_trangle;
 
-		private:
-			QPointF _gl_handle_center;
-			QPointF _widget_handle_center;
-			QPointF lastHandleCenterPoint;
-			QPointF lastDHandleCenterPoint;
+				QPointF lastPos;
 
-			bool edit_skelen{ false };
-			ToolHandleControlMode editMode{ 0 };
-		};
+			private:
+				QPointF _gl_handle_center;
+				QPointF _widget_handle_center;
+				QPointF lastHandleCenterPoint;
+				QPointF lastDHandleCenterPoint;
+
+				bool edit_skelen{ false };
+				HandleControlMode editMode{ 0 };
+			};
+
+		}
 
 	}
 }

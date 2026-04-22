@@ -3,52 +3,56 @@
 #include <qpointf>
 #include <memory>
 
-enum class ToolHandleControlMode;
-
 namespace piying {
 
 	class SelectedPoints;
 
-	namespace tool::texture {
+	namespace tool {
 
-		class VertSelect final
-		{
-		public:
-			VertSelect();
-			~VertSelect();
+		enum class HandleControlMode;
+		
+		namespace texture {
 
-			void escape();
-			void deleteElement();
-			void draw_handle_and_selected();
-			void change_edit_mode_by_setting_last_pos(const QPointF& mouse);
-			void moveHandle(const QPointF& mouse);
-			void affirmHandle();
-			void click_select(const QPointF& mouse);
-			void update_selected_to_draw();
-			void clear();
-			void append(unsigned int index);
-			void push_back(unsigned int index);
+			class VertSelect final
+			{
+			public:
+				VertSelect();
+				~VertSelect();
 
-			bool contains(unsigned int index) const noexcept;
-			bool is_edit_skelen() const noexcept { return _edit_shape; }
+				void escape();
+				void deleteElement();
+				void draw_handle_and_selected();
+				void change_edit_mode_by_setting_last_pos(const QPointF& mouse);
+				void moveHandle(const QPointF& mouse);
+				void affirmHandle();
+				void click_select(const QPointF& mouse);
+				void update_selected_to_draw();
+				void clear();
+				void append(unsigned int index);
+				void push_back(unsigned int index);
 
-			QPointF get_last_pos() const noexcept { return lastPos; }
+				bool contains(unsigned int index) const noexcept;
+				bool is_edit_skelen() const noexcept { return _edit_shape; }
 
-			ToolHandleControlMode getEditMode() const noexcept { return editMode; }
+				QPointF get_last_pos() const noexcept { return lastPos; }
 
-		private:
-			QPointF handleCenterPoint;
-			QPointF dHandleCenterPoint;
-			QPointF lastHandleCenterPoint;
-			QPointF lastDHandleCenterPoint;
+				HandleControlMode getEditMode() const noexcept { return editMode; }
 
-			QPointF lastPos;
+			private:
+				QPointF handleCenterPoint;
+				QPointF dHandleCenterPoint;
+				QPointF lastHandleCenterPoint;
+				QPointF lastDHandleCenterPoint;
 
-			const bool _edit_shape;
-			ToolHandleControlMode editMode;
+				QPointF lastPos;
 
-			std::unique_ptr<SelectedPoints> selected_points;
-		};
+				const bool _edit_shape;
+				HandleControlMode editMode;
+
+				std::unique_ptr<SelectedPoints> selected_points;
+			};
+
+		}
 
 	}
 }

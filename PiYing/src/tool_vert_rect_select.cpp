@@ -38,7 +38,7 @@ void piying::tool::texture::VertRectSelect::click(const QPointF& mouseOri)
 	_is_press = true;
 	chElementSelect->change_edit_mode_by_setting_last_pos(mouseOri);
 
-	if (chElementSelect->getEditMode() != ToolHandleControlMode::None) {
+	if (chElementSelect->getEditMode() != HandleControlMode::None) {
 		chElementSelect->affirmHandle();
 		return;
 	}
@@ -52,7 +52,7 @@ void piying::tool::texture::VertRectSelect::mouse_move(const QPointF& mouse)
 {
 	if (!_is_press) return;
 
-	if (chElementSelect->getEditMode() != ToolHandleControlMode::None) {
+	if (chElementSelect->getEditMode() != HandleControlMode::None) {
 		chElementSelect->moveHandle(mouse);
 		isDraw = false;
 		return;

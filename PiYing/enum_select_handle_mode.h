@@ -1,12 +1,16 @@
 #pragma once
 
-enum class ToolHandleControlMode {
-	None,
-	Move,
-	MoveX,
-	MoveY,
-	Rotate,
-	Scale,
-	ScaleX,
-	ScaleY,
-};
+namespace piying::tool {
+
+	enum class HandleControlMode {
+		None,
+		Move,
+		MoveX,
+		MoveY,
+		Rotate,
+		Scale,
+		ScaleX,
+		ScaleY,
+	};
+
+}

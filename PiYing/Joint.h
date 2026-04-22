@@ -10,6 +10,8 @@ public:
 
     QMatrix4x4 get_local_transform() const noexcept;
 
+    void set_center(float x, float y) noexcept;
+
 private:
     float 
         center_x{ 0 },

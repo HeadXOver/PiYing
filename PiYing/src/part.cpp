@@ -85,6 +85,8 @@ Part::Part(
 	_x = (left + right) / 2.f;
 	_y = (top + bottom) / 2.f;
 
+	_joint->set_center(_x, _y);
+
 	_height = top - bottom;
 	_width = right - left;
 

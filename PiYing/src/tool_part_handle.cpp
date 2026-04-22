@@ -16,7 +16,7 @@
 #include <qpainter>
 
 piying::tool::part::Handle::Handle():
-    _edit_mode(ToolHandleControlMode::None)
+    _edit_mode(HandleControlMode::None)
 {
 }
 
@@ -55,31 +55,31 @@ void piying::tool::part::Handle::mouse_move(const QPointF& mouse)
 {
 	if (!_is_press) return;
 
-    if (_edit_mode == ToolHandleControlMode::None) return;
+    if (_edit_mode == HandleControlMode::None) return;
 
     PointVectorLayer& pointLayer = *TimelineGl::getInstance().currentLayer();
     PointVectorLayer& pointLayerOrigin = *TimelineGl::getInstance().currentLayerOrigin();
 
     switch (_edit_mode) {
-    case ToolHandleControlMode::Move: {
+    case HandleControlMode::Move: {
         pointLayer.skelen_add_move(
             PiYingGL::getInstance().GLViewProjMatrixInvert(mouse) - PiYingGL::getInstance().GLViewProjMatrixInvert(_last_pos),
             pointLayerOrigin
         );
     }break;
-    case ToolHandleControlMode::MoveX: {
+    case HandleControlMode::MoveX: {
         pointLayer.skelen_add_move(
             PiYingGL::getInstance().GLViewProjMatrixInvert(mouse.x(), 0.f) - PiYingGL::getInstance().GLViewProjMatrixInvert(_last_pos.x(), 0.f),
             pointLayerOrigin
         );
     }break;
-    case ToolHandleControlMode::MoveY: {
+    case HandleControlMode::MoveY: {
         pointLayer.skelen_add_move(
             PiYingGL::getInstance().GLViewProjMatrixInvert(0.f, mouse.y()) - PiYingGL::getInstance().GLViewProjMatrixInvert(0.f, _last_pos.y()),
             pointLayerOrigin
         );
     }break;
-    case ToolHandleControlMode::Rotate: {
+    case HandleControlMode::Rotate: {
         using namespace piying;
 
         QMatrix4x4 rotation = PiYingGL::getInstance().getProj();
@@ -93,7 +93,7 @@ void piying::tool::part::Handle::mouse_move(const QPointF& mouse)
             pointLayer.set_point(true, i, toSet);
         }
     }break;
-    case ToolHandleControlMode::Scale: {
+    case HandleControlMode::Scale: {
         float scale = (mouse.x() + mouse.y() - dHandleCenterPoint.x() - dHandleCenterPoint.y()) / (ROTATEHANDLE_RADIUS + ROTATEHANDLE_RADIUS);
         const QPointF toScale = lastHandleCenterPoint * (scale - 1);
         QPointF toSet;
@@ -101,7 +101,7 @@ void piying::tool::part::Handle::mouse_move(const QPointF& mouse)
             pointLayer.set_point(true, i, pointLayerOrigin[i] * scale - toScale);
         }
     }break;
-    case ToolHandleControlMode::ScaleX: {
+    case HandleControlMode::ScaleX: {
         float scale = (mouse.x() - lastDHandleCenterPoint.x()) / ROTATEHANDLE_RADIUS;
         float scaleX = lastDHandleCenterPoint.x() * (1 - scale);
         QPointF toSet;
@@ -111,7 +111,7 @@ void piying::tool::part::Handle::mouse_move(const QPointF& mouse)
             pointLayer.set_point(true, i, toSet);
         }
     }break;
-    case ToolHandleControlMode::ScaleY: {
+    case HandleControlMode::ScaleY: {
         float scale = (mouse.y() - lastDHandleCenterPoint.y()) / ROTATEHANDLE_RADIUS;
         float scaleY = lastDHandleCenterPoint.y() * (1 - scale);
         QPointF toSet;
