@@ -48,6 +48,8 @@ void PiYing::change_edit_mode_overview()
 
     PiYingGL::getInstance().setChTool(CharacterToolState::None);
     PiYingGL::getInstance().setEditMode(EditMode::OverView);
+
+    ui->mainToolBar->clear();
 }
 
 void PiYing::change_edit_mode_background()
@@ -63,6 +65,8 @@ void PiYing::change_edit_mode_background()
 
     PiYingGL::getInstance().setChTool(CharacterToolState::None);
     PiYingGL::getInstance().setEditMode(EditMode::BackGround);
+
+    ui->mainToolBar->clear();
 }
 
 void PiYing::change_edit_mode_character_texture()

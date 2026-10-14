@@ -102,7 +102,7 @@ PiYing::PiYing() :
     splitTimelineOpenGL->addWidget(&TimelineGl::getInstance());
     splitListOpenGL->addWidget(voidListWidget);
     splitListOpenGL->addWidget(splitTimelineOpenGL);
-    splitTimelineOpenGL->setSizes({ width() * 5 / 6, width() / 6 });
+    splitTimelineOpenGL->setSizes({ height() * 5 / 6, height() / 6 });
     splitListOpenGL->setStretchFactor(0, 0);
     splitListOpenGL->setStretchFactor(1, 1);
 
